@@ -22,6 +22,9 @@
             </intent-filter>
         </activity>
 
+
+        <activity android:name=".HomeUtente" />
+
     </application>
 
 </manifest>

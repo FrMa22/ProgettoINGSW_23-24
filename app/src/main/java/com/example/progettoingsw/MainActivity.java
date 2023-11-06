@@ -39,7 +39,9 @@ public class MainActivity extends AppCompatActivity {
                 bottoneLogin.setText("Porco");
                 //PopUpLogin schermata_richiesta_login = new PopUpLogin();
                 //schermata_richiesta_login.setVisible(true);
-                Intent intent = new Intent(MainActivity.this, PopUpLogin.class);
+                //Intent intent = new Intent(MainActivity.this, PopUpLogin.class);
+                //startActivity(intent);
+                Intent intent = new Intent(MainActivity.this, HomeUtente.class);
                 startActivity(intent);
 
             }

@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/relativeLayout"
     android:background="#99E8FF"
     tools:context=".MainActivity">
 
@@ -23,18 +22,18 @@
         android:layout_alignBottom="@+id/barraSuperiore"
         android:layout_marginBottom="-1dp"
         android:gravity="center"
-        android:textSize="35dp"
+        android:textSize="35sp"
         android:textStyle="bold"
-        android:text="Benvenuto in *nome applicazione*" />
+        android:text="@string/benvenuto_in_nome_applicazione" />
 
     <TextView
         android:id="@+id/textViewCredenziali"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Inserire credenziali:"
+        android:text="@string/inserire_credenziali"
         android:layout_below="@id/barraSuperiore"
         android:layout_margin="15dp"
-        android:textSize="25dp"
+        android:textSize="25sp"
         android:textStyle="bold"
         android:gravity="center"
         />
@@ -49,9 +48,10 @@
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="20dp"
         android:background="@color/white"
-        android:drawableLeft="@drawable/baseline_alternate_email_24"
+
+        android:drawableStart="@drawable/baseline_alternate_email_24"
         android:drawablePadding="15dp"
-        android:hint="Indirizzo Email"
+        android:hint="@string/indirizzo_email"
         android:padding="20dp"
         />
 
@@ -65,9 +65,8 @@
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="20dp"
         android:background="@color/white"
-
         android:drawablePadding="15dp"
-        android:hint="Indirizzo Email"
+        android:hint="@string/password"
         android:padding="20dp"
         />
 
