@@ -20,4 +20,9 @@
     <string name="password">Password</string>
     <string name="cerca">Cerca</string>
 
+    <string name="open">Open Navigation Drawer</string>
+    <string name="close">Close Navigation Drawer</string>
+    <string name="title_activity_gallery">Activity_gallery</string>
+
+
 </resources>
