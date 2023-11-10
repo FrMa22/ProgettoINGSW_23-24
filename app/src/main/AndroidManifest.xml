@@ -23,6 +23,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".HomeUtente" />
+        <activity android:name=".ProfiloActivity" />
+
+
     </application>
 
 </manifest>
