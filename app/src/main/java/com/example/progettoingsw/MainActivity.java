@@ -29,14 +29,16 @@ public class MainActivity extends AppCompatActivity {
 
         registrazione.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, Registrazione.class);
-                startActivity(intent);
+                //apre schermata registrazione
+                registrazione.setText("Ciao");
             }
         });
 
         bottoneLogin.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 bottoneLogin.setText("Porco");
+                //PopUpLogin schermata_richiesta_login = new PopUpLogin();
+                //schermata_richiesta_login.setVisible(true);
                 Intent intent = new Intent(MainActivity.this, PopUpLogin.class);
                 startActivity(intent);
 

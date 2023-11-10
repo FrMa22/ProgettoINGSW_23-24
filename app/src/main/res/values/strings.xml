@@ -1,7 +1,3 @@
 <resources>
     <string name="app_name">ProgettoINGSW</string>
-    <string-array name="tipoUtente">
-        <item> Acquirente</item>
-        <item>Venditore</item>
-    </string-array>
 </resources>
