@@ -24,4 +24,14 @@
     <string name="close">Close Navigation Drawer</string>
     <string name="title_activity_gallery">Activity_gallery</string>
 
+
+    <string-array name="elencoSocialRegistrazione">
+        <item>Tiktok</item>
+        <item>Instagram</item>
+        <item>Facebook</item>
+        <item>X</item>
+        <item>Linkedin</item>
+    </string-array>
+
+
 </resources>

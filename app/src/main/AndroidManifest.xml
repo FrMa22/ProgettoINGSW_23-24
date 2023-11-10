@@ -27,6 +27,30 @@
         <activity android:name=".ProfiloActivity"/>
         <activity android:name=".Registrazione"/>
 
+
+
+        <activity
+            android:name=".CampiFacoltativiRegistrazione"
+            android:exported="true">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+
+        </activity>
+
+
+
+        <activity
+            android:name=".InteressiRegistrazione"
+            android:exported="true">
+
+        </activity>
+
+
     </application>
 
 </manifest>
