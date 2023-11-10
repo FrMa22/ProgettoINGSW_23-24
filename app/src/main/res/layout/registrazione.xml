@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/relativeLayoutRegistrazione"
+    android:background="#99E8FF"
+    tools:context=".MainActivity">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:id="@+id/barraSuperioreRegistrazione"
+        android:background="#FF9933" />
+
+
+    <TextView
+        android:id="@+id/textViewCompilazione"
+        android:layout_width="match_parent"
+        android:layout_height="151dp"
+        android:layout_alignBottom="@+id/barraSuperioreRegistrazione"
+        android:layout_marginBottom="-1dp"
+        android:gravity="center"
+        android:textSize="35dp"
+        android:textStyle="bold"
+        android:text="Compilare i seguenti campi" />
+
+    <View
+        android:id="@+id/ViewCredenzialiRegistrazione"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/barraSuperioreRegistrazione"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="15dp"
+        android:gravity="center"
+        android:textSize="25dp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/editTextEmailRegistrazione"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/barraSuperioreRegistrazione"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="161dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        android:background="@color/white"
+        android:drawableLeft="@drawable/baseline_alternate_email_24"
+        android:drawablePadding="5dp"
+        android:hint="Indirizzo Email"
+        android:padding="15dp" />
+
+    <EditText
+        android:id="@+id/editTextNomeRegistrazione"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/barraSuperioreRegistrazione"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="11dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        android:background="@color/white"
+        android:drawablePadding="15dp"
+        android:hint="Nome"
+        android:padding="15dp" />
+
+    <EditText
+        android:id="@+id/editTextCongnomeRegistrazione"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/barraSuperioreRegistrazione"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="87dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        android:background="@color/white"
+        android:drawablePadding="15dp"
+        android:hint="Congnome"
+        android:padding="15dp" />
+
+    <EditText
+        android:id="@+id/editTextPasswordRegistrazione"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/barraSuperioreRegistrazione"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="237dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        android:background="@color/white"
+        android:drawablePadding="15dp"
+        android:hint="Password"
+        android:padding="15dp"
+        android:inputType="textPassword"
+        />
+
+    <EditText
+        android:id="@+id/editTextConfermaPasswordRegistrazione"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/barraSuperioreRegistrazione"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="315dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        android:background="@color/white"
+        android:drawablePadding="15dp"
+        android:hint="Conferma password"
+        android:padding="15dp"
+        android:inputType="textPassword"/>
+
+    <TextView
+        android:id="@+id/textViewTipologiaUtente"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/editTextConfermaPasswordRegistrazione"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="1dp"
+        android:layout_marginEnd="1dp"
+        android:layout_marginBottom="1dp"
+        android:gravity="center"
+        android:text="Che tipologia di utente sei?"
+        android:textSize="25dp"
+        android:textStyle="bold" />
+
+    <Spinner
+        android:id="@+id/spinnerRegistrazione"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@id/textViewTipologiaUtente"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="16dp"
+        android:background="@color/white"
+        android:entries="@array/tipoUtente"
+        android:gravity="center"
+        android:textSize="25dp"
+        android:textStyle="bold"
+
+        
+/>
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/bottoneAnnulla"
+        android:layout_width="150dp"
+        android:layout_height="59dp"
+        android:layout_below="@id/spinnerRegistrazione"
+        android:layout_marginTop="50dp"
+        android:layout_marginLeft="35dp"
+        android:layout_marginRight="226dp"
+        android:backgroundTint="#FFFFFF"
+        android:textStyle="bold"
+        android:text="Annulla"
+        android:textColor="@color/black"
+        android:textSize="20dp"
+        />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/bottoneProsegui"
+        android:layout_width="150dp"
+        android:layout_height="59dp"
+        android:layout_below="@id/spinnerRegistrazione"
+        android:layout_marginTop="50dp"
+        android:layout_marginRight="35dp"
+        android:layout_marginLeft="226dp"
+        android:backgroundTint="#FFFFFF"
+        android:textStyle="bold"
+        android:text="Prosegui"
+        android:textColor="@color/black"
+        android:textSize="20dp"
+/>
+
+
+</RelativeLayout>
