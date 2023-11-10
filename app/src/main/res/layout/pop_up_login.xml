@@ -2,74 +2,63 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/pop_up_login_relativelayout"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".PopUpLogin"
+    android:layout_width="fill_parent"
+    android:layout_height="500dp"
     android:background="#FF9933"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".PopUpLogin">
 
 
     <TextView
         android:id="@+id/TextViewRichiestaAccount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
         android:text="Con quale account vuoi accedere?"
         android:textAlignment="center"
         android:textSize="30dp"
-        android:layout_margin="20dp"
+        android:textStyle="bold"
         />
 
-
-    <AbsoluteLayout
-        android:layout_width="match_parent"
-        android:layout_height="270dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerInParent="true">
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/bottoneVenditore"
-            android:layout_width="170dp"
-            android:layout_height="69dp"
-            android:layout_alignParentTop="true"
-            android:layout_centerInParent="true"
-            android:layout_x="148dp"
-            android:layout_y="163dp"
-            android:backgroundTint="@color/white"
-            android:text="Venditore"
-            android:textColor="@color/black"
-            android:textSize="20dp"
-            android:textStyle="bold" />
-
-        <com.google.android.material.button.MaterialButton
+    <com.google.android.material.button.MaterialButton
             android:id="@+id/bottoneAcquirente"
-            android:layout_width="170dp"
+            android:layout_width="180dp"
             android:layout_height="69dp"
-            android:layout_alignParentBottom="true"
-            android:layout_centerInParent="true"
-            android:layout_x="148dp"
-            android:layout_y="20dp"
+            android:layout_below="@+id/TextViewRichiestaAccount"
             android:backgroundTint="@color/white"
             android:text="Acquirente"
             android:textColor="@color/black"
-            android:textSize="20dp"
-            android:textStyle="bold" />
+            android:textSize="25dp"
+            android:textStyle="bold"
+        android:layout_centerHorizontal="true"/>
 
-        <TextView
-            android:id="@+id/TextViewOr"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_x="191dp"
-            android:layout_y="107dp"
-            android:text="Oppure"
-            android:textSize="25dp" />
+    <TextView
+        android:id="@+id/textViewOppure"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/bottoneAcquirente"
+        android:layout_marginTop="20dp"
+        android:textColor="@color/black"
+        android:text="Oppure"
+        android:textAlignment="center"
+        android:textSize="25dp"
+        android:textStyle="bold"></TextView>
 
-
-    </AbsoluteLayout>
-
-
-
-
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/bottoneVenditore"
+        android:layout_width="180dp"
+        android:layout_height="69dp"
+        android:layout_below="@+id/textViewOppure"
+        android:backgroundTint="@color/white"
+        android:text="Venditore"
+        android:textColor="@color/black"
+        android:textSize="25dp"
+        android:textStyle="bold"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        />
 
 </RelativeLayout>

@@ -21,6 +21,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+<activity android:name=".PopUpLogin"
+    android:theme="@style/Base.Theme.ProgettoINGSW.CustomTheme"></activity>
+
+        <activity
+            android:name=".Registrazione"
+            android:exported="true"></activity>
 
     </application>
 
