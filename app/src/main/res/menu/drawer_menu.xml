@@ -3,7 +3,32 @@
     <item
         android:id="@+id/nav_home"
         android:title="Home" />
+    <group
+        android:id="@+id/categorie_gruppo"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/arte"
+            android:title="Arte" />
+        <item
+            android:id="@+id/Elettrodomestici"
+            android:title="Elettrodomestici" />
+    </group>
+    <item
+        android:id="@+id/nav_expandable"
+        android:title="Espandibile">
+        <menu
+            android:id="@+id/group_expandable">
+            <!-- Utilizza un SubMenu per contenere gli elementi espandibili -->
+            <item
+                android:id="@+id/elemento1"
+                android:title="Elemento 1" />
+            <item
+                android:id="@+id/elemento2"
+                android:title="Elemento 2" />
+        </menu>
+    </item>
     <item
         android:id="@+id/nav_profilo"
         android:title="Profilo" />
 </menu>
+

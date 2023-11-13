@@ -27,12 +27,11 @@ public class Registrazione extends AppCompatActivity {
             }
         });
 
-      /*  bottoneProsegui.setOnClickListener(new View.OnClickListener() {
+        bottoneProsegui.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                Intent intent = new Intent(Registrazione.this,ClasseDopo.class);
-                startActivity(intent);
+                MainActivity.redirectActivity(Registrazione.this, CampiFacoltativiRegistrazione.class);
 
             }
-        }); */
+        });
     }
 }

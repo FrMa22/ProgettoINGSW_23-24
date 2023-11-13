@@ -42,9 +42,7 @@ public class InteressiRegistrazione extends AppCompatActivity {
 
         bottoneProseguiInteressiRegistrazione.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                Toast.makeText(getApplicationContext(),"Prosegui!",Toast.LENGTH_SHORT).show();
-                //Intent intent = new Intent(CampiFacoltativiRegistrazione.this, InteressiRegistrazione.class);
-                //startActivity(intent);
+                MainActivity.redirectActivity(InteressiRegistrazione.this, HomeUtente.class);
 
             }
         });

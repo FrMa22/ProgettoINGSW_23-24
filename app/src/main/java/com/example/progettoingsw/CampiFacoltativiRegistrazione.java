@@ -105,10 +105,7 @@ public class CampiFacoltativiRegistrazione  extends AppCompatActivity {
 
         bottoneProseguiRegistrazione.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                //PopUpLogin schermata_richiesta_login = new PopUpLogin();
-                //schermata_richiesta_login.setVisible(true);
-                Intent intent = new Intent(CampiFacoltativiRegistrazione.this, InteressiRegistrazione.class);
-                startActivity(intent);
+                MainActivity.redirectActivity(CampiFacoltativiRegistrazione.this, InteressiRegistrazione.class);
 
             }
         });
