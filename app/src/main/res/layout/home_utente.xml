@@ -20,54 +20,58 @@
             android:orientation="vertical">
 
 
-            <androidx.appcompat.widget.Toolbar
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
-                android:background="#00F0FF">
+                android:paddingStart="0dp"
+                android:background="#00F0FF"
+                android:orientation="horizontal"
+                android:gravity="center">
 
-                <Button
+                <ImageButton
                     android:id="@+id/openDrawerButton"
-                    android:layout_width="50dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="start"
-                    android:layout_marginLeft="-30dp"
-                    android:background="@drawable/ic_menu"
+                    android:layout_marginStart="5dp"
+                    android:src="@drawable/ic_menu"
+                    android:background="@android:color/transparent"
                     android:contentDescription="Clicca per aprire il menu." />
 
                 <EditText
-                    android:layout_width="220dp"
+                    android:layout_width="230dp"
                     android:layout_height="50dp"
-                    android:layout_marginLeft="50dp"
+                    android:layout_marginLeft="5dp"
                     android:background="@drawable/rounded_background"
                     android:drawableRight="@drawable/ic_search"
                     android:hint="Cerca"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp"
                     android:singleLine="true"
                     android:textColor="@color/black"
                     android:textSize="30sp"
 
                     />
 
-                <Button
+                <ImageButton
                     android:id="@+id/openPreferiti"
-                    android:layout_width="50dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
-                    android:background="@drawable/ic_favourite"
-                    android:contentDescription="Clicca per aprire i preferiti."
-                    android:drawableTint="@android:color/transparent" />
+                    android:src="@drawable/ic_favourite"
+                    android:background="@android:color/transparent"
+                    android:backgroundTint="@android:color/transparent"
+                    android:contentDescription="Clicca per aprire i preferiti." />
 
-                <Button
+                <ImageButton
                     android:id="@+id/openProfiloButton"
-                    android:layout_width="50dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="end"
-                    android:background="@drawable/ic_profilo"
-                    android:backgroundTint="#00F0FF"
+                    android:layout_marginLeft="-5dp"
+                    android:src="@drawable/ic_profilo"
+                    android:background="@android:color/transparent"
                     android:contentDescription="Clicca per aprire il profilo." />
 
-            </androidx.appcompat.widget.Toolbar>
+            </LinearLayout>
 
             <TextView
                 android:layout_width="wrap_content"
