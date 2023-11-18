@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/interessi_registrazione_relativelayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#99E8FF"
+    android:orientation="vertical"
+    tools:context=".InteressiRegistrazione">
+
+    <TextView
+        android:id="@+id/textViewRaccontaciDeiTuoiInteressi"
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        android:background="#9999FF"
+        android:gravity="center"
+        android:text="Raccontaci dei tuoi interessi selezionando tra le seguenti categorie"
+        android:textSize="22dp"
+        android:textStyle="bold" />
+
+
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:columnCount="2"
+        android:rowCount="9"
+        android:useDefaultMargins="true"
+        >
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/bottoneArte"
+            android:layout_width="180dp"
+            android:layout_height="60dp"
+            android:layout_gravity="fill"
+            android:backgroundTint="@color/white"
+            android:text="Arte"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/bottoneElettrodomestici"
+            android:layout_width="180dp"
+            android:layout_height="60dp"
+            android:layout_gravity="fill"
+            android:backgroundTint="@color/white"
+            android:text="Elettrodomestici"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/bottoneAutomobili"
+            android:layout_width="180dp"
+            android:layout_height="60dp"
+            android:layout_gravity="fill"
+            android:backgroundTint="@color/white"
+            android:text="Automobili"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/bottoneMoto"
+            android:layout_width="180dp"
+            android:layout_height="60dp"
+            android:layout_gravity="fill"
+            android:backgroundTint="@color/white"
+            android:text="Moto"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/bottoneAutoEpoca"
+            android:layout_width="180dp"
+            android:layout_height="60dp"
+            android:layout_gravity="fill"
+            android:backgroundTint="@color/white"
+            android:text="Auto d'epoca"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/bottoneMotoEpoca"
+            android:layout_width="180dp"
+            android:layout_height="60dp"
+            android:layout_gravity="fill"
+            android:backgroundTint="@color/white"
+            android:text="Moto d'epoca"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/bottoneTelefonia"
+            android:layout_width="180dp"
+            android:layout_height="60dp"
+            android:layout_gravity="fill"
+            android:backgroundTint="@color/white"
+            android:text="Telefonia"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/bottoneComputer"
+            android:layout_width="180dp"
+            android:layout_height="60dp"
+            android:layout_gravity="fill"
+            android:backgroundTint="@color/white"
+            android:text="Computer"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/bottoneMusica"
+            android:layout_width="180dp"
+            android:layout_height="60dp"
+            android:layout_gravity="fill"
+            android:backgroundTint="@color/white"
+            android:text="Musica"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/bottoneLibri"
+            android:layout_width="180dp"
+            android:layout_height="60dp"
+            android:layout_gravity="fill"
+            android:backgroundTint="@color/white"
+            android:text="Libri"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/bottoneArredamentoCasa"
+            android:layout_width="180dp"
+            android:layout_height="60dp"
+            android:layout_gravity="fill"
+            android:backgroundTint="@color/white"
+            android:text="Arredamento casa"
+            android:textColor="@color/black"
+            android:textSize="17sp"
+            android:textStyle="bold" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/bottoneFumetti"
+            android:layout_width="180dp"
+            android:layout_height="60dp"
+            android:layout_gravity="fill"
+            android:backgroundTint="@color/white"
+            android:text="Fumetti"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/bottoneEsterniCasa"
+            android:layout_width="180dp"
+            android:layout_height="60dp"
+            android:layout_gravity="fill"
+            android:backgroundTint="@color/white"
+            android:text="Esterni casa"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/bottoneSport"
+            android:layout_width="180dp"
+            android:layout_height="60dp"
+            android:layout_gravity="fill"
+            android:backgroundTint="@color/white"
+            android:text="Sport"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/bottoneVestiario"
+            android:layout_width="180dp"
+            android:layout_height="60dp"
+            android:layout_gravity="fill"
+            android:backgroundTint="@color/white"
+            android:text="Vestiario"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/bottoneGioielli"
+            android:layout_width="180dp"
+            android:layout_height="60dp"
+            android:layout_gravity="fill"
+            android:backgroundTint="@color/white"
+            android:text="Gioielli e Accessori"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/bottoneGiocattoli"
+            android:layout_width="180dp"
+            android:layout_height="60dp"
+            android:layout_gravity="fill"
+            android:backgroundTint="@color/white"
+            android:text="Giocattoli"
+            android:textColor="@color/black"
+            android:textSize="20dp"
+            android:textStyle="bold" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/bottoneFotografia"
+            android:layout_width="180dp"
+            android:layout_height="60dp"
+            android:layout_gravity="fill"
+            android:backgroundTint="@color/white"
+            android:text="Fotografia"
+            android:textColor="@color/black"
+            android:textSize="20dp"
+            android:textStyle="bold" />
+
+    </GridLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#9999FF">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/bottoneProseguiInteressiRegistrazione"
+            android:layout_width="130dp"
+            android:layout_height="70dp"
+            android:layout_centerInParent="true"
+            android:backgroundTint="@color/white"
+            android:text="Prosegui"
+            android:textColor="@color/black"
+            android:textSize="20dp"
+            android:textStyle="bold" />
+    </RelativeLayout>
+
+
+</LinearLayout>
