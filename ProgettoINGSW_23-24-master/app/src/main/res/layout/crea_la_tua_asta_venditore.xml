@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/crea_astaVenditore_relativelayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".CreaLaTuaAstaVenditore"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="51dp"
+        android:id="@+id/barraSuperioreCreaAstaVenditore"
+        android:background="#99E8FF" />
+
+
+
+    <TextView
+        android:id="@+id/textViewCreaLaTuaAstaVenditore"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_alignBottom="@+id/barraSuperioreCreaAstaVenditore"
+        android:layout_marginBottom="-1dp"
+        android:gravity="center"
+        android:textSize="35dp"
+        android:textStyle="bold"
+        android:text="Crea la tua Asta" />
+
+
+    <Button
+        android:id="@+id/bottoneTornaIndietroCreaLaTuaAstaVenditore"
+        android:layout_width="60dp"
+        android:layout_height="70dp"
+        android:layout_alignBottom="@id/barraSuperioreCreaAstaVenditore"
+        android:backgroundTint="#99E8FF"
+        android:text="p"
+        android:textColor="@color/black"
+        android:textSize="20dp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/textViewInserireDatiBeneVenditore"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/barraSuperioreCreaAstaVenditore"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="15dp"
+        android:gravity="center"
+        android:text="Inserire dati del bene/servizio"
+        android:textSize="25dp"
+        android:textStyle="bold" />
+
+
+    <EditText
+        android:id="@+id/editTextNomeBeneCreaAstaVenditore"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textViewInserireDatiBeneVenditore"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        android:background="#DCDCDC"
+        android:drawablePadding="15dp"
+        android:hint="Nome"
+        android:gravity="center"
+        android:padding="20dp"
+        />
+
+    <EditText
+        android:id="@+id/editTextDescrizioneCreaAstaVenditore"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        android:layout_below="@id/editTextNomeBeneCreaAstaVenditore"
+        android:background="#DCDCDC"
+        android:drawablePadding="15dp"
+        android:hint="Descrizione:"
+        android:gravity="top|center"
+        android:padding="20dp"
+        />
+
+
+
+    <TextView
+        android:id="@+id/textViewInserisciImmagineVenditore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/editTextDescrizioneCreaAstaVenditore"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="15dp"
+        android:gravity="left"
+        android:text="Inserisci un'immagine:"
+        android:textSize="25dp"
+        android:textStyle="bold" />
+
+    <ImageButton
+        android:id="@+id/imageButtonInserisciImmagineCreaAstaVenditore"
+        android:layout_width="80dp"
+        android:layout_below="@id/editTextDescrizioneCreaAstaVenditore"
+        android:layout_toRightOf="@id/textViewInserisciImmagineVenditore"
+        android:layout_marginTop="15dp"
+        android:layout_height="wrap_content"
+        android:src="@drawable/baseline_add_a_photo_24"
+        android:onClick="onClickMethod" />
+
+
+    <ImageView
+        android:id="@+id/imageViewCreaAstaVenditore"
+        android:layout_width="200dp"
+        android:layout_height="140dp"
+        android:layout_below="@+id/textViewInserisciImmagineVenditore"
+        android:scaleType="fitXY"
+        />
+
+
+
+    <TextView
+        android:id="@+id/textViewTipologiaAstaVenditore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/imageViewCreaAstaVenditore"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="15dp"
+        android:gravity="center"
+        android:text="Seleziona Tipologia Asta:"
+        android:textSize="25dp"
+        android:textStyle="bold" />
+
+    <Spinner
+        android:id="@+id/spinnerTipologiaAstaVenditore"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_below="@id/textViewTipologiaAstaVenditore"
+        android:background="#DCDCDC"
+        />
+
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/bottoneProseguiCreaAstaVenditore"
+        android:layout_width="131dp"
+        android:layout_height="65dp"
+        android:layout_below="@id/spinnerTipologiaAstaVenditore"
+        android:layout_alignParentRight="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="20dp"
+        android:backgroundTint="#DCDCDC"
+        android:text="Prosegui"
+        android:textColor="@color/black"
+        android:textSize="20dp"
+        android:textStyle="bold" />
+
+
+
+
+</RelativeLayout>
