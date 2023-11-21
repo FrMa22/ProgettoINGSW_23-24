@@ -11,10 +11,11 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.example.progettoingsw.controllers_package.Controller;
 import com.google.android.material.navigation.NavigationView;
 
 public class ProfiloActivity extends AppCompatActivity {
-
+    Controller controller;
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle actionBarDrawerToggle;
     private NavigationView navigationView;
@@ -25,6 +26,7 @@ public class ProfiloActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profilo);
 
+        controller = new Controller();
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.navigation_view);
         View headerView = navigationView.getHeaderView(0);
@@ -35,7 +37,6 @@ public class ProfiloActivity extends AppCompatActivity {
 
         actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close);
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
-
 
 
         openDrawerButton.setOnClickListener(new View.OnClickListener() {
@@ -52,17 +53,17 @@ public class ProfiloActivity extends AppCompatActivity {
                 int id = menuItem.getItemId();
 
                 if (id == R.id.nav_home) {
-                    MainActivity.redirectActivity(ProfiloActivity.this, HomeUtente.class);
+                    controller.redirectActivity(ProfiloActivity.this, HomeUtente.class);
                 } else if (id == R.id.nav_profilo) {
-                    if(drawerLayout.isOpen()){
+                    if (drawerLayout.isOpen()) {
                         drawerLayout.closeDrawer(navigationView);
                     }
-                }else if(id==R.id.nav_cliccacategorie){
-                    MainActivity.redirectActivity(ProfiloActivity.this, SelezioneCategorie.class);
-                }else if(id==R.id.nav_about_us){
-                    MainActivity.redirectActivity(ProfiloActivity.this, AboutUs.class);
-                }else if(id==R.id.nav_esci){
-                    MainActivity.redirectActivity(ProfiloActivity.this, MainActivity.class);
+                } else if (id == R.id.nav_cliccacategorie) {
+                    controller.redirectActivity(ProfiloActivity.this, SelezioneCategorie.class);
+                } else if (id == R.id.nav_about_us) {
+                    controller.redirectActivity(ProfiloActivity.this, AboutUs.class);
+                } else if (id == R.id.nav_esci) {
+                    controller.redirectActivity(ProfiloActivity.this, MainActivity.class);
                 }
 
                 return true;

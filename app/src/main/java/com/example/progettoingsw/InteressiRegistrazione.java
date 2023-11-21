@@ -6,15 +6,19 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.progettoingsw.controllers_package.Controller;
 import com.google.android.material.button.MaterialButton;
 
 import java.util.ArrayList;
 
 public class InteressiRegistrazione extends AppCompatActivity {
 
+    Controller controller;
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.interessi_registrazione);
+        controller = new Controller();
 
         MaterialButton bottoneProseguiInteressiRegistrazione= (MaterialButton) findViewById(R.id.bottoneProseguiInteressiRegistrazione);
         ArrayList<String> ElencoInteressiRegistrazione=new ArrayList<String>();
@@ -42,7 +46,7 @@ public class InteressiRegistrazione extends AppCompatActivity {
 
         bottoneProseguiInteressiRegistrazione.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                MainActivity.redirectActivity(InteressiRegistrazione.this, HomeUtente.class);
+                controller.redirectActivity(InteressiRegistrazione.this, HomeUtente.class);
 
             }
         });

@@ -21,11 +21,13 @@ import androidx.constraintlayout.widget.Group;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.example.progettoingsw.controllers_package.Controller;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.navigation.NavigationView;
 
 public class HomeUtente extends AppCompatActivity{
 
+    Controller controller;
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle actionBarDrawerToggle;
     private NavigationView navigationView;
@@ -40,6 +42,8 @@ public class HomeUtente extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home_utente);
+
+        controller = new Controller();
 
         preferitiButton = findViewById(R.id.openPreferiti);
         profiloButton = findViewById(R.id.openProfiloButton);
@@ -67,7 +71,7 @@ public class HomeUtente extends AppCompatActivity{
         preferitiButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                MainActivity.redirectActivity(HomeUtente.this, PreferitiActivity.class);
+                controller.redirectActivity(HomeUtente.this, PreferitiActivity.class);
             }
         });
 
@@ -81,13 +85,15 @@ public class HomeUtente extends AppCompatActivity{
                         drawerLayout.closeDrawer(navigationView);
                     }
                 } else if(id==R.id.nav_cliccacategorie){
-                    MainActivity.redirectActivity(HomeUtente.this, SelezioneCategorie.class);
+                    controller.redirectActivity(HomeUtente.this, SelezioneCategorie.class);
                 }else if(id==R.id.nav_esci){
-                    MainActivity.redirectActivity(HomeUtente.this, MainActivity.class);
+                    controller.redirectActivity(HomeUtente.this, MainActivity.class);
                 }else if (id == R.id.nav_profilo) {
-                    MainActivity.redirectActivity(HomeUtente.this, ProfiloActivity.class);
+                    controller.redirectActivity(HomeUtente.this, ProfiloActivity.class);
                 }else if (id==R.id.nav_about_us){
-                    MainActivity.redirectActivity(HomeUtente.this,AboutUs.class);
+                    controller.redirectActivity(HomeUtente.this,AboutUs.class);
+                }else if (id==R.id.nav_crea_asta){
+                    controller.redirectActivity(HomeUtente.this, CreaLaTuaAstaVenditore.class);
                 }
                 return true;
             }

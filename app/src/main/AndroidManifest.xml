@@ -15,6 +15,9 @@
         android:theme="@style/Theme.ProgettoINGSW"
         tools:targetApi="31">
         <activity
+            android:name=".PopUpRicercaCategorie"
+            android:theme="@style/Base.Theme.ProgettoINGSW.CustomTheme" />
+        <activity
             android:name=".AboutUs"
             android:exported="false" />
         <activity

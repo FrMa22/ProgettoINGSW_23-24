@@ -19,19 +19,33 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.progettoingsw.controllers_package.Controller;
+
 public class CreaLaTuaAstaVenditore extends AppCompatActivity {
 
     String opzioneSelezionata;
     ImageView immagineProdotto;
+    ImageButton back;
+    Controller controller;
     ActivityResultLauncher<Intent> resultLauncher;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.crea_la_tua_asta_venditore);
 
+        controller = new Controller();
 
         immagineProdotto=(ImageView) findViewById(R.id.imageViewCreaAstaVenditore);
         ImageButton bottoneInserisciImmagine=(ImageButton) findViewById(R.id.imageButtonInserisciImmagineCreaAstaVenditore);
+
+
+        back = findViewById(R.id.bottoneTornaIndietroCreaLaTuaAstaVenditore);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                controller.redirectActivity(CreaLaTuaAstaVenditore.this, HomeUtente.class);
+            }
+        });
 
         registraRisultati();
 
