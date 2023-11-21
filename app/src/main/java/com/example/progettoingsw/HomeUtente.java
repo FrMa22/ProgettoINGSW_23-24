@@ -1,30 +1,41 @@
 package com.example.progettoingsw;
 
 import android.app.Activity;
+import android.content.ClipData;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.SubMenu;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.Group;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.example.progettoingsw.controllers_package.Controller;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.navigation.NavigationView;
 
 public class HomeUtente extends AppCompatActivity{
 
+    Controller controller;
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle actionBarDrawerToggle;
     private NavigationView navigationView;
-    private Button openDrawerButton;
+    private ImageButton openDrawerButton;
+    private ImageButton preferitiButton;
+    private ImageButton profiloButton;
+
+
     private Menu menu;
 
     @Override
@@ -32,12 +43,19 @@ public class HomeUtente extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home_utente);
 
+        controller = new Controller();
+
+        preferitiButton = findViewById(R.id.openPreferiti);
+        profiloButton = findViewById(R.id.openProfiloButton);
+
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.navigation_view);
         menu = navigationView.getMenu();
+
         View headerView = navigationView.getHeaderView(0);
+
         TextView headerText = headerView.findViewById(R.id.textViewHeader);
-        headerText.setText("Home");
+
         openDrawerButton = findViewById(R.id.openDrawerButton);
 
         actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close);
@@ -50,6 +68,13 @@ public class HomeUtente extends AppCompatActivity{
             }
         });
 
+        preferitiButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                controller.redirectActivity(HomeUtente.this, PreferitiActivity.class);
+            }
+        });
+
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem menuItem) {
@@ -59,14 +84,17 @@ public class HomeUtente extends AppCompatActivity{
                     if (drawerLayout.isDrawerOpen(navigationView)) {
                         drawerLayout.closeDrawer(navigationView);
                     }
-                } else if (id == R.id.nav_profilo) {
-                    MainActivity.redirectActivity(HomeUtente.this, ProfiloActivity.class);
-                }else if (id == R.id.nav_expandable) {
-                    // Aggiungi o rimuovi elementi dinamicamente
-                    handleExpandableItemClick();
-                    return true;
+                } else if(id==R.id.nav_cliccacategorie){
+                    controller.redirectActivity(HomeUtente.this, SelezioneCategorie.class);
+                }else if(id==R.id.nav_esci){
+                    controller.redirectActivity(HomeUtente.this, MainActivity.class);
+                }else if (id == R.id.nav_profilo) {
+                    controller.redirectActivity(HomeUtente.this, ProfiloActivity.class);
+                }else if (id==R.id.nav_about_us){
+                    controller.redirectActivity(HomeUtente.this,AboutUs.class);
+                }else if (id==R.id.nav_crea_asta){
+                    controller.redirectActivity(HomeUtente.this, CreaLaTuaAstaVenditore.class);
                 }
-
                 return true;
             }
         });
@@ -95,18 +123,11 @@ public class HomeUtente extends AppCompatActivity{
         actionBarDrawerToggle.onConfigurationChanged(newConfig);
 
     }
-    private void handleExpandableItemClick() {
-        MenuItem expandableItem = menu.findItem(R.id.nav_expandable);
-        SubMenu subMenu = expandableItem.getSubMenu();
 
-        // Se il sottomenu è attualmente visibile, lo nascondi
-        if (subMenu.size() > 0) {
-            subMenu.clear();
-        } else {
-            // Altrimenti, aggiungi gli elementi del sottomenu
-            subMenu.add("Elemento 1").setIcon(R.drawable.ic_emoticon);
-            subMenu.add("Elemento 2").setIcon(R.drawable.ic_emoticon);
-        }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.drawer_menu, menu);
+        return true;
     }
 
 }

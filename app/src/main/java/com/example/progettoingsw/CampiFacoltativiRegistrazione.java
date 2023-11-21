@@ -12,16 +12,20 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.progettoingsw.controllers_package.Controller;
 import com.google.android.material.button.MaterialButton;
 
 import java.util.ArrayList;
 
 public class CampiFacoltativiRegistrazione  extends AppCompatActivity {
 
+    Controller controller;
     String opzioneSelezionata;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.campi_facoltativi_registrazione);
+
+        controller = new Controller();
 
         MaterialButton bottoneAnnulla = (MaterialButton) findViewById(R.id.bottoneAnnullaRegistrazione);
         MaterialButton bottoneSocial = (MaterialButton) findViewById(R.id.bottoneSocialRegistrazione);
@@ -32,9 +36,7 @@ public class CampiFacoltativiRegistrazione  extends AppCompatActivity {
 
         bottoneAnnulla.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                //torna alla schermata precedente
-                Intent intent = new Intent(CampiFacoltativiRegistrazione.this, PopUpLogin.class);
-                startActivity(intent);
+                controller.redirectActivity(CampiFacoltativiRegistrazione.this, PopUpLogin.class);
             }
         });
 
@@ -105,7 +107,7 @@ public class CampiFacoltativiRegistrazione  extends AppCompatActivity {
 
         bottoneProseguiRegistrazione.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                MainActivity.redirectActivity(CampiFacoltativiRegistrazione.this, InteressiRegistrazione.class);
+                controller.redirectActivity(CampiFacoltativiRegistrazione.this, InteressiRegistrazione.class);
 
             }
         });

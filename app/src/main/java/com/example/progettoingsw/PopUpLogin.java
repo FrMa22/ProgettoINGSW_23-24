@@ -6,13 +6,17 @@ import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.progettoingsw.controllers_package.Controller;
 import com.google.android.material.button.MaterialButton;
 
 public class PopUpLogin extends AppCompatActivity {
+    Controller controller;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.pop_up_login);
+
+        controller = new Controller();
 
         DisplayMetrics metricaDisplay = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(metricaDisplay);
@@ -24,7 +28,7 @@ public class PopUpLogin extends AppCompatActivity {
         bottoneAcquirente.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 //apre schermata registrazione
-                MainActivity.redirectActivity(PopUpLogin.this, HomeUtente.class);
+                controller.redirectActivity(PopUpLogin.this, HomeUtente.class);
             }
         });
 

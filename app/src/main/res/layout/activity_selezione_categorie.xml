@@ -37,118 +37,61 @@
 
         </androidx.appcompat.widget.Toolbar>
 
-        <GridLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
             android:orientation="vertical">
 
-            <LinearLayout
+            <CheckBox
+                android:id="@+id/radiobutton_arte"
+                android:layout_width="350dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layoutDirection="rtl"
+                android:drawableLeft="@drawable/ic_pennello_arte"
+                android:text="Arte"
+                android:textAlignment="center"
+                android:textSize="28sp"
+                android:textStyle="bold"
+                android:button="@drawable/ic_checkbox"/>
+
+            <CheckBox
+                android:id="@+id/radiobutton_elettrodomestici"
+                android:layout_width="350dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layoutDirection="rtl"
+                android:drawableLeft="@drawable/ic_lavatrice"
+                android:text="Elettrodomestici"
+                android:textAlignment="center"
+                android:textSize="28sp"
+                android:textStyle="bold"
+                android:button="@drawable/ic_checkbox"/>
+
+            <CheckBox
+                android:id="@+id/radiobutton_automobili"
+                android:layout_width="350dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layoutDirection="rtl"
+                android:drawableLeft="@drawable/ic_car"
+                android:text="Automobili"
+                android:textAlignment="center"
+                android:textSize="28sp"
+                android:textStyle="bold"
+                android:button="@drawable/ic_checkbox"/>
+
+            <Button
+                android:id="@+id/textview_lista_elementi"
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
+                android:layout_height="wrap_content"
+                android:textSize="30sp"
+                android:textColor="@color/black"
+                android:backgroundTint="#FFCCCC"/>
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:src="@drawable/ic_pennello_arte" />
+        </LinearLayout>
 
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="30dp"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="ARTE"
-                    android:textColor="@color/black"
-                    android:textSize="30sp"
-                    android:textStyle="bold" />
-
-                <ImageButton
-                    android:id="@+id/button_selection_arte"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="@android:color/transparent"
-                    android:contentDescription="Premi per selezionare."
-                    android:src="@drawable/ic_radio_button_unclicked" />
-
-            </LinearLayout>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="10dp" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:src="@drawable/ic_lavatrice" />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="30dp"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="ELETTRODOMESTICI"
-                    android:textColor="@color/black"
-                    android:textSize="26sp"
-                    android:textStyle="bold" />
-
-                <ImageButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="@android:color/transparent"
-                    android:contentDescription="Premi per selezionare."
-                    android:src="@drawable/ic_radio_button_unclicked" />
-
-            </LinearLayout>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="10dp" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:src="@drawable/ic_car" />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="30dp"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="AUTOMOBILI"
-                    android:textColor="@color/black"
-                    android:textSize="30sp"
-                    android:textStyle="bold" />
-
-                <ImageButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="@android:color/transparent"
-                    android:contentDescription="Premi per selezionare."
-                    android:src="@drawable/ic_radio_button_unclicked" />
-
-            </LinearLayout>
-
-        </GridLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -156,13 +99,15 @@
             android:background="#00F0FF">
 
             <Button
+                android:id="@+id/buttonCerca"
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="10dp"
                 android:text="Cerca"
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                android:contentDescription="Premi per procedere nella ricerca."/>
         </RelativeLayout>
 
     </LinearLayout>

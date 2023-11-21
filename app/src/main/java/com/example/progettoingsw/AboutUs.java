@@ -10,11 +10,12 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.example.progettoingsw.controllers_package.Controller;
 import com.google.android.material.navigation.NavigationView;
 
 public class AboutUs extends AppCompatActivity {
 
-
+    Controller controller;
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle actionBarDrawerToggle;
     private NavigationView navigationView;
@@ -24,6 +25,8 @@ public class AboutUs extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about_us);
+
+        controller = new Controller();
 
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.navigation_view);
@@ -51,17 +54,17 @@ public class AboutUs extends AppCompatActivity {
                 int id = menuItem.getItemId();
 
                 if (id == R.id.nav_home) {
-                    MainActivity.redirectActivity(AboutUs.this, HomeUtente.class);
+                    controller.redirectActivity(AboutUs.this, HomeUtente.class);
                 } else if (id == R.id.nav_profilo) {
-                    MainActivity.redirectActivity(AboutUs.this, ProfiloActivity.class);
+                    controller.redirectActivity(AboutUs.this, ProfiloActivity.class);
                 } else if (id == R.id.nav_cliccacategorie) {
-                    MainActivity.redirectActivity(AboutUs.this, SelezioneCategorie.class);
+                    controller.redirectActivity(AboutUs.this, SelezioneCategorie.class);
                 } else if (id == R.id.nav_about_us) {
                     if (drawerLayout.isOpen()) {
                         drawerLayout.closeDrawer(navigationView);
                     }
                 } else if (id == R.id.nav_esci) {
-                    MainActivity.redirectActivity(AboutUs.this, MainActivity.class);
+                    controller.redirectActivity(AboutUs.this, MainActivity.class);
                 }
 
                 return true;
