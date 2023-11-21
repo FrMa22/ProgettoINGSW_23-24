@@ -31,13 +31,13 @@ public class MainActivity extends AppCompatActivity {
         registrazione.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 //apre schermata registrazione
-                redirectActivity(MainActivity.this, Registrazione.class);
+                redirectActivity(MainActivity.this, PopUpLogin.class);
             }
         });
 
         bottoneLogin.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, PopUpLogin.class);
+                Intent intent = new Intent(MainActivity.this, AstaRibasso.class);
                 startActivity(intent);
 
             }

@@ -22,34 +22,28 @@
             </intent-filter>
         </activity>
         <activity android:name=".PopUpLogin"
-            android:theme="@style/Base.Theme.ProgettoINGSW.CustomTheme"/>
-        <activity android:name=".HomeUtente"/>
-        <activity android:name=".ProfiloActivity"/>
-        <activity android:name=".Registrazione"/>
-
-
+            android:theme="@style/Base.Theme.ProgettoINGSW.CustomTheme"
+            android:exported="true"/>
+        <activity android:name=".HomeUtente"
+            android:exported="true" />
+        <activity android:name=".ProfiloActivity"
+            android:exported="true" />
+        <activity android:name=".Registrazione"
+            android:exported="true" />
+        <activity android:name=".AstaInversa"
+            android:exported="true" />
+        <activity android:name=".AstaRibasso"
+            android:exported="true" />
+        <activity android:name=".AstaInglese"
+            android:exported="true" />
 
         <activity
             android:name=".CampiFacoltativiRegistrazione"
-            android:exported="true">
-
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-
-
-        </activity>
-
-
+            android:exported="true"/>
 
         <activity
             android:name=".InteressiRegistrazione"
-            android:exported="true">
-
-        </activity>
-
+            android:exported="true"/>
 
     </application>
 
