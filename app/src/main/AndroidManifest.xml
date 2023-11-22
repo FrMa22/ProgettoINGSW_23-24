@@ -73,6 +73,14 @@
             android:exported="true" />
 
 
+        <activity
+            android:name=".ProfiloAcquirente"
+            android:exported="true" />
+
+        <activity
+            android:name=".ProfiloVenditore"
+            android:exported="true" />
+
     </application>
 
 </manifest>
