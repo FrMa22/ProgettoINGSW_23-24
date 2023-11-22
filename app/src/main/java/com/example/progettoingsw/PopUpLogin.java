@@ -28,7 +28,7 @@ public class PopUpLogin extends AppCompatActivity {
         bottoneAcquirente.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 //apre schermata registrazione
-                controller.redirectActivity(PopUpLogin.this, HomeUtente.class);
+                Controller.redirectActivity(PopUpLogin.this, HomeUtente.class);
             }
         });
 

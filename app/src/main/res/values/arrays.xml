@@ -4,4 +4,13 @@
         <item> Acquirente </item>
         <item> Venditore </item>
     </string-array>
+
+    <string-array name="elencoTipiAstaVenditore">
+        <item>Asta all\'inglese</item>
+        <item>Asta al ribasso</item>
+    </string-array>
+
+    <string-array name="elencoTipiAstaAcquirente">
+        <item>Asta inversa</item>
+    </string-array>
 </resources>

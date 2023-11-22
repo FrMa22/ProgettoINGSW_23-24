@@ -71,7 +71,7 @@ public class HomeUtente extends AppCompatActivity{
         preferitiButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                controller.redirectActivity(HomeUtente.this, PreferitiActivity.class);
+                Controller.redirectActivity(HomeUtente.this, PreferitiActivity.class);
             }
         });
 
@@ -85,15 +85,15 @@ public class HomeUtente extends AppCompatActivity{
                         drawerLayout.closeDrawer(navigationView);
                     }
                 } else if(id==R.id.nav_cliccacategorie){
-                    controller.redirectActivity(HomeUtente.this, SelezioneCategorie.class);
+                    Controller.redirectActivity(HomeUtente.this, SelezioneCategorie.class);
                 }else if(id==R.id.nav_esci){
-                    controller.redirectActivity(HomeUtente.this, MainActivity.class);
+                    Controller.redirectActivity(HomeUtente.this, MainActivity.class);
                 }else if (id == R.id.nav_profilo) {
-                    controller.redirectActivity(HomeUtente.this, ProfiloActivity.class);
+                    Controller.redirectActivity(HomeUtente.this, ProfiloActivity.class);
                 }else if (id==R.id.nav_about_us){
-                    controller.redirectActivity(HomeUtente.this,AboutUs.class);
+                    Controller.redirectActivity(HomeUtente.this,AboutUs.class);
                 }else if (id==R.id.nav_crea_asta){
-                    controller.redirectActivity(HomeUtente.this, CreaLaTuaAstaVenditore.class);
+                    Controller.redirectActivity(HomeUtente.this, CreaLaTuaAstaVenditore.class);
                 }
                 return true;
             }

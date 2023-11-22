@@ -148,8 +148,8 @@
 
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/bottoneProseguiCreaAstaVenditore"
-        android:layout_width="131dp"
+        android:id="@+id/bottoneProsegui"
+        android:layout_width="130dp"
         android:layout_height="65dp"
         android:layout_below="@id/spinnerTipologiaAstaVenditore"
         android:layout_alignParentRight="true"
@@ -162,7 +162,7 @@
         android:backgroundTint="#DCDCDC"
         android:text="Prosegui"
         android:textColor="@color/black"
-        android:textSize="20dp"
+        android:textSize="20sp"
         android:textStyle="bold" />
 
 

@@ -25,13 +25,14 @@
                 android:layout_height="80dp"
                 android:background="#00F0FF">
 
-                <Button
+                <ImageButton
                     android:id="@+id/openDrawerButton"
                     android:layout_width="50dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="start"
                     android:layout_marginLeft="-30dp"
-                    android:background="@drawable/ic_menu"
+                    android:src="@drawable/ic_menu"
+                    android:backgroundTint="@android:color/transparent"
                     android:contentDescription="Clicca per aprire il menu." />
 
                 <EditText
@@ -46,25 +47,25 @@
                     android:singleLine="true"
                     android:textColor="@color/black"
                     android:textSize="30sp"
-
                     />
 
-                <Button
+                <ImageButton
                     android:id="@+id/openPreferiti"
                     android:layout_width="50dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
-                    android:background="@drawable/ic_favourite"
+                    android:src="@drawable/ic_favourite"
+                    android:backgroundTint="@android:color/transparent"
                     android:contentDescription="Clicca per aprire i preferiti."
                     android:drawableTint="@android:color/transparent" />
 
-                <Button
+                <ImageButton
                     android:id="@+id/openProfiloButton"
-                    android:layout_width="50dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
-                    android:background="@drawable/ic_profilo"
-                    android:backgroundTint="#00F0FF"
+                    android:src="@drawable/ic_profilo"
+                    android:backgroundTint="@android:color/transparent"
                     android:contentDescription="Clicca per aprire il profilo." />
 
             </androidx.appcompat.widget.Toolbar>

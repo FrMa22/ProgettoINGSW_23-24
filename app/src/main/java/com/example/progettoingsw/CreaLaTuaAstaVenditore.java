@@ -20,12 +20,15 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.progettoingsw.controllers_package.Controller;
+import com.google.android.material.button.MaterialButton;
 
 public class CreaLaTuaAstaVenditore extends AppCompatActivity {
-
+    public int selezione_asta=0;
     String opzioneSelezionata;
     ImageView immagineProdotto;
     ImageButton back;
+
+    MaterialButton bottone_prosegui;
     Controller controller;
     ActivityResultLauncher<Intent> resultLauncher;
     @Override
@@ -34,6 +37,7 @@ public class CreaLaTuaAstaVenditore extends AppCompatActivity {
         setContentView(R.layout.crea_la_tua_asta_venditore);
 
         controller = new Controller();
+        bottone_prosegui=findViewById(R.id.bottoneProsegui);
 
         immagineProdotto=(ImageView) findViewById(R.id.imageViewCreaAstaVenditore);
         ImageButton bottoneInserisciImmagine=(ImageButton) findViewById(R.id.imageButtonInserisciImmagineCreaAstaVenditore);
@@ -62,6 +66,14 @@ public class CreaLaTuaAstaVenditore extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 //fa qualcosa se si è selezionato qualcosa
                 opzioneSelezionata=parent.getItemAtPosition(position).toString();
+
+                if(opzioneSelezionata.equals("Asta all\'inglese")){
+                    selezione_asta=0;
+                    Toast.makeText(getApplicationContext(), "Asta inglese", Toast.LENGTH_SHORT).show();
+                }if(opzioneSelezionata.equals("Asta al ribasso")){
+                    selezione_asta=1;
+                    Toast.makeText(getApplicationContext(), "Asta al ribasso", Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override
@@ -70,6 +82,17 @@ public class CreaLaTuaAstaVenditore extends AppCompatActivity {
             }
         });
 
+        bottone_prosegui.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(selezione_asta==0){
+                    Controller.redirectActivity(CreaLaTuaAstaVenditore.this, AstaInglese.class);
+                }
+                else if(selezione_asta==1){
+                    Controller.redirectActivity(CreaLaTuaAstaVenditore.this, AstaRibasso.class);
+                }
+            }
+        });
 
     }
 

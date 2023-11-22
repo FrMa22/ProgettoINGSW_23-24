@@ -88,7 +88,7 @@ public class CampiFacoltativiRegistrazione  extends AppCompatActivity {
                         String usernameSocialRegistrazione=editTextUsernameRegistrazioneSocial.getText().toString();
                          String profiloSocialRegistrazione="https://www."+ opzioneSelezionata+".com/"+usernameSocialRegistrazione;
                         ElencoSocialRegistrazione.add(profiloSocialRegistrazione);
-                        Toast.makeText(getApplicationContext(),"Social Aggiunto correttamente!",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(),"Social Aggiunto correttamente!" + profiloSocialRegistrazione,Toast.LENGTH_SHORT).show();
                     }
                 });
 

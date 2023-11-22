@@ -1,6 +1,5 @@
 package com.example.progettoingsw;
 
-import static com.example.progettoingsw.MainActivity.redirectActivity;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
@@ -14,12 +13,14 @@ import android.widget.TimePicker;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.progettoingsw.controllers_package.Controller;
 import com.google.android.material.button.MaterialButton;
 
 import java.util.Date;
 
 public class AstaInversa extends AppCompatActivity {
 
+    Controller controller;
     MaterialButton bottoneData;
     MaterialButton bottoneOra;
 
@@ -27,6 +28,8 @@ public class AstaInversa extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.asta_inversa);
+
+        controller = new Controller();
 
         MaterialButton bottoneConferma = (MaterialButton) findViewById(R.id.bottoneConfermaAstaInversa);
         MaterialButton bottoneBack = (MaterialButton) findViewById(R.id.bottoneBackAstaInversa);
@@ -51,7 +54,7 @@ public class AstaInversa extends AppCompatActivity {
 
         bottoneConferma.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                redirectActivity(AstaInversa.this, HomeUtente.class);
+                controller.redirectActivity(AstaInversa.this, HomeUtente.class);
             }
         });
 
