@@ -15,6 +15,9 @@
         android:theme="@style/Theme.ProgettoINGSW"
         tools:targetApi="31">
         <activity
+            android:name=".PopUpModificaCampoProfilo"
+            android:theme="@style/Base.Theme.ProgettoINGSW.CustomThemeSfocato" />
+        <activity
             android:name=".PopUpRicercaCategorie"
             android:theme="@style/Base.Theme.ProgettoINGSW.CustomTheme" />
         <activity
@@ -48,20 +51,15 @@
         <activity
             android:name=".CampiFacoltativiRegistrazione"
             android:exported="true" />
-
         <activity
             android:name=".InteressiRegistrazione"
             android:exported="true" />
-
         <activity
             android:name=".CreaLaTuaAstaVenditore"
             android:exported="true" />
-
-
         <activity
             android:name=".CreaLaTuaAstaAcquirente"
             android:exported="true" />
-
         <activity
             android:name=".AstaInglese"
             android:exported="true" />
@@ -71,8 +69,6 @@
         <activity
             android:name=".AstaInversa"
             android:exported="true" />
-
-
     </application>
 
 </manifest>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/gridview_item_layout">
+
+    <TextView
+        android:id="@+id/textViewLeft"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:text="Label:"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:gravity="center"
+        android:padding="8dp"/>
+
+    <EditText
+        android:id="@+id/editTextRight"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:padding="8dp"
+        android:focusable="false"
+        android:text="Value"
+        android:textSize="20sp"
+        android:gravity="center"/>
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/buttonModifica"
+        android:src="@drawable/ic_edit"
+        android:contentDescription="Premi per modificare"
+        android:backgroundTint="@android:color/transparent"
+        />
+
+</LinearLayout>

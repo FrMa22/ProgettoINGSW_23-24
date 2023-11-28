@@ -14,8 +14,15 @@
     <style name="Base.Theme.ProgettoINGSW.CustomTheme">
         <item name="android:windowIsTranslucent"> true </item>
         <item name="android:windowCloseOnTouchOutside">true</item>
-
     </style>
+    <style name="Base.Theme.ProgettoINGSW.CustomThemeSfocato">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowCloseOnTouchOutside">true</item>
+        <item name="android:windowContentOverlay">@android:color/transparent</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:backgroundDimAmount">0.5</item> <!-- Imposta il livello di sfocatura (da 0 a 1) -->
+    </style>
+
 
 </resources>
 

@@ -33,5 +33,33 @@
         <item>Linkedin</item>
     </string-array>
 
+    <string-array name="array_elenco_campi_profilo">
+        <item>Nome</item>
+        <item>Cognome</item>
+        <item>Email</item>
+        <item>SitoWeb</item>
+    </string-array>
+
+    <string-array name="array_elenco_dati_profilo_provvisorio">
+        <item>Dati di prova</item>
+        <item>Esposito</item>
+        <item>espositociro@gmail.com</item>
+        <item>tutto_ciò_verrà_sostituito_da_db.com</item>
+    </string-array>
+
+    <string-array name="array_elenco_social_nomi_profilo">
+        <item>Instagram</item>
+        <item>Facebook</item>
+        <item>X</item>
+        <item>Linkedin</item>
+    </string-array>
+
+    <string-array name="array_elenco_social_links_profilo">
+        <item>instagram.com/Utente</item>
+        <item>Facebook.com/Utente</item>
+        <item>X.com/Utente</item>
+        <item>Linkedin.com/Utente</item>
+    </string-array>
+
 
 </resources>

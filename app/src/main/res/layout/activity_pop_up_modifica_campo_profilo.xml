@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="300dp"
+    android:layout_height="350dp"
+    android:layout_gravity="center"
+    tools:context=".PopUpModificaCampoProfilo"
+    android:orientation="vertical"
+    android:background="@drawable/bordo_colorato_blu"
+    >
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textview_titolo"
+        android:text="Modifica *nome campo*"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        android:gravity="center"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:id="@+id/textview_campo_nome"
+        android:text="Valore attuale di *nome campo*: "
+        android:textSize="17sp"
+        android:layout_marginLeft="15dp"/>
+
+
+    <TextView
+        android:layout_width="270dp"
+        android:layout_height="70dp"
+        android:layout_gravity="center"
+        android:id="@+id/textview_valore_attuale"
+        android:hint="Qui c'è il valore attuale del campo"
+        android:gravity="center"
+        android:background="@drawable/bordo_colorato_blu"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Nuovo valore: "
+        android:textSize="17sp"
+        android:layout_marginLeft="15dp"/>
+
+    <EditText
+        android:layout_width="270dp"
+        android:layout_height="70dp"
+        android:id="@+id/edittext_valore_modificato"
+        android:layout_gravity="center"
+        android:background="@drawable/bordo_colorato_blu"
+        android:hint="Nuovo valore"
+        android:textSize="12sp"
+        android:gravity="center"
+        tools:ignore="TouchTargetSizeCheck" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="25dp"
+        >
+        <Button
+            android:layout_width="120dp"
+            android:layout_height="50dp"
+            android:id="@+id/button_annulla_modifica"
+            android:text="Annulla"
+            android:textSize="16sp"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:layout_marginLeft="15dp"
+            android:backgroundTint="#00F0FF"
+            android:layout_alignParentStart="true"/>
+
+        <Button
+            android:layout_width="120dp"
+            android:layout_height="50dp"
+            android:id="@+id/button_conferma_modifica"
+            android:text="Conferma"
+            android:textSize="16sp"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:layout_marginRight="10dp"
+            android:backgroundTint="#00F0FF"
+            android:layout_alignParentEnd="true"/>
+
+    </RelativeLayout>
+
+
+
+
+</LinearLayout>

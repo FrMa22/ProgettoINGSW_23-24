@@ -2,6 +2,7 @@ package com.example.progettoingsw;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,10 +24,10 @@ public class InteressiRegistrazione extends AppCompatActivity {
         MaterialButton bottoneProseguiInteressiRegistrazione= (MaterialButton) findViewById(R.id.bottoneProseguiInteressiRegistrazione);
         ArrayList<String> ElencoInteressiRegistrazione=new ArrayList<String>();
 
-        MaterialButton bottoneArte=(MaterialButton) findViewById(R.id.bottoneArte);
-        MaterialButton bottoneElettrodomestici=(MaterialButton) findViewById(R.id.bottoneElettrodomestici);
-        MaterialButton bottoneAutomobili=(MaterialButton) findViewById(R.id.bottoneAutomobili);
-        MaterialButton bottoneMoto=(MaterialButton) findViewById(R.id.bottoneMoto);
+        CheckBox bottoneArte= findViewById(R.id.bottoneArte);
+        CheckBox bottoneElettrodomestici=findViewById(R.id.bottoneElettrodomestici);
+        CheckBox bottoneAutomobili= findViewById(R.id.bottoneAutomobili);
+        CheckBox bottoneMoto= findViewById(R.id.bottoneMoto);
         MaterialButton bottoneAutoEpoca=(MaterialButton) findViewById(R.id.bottoneAutoEpoca);
         MaterialButton bottoneMotoEpoca=(MaterialButton) findViewById(R.id.bottoneMotoEpoca);
         MaterialButton bottoneTelefonia=(MaterialButton) findViewById(R.id.bottoneTelefonia);

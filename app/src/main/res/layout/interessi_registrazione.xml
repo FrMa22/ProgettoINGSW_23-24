@@ -4,81 +4,95 @@
     android:id="@+id/interessi_registrazione_relativelayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#99E8FF"
+    android:background="@color/white"
     android:orientation="vertical"
     tools:context=".InteressiRegistrazione">
 
     <TextView
         android:id="@+id/textViewRaccontaciDeiTuoiInteressi"
         android:layout_width="match_parent"
-        android:layout_height="75dp"
-        android:background="#9999FF"
+        android:layout_height="80dp"
+        android:background="#00F0FF"
         android:gravity="center"
         android:text="Raccontaci dei tuoi interessi selezionando tra le seguenti categorie"
         android:textSize="22dp"
         android:textStyle="bold" />
 
-
-    <GridLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:columnCount="2"
-        android:rowCount="9"
-        android:useDefaultMargins="true"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:background="@color/white"
         >
 
-
-        <com.google.android.material.button.MaterialButton
+        <CheckBox
             android:id="@+id/bottoneArte"
-            android:layout_width="180dp"
+            android:layout_width="370dp"
             android:layout_height="60dp"
-            android:layout_gravity="fill"
-            android:backgroundTint="@color/white"
+            android:layout_marginTop="10dp"
+            android:layout_gravity="center"
+            android:layoutDirection="rtl"
+            android:backgroundTint="#00F0FF"
             android:text="Arte"
+            android:textAlignment="center"
             android:textColor="@color/black"
-            android:textSize="20sp"
-            android:textStyle="bold"/>
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:drawableLeft="@drawable/ic_arte"/>
 
-        <com.google.android.material.button.MaterialButton
+        <CheckBox
             android:id="@+id/bottoneElettrodomestici"
-            android:layout_width="180dp"
+            android:layout_width="370dp"
             android:layout_height="60dp"
-            android:layout_gravity="fill"
-            android:backgroundTint="@color/white"
+            android:layout_marginTop="10dp"
+            android:layoutDirection="rtl"
+            android:layout_gravity="center"
+            android:backgroundTint="#00F0FF"
             android:text="Elettrodomestici"
+            android:textAlignment="center"
             android:textColor="@color/black"
-            android:textSize="16sp"
-            android:textStyle="bold" />
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:drawableLeft="@drawable/ic_elettrodomestici"/>
 
 
-        <com.google.android.material.button.MaterialButton
+        <CheckBox
             android:id="@+id/bottoneAutomobili"
-            android:layout_width="180dp"
+            android:layout_width="370dp"
             android:layout_height="60dp"
-            android:layout_gravity="fill"
-            android:backgroundTint="@color/white"
+            android:layoutDirection="rtl"
+            android:layout_gravity="center"
+            android:backgroundTint="#00F0FF"
             android:text="Automobili"
+            android:textAlignment="center"
             android:textColor="@color/black"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:layout_marginTop="10dp"
+            android:drawableLeft="@drawable/ic_car"/>
 
-        <com.google.android.material.button.MaterialButton
+        <CheckBox
             android:id="@+id/bottoneMoto"
-            android:layout_width="180dp"
+            android:layout_width="370dp"
             android:layout_height="60dp"
-            android:layout_gravity="fill"
-            android:backgroundTint="@color/white"
+            android:layoutDirection="rtl"
+            android:layout_gravity="center"
+            android:backgroundTint="#00F0FF"
             android:text="Moto"
             android:textColor="@color/black"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            android:textSize="30sp"
+            android:textAlignment="center"
+            android:textStyle="bold"
+            android:layout_marginTop="10dp"
+            android:drawableLeft="@drawable/ic_motorcycle"/>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/bottoneAutoEpoca"
             android:layout_width="180dp"
             android:layout_height="60dp"
             android:layout_gravity="fill"
-            android:backgroundTint="@color/white"
+            android:backgroundTint="#00F0FF"
             android:text="Auto d'epoca"
             android:textColor="@color/black"
             android:textSize="20sp"
@@ -90,7 +104,7 @@
             android:layout_width="180dp"
             android:layout_height="60dp"
             android:layout_gravity="fill"
-            android:backgroundTint="@color/white"
+            android:backgroundTint="#00F0FF"
             android:text="Moto d'epoca"
             android:textColor="@color/black"
             android:textSize="20sp"
@@ -101,7 +115,7 @@
             android:layout_width="180dp"
             android:layout_height="60dp"
             android:layout_gravity="fill"
-            android:backgroundTint="@color/white"
+            android:backgroundTint="#00F0FF"
             android:text="Telefonia"
             android:textColor="@color/black"
             android:textSize="20sp"
@@ -113,7 +127,7 @@
             android:layout_width="180dp"
             android:layout_height="60dp"
             android:layout_gravity="fill"
-            android:backgroundTint="@color/white"
+            android:backgroundTint="#00F0FF"
             android:text="Computer"
             android:textColor="@color/black"
             android:textSize="20sp"
@@ -125,7 +139,7 @@
             android:layout_width="180dp"
             android:layout_height="60dp"
             android:layout_gravity="fill"
-            android:backgroundTint="@color/white"
+            android:backgroundTint="#00F0FF"
             android:text="Musica"
             android:textColor="@color/black"
             android:textSize="20sp"
@@ -137,7 +151,7 @@
             android:layout_width="180dp"
             android:layout_height="60dp"
             android:layout_gravity="fill"
-            android:backgroundTint="@color/white"
+            android:backgroundTint="#00F0FF"
             android:text="Libri"
             android:textColor="@color/black"
             android:textSize="20sp"
@@ -149,7 +163,7 @@
             android:layout_width="180dp"
             android:layout_height="60dp"
             android:layout_gravity="fill"
-            android:backgroundTint="@color/white"
+            android:backgroundTint="#00F0FF"
             android:text="Arredamento casa"
             android:textColor="@color/black"
             android:textSize="17sp"
@@ -160,7 +174,7 @@
             android:layout_width="180dp"
             android:layout_height="60dp"
             android:layout_gravity="fill"
-            android:backgroundTint="@color/white"
+            android:backgroundTint="#00F0FF"
             android:text="Fumetti"
             android:textColor="@color/black"
             android:textSize="20sp"
@@ -172,7 +186,7 @@
             android:layout_width="180dp"
             android:layout_height="60dp"
             android:layout_gravity="fill"
-            android:backgroundTint="@color/white"
+            android:backgroundTint="#00F0FF"
             android:text="Esterni casa"
             android:textColor="@color/black"
             android:textSize="20sp"
@@ -184,7 +198,7 @@
             android:layout_width="180dp"
             android:layout_height="60dp"
             android:layout_gravity="fill"
-            android:backgroundTint="@color/white"
+            android:backgroundTint="#00F0FF"
             android:text="Sport"
             android:textColor="@color/black"
             android:textSize="20sp"
@@ -195,7 +209,7 @@
             android:layout_width="180dp"
             android:layout_height="60dp"
             android:layout_gravity="fill"
-            android:backgroundTint="@color/white"
+            android:backgroundTint="#00F0FF"
             android:text="Vestiario"
             android:textColor="@color/black"
             android:textSize="20sp"
@@ -207,7 +221,7 @@
             android:layout_width="180dp"
             android:layout_height="60dp"
             android:layout_gravity="fill"
-            android:backgroundTint="@color/white"
+            android:backgroundTint="#00F0FF"
             android:text="Gioielli e Accessori"
             android:textColor="@color/black"
             android:textSize="16sp"
@@ -218,7 +232,7 @@
             android:layout_width="180dp"
             android:layout_height="60dp"
             android:layout_gravity="fill"
-            android:backgroundTint="@color/white"
+            android:backgroundTint="#00F0FF"
             android:text="Giocattoli"
             android:textColor="@color/black"
             android:textSize="20dp"
@@ -229,24 +243,23 @@
             android:layout_width="180dp"
             android:layout_height="60dp"
             android:layout_gravity="fill"
-            android:backgroundTint="@color/white"
+            android:backgroundTint="#00F0FF"
             android:text="Fotografia"
             android:textColor="@color/black"
             android:textSize="20dp"
             android:textStyle="bold" />
 
-    </GridLayout>
-
+    </LinearLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#9999FF">
+        android:layout_height="80dp"
+        android:background="#00F0FF">
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/bottoneProseguiInteressiRegistrazione"
             android:layout_width="130dp"
-            android:layout_height="70dp"
+            android:layout_height="60dp"
             android:layout_centerInParent="true"
             android:backgroundTint="@color/white"
             android:text="Prosegui"
