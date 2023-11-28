@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="300dp"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@color/material_dynamic_tertiary95">
+
+    <TextView
+        android:id="@+id/textViewTitoloAsta"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:background="#99E8FF"
+        android:layout_marginBottom="-1dp"
+        android:gravity="center"
+        android:textSize="35dp"
+        android:textStyle="bold"
+        android:text="Accetta offerta"/>
+
+    <TextView
+        android:id="@+id/TextViewOffertaAsta"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="11dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        android:background="@color/white"
+        android:gravity="center"
+       android:textSize="20dp"
+        android:text="150€"
+        android:padding="15dp" />
+    <RelativeLayout
+        android:layout_width="300dp"
+        android:layout_height="80dp">
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/bottoneConfermaPopUpAsta"
+            android:layout_width="140dp"
+            android:layout_height="59dp"
+            android:layout_marginLeft="156dp"
+            android:backgroundTint="#FFFFFF"
+            android:text="Conferma"
+            android:textColor="@color/black"
+            android:textSize="20dp"
+            android:textStyle="bold" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/bottoneAnnullaPopUpAsta"
+            android:layout_width="140dp"
+            android:layout_height="59dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="150dp"
+            android:backgroundTint="#FFFFFF"
+            android:text="Annulla"
+            android:textColor="@color/black"
+            android:textSize="20dp"
+            android:textStyle="bold" />
+    </RelativeLayout>
+</LinearLayout>

@@ -84,6 +84,15 @@
             android:name=".ProfiloVenditore"
             android:exported="true" />
 
+        <activity
+            android:name=".SchermataAstaInglese"
+            android:exported="true" />
+        <activity
+            android:name=".SchermataAstaInversa"
+            android:exported="true" />
+        <activity
+            android:name=".SchermataAstaRibasso"
+            android:exported="true" />
     </application>
 
 </manifest>
