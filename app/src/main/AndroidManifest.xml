@@ -51,15 +51,20 @@
         <activity
             android:name=".CampiFacoltativiRegistrazione"
             android:exported="true" />
+
         <activity
             android:name=".InteressiRegistrazione"
             android:exported="true" />
+
         <activity
             android:name=".CreaLaTuaAstaVenditore"
             android:exported="true" />
+
+
         <activity
             android:name=".CreaLaTuaAstaAcquirente"
             android:exported="true" />
+
         <activity
             android:name=".AstaInglese"
             android:exported="true" />
@@ -69,6 +74,16 @@
         <activity
             android:name=".AstaInversa"
             android:exported="true" />
+
+
+        <activity
+            android:name=".ProfiloAcquirente"
+            android:exported="true" />
+
+        <activity
+            android:name=".ProfiloVenditore"
+            android:exported="true" />
+
     </application>
 
 </manifest>

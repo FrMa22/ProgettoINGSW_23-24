@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/profilo_acquirente_relativelayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ProfiloVenditore"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="51dp"
+        android:id="@+id/barraSuperioreProfiloVenditore"
+        android:background="#99E8FF" />
+
+
+
+    <TextView
+        android:id="@+id/textViewProfiloVenditore"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_alignBottom="@+id/barraSuperioreProfiloVenditore"
+        android:layout_marginBottom="10dp"
+        android:gravity="center"
+        android:textSize="35dp"
+        android:textStyle="bold"
+        android:text="Venditore" />
+
+
+    <ImageButton
+        android:id="@+id/bottoneTornaIndietroProfiloVenditore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/barraSuperioreProfiloVenditore"
+        android:src="@drawable/ic_back_arrow"
+        android:backgroundTint="@android:color/transparent"
+        android:text=""
+        android:contentDescription="Clicca per tornare indietro"
+        android:textColor="@color/black"
+        android:textSize="20dp"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/linearLayoutProfiloVenditore"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/barraSuperioreProfiloVenditore"
+        android:orientation="vertical"
+        android:background="#C0C0C0">
+
+        <TextView
+            android:id="@+id/textViewNomeProfiloVenditore"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginBottom="15dp"
+            android:text="Nome:"
+            android:textSize="25dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textViewCognomeProfiloVenditore"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginBottom="15dp"
+            android:text="Cognome:"
+            android:textSize="25dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textViewIndirizzoEmailProfiloVenditore"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginBottom="15dp"
+            android:text="Indirizzo email:"
+            android:textSize="25dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textViewSitoWebProfiloVenditore"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginBottom="15dp"
+            android:text="Sito web:"
+            android:textSize="25dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textViewAreaGeograficaProfiloVenditore"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginBottom="15dp"
+            android:text="Area geografica:"
+            android:textSize="25dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textViewSocialProfiloVenditore"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginBottom="15dp"
+            android:text="Social:"
+            android:textSize="25dp"
+            android:textStyle="bold" />
+
+
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:columnCount="2"
+            android:useDefaultMargins="true"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="NomeProva"
+                android:textSize="20dp"
+                android:layout_marginEnd="16dp"
+                android:layout_columnSpan="1" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="LinkProva"
+                android:textSize="20dp"
+                android:layout_columnSpan="1" />
+
+
+        </GridLayout>
+
+
+    </LinearLayout>
+
+
+
+
+    <TextView
+        android:id="@+id/textViewBioProfiloVenditore"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/linearLayoutProfiloVenditore"
+        android:layout_marginBottom="-45dp"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:background="#C0C0C0"
+        android:text="Bio:"
+        />
+
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/bottoneStoricoAsteProfiloVenditore"
+        android:layout_width="wrap_content"
+        android:layout_height="44dp"
+        android:layout_below="@id/textViewBioProfiloVenditore"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="60dp"
+        android:backgroundTint="#C0C0C0"
+        android:text="Storico Aste"
+        android:textColor="@color/black"
+        android:textSize="20dp"
+        android:textStyle="bold" />
+
+
+    <TextView
+        android:id="@+id/textViewAsteAttiveProfiloVenditore"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/bottoneStoricoAsteProfiloVenditore"
+        android:layout_marginBottom="-50dp"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:text="Aste attive:"
+        />
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textViewAsteAttiveProfiloVenditore"
+        android:layout_marginTop="50dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="250dp"
+                    android:layout_height="80dp"
+                    android:contentDescription="Immagine"
+                    android:src="@drawable/sfondoprova" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="-5dp"
+                    android:text="Varie info sul prodotto"
+                    android:textSize="20sp" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="250dp"
+                    android:layout_height="80dp"
+                    android:contentDescription="Immagine"
+                    android:src="@drawable/sfondoprova" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="-5dp"
+                    android:text="Varie info sul prodotto"
+                    android:textSize="20sp" />
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+    </HorizontalScrollView>
+
+
+</RelativeLayout>
