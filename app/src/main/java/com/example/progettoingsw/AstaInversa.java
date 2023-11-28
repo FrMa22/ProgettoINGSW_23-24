@@ -58,11 +58,11 @@ public class AstaInversa extends AppCompatActivity {
             }
         });
 
-       /* bottoneBack.setOnClickListener(new View.OnClickListener() {
+        bottoneBack.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                redirectActivity(AstaInglese.this, ???.class);
+               controller.redirectActivity(AstaInversa.this, CreaLaTuaAstaVenditore.class);
             }
-        }); */
+        });
     }
 
 

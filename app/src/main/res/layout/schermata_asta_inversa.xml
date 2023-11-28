@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/relativeLayoutSchermataAstaInversa"
+    android:background="#FFFFFF"
+    tools:context=".HomeUtente">  <!-- da cambiare-->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/textViewTitoloSchermataAstaInversa"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:layout_marginBottom="-1dp"
+                android:gravity="center"
+                android:textSize="35dp"
+                android:textStyle="bold"
+                android:text="Prodotto richiesto"
+                android:background="#99E8FF"/>
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/bottoneBackSchermataAstaInversa"
+                android:layout_width="60dp"
+                android:layout_height="80dp"
+                android:backgroundTint="#99E8FF"
+                android:hint="@string/navigation_drawer_close"
+                android:drawableLeft="@drawable/baseline_arrow_back_ios_24"
+                />
+
+            <ImageView
+                android:id="@+id/ImageViewSchermataAstaInversa"
+                android:layout_width="380dp"
+                android:layout_height="150dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_below="@id/textViewTitoloSchermataAstaInversa"
+                android:layout_marginTop="15dp"
+                android:src="@drawable/sfondoprova"/>
+
+            <ImageButton
+                android:id="@+id/SeguiSchermataAstaInversa"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="345dp"
+                android:layout_marginTop="100dp"
+                android:layout_below="@id/textViewTitoloSchermataAstaInversa"
+                android:src="@drawable/baseline_favorite_border_24"
+                android:backgroundTint="@android:color/transparent"
+                android:contentDescription="Clicca per aggiungere ai preferiti."
+                android:drawableTint="@android:color/transparent" />
+
+
+            <TextView
+                android:id="@+id/textViewNomeProdottoSchermataAstaInversa"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginBottom="-1dp"
+                android:gravity="center"
+                android:textSize="23dp"
+                android:textStyle="bold"
+                android:text="Nome prodotto/servizio richiesto"
+                android:layout_below="@id/ImageViewSchermataAstaInversa"
+                android:layout_marginTop="10dp"
+                android:background="#FFFFFF"
+                />
+
+            <TextView
+                android:id="@+id/textViewDescrizioneSchermataAstaInversa"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:gravity="center"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:text="Descrizione Prodotto"
+                android:background="#DCDCDC"
+                android:layout_below="@id/textViewNomeProdottoSchermataAstaInversa"/>
+
+            <TextView
+                android:id="@+id/textViewOffertaAttualeSchermataAstaInversa"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginBottom="-1dp"
+                android:textSize="23dp"
+                android:textStyle="bold"
+                android:text="  Offerta attuale: 150€"
+                android:layout_below="@id/textViewDescrizioneSchermataAstaInversa"
+
+                android:background="#FFFFFF"
+                />
+
+            <TextView
+                android:id="@+id/textViewTempoRimanenteSchermataAstaInversa"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginBottom="-1dp"
+                android:textSize="23dp"
+                android:textStyle="bold"
+                android:text="  Tempo rimanente: 12:45:36"
+                android:layout_below="@id/textViewOffertaAttualeSchermataAstaInversa"
+                android:background="#FFFFFF"
+                />
+
+            <ImageButton
+                android:id="@+id/bottoneOffertaSchermataAstaInversa"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginLeft="300dp"
+                android:background="@drawable/round_button"
+                android:contentDescription="offerta nuova"
+                android:layout_below="@id/textViewTempoRimanenteSchermataAstaInversa"
+                android:src="@drawable/baseline_add_24"
+                />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/bottoneProfiloAcquirenteSchermataAstaInversa"
+                android:layout_width="230dp"
+                android:layout_height="48dp"
+                android:backgroundTint="#FFFFFF"
+                android:hint="bottone acquirente"
+                android:layout_below="@id/textViewTempoRimanenteSchermataAstaInversa"
+                />
+
+
+            <TextView
+                android:id="@+id/textViewAcquirenteSchermataAstaInversa"
+                android:layout_width="230dp"
+                android:layout_height="48dp"
+                android:layout_marginBottom="-1dp"
+                android:textSize="23dp"
+                android:textStyle="bold"
+                android:drawableLeft="@drawable/ic_profilo"
+                android:text="Nome Acquirente"
+                android:layout_below="@id/textViewTempoRimanenteSchermataAstaInversa"
+                android:background="#FFFFFF"
+                android:gravity="center"
+                />
+
+
+            <TextView
+                android:id="@+id/textViewAltreRichiesteSchermataAstaInversa"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Altre richieste"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                android:layout_below="@id/bottoneProfiloAcquirenteSchermataAstaInversa"/>
+
+            <TextView
+                android:id="@+id/TextViewLineaSchermataAstaInversa"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/black"
+                android:paddingTop="5dp"
+                android:layout_below="@id/textViewAltreRichiesteSchermataAstaInversa"/>
+
+
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/TextViewLineaSchermataAstaInversa">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="250dp"
+                            android:layout_height="170dp"
+                            android:contentDescription="Immagine"
+                            android:src="@drawable/sfondoprova" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginTop="-5dp"
+                            android:text="Nome Prodotto"
+                            android:textSize="20sp" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginTop="-1dp"
+                            android:text="Offerta attuale"
+                            android:textSize="20sp" />
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="250dp"
+                            android:layout_height="170dp"
+                            android:contentDescription="Immagine"
+                            android:src="@drawable/sfondoprova" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginTop="-5dp"
+                            android:text="Nome Prodotto"
+                            android:textSize="20sp" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginTop="-1dp"
+                            android:text="Offerta attuale"
+                            android:textSize="20sp" />
+
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+
+            </HorizontalScrollView>
+            <TextView
+                android:id="@+id/TextViewLineaFinaleSchermataAstaInversa"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginTop="240dp"
+                android:background="@color/black"
+                android:paddingTop="5dp"
+                android:layout_below="@id/textViewAltreRichiesteSchermataAstaInversa"/>
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+</RelativeLayout>
