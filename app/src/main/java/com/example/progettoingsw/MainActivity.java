@@ -14,6 +14,7 @@ import com.google.android.material.button.MaterialButton;
 
 public class MainActivity extends AppCompatActivity {
 
+    Button bottone;
     Controller controller;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,17 +28,24 @@ public class MainActivity extends AppCompatActivity {
         MaterialButton bottoneLogin = (MaterialButton) findViewById(R.id.bottonelogin);
 
 
-        registrazione.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                //apre schermata registrazione
-                controller.redirectActivity(MainActivity.this, Registrazione.class);
-            }
+        registrazione.setOnClickListener(v -> {
+            //apre schermata registrazione
+            controller.redirectActivity(MainActivity.this, Registrazione.class);
         });
 
         bottoneLogin.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 controller.redirectActivity(MainActivity.this, PopUpLogin.class);
 
+            }
+        });
+
+
+        bottone = findViewById(R.id.button);
+        bottone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Controller.redirectActivity(MainActivity.this, SchermataAstaInglese.class);
             }
         });
 
