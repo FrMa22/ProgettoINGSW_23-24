@@ -93,6 +93,14 @@
         <activity
             android:name=".SchermataAstaRibasso"
             android:exported="true" />
+
+
+
+        <activity
+            android:name=".LeMieAste"
+            android:exported="true" />
+
+
     </application>
 
 </manifest>
