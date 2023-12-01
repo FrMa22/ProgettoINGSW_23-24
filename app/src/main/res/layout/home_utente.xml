@@ -36,6 +36,7 @@
                     android:contentDescription="Clicca per aprire il menu." />
 
                 <EditText
+                    android:id="@+id/edittext_ricerca"
                     android:layout_width="220dp"
                     android:layout_height="50dp"
                     android:layout_marginLeft="50dp"

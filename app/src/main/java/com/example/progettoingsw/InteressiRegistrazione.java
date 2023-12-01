@@ -28,20 +28,21 @@ public class InteressiRegistrazione extends AppCompatActivity {
         CheckBox bottoneElettrodomestici=findViewById(R.id.bottoneElettrodomestici);
         CheckBox bottoneAutomobili= findViewById(R.id.bottoneAutomobili);
         CheckBox bottoneMoto= findViewById(R.id.bottoneMoto);
-        MaterialButton bottoneAutoEpoca=(MaterialButton) findViewById(R.id.bottoneAutoEpoca);
-        MaterialButton bottoneMotoEpoca=(MaterialButton) findViewById(R.id.bottoneMotoEpoca);
-        MaterialButton bottoneTelefonia=(MaterialButton) findViewById(R.id.bottoneTelefonia);
-        MaterialButton bottoneComputer=(MaterialButton) findViewById(R.id.bottoneComputer);
-        MaterialButton bottoneMusica=(MaterialButton) findViewById(R.id.bottoneMusica);
-        MaterialButton bottoneLibri=(MaterialButton) findViewById(R.id.bottoneLibri);
-        MaterialButton bottoneArredamentoCasa=(MaterialButton) findViewById(R.id.bottoneArredamentoCasa);
-        MaterialButton bottoneFumetti=(MaterialButton) findViewById(R.id.bottoneFumetti);
-        MaterialButton bottoneEsterniCasa=(MaterialButton) findViewById(R.id.bottoneEsterniCasa);
-        MaterialButton bottoneSport=(MaterialButton) findViewById(R.id.bottoneSport);
-        MaterialButton bottoneVestiario=(MaterialButton) findViewById(R.id.bottoneVestiario);
-        MaterialButton bottoneGioielli=(MaterialButton) findViewById(R.id.bottoneGioielli);
-        MaterialButton bottoneGiocattoli=(MaterialButton) findViewById(R.id.bottoneGiocattoli);
-        MaterialButton bottoneFotografia=(MaterialButton) findViewById(R.id.bottoneFotografia);
+        CheckBox bottoneAutoEpoca= findViewById(R.id.bottoneAutoEpoca);
+        CheckBox bottoneMotoEpoca=findViewById(R.id.bottoneMotoEpoca);
+        CheckBox bottoneTelefonia= findViewById(R.id.bottoneTelefonia);
+        CheckBox bottoneComputer= findViewById(R.id.bottoneComputer);
+        CheckBox bottoneMusica= findViewById(R.id.bottoneMusica);
+
+        CheckBox bottoneLibri= findViewById(R.id.bottoneLibri);
+        CheckBox bottoneArredamentoCasa= findViewById(R.id.bottoneArredamentoCasa);
+        CheckBox bottoneFumetti= findViewById(R.id.bottoneFumetti);
+        CheckBox bottoneEsterniCasa= findViewById(R.id.bottoneEsterniCasa);
+        CheckBox bottoneSport= findViewById(R.id.bottoneSport);
+        CheckBox bottoneVestiario= findViewById(R.id.bottoneVestiario);
+        CheckBox bottoneGioielli= findViewById(R.id.bottoneGioielli);
+        CheckBox bottoneGiocattoli= findViewById(R.id.bottoneGiocattoli);
+        CheckBox bottoneFotografia= findViewById(R.id.bottoneFotografia);
 
 
 

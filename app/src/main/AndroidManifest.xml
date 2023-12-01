@@ -15,6 +15,12 @@
         android:theme="@style/Theme.ProgettoINGSW"
         tools:targetApi="31">
         <activity
+            android:name=".PopUpFiltroRicerca"
+            android:theme="@style/Base.Theme.ProgettoINGSW.CustomThemeSfocato" />
+        <activity
+            android:name=".RicercaAstaActivity"
+            android:exported="false" />
+        <activity
             android:name=".PopUpModificaCampoProfilo"
             android:theme="@style/Base.Theme.ProgettoINGSW.CustomThemeSfocato" />
         <activity
@@ -40,7 +46,7 @@
         </activity>
         <activity
             android:name=".PopUpLogin"
-            android:theme="@style/Base.Theme.ProgettoINGSW.CustomTheme" />
+            android:theme="@style/Base.Theme.ProgettoINGSW.CustomThemeSfocato" />
         <activity
             android:name=".HomeUtente"
             android:exported="true" />
@@ -51,20 +57,15 @@
         <activity
             android:name=".CampiFacoltativiRegistrazione"
             android:exported="true" />
-
         <activity
             android:name=".InteressiRegistrazione"
             android:exported="true" />
-
         <activity
             android:name=".CreaLaTuaAstaVenditore"
             android:exported="true" />
-
-
         <activity
             android:name=".CreaLaTuaAstaAcquirente"
             android:exported="true" />
-
         <activity
             android:name=".AstaInglese"
             android:exported="true" />
@@ -74,16 +75,12 @@
         <activity
             android:name=".AstaInversa"
             android:exported="true" />
-
-
         <activity
             android:name=".ProfiloAcquirente"
             android:exported="true" />
-
         <activity
             android:name=".ProfiloVenditore"
             android:exported="true" />
-
         <activity
             android:name=".SchermataAstaInglese"
             android:exported="true" />

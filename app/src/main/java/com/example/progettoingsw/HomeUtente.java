@@ -6,14 +6,18 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.SubMenu;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.view.KeyEvent;
+import android.view.inputmethod.EditorInfo;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,16 +29,17 @@ import com.example.progettoingsw.controllers_package.Controller;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.navigation.NavigationView;
 
+import java.util.ArrayList;
+
 public class HomeUtente extends AppCompatActivity{
 
-    Controller controller;
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle actionBarDrawerToggle;
     private NavigationView navigationView;
     private ImageButton openDrawerButton;
     private ImageButton preferitiButton;
     private ImageButton profiloButton;
-
+    private EditText ricerca;
 
     private Menu menu;
 
@@ -42,8 +47,6 @@ public class HomeUtente extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home_utente);
-
-        controller = new Controller();
 
         preferitiButton = findViewById(R.id.openPreferiti);
         profiloButton = findViewById(R.id.openProfiloButton);
@@ -60,6 +63,25 @@ public class HomeUtente extends AppCompatActivity{
 
         actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close);
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
+
+        ricerca = findViewById(R.id.edittext_ricerca);
+        ricerca.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
+                if (actionId == EditorInfo.IME_ACTION_DONE || actionId == EditorInfo.IME_NULL) {
+                    String inputText = ricerca.getText().toString();
+
+                    if (!inputText.isEmpty()) {
+
+                        Intent intent = new Intent(HomeUtente.this, RicercaAstaActivity.class);
+                        intent.putExtra("valoreRicercato", inputText);
+                        startActivity(intent);
+                    }
+                    return true;
+                }
+                return false;
+            }
+        });
 
         openDrawerButton.setOnClickListener(new View.OnClickListener() {
             @Override
