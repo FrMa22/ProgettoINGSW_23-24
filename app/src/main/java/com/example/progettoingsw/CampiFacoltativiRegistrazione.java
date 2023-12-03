@@ -40,60 +40,19 @@ public class CampiFacoltativiRegistrazione  extends AppCompatActivity {
             }
         });
 
+
+
+
         bottoneSocial.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                //apre elenco social inseribili
-               Dialog popupSocialRegistrazioneDialog=new Dialog(CampiFacoltativiRegistrazione.this);
-
-               //imposta il layout del popup
-               popupSocialRegistrazioneDialog.setContentView(R.layout.pop_up_registrazione_social);
-                //mostra il popup
-                popupSocialRegistrazioneDialog.show();
-               //Riferimenti ai widget all'interno del pop up(quindi qui si opera come una normale activity)
-                MaterialButton bottoneChiudiRegistrazioneSocial=(MaterialButton) popupSocialRegistrazioneDialog.findViewById(R.id.bottoneChiudiRegistrazioneSocial);
-                MaterialButton bottoneConfermaRegistrazioneSocial=(MaterialButton) popupSocialRegistrazioneDialog.findViewById(R.id.bottoneConfermaRegistrazioneSocial);
-                EditText editTextUsernameRegistrazioneSocial=(EditText) popupSocialRegistrazioneDialog.findViewById(R.id.editTextUsernameRegistrazioneSocial);
-
-
-                Spinner spinnerRegistrazioneSocial=(Spinner) popupSocialRegistrazioneDialog.findViewById(R.id.spinner_social_registrazione);
-                ArrayAdapter<CharSequence> adapterSpinnerRegistrazioneSocial=(ArrayAdapter<CharSequence>) ArrayAdapter.createFromResource(CampiFacoltativiRegistrazione.this,R.array.elencoSocialRegistrazione, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item);
-                adapterSpinnerRegistrazioneSocial.setDropDownViewResource(androidx.appcompat.R.layout.support_simple_spinner_dropdown_item);
-                spinnerRegistrazioneSocial.setAdapter(adapterSpinnerRegistrazioneSocial);
-
-                spinnerRegistrazioneSocial.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                    @Override
-                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                        //fa qualcosa se si è selezionato qualcosa
-                          opzioneSelezionata=parent.getItemAtPosition(position).toString();
-                    }
-
-                    @Override
-                    public void onNothingSelected(AdapterView<?> parent) {
-                        //non fa nulla
-                    }
-                });
-
-                //azione bottonechiudiregistrazionesocial
-                bottoneChiudiRegistrazioneSocial.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        popupSocialRegistrazioneDialog.dismiss();
-                    }
-                });//
-
-
-                bottoneConfermaRegistrazioneSocial.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        String usernameSocialRegistrazione=editTextUsernameRegistrazioneSocial.getText().toString();
-                         String profiloSocialRegistrazione="https://www."+ opzioneSelezionata+".com/"+usernameSocialRegistrazione;
-                        ElencoSocialRegistrazione.add(profiloSocialRegistrazione);
-                        Toast.makeText(getApplicationContext(),"Social Aggiunto correttamente!" + profiloSocialRegistrazione,Toast.LENGTH_SHORT).show();
-                    }
-                });
-
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(CampiFacoltativiRegistrazione.this, PopUpRegistrazioneSocial.class);
+                startActivity(intent);
             }
-        });//fine pulsante social
+        });
+
+
+
 
 
         bottoneSitoWeb.setOnClickListener(new View.OnClickListener() {

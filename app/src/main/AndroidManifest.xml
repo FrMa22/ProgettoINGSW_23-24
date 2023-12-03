@@ -100,6 +100,10 @@
             android:name=".LeMieAste"
             android:exported="true" />
 
+        <activity
+            android:name=".PopUpRegistrazioneSocial"
+            android:exported="true" />
+
 
     </application>
 
