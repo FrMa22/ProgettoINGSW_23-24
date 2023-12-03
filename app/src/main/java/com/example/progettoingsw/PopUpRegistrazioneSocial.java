@@ -2,6 +2,8 @@ package com.example.progettoingsw;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -27,6 +29,17 @@ public class PopUpRegistrazioneSocial extends AppCompatActivity {
         setContentView(R.layout.pop_up_registrazione_social);
 
         controller = new Controller();
+
+
+
+        DisplayMetrics metricaDisplay = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(metricaDisplay);
+        int width = metricaDisplay.widthPixels;
+        int height = metricaDisplay.heightPixels;
+        int offsetY = (int) (height * 0.15);
+        getWindow().setLayout((int) (width * .763), (int) (height * .4475));
+        getWindow().setGravity(Gravity.CENTER);
+        getWindow().getAttributes().y = offsetY;
 
 
 
