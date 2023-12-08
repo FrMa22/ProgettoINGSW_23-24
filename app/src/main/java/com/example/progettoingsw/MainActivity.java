@@ -3,7 +3,10 @@ package com.example.progettoingsw;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -36,7 +39,14 @@ public class MainActivity extends AppCompatActivity {
         bottoneLogin.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 controller.redirectActivity(MainActivity.this, PopUpLogin.class);
-
+                /*Dialog dialog = new Dialog(MainActivity.this);
+                // Imposta il layout personalizzato per il popup
+                dialog.setContentView(R.layout.pop_up_login);
+                // Imposta uno sfondo trasparente con opacità al 50%
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                dialog.getWindow().setDimAmount(0.75f); // Imposta il livello di opacità
+                // Mostra il dialog
+                dialog.show();*/
             }
         });
 
@@ -45,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
         bottone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Controller.redirectActivity(MainActivity.this, SchermataAstaInglese.class);
+                Controller.redirectActivity(MainActivity.this, SchermataAstaInversa.class);
             }
         });
 

@@ -5,7 +5,7 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ProfiloActivity">
+    tools:context=".SelezioneCategorie">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -16,7 +16,7 @@
         <androidx.appcompat.widget.Toolbar
             android:layout_width="match_parent"
             android:layout_height="80dp"
-            android:background="#00F0FF">
+            android:background="@color/toolbar_color">
 
             <ImageButton
                 android:id="@+id/openDrawerButton"
@@ -37,50 +37,299 @@
 
         </androidx.appcompat.widget.Toolbar>
 
-        <LinearLayout
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_weight="1">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <CheckBox
-                android:id="@+id/radiobutton_arte"
-                android:layout_width="350dp"
-                android:layout_height="wrap_content"
+                android:id="@+id/bottoneArte"
+                android:layout_width="370dp"
+                android:layout_height="60dp"
                 android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:backgroundTint="#00F0FF"
+                android:drawableLeft="@drawable/ic_arte"
                 android:layoutDirection="rtl"
-                android:drawableLeft="@drawable/ic_pennello_arte"
                 android:text="Arte"
                 android:textAlignment="center"
-                android:textSize="28sp"
-                android:textStyle="bold"
-                android:button="@drawable/ic_checkbox"/>
+                android:textColor="@color/black"
+                android:textSize="30sp"
+                android:textStyle="bold" />
 
             <CheckBox
-                android:id="@+id/radiobutton_elettrodomestici"
-                android:layout_width="350dp"
-                android:layout_height="wrap_content"
+                android:id="@+id/bottoneElettrodomestici"
+                android:layout_width="370dp"
+                android:layout_height="60dp"
                 android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:backgroundTint="#00F0FF"
+                android:drawableLeft="@drawable/ic_elettrodomestici"
                 android:layoutDirection="rtl"
-                android:drawableLeft="@drawable/ic_lavatrice"
                 android:text="Elettrodomestici"
                 android:textAlignment="center"
-                android:textSize="28sp"
-                android:textStyle="bold"
-                android:button="@drawable/ic_checkbox"/>
+                android:textColor="@color/black"
+                android:textSize="30sp"
+                android:textStyle="bold" />
 
             <CheckBox
-                android:id="@+id/radiobutton_automobili"
-                android:layout_width="350dp"
-                android:layout_height="wrap_content"
+                android:id="@+id/bottoneAutomobili"
+                android:layout_width="370dp"
+                android:layout_height="60dp"
                 android:layout_gravity="center"
-                android:layoutDirection="rtl"
+                android:layout_marginTop="10dp"
+                android:backgroundTint="#00F0FF"
                 android:drawableLeft="@drawable/ic_car"
+                android:layoutDirection="rtl"
                 android:text="Automobili"
                 android:textAlignment="center"
-                android:textSize="28sp"
-                android:textStyle="bold"
-                android:button="@drawable/ic_checkbox"/>
+                android:textColor="@color/black"
+                android:textSize="30sp"
+                android:textStyle="bold" />
+
+            <CheckBox
+                android:id="@+id/bottoneMoto"
+                android:layout_width="370dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:backgroundTint="#00F0FF"
+                android:drawableLeft="@drawable/ic_motorcycle"
+                android:layoutDirection="rtl"
+                android:text="Moto"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="30sp"
+                android:textStyle="bold" />
+
+            <CheckBox
+                android:id="@+id/bottoneAutoEpoca"
+                android:layout_width="370dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:backgroundTint="#00F0FF"
+                android:drawableLeft="@drawable/ic_auto_epoca"
+                android:layoutDirection="rtl"
+                android:paddingLeft="10dp"
+                android:text="Auto d'epoca"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="30sp"
+                android:textStyle="bold" />
+
+            <CheckBox
+                android:id="@+id/bottoneMotoEpoca"
+                android:layout_width="370dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:backgroundTint="#00F0FF"
+                android:drawableLeft="@drawable/ic_moto_epoca"
+                android:layoutDirection="rtl"
+                android:paddingLeft="10dp"
+                android:text="Moto d'epoca"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="30sp"
+                android:textStyle="bold" />
+
+            <CheckBox
+                android:id="@+id/bottoneTelefonia"
+                android:layout_width="370dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:backgroundTint="#00F0FF"
+                android:drawableLeft="@drawable/ic_smartphone"
+                android:layoutDirection="rtl"
+                android:paddingLeft="10dp"
+                android:text="Telefonia"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="30sp"
+                android:textStyle="bold" />
+
+            <CheckBox
+                android:id="@+id/bottoneComputer"
+                android:layout_width="370dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:backgroundTint="#00F0FF"
+                android:drawableLeft="@drawable/ic_computer"
+                android:layoutDirection="rtl"
+                android:paddingLeft="10dp"
+                android:text="Computer"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="30sp"
+                android:textStyle="bold" />
+
+            <CheckBox
+                android:id="@+id/bottoneMusica"
+                android:layout_width="370dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:backgroundTint="#00F0FF"
+                android:drawableLeft="@drawable/ic_music"
+                android:layoutDirection="rtl"
+                android:paddingLeft="10dp"
+                android:text="Musica"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="30sp"
+                android:textStyle="bold" />
+
+            <CheckBox
+                android:id="@+id/bottoneLibri"
+                android:layout_width="370dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:backgroundTint="#00F0FF"
+                android:drawableLeft="@drawable/ic_libri"
+                android:layoutDirection="rtl"
+                android:paddingLeft="10dp"
+                android:text="Libri"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="30sp"
+                android:textStyle="bold" />
+
+            <CheckBox
+                android:id="@+id/bottoneArredamentoCasa"
+                android:layout_width="370dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:backgroundTint="#00F0FF"
+                android:drawableLeft="@drawable/ic_arredamento"
+                android:layoutDirection="rtl"
+                android:paddingLeft="10dp"
+                android:text="Arredamento casa"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="30sp"
+                android:textStyle="bold" />
+
+            <CheckBox
+                android:id="@+id/bottoneFumetti"
+                android:layout_width="370dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:backgroundTint="#00F0FF"
+                android:drawableLeft="@drawable/ic_fumetti"
+                android:layoutDirection="rtl"
+                android:paddingLeft="10dp"
+                android:text="Fumetti"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="30sp"
+                android:textStyle="bold" />
+
+            <CheckBox
+                android:id="@+id/bottoneEsterniCasa"
+                android:layout_width="370dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:backgroundTint="#00F0FF"
+                android:drawableLeft="@drawable/ic_arredamento_esterni"
+                android:layoutDirection="rtl"
+                android:paddingLeft="10dp"
+                android:text="Esterni casa"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="30sp"
+                android:textStyle="bold" />
+
+            <CheckBox
+                android:id="@+id/bottoneSport"
+                android:layout_width="370dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:backgroundTint="#00F0FF"
+                android:drawableLeft="@drawable/ic_sport_palloni"
+                android:layoutDirection="rtl"
+                android:paddingLeft="10dp"
+                android:text="Sport"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="30sp"
+                android:textStyle="bold" />
+
+            <CheckBox
+                android:id="@+id/bottoneVestiario"
+                android:layout_width="370dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:backgroundTint="#00F0FF"
+                android:drawableLeft="@drawable/ic_vestiario"
+                android:layoutDirection="rtl"
+                android:paddingLeft="10dp"
+                android:text="Vestiario"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="30sp"
+                android:textStyle="bold" />
+
+            <CheckBox
+                android:id="@+id/bottoneGioielli"
+                android:layout_width="370dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:backgroundTint="#00F0FF"
+                android:drawableLeft="@drawable/ic_gioielli"
+                android:layoutDirection="rtl"
+                android:text="Gioielli e Accessori"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="30sp"
+                android:textStyle="bold" />
+
+            <CheckBox
+                android:id="@+id/bottoneGiocattoli"
+                android:layout_width="370dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:backgroundTint="#00F0FF"
+                android:drawableLeft="@drawable/ic_giocattoli"
+                android:layoutDirection="rtl"
+                android:paddingLeft="10dp"
+                android:text="Giocattoli"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="30sp"
+                android:textStyle="bold" />
+
+            <CheckBox
+                android:id="@+id/bottoneFotografia"
+                android:layout_width="370dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:backgroundTint="#00F0FF"
+                android:drawableLeft="@drawable/ic_fotografia"
+                android:layoutDirection="rtl"
+                android:paddingLeft="10dp"
+                android:text="Fotografia"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="30sp"
+                android:textStyle="bold" />
 
             <Button
                 android:id="@+id/textview_lista_elementi"
@@ -92,6 +341,7 @@
 
         </LinearLayout>
 
+        </ScrollView>
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -102,15 +352,14 @@
                 android:id="@+id/buttonCerca"
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="10dp"
+                android:layout_centerInParent="true"
                 android:text="Cerca"
                 android:textSize="20sp"
                 android:contentDescription="Premi per procedere nella ricerca."/>
         </RelativeLayout>
 
     </LinearLayout>
+
 
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/navigation_view"

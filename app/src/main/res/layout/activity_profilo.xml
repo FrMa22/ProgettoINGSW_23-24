@@ -19,7 +19,7 @@
             <androidx.appcompat.widget.Toolbar
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
-                android:background="#00F0FF">
+                android:background="@color/toolbar_color">
 
                 <ImageButton
                     android:id="@+id/openDrawerButton"

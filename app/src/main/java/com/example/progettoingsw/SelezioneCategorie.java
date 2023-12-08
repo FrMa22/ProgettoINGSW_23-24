@@ -56,7 +56,7 @@ public class SelezioneCategorie extends AppCompatActivity {
 
         elementi_selezionati = findViewById(R.id.textview_lista_elementi);
 
-        button_arte = findViewById(R.id.radiobutton_arte);
+        button_arte = findViewById(R.id.bottoneArte);
         button_arte.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                                                    @Override
                                                    public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
@@ -74,7 +74,7 @@ public class SelezioneCategorie extends AppCompatActivity {
                                                }
         );
 
-        button_elettrodomestici = findViewById(R.id.radiobutton_elettrodomestici);
+        button_elettrodomestici = findViewById(R.id.bottoneElettrodomestici);
         button_elettrodomestici.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                                                    @Override
                                                    public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
@@ -91,7 +91,7 @@ public class SelezioneCategorie extends AppCompatActivity {
                                                    }
                                                }
         );
-        button_automobile = findViewById(R.id.radiobutton_automobili);
+        button_automobile = findViewById(R.id.bottoneAutomobili);
         button_automobile.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                                                    @Override
                                                    public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {

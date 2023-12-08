@@ -2,7 +2,7 @@
 <resources>
 
     <style name="RoundedBorders">
-        <item name="android:background">@drawable/rounded_background</item>
+        <item name="android:background">@drawable/bordi_blu_senza_riempimento</item>
     </style>
 
     <style name="TransparentActivity" parent="Theme.AppCompat.Light.NoActionBar">

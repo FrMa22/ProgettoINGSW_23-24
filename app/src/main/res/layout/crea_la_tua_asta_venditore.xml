@@ -10,35 +10,32 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="51dp"
+        android:layout_height="80dp"
         android:id="@+id/barraSuperioreCreaAstaVenditore"
-        android:background="#99E8FF" />
+        android:background="@color/toolbar_color" />
 
 
 
     <TextView
         android:id="@+id/textViewCreaLaTuaAstaVenditore"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="80dp"
         android:layout_alignBottom="@+id/barraSuperioreCreaAstaVenditore"
         android:layout_marginBottom="-1dp"
         android:gravity="center"
-        android:textSize="35dp"
+        android:textSize="35sp"
+        android:textColor="@color/black"
         android:textStyle="bold"
         android:text="Crea la tua Asta" />
 
     <ImageButton
         android:id="@+id/bottoneTornaIndietroCreaLaTuaAstaVenditore"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="80dp"
         android:layout_alignBottom="@id/barraSuperioreCreaAstaVenditore"
         android:src="@drawable/ic_back_arrow"
         android:backgroundTint="@android:color/transparent"
-        android:text=""
-        android:contentDescription="Clicca per tornare indietro"
-        android:textColor="@color/black"
-        android:textSize="20sp"
-        android:textStyle="bold" />
+        android:contentDescription="Clicca per tornare indietro"/>
 
     <TextView
         android:id="@+id/textViewInserireDatiBeneVenditore"

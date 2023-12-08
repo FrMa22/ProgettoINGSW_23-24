@@ -121,6 +121,7 @@
             android:orientation="vertical"
             >
             <TextView
+                android:id="@+id/textViewPrezzo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Prezzo"
@@ -141,6 +142,7 @@
                     />
 
                 <EditText
+                    android:id="@+id/editTextPrezzoMin"
                     android:layout_width="50dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
@@ -159,6 +161,7 @@
                     android:layout_marginLeft="15dp"
                     />
                 <EditText
+                    android:id="@+id/editTextPrezzoMax"
                     android:layout_width="50dp"
                     android:layout_height="wrap_content"
                     android:hint="50"
@@ -234,6 +237,7 @@
         android:backgroundTint="@color/black"
         />
     <Button
+        android:id="@+id/buttonSalvaFiltro"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Salva"

@@ -20,19 +20,18 @@
                 android:id="@+id/textViewTitoloSchermataAstaRibasso"
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
-                android:layout_marginBottom="-1dp"
                 android:gravity="center"
-                android:textSize="35dp"
+                android:textSize="35sp"
                 android:textStyle="bold"
+                android:textColor="@color/black"
                 android:text="Prodotto asta"
-                android:background="#99E8FF"/>
-            <com.google.android.material.button.MaterialButton
+                android:background="@color/toolbar_color"/>
+            <ImageButton
                 android:id="@+id/bottoneBackSchermataAstaRibasso"
-                android:layout_width="60dp"
+                android:layout_width="wrap_content"
                 android:layout_height="80dp"
-                android:backgroundTint="#99E8FF"
-                android:hint="@string/navigation_drawer_close"
-                android:drawableLeft="@drawable/baseline_arrow_back_ios_24"
+                android:backgroundTint="@android:color/transparent"
+                android:src="@drawable/baseline_arrow_back_ios_24"
                 />
 
             <ImageView

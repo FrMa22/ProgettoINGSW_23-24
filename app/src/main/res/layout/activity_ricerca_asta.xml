@@ -19,7 +19,7 @@
             <androidx.appcompat.widget.Toolbar
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
-                android:background="#00F0FF">
+                android:background="@color/toolbar_color">
 
                 <ImageButton
                     android:id="@+id/openDrawerButton"
@@ -36,7 +36,7 @@
                     android:layout_width="220dp"
                     android:layout_height="50dp"
                     android:layout_marginLeft="50dp"
-                    android:background="@drawable/rounded_background"
+                    android:background="@drawable/bordo_bianco_edittext"
                     android:drawableRight="@drawable/ic_search"
                     android:hint="Cerca"
                     android:paddingLeft="10dp"

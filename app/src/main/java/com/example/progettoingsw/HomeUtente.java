@@ -49,7 +49,7 @@ public class HomeUtente extends AppCompatActivity{
         setContentView(R.layout.home_utente);
 
         preferitiButton = findViewById(R.id.openPreferiti);
-        profiloButton = findViewById(R.id.openProfiloButton);
+//        profiloButton = findViewById(R.id.openProfiloButton);
 
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.navigation_view);
@@ -64,7 +64,7 @@ public class HomeUtente extends AppCompatActivity{
         actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close);
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
 
-        ricerca = findViewById(R.id.edittext_ricerca);
+        /*ricerca = findViewById(R.id.edittext_ricerca);
         ricerca.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
@@ -81,7 +81,7 @@ public class HomeUtente extends AppCompatActivity{
                 }
                 return false;
             }
-        });
+        });*/
 
         openDrawerButton.setOnClickListener(new View.OnClickListener() {
             @Override
