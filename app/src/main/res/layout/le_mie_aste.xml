@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.drawerlayout.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".LeMieAste">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_le_mie_aste"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:background="#00F0FF">
+
+        <ImageButton
+            android:id="@+id/openDrawerButton"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:layout_marginLeft="-30dp"
+            android:src="@drawable/ic_menu"
+            android:backgroundTint="@android:color/transparent"
+            android:contentDescription="Clicca per aprire il menu." />
+
+        <EditText
+            android:layout_width="220dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="50dp"
+            android:background="@drawable/rounded_background"
+            android:drawableRight="@drawable/ic_search"
+            android:hint="Cerca"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:singleLine="true"
+            android:textColor="@color/black"
+            android:textSize="30sp"
+            />
+
+        <ImageButton
+            android:id="@+id/openPreferiti"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:src="@drawable/ic_favourite"
+            android:backgroundTint="@android:color/transparent"
+            android:contentDescription="Clicca per aprire i preferiti."
+            android:drawableTint="@android:color/transparent" />
+
+        <ImageButton
+            android:id="@+id/openProfiloButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:src="@drawable/ic_profilo"
+            android:backgroundTint="@android:color/transparent"
+            android:contentDescription="Clicca per aprire il profilo." />
+
+    </androidx.appcompat.widget.Toolbar>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <TextView
+                android:id="@+id/textViewLeMieAste"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Le mie aste"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                android:layout_centerHorizontal="true"/>
+
+            <RadioGroup
+                android:id="@+id/radioGroupLeMieAste"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_below="@+id/textViewLeMieAste"
+                >
+
+                <!-- Impostato a true per farlo partire come selezionato -->
+
+                <RadioButton
+                    android:id="@+id/bottoneAttive"
+                    android:layout_width="wrap_content"
+                    android:layout_height="80dp"
+                    android:checked="true"
+                    android:text="Attive" />
+
+                <RadioButton
+                    android:id="@+id/bottoneNonAttive"
+                    android:layout_width="wrap_content"
+                    android:layout_height="80dp"
+                    android:text="Non Attive" />
+            </RadioGroup>
+
+
+            <GridLayout
+                android:id="@+id/gridLayoutAsteAttive"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:columnCount="4"
+                android:layout_below="@+id/radioGroupLeMieAste"
+                android:useDefaultMargins="true"
+                android:visibility="visible">
+
+                <!-- Impostato a visible perchè inizialmente "Attive" è selezionato-->
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="FotoProva"
+                    android:textSize="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_columnSpan="1" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="NomeProva"
+                    android:textSize="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_columnSpan="1" />
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="PrezzoProva"
+                    android:textSize="16dp"
+                    android:layout_columnSpan="1" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="StatoProva"
+                    android:textSize="16dp"
+                    android:layout_columnSpan="1" />
+
+
+            </GridLayout>
+
+
+
+
+
+            <GridLayout
+                android:id="@+id/gridLayoutAsteNonAttive"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:columnCount="4"
+                android:layout_below="@+id/radioGroupLeMieAste"
+                android:useDefaultMargins="true"
+                android:visibility="gone">
+
+                <!-- Impostato a visible perchè inizialmente "Attive" è selezionato-->
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="FotoProva2"
+                    android:textSize="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_columnSpan="1" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="NomeProva2"
+                    android:textSize="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_columnSpan="1" />
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="PrezzoProva2"
+                    android:textSize="16dp"
+                    android:layout_columnSpan="1" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="StatoProva2"
+                    android:textSize="16dp"
+                    android:layout_columnSpan="1" />
+
+
+            </GridLayout>
+
+
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+
+
+
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/navigation_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        app:headerLayout="@layout/header_drawer"
+        app:menu="@menu/drawer_menu" />
+
+</androidx.drawerlayout.widget.DrawerLayout>
