@@ -1,9 +1,8 @@
 package com.example.progettoingsw;
 
-import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -17,6 +16,7 @@ public class SchermataAstaInversa extends AppCompatActivity {
     MaterialButton bottoneBack;
     MaterialButton bottoneProfiloAcquirente;
     ImageButton bottoneNuovaOfferta;
+    String prezzo;
 
     ImageButton bottonePreferito;
     @Override
@@ -40,41 +40,23 @@ public class SchermataAstaInversa extends AppCompatActivity {
         });
 
         TextView offertaAttuale= (TextView) findViewById(R.id.textViewOffertaAttualeSchermataAstaInversa);
+        TextView prezzoAttuale = (TextView) findViewById(R.id. textViewPrezzpAttualeSchermataAstaInversa) ;
         bottoneNuovaOfferta = (ImageButton) findViewById(R.id.bottoneOffertaSchermataAstaInversa);
 
         bottoneNuovaOfferta.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Dialog popUpNuovaOffertaDialog = new Dialog(SchermataAstaInversa.this);
-                popUpNuovaOffertaDialog.setContentView(R.layout.pop_up_nuova_offerta);
-                popUpNuovaOffertaDialog.show();
-                MaterialButton bottoneAnnullaPopuP=(MaterialButton) popUpNuovaOffertaDialog.findViewById(R.id.bottoneAnnullaPopUpAsta);
-                MaterialButton bottoneConfermaPopUP=(MaterialButton) popUpNuovaOffertaDialog.findViewById(R.id.bottoneConfermaPopUpAsta);
-                EditText nuovaOfferta= (EditText) popUpNuovaOffertaDialog.findViewById(R.id.editTextNuovaOffertaAsta);
-                TextView testoErrore = (TextView) popUpNuovaOffertaDialog.findViewById(R.id.textViewErrorePrezzoPopUp);
-                nuovaOfferta.setText(offertaAttuale.getText());
-
-                bottoneAnnullaPopuP.setOnClickListener(new View.OnClickListener(){
-                    @Override
-                    public void onClick(View v) {
-                        popUpNuovaOffertaDialog.dismiss();
-                    }
-                });
-
-                bottoneConfermaPopUP.setOnClickListener(new View.OnClickListener(){
-                    @Override
-                    public void onClick(View v) {
-                        if (Integer.parseInt(nuovaOfferta.getText().toString()) > Integer.parseInt(offertaAttuale.getText().toString())) {
-                            offertaAttuale.setText(nuovaOfferta.getText());
-                            popUpNuovaOffertaDialog.dismiss();
-
-                        }
-                        else{
-                            testoErrore.setText("Offerta non valida");
-                        }
-                    }
-                });
+                String tipo = "inversa";
+                Intent intent = new Intent(SchermataAstaInversa.this, PopUpNuovaOfferta.class);
+                intent.putExtra("textViewPrezzo", prezzoAttuale.getText().toString());
+                intent.putExtra("tipoPopUp", tipo);
+                startActivity(intent);
             }
         });
+        String valoreDaModificare = getIntent().getStringExtra("editTextPrezzo");
+        if (valoreDaModificare != null) {
+            prezzoAttuale.setText(valoreDaModificare);
+        }
+
     }
 }
 

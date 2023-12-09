@@ -1,6 +1,6 @@
 package com.example.progettoingsw;
 
-import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -17,6 +17,7 @@ public class SchermataAstaInglese extends AppCompatActivity {
     MaterialButton bottoneBack;
     MaterialButton bottoneProfiloVenditore;
     ImageButton bottoneNuovaOfferta;
+
 
     ImageButton bottonePreferito;
     @Override
@@ -40,40 +41,20 @@ public class SchermataAstaInglese extends AppCompatActivity {
         });
 
         TextView offertaAttuale= (TextView) findViewById(R.id.textViewOffertaAttualeSchermataAstaInglese);
+        TextView prezzoAttuale = (TextView) findViewById(R.id.textViewPrezzoAttualeSchermataAstaInglese ) ;
         bottoneNuovaOfferta = (ImageButton) findViewById(R.id.bottoneOffertaSchermataAstaInglese);
-
         bottoneNuovaOfferta.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Dialog popUpNuovaOffertaDialog = new Dialog(SchermataAstaInglese.this);
-                popUpNuovaOffertaDialog.setContentView(R.layout.pop_up_nuova_offerta);
-                MaterialButton bottoneAnnullaPopuP=(MaterialButton) popUpNuovaOffertaDialog.findViewById(R.id.bottoneAnnullaPopUpAsta);;
-                MaterialButton bottoneConfermaPopUP=(MaterialButton) popUpNuovaOffertaDialog.findViewById(R.id.bottoneConfermaPopUpAsta);;
-                EditText nuovaOfferta= (EditText) popUpNuovaOffertaDialog.findViewById(R.id.editTextNuovaOffertaAsta);
-                TextView testoErrore = (TextView) popUpNuovaOffertaDialog.findViewById(R.id.textViewErrorePrezzoPopUp);
-                nuovaOfferta.setText(offertaAttuale.getText());
-
-                bottoneAnnullaPopuP.setOnClickListener(new View.OnClickListener(){
-                    @Override
-                    public void onClick(View v) {
-                        popUpNuovaOffertaDialog.dismiss();
-                    }
-                });
-
-                bottoneConfermaPopUP.setOnClickListener(new View.OnClickListener(){
-                    @Override
-                    public void onClick(View v) {
-                        if (Integer.parseInt(nuovaOfferta.getText().toString()) > Integer.parseInt(offertaAttuale.getText().toString())) {
-                            offertaAttuale.setText(nuovaOfferta.getText());
-                            popUpNuovaOffertaDialog.dismiss();
-
-                        }
-                        else {
-                            testoErrore.setText("Offerta non valida");
-                        }
-                    }
-                });
-                popUpNuovaOffertaDialog.show();
+                String tipo = "inglese";
+                Intent intent = new Intent(SchermataAstaInglese.this, PopUpNuovaOfferta.class);
+                intent.putExtra("textViewPrezzo", prezzoAttuale.getText().toString());
+                intent.putExtra("tipoPopUp", tipo);
+                startActivity(intent);
             }
         });
+        String valoreDaModificare = getIntent().getStringExtra("editTextPrezzo");
+        if (valoreDaModificare != null) {
+            prezzoAttuale.setText(valoreDaModificare);
+        }
     }
 }

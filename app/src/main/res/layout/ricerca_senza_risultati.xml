@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.drawerlayout.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layoutRicercaSenzaRisultati"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/relativeLayoutRicercaSenzaRisultati"
+        android:background="#FFFFFF">
+
+        <androidx.appcompat.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:background="#00F0FF">
+
+            <ImageButton
+                android:id="@+id/openDrawerButtonRicercaSenzaRisultati"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:layout_marginLeft="-30dp"
+                android:src="@drawable/ic_menu"
+                android:backgroundTint="@android:color/transparent"
+                android:contentDescription="Clicca per aprire il menu." />
+
+            <EditText
+                android:id="@+id/editTextRicercaSenzaRisultati"
+                android:layout_width="220dp"
+                android:layout_height="50dp"
+                android:layout_marginLeft="50dp"
+                android:background="@drawable/rounded_background"
+                android:drawableRight="@drawable/ic_search"
+                android:hint="Cerca"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:singleLine="true"
+                android:textColor="@color/black"
+                android:textSize="30sp"
+                />
+
+            <ImageButton
+                android:id="@+id/openPreferitiRicercaSenzaRisultati"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:src="@drawable/ic_favourite"
+                android:backgroundTint="@android:color/transparent"
+                android:contentDescription="Clicca per aprire i preferiti."
+                android:drawableTint="@android:color/transparent" />
+
+            <ImageButton
+                android:id="@+id/openProfiloButtonRicercaSenzaRisultati"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:src="@drawable/ic_profilo"
+                android:backgroundTint="@android:color/transparent"
+                android:contentDescription="Clicca per aprire il profilo." />
+
+        </androidx.appcompat.widget.Toolbar>
+        <TextView
+            android:id="@+id/textViewAvvisoRicercaSenzaRisultati"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="180dp"
+            android:textSize="30dp"
+            android:textStyle="bold"
+            android:text="La ricerca non ha ottenuto risultati! Prova cambiando la ricerca o i filtri o crea un asta inversa!"
+            android:gravity="center"
+            />
+
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="270dp"
+            android:layout_height="120dp"
+            android:layout_below="@+id/textViewAvvisoRicercaSenzaRisultati"
+            android:layout_marginLeft="80dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="80dp"
+            android:backgroundTint="#FF9933"
+            android:gravity="center"
+            android:text="Crea asta inversa"
+            android:textColor="@color/black"
+            android:textSize="35dp"
+            android:textStyle="bold" />
+
+
+    </RelativeLayout>
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/navigation_viewRicercaSenzaRisultati"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        app:headerLayout="@layout/header_drawer"
+        app:menu="@menu/drawer_menu" />
+
+
+
+</androidx.drawerlayout.widget.DrawerLayout>

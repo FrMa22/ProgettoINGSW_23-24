@@ -106,6 +106,16 @@
             android:theme="@style/Base.Theme.ProgettoINGSW.CustomTheme"
             />
 
+        <activity
+            android:name=".RicercaSenzaRisultati"
+            android:exported="true" />
+
+        <activity
+            android:name=".PopUpNuovaOfferta"
+            android:exported="true"
+            android:theme="@style/Base.Theme.ProgettoINGSW.CustomTheme"
+            />
+
 
     </application>
 
