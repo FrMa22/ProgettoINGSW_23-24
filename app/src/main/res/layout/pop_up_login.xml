@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:text="Abbiamo rilevato due account collegati a questa email, con quale vuoi accedere?"
         android:gravity="center"
-        android:textSize="35sp"
+        android:textSize="30sp"
         android:textAlignment="center"
         android:padding="16dp" />
 

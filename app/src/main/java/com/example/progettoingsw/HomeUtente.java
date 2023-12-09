@@ -26,6 +26,7 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.example.progettoingsw.controllers_package.Controller;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.navigation.NavigationView;
 
@@ -42,6 +43,7 @@ public class HomeUtente extends AppCompatActivity{
     private EditText ricerca;
 
     private Menu menu;
+    private BottomNavigationView bottomNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +66,7 @@ public class HomeUtente extends AppCompatActivity{
         actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close);
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
 
-        /*ricerca = findViewById(R.id.edittext_ricerca);
+        ricerca = findViewById(R.id.edittext_ricerca);
         ricerca.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
@@ -81,7 +83,7 @@ public class HomeUtente extends AppCompatActivity{
                 }
                 return false;
             }
-        });*/
+        });
 
         openDrawerButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -120,6 +122,34 @@ public class HomeUtente extends AppCompatActivity{
                 return true;
             }
         });
+
+        bottomNavigationView = findViewById(R.id.bottom_navigation);
+
+        bottomNavigationView.setSelectedItemId(R.id.action_home);
+        // Imposta il listener per il BottomNavigationView
+        bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
+
+            // Gestisci la selezione dell'elemento del menu
+
+                if(item.getItemId()==R.id.action_categories) {
+                    Controller.redirectActivity(HomeUtente.this, SelezioneCategorie.class);
+                }
+                else if(item.getItemId()==R.id.action_crea_asta) {
+                    Controller.redirectActivity(HomeUtente.this, CreaLaTuaAstaAcquirente.class);
+                }
+                else if(item.getItemId()==R.id.action_search){
+                    //da creare
+                }
+                else if(item.getItemId()==R.id.action_profile) {
+                    Controller.redirectActivity(HomeUtente.this, ProfiloActivity.class);
+                }
+
+
+
+            return false;
+        });
+
+
 
 
     }

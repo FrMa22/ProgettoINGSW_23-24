@@ -16,6 +16,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.example.progettoingsw.controllers_package.Controller;
 import com.example.progettoingsw.gestori_gui.CustomAdapter_gridview_profilo_campi;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
@@ -60,6 +61,8 @@ public class ProfiloActivity extends AppCompatActivity {
     private TextView textview_paese;
     private String testo_textview_campo_paese;
     private String testo_textview_paese;
+
+    private BottomNavigationView bottomNavigationView;
 
 
     @Override
@@ -233,6 +236,37 @@ public class ProfiloActivity extends AppCompatActivity {
                     break;
             }
         }
+
+
+
+        bottomNavigationView = findViewById(R.id.bottom_navigation);
+
+        bottomNavigationView.setSelectedItemId(R.id.action_profile);
+        // Imposta il listener per il BottomNavigationView
+        bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
+
+            // Gestisci la selezione dell'elemento del menu
+
+            if(item.getItemId()==R.id.action_categories) {
+                Controller.redirectActivity(ProfiloActivity.this, SelezioneCategorie.class);
+                return true;
+            }
+            else if(item.getItemId()==R.id.action_crea_asta) {
+                Controller.redirectActivity(ProfiloActivity.this, CreaLaTuaAstaAcquirente.class);
+                return true;
+            }
+            else if(item.getItemId()==R.id.action_search){
+                //da creare
+                return true;
+            }
+            else if(item.getItemId()==R.id.action_home) {
+                Controller.redirectActivity(ProfiloActivity.this, HomeUtente.class);
+                return true;
+            }
+
+            return false;
+        });
+
     }
 
     @Override

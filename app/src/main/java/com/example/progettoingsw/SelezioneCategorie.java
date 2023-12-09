@@ -16,6 +16,7 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.example.progettoingsw.controllers_package.Controller;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
@@ -34,6 +35,7 @@ public class SelezioneCategorie extends AppCompatActivity {
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle actionBarDrawerToggle;
     private ImageButton openDrawerButton;
+    private BottomNavigationView bottomNavigationView;
 
 
     @Override
@@ -152,6 +154,33 @@ public class SelezioneCategorie extends AppCompatActivity {
             }
         });
 
+        bottomNavigationView = findViewById(R.id.bottom_navigation);
+
+        bottomNavigationView.setSelectedItemId(R.id.action_categories);
+        // Imposta il listener per il BottomNavigationView
+        bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
+
+            // Gestisci la selezione dell'elemento del menu
+            if(item.getItemId()==R.id.action_home) {
+                Controller.redirectActivity(SelezioneCategorie.this, HomeUtente.class);
+            }
+            if(item.getItemId()==R.id.action_categories) {
+                Controller.redirectActivity(SelezioneCategorie.this, SelezioneCategorie.class);
+            }
+            else if(item.getItemId()==R.id.action_crea_asta) {
+                Controller.redirectActivity(SelezioneCategorie.this, CreaLaTuaAstaAcquirente.class);
+            }
+            else if(item.getItemId()==R.id.action_search){
+                //da creare
+            }
+            else if(item.getItemId()==R.id.action_profile) {
+                Controller.redirectActivity(SelezioneCategorie.this, ProfiloActivity.class);
+            }
+
+
+
+            return false;
+        });
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {
