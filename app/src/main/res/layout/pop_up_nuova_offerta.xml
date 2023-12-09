@@ -1,8 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="300dp"
     android:layout_height="wrap_content"
     android:orientation="vertical"
+    tools:context=".SchermataAstaInglese"
     android:background="@color/material_dynamic_tertiary95">
 
     <TextView
@@ -16,16 +18,58 @@
         android:textStyle="bold"
         android:text="Fai un offerta"/>
 
-    <EditText
-        android:id="@+id/editTextNuovaOffertaAsta"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/TextViewOffertaAsta"
+        android:layout_width="130dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
+        android:layout_below="@id/textViewTitoloAsta"
+        android:background="@color/white"
+        android:drawablePadding="15dp"
+        android:text="Prezzo attuale :"
+        android:textStyle="bold"
+        android:padding="15dp" />
+
+    <TextView
+        android:id="@+id/TextViewPrezzoOffertaAsta"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="151dp"
+        android:layout_marginEnd="20dp"
+        android:layout_below="@id/textViewTitoloAsta"
         android:background="@color/white"
         android:drawablePadding="15dp"
         android:text="€€€"
+        android:textStyle="bold"
         android:padding="15dp" />
+
+    <TextView
+        android:id="@+id/TextViewNuovaOffertaAsta"
+        android:layout_width="130dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_below="@id/TextViewPrezzoOffertaAsta"
+        android:background="@color/white"
+        android:drawablePadding="15dp"
+        android:text="Fai un\' offerta :"
+        android:textStyle="bold"
+        android:padding="15dp" />
+
+    <EditText
+        android:id="@+id/EditTextPrezzoNuovaOffertaAsta"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="151dp"
+        android:layout_marginEnd="20dp"
+        android:layout_below="@id/TextViewPrezzoOffertaAsta"
+        android:background="@color/white"
+        android:text="€€€"
+        android:textStyle="bold"
+        android:padding="12dp" />
+
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -33,10 +77,9 @@
         android:textColor="@color/design_default_color_error"
         android:text=""
         android:contentDescription="errore prezzo"
+        android:layout_below="@id/TextViewNuovaOffertaAsta"
         />
-<RelativeLayout
-    android:layout_width="300dp"
-    android:layout_height="80dp">
+
     <com.google.android.material.button.MaterialButton
         android:id="@+id/bottoneConfermaPopUpAsta"
         android:layout_width="140dp"
@@ -46,7 +89,8 @@
         android:text="Conferma"
         android:textColor="@color/black"
         android:textSize="20dp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:layout_below="@id/textViewErrorePrezzoPopUp"/>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/bottoneAnnullaPopUpAsta"
@@ -58,6 +102,7 @@
         android:text="Annulla"
         android:textColor="@color/black"
         android:textSize="20dp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:layout_below="@id/textViewErrorePrezzoPopUp"/>
+
 </RelativeLayout>
-</LinearLayout>
