@@ -17,6 +17,9 @@
                 android:icon="@drawable/ic_categorie"
                 android:title="Categorie" />
             <item
+                android:id="@+id/nav_le_mie_aste"
+                android:title="Le mie aste" />
+            <item
                 android:id="@+id/nav_crea_asta"
                 android:title="Crea un'asta" />
         </menu>

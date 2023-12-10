@@ -2,9 +2,11 @@ package com.example.progettoingsw;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -26,7 +28,7 @@ public class RicercaSenzaRisultati extends AppCompatActivity {
     private ImageButton openDrawerButton;
     private ImageButton preferitiButton;
     private ImageButton profiloButton;
-    private MaterialButton creaAstaInversa;
+    private Button creaAstaInversa;
 
     private Menu menu;
 
@@ -53,12 +55,15 @@ public class RicercaSenzaRisultati extends AppCompatActivity {
         actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close);
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
 
-        creaAstaInversa.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Controller.redirectActivity(RicercaSenzaRisultati.this, CreaLaTuaAstaAcquirente.class);
-            }
-        });
+
+            creaAstaInversa = findViewById(R.id.bottoneCreaAstaInversa);
+            creaAstaInversa.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Controller.redirectActivity(RicercaSenzaRisultati.this, CreaLaTuaAstaAcquirente.class);
+                }
+            });
+
 
         openDrawerButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,12 +72,16 @@ public class RicercaSenzaRisultati extends AppCompatActivity {
             }
         });
 
-        preferitiButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Controller.redirectActivity(RicercaSenzaRisultati.this, PreferitiActivity.class);
-            }
-        });
+        try {
+            preferitiButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Controller.redirectActivity(RicercaSenzaRisultati.this, PreferitiActivity.class);
+                }
+            });
+        } catch (NullPointerException e) {
+            Log.e("Tag", "Preferiti", e);
+        }
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -83,15 +92,15 @@ public class RicercaSenzaRisultati extends AppCompatActivity {
                     if (drawerLayout.isDrawerOpen(navigationView)) {
                         drawerLayout.closeDrawer(navigationView);
                     }
-                } else if(id==R.id.nav_cliccacategorie){
+                } else if (id == R.id.nav_cliccacategorie) {
                     Controller.redirectActivity(RicercaSenzaRisultati.this, SelezioneCategorie.class);
-                }else if(id==R.id.nav_esci){
+                } else if (id == R.id.nav_esci) {
                     Controller.redirectActivity(RicercaSenzaRisultati.this, MainActivity.class);
-                }else if (id == R.id.nav_profilo) {
+                } else if (id == R.id.nav_profilo) {
                     Controller.redirectActivity(RicercaSenzaRisultati.this, ProfiloActivity.class);
-                }else if (id==R.id.nav_about_us){
-                    Controller.redirectActivity(RicercaSenzaRisultati.this,AboutUs.class);
-                }else if (id==R.id.nav_crea_asta){
+                } else if (id == R.id.nav_about_us) {
+                    Controller.redirectActivity(RicercaSenzaRisultati.this, AboutUs.class);
+                } else if (id == R.id.nav_crea_asta) {
                     Controller.redirectActivity(RicercaSenzaRisultati.this, CreaLaTuaAstaAcquirente.class);
                 }
                 return true;

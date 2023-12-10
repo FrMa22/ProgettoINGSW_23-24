@@ -118,6 +118,8 @@ public class HomeUtente extends AppCompatActivity{
                     Controller.redirectActivity(HomeUtente.this,AboutUs.class);
                 }else if (id==R.id.nav_crea_asta){
                     Controller.redirectActivity(HomeUtente.this, CreaLaTuaAstaVenditore.class);
+                }else if (id==R.id.nav_le_mie_aste){
+                    Controller.redirectActivity(HomeUtente.this, LeMieAste.class);
                 }
                 return true;
             }

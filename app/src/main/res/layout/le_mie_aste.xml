@@ -35,7 +35,7 @@
             android:layout_width="220dp"
             android:layout_height="50dp"
             android:layout_marginLeft="50dp"
-            android:background="@drawable/rounded_background"
+            android:background="@drawable/bordo_nero_curvo"
             android:drawableRight="@drawable/ic_search"
             android:hint="Cerca"
             android:paddingLeft="10dp"

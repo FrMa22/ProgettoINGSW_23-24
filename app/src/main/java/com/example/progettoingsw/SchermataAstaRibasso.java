@@ -4,7 +4,7 @@ package com.example.progettoingsw;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.EditText;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -15,7 +15,7 @@ import com.google.android.material.button.MaterialButton;
 
 public class SchermataAstaRibasso extends AppCompatActivity {
     Controller controller;
-    MaterialButton bottoneBack;
+    ImageButton bottoneBack;
     MaterialButton bottoneProfiloVenditore;
     ImageButton bottoneNuovaOfferta;
 
@@ -24,11 +24,11 @@ public class SchermataAstaRibasso extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.schermata_asta_ribasso);
-        bottoneBack = (MaterialButton) findViewById(R.id.bottoneBackSchermataAstaRibasso);
+        bottoneBack =  findViewById(R.id.bottoneBackSchermataAstaRibasso);
 
         bottoneBack.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                controller.redirectActivity(SchermataAstaRibasso.this, HomeUtente.class);
+                Controller.redirectActivity(SchermataAstaRibasso.this, HomeUtente.class);
             }
         });
 
@@ -36,7 +36,7 @@ public class SchermataAstaRibasso extends AppCompatActivity {
 
         bottoneProfiloVenditore.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                controller.redirectActivity(SchermataAstaRibasso.this, ProfiloVenditore.class);
+                Controller.redirectActivity(SchermataAstaRibasso.this, ProfiloVenditore.class);
             }
         });
 
@@ -46,7 +46,7 @@ public class SchermataAstaRibasso extends AppCompatActivity {
         bottoneNuovaOfferta.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Dialog popUpConfermaOffertaDialog = new Dialog(SchermataAstaRibasso.this);
-                popUpConfermaOffertaDialog.setContentView(R.layout.pop_up_conferama_offerta);
+                popUpConfermaOffertaDialog.setContentView(R.layout.pop_up_conferma_offerta);
                 popUpConfermaOffertaDialog.show();
                 MaterialButton bottoneAnnullaPopuP=(MaterialButton) popUpConfermaOffertaDialog.findViewById(R.id.bottoneAnnullaPopUpAsta);;
                 MaterialButton bottoneConfermaPopUP=(MaterialButton) popUpConfermaOffertaDialog.findViewById(R.id.bottoneConfermaPopUpAsta);;

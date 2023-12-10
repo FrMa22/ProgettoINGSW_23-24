@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
         bottone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Controller.redirectActivity(MainActivity.this, SchermataAstaInversa.class);
+                Controller.redirectActivity(MainActivity.this, RicercaSenzaRisultati.class);
             }
         });
 
