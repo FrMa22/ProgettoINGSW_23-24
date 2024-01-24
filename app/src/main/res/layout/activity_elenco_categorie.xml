@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@drawable/bordo_sotto_nero_doppio">
+
+        <ImageButton
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@android:color/transparent"
+            android:contentDescription="Premi per tornare indietro"
+            android:src="@drawable/baseline_arrow_back_ios_24" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:text="Selezione categoria"
+            android:textSize="30sp"
+            android:textStyle="bold" />
+    </androidx.appcompat.widget.Toolbar>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:background="@drawable/bordo_sotto_grigio">
+
+        <ImageView
+            android:id="@+id/imageViewArte"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:backgroundTint="@android:color/transparent"
+            android:src="@drawable/ic_elenco_categorie_arte" />
+
+        <TextView
+            android:id="@+id/textViewArte"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginStart="20dp"
+            android:layout_toEndOf="@id/imageViewArte"
+            android:gravity="center_vertical"
+            android:text="Arte"
+            android:textSize="25sp" />
+
+        <ImageButton
+            android:id="@+id/ImageButtonArte"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:backgroundTint="@android:color/transparent"
+            android:contentDescription="Premi per aprire categoria"
+            android:src="@drawable/ic_freccia_piccola_dx" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:background="@drawable/bordo_sotto_grigio">
+
+        <ImageView
+            android:id="@+id/imageViewElettrodomestici"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:backgroundTint="@android:color/transparent"
+            android:src="@drawable/ic_elenco_categorie_elettrodomestici" />
+
+        <TextView
+            android:id="@+id/textViewElettrodomestici"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginStart="20dp"
+            android:layout_toEndOf="@id/imageViewElettrodomestici"
+            android:gravity="center_vertical"
+            android:text="Elettrodomestici"
+            android:textSize="25sp" />
+
+        <ImageButton
+            android:id="@+id/ImageButtonElettrodomestici"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:backgroundTint="@android:color/transparent"
+            android:contentDescription="Premi per aprire categoria"
+            android:src="@drawable/ic_freccia_piccola_dx" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:background="@drawable/bordo_sotto_grigio">
+
+        <ImageView
+            android:id="@+id/imageViewAutomobili"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:backgroundTint="@android:color/transparent"
+            android:src="@drawable/ic_elenco_categorie_car" />
+
+        <TextView
+            android:id="@+id/textViewAutomobili"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginStart="20dp"
+            android:layout_toEndOf="@id/imageViewAutomobili"
+            android:gravity="center_vertical"
+            android:text="Automobili"
+            android:textSize="25sp" />
+
+        <ImageButton
+            android:id="@+id/ImageButtonAutomobili"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:backgroundTint="@android:color/transparent"
+            android:contentDescription="Premi per aprire categoria"
+            android:src="@drawable/ic_freccia_piccola_dx" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:background="@drawable/bordo_sotto_grigio">
+
+        <ImageView
+            android:id="@+id/imageViewMoto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:backgroundTint="@android:color/transparent"
+            android:src="@drawable/ic_elenco_categorie_moto" />
+
+        <TextView
+            android:id="@+id/textViewMoto"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginStart="20dp"
+            android:layout_toEndOf="@id/imageViewMoto"
+            android:gravity="center_vertical"
+            android:text="Moto"
+            android:textSize="25sp" />
+
+        <ImageButton
+            android:id="@+id/ImageButtonMoto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:backgroundTint="@android:color/transparent"
+            android:contentDescription="Premi per aprire categoria"
+            android:src="@drawable/ic_freccia_piccola_dx" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:background="@drawable/bordo_sotto_grigio">
+
+        <ImageView
+            android:id="@+id/imageViewTelefonia"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:backgroundTint="@android:color/transparent"
+            android:src="@drawable/ic_elenco_categorie_telefonia" />
+
+        <TextView
+            android:id="@+id/textViewTelefonia"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginStart="20dp"
+            android:layout_toEndOf="@id/imageViewTelefonia"
+            android:gravity="center_vertical"
+            android:text="Telefonia"
+            android:textSize="25sp" />
+
+        <ImageButton
+            android:id="@+id/ImageButtonTelefonia"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:backgroundTint="@android:color/transparent"
+            android:contentDescription="Premi per aprire categoria"
+            android:src="@drawable/ic_freccia_piccola_dx" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:background="@drawable/bordo_sotto_grigio">
+
+        <ImageView
+            android:id="@+id/imageViewInformatica"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:backgroundTint="@android:color/transparent"
+            android:src="@drawable/ic_elenco_categorie_informatica" />
+
+        <TextView
+            android:id="@+id/textViewInformatica"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginStart="20dp"
+            android:layout_toEndOf="@id/imageViewInformatica"
+            android:gravity="center_vertical"
+            android:text="Informatica"
+            android:textSize="25sp" />
+
+        <ImageButton
+            android:id="@+id/ImageButtonInformatica"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:backgroundTint="@android:color/transparent"
+            android:contentDescription="Premi per aprire categoria"
+            android:src="@drawable/ic_freccia_piccola_dx" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:background="@drawable/bordo_sotto_grigio">
+
+        <ImageView
+            android:id="@+id/imageViewMusica"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:backgroundTint="@android:color/transparent"
+            android:src="@drawable/ic_music" />
+
+        <TextView
+            android:id="@+id/textViewMusica"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginStart="20dp"
+            android:layout_toEndOf="@id/imageViewMusica"
+            android:gravity="center_vertical"
+            android:text="Musica"
+            android:textSize="25sp" />
+
+        <ImageButton
+            android:id="@+id/ImageButtonMusica"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:backgroundTint="@android:color/transparent"
+            android:contentDescription="Premi per aprire categoria"
+            android:src="@drawable/ic_freccia_piccola_dx" />
+    </RelativeLayout>
+
+</LinearLayout>
