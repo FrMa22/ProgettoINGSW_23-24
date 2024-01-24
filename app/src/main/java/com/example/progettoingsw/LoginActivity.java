@@ -2,11 +2,6 @@ package com.example.progettoingsw;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.Activity;
-import android.app.Dialog;
-import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -15,14 +10,14 @@ import android.widget.TextView;
 import com.example.progettoingsw.controllers_package.Controller;
 import com.google.android.material.button.MaterialButton;
 
-public class MainActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
 
     Button bottone;
     Controller controller;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_login);
 
         controller = new Controller();
 
@@ -33,13 +28,13 @@ public class MainActivity extends AppCompatActivity {
 
         registrazione.setOnClickListener(v -> {
             //apre schermata registrazione
-            controller.redirectActivity(MainActivity.this, Registrazione.class);
+            controller.redirectActivity(LoginActivity.this, Registrazione.class);
         });
 
         bottoneLogin.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                controller.redirectActivity(MainActivity.this, PopUpLogin.class);
-                /*Dialog dialog = new Dialog(MainActivity.this);
+                controller.redirectActivity(LoginActivity.this, PopUpLogin.class);
+                /*Dialog dialog = new Dialog(LoginActivity.this);
                 // Imposta il layout personalizzato per il popup
                 dialog.setContentView(R.layout.pop_up_login);
                 // Imposta uno sfondo trasparente con opacità al 50%
@@ -55,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
         bottone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Controller.redirectActivity(MainActivity.this, RicercaSenzaRisultati.class);
+                Controller.redirectActivity(LoginActivity.this, AstaInversa.class);
             }
         });
 

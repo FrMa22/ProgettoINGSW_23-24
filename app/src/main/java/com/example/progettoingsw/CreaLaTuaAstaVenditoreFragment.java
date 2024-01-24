@@ -4,7 +4,9 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
@@ -16,13 +18,14 @@ import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 import com.example.progettoingsw.controllers_package.Controller;
 import com.google.android.material.button.MaterialButton;
 
-public class CreaLaTuaAstaVenditore extends AppCompatActivity {
+public class CreaLaTuaAstaVenditoreFragment extends Fragment {
     public int selezione_asta=0;
     String opzioneSelezionata;
     ImageView immagineProdotto;
@@ -32,32 +35,37 @@ public class CreaLaTuaAstaVenditore extends AppCompatActivity {
     Controller controller;
     ActivityResultLauncher<Intent> resultLauncher;
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.crea_la_tua_asta_venditore);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view_fragment = inflater.inflate(R.layout.fragment_crea_la_tua_asta_venditore, container, false);
+
+        return view_fragment;
+    }
+
+    public void onViewCreated(@NonNull View view_fragment, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view_fragment, savedInstanceState);
 
         controller = new Controller();
-        bottone_prosegui=findViewById(R.id.bottoneProsegui);
+        bottone_prosegui=view_fragment.findViewById(R.id.bottoneProsegui);
 
-        immagineProdotto=(ImageView) findViewById(R.id.imageViewCreaAstaVenditore);
-        ImageButton bottoneInserisciImmagine=(ImageButton) findViewById(R.id.imageButtonInserisciImmagineCreaAstaVenditore);
+        immagineProdotto=(ImageView) view_fragment.findViewById(R.id.imageViewCreaAstaVenditore);
+        ImageButton bottoneInserisciImmagine=(ImageButton) view_fragment.findViewById(R.id.imageButtonInserisciImmagineCreaAstaVenditore);
 
 
-        back = findViewById(R.id.bottoneTornaIndietroCreaLaTuaAstaVenditore);
+        /*back = view.findViewById(R.id.bottoneTornaIndietroCreaLaTuaAstaVenditore);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                controller.redirectActivity(CreaLaTuaAstaVenditore.this, HomeUtente.class);
+                onBackPressed();
             }
-        });
+        });*/
 
         registraRisultati();
 
-       bottoneInserisciImmagine.setOnClickListener(view ->prelevaImmagine());//significa che chiama il metodo prelevaImmagine
+        bottoneInserisciImmagine.setOnClickListener(view ->prelevaImmagine());//significa che chiama il metodo prelevaImmagine
 
 
-        Spinner spinnerTipoAsta=(Spinner) findViewById(R.id.spinnerTipologiaAstaVenditore);
-        ArrayAdapter<CharSequence> adapterSpinnerTipoAsta=(ArrayAdapter<CharSequence>) ArrayAdapter.createFromResource(CreaLaTuaAstaVenditore.this, R.array.elencoTipiAstaVenditore, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item);
+        Spinner spinnerTipoAsta=(Spinner) view_fragment.findViewById(R.id.spinnerTipologiaAstaVenditore);
+        ArrayAdapter<CharSequence> adapterSpinnerTipoAsta=(ArrayAdapter<CharSequence>) ArrayAdapter.createFromResource(getContext(), R.array.elencoTipiAstaVenditore, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item);
         adapterSpinnerTipoAsta.setDropDownViewResource(androidx.appcompat.R.layout.support_simple_spinner_dropdown_item);
         spinnerTipoAsta.setAdapter(adapterSpinnerTipoAsta);
 
@@ -69,10 +77,10 @@ public class CreaLaTuaAstaVenditore extends AppCompatActivity {
 
                 if(opzioneSelezionata.equals("Asta all\'inglese")){
                     selezione_asta=0;
-                    Toast.makeText(getApplicationContext(), "Asta inglese", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getApplicationContext(), "Asta inglese", Toast.LENGTH_SHORT).show();
                 }if(opzioneSelezionata.equals("Asta al ribasso")){
                     selezione_asta=1;
-                    Toast.makeText(getApplicationContext(), "Asta al ribasso", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getApplicationContext(), "Asta al ribasso", Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -86,14 +94,13 @@ public class CreaLaTuaAstaVenditore extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(selezione_asta==0){
-                    Controller.redirectActivity(CreaLaTuaAstaVenditore.this, AstaInglese.class);
+                    Controller.redirectActivity(getActivity(), AstaInglese.class);
                 }
                 else if(selezione_asta==1){
-                    Controller.redirectActivity(CreaLaTuaAstaVenditore.this, AstaRibasso.class);
+                    Controller.redirectActivity(getActivity(), AstaRibasso.class);
                 }
             }
         });
-
     }
 
 
@@ -112,11 +119,11 @@ public class CreaLaTuaAstaVenditore extends AppCompatActivity {
                             Uri uriImmagine = result.getData().getData();
                             immagineProdotto.setImageURI(uriImmagine);
                         } catch (Exception e) {
-                            Toast.makeText(CreaLaTuaAstaVenditore.this, "Nessuna Immagine selezionata", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), "Nessuna Immagine selezionata", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
-    }
 
+    }
 
 }

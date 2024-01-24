@@ -5,7 +5,7 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ProfiloActivity">
+    tools:context=".FragmentProfilo">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -31,13 +31,6 @@
                 android:layout_height="80dp"
                 android:background="@color/toolbar_color">
 
-                <ImageButton
-                    android:id="@+id/openDrawerButton"
-                    android:layout_width="50dp"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="@android:color/transparent"
-                    android:contentDescription="Clicca per aprire il menu."
-                    android:src="@drawable/ic_menu" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -48,7 +41,22 @@
                     android:textSize="35sp"
                     android:textStyle="bold" />
 
-            </androidx.appcompat.widget.Toolbar>
+
+
+                <ImageButton
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/ic_edit_outfilled"
+                    android:backgroundTint="@android:color/transparent"
+                    android:layout_gravity="end"
+                    android:layout_marginEnd="10dp"
+                    android:contentDescription="Descrizione dell'immagine"
+                />
+
+
+
+
+        </androidx.appcompat.widget.Toolbar>
 
 
 
@@ -93,14 +101,7 @@
                             android:gravity="center"
                             android:textSize="20sp"
                             android:textColor="@color/black"/>
-                        <ImageButton
-                            android:id="@+id/button_modifica_nome"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:contentDescription="Premi per modificare"
-                            android:src="@drawable/ic_edit"
-                            android:backgroundTint="@android:color/transparent"
-                            android:layout_marginLeft="5dp"/>
+
 
                     </LinearLayout>
                     <TextView
@@ -134,14 +135,6 @@
                             android:text="Rossi"
                             android:textSize="20sp"
                             android:textColor="@color/black"/>
-                        <ImageButton
-                            android:id="@+id/button_modifica_cognome"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/ic_edit"
-                            android:contentDescription="Premi per modificare"
-                            android:backgroundTint="@android:color/transparent"
-                            android:layout_marginLeft="5dp"/>
 
                     </LinearLayout>
                     <TextView
@@ -176,14 +169,6 @@
                             android:singleLine="true"
                             android:textSize="20sp"
                             android:textColor="@color/black"/>
-                        <ImageButton
-                            android:id="@+id/button_modifica_email"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:contentDescription="Premi per modificare"
-                            android:src="@drawable/ic_edit"
-                            android:backgroundTint="@android:color/transparent"
-                            android:layout_marginLeft="5dp"/>
 
                     </LinearLayout>
                     <TextView
@@ -218,14 +203,6 @@
                             android:text="MarioRossi.it"
                             android:textSize="20sp"
                             android:textColor="@color/black"/>
-                        <ImageButton
-                            android:id="@+id/button_modifica_sitoweb"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:contentDescription="Premi per modificare"
-                            android:src="@drawable/ic_edit"
-                            android:backgroundTint="@android:color/transparent"
-                            android:layout_marginLeft="5dp"/>
 
                     </LinearLayout>
                     <TextView
@@ -259,14 +236,6 @@
                             android:text="Italia"
                             android:textSize="20sp"
                             android:textColor="@color/black"/>
-                        <ImageButton
-                            android:id="@+id/button_modifica_paese"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:contentDescription="Premi per modificare"
-                            android:src="@drawable/ic_edit"
-                            android:backgroundTint="@android:color/transparent"
-                            android:layout_marginLeft="5dp"/>
 
                     </LinearLayout>
 
@@ -351,19 +320,6 @@
 
     </ScrollView>
 
-        <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:id="@+id/bottom_navigation"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:background="@drawable/bordo_solo_sopra"
-            app:menu="@menu/bottom_nav_menu" />
 </LinearLayout>
-        <com.google.android.material.navigation.NavigationView
-            android:id="@+id/navigation_view"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="start"
-            app:headerLayout="@layout/header_drawer"
-            app:menu="@menu/drawer_menu" />
 
 </androidx.drawerlayout.widget.DrawerLayout>

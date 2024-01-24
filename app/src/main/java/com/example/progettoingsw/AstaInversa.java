@@ -3,20 +3,16 @@ package com.example.progettoingsw;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
-import android.icu.text.SimpleDateFormat;
 import android.os.Bundle;
-import android.provider.ContactsContract;
-import android.text.format.DateFormat;
 import android.view.View;
 import android.widget.DatePicker;
+import android.widget.ImageButton;
 import android.widget.TimePicker;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.progettoingsw.controllers_package.Controller;
 import com.google.android.material.button.MaterialButton;
-
-import java.util.Date;
 
 public class AstaInversa extends AppCompatActivity {
 
@@ -32,7 +28,7 @@ public class AstaInversa extends AppCompatActivity {
         controller = new Controller();
 
         MaterialButton bottoneConferma = (MaterialButton) findViewById(R.id.bottoneConfermaAstaInversa);
-        MaterialButton bottoneBack = (MaterialButton) findViewById(R.id.bottoneBackAstaInversa);
+        ImageButton bottoneBack =  findViewById(R.id.bottoneBackAstaInversa);
 
         bottoneData = (MaterialButton) findViewById(R.id.bottoneDataAstaInversa);
         bottoneOra = (MaterialButton) findViewById(R.id.bottoneOraAstaInversa);
@@ -54,13 +50,13 @@ public class AstaInversa extends AppCompatActivity {
 
         bottoneConferma.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                controller.redirectActivity(AstaInversa.this, HomeUtente.class);
+                controller.redirectActivity(AstaInversa.this, FragmentHomeUtente.class);
             }
         });
 
         bottoneBack.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-               controller.redirectActivity(AstaInversa.this, CreaLaTuaAstaVenditore.class);
+               controller.redirectActivity(AstaInversa.this, CreaLaTuaAstaVenditoreFragment.class);
             }
         });
     }

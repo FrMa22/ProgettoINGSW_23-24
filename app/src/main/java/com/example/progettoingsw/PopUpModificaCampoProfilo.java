@@ -7,11 +7,9 @@ import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.Button;
-import android.util.Log;
 import android.view.Gravity;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.progettoingsw.controllers_package.Controller;
 
@@ -21,7 +19,7 @@ public class PopUpModificaCampoProfilo extends AppCompatActivity {
 
     String testo_textview_campo_titolo;
     String testo_textview_valore;
-    private ProfiloActivity profiloActivity;
+    private FragmentProfilo fragmentProfilo;
 
     private TextView textview_campo_nome;
     private TextView textview_valore_attuale;
@@ -72,17 +70,17 @@ public class PopUpModificaCampoProfilo extends AppCompatActivity {
             }
         });
 
-        button_conferma_modifica = findViewById(R.id.button_conferma_modifica);
+        /*button_conferma_modifica = findViewById(R.id.button_conferma_modifica);
         button_conferma_modifica.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String valoreModificato = edittext_valore_modificato.getText().toString();
-                Intent intent = new Intent(PopUpModificaCampoProfilo.this, ProfiloActivity.class);
+                Intent intent = new Intent(PopUpModificaCampoProfilo.this, FragmentProfilo.class);
                 intent.putExtra("valoreDaModificare", testo_textview_campo_titolo);
                 intent.putExtra("valoreModificato", valoreModificato);
                 startActivity(intent);
             }
-        });
+        });*/
 
 
     }

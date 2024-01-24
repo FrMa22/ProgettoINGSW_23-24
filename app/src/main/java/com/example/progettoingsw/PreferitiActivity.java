@@ -23,7 +23,7 @@ public class PreferitiActivity extends AppCompatActivity {
         backBottone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                controller.redirectActivity(PreferitiActivity.this, HomeUtente.class);
+                controller.redirectActivity(PreferitiActivity.this, FragmentHomeUtente.class);
             }
         });
 

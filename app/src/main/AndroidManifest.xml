@@ -13,13 +13,34 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ProgettoINGSW"
+        android:enableOnBackInvokedCallback="true"
         tools:targetApi="31">
+        <activity
+            android:name=".MainActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ElencoCategorie"
+            android:exported="false" />
         <activity
             android:name=".PopUpFiltroRicerca"
             android:theme="@style/Base.Theme.ProgettoINGSW.CustomThemeSfocato" />
-        <activity
-            android:name=".RicercaAstaActivity"
+        <!--<activity
+            android:name=".FragmentRicercaAsta"
             android:exported="false" />
+        <activity
+            android:name=".FragmentSelezioneCategorie"
+            android:exported="false" />
+
+        <fragment
+            android:name=".CreaLaTuaAstaVenditoreFragment"
+            android:exported="true" />
+
+        <activity
+            android:name=".FragmentHomeUtente"
+            android:exported="true" />
+        <activity
+            android:name=".FragmentProfilo"
+            android:exported="true" />-->
         <activity
             android:name=".PopUpModificaCampoProfilo"
             android:theme="@style/Base.Theme.ProgettoINGSW.CustomThemeSfocato" />
@@ -29,14 +50,12 @@
         <activity
             android:name=".AboutUs"
             android:exported="false" />
-        <activity
-            android:name=".SelezioneCategorie"
-            android:exported="false" />
+
         <activity
             android:name=".PreferitiActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -47,24 +66,18 @@
         <activity
             android:name=".PopUpLogin"
             android:theme="@style/Base.Theme.ProgettoINGSW.CustomThemeSfocato" />
-        <activity
-            android:name=".HomeUtente"
-            android:exported="true" />
-        <activity
-            android:name=".ProfiloActivity"
-            android:exported="true" />
+
         <activity android:name=".Registrazione" />
+
         <activity
             android:name=".CampiFacoltativiRegistrazione"
             android:exported="true" />
         <activity
             android:name=".InteressiRegistrazione"
             android:exported="true" />
+
         <activity
-            android:name=".CreaLaTuaAstaVenditore"
-            android:exported="true" />
-        <activity
-            android:name=".CreaLaTuaAstaAcquirente"
+            android:name=".FragmentCreaLaTuaAstaAcquirente"
             android:exported="true" />
         <activity
             android:name=".AstaInglese"
@@ -90,30 +103,20 @@
         <activity
             android:name=".SchermataAstaRibasso"
             android:exported="true" />
-
-
-
         <activity
             android:name=".LeMieAste"
             android:exported="true" />
-
         <activity
             android:name=".PopUpRegistrazioneSocial"
             android:exported="true"
-            android:theme="@style/Base.Theme.ProgettoINGSW.CustomTheme"
-            />
-
+            android:theme="@style/Base.Theme.ProgettoINGSW.CustomTheme" />
         <activity
             android:name=".RicercaSenzaRisultati"
             android:exported="true" />
-
         <activity
             android:name=".PopUpNuovaOfferta"
             android:exported="true"
-            android:theme="@style/Base.Theme.ProgettoINGSW.CustomTheme"
-            />
-
-
+            android:theme="@style/Base.Theme.ProgettoINGSW.CustomTheme" />
     </application>
 
 </manifest>

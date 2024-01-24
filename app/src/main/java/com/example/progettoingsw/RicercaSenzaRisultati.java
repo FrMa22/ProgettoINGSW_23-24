@@ -15,7 +15,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.example.progettoingsw.controllers_package.Controller;
-import com.google.android.material.button.MaterialButton;
 import com.google.android.material.navigation.NavigationView;
 
 public class RicercaSenzaRisultati extends AppCompatActivity {
@@ -60,7 +59,7 @@ public class RicercaSenzaRisultati extends AppCompatActivity {
             creaAstaInversa.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Controller.redirectActivity(RicercaSenzaRisultati.this, CreaLaTuaAstaAcquirente.class);
+                    Controller.redirectActivity(RicercaSenzaRisultati.this, FragmentCreaLaTuaAstaAcquirente.class);
                 }
             });
 
@@ -93,15 +92,15 @@ public class RicercaSenzaRisultati extends AppCompatActivity {
                         drawerLayout.closeDrawer(navigationView);
                     }
                 } else if (id == R.id.nav_cliccacategorie) {
-                    Controller.redirectActivity(RicercaSenzaRisultati.this, SelezioneCategorie.class);
+                    Controller.redirectActivity(RicercaSenzaRisultati.this, FragmentSelezioneCategorie.class);
                 } else if (id == R.id.nav_esci) {
-                    Controller.redirectActivity(RicercaSenzaRisultati.this, MainActivity.class);
+                    Controller.redirectActivity(RicercaSenzaRisultati.this, LoginActivity.class);
                 } else if (id == R.id.nav_profilo) {
-                    Controller.redirectActivity(RicercaSenzaRisultati.this, ProfiloActivity.class);
+                    Controller.redirectActivity(RicercaSenzaRisultati.this, FragmentProfilo.class);
                 } else if (id == R.id.nav_about_us) {
                     Controller.redirectActivity(RicercaSenzaRisultati.this, AboutUs.class);
                 } else if (id == R.id.nav_crea_asta) {
-                    Controller.redirectActivity(RicercaSenzaRisultati.this, CreaLaTuaAstaAcquirente.class);
+                    Controller.redirectActivity(RicercaSenzaRisultati.this, FragmentCreaLaTuaAstaAcquirente.class);
                 }
                 return true;
             }

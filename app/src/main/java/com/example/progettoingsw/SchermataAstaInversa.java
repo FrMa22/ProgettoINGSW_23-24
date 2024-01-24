@@ -27,7 +27,7 @@ public class SchermataAstaInversa extends AppCompatActivity {
 
         bottoneBack.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                controller.redirectActivity(SchermataAstaInversa.this, HomeUtente.class);
+                controller.redirectActivity(SchermataAstaInversa.this, FragmentHomeUtente.class);
             }
         });
 

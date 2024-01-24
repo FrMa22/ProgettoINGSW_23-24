@@ -1,47 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/crea_astaAcquirente_relativelayout"
+    android:id="@+id/crea_astaVenditore_relativelayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CreaLaTuaAstaAcquirente"
+    tools:context=".CreaLaTuaAstaVenditoreFragment"
     android:background="@color/white"
     android:orientation="vertical">
 
     <View
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:id="@+id/barraSuperioreCreaAstaAcquirente"
+        android:id="@+id/barraSuperioreCreaAstaVenditore"
         android:background="@color/toolbar_color" />
 
 
 
     <TextView
-        android:id="@+id/textViewCreaLaTuaAstaAcquirente"
+        android:id="@+id/textViewCreaLaTuaAstaVenditore"
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:layout_alignBottom="@+id/barraSuperioreCreaAstaAcquirente"
+        android:layout_alignBottom="@+id/barraSuperioreCreaAstaVenditore"
+        android:layout_marginBottom="-1dp"
         android:gravity="center"
         android:textSize="35sp"
-        android:textStyle="bold"
         android:textColor="@color/black"
+        android:textStyle="bold"
         android:text="Crea la tua Asta" />
 
-
     <ImageButton
-        android:id="@+id/bottoneTornaIndietroCreaLaTuaAstaAcquirente"
+        android:id="@+id/bottoneTornaIndietroCreaLaTuaAstaVenditore"
         android:layout_width="wrap_content"
         android:layout_height="80dp"
-        android:layout_alignBottom="@id/barraSuperioreCreaAstaAcquirente"
+        android:layout_alignBottom="@id/barraSuperioreCreaAstaVenditore"
         android:src="@drawable/ic_back_arrow"
         android:backgroundTint="@android:color/transparent"
-        android:contentDescription="Clicca per tornare indietro" />
+        android:contentDescription="Clicca per tornare indietro"/>
 
     <TextView
-        android:id="@+id/textViewInserireDatiBeneAcquirente"
+        android:id="@+id/textViewInserireDatiBeneVenditore"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/barraSuperioreCreaAstaAcquirente"
+        android:layout_below="@id/barraSuperioreCreaAstaVenditore"
         android:layout_marginStart="15dp"
         android:layout_marginTop="15dp"
         android:layout_marginEnd="15dp"
@@ -53,10 +53,10 @@
 
 
     <EditText
-        android:id="@+id/editTextNomeBeneCreaAstaAcquirente"
+        android:id="@+id/editTextNomeBeneCreaAstaVenditore"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/textViewInserireDatiBeneAcquirente"
+        android:layout_below="@id/textViewInserireDatiBeneVenditore"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="20dp"
@@ -68,13 +68,13 @@
         />
 
     <EditText
-        android:id="@+id/editTextDescrizioneCreaAstaAcquirente"
+        android:id="@+id/editTextDescrizioneCreaAstaVenditore"
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="20dp"
-        android:layout_below="@id/editTextNomeBeneCreaAstaAcquirente"
+        android:layout_below="@id/editTextNomeBeneCreaAstaVenditore"
         android:background="#DCDCDC"
         android:drawablePadding="15dp"
         android:hint="Descrizione:"
@@ -85,12 +85,12 @@
 
 
     <TextView
-        android:id="@+id/textViewInserisciImmagineAcquirente"
+        android:id="@+id/textViewInserisciImmagineVenditore"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/editTextDescrizioneCreaAstaAcquirente"
+        android:layout_below="@id/editTextDescrizioneCreaAstaVenditore"
         android:layout_marginStart="15dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="15dp"
         android:layout_marginEnd="15dp"
         android:layout_marginBottom="15dp"
         android:gravity="left"
@@ -99,32 +99,32 @@
         android:textStyle="bold" />
 
     <ImageButton
-        android:id="@+id/imageButtonInserisciImmagineCreaAstaAcquirente"
+        android:id="@+id/imageButtonInserisciImmagineCreaAstaVenditore"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/editTextDescrizioneCreaAstaAcquirente"
-        android:layout_toRightOf="@id/textViewInserisciImmagineAcquirente"
-        android:layout_marginTop="10dp"
+        android:layout_below="@id/editTextDescrizioneCreaAstaVenditore"
+        android:layout_toRightOf="@id/textViewInserisciImmagineVenditore"
+        android:layout_marginTop="15dp"
         android:src="@drawable/baseline_add_a_photo_24"
         android:onClick="onClickMethod"
-        android:contentDescription="CLicca per selezionare un immagine"/>
+        android:contentDescription="Clicca per selezionare un immagine"/>
 
 
     <ImageView
-        android:id="@+id/imageViewCreaAstaAcquirente"
+        android:id="@+id/imageViewCreaAstaVenditore"
         android:layout_width="200dp"
         android:layout_height="140dp"
-        android:layout_below="@+id/textViewInserisciImmagineAcquirente"
+        android:layout_below="@+id/textViewInserisciImmagineVenditore"
         android:scaleType="fitXY"
         />
 
 
 
     <TextView
-        android:id="@+id/textViewTipologiaAstaAcquirente"
+        android:id="@+id/textViewTipologiaAstaVenditore"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/imageViewCreaAstaAcquirente"
+        android:layout_below="@id/imageViewCreaAstaVenditore"
         android:layout_marginStart="15dp"
         android:layout_marginTop="15dp"
         android:layout_marginEnd="15dp"
@@ -135,20 +135,20 @@
         android:textStyle="bold" />
 
     <Spinner
-        android:id="@+id/spinnerTipologiaAstaAcquirente"
+        android:id="@+id/spinnerTipologiaAstaVenditore"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:layout_marginTop="10dp"
-        android:layout_below="@id/textViewTipologiaAstaAcquirente"
+        android:layout_marginTop="20dp"
+        android:layout_below="@id/textViewTipologiaAstaVenditore"
         android:background="#DCDCDC"
         />
 
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/bottoneProseguiCreaAstaAcquirente"
-        android:layout_width="131dp"
+        android:id="@+id/bottoneProsegui"
+        android:layout_width="130dp"
         android:layout_height="65dp"
-        android:layout_below="@id/spinnerTipologiaAstaAcquirente"
+        android:layout_below="@id/spinnerTipologiaAstaVenditore"
         android:layout_alignParentRight="true"
         android:layout_marginStart="20dp"
         android:layout_marginLeft="20dp"
@@ -159,7 +159,7 @@
         android:backgroundTint="#DCDCDC"
         android:text="Prosegui"
         android:textColor="@color/black"
-        android:textSize="20dp"
+        android:textSize="20sp"
         android:textStyle="bold" />
 
 

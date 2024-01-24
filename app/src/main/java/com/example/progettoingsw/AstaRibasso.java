@@ -3,6 +3,7 @@ package com.example.progettoingsw;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageButton;
 
 import com.example.progettoingsw.controllers_package.Controller;
 import com.google.android.material.button.MaterialButton;
@@ -10,30 +11,29 @@ import androidx.appcompat.app.AppCompatActivity;
 
 
 public class AstaRibasso extends AppCompatActivity{
-
-    Controller controller;
+    MaterialButton bottoneConferma;
+    ImageButton bottoneBack;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.asta_ribasso);
 
-        controller = new Controller();
 
-        MaterialButton bottoneConferma = (MaterialButton) findViewById(R.id.bottoneConfermaAstaRibasso);
-        MaterialButton bottoneBack = (MaterialButton) findViewById(R.id.bottoneBackAstaRibasso);
+        bottoneConferma =  findViewById(R.id.bottoneConfermaAstaRibasso);
+        bottoneBack =  findViewById(R.id.bottoneBackAstaRibasso);
 
 
         bottoneConferma.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                controller.redirectActivity(AstaRibasso.this, HomeUtente.class);
+                Controller.redirectActivity(AstaRibasso.this, FragmentHomeUtente.class);
             }
         });
 
-       /* bottoneBack.setOnClickListener(new View.OnClickListener() {
+        bottoneBack.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                redirectActivity(AstaInglese.this, ???.class);
+                onBackPressed();
             }
-        }); */
+        });
     }
 }
 

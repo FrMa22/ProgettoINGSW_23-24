@@ -41,7 +41,7 @@ public class PopUpRicercaCategorie extends AppCompatActivity {
         button_annulla.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                controller.redirectActivity(PopUpRicercaCategorie.this, SelezioneCategorie.class);
+                controller.redirectActivity(PopUpRicercaCategorie.this, FragmentSelezioneCategorie.class);
             }
         });
 

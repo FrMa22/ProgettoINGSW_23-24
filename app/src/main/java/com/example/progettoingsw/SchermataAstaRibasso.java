@@ -4,7 +4,6 @@ package com.example.progettoingsw;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -28,7 +27,7 @@ public class SchermataAstaRibasso extends AppCompatActivity {
 
         bottoneBack.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                Controller.redirectActivity(SchermataAstaRibasso.this, HomeUtente.class);
+                Controller.redirectActivity(SchermataAstaRibasso.this, FragmentHomeUtente.class);
             }
         });
 

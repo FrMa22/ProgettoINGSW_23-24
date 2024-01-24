@@ -1,31 +1,21 @@
 package com.example.progettoingsw;
 
-import android.app.Activity;
-import android.content.ClipData;
-import android.content.Intent;
 import android.content.res.Configuration;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.SubMenu;
 import android.view.View;
-import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.Group;
-import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.example.progettoingsw.controllers_package.Controller;
-import com.google.android.material.button.MaterialButton;
 import com.google.android.material.navigation.NavigationView;
 
 public class LeMieAste extends AppCompatActivity{
@@ -88,15 +78,15 @@ public class LeMieAste extends AppCompatActivity{
                         drawerLayout.closeDrawer(navigationView);
                     }
                 } else if(id==R.id.nav_cliccacategorie){
-                    Controller.redirectActivity(LeMieAste.this, SelezioneCategorie.class);
+                    Controller.redirectActivity(LeMieAste.this, FragmentSelezioneCategorie.class);
                 }else if(id==R.id.nav_esci){
-                    Controller.redirectActivity(LeMieAste.this, MainActivity.class);
+                    Controller.redirectActivity(LeMieAste.this, LoginActivity.class);
                 }else if (id == R.id.nav_profilo) {
-                    Controller.redirectActivity(LeMieAste.this, ProfiloActivity.class);
+                    Controller.redirectActivity(LeMieAste.this, FragmentProfilo.class);
                 }else if (id==R.id.nav_about_us){
                     Controller.redirectActivity(LeMieAste.this,AboutUs.class);
                 }else if (id==R.id.nav_crea_asta){
-                    Controller.redirectActivity(LeMieAste.this, CreaLaTuaAstaVenditore.class);
+                    Controller.redirectActivity(LeMieAste.this, CreaLaTuaAstaVenditoreFragment.class);
                 }
                 return true;
             }

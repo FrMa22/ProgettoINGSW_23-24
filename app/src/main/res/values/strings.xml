@@ -60,6 +60,7 @@
         <item>X.com/Utente</item>
         <item>Linkedin.com/Utente</item>
     </string-array>
+    <string name="title_activity_ricerca_per_categorie">RicercaPerCategorie</string>
 
 
 </resources>

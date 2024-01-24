@@ -3,7 +3,6 @@ package com.example.progettoingsw;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -28,7 +27,7 @@ public class SchermataAstaInglese extends AppCompatActivity {
 
         bottoneBack.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                controller.redirectActivity(SchermataAstaInglese.this, HomeUtente.class);
+                controller.redirectActivity(SchermataAstaInglese.this, FragmentHomeUtente.class);
             }
         });
 

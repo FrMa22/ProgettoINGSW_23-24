@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:id="@+id/relativeLayoutAstaInversa"
     android:background="#FFFFFF"
-    tools:context=".MainActivity"> <!-- da cambiare-->
+    tools:context=".AstaInversa"> <!-- da cambiare-->
 
     <TextView
         android:id="@+id/textViewTitoloAstaInversa"
@@ -26,6 +26,7 @@
         android:backgroundTint="@android:color/transparent"
         android:hint="@string/navigation_drawer_close"
         android:src="@drawable/baseline_arrow_back_ios_24"
+        android:contentDescription="Torna indietro"
         android:layout_marginLeft="10dp"
         />
 

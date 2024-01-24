@@ -4,7 +4,9 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
@@ -16,30 +18,42 @@ import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
-public class CreaLaTuaAstaAcquirente extends AppCompatActivity {
+public class FragmentCreaLaTuaAstaAcquirente extends Fragment {
 
     String opzioneSelezionata;
     ImageView immagineProdotto;
+    ImageButton bottoneInserisciImmagine;
+    Spinner spinnerTipoAsta;
+
+
     ActivityResultLauncher<Intent> resultLauncher;
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.crea_la_tua_asta_acquirente);
 
+    public FragmentCreaLaTuaAstaAcquirente() {
+        // Costruttore vuoto richiesto dal framework
+    }
 
-        immagineProdotto=(ImageView) findViewById(R.id.imageViewCreaAstaAcquirente);
-        ImageButton bottoneInserisciImmagine=(ImageButton) findViewById(R.id.imageButtonInserisciImmagineCreaAstaAcquirente);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view_fragment = inflater.inflate(R.layout.fragment_crea_la_tua_asta_acquirente, container, false);
+        return view_fragment;
+    }
+
+    public void onViewCreated(@NonNull View view_fragment, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view_fragment, savedInstanceState);
+
+        immagineProdotto= view_fragment.findViewById(R.id.imageViewCreaAstaAcquirente);
+        bottoneInserisciImmagine = view_fragment.findViewById(R.id.imageButtonInserisciImmagineCreaAstaAcquirente);
 
         registraRisultati();
 
         bottoneInserisciImmagine.setOnClickListener(view ->prelevaImmagine());//significa che chiama il metodo prelevaImmagine
 
 
-        Spinner spinnerTipoAsta=(Spinner) findViewById(R.id.spinnerTipologiaAstaAcquirente);
-        ArrayAdapter<CharSequence> adapterSpinnerTipoAsta=(ArrayAdapter<CharSequence>) ArrayAdapter.createFromResource(CreaLaTuaAstaAcquirente.this, R.array.elencoTipiAstaAcquirente, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item);
+        spinnerTipoAsta = view_fragment.findViewById(R.id.spinnerTipologiaAstaAcquirente);
+        ArrayAdapter<CharSequence> adapterSpinnerTipoAsta=(ArrayAdapter<CharSequence>) ArrayAdapter.createFromResource(requireContext(), R.array.elencoTipiAstaAcquirente, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item);
         adapterSpinnerTipoAsta.setDropDownViewResource(androidx.appcompat.R.layout.support_simple_spinner_dropdown_item);
         spinnerTipoAsta.setAdapter(adapterSpinnerTipoAsta);
 
@@ -75,11 +89,9 @@ public class CreaLaTuaAstaAcquirente extends AppCompatActivity {
                             Uri uriImmagine = result.getData().getData();
                             immagineProdotto.setImageURI(uriImmagine);
                         } catch (Exception e) {
-                            Toast.makeText(CreaLaTuaAstaAcquirente.this, "Nessuna Immagine selezionata", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(requireContext(), "Nessuna Immagine selezionata", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
     }
-
-
-}
+    }

@@ -54,17 +54,17 @@ public class AboutUs extends AppCompatActivity {
                 int id = menuItem.getItemId();
 
                 if (id == R.id.nav_home) {
-                    controller.redirectActivity(AboutUs.this, HomeUtente.class);
+                    controller.redirectActivity(AboutUs.this, FragmentHomeUtente.class);
                 } else if (id == R.id.nav_profilo) {
-                    controller.redirectActivity(AboutUs.this, ProfiloActivity.class);
+                    controller.redirectActivity(AboutUs.this, FragmentProfilo.class);
                 } else if (id == R.id.nav_cliccacategorie) {
-                    controller.redirectActivity(AboutUs.this, SelezioneCategorie.class);
+                    controller.redirectActivity(AboutUs.this, FragmentSelezioneCategorie.class);
                 } else if (id == R.id.nav_about_us) {
                     if (drawerLayout.isOpen()) {
                         drawerLayout.closeDrawer(navigationView);
                     }
                 } else if (id == R.id.nav_esci) {
-                    controller.redirectActivity(AboutUs.this, MainActivity.class);
+                    controller.redirectActivity(AboutUs.this, LoginActivity.class);
                 }
 
                 return true;

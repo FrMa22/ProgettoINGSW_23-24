@@ -48,7 +48,7 @@ public class InteressiRegistrazione extends AppCompatActivity {
 
         bottoneProseguiInteressiRegistrazione.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                controller.redirectActivity(InteressiRegistrazione.this, HomeUtente.class);
+                controller.redirectActivity(InteressiRegistrazione.this, FragmentHomeUtente.class);
 
             }
         });

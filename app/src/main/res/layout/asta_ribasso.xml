@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:id="@+id/relativeLayoutAstaRibasso"
     android:background="#FFFFFF"
-    tools:context=".HomeUtente">  <!-- da cambiare-->
+    tools:context=".FragmentHomeUtente">  <!-- da cambiare-->
 
     <TextView
         android:id="@+id/textViewTitoloAstaRibasso"
@@ -24,7 +24,7 @@
         android:layout_width="60dp"
         android:layout_height="80dp"
         android:backgroundTint="@android:color/transparent"
-        android:hint="@string/navigation_drawer_close"
+        android:contentDescription="Premi per tornare indietro."
         android:src="@drawable/baseline_arrow_back_ios_24"
         android:layout_marginLeft="10dp"
         />

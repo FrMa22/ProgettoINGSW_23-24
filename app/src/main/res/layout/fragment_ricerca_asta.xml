@@ -1,15 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/drawer_layout"
-    tools:context=".RicercaAstaActivity">
+    tools:context=".FragmentRicercaAsta">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="0dp"
+        android:layout_weight="1">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -19,9 +26,9 @@
             <androidx.appcompat.widget.Toolbar
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
-                android:background="@color/toolbar_color">
+                android:background="#FFFFFF">
 
-                <ImageButton
+                <!--<ImageButton
                     android:id="@+id/openDrawerButton"
                     android:layout_width="50dp"
                     android:layout_height="wrap_content"
@@ -29,23 +36,32 @@
                     android:layout_marginLeft="-30dp"
                     android:backgroundTint="@android:color/transparent"
                     android:contentDescription="Clicca per aprire il menu."
-                    android:src="@drawable/ic_menu" />
+                    android:src="@drawable/ic_menu" />-->
 
                 <EditText
                     android:id="@+id/edittext_ricerca"
-                    android:layout_width="220dp"
-                    android:layout_height="50dp"
-                    android:layout_marginLeft="50dp"
+                    android:layout_width="300dp"
+                    android:layout_height="48dp"
+                    android:layout_gravity="start"
                     android:background="@drawable/bordo_bianco_edittext"
-                    android:drawableRight="@drawable/ic_search"
+                    android:backgroundTint="#ECECEC"
+                    android:drawableStart="@drawable/ic_search"
                     android:hint="Cerca"
                     android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
+                    android:drawablePadding="10dp"
                     android:singleLine="true"
                     android:textColor="@color/black"
                     android:textSize="30sp" />
-
                 <ImageButton
+                    android:id="@+id/button_filtro"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:backgroundTint="@android:color/transparent"
+                    android:contentDescription="Premi per inserire filtri per la ricerca"
+                    android:src="@drawable/ic_filtro" />
+
+                <!--<ImageButton
                     android:id="@+id/openPreferiti"
                     android:layout_width="50dp"
                     android:layout_height="wrap_content"
@@ -53,37 +69,25 @@
                     android:backgroundTint="@android:color/transparent"
                     android:contentDescription="Clicca per aprire i preferiti."
                     android:drawableTint="@android:color/transparent"
-                    android:src="@drawable/ic_favourite" />
+                    android:src="@drawable/ic_favourite" />-->
 
-                <ImageButton
+                <!--<ImageButton
                     android:id="@+id/openProfiloButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
                     android:backgroundTint="@android:color/transparent"
                     android:contentDescription="Clicca per aprire il profilo."
-                    android:src="@drawable/ic_profilo" />
+                    android:src="@drawable/ic_profilo" />-->
 
             </androidx.appcompat.widget.Toolbar>
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="70dp">
                 <TextView
                     android:layout_width="350dp"
                     android:layout_height="3dp"
-                    android:layout_alignParentBottom="true"
-                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="center"
                     android:background="@color/black" />
-                <ImageButton
-                    android:id="@+id/button_filtro"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:backgroundTint="@android:color/transparent"
-                    android:contentDescription="Premi per inserire filtri per la ricerca"
-                    android:src="@drawable/ic_filtro" />
-            </RelativeLayout>
+
 
             <GridLayout
                 android:layout_width="match_parent"
@@ -175,11 +179,6 @@
     </ScrollView>
 
 
-    <com.google.android.material.navigation.NavigationView
-        android:id="@+id/navigation_view"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        app:headerLayout="@layout/header_drawer"
-        app:menu="@menu/drawer_menu" />
-</androidx.drawerlayout.widget.DrawerLayout>
+    </LinearLayout>
+
+</LinearLayout>

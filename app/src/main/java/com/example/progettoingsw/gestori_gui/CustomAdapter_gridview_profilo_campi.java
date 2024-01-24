@@ -75,6 +75,7 @@ public class CustomAdapter_gridview_profilo_campi extends BaseAdapter {
         if (position < array_campi_gridview.size() && position < array_dati_gridview.size()) {
             holder.textViewLeft.setText(array_campi_gridview.get(position));
             holder.editTextRight.setText(array_dati_gridview.get(position));
+//            holder.buttonModifica = convertView.findViewById(R.id.tuo_id_del_bottone);
         }
 
 
