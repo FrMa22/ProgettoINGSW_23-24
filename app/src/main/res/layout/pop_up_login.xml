@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/transparent">
+<androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="370dp"
     android:layout_height="300dp"
     android:layout_gravity="center"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/bordo_non_stondato"
-    android:backgroundTint="#8866B2FF"
     tools:context=".PopUpLogin">
 
     <TextView
@@ -18,9 +22,10 @@
         android:textSize="30sp"
         android:textAlignment="center"
         android:padding="16dp"
+        android:textColor="@color/colore_secondario"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -39,7 +44,7 @@
             android:layout_height="80dp"
             android:layout_marginStart="20dp"
             android:text="Acquirente"
-            android:textColor="#AA00FF"
+            android:textColor="@color/colore_secondario"
             android:textSize="22sp"
             android:textStyle="bold"
             android:background="@drawable/bordo_rettangolare_per_bottone"
@@ -56,7 +61,7 @@
             android:layout_gravity="end"
             android:layout_marginEnd="20dp"
             android:text="Venditore"
-            android:textColor="#AA00FF"
+            android:textColor="@color/colore_secondario"
             android:textSize="22sp"
             android:textStyle="bold"
             android:background="@drawable/bordo_rettangolare_per_bottone"
@@ -65,6 +70,6 @@
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
-
+</FrameLayout>
 
 

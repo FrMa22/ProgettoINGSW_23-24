@@ -6,6 +6,7 @@ import android.widget.CheckBox;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import com.example.progettoingsw.controllers_package.Controller;
 import com.google.android.material.button.MaterialButton;
@@ -20,6 +21,7 @@ public class InteressiRegistrazione extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.interessi_registrazione);
         controller = new Controller();
+        getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.status_bar_color));
 
         MaterialButton bottoneProseguiInteressiRegistrazione= (MaterialButton) findViewById(R.id.bottoneProseguiInteressiRegistrazione);
         ArrayList<String> ElencoInteressiRegistrazione=new ArrayList<String>();

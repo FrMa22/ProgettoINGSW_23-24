@@ -8,6 +8,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import com.example.progettoingsw.controllers_package.Controller;
 import com.google.android.material.button.MaterialButton;
@@ -24,7 +25,7 @@ public class SchermataAstaRibasso extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.schermata_asta_ribasso);
         bottoneBack =  findViewById(R.id.bottoneBackSchermataAstaRibasso);
-
+        getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.status_bar_color));
         bottoneBack.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 Controller.redirectActivity(SchermataAstaRibasso.this, FragmentHomeUtente.class);

@@ -5,68 +5,16 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".FragmentHomeUtente">
+    tools:context=".FragmentHomeUtente"
+    android:backgroundTint="@color/colore_base">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/colore_base"
         android:orientation="vertical">
 
-        <!--<androidx.appcompat.widget.Toolbar
-            android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:background="@drawable/bordo_solo_sotto">
 
-
-            <ImageButton
-                android:id="@+id/openDrawerButton"
-                android:layout_width="50dp"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="10dp"
-                android:layout_gravity="start"
-                android:src="@drawable/ic_menu"
-                android:backgroundTint="@android:color/transparent"
-                android:contentDescription="Clicca per aprire il menu." />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Home"
-                android:textColor="@color/black"
-                android:textSize="35sp"
-                android:textStyle="bold"
-                />
-
-
-                    <ImageButton
-                   android:id="@+id/openProfiloButton"
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:src="@drawable/ic_profilo"
-                   android:layout_marginLeft="60dp"
-                   android:backgroundTint="@android:color/transparent"
-                   android:contentDescription="Clicca per aprire il profilo." />
-
-            <ImageButton
-                android:id="@+id/openPreferiti"
-                android:layout_width="50dp"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_favourite"
-                android:layout_marginLeft="110dp"
-                android:backgroundTint="@android:color/transparent"
-                android:contentDescription="Clicca per aprire i preferiti."
-                android:drawableTint="@android:color/transparent" />
-
-
-            <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:contentDescription="Premi per cercare"
-                android:src="@drawable/ic_search"
-                android:backgroundTint="@android:color/transparent"/>
-
-        </androidx.appcompat.widget.Toolbar>-->
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -76,7 +24,6 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/sfondo_home"
                 android:orientation="vertical">
 
 
@@ -87,18 +34,19 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="NomeApp"
+                        android:text="Home"
+                        android:textColor="@color/colore_secondario"
                         android:textStyle="bold"
-                        android:textSize="40sp"
-                        android:layout_gravity="start"
-                        android:layout_marginLeft="20dp"/>
+                        android:textSize="50sp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_gravity="start"/>
                     <ImageButton
                         android:id="@+id/openPreferiti"
                         android:layout_width="50dp"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/ic_favourite"
+                        android:src="@drawable/ic_preferiti_non_riempita"
                         android:layout_gravity="end"
-                        android:layout_marginRight="10dp"
+                        android:layout_marginRight="20dp"
                         android:backgroundTint="@android:color/transparent"
                         android:contentDescription="Clicca per aprire i preferiti."
                         android:drawableTint="@android:color/transparent" />
@@ -114,7 +62,7 @@
                     android:drawablePadding="30dp"
                     android:gravity="center_vertical"
                     android:text="Consigliati per te"
-                    android:textColor="@color/black"
+                    android:textColor="@color/colore_secondario"
                     android:textSize="25sp"
                     android:textStyle="bold" />
 
@@ -132,34 +80,45 @@
 
                         <LinearLayout
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="5dp"
-                            android:background="@drawable/bordo_stondato_bluscuro"
+                            android:layout_height="250dp"
+                            android:layout_marginStart="10dp"
+                            android:background="@drawable/home_item_design"
                             android:orientation="vertical">
 
-                            <ImageView
-                                android:layout_width="200dp"
-                                android:layout_height="170dp"
-                                android:layout_gravity="center"
-                                android:layout_marginTop="10dp"
-                                android:contentDescription="Immagine"
-                                android:src="@drawable/prova_home_lavatrice" />
+                            <RelativeLayout
+                                android:layout_width="160dp"
+                                android:layout_height="180dp"
+                                android:layout_margin="10dp"
+                                android:background="@drawable/home_item_design"
+                                >
+
+                                <ImageView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginStart="20dp"
+                                    android:layout_marginTop="20dp"
+                                    android:layout_marginEnd="20dp"
+                                    android:layout_marginBottom="20dp"
+                                    android:contentDescription="Immagine"
+                                    android:src="@drawable/prova_home_lavatrice" />
+                            </RelativeLayout>
+
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="5dp"
+                                android:layout_marginStart="10dp"
                                 android:layout_marginTop="-5dp"
-                                android:text="Lavatrice "
-                                android:textColor="@color/black"
+                                android:text="Lavatrice"
+                                android:textColor="@color/white"
                                 android:textSize="20sp" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="5dp"
+                                android:layout_marginStart="10dp"
                                 android:text="200€"
-                                android:textColor="@color/black"
+                                android:textColor="@color/white"
                                 android:textSize="20sp" />
 
 
@@ -167,33 +126,41 @@
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="250dp"
                             android:layout_marginLeft="15dp"
-                            android:background="@drawable/bordo_stondato_bluscuro"
+                            android:background="@drawable/home_item_design"
                             android:orientation="vertical">
 
-                            <ImageView
-                                android:layout_width="200dp"
-                                android:layout_height="170dp"
-                                android:layout_marginTop="10dp"
-                                android:contentDescription="Immagine"
-                                android:src="@drawable/prova_home_albero_di_natale" />
+                            <RelativeLayout
+                                android:layout_width="160dp"
+                                android:layout_height="180dp"
+                                android:layout_margin="10dp"
+                                android:background="@drawable/home_item_design"
+                                >
+
+                                <ImageView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_margin="20dp"
+                                    android:contentDescription="Immagine"
+                                    android:src="@drawable/prova_home_albero_di_natale" />
+                            </RelativeLayout>
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="5dp"
+                                android:layout_marginStart="10dp"
                                 android:layout_marginTop="-5dp"
                                 android:text="Albero di natale"
-                                android:textColor="@color/black"
+                                android:textColor="@color/white"
                                 android:textSize="20sp" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="5dp"
+                                android:layout_marginStart="10dp"
                                 android:text="40€"
-                                android:textColor="@color/black"
+                                android:textColor="@color/white"
                                 android:textSize="20sp" />
 
 
@@ -234,7 +201,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="vertical"
-                            android:background="@drawable/bordo_stondato_bluscuro">
+                            android:background="@drawable/bottom_nav_design">
 
                             <ImageView
                                 android:layout_width="200dp"
@@ -266,7 +233,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="vertical"
-                            android:background="@drawable/bordo_stondato_bluscuro">
+                            android:background="@drawable/bottom_nav_design">
 
                             <ImageView
                                 android:layout_width="200dp"
@@ -330,7 +297,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="vertical"
-                            android:background="@drawable/bordo_stondato_bluscuro">
+                            android:background="@drawable/bottom_nav_design">
 
                             <ImageView
                                 android:layout_width="250dp"
@@ -351,7 +318,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="vertical"
-                            android:background="@drawable/bordo_stondato_bluscuro">
+                            android:background="@drawable/bottom_nav_design">
 
                             <ImageView
                                 android:layout_width="250dp"

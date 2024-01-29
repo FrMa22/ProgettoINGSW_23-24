@@ -29,7 +29,7 @@
             <androidx.appcompat.widget.Toolbar
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
-                android:background="@color/toolbar_color">
+                android:background="@color/colore_base">
 
 
                 <TextView
@@ -37,7 +37,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:text="Profilo"
-                    android:textColor="@color/black"
+                    android:textColor="@color/colore_secondario"
                     android:textSize="35sp"
                     android:textStyle="bold" />
 
@@ -57,7 +57,13 @@
 
 
         </androidx.appcompat.widget.Toolbar>
-
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@color/colore_secondario"
+                android:layout_gravity="center"
+                android:layout_marginTop="-1dp"
+                android:layout_marginBottom="10dp"/>
 
 
 
@@ -91,6 +97,7 @@
                             android:textStyle="bold"
                             android:textSize="20sp"
                             android:gravity="center"
+                            android:textColor="@color/colore_secondario"
                             />
                         <TextView
                             android:id="@+id/textview_nome"
@@ -100,16 +107,17 @@
                             android:layout_height="match_parent"
                             android:gravity="center"
                             android:textSize="20sp"
-                            android:textColor="@color/black"/>
+                            android:textColor="@color/colore_secondario"
+                            />
 
 
                     </LinearLayout>
-                    <TextView
+                    <View
                         android:layout_width="320dp"
                         android:layout_height="1dp"
+                        android:background="@color/colore_secondario"
                         android:layout_gravity="center"
-                        android:background="@color/black"
-                        />
+                        android:layout_marginTop="-1dp"/>
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
@@ -123,6 +131,7 @@
                             android:layout_height="match_parent"
                             android:text="Cognome"
                             android:textStyle="bold"
+                            android:textColor="@color/colore_secondario"
                             android:textSize="20sp"
                             android:gravity="center"
                             />
@@ -134,15 +143,15 @@
                             android:gravity="center"
                             android:text="Rossi"
                             android:textSize="20sp"
-                            android:textColor="@color/black"/>
+                            android:textColor="@color/colore_secondario"/>
 
                     </LinearLayout>
-                    <TextView
+                    <View
                         android:layout_width="320dp"
                         android:layout_height="1dp"
+                        android:background="@color/colore_secondario"
                         android:layout_gravity="center"
-                        android:background="@color/black"
-                        />
+                        android:layout_marginTop="-1dp"/>
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
@@ -156,6 +165,7 @@
                             android:layout_height="match_parent"
                             android:text="Email"
                             android:textStyle="bold"
+                            android:textColor="@color/colore_secondario"
                             android:textSize="20sp"
                             android:gravity="center"
                             />
@@ -168,15 +178,15 @@
                             android:text="mariorossi@gmail.com"
                             android:singleLine="true"
                             android:textSize="20sp"
-                            android:textColor="@color/black"/>
+                            android:textColor="@color/colore_secondario"/>
 
                     </LinearLayout>
-                    <TextView
+                    <View
                         android:layout_width="320dp"
                         android:layout_height="1dp"
+                        android:background="@color/colore_secondario"
                         android:layout_gravity="center"
-                        android:background="@color/black"
-                        />
+                        android:layout_marginTop="-1dp"/>
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
@@ -190,6 +200,7 @@
                             android:layout_height="match_parent"
                             android:text="Sito web"
                             android:textStyle="bold"
+                            android:textColor="@color/colore_secondario"
                             android:textSize="20sp"
                             android:gravity="center"
                             />
@@ -202,15 +213,15 @@
                             android:singleLine="true"
                             android:text="MarioRossi.it"
                             android:textSize="20sp"
-                            android:textColor="@color/black"/>
+                            android:textColor="@color/colore_secondario"/>
 
                     </LinearLayout>
-                    <TextView
+                    <View
                         android:layout_width="320dp"
                         android:layout_height="1dp"
+                        android:background="@color/colore_secondario"
                         android:layout_gravity="center"
-                        android:background="@color/black"
-                        />
+                        android:layout_marginTop="-1dp"/>
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
@@ -225,9 +236,10 @@
                             android:text="Paese"
                             android:textStyle="bold"
                             android:textSize="20sp"
+                            android:textColor="@color/colore_secondario"
                             android:gravity="center"
                             />
-                        <EditText
+                        <TextView
                             android:id="@+id/textview_paese"
                             android:layout_width="0dp"
                             android:layout_weight="1"
@@ -235,26 +247,27 @@
                             android:gravity="center"
                             android:text="Italia"
                             android:textSize="20sp"
-                            android:textColor="@color/black"/>
+                            android:textColor="@color/colore_secondario"/>
 
                     </LinearLayout>
 
                 </GridLayout>
 
 
-                <TextView
+                <View
                     android:layout_width="320dp"
                     android:layout_height="1dp"
+                    android:background="@color/colore_secondario"
                     android:layout_gravity="center"
-                    android:layout_marginTop="5dp"
-                    android:background="@color/black"
-                    />
+                    android:layout_marginTop="-1dp"
+                    android:layout_marginBottom="5dp"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingLeft="20dp"
                     android:paddingTop="10dp"
                     android:text="Social:"
+                    android:textColor="@color/colore_secondario"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
@@ -278,11 +291,11 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginBottom="20dp"
-                    android:background="@drawable/bordo_colorato"
+                    android:background="@drawable/design_bio_personale"
                     android:hint="Biografia"
+                    android:textColorHint="@color/colore_hint"
                     android:minHeight="48dp"
-                    android:paddingLeft="10dp"
-                    android:editable="false"/>
+                    android:paddingLeft="10dp"/>
             </LinearLayout>
 
             <Button
@@ -298,20 +311,24 @@
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/button_log_out_profilo"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="65dp"
                 android:layout_gravity="end"
-                android:layout_marginRight="10dp"
-                android:layout_marginBottom="10dp"
-                android:backgroundTint="#00F0FF"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="20dp"
+                android:backgroundTint="@color/colore_base"
+                app:strokeWidth="2dp"
+                app:strokeColor="#AAAAAA"
                 android:contentDescription="premi per uscire dall'account"
                 android:text="Log Out"
-                android:textColor="@color/black"
-                android:textSize="30sp"
-                android:textStyle="bold" />
-
+                android:textColor="@color/colore_secondario"
+                android:textSize="25sp"
+                android:drawableRight="@drawable/ic_log_out"
+                android:gravity="center"
+                android:paddingEnd="12dp"
+                android:paddingStart="15dp"/>
 
 
 

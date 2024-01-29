@@ -13,4 +13,14 @@
     <string-array name="elencoTipiAstaAcquirente">
         <item>Asta inversa</item>
     </string-array>
+
+        <string-array name="item_names_and_images">
+            <item>Arte</item>
+            <item>@drawable/ic_arte</item>
+            <item>Elettrodomestici</item>
+            <item>@drawable/ic_elettrodomestici</item>
+            <!-- Aggiungi altri nomi e riferimenti di immagini secondo necessità -->
+        </string-array>
+
+
 </resources>

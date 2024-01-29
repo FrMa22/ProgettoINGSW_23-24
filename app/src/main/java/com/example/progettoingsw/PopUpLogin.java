@@ -22,7 +22,7 @@ public class PopUpLogin extends AppCompatActivity {
         getWindowManager().getDefaultDisplay().getMetrics(metricaDisplay);
         int width = metricaDisplay.widthPixels;
         int height = metricaDisplay.heightPixels;
-        getWindow().setLayout((int)(width*.95),(int)(height*.385));
+        getWindow().setLayout((int)(width*.100),(int)(height*.500));
         getWindow().setGravity(Gravity.CENTER);
         bottoneAcquirente = findViewById(R.id.bottoneAcquirente);
         bottoneAcquirente.setOnClickListener(new View.OnClickListener() {

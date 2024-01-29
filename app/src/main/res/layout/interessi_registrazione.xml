@@ -12,12 +12,18 @@
         android:id="@+id/textViewRaccontaciDeiTuoiInteressi"
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:background="@color/toolbar_color"
+        android:background="@color/colore_base"
         android:gravity="center"
         android:text="Raccontaci dei tuoi interessi selezionando tra le seguenti categorie"
         android:textSize="22sp"
-        android:textStyle="bold" />
-
+        android:textStyle="bold"
+        android:textColor="@color/colore_secondario"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/colore_secondario"
+        android:layout_gravity="center"
+        android:layout_marginTop="-1dp"/>
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -27,7 +33,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/white"
+            android:background="@color/colore_base"
             android:orientation="vertical">
 
             <CheckBox
@@ -41,7 +47,7 @@
                 android:layoutDirection="rtl"
                 android:text="Arte"
                 android:textAlignment="center"
-                android:textColor="@color/black"
+                android:textColor="@color/colore_secondario"
                 android:textSize="30sp"
                 android:textStyle="bold" />
 
@@ -56,7 +62,7 @@
                 android:layoutDirection="rtl"
                 android:text="Elettrodomestici"
                 android:textAlignment="center"
-                android:textColor="@color/black"
+                android:textColor="@color/colore_secondario"
                 android:textSize="30sp"
                 android:textStyle="bold" />
 
@@ -71,7 +77,7 @@
                 android:layoutDirection="rtl"
                 android:text="Automobili"
                 android:textAlignment="center"
-                android:textColor="@color/black"
+                android:textColor="@color/colore_secondario"
                 android:textSize="30sp"
                 android:textStyle="bold" />
 
@@ -86,7 +92,7 @@
                 android:layoutDirection="rtl"
                 android:text="Moto"
                 android:textAlignment="center"
-                android:textColor="@color/black"
+                android:textColor="@color/colore_secondario"
                 android:textSize="30sp"
                 android:textStyle="bold" />
 
@@ -102,7 +108,7 @@
                 android:paddingLeft="10dp"
                 android:text="Auto d'epoca"
                 android:textAlignment="center"
-                android:textColor="@color/black"
+                android:textColor="@color/colore_secondario"
                 android:textSize="30sp"
                 android:textStyle="bold" />
 
@@ -118,7 +124,7 @@
                 android:paddingLeft="10dp"
                 android:text="Moto d'epoca"
                 android:textAlignment="center"
-                android:textColor="@color/black"
+                android:textColor="@color/colore_secondario"
                 android:textSize="30sp"
                 android:textStyle="bold" />
 
@@ -134,7 +140,7 @@
                 android:paddingLeft="10dp"
                 android:text="Telefonia"
                 android:textAlignment="center"
-                android:textColor="@color/black"
+                android:textColor="@color/colore_secondario"
                 android:textSize="30sp"
                 android:textStyle="bold" />
 
@@ -150,7 +156,7 @@
                 android:paddingLeft="10dp"
                 android:text="Computer"
                 android:textAlignment="center"
-                android:textColor="@color/black"
+                android:textColor="@color/colore_secondario"
                 android:textSize="30sp"
                 android:textStyle="bold" />
 
@@ -166,7 +172,7 @@
                 android:paddingLeft="10dp"
                 android:text="Musica"
                 android:textAlignment="center"
-                android:textColor="@color/black"
+                android:textColor="@color/colore_secondario"
                 android:textSize="30sp"
                 android:textStyle="bold" />
 
@@ -182,7 +188,7 @@
                 android:paddingLeft="10dp"
                 android:text="Libri"
                 android:textAlignment="center"
-                android:textColor="@color/black"
+                android:textColor="@color/colore_secondario"
                 android:textSize="30sp"
                 android:textStyle="bold" />
 
@@ -198,7 +204,7 @@
                 android:paddingLeft="10dp"
                 android:text="Arredamento casa"
                 android:textAlignment="center"
-                android:textColor="@color/black"
+                android:textColor="@color/colore_secondario"
                 android:textSize="30sp"
                 android:textStyle="bold" />
 
@@ -214,7 +220,7 @@
                 android:paddingLeft="10dp"
                 android:text="Fumetti"
                 android:textAlignment="center"
-                android:textColor="@color/black"
+                android:textColor="@color/colore_secondario"
                 android:textSize="30sp"
                 android:textStyle="bold" />
 
@@ -230,7 +236,7 @@
                 android:paddingLeft="10dp"
                 android:text="Esterni casa"
                 android:textAlignment="center"
-                android:textColor="@color/black"
+                android:textColor="@color/colore_secondario"
                 android:textSize="30sp"
                 android:textStyle="bold" />
 
@@ -246,7 +252,7 @@
                 android:paddingLeft="10dp"
                 android:text="Sport"
                 android:textAlignment="center"
-                android:textColor="@color/black"
+                android:textColor="@color/colore_secondario"
                 android:textSize="30sp"
                 android:textStyle="bold" />
 
@@ -262,7 +268,7 @@
                 android:paddingLeft="10dp"
                 android:text="Vestiario"
                 android:textAlignment="center"
-                android:textColor="@color/black"
+                android:textColor="@color/colore_secondario"
                 android:textSize="30sp"
                 android:textStyle="bold" />
 
@@ -277,7 +283,7 @@
                 android:layoutDirection="rtl"
                 android:text="Gioielli e Accessori"
                 android:textAlignment="center"
-                android:textColor="@color/black"
+                android:textColor="@color/colore_secondario"
                 android:textSize="30sp"
                 android:textStyle="bold" />
 
@@ -293,7 +299,7 @@
                 android:paddingLeft="10dp"
                 android:text="Giocattoli"
                 android:textAlignment="center"
-                android:textColor="@color/black"
+                android:textColor="@color/colore_secondario"
                 android:textSize="30sp"
                 android:textStyle="bold" />
 
@@ -309,7 +315,7 @@
                 android:paddingLeft="10dp"
                 android:text="Fotografia"
                 android:textAlignment="center"
-                android:textColor="@color/black"
+                android:textColor="@color/colore_secondario"
                 android:textSize="30sp"
                 android:textStyle="bold" />
 
@@ -317,22 +323,45 @@
 
 
     </ScrollView>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/colore_secondario"
+        android:layout_gravity="center"
+        android:layout_marginTop="-1dp"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:background="@color/toolbar_color">
+        android:layout_height="100dp"
+        android:background="@color/colore_base"
+        >
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/bottoneAnnullaRegistrazione"
+            android:layout_width="150dp"
+            android:layout_height="70dp"
+            android:layout_marginStart="20dp"
+            android:backgroundTint="@color/colore_secondario"
+            android:textColor="@color/colore_base"
+            android:text="Annulla"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_alignParentStart="true"
+            />
+
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/bottoneProseguiInteressiRegistrazione"
-            android:layout_width="130dp"
-            android:layout_height="60dp"
-            android:layout_centerInParent="true"
-            android:backgroundTint="@color/white"
+            android:layout_width="150dp"
+            android:layout_height="70dp"
+            android:layout_marginEnd="20dp"
+            android:backgroundTint="@color/colore_secondario"
+            android:textColor="@color/colore_base"
             android:text="Prosegui"
-            android:textColor="@color/black"
             android:textSize="20sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:layout_alignParentEnd="true" />
     </RelativeLayout>
 
 

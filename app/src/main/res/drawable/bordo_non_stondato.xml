@@ -4,9 +4,13 @@
 
     <item>
         <shape>
+            <corners
+                android:radius="10dp"/>
             <stroke
                 android:width="3dp"
-                android:color="#66B2FF" />
+                android:color="@color/colore_secondario" />
+            <solid android:color="@color/colore_base" />
         </shape>
+
     </item>
 </layer-list>

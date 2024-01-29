@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.example.progettoingsw.controllers_package.Controller;
@@ -35,7 +36,7 @@ public class LeMieAste extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.le_mie_aste);
-
+        getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.status_bar_color));
         controller = new Controller();
 
         preferitiButton = findViewById(R.id.openPreferiti);
@@ -86,7 +87,7 @@ public class LeMieAste extends AppCompatActivity{
                 }else if (id==R.id.nav_about_us){
                     Controller.redirectActivity(LeMieAste.this,AboutUs.class);
                 }else if (id==R.id.nav_crea_asta){
-                    Controller.redirectActivity(LeMieAste.this, CreaLaTuaAstaVenditoreFragment.class);
+                    Controller.redirectActivity(LeMieAste.this, FragmentCreaLaTuaAstaVenditore.class);
                 }
                 return true;
             }

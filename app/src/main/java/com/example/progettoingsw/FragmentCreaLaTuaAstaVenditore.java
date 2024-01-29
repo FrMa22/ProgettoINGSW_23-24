@@ -25,7 +25,7 @@ import androidx.fragment.app.Fragment;
 import com.example.progettoingsw.controllers_package.Controller;
 import com.google.android.material.button.MaterialButton;
 
-public class CreaLaTuaAstaVenditoreFragment extends Fragment {
+public class FragmentCreaLaTuaAstaVenditore extends Fragment {
     public int selezione_asta=0;
     String opzioneSelezionata;
     ImageView immagineProdotto;

@@ -26,17 +26,8 @@
             <androidx.appcompat.widget.Toolbar
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
-                android:background="#FFFFFF">
+                android:background="@color/colore_base">
 
-                <!--<ImageButton
-                    android:id="@+id/openDrawerButton"
-                    android:layout_width="50dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="start"
-                    android:layout_marginLeft="-30dp"
-                    android:backgroundTint="@android:color/transparent"
-                    android:contentDescription="Clicca per aprire il menu."
-                    android:src="@drawable/ic_menu" />-->
 
                 <EditText
                     android:id="@+id/edittext_ricerca"
@@ -46,12 +37,14 @@
                     android:background="@drawable/bordo_bianco_edittext"
                     android:backgroundTint="#ECECEC"
                     android:drawableStart="@drawable/ic_search"
+                    android:drawablePadding="10dp"
                     android:hint="Cerca"
                     android:paddingLeft="10dp"
-                    android:drawablePadding="10dp"
                     android:singleLine="true"
                     android:textColor="@color/black"
+                    android:textColorHint="@color/colore_hint"
                     android:textSize="30sp" />
+
                 <ImageButton
                     android:id="@+id/button_filtro"
                     android:layout_width="wrap_content"
@@ -61,32 +54,16 @@
                     android:contentDescription="Premi per inserire filtri per la ricerca"
                     android:src="@drawable/ic_filtro" />
 
-                <!--<ImageButton
-                    android:id="@+id/openPreferiti"
-                    android:layout_width="50dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:backgroundTint="@android:color/transparent"
-                    android:contentDescription="Clicca per aprire i preferiti."
-                    android:drawableTint="@android:color/transparent"
-                    android:src="@drawable/ic_favourite" />-->
-
-                <!--<ImageButton
-                    android:id="@+id/openProfiloButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="end"
-                    android:backgroundTint="@android:color/transparent"
-                    android:contentDescription="Clicca per aprire il profilo."
-                    android:src="@drawable/ic_profilo" />-->
 
             </androidx.appcompat.widget.Toolbar>
 
-                <TextView
-                    android:layout_width="350dp"
-                    android:layout_height="3dp"
-                    android:layout_gravity="center"
-                    android:background="@color/black" />
+            <View
+                android:layout_width="350dp"
+                android:layout_height="1dp"
+                android:background="@color/colore_secondario"
+                android:layout_gravity="center"
+                android:layout_marginTop="-1dp"
+                android:layout_marginBottom="10dp"/>
 
 
             <GridLayout

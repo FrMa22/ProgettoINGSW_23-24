@@ -6,6 +6,7 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 public class ElencoCategorie extends AppCompatActivity {
 
@@ -13,7 +14,7 @@ public class ElencoCategorie extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_elenco_categorie);
-
+        getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.status_bar_color));
         /*ImageButton imageButtonArte = findViewById(R.id.ImageButtonArte);
         ImageButton imageButtonAutomobili = findViewById(R.id.ImageButtonAutomobili);
 

@@ -7,13 +7,14 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import com.example.progettoingsw.controllers_package.Controller;
 import com.google.android.material.button.MaterialButton;
 
 public class SchermataAstaInversa extends AppCompatActivity {
     Controller controller;
-    MaterialButton bottoneBack;
+    ImageButton bottoneBack;
     MaterialButton bottoneProfiloAcquirente;
     ImageButton bottoneNuovaOfferta;
     String prezzo;
@@ -23,7 +24,8 @@ public class SchermataAstaInversa extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.schermata_asta_inversa);
-        bottoneBack = (MaterialButton) findViewById(R.id.bottoneBackSchermataAstaInversa);
+        getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.status_bar_color));
+        bottoneBack = (ImageButton) findViewById(R.id.bottoneBackSchermataAstaInversa);
 
         bottoneBack.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {

@@ -5,43 +5,34 @@
     android:id="@+id/linear_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#001933"
+    android:background="@color/colore_base"
+    tools:context=".LoginActivity"
     android:orientation="vertical"
-    tools:context=".LoginActivity">
+    android:fitsSystemWindows="true">
 
 
-    <TextView
-        android:id="@+id/textViewBenvenuto"
-        android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:layout_marginBottom="-1dp"
-        android:gravity="center"
-        android:text="AppAste"
-        android:textColor="@color/white"
-        android:textSize="70sp"
-        android:textStyle="bold" />
+        <TextView
+            android:id="@+id/textViewBenvenuto"
+            android:layout_width="320dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="AstApp"
+            android:textColor="@color/colore_secondario"
+            android:textSize="70sp"
+            android:textStyle="bold"
+            android:fontFamily="casual"
+            android:layout_marginTop="20dp"/>
 
     <LinearLayout
-        android:layout_width="370dp"
+        android:layout_width="400dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/bordo_similbianco_main_login"
+        android:layout_marginTop="50dp"
         android:orientation="vertical"
         >
 
 
-       <TextView
-            android:id="@+id/textViewCredenziali"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:text="Login"
-            android:textSize="35sp"
-            android:textStyle="bold"
-           android:textColor="#66B2FF"
-           android:layout_marginTop="15dp"/>
 
         <EditText
             android:id="@+id/editTextEmail"
@@ -50,74 +41,91 @@
             android:layout_marginStart="20dp"
             android:layout_marginTop="20dp"
             android:layout_marginEnd="20dp"
-            android:layout_marginBottom="20dp"
-            android:background="@drawable/bordi_blu_senza_riempimento"
+            android:background="@drawable/edit_text_top_corners_rounded_grigi"
             android:drawableLeft="@drawable/baseline_alternate_email_24"
             android:drawablePadding="15dp"
             android:hint="Indirizzo Email"
             android:padding="20dp"
-            android:textColor="#CCFFFF"
-            android:textColorHint="#CCFFFF" />
+            android:textColor="@color/colore_secondario"
+            android:textColorHint="@color/colore_hint" />
+
+        <View
+            android:layout_width="270dp"
+            android:layout_height="1dp"
+            android:background="@color/colore_trattino_separatore"
+            android:layout_gravity="center"
+            android:layout_marginTop="-2dp"
+            />
 
         <EditText
             android:id="@+id/editTextPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="20dp"
             android:layout_marginEnd="20dp"
             android:layout_marginBottom="20dp"
-            android:background="@drawable/bordi_blu_senza_riempimento"
+            android:background="@drawable/edit_text_bottom_corners_rounded_grigi"
             android:drawableLeft="@drawable/ic_lucchetto"
             android:drawablePadding="15dp"
             android:hint="Password"
             android:inputType="textPassword"
             android:padding="20dp"
-            android:textColor="#CCFFFF"
-            android:textColorHint="#CCFFFF" />
+            android:textColor="@color/colore_secondario"
+            android:textColorHint="@color/colore_hint" />
 
-        <com.google.android.material.button.MaterialButton
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/bottonelogin"
-            android:layout_width="wrap_content"
-            android:layout_height="65dp"
-            android:layout_centerHorizontal="true"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="150dp"
+            android:layout_marginEnd="50dp"
+            android:layout_marginBottom="20dp"
             android:layout_gravity="center"
-            android:backgroundTint="#8866B2FF"
+            android:background="@drawable/button_background"
             android:text="Accedi"
-            android:textColor="#001933"
+            android:textColor="@color/colore_base"
             android:textSize="30sp"
-            android:textStyle="bold"
-            android:layout_marginBottom="20dp"/>
+            android:textStyle="bold"/>
 
 
     </LinearLayout>
 
-
-    <TextView
-        android:id="@+id/TextViewNonHaiUnAccount"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="20dp"
-        android:text="Non hai un account?"
-        android:textColor="#CCFFFF"
-        android:textSize="25sp" />
+        android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/TextViewRegistrati"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="Registrati"
-        android:textColor="#CCFFFF"
-        android:textSize="30sp"
-        android:textStyle="bold" />
+        <TextView
+            android:id="@+id/TextViewNonHaiUnAccount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Non hai un account?"
+            android:textColor="#555555"
+            android:textSize="25sp" />
+
+        <TextView
+            android:id="@+id/TextViewRegistrati"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Registrati"
+            android:textColor="@color/colore_secondario"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            android:layout_marginLeft="5dp"/>
+    </LinearLayout>
+
+
+
 
     <Button
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="BottoneAstaProva"
+        android:textColor="@color/colore_secondario"
         android:layout_gravity="center"
         android:layout_marginTop="80dp"
         android:background="@android:color/transparent"/>

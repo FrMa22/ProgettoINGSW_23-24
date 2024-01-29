@@ -24,15 +24,15 @@
         <activity
             android:name=".PopUpFiltroRicerca"
             android:theme="@style/Base.Theme.ProgettoINGSW.CustomThemeSfocato" />
-        <!--<activity
+        <activity
             android:name=".FragmentRicercaAsta"
             android:exported="false" />
         <activity
             android:name=".FragmentSelezioneCategorie"
             android:exported="false" />
 
-        <fragment
-            android:name=".CreaLaTuaAstaVenditoreFragment"
+        <activity
+            android:name=".FragmentCreaLaTuaAstaVenditore"
             android:exported="true" />
 
         <activity
@@ -40,7 +40,7 @@
             android:exported="true" />
         <activity
             android:name=".FragmentProfilo"
-            android:exported="true" />-->
+            android:exported="true" />
         <activity
             android:name=".PopUpModificaCampoProfilo"
             android:theme="@style/Base.Theme.ProgettoINGSW.CustomThemeSfocato" />

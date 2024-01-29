@@ -18,6 +18,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 public class ProfiloAcquirente extends AppCompatActivity {
 
@@ -25,7 +26,7 @@ public class ProfiloAcquirente extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.profilo_acquirente);
-
+        getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.status_bar_color));
 
     }
 }

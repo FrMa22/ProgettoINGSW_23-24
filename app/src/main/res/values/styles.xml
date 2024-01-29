@@ -15,7 +15,15 @@
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowCloseOnTouchOutside">true</item>
     </style>
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar"/>
-
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="android:windowBackground">@color/backgroundColorLight</item>
+        
+    </style>
+    <style name="AppTheme.Dark" parent="Theme.AppCompat">
+        <item name="android:windowBackground">@color/backgroundColorDark</item>
+    </style>
+    <style name="SpinnerDropDownItem" parent="Widget.AppCompat.DropDownItem.Spinner">
+        <item name="android:background">@drawable/custom_dropdown_item_background</item>
+    </style>
 
 </resources>

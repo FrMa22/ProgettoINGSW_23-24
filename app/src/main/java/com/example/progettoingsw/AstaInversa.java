@@ -10,6 +10,7 @@ import android.widget.ImageButton;
 import android.widget.TimePicker;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import com.example.progettoingsw.controllers_package.Controller;
 import com.google.android.material.button.MaterialButton;
@@ -24,7 +25,7 @@ public class AstaInversa extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.asta_inversa);
-
+        getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.status_bar_color));
         controller = new Controller();
 
         MaterialButton bottoneConferma = (MaterialButton) findViewById(R.id.bottoneConfermaAstaInversa);
@@ -56,7 +57,7 @@ public class AstaInversa extends AppCompatActivity {
 
         bottoneBack.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-               controller.redirectActivity(AstaInversa.this, CreaLaTuaAstaVenditoreFragment.class);
+               controller.redirectActivity(AstaInversa.this, FragmentCreaLaTuaAstaVenditore.class);
             }
         });
     }

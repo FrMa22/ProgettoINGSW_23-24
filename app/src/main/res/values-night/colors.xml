@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="toolbar_color">#00F0FF</color>
+    <color name="backgroundColorLight">#99CCFF</color>
+    <color name="backgroundColorDark">#003366</color>
+<!--    <color name="colore_base">#0A0A0A</color>-->
+    <color name="colore_base">#111111</color>
+    <color name="colore_secondario">#FFFFFF</color>
+    <color name="status_bar_color">#222222</color>
+    <color name="edit_text_color">#222222</color>
+    <color name="colore_trattino_separatore">#777777</color>
+    <color name="colore_hint">#AAAAAA</color>
+    <color name="colore_bordo">#333333</color>
+    <color name="bottom_nav_item_not_checked">#777777</color>
+    <color name="bottom_nav_item_checked">#FFFFFF</color>
+
+
+
+</resources>

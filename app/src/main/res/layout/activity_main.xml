@@ -7,6 +7,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colore_base"
     tools:context=".MainActivity">
 
     <FrameLayout
@@ -19,7 +20,10 @@
         android:id="@+id/nav_view"
         android:layout_width="match_parent"
         android:layout_height="70dp"
-        android:background="@drawable/bordo_stondato_bluscuro"
-        app:menu="@menu/bottom_nav_menu" />
+        android:background="@drawable/bottom_nav_design"
+        app:itemIconTint="@color/bottom_navigation_colors"
+        app:itemTextColor="@color/bottom_navigation_colors"
+        app:menu="@menu/bottom_nav_menu"
+        app:labelVisibilityMode="labeled"/>
 
 </LinearLayout>

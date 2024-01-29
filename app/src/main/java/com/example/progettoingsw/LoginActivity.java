@@ -1,6 +1,7 @@
 package com.example.progettoingsw;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import android.os.Bundle;
 import android.view.View;
@@ -18,12 +19,13 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.status_bar_color));
 
         controller = new Controller();
 
 
         TextView registrazione = (TextView) findViewById(R.id.TextViewRegistrati);
-        MaterialButton bottoneLogin = (MaterialButton) findViewById(R.id.bottonelogin);
+        Button bottoneLogin = (Button) findViewById(R.id.bottonelogin);
 
 
         registrazione.setOnClickListener(v -> {

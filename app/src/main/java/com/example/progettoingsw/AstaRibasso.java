@@ -8,6 +8,7 @@ import android.widget.ImageButton;
 import com.example.progettoingsw.controllers_package.Controller;
 import com.google.android.material.button.MaterialButton;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 
 public class AstaRibasso extends AppCompatActivity{
@@ -17,7 +18,7 @@ public class AstaRibasso extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.asta_ribasso);
-
+        getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.status_bar_color));
 
         bottoneConferma =  findViewById(R.id.bottoneConfermaAstaRibasso);
         bottoneBack =  findViewById(R.id.bottoneBackAstaRibasso);

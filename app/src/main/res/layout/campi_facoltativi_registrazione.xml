@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/campi_facoltativi_registrazione_relativelayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".CampiFacoltativiRegistrazione"
-    android:background="#99E8FF"
+    android:background="@color/colore_base"
     android:orientation="vertical">
 
 
@@ -15,8 +16,9 @@
         android:layout_height="wrap_content"
         android:text="Campi Facoltativi:"
         android:layout_margin="15dp"
-        android:textSize="25dp"
+        android:textSize="30sp"
         android:textStyle="bold"
+        android:textColor="@color/colore_secondario"
         android:gravity="center"
         />
 
@@ -30,9 +32,10 @@
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="20dp"
         android:layout_below="@id/textViewCampiFacoltativi"
-        android:background="@drawable/bordo_bianco_edittext"
+        android:background="@drawable/design_bio_personale"
         android:drawablePadding="15dp"
         android:hint="Bio personale"
+        android:textSize="20sp"
         android:gravity="center"
         android:padding="20dp"
         />
@@ -49,7 +52,7 @@
         android:layout_marginTop="20dp"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="20dp"
-        android:background="@drawable/bordo_bianco_edittext"
+        android:background="@drawable/design_bio_personale"
         android:drawablePadding="15dp"
         android:hint="Paese di provenienza"
         android:padding="20dp"
@@ -71,8 +74,8 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/bottoneSocialRegistrazione"
-        android:layout_width="126dp"
-        android:layout_height="65dp"
+        android:layout_width="150dp"
+        android:layout_height="60dp"
         android:layout_below="@id/textViewPremiPerInserire"
         android:layout_marginStart="20dp"
         android:layout_marginLeft="20dp"
@@ -80,18 +83,20 @@
         android:layout_marginEnd="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginBottom="20dp"
-        android:backgroundTint="@color/white"
+        app:strokeColor="#AAAAAA"
+        app:strokeWidth="2dp"
+        android:backgroundTint="@color/colore_base"
         android:text="Social"
-        android:textColor="@color/black"
-        android:textSize="20dp"
+        android:textColor="@color/colore_secondario"
+        android:textSize="20sp"
         android:textStyle="bold" />
 
 
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/bottoneSitoWebRegistrazione"
-        android:layout_width="128dp"
-        android:layout_height="65dp"
+        android:layout_width="150dp"
+        android:layout_height="60dp"
         android:layout_below="@id/textViewPremiPerInserire"
         android:layout_alignParentRight="true"
         android:layout_marginStart="20dp"
@@ -100,48 +105,44 @@
         android:layout_marginEnd="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginBottom="20dp"
-        android:backgroundTint="@color/white"
+        app:strokeColor="#AAAAAA"
+        app:strokeWidth="2dp"
+        android:backgroundTint="@color/colore_base"
         android:text="Sito web"
-        android:textColor="@color/black"
+        android:textColor="@color/colore_secondario"
         android:textSize="20dp"
         android:textStyle="bold" />
 
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/bottoneAnnullaRegistrazione"
-        android:layout_width="128dp"
-        android:layout_height="65dp"
-        android:layout_below="@id/bottoneSocialRegistrazione"
+        android:layout_width="150dp"
+        android:layout_height="70dp"
         android:layout_marginStart="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginBottom="20dp"
-        android:backgroundTint="@color/white"
+        android:layout_marginBottom="30dp"
+        android:backgroundTint="@color/colore_secondario"
+        android:textColor="@color/colore_base"
         android:text="Annulla"
-        android:textColor="@color/black"
-        android:textSize="20dp"
-        android:textStyle="bold" />
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        />
 
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/bottoneProseguiRegistrazione"
-        android:layout_width="131dp"
-        android:layout_height="65dp"
-        android:layout_below="@id/bottoneSocialRegistrazione"
-        android:layout_alignParentRight="true"
-        android:layout_marginStart="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="20dp"
+        android:layout_width="150dp"
+        android:layout_height="70dp"
         android:layout_marginEnd="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginBottom="20dp"
-        android:backgroundTint="@color/white"
+        android:layout_marginBottom="30dp"
+        android:backgroundTint="@color/colore_secondario"
+        android:textColor="@color/colore_base"
         android:text="Prosegui"
-        android:textColor="@color/black"
-        android:textSize="20dp"
-        android:textStyle="bold" />
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true" />
 
 
 
