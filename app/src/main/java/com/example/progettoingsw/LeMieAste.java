@@ -16,16 +16,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.example.progettoingsw.classe_da_estendere.GestoreComuniImplementazioni;
 import com.example.progettoingsw.controllers_package.Controller;
 import com.google.android.material.navigation.NavigationView;
 
-public class LeMieAste extends AppCompatActivity{
+public class LeMieAste extends GestoreComuniImplementazioni {
 
     Controller controller;
-    private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle actionBarDrawerToggle;
-    private NavigationView navigationView;
-    private ImageButton openDrawerButton;
     private ImageButton preferitiButton;
     private ImageButton profiloButton;
 
@@ -36,60 +34,19 @@ public class LeMieAste extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.le_mie_aste);
-        getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.status_bar_color));
         controller = new Controller();
 
         preferitiButton = findViewById(R.id.openPreferiti);
         profiloButton = findViewById(R.id.openProfiloButton);
 
-        drawerLayout = findViewById(R.id.drawer_layout);
-        navigationView = findViewById(R.id.navigation_view);
-        menu = navigationView.getMenu();
 
-        View headerView = navigationView.getHeaderView(0);
 
-        TextView headerText = headerView.findViewById(R.id.textViewHeader);
 
-        openDrawerButton = findViewById(R.id.openDrawerButton);
-
-        actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close);
-        drawerLayout.addDrawerListener(actionBarDrawerToggle);
-
-        openDrawerButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                drawerLayout.openDrawer(navigationView);
-            }
-        });
 
         preferitiButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Controller.redirectActivity(LeMieAste.this, PreferitiActivity.class);
-            }
-        });
-
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(MenuItem menuItem) {
-                int id = menuItem.getItemId();
-
-                if (id == R.id.nav_home) {
-                    if (drawerLayout.isDrawerOpen(navigationView)) {
-                        drawerLayout.closeDrawer(navigationView);
-                    }
-                } else if(id==R.id.nav_cliccacategorie){
-                    Controller.redirectActivity(LeMieAste.this, FragmentSelezioneCategorie.class);
-                }else if(id==R.id.nav_esci){
-                    Controller.redirectActivity(LeMieAste.this, LoginActivity.class);
-                }else if (id == R.id.nav_profilo) {
-                    Controller.redirectActivity(LeMieAste.this, FragmentProfilo.class);
-                }else if (id==R.id.nav_about_us){
-                    Controller.redirectActivity(LeMieAste.this,AboutUs.class);
-                }else if (id==R.id.nav_crea_asta){
-                    Controller.redirectActivity(LeMieAste.this, FragmentCreaLaTuaAstaVenditore.class);
-                }
-                return true;
             }
         });
 

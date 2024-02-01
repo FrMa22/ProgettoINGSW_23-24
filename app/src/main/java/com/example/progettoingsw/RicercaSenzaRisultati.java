@@ -15,17 +15,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.example.progettoingsw.classe_da_estendere.GestoreComuniImplementazioni;
 import com.example.progettoingsw.controllers_package.Controller;
 import com.google.android.material.navigation.NavigationView;
 
-public class RicercaSenzaRisultati extends AppCompatActivity {
+public class RicercaSenzaRisultati extends GestoreComuniImplementazioni {
 
 
     Controller controller;
-    private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle actionBarDrawerToggle;
-    private NavigationView navigationView;
-    private ImageButton openDrawerButton;
     private ImageButton preferitiButton;
     private ImageButton profiloButton;
     private Button creaAstaInversa;
@@ -36,24 +34,10 @@ public class RicercaSenzaRisultati extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ricerca_senza_risultati);
-        getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.status_bar_color));
         controller = new Controller();
 
         preferitiButton = findViewById(R.id.openPreferitiRicercaSenzaRisultati);
         profiloButton = findViewById(R.id.openProfiloButtonRicercaSenzaRisultati);
-
-        drawerLayout = findViewById(R.id.drawer_layoutRicercaSenzaRisultati);
-        navigationView = findViewById(R.id.navigation_viewRicercaSenzaRisultati);
-        menu = navigationView.getMenu();
-
-        View headerView = navigationView.getHeaderView(0);
-
-        TextView headerText = headerView.findViewById(R.id.textViewHeader);
-
-        openDrawerButton = findViewById(R.id.openDrawerButtonRicercaSenzaRisultati);
-
-        actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close);
-        drawerLayout.addDrawerListener(actionBarDrawerToggle);
 
 
             creaAstaInversa = findViewById(R.id.bottoneCreaAstaInversa);
@@ -65,12 +49,6 @@ public class RicercaSenzaRisultati extends AppCompatActivity {
             });
 
 
-        openDrawerButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                drawerLayout.openDrawer(navigationView);
-            }
-        });
 
         try {
             preferitiButton.setOnClickListener(new View.OnClickListener() {
@@ -83,29 +61,6 @@ public class RicercaSenzaRisultati extends AppCompatActivity {
             Log.e("Tag", "Preferiti", e);
         }
 
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(MenuItem menuItem) {
-                int id = menuItem.getItemId();
-
-                if (id == R.id.nav_home) {
-                    if (drawerLayout.isDrawerOpen(navigationView)) {
-                        drawerLayout.closeDrawer(navigationView);
-                    }
-                } else if (id == R.id.nav_cliccacategorie) {
-                    Controller.redirectActivity(RicercaSenzaRisultati.this, FragmentSelezioneCategorie.class);
-                } else if (id == R.id.nav_esci) {
-                    Controller.redirectActivity(RicercaSenzaRisultati.this, LoginActivity.class);
-                } else if (id == R.id.nav_profilo) {
-                    Controller.redirectActivity(RicercaSenzaRisultati.this, FragmentProfilo.class);
-                } else if (id == R.id.nav_about_us) {
-                    Controller.redirectActivity(RicercaSenzaRisultati.this, AboutUs.class);
-                } else if (id == R.id.nav_crea_asta) {
-                    Controller.redirectActivity(RicercaSenzaRisultati.this, FragmentCreaLaTuaAstaAcquirente.class);
-                }
-                return true;
-            }
-        });
 
 
     }

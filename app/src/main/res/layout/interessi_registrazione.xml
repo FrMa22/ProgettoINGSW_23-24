@@ -15,7 +15,7 @@
         android:background="@color/colore_base"
         android:gravity="center"
         android:text="Raccontaci dei tuoi interessi selezionando tra le seguenti categorie"
-        android:textSize="22sp"
+        android:textSize="20sp"
         android:textStyle="bold"
         android:textColor="@color/colore_secondario"/>
     <View

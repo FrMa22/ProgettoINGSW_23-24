@@ -29,7 +29,7 @@
             <androidx.appcompat.widget.Toolbar
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
-                android:background="@color/colore_base">
+                android:background="@drawable/design_toolbar">
 
 
                 <TextView
@@ -57,13 +57,7 @@
 
 
         </androidx.appcompat.widget.Toolbar>
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:background="@color/colore_secondario"
-                android:layout_gravity="center"
-                android:layout_marginTop="-1dp"
-                android:layout_marginBottom="10dp"/>
+
 
 
 

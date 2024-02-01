@@ -13,19 +13,19 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import com.example.progettoingsw.classe_da_estendere.GestoreComuniImplementazioni;
 import com.example.progettoingsw.controllers_package.Controller;
 import com.google.android.material.button.MaterialButton;
 
 import java.util.ArrayList;
 
-public class CampiFacoltativiRegistrazione  extends AppCompatActivity {
+public class CampiFacoltativiRegistrazione  extends GestoreComuniImplementazioni {
 
     Controller controller;
     String opzioneSelezionata;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.campi_facoltativi_registrazione);
-        getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.status_bar_color));
         controller = new Controller();
 
         MaterialButton bottoneAnnulla = (MaterialButton) findViewById(R.id.bottoneAnnullaRegistrazione);
@@ -37,7 +37,7 @@ public class CampiFacoltativiRegistrazione  extends AppCompatActivity {
 
         bottoneAnnulla.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                controller.redirectActivity(CampiFacoltativiRegistrazione.this, PopUpLogin.class);
+                controller.redirectActivity(CampiFacoltativiRegistrazione.this, Registrazione.class);
             }
         });
 
@@ -47,8 +47,8 @@ public class CampiFacoltativiRegistrazione  extends AppCompatActivity {
         bottoneSocial.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(CampiFacoltativiRegistrazione.this, PopUpRegistrazioneSocial.class);
-                startActivity(intent);
+                PopUpRegistrazioneSocial PopUpRegistrazioneSocial = new PopUpRegistrazioneSocial(CampiFacoltativiRegistrazione.this);
+                PopUpRegistrazioneSocial.show();
             }
         });
 

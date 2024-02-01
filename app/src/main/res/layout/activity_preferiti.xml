@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".PreferitiActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/colore_base">
 
     <androidx.appcompat.widget.Toolbar
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:background="@color/toolbar_color">
+        android:background="@drawable/design_toolbar">
 
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/backButton"
             android:contentDescription="Clicca per tornare indietro."
-            android:backgroundTint="#00F0FF"
+            android:backgroundTint="@android:color/transparent"
             android:src="@drawable/ic_back_arrow"
             />
 
@@ -26,7 +26,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="Preferiti"
-            android:textColor="@color/black"
+            android:textColor="@color/colore_secondario"
             android:textSize="35sp"
             android:textStyle="bold" />
 

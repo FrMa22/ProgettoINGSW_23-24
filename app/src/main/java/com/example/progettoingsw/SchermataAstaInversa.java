@@ -9,10 +9,11 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import com.example.progettoingsw.classe_da_estendere.GestoreComuniImplementazioni;
 import com.example.progettoingsw.controllers_package.Controller;
 import com.google.android.material.button.MaterialButton;
 
-public class SchermataAstaInversa extends AppCompatActivity {
+public class SchermataAstaInversa extends GestoreComuniImplementazioni {
     Controller controller;
     ImageButton bottoneBack;
     MaterialButton bottoneProfiloAcquirente;
@@ -24,7 +25,6 @@ public class SchermataAstaInversa extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.schermata_asta_inversa);
-        getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.status_bar_color));
         bottoneBack = (ImageButton) findViewById(R.id.bottoneBackSchermataAstaInversa);
 
         bottoneBack.setOnClickListener(new View.OnClickListener() {

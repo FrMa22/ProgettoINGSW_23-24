@@ -8,13 +8,14 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
-public class ElencoCategorie extends AppCompatActivity {
+import com.example.progettoingsw.classe_da_estendere.GestoreComuniImplementazioni;
+
+public class ElencoCategorie extends GestoreComuniImplementazioni {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_elenco_categorie);
-        getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.status_bar_color));
         /*ImageButton imageButtonArte = findViewById(R.id.ImageButtonArte);
         ImageButton imageButtonAutomobili = findViewById(R.id.ImageButtonAutomobili);
 

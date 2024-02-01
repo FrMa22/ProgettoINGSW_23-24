@@ -8,12 +8,13 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import com.example.progettoingsw.classe_da_estendere.GestoreComuniImplementazioni;
 import com.example.progettoingsw.controllers_package.Controller;
 import com.google.android.material.button.MaterialButton;
 
 import java.util.ArrayList;
 
-public class InteressiRegistrazione extends AppCompatActivity {
+public class InteressiRegistrazione extends GestoreComuniImplementazioni {
 
     Controller controller;
 
@@ -21,7 +22,6 @@ public class InteressiRegistrazione extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.interessi_registrazione);
         controller = new Controller();
-        getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.status_bar_color));
 
         MaterialButton bottoneProseguiInteressiRegistrazione= (MaterialButton) findViewById(R.id.bottoneProseguiInteressiRegistrazione);
         ArrayList<String> ElencoInteressiRegistrazione=new ArrayList<String>();
@@ -50,7 +50,7 @@ public class InteressiRegistrazione extends AppCompatActivity {
 
         bottoneProseguiInteressiRegistrazione.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                controller.redirectActivity(InteressiRegistrazione.this, FragmentHomeUtente.class);
+                controller.redirectActivity(InteressiRegistrazione.this, MainActivity.class);
 
             }
         });

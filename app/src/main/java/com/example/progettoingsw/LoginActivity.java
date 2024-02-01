@@ -8,10 +8,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.progettoingsw.classe_da_estendere.GestoreComuniImplementazioni;
 import com.example.progettoingsw.controllers_package.Controller;
 import com.google.android.material.button.MaterialButton;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends GestoreComuniImplementazioni {
 
     Button bottone;
     Controller controller;
@@ -19,7 +20,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.status_bar_color));
+
 
         controller = new Controller();
 
@@ -35,7 +36,9 @@ public class LoginActivity extends AppCompatActivity {
 
         bottoneLogin.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                controller.redirectActivity(LoginActivity.this, PopUpLogin.class);
+//                controller.redirectActivity(LoginActivity.this, PopUpLogin.class);
+                PopUpLogin popUpLogin = new PopUpLogin(LoginActivity.this);
+                popUpLogin.show();
                 /*Dialog dialog = new Dialog(LoginActivity.this);
                 // Imposta il layout personalizzato per il popup
                 dialog.setContentView(R.layout.pop_up_login);
@@ -52,7 +55,7 @@ public class LoginActivity extends AppCompatActivity {
         bottone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Controller.redirectActivity(LoginActivity.this, AstaInversa.class);
+                Controller.redirectActivity(LoginActivity.this, AstaInglese.class);
             }
         });
 

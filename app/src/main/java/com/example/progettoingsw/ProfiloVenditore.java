@@ -20,16 +20,16 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import com.example.progettoingsw.classe_da_estendere.GestoreComuniImplementazioni;
 import com.example.progettoingsw.controllers_package.Controller;
 import com.google.android.material.button.MaterialButton;
 
-public class ProfiloVenditore extends AppCompatActivity {
+public class ProfiloVenditore extends GestoreComuniImplementazioni {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.profilo_venditore);
-        getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.status_bar_color));
 
         MaterialButton bottonestoricoAste=(MaterialButton)findViewById(R.id.bottoneStoricoAsteProfiloVenditore);
 

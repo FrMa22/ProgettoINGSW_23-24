@@ -12,10 +12,11 @@ import android.widget.TimePicker;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import com.example.progettoingsw.classe_da_estendere.GestoreComuniImplementazioni;
 import com.example.progettoingsw.controllers_package.Controller;
 import com.google.android.material.button.MaterialButton;
 
-public class AstaInversa extends AppCompatActivity {
+public class AstaInversa extends GestoreComuniImplementazioni {
 
     Controller controller;
     MaterialButton bottoneData;
@@ -25,7 +26,6 @@ public class AstaInversa extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.asta_inversa);
-        getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.status_bar_color));
         controller = new Controller();
 
         MaterialButton bottoneConferma = (MaterialButton) findViewById(R.id.bottoneConfermaAstaInversa);

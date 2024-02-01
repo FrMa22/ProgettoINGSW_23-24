@@ -141,7 +141,6 @@
         android:entries="@array/tipoUtente"
         android:gravity="center"
         android:textSize="25sp"
-        android:textStyle="bold"
         android:paddingStart="10dp"
         android:paddingEnd="10dp"
         />

@@ -14,13 +14,16 @@
         <item>Asta inversa</item>
     </string-array>
 
-        <string-array name="item_names_and_images">
-            <item>Arte</item>
-            <item>@drawable/ic_arte</item>
-            <item>Elettrodomestici</item>
-            <item>@drawable/ic_elettrodomestici</item>
-            <!-- Aggiungi altri nomi e riferimenti di immagini secondo necessità -->
-        </string-array>
+    <string-array name="array_immagini_categorie">
+        <item>ic_arte</item>
+        <item>ic_arte</item>
+        <!-- Aggiungi gli altri elementi immagine -->
+    </string-array>
 
+    <string-array name="array_testi_categorie">
+        <item>Testo Categoria 1</item>
+        <item>Testo Categoria 2</item>
+        <!-- Aggiungi gli altri elementi testo -->
+    </string-array>
 
 </resources>
