@@ -40,7 +40,8 @@ public class FragmentRicercaAsta extends Fragment {
         button_filtro.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Controller.redirectActivity(requireActivity(), PopUpFiltroRicerca.class);
+                PopUpFiltroRicerca popUpFiltroRicerca = new PopUpFiltroRicerca(getContext());
+                popUpFiltroRicerca.show();
             }
         });
 

@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="380dp"
-    android:layout_height="330dp"
+    android:layout_width="370dp"
+    android:layout_height="450dp"
     android:layout_gravity="center"
-    android:background="@drawable/bordo_nero_sfondo_grigio_chiaro"
-    tools:context=".PopUpFiltroRicerca"
-    >
+    android:background="@drawable/bordo_non_stondato"
+    tools:context=".PopUpFiltroRicerca">
 
     <TextView
         android:id="@+id/textview_inserire_filtri"
@@ -14,14 +14,16 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
         android:gravity="center"
         android:text="Inserire filtri:"
+        android:textColor="@color/colore_secondario"
         android:textSize="30sp"
         android:textStyle="bold" />
 
     <GridLayout
         android:layout_width="match_parent"
-        android:layout_height="210dp"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/textview_inserire_filtri"
         android:columnCount="2"
         android:orientation="horizontal">
@@ -29,21 +31,22 @@
         <LinearLayout
             android:layout_width="170dp"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="5dp">
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="5dp"
+            android:orientation="vertical">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="Categorie"
+                android:textColor="@color/colore_secondario"
                 android:textSize="25sp" />
 
             <ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/bordo_nero_sfondo_grigio_scuro">
+                android:background="@drawable/design_bio_personale">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -57,6 +60,7 @@
                         android:layoutDirection="rtl"
                         android:paddingLeft="20dp"
                         android:text="Arte"
+                        android:background="@drawable/bordo_sotto_grigio"
                         android:textAlignment="center"
                         android:textSize="12sp"
                         android:textStyle="bold" />
@@ -69,6 +73,7 @@
                         android:paddingLeft="20dp"
                         android:text="Elettrodomestici"
                         android:textAlignment="center"
+                        android:background="@drawable/bordo_sotto_grigio"
                         android:textSize="12sp"
                         android:textStyle="bold" />
 
@@ -79,6 +84,7 @@
                         android:layoutDirection="rtl"
                         android:paddingLeft="20dp"
                         android:text="Automobili"
+                        android:background="@drawable/bordo_sotto_grigio"
                         android:textAlignment="center"
                         android:textSize="12sp"
                         android:textStyle="bold" />
@@ -90,6 +96,7 @@
                         android:layoutDirection="rtl"
                         android:paddingLeft="20dp"
                         android:text="Moto"
+                        android:background="@drawable/bordo_sotto_grigio"
                         android:textAlignment="center"
                         android:textSize="12sp"
                         android:textStyle="bold" />
@@ -100,6 +107,7 @@
                         android:layout_gravity="center"
                         android:layoutDirection="rtl"
                         android:paddingLeft="20dp"
+                        android:background="@drawable/bordo_sotto_grigio"
                         android:text="Auto d'epoca"
                         android:textAlignment="center"
                         android:textSize="12sp"
@@ -116,109 +124,134 @@
 
         <LinearLayout
             android:layout_width="170dp"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="10dp"
-            android:orientation="vertical"
-            >
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:orientation="vertical">
+
             <TextView
                 android:id="@+id/textViewPrezzo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Prezzo"
-                android:textSize="25sp"
                 android:layout_gravity="center"
-                />
+                android:text="Prezzo"
+                android:textColor="@color/colore_secondario"
+                android:textSize="25sp" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                >
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Da"
-                    android:textSize="20sp"
-                    android:textColor="#606060"
-                    />
+                android:orientation="vertical">
 
-                <EditText
-                    android:id="@+id/editTextPrezzoMin"
-                    android:layout_width="50dp"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:background="@drawable/bordo_nero_curvo"
-                    android:gravity="center"
-                    android:hint="10"
-                    android:textColor="@color/black"
-                    android:textSize="20sp"
-                    tools:ignore="TouchTargetSizeCheck" />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="A"
-                    android:textSize="20sp"
-                    android:textColor="#606060"
-                    android:layout_marginLeft="15dp"
-                    />
-                <EditText
-                    android:id="@+id/editTextPrezzoMax"
-                    android:layout_width="50dp"
-                    android:layout_height="wrap_content"
-                    android:hint="50"
-                    android:textColor="@color/black"
-                    android:background="@drawable/bordo_nero_curvo"
-                    android:textSize="20sp"
-                    android:gravity="center"
-                    android:layout_marginLeft="5dp"
-                    tools:ignore="TouchTargetSizeCheck"/>
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Da"
+                        android:layout_marginStart="10dp"
+                        android:textColor="@color/colore_secondario"
+                        android:textSize="20sp" />
+
+                    <EditText
+                        android:id="@+id/editTextPrezzoMin"
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:background="@drawable/bordo_nero_curvo"
+                        android:gravity="center"
+                        android:hint="10"
+                        android:textColor="@color/black"
+                        android:textSize="20sp"
+                        tools:ignore="TouchTargetSizeCheck" />
 
 
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="10dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:text="A"
+                        android:textColor="@color/colore_secondario"
+                        android:textSize="20sp" />
+
+                    <EditText
+                        android:id="@+id/editTextPrezzoMax"
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:background="@drawable/bordo_nero_curvo"
+                        android:gravity="center"
+                        android:hint="50"
+                        android:textColor="@color/black"
+                        android:textSize="20sp"
+                        tools:ignore="TouchTargetSizeCheck" />
+                </LinearLayout>
             </LinearLayout>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Scadenza"
-                android:textSize="25sp"
                 android:layout_gravity="center"
                 android:layout_marginTop="20dp"
-                />
+                android:text="Scadenza"
+                android:textColor="@color/colore_secondario"
+                android:textSize="25sp" />
+
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-                <Button
-                    android:layout_width="90dp"
-                    android:layout_height="wrap_content"
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/button_1ora"
-                    android:text="1 h"
-                    android:textSize="15sp"
-                    android:backgroundTint="#A0A0A0"
+                    android:layout_width="90dp"
+                    android:layout_height="50dp"
+                    app:strokeColor="#AAAAAA"
+                    app:strokeWidth="2dp"
+                    android:textColor="@color/colore_secondario"
+                    android:backgroundTint="@color/colore_base"
                     android:contentDescription="Premi per inserire 1 ora di scadenza"
-                    />
-                <Button
-                    android:layout_width="90dp"
-                    android:layout_height="wrap_content"
+                    android:text="1 h"
+                    android:textSize="15sp" />
+
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/button_1giorno"
-                    android:text="1 gg"
-                    android:textSize="15sp"
-                    android:backgroundTint="#A0A0A0"
-                    android:contentDescription="Premi per inserire 1 giorno di scadenza"
-                    android:layout_toRightOf="@id/button_1ora"
-                    />
-                <Button
                     android:layout_width="90dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="50dp"
+                    android:layout_toEndOf="@id/button_1ora"
+                    app:strokeColor="#AAAAAA"
+                    app:strokeWidth="2dp"
+                    android:textColor="@color/colore_secondario"
+                    android:backgroundTint="@color/colore_base"
+                    android:contentDescription="Premi per inserire 1 giorno di scadenza"
+                    android:text="1 gg"
+                    android:textSize="15sp" />
+
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/button_1settimana"
-                    android:text="7 gg"
-                    android:textSize="15sp"
-                    android:backgroundTint="#A0A0A0"
+                    android:layout_width="90dp"
+                    android:layout_height="50dp"
+                    android:layout_below="@id/button_1giorno"
+                    app:strokeColor="#AAAAAA"
+                    app:strokeWidth="2dp"
+                    android:textColor="@color/colore_secondario"
+                    android:backgroundTint="@color/colore_base"
                     android:contentDescription="Premi per inserire 1 settimana di scadenza"
-                    android:layout_below="@id/button_1ora"
-                    />
-
-
+                    android:text="7 gg"
+                    android:textSize="15sp" />
 
             </RelativeLayout>
+
 
 
         </LinearLayout>
@@ -227,25 +260,28 @@
     </GridLayout>
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="130dp"
         android:layout_height="wrap_content"
-        android:text="Annulla"
-        android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
-        android:layout_marginLeft="70dp"
-        android:layout_marginBottom="10dp"
-        android:backgroundTint="@color/black"
-        />
+        android:layout_alignParentBottom="true"
+        android:layout_margin="30dp"
+        android:backgroundTint="@color/colore_secondario"
+        android:text="Annulla"
+        android:textColor="@color/colore_base"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
     <Button
         android:id="@+id/buttonSalvaFiltro"
-        android:layout_width="wrap_content"
+        android:layout_width="130dp"
         android:layout_height="wrap_content"
-        android:text="Salva"
-        android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginRight="70dp"
-        android:layout_marginBottom="10dp"
-        android:backgroundTint="@color/black"
-        />
+        android:layout_alignParentBottom="true"
+        android:layout_margin="30dp"
+        android:backgroundTint="@color/colore_secondario"
+        android:text="Salva"
+        android:textColor="@color/colore_base"
+        android:textSize="20sp"
+        android:textStyle="bold" />
 
 </RelativeLayout>

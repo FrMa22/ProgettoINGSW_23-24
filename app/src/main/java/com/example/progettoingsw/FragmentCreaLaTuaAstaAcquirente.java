@@ -22,6 +22,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.progettoingsw.classe_da_estendere.GestoreComuniImplementazioni;
+
 public class FragmentCreaLaTuaAstaAcquirente extends Fragment {
 
     String opzioneSelezionata;
@@ -61,6 +63,7 @@ public class FragmentCreaLaTuaAstaAcquirente extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 //fa qualcosa se si è selezionato qualcosa
+
                 opzioneSelezionata=parent.getItemAtPosition(position).toString();
             }
 

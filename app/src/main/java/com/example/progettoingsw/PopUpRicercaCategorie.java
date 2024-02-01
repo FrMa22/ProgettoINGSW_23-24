@@ -23,7 +23,7 @@ public class PopUpRicercaCategorie extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_pop_up_ricerca_categorie);
+        setContentView(R.layout._pop_up_ricerca_categorie);
 
         controller = new Controller();
 

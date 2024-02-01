@@ -17,6 +17,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.progettoingsw.controllers_package.Controller;
 import com.example.progettoingsw.gestori_gui.CustomAdapter_gridview_profilo_campi;
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
@@ -24,6 +25,7 @@ import java.util.Arrays;
 
 public class FragmentProfilo extends Fragment {
     private Controller controller;
+    MaterialButton button_log_out;
     boolean modificaCampi = false;
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle actionBarDrawerToggle;
@@ -76,7 +78,13 @@ public class FragmentProfilo extends Fragment {
 
         controller = new Controller();
 
-
+        button_log_out = view.findViewById(R.id.button_log_out_profilo);
+        button_log_out.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Controller.redirectActivity(getContext(), LoginActivity.class);
+            }
+        });
 
 
         /*gridView = view.findViewById(R.id.gridview_social_activity_profilo);
