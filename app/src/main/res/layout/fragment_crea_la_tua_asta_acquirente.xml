@@ -29,27 +29,15 @@
 </androidx.appcompat.widget.Toolbar>
 
 
-    <TextView
-        android:id="@+id/textViewInserireDatiBeneAcquirente"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/toolbar"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginEnd="15dp"
-        android:layout_marginBottom="15dp"
-        android:gravity="center"
-        android:text="Inserire dati del bene/servizio"
-        android:textSize="25dp"
-        android:textStyle="bold"
-        android:textColor="@color/colore_secondario"/>
+
 
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:id="@+id/linear_layout_campi"
-    android:layout_below="@id/textViewInserireDatiBeneAcquirente">
+    android:layout_marginTop="20dp"
+    android:layout_below="@id/toolbar">
     <EditText
         android:id="@+id/editTextNomeBeneCreaAstaAcquirente"
         android:layout_width="match_parent"
@@ -65,13 +53,13 @@
         android:singleLine="true"
         />
     <View
-        android:layout_width="320dp"
+        android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="#AAAAAA"
         android:layout_gravity="center"
         android:layout_marginTop="-2dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="40dp"
         />
     <EditText
         android:id="@+id/editTextDescrizioneCreaAstaAcquirente"
@@ -97,14 +85,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/linear_layout_campi"
-        android:layout_marginStart="15dp"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="15dp"
         android:layout_marginBottom="15dp"
         android:textColor="@color/colore_secondario"
-        android:gravity="left"
+        android:gravity="start"
         android:text="Inserisci un'immagine:"
-        android:textSize="25dp"
+        android:textSize="25sp"
         android:textStyle="bold" />
 
     <ImageButton
@@ -112,10 +100,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/linear_layout_campi"
-        android:layout_toRightOf="@id/textViewInserisciImmagineAcquirente"
-        android:layout_marginTop="10dp"
         android:src="@drawable/baseline_add_a_photo_24"
         android:onClick="onClickMethod"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="20dp"
         android:contentDescription="CLicca per selezionare un immagine"/>
 
 
