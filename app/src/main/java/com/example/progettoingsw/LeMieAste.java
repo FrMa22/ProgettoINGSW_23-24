@@ -36,22 +36,6 @@ public class LeMieAste extends GestoreComuniImplementazioni {
         setContentView(R.layout.le_mie_aste);
         controller = new Controller();
 
-        preferitiButton = findViewById(R.id.openPreferiti);
-        profiloButton = findViewById(R.id.openProfiloButton);
-
-
-
-
-
-        preferitiButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Controller.redirectActivity(LeMieAste.this, PreferitiActivity.class);
-            }
-        });
-
-
-
 
 
         //Ora inizia codice solo per LeMieAste

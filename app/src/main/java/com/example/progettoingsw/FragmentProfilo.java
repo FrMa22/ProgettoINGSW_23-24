@@ -25,7 +25,9 @@ import java.util.Arrays;
 
 public class FragmentProfilo extends Fragment {
     private Controller controller;
-    MaterialButton button_log_out;
+    ImageButton button_log_out;
+    MaterialButton button_le_mie_aste;
+
     boolean modificaCampi = false;
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle actionBarDrawerToggle;
@@ -86,6 +88,13 @@ public class FragmentProfilo extends Fragment {
             }
         });
 
+        button_le_mie_aste = view.findViewById(R.id.button_le_mie_aste);
+        button_le_mie_aste.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Controller.redirectActivity(getContext(), LeMieAste.class);
+            }
+        });
 
         /*gridView = view.findViewById(R.id.gridview_social_activity_profilo);
         adapterSocial = new CustomAdapter_gridview_profilo_campi(getContext());

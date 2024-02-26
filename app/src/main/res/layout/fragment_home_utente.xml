@@ -53,11 +53,27 @@
                         android:drawableTint="@android:color/transparent" />
                 </androidx.appcompat.widget.Toolbar>
 
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/button_le_mie_aste"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center"
+                    android:backgroundTint="@color/colore_base"
+                    android:text="Le mie aste"
+                    android:textColor="@color/colore_secondario"
+                    android:textSize="25sp"
+                    android:textStyle="bold"
+                    app:strokeColor="#AAAAAA"
+                    app:strokeWidth="2dp"
+                    android:layout_marginTop="10dp"/>
+                
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="10dp"
                     android:drawableRight="@drawable/ic_freccia_piccola_dx"
                     android:drawablePadding="30dp"
                     android:gravity="center_vertical"
