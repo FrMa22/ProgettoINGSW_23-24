@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/relativeLayoutAstaInversa"
+    android:background="@color/colore_base"
+    tools:context=".gui.acquirente.AcquirenteAstaInversa"> <!-- da cambiare-->
+
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:background="@drawable/design_toolbar"
+        android:id="@+id/toolbar">
+
+
+    <TextView
+        android:id="@+id/textViewTitoloAstaInversa"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/colore_base"
+        android:layout_gravity="center"
+        android:textSize="35sp"
+        android:textStyle="bold"
+        android:textColor="@color/colore_secondario"
+        android:text="Asta Inversa"/>
+
+    <ImageButton
+        android:id="@+id/bottoneBackAstaInversa"
+        android:layout_width="60dp"
+        android:layout_height="80dp"
+        android:backgroundTint="@android:color/transparent"
+        android:src="@drawable/baseline_arrow_back_ios_24"
+        android:contentDescription="Torna indietro"
+        android:layout_marginStart="10dp"
+        />
+    </androidx.appcompat.widget.Toolbar>
+    <TextView
+        android:id="@+id/textViewInfoAstaInversa"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginBottom="-1dp"
+        android:gravity="center"
+        android:textSize="23sp"
+        android:textStyle="bold"
+        android:textColor="@color/colore_secondario"
+        android:text="Inserire dati relativi all\'asta inversa"
+        android:layout_below="@id/toolbar"
+        android:background="@color/colore_base"
+        />
+
+    <TextView
+        android:id="@+id/textViewNomeProdottoAstaInversa"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginBottom="-1dp"
+        android:gravity="center"
+        android:textSize="23dp"
+        android:textStyle="bold"
+        android:text="Nome prodotto/servizio richiesto"
+        android:layout_below="@id/textViewInfoAstaInversa"
+        android:layout_marginTop="10dp"
+        android:background="@color/colore_base"
+        android:textColor="@color/colore_secondario"
+        />
+
+    <EditText
+        android:id="@+id/editTextNomeProdottoAstaAstaInversa"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@id/textViewNomeProdottoAstaInversa"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        android:background="@color/white"
+        android:hint="prodotto/servizio"
+        android:textColor="@color/colore_secondario"
+        android:textColorHint="@color/colore_secondario"
+        android:textSize="20sp"
+        android:backgroundTint="#D9D9D9"
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:id="@+id/TextViewImmagineAstaInversa"
+        android:layout_below="@id/editTextNomeProdottoAstaAstaInversa"
+        android:gravity="center"
+        android:textSize="23dp"
+        android:textStyle="bold"
+        android:text="Inserire un\'immagine (facoltativo)"
+        />
+
+    <ImageView
+        android:id="@+id/ImageViewAstaInversa"
+        android:layout_width="match_parent"
+        android:layout_height="130dp"
+        android:layout_below="@id/TextViewImmagineAstaInversa"
+        android:layout_marginTop="10dp"
+        android:src="@drawable/sfondoprova"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/bottoneDataAstaInversa"
+        android:layout_width="170dp"
+        android:layout_height="59dp"
+        android:layout_below="@id/ImageViewAstaInversa"
+        android:layout_marginTop="120dp"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="216dp"
+        android:backgroundTint="#D9D9D9"
+        android:textStyle="bold"
+        android:text="Data"
+        android:textColor="@color/black"
+        android:textSize="20dp"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/bottoneOraAstaInversa"
+        android:layout_width="170dp"
+        android:layout_height="59dp"
+        android:layout_below="@id/ImageViewAstaInversa"
+        android:layout_marginTop="120dp"
+        android:layout_marginRight="25dp"
+        android:layout_marginLeft="216dp"
+        android:backgroundTint="#D9D9D9"
+        android:textStyle="bold"
+        android:text="Orario"
+        android:textColor="@color/black"
+        android:textSize="20dp"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:id="@+id/textViewPrezzoAstaInversa"
+        android:layout_below="@id/ImageViewAstaInversa"
+        android:gravity="center"
+        android:textSize="23dp"
+        android:textStyle="bold"
+        android:text="Inserire prezzo iniziale"
+        android:layout_marginTop="20dp"
+        />
+
+    <EditText
+        android:id="@+id/editTextPrezzoAstaInversa"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@id/textViewPrezzoAstaInversa"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        android:background="@color/white"
+        android:hint=" €"
+        android:textColorHint="@color/colore_secondario"
+        android:textColor="@color/colore_secondario"
+        android:textSize="20sp"
+        android:backgroundTint="#D9D9D9"
+        />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/bottoneConfermaAstaInversa"
+        android:layout_width="170dp"
+        android:layout_height="59dp"
+        android:layout_below="@id/editTextPrezzoAstaInversa"
+        android:layout_marginTop="85dp"
+        android:layout_marginRight="25dp"
+        android:layout_marginLeft="216dp"
+        android:backgroundTint="#D9D9D9"
+        android:textStyle="bold"
+        android:text="Conferma"
+        android:textColor="@color/black"
+        android:textSize="20dp"
+        />
+
+</RelativeLayout>

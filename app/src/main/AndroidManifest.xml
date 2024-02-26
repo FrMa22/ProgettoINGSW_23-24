@@ -18,44 +18,47 @@
         tools:targetApi="31"
         >
         <activity
-            android:name=".MainActivity"
+            android:name=".gui.acquirente.AcquirenteMainActivity"
             android:exported="false" />
         <activity
-            android:name=".ElencoCategorie"
+            android:name=".gui.venditore.VenditoreMainActivity"
             android:exported="false" />
         <activity
-            android:name=".PopUpFiltroRicerca"
+            android:name=".gui.ElencoCategorie"
+            android:exported="false" />
+        <activity
+            android:name=".gui.PopUpFiltroRicerca"
             android:theme="@style/Base.Theme.ProgettoINGSW.CustomThemeSfocato" />
         <activity
-            android:name=".FragmentRicercaAsta"
+            android:name=".gui.acquirente.AcquirenteFragmentRicercaAsta"
             android:exported="false" />
         <activity
-            android:name=".FragmentSelezioneCategorie"
+            android:name=".gui.acquirente.AcquirenteFragmentSelezioneCategorie"
             android:exported="false" />
 
         <activity
-            android:name=".FragmentCreaLaTuaAstaVenditore"
+            android:name=".gui.venditore.VenditoreFragmentCreaLaTuaAstaVenditore"
             android:exported="true" />
 
         <activity
-            android:name=".FragmentHomeUtente"
+            android:name=".gui.acquirente.AcquirenteFragmentHome"
             android:exported="true" />
         <activity
-            android:name=".FragmentProfilo"
+            android:name=".gui.acquirente.AcquirenteFragmentProfilo"
             android:exported="true" />
         <activity
-            android:name=".PopUpModificaCampoProfilo"
+            android:name=".gui.PopUpModificaCampoProfilo"
             android:theme="@style/Base.Theme.ProgettoINGSW.CustomThemeSfocato" />
         <activity
-            android:name=".PopUpRicercaCategorie"
+            android:name=".gui.PopUpRicercaCategorie"
             android:theme="@style/Base.Theme.ProgettoINGSW.CustomTheme" />
 
 
         <activity
-            android:name=".PreferitiActivity"
+            android:name=".gui.PreferitiActivity"
             android:exported="false" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".gui.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -64,57 +67,57 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".PopUpLogin"
+            android:name=".gui.PopUpLogin"
             android:theme="@style/Base.Theme.ProgettoINGSW.CustomThemeSfocato" />
 
-        <activity android:name=".Registrazione" />
+        <activity android:name=".gui.Registrazione" />
 
         <activity
-            android:name=".CampiFacoltativiRegistrazione"
+            android:name=".gui.CampiFacoltativiRegistrazione"
             android:exported="true" />
         <activity
-            android:name=".InteressiRegistrazione"
+            android:name=".gui.InteressiRegistrazione"
             android:exported="true" />
 
         <activity
-            android:name=".FragmentCreaLaTuaAstaAcquirente"
+            android:name=".gui.acquirente.AcquirenteFragmentCreaLaTuaAstaAcquirente"
             android:exported="true" />
         <activity
-            android:name=".AstaInglese"
+            android:name=".gui.venditore.VenditoreAstaInglese"
             android:exported="true" />
         <activity
-            android:name=".AstaRibasso"
+            android:name=".gui.venditore.VenditoreAstaRibasso"
             android:exported="true" />
         <activity
-            android:name=".AstaInversa"
+            android:name=".gui.acquirente.AcquirenteAstaInversa"
             android:exported="true" />
         <activity
-            android:name=".ProfiloAcquirente"
+            android:name=".gui.ProfiloAcquirente"
             android:exported="true" />
         <activity
-            android:name=".ProfiloVenditore"
+            android:name=".gui.ProfiloVenditore"
             android:exported="true" />
         <activity
-            android:name=".SchermataAstaInglese"
+            android:name=".gui.SchermataAstaInglese"
             android:exported="true" />
         <activity
-            android:name=".SchermataAstaInversa"
+            android:name=".gui.SchermataAstaInversa"
             android:exported="true" />
         <activity
-            android:name=".SchermataAstaRibasso"
+            android:name=".gui.SchermataAstaRibasso"
             android:exported="true" />
         <activity
-            android:name=".LeMieAste"
+            android:name=".gui.LeMieAste"
             android:exported="true" />
         <activity
-            android:name=".PopUpRegistrazioneSocial"
+            android:name=".gui.PopUpRegistrazioneSocial"
             android:exported="true"
             android:theme="@style/Base.Theme.ProgettoINGSW.CustomTheme" />
         <activity
-            android:name=".RicercaSenzaRisultati"
+            android:name=".gui.RicercaSenzaRisultati"
             android:exported="true" />
         <activity
-            android:name=".PopUpNuovaOfferta"
+            android:name=".gui.PopUpNuovaOfferta"
             android:exported="true"
             android:theme="@style/Base.Theme.ProgettoINGSW.CustomTheme" />
     </application>

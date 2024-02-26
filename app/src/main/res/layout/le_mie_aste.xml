@@ -6,80 +6,63 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LeMieAste">
+    tools:context=".gui.LeMieAste">
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="@color/colore_base">
 
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar_le_mie_aste"
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:background="#00F0FF">
-
+        android:background="@drawable/design_toolbar">
         <ImageButton
-            android:id="@+id/openDrawerButton"
-            android:layout_width="50dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="start"
-            android:layout_marginLeft="-30dp"
-            android:src="@drawable/ic_menu"
+            android:id="@+id/bottoneBackSchermataAstaRibasso"
+            android:layout_width="wrap_content"
+            android:layout_height="80dp"
+            android:contentDescription="Back"
             android:backgroundTint="@android:color/transparent"
-            android:contentDescription="Clicca per aprire il menu." />
-
-        <EditText
-            android:layout_width="220dp"
-            android:layout_height="50dp"
-            android:layout_marginLeft="50dp"
-            android:background="@drawable/bordo_nero_curvo"
-            android:drawableRight="@drawable/ic_search"
-            android:hint="Cerca"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:singleLine="true"
-            android:textColor="@color/black"
-            android:textSize="30sp"
+            android:src="@drawable/baseline_arrow_back_ios_24"
             />
-
-        <ImageButton
-            android:id="@+id/openPreferiti"
-            android:layout_width="50dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:src="@drawable/ic_favourite"
-            android:backgroundTint="@android:color/transparent"
-            android:contentDescription="Clicca per aprire i preferiti."
-            android:drawableTint="@android:color/transparent" />
-
-        <ImageButton
-            android:id="@+id/openProfiloButton"
+        <TextView
+            android:id="@+id/textViewLeMieAste"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:src="@drawable/ic_profilo"
-            android:backgroundTint="@android:color/transparent"
-            android:contentDescription="Clicca per aprire il profilo." />
+            android:text="Le mie aste"
+            android:textSize="35sp"
+            android:textStyle="bold"
+            android:textColor="@color/colore_secondario"
+            android:layout_gravity="center"/>
+
+
 
     </androidx.appcompat.widget.Toolbar>
 
+        <EditText
+            android:id="@+id/edittext_ricerca"
+            android:layout_width="300dp"
+            android:layout_height="48dp"
+            android:layout_gravity="center"
+            android:background="@drawable/bordo_bianco_edittext"
+            android:backgroundTint="#ECECEC"
+            android:drawableStart="@drawable/ic_search"
+            android:drawablePadding="10dp"
+            android:hint="Cerca"
+            android:paddingLeft="10dp"
+            android:singleLine="true"
+            android:textColor="@color/black"
+            android:textColorHint="@color/colore_hint"
+            android:textSize="30sp"
+            android:layout_marginTop="10dp"/>
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
 
 
-            <TextView
-                android:id="@+id/textViewLeMieAste"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Le mie aste"
-                android:textSize="30sp"
-                android:textStyle="bold"
-                android:layout_centerHorizontal="true"/>
+
 
             <RadioGroup
                 android:id="@+id/radioGroupLeMieAste"
@@ -204,7 +187,6 @@
 
 
 
-        </RelativeLayout>
 
     </LinearLayout>
 

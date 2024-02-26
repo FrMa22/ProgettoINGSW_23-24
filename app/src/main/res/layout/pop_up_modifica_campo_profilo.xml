@@ -5,7 +5,7 @@
     android:layout_width="300dp"
     android:layout_height="350dp"
     android:layout_gravity="center"
-    tools:context=".PopUpModificaCampoProfilo"
+    tools:context=".gui.PopUpModificaCampoProfilo"
     android:orientation="vertical"
     android:background="@drawable/bordo_colorato_blu"
     >

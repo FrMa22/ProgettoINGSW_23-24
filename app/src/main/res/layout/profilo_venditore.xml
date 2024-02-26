@@ -4,7 +4,7 @@
     android:id="@+id/profilo_acquirente_relativelayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ProfiloVenditore"
+    tools:context=".gui.ProfiloVenditore"
     android:background="@color/white"
     android:orientation="vertical">
 
