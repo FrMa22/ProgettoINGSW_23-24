@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/relativeLayoutAstaRibasso"
+    android:background="#FFFFFF"
+    tools:context=".gui.acquirente.AcquirenteFragmentHome">  <!-- da cambiare-->
+
+    <TextView
+        android:id="@+id/textViewTitoloAstaRibasso"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:gravity="center"
+        android:textColor="@color/black"
+        android:textSize="35sp"
+        android:textStyle="bold"
+        android:text="Asta al ribasso"
+        android:background="@color/toolbar_color"/>
+
+    <ImageButton
+        android:id="@+id/bottoneBackAstaRibasso"
+        android:layout_width="60dp"
+        android:layout_height="80dp"
+        android:backgroundTint="@android:color/transparent"
+        android:contentDescription="Premi per tornare indietro."
+        android:src="@drawable/baseline_arrow_back_ios_24"
+        android:layout_marginLeft="10dp"
+        />
+
+
+    <TextView
+        android:id="@+id/textViewInfoAstaRibasso"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginBottom="-1dp"
+        android:gravity="center"
+        android:textSize="23dp"
+        android:textStyle="bold"
+        android:text="Inserire dati relativi all\'asta a ribasso"
+        android:layout_below="@id/textViewTitoloAstaRibasso"
+        android:background="#FFFFFF"
+        />
+
+    <TextView
+        android:id="@+id/textViewBaseAstaRibasso"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginBottom="-1dp"
+        android:gravity="center"
+        android:textSize="23dp"
+        android:textStyle="bold"
+        android:text="Base d\'asta"
+        android:layout_below="@id/textViewInfoAstaRibasso"
+        android:background="#FFFFFF"
+        />
+
+    <EditText
+        android:id="@+id/editTextBaseAstaAstaRibasso"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textViewBaseAstaRibasso"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        android:background="@color/white"
+        android:hint="€"
+        android:padding="20dp"
+        android:textSize="20dp"
+        android:backgroundTint="#D9D9D9"
+        />
+
+    <TextView
+        android:id="@+id/textViewTimerDecrementoAstaRibasso"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginBottom="-1dp"
+        android:gravity="center"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:text="Interevallo per presentare nuove offerte"
+        android:layout_below="@id/editTextBaseAstaAstaRibasso"
+        android:background="#FFFFFF"
+        />
+
+    <EditText
+        android:id="@+id/editTextTimerDecrementoAstaRibasso"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textViewTimerDecrementoAstaRibasso"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        android:background="@color/white"
+        android:hint="1h"
+        android:padding="20dp"
+        android:textSize="20dp"
+        android:backgroundTint="#D9D9D9"
+        />
+
+    <TextView
+        android:id="@+id/textViewSogliaDecrementoAstaRibasso"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginBottom="-1dp"
+        android:gravity="center"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:text="Soglia di decremento"
+        android:layout_below="@id/editTextTimerDecrementoAstaRibasso"
+        android:background="#FFFFFF"
+        />
+
+    <EditText
+        android:id="@+id/editTextSogliaDecrementoAstaRibasso"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textViewSogliaDecrementoAstaRibasso"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        android:background="@color/white"
+        android:hint="€"
+        android:padding="20dp"
+        android:textSize="20dp"
+        android:backgroundTint="#D9D9D9"
+        />
+
+    <TextView
+        android:id="@+id/textViewPrezzoSegretoAstaRibasso"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginBottom="-1dp"
+        android:gravity="center"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:text="Prezzo (segreto) a cui vendere"
+        android:layout_below="@id/editTextSogliaDecrementoAstaRibasso"
+        android:background="#FFFFFF"
+        />
+
+    <EditText
+        android:id="@+id/editTextPrezzoSegretoAstaRibasso"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textViewPrezzoSegretoAstaRibasso"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        android:background="@color/white"
+        android:hint="€"
+        android:padding="20dp"
+        android:textSize="20dp"
+        android:backgroundTint="#D9D9D9"
+        />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/bottoneConfermaAstaRibasso"
+        android:layout_width="170dp"
+        android:layout_height="59dp"
+        android:layout_below="@id/editTextPrezzoSegretoAstaRibasso"
+        android:layout_marginRight="35dp"
+        android:layout_marginLeft="226dp"
+        android:backgroundTint="#D9D9D9"
+        android:textStyle="bold"
+        android:text="Conferma"
+        android:textColor="@color/black"
+        android:textSize="18dp"
+        />
+
+</RelativeLayout>
+
+

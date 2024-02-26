@@ -11,7 +11,7 @@
     android:layout_gravity="center"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/bordo_non_stondato"
-    tools:context=".PopUpLogin">
+    tools:context=".gui.PopUpLogin">
 
     <TextView
         android:id="@+id/TextViewRichiestaAccount"

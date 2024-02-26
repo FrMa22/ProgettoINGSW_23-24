@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:id="@+id/relativeLayoutSchermataAstaRibasso"
     android:background="#FFFFFF"
-    tools:context=".FragmentHomeUtente">  <!-- da cambiare-->
+    tools:context=".gui.acquirente.AcquirenteFragmentHome">  <!-- da cambiare-->
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">

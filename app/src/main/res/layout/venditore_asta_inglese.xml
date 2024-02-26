@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/relativeLayoutAstaInglese"
+    android:background="@color/colore_base"
+    tools:context=".gui.venditore.VenditoreAstaInglese">
+
+
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:id="@+id/toolbar"
+        android:background="@drawable/design_toolbar"
+        >
+        <TextView
+            android:id="@+id/textViewTitoloAstaInglese"
+            android:layout_width="wrap_content"
+            android:layout_height="80dp"
+            android:gravity="center"
+            android:textSize="35sp"
+            android:textColor="@color/colore_secondario"
+            android:textStyle="bold"
+            android:layout_gravity="center"
+            android:text="Asta all\'inglese"/>
+
+        <ImageButton
+            android:id="@+id/bottoneBackAstaInglese"
+            android:layout_width="60dp"
+            android:layout_height="80dp"
+            android:layout_gravity="start"
+            android:backgroundTint="@android:color/transparent"
+            android:contentDescription="Premi per tornare indietro."
+            android:src="@drawable/baseline_arrow_back_ios_24"
+            />
+        <ImageButton
+            android:layout_width="60dp"
+            android:layout_height="80dp"
+            android:id="@+id/button_info_asta_inglese"
+            android:layout_gravity="end"
+            android:backgroundTint="@android:color/transparent"
+            android:contentDescription="Premi per tornare indietro."
+            android:src="@drawable/ic_info"
+            />
+
+    </androidx.appcompat.widget.Toolbar>
+
+
+
+    <TextView
+        android:id="@+id/textViewInfoAstaInglese"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="-1dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:gravity="center"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:textColor="@color/colore_secondario"
+        android:text="Inserire dati relativi all\'asta all'inglese"
+        android:layout_below="@id/toolbar"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/view"
+        android:background="@drawable/design_bio_personale"
+        android:layout_below="@id/textViewInfoAstaInglese"
+        android:orientation="vertical"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="20dp"
+        >
+    <TextView
+        android:id="@+id/textViewBaseAstaInglese"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginBottom="-1dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:gravity="center"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:text="Base d\'asta"
+        android:layout_marginTop="5dp"
+        />
+
+    <EditText
+        android:id="@+id/editTextBaseAstaAstaInglese"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/edit_text_tutti_lati_grigi_rounded"
+        android:hint="€"
+        android:padding="20dp"
+        android:textSize="20sp"
+        />
+
+    <TextView
+        android:id="@+id/textViewIntervalloTempoAstaInglese"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:singleLine="true"
+        android:text="Interevallo per presentare nuove offerte"
+        android:layout_marginTop="5dp"
+        />
+
+    <EditText
+        android:id="@+id/editTextIntervalloTempoAstaInglese"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/edit_text_tutti_lati_grigi_rounded"
+        android:hint="1h"
+        android:padding="20dp"
+        android:textSize="20sp"
+        />
+
+    <TextView
+        android:id="@+id/textViewSogliaRialzoAstaInglese"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginBottom="-1dp"
+        android:gravity="center"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:text="Soglia di rialzo"
+        />
+
+    <EditText
+        android:id="@+id/editTextSogliaRialzoAstaInglese"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/edit_text_tutti_lati_grigi_rounded"
+        android:hint="€10"
+        android:padding="20dp"
+        android:textSize="20sp"
+        />
+    </LinearLayout>
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/bottoneConfermaAstaInglese"
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
+        android:layout_below="@id/view"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="10dp"
+        android:layout_alignParentEnd="true"
+        android:textStyle="bold"
+        android:text="Conferma"
+        android:backgroundTint="@color/colore_secondario"
+        android:textColor="@color/colore_base"
+        android:textSize="20sp"
+        />
+
+</RelativeLayout>
+
+

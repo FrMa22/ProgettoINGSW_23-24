@@ -6,7 +6,7 @@
     android:layout_height="450dp"
     android:layout_gravity="center"
     android:background="@drawable/bordo_non_stondato"
-    tools:context=".PopUpFiltroRicerca">
+    tools:context=".gui.PopUpFiltroRicerca">
 
     <TextView
         android:id="@+id/textview_inserire_filtri"

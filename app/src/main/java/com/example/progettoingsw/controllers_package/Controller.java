@@ -1,10 +1,9 @@
 package com.example.progettoingsw.controllers_package;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 
-import com.example.progettoingsw.*;
+import com.example.progettoingsw.gui.acquirente.AcquirenteFragmentProfilo;
 
 public class Controller {
 
@@ -12,7 +11,7 @@ public class Controller {
     // Altri membri e metodi del controller
 
 
-    static FragmentProfilo fragmentProfilo;
+    static AcquirenteFragmentProfilo acquirenteFragmentProfilo;
     public Controller() {
 
 
