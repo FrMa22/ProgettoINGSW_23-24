@@ -41,7 +41,7 @@
             android:id="@+id/button_info_asta_inglese"
             android:layout_gravity="end"
             android:backgroundTint="@android:color/transparent"
-            android:contentDescription="Premi per tornare indietro."
+            android:contentDescription="Premi per informazioni sull'asta."
             android:src="@drawable/ic_info"
             />
 
@@ -79,12 +79,12 @@
         android:id="@+id/textViewBaseAstaInglese"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_marginBottom="-1dp"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
         android:gravity="center"
-        android:textSize="18sp"
+        android:textSize="25sp"
         android:textStyle="bold"
+        android:textColor="@color/colore_secondario"
         android:text="Base d\'asta"
         android:layout_marginTop="5dp"
         />
@@ -108,11 +108,13 @@
         android:gravity="center"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
-        android:textSize="16sp"
+        android:layout_marginTop="5dp"
+        android:textSize="20sp"
+        android:textColor="@color/colore_secondario"
         android:textStyle="bold"
         android:singleLine="true"
-        android:text="Interevallo per presentare nuove offerte"
-        android:layout_marginTop="5dp"
+        android:text="Intervallo per presentare nuove offerte"
+
         />
 
     <EditText

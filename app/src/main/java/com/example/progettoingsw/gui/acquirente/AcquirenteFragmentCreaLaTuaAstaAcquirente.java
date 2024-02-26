@@ -23,6 +23,10 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.progettoingsw.R;
+import com.example.progettoingsw.controllers_package.Controller;
+import com.example.progettoingsw.gui.LoginActivity;
+import com.example.progettoingsw.gui.PopUpLogin;
+import com.google.android.material.button.MaterialButton;
 
 public class AcquirenteFragmentCreaLaTuaAstaAcquirente extends Fragment {
 
@@ -30,8 +34,7 @@ public class AcquirenteFragmentCreaLaTuaAstaAcquirente extends Fragment {
     ImageView immagineProdotto;
     ImageButton bottoneInserisciImmagine;
     Spinner spinnerTipoAsta;
-
-
+    MaterialButton bottoneProseguiCreaAstaAcquirente;
     ActivityResultLauncher<Intent> resultLauncher;
 
     public AcquirenteFragmentCreaLaTuaAstaAcquirente() {
@@ -45,7 +48,6 @@ public class AcquirenteFragmentCreaLaTuaAstaAcquirente extends Fragment {
 
     public void onViewCreated(@NonNull View view_fragment, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view_fragment, savedInstanceState);
-
         immagineProdotto= view_fragment.findViewById(R.id.imageViewCreaAstaAcquirente);
         bottoneInserisciImmagine = view_fragment.findViewById(R.id.imageButtonInserisciImmagineCreaAstaAcquirente);
 
@@ -53,6 +55,12 @@ public class AcquirenteFragmentCreaLaTuaAstaAcquirente extends Fragment {
 
         bottoneInserisciImmagine.setOnClickListener(view ->prelevaImmagine());//significa che chiama il metodo prelevaImmagine
 
+        bottoneProseguiCreaAstaAcquirente = view_fragment.findViewById(R.id.bottoneProseguiCreaAstaAcquirente);
+        bottoneProseguiCreaAstaAcquirente.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                Controller.redirectActivity(getActivity(), AcquirenteAstaInversa.class);
+            }
+        });
 
         spinnerTipoAsta = view_fragment.findViewById(R.id.spinnerTipologiaAstaAcquirente);
         ArrayAdapter<CharSequence> adapterSpinnerTipoAsta=(ArrayAdapter<CharSequence>) ArrayAdapter.createFromResource(requireContext(), R.array.elencoTipiAstaAcquirente, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item);

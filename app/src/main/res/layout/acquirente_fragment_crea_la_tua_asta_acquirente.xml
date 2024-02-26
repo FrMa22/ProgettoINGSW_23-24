@@ -104,7 +104,7 @@
         android:onClick="onClickMethod"
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="20dp"
-        android:contentDescription="CLicca per selezionare un immagine"/>
+        android:contentDescription="Clicca per selezionare un immagine"/>
 
 
     <ImageView
@@ -152,8 +152,8 @@
         android:layout_alignParentRight="true"
         android:layout_margin="20dp"
         android:backgroundTint="@color/colore_secondario"
-        android:textColor="@color/colore_base"
         android:text="Prosegui"
+        android:textColor="@color/colore_base"
         android:textSize="20sp"
         android:textStyle="bold" />
 

@@ -25,7 +25,6 @@ public class AcquirenteAstaInversa extends GestoreComuniImplementazioni {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.acquirente_asta_inversa);
-        controller = new Controller();
 
         MaterialButton bottoneConferma = (MaterialButton) findViewById(R.id.bottoneConfermaAstaInversa);
         ImageButton bottoneBack =  findViewById(R.id.bottoneBackAstaInversa);
@@ -50,15 +49,15 @@ public class AcquirenteAstaInversa extends GestoreComuniImplementazioni {
 
         bottoneConferma.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                controller.redirectActivity(AcquirenteAstaInversa.this, AcquirenteFragmentHome.class);
+                Controller.redirectActivity(AcquirenteAstaInversa.this, AcquirenteFragmentHome.class);
             }
         });
 
-        bottoneBack.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
-               controller.redirectActivity(AcquirenteAstaInversa.this, VenditoreFragmentCreaLaTuaAstaVenditore.class);
-            }
-        });
+//        bottoneBack.setOnClickListener(new View.OnClickListener() {
+//            public void onClick(View view) {
+//               Controller.redirectActivity(AcquirenteAstaInversa.this, VenditoreFragmentCreaLaTuaAstaVenditore.class);
+//            }
+//        });
     }
 
 
