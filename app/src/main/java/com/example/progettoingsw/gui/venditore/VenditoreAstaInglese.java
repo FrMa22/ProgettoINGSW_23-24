@@ -32,7 +32,6 @@ public class VenditoreAstaInglese extends GestoreComuniImplementazioni {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.venditore_asta_inglese);
-        setContentView(R.layout.asta_inglese);
          controller = new Controller();
         AstaIngleseDAO astaIngleseDao = new AstaIngleseDAO();
 
