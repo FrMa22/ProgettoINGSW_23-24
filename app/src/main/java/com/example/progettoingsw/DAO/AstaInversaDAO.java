@@ -21,12 +21,12 @@ public class AstaInversaDAO {
         new AstaInversaDAO.DatabaseTask().execute("open");
     }
 
-    public void creaAstaInversa(String nome, String prezzo,String data) {
-        if (nome.isEmpty() || prezzo.isEmpty() || data.isEmpty()) {
+    public void creaAstaInversa(String nome, String prezzo,String data,String ora) {
+        if (nome.isEmpty() || prezzo.isEmpty() || data.isEmpty() || ora.isEmpty()) {
             // Se uno dei campi è vuoto, non fare nulla
             return;
         }
-        new AstaInversaDAO.DatabaseTask().execute("insert", nome, prezzo,data);
+        new AstaInversaDAO.DatabaseTask().execute("insert", nome, prezzo,data,ora);
     }
 
     public void closeConnection() {
@@ -46,7 +46,7 @@ public class AstaInversaDAO {
                     } else if (action.equals("insert")) {
                         if (connection != null && !connection.isClosed()) {
                             double prezzoMax = Double.parseDouble(strings[2]);
-                            String dataDiScadenza = strings[3] + " 00:00:00";
+                            String dataDiScadenza = strings[3] +" " +strings[4]+ ":00";
                             String condizione = strings[1];
                             String id_venditore = "esempio@email.com";
 

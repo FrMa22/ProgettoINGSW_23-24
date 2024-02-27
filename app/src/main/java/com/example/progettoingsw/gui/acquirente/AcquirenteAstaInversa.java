@@ -34,6 +34,7 @@ public class AcquirenteAstaInversa extends GestoreComuniImplementazioni {
     EditText prezzoAstaInversa;
 
     private String selectedDateString;
+    private String selectedHourString;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,10 +77,11 @@ public class AcquirenteAstaInversa extends GestoreComuniImplementazioni {
                 String nome = prodottoAstaInversa.getText().toString();
                 String prezzo = prezzoAstaInversa.getText().toString();
                 String data=selectedDateString;
+                String ora=selectedHourString;
 
                 // Chiamata al metodo per creare l'asta nel database
                 astaInversaDao.openConnection();
-                astaInversaDao.creaAstaInversa(nome,prezzo,data);
+                astaInversaDao.creaAstaInversa(nome,prezzo,data,ora);
                 astaInversaDao.closeConnection();
 
             }
@@ -111,6 +113,8 @@ public class AcquirenteAstaInversa extends GestoreComuniImplementazioni {
             @Override
             public void onTimeSet(TimePicker view, int hours, int minute) {
                 bottoneOra.setText(String.valueOf(hours)+":"+String.valueOf(minute));
+                selectedHourString=String.format("%02d:%02d", hours, minute);
+                bottoneOra.setText(selectedHourString);
             }
         }, 00, 00, true);
         orologio.show();
