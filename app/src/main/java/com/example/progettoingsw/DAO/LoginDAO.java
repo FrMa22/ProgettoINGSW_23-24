@@ -3,6 +3,7 @@ package com.example.progettoingsw.DAO;
 import android.os.AsyncTask;
 
 import com.example.progettoingsw.controllers_package.DatabaseHelper;
+import com.example.progettoingsw.gui.LoginActivity;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -12,6 +13,11 @@ import java.sql.Statement;
 public class LoginDAO {
 
     private Connection connection;
+    private LoginActivity loginActivity;
+
+    public LoginDAO(LoginActivity loginActivity) {
+        this.loginActivity = loginActivity;
+    }
 
     public void openConnection() {
         new DatabaseTask().execute("open");
@@ -29,51 +35,43 @@ public class LoginDAO {
         new DatabaseTask().execute("close");
     }
 
-    private class DatabaseTask extends AsyncTask<String, Void, String> {
+    private class DatabaseTask extends AsyncTask<String, Void, Boolean> {
 
         @Override
-        protected String doInBackground(String... strings) {
+        protected Boolean doInBackground(String... strings) {
             try {
                 if (strings.length > 0) {
                     String action = strings[0];
                     if (action.equals("open")) {
                         connection = DatabaseHelper.getConnection();
-                        return "Connessione aperta con successo!";
+                        return true;
                     } else if (action.equals("find")) {
                         if (connection != null && !connection.isClosed()) {
                             Statement statement = connection.createStatement();
-                            ResultSet resultSet = statement.executeQuery("SELECT * FROM utente WHERE mail = '" + strings[1] + "' AND password = '" + strings[2] + "'");
-                            if (resultSet.next()) {
-                                // L'utente è stato trovato
-                                return "Utente trovato: " + resultSet.getString("mail") + " " + resultSet.getString("password");
-                            } else {
-                                // L'utente non è stato trovato
-                                return "Utente non trovato.";
-                            }
+                            ResultSet resultSet = statement.executeQuery("SELECT * FROM acquirente WHERE indirizzo_email = '" + strings[1] + "'");
+                            return resultSet.next();
                         } else {
-                            return "Impossibile cercare l'utente: connessione non aperta.";
+                            return false;
                         }
                     } else if (action.equals("close")) {
                         if (connection != null && !connection.isClosed()) {
                             connection.close();
-                            return "Connessione chiusa con successo!";
-                        } else {
-                            return "Connessione già chiusa.";
                         }
+                        return true;
                     }
                 }
-                return "Azione non supportata.";
+                return false;
             } catch (Exception e) {
                 e.printStackTrace();
-                return "Errore durante l'operazione: " + e.getMessage();
+                return false;
             }
         }
 
         @Override
-        protected void onPostExecute(String result) {
+        protected void onPostExecute(Boolean result) {
             // Questo metodo viene chiamato dopo che doInBackground è completato
             // Puoi mostrare il risultato all'utente o gestirlo in modo appropriato
-            System.out.println(result);
+            loginActivity.handleLoginResult(result);
         }
     }
 }
