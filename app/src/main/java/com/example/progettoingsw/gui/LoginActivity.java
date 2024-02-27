@@ -1,15 +1,19 @@
 package com.example.progettoingsw.gui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.progettoingsw.DAO.Acquirente;
 import com.example.progettoingsw.DAO.LoginDAO;
 import com.example.progettoingsw.R;
 import com.example.progettoingsw.classe_da_estendere.GestoreComuniImplementazioni;
 import com.example.progettoingsw.controllers_package.Controller;
+import com.example.progettoingsw.gui.acquirente.AcquirenteMainActivity;
 import com.example.progettoingsw.gui.venditore.VenditoreAstaInglese;
 
 public class LoginActivity extends GestoreComuniImplementazioni {
@@ -28,7 +32,7 @@ public class LoginActivity extends GestoreComuniImplementazioni {
         editText_mail = findViewById(R.id.editTextEmail);
         editText_password = findViewById(R.id.editTextPassword);
 
-        LoginDAO logindao = new LoginDAO();
+        LoginDAO logindao = new LoginDAO(this);
 
         registrazione.setOnClickListener(v -> {
             //apre schermata registrazione
@@ -37,15 +41,14 @@ public class LoginActivity extends GestoreComuniImplementazioni {
         });
         bottoneLogin.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-//                controller.redirectActivity(LoginActivity.this, PopUpLogin.class);
-                PopUpLogin popUpLogin = new PopUpLogin(LoginActivity.this);
-                popUpLogin.show();
-//                String mail = editText_mail.getText().toString();
-//                String password = editText_password.getText().toString();
-//
-//                // Chiamata al metodo per cercare nel database
-//                logindao.openConnection();
-//                logindao.findUser(mail, password);
+//                PopUpLogin popUpLogin = new PopUpLogin(LoginActivity.this);
+//                popUpLogin.show();
+                String mail = editText_mail.getText().toString();
+                String password = editText_password.getText().toString();
+
+                // Chiamata al metodo per cercare nel database
+                logindao.openConnection();
+                logindao.findUser(mail, password);
             }
         });
 
@@ -57,6 +60,20 @@ public class LoginActivity extends GestoreComuniImplementazioni {
             }
         });
 
+    }
+    public void handleLoginResult(boolean result) {
+        if (result) {
+            Toast.makeText(this, "Trovato", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(LoginActivity.this, AcquirenteMainActivity.class);
+            intent.putExtra("email", editText_mail.getText().toString());
+            startActivity(intent);
+            // L'utente è stato trovato
+            // Esegui le azioni necessarie per il login
+        } else {
+            Toast.makeText(this, "Non trovato", Toast.LENGTH_SHORT).show();
+            // L'utente non è stato trovato
+            // Mostra un messaggio di errore o esegui altre azioni necessarie
+        }
     }
 
 }

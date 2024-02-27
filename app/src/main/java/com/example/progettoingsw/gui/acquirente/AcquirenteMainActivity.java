@@ -5,20 +5,26 @@ import androidx.fragment.app.Fragment;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.progettoingsw.R;
 import com.example.progettoingsw.classe_da_estendere.GestoreComuniImplementazioni;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-
 public class AcquirenteMainActivity extends GestoreComuniImplementazioni {
 
     private BottomNavigationView bottomNavigationView;
+    private String email;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.acquirente_activity_main);
         bottomNavigationView = findViewById(R.id.acquirente_nav_view);
+
+        String email = getIntent().getStringExtra("email");
+
+        Toast.makeText(this, "La mail è "+email, Toast.LENGTH_SHORT).show();
 
         View decorView = getWindow().getDecorView();
         int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
@@ -50,8 +56,14 @@ public class AcquirenteMainActivity extends GestoreComuniImplementazioni {
                 Log.d("BottomNav", "Selected Search");
                 selectedFragment = new AcquirenteFragmentRicercaAsta();
             } else if (item.getItemId() == R.id.action_profile) {
+//                Log.d("BottomNav", "Selected Profile");
+//                selectedFragment = new AcquirenteFragmentProfilo(email);
                 Log.d("BottomNav", "Selected Profile");
-                selectedFragment = new AcquirenteFragmentProfilo();
+                AcquirenteFragmentProfilo fragmentProfilo = new AcquirenteFragmentProfilo();
+                Bundle args = new Bundle();
+                args.putString("email", email);
+                fragmentProfilo.setArguments(args);
+                selectedFragment = fragmentProfilo;
             }
 
             // Controlla se il fragment corrente è già quello selezionato

@@ -127,7 +127,6 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:gravity="center"
-                            android:text="Mario"
                             android:textColor="@color/colore_secondario"
                             android:textSize="20sp" />
 
@@ -163,7 +162,6 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:gravity="center"
-                            android:text="Rossi"
                             android:textColor="@color/colore_secondario"
                             android:textSize="20sp" />
 
@@ -199,7 +197,6 @@
                             android:layout_weight="1"
                             android:gravity="center"
                             android:singleLine="true"
-                            android:text="mariorossi@gmail.com"
                             android:textColor="@color/colore_secondario"
                             android:textSize="20sp" />
 
@@ -235,7 +232,6 @@
                             android:layout_weight="1"
                             android:gravity="center"
                             android:singleLine="true"
-                            android:text="MarioRossi.it"
                             android:textColor="@color/colore_secondario"
                             android:textSize="20sp" />
 
@@ -270,7 +266,6 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:gravity="center"
-                            android:text="Italia"
                             android:textColor="@color/colore_secondario"
                             android:textSize="20sp" />
 
@@ -311,14 +306,15 @@
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
-                <EditText
-                    android:id="@+id/edittext_bio_profilo"
+                <TextView
+                    android:id="@+id/text_view_bio_profilo"
                     android:layout_width="350dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginBottom="20dp"
                     android:background="@drawable/design_bio_personale"
                     android:hint="Biografia"
+                    android:textSize="20sp"
                     android:minHeight="48dp"
                     android:paddingLeft="10dp"
                     android:textColorHint="@color/colore_hint" />

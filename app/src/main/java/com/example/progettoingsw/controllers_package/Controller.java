@@ -23,6 +23,13 @@ public class Controller {
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
     }
+    public static void redirectActivityEmail(Context context, Class<?> targetClass, String email) {
+        Intent intent = new Intent(context, targetClass);
+        intent.putExtra("email", email);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
+    }
+
 
 
 
