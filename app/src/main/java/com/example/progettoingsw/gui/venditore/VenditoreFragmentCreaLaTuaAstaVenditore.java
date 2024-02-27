@@ -64,11 +64,12 @@ public class VenditoreFragmentCreaLaTuaAstaVenditore extends Fragment {
 
         bottoneInserisciImmagine.setOnClickListener(view ->prelevaImmagine());//significa che chiama il metodo prelevaImmagine
 
+        Spinner spinnerTipoAsta = view_fragment.findViewById(R.id.spinnerTipologiaAstaVenditore);
 
-        Spinner spinnerTipoAsta=(Spinner) view_fragment.findViewById(R.id.spinnerTipologiaAstaVenditore);
-        ArrayAdapter<CharSequence> adapterSpinnerTipoAsta=(ArrayAdapter<CharSequence>) ArrayAdapter.createFromResource(getContext(), R.array.elencoTipiAstaVenditore, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item);
-        adapterSpinnerTipoAsta.setDropDownViewResource(androidx.appcompat.R.layout.support_simple_spinner_dropdown_item);
-        spinnerTipoAsta.setAdapter(adapterSpinnerTipoAsta);
+        //Spinner spinnerTipoAsta=(Spinner) view_fragment.findViewById(R.id.spinnerTipologiaAstaVenditore);
+        //ArrayAdapter<CharSequence> adapterSpinnerTipoAsta=(ArrayAdapter<CharSequence>) ArrayAdapter.createFromResource(getContext(), R.array.elencoTipiAstaVenditore, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item);
+        //adapterSpinnerTipoAsta.setDropDownViewResource(androidx.appcompat.R.layout.support_simple_spinner_dropdown_item);
+        //spinnerTipoAsta.setAdapter(adapterSpinnerTipoAsta);
 
         spinnerTipoAsta.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
