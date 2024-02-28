@@ -46,13 +46,18 @@ public class AstaIngleseDAO {
                         if (connection != null && !connection.isClosed()) {
                             Statement statement = connection.createStatement();
 
-                            LocalDateTime dataScadenza = LocalDateTime.of(2024, 3, 10, 12, 0, 0);
+                            //LocalDateTime dataScadenza = LocalDateTime.of(2024, 3, 10, 12, 0, 0);
+                            LocalDateTime dataScadenza = LocalDateTime.now();
                             String condizione = "aperta";
                             String id_venditore = "venditore1@example.com";
                             double baseAsta=Double.parseDouble(strings[1]);
                             int intervallo=Integer.parseInt(strings[2]);
                             double rialzoMin=Double.parseDouble(strings[3]);
                             double prezzoAttuale = baseAsta;
+
+                            // Aggiungere l'intervallo in ore alla data di scadenza
+                            dataScadenza = dataScadenza.plusHours(intervallo);
+
                             // Creazione del formatter per la data
                             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
@@ -60,7 +65,7 @@ public class AstaIngleseDAO {
                             String formattedDataScadenza = dataScadenza.format(formatter);
 
                             statement.executeUpdate("INSERT INTO asta_allinglese"  + " (baseAsta,intervalloTempoOfferte, rialzoMin, prezzoAttuale, dataDiScadenza, condizione, id_venditore) " +
-                                    "VALUES (" + baseAsta + ", INTERVAL '" + intervallo + " minutes', " + rialzoMin + ", " + prezzoAttuale + ",'"+ formattedDataScadenza + "', ' " + condizione + "', '" +id_venditore + "')");
+                                    "VALUES (" + baseAsta + ", INTERVAL '" + intervallo + " hours', " + rialzoMin + ", " + prezzoAttuale + ",'"+ formattedDataScadenza + "', ' " + condizione + "', '" +id_venditore + "')");
                             statement.close();
                             return "Asta inglese inserita con successo!";
                         } else {
