@@ -47,7 +47,7 @@ public class AstaInversaDAO {
                         if (connection != null && !connection.isClosed()) {
                             double prezzoMax = Double.parseDouble(strings[2]);
                             String dataDiScadenza = strings[3] +" " +strings[4]+ ":00";
-                            String condizione = strings[1];
+                            String condizione = strings[1];//IN TEORIA DOVREBBE ESSERE "aperta" solo che non so come fare la ricerca per prodotto dal database
                             String id_venditore = "esempio@email.com";
 
 // Definisci il pattern per il formato della stringa con data e orario

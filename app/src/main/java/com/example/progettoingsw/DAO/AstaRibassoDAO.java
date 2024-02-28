@@ -46,13 +46,14 @@ public class AstaRibassoDAO {
                         if (connection != null && !connection.isClosed()) {
                             Statement statement = connection.createStatement();
 
-                            double prezzoAttuale = 100.00;
+
                             String condizione = "aperta";
                             String id_venditore = "venditore1@example.com";
                             double baseAsta=Double.parseDouble(strings[1]);
                             int intervallo=Integer.parseInt(strings[2]);
                             double soglia=Double.parseDouble(strings[3]);
                             double prezzoMin=Double.parseDouble(strings[4]);
+                            double prezzoAttuale = baseAsta;
 
                             statement.executeUpdate("INSERT INTO asta_alribasso"  + " (prezzoBase,intervalloDecrementale, decrementoAutomaticoCifra, prezzoMin, prezzoAttuale, condizione, id_venditore) " +
                                     "VALUES (" + baseAsta + ", INTERVAL '" + intervallo + " minutes', " + soglia + ", " + prezzoMin + ", "+ prezzoAttuale + ", ' " + condizione + "', '" +id_venditore + "')");

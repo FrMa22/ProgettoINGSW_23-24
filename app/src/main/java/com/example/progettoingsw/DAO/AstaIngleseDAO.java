@@ -46,14 +46,13 @@ public class AstaIngleseDAO {
                         if (connection != null && !connection.isClosed()) {
                             Statement statement = connection.createStatement();
 
-                            double prezzoAttuale = 100.00;
                             LocalDateTime dataScadenza = LocalDateTime.of(2024, 3, 10, 12, 0, 0);
                             String condizione = "aperta";
                             String id_venditore = "venditore1@example.com";
                             double baseAsta=Double.parseDouble(strings[1]);
                             int intervallo=Integer.parseInt(strings[2]);
                             double rialzoMin=Double.parseDouble(strings[3]);
-
+                            double prezzoAttuale = baseAsta;
                             // Creazione del formatter per la data
                             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
