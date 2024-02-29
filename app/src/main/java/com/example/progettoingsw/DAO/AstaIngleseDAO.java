@@ -15,17 +15,18 @@ import java.time.format.DateTimeFormatter;
 public class AstaIngleseDAO {
 
     private Connection connection;
+    private String idAsta;
 
     public void openConnection() {
         new DatabaseTask().execute("open");
     }
 
-    public void creaAstaInglese(String base, String intervallo,String rialzo) {
+    public void creaAstaInglese(String base, String intervallo, String rialzo) {
         if (base.isEmpty() || intervallo.isEmpty() || rialzo.isEmpty()) {
             // Se uno dei campi è vuoto, non fare nulla
             return;
         }
-        new DatabaseTask().execute("insert", base, intervallo,rialzo);
+        new DatabaseTask().execute("insert", base, intervallo, rialzo);
     }
 
     public void closeConnection() {
@@ -50,9 +51,9 @@ public class AstaIngleseDAO {
                             LocalDateTime dataScadenza = LocalDateTime.now();
                             String condizione = "aperta";
                             String id_venditore = "venditore1@example.com";
-                            double baseAsta=Double.parseDouble(strings[1]);
-                            int intervallo=Integer.parseInt(strings[2]);
-                            double rialzoMin=Double.parseDouble(strings[3]);
+                            double baseAsta = Double.parseDouble(strings[1]);
+                            int intervallo = Integer.parseInt(strings[2]);
+                            double rialzoMin = Double.parseDouble(strings[3]);
                             double prezzoAttuale = baseAsta;
 
                             // Aggiungere l'intervallo in ore alla data di scadenza
@@ -64,9 +65,18 @@ public class AstaIngleseDAO {
                             // Formattazione della data
                             String formattedDataScadenza = dataScadenza.format(formatter);
 
-                            statement.executeUpdate("INSERT INTO asta_allinglese"  + " (baseAsta,intervalloTempoOfferte, rialzoMin, prezzoAttuale, dataDiScadenza, condizione, id_venditore) " +
-                                    "VALUES (" + baseAsta + ", INTERVAL '" + intervallo + " hours', " + rialzoMin + ", " + prezzoAttuale + ",'"+ formattedDataScadenza + "', ' " + condizione + "', '" +id_venditore + "')");
+                            statement.executeUpdate("INSERT INTO asta_allinglese" + " (baseAsta,intervalloTempoOfferte, rialzoMin, prezzoAttuale, dataDiScadenza, condizione, id_venditore) " +
+                                    "VALUES (" + baseAsta + ", INTERVAL '" + intervallo + " hours', " + rialzoMin + ", " + prezzoAttuale + ",'" + formattedDataScadenza + "', ' " + condizione + "', '" + id_venditore + "')");
+
+                            //
+                            // Ottenimento dell'ID dell'asta appena creata
+                            ResultSet resultSet = statement.executeQuery("SELECT LASTVAL()");
+                            if (resultSet.next()) {
+                                idAsta = resultSet.getString(1); // ID dell'asta
+                            }
+                            //
                             statement.close();
+
                             return "Asta inglese inserita con successo!";
                         } else {
                             return "Impossibile inserire l'asta: connessione non aperta.";
@@ -93,6 +103,14 @@ public class AstaIngleseDAO {
             // Questo metodo viene chiamato dopo che doInBackground è completato
             // Puoi mostrare il risultato all'utente o gestirlo in modo appropriato
             System.out.println(result);
+            if(result.equals("Asta inglese inserita con successo!")) {
+                ProdottoDAO prodottoDao = new ProdottoDAO();
+                String nomeProdotto = "lies of p";
+                String descrizione = "souls-like";
+                prodottoDao.openConnection();
+                prodottoDao.creaProdotto(nomeProdotto, descrizione, null, idAsta, "inglese");
+                prodottoDao.closeConnection();
+            }
         }
     }
 }

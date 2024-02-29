@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
@@ -31,10 +32,14 @@ public class VenditoreFragmentCreaLaTuaAstaVenditore extends Fragment {
     String opzioneSelezionata;
     ImageView immagineProdotto;
     ImageButton back;
+    EditText nomeProdotto;
+    EditText descrizioneProdotto;
 
     MaterialButton bottone_prosegui;
     Controller controller;
     ActivityResultLauncher<Intent> resultLauncher;
+    String nomeProd;
+    String descProd;
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view_fragment = inflater.inflate(R.layout.venditore_fragment_crea_la_tua_asta_venditore, container, false);
@@ -50,7 +55,8 @@ public class VenditoreFragmentCreaLaTuaAstaVenditore extends Fragment {
 
         immagineProdotto=(ImageView) view_fragment.findViewById(R.id.imageViewCreaAstaVenditore);
         ImageButton bottoneInserisciImmagine=(ImageButton) view_fragment.findViewById(R.id.imageButtonInserisciImmagineCreaAstaVenditore);
-
+        nomeProdotto=view_fragment.findViewById(R.id.editTextNomeBeneCreaAstaVenditore);
+        descrizioneProdotto=view_fragment.findViewById(R.id.editTextDescrizioneCreaAstaVenditore);
 
         /*back = view.findViewById(R.id.bottoneTornaIndietroCreaLaTuaAstaVenditore);
         back.setOnClickListener(new View.OnClickListener() {
@@ -96,10 +102,22 @@ public class VenditoreFragmentCreaLaTuaAstaVenditore extends Fragment {
             @Override
             public void onClick(View view) {
                 if(selezione_asta==0){
-                    Controller.redirectActivity(getActivity(), VenditoreAstaInglese.class);
+                    nomeProd=nomeProdotto.getText().toString();
+                    descProd=descrizioneProdotto.getText().toString();
+                    //Controller.redirectActivity(getActivity(), VenditoreAstaInglese.class);
+                    Intent intent = new Intent(getActivity(), VenditoreAstaInglese.class);
+                    intent.putExtra("nomeProd", nomeProd);
+                    intent.putExtra("descProd", descProd);
+                    startActivity(intent);
                 }
                 else if(selezione_asta==1){
-                    Controller.redirectActivity(getActivity(), VenditoreAstaRibasso.class);
+                    nomeProd=nomeProdotto.getText().toString();
+                    descProd=descrizioneProdotto.getText().toString();
+                    //Controller.redirectActivity(getActivity(), VenditoreAstaRibasso.class);
+                    Intent intent = new Intent(getActivity(), VenditoreAstaRibasso.class);
+                    intent.putExtra("nomeProd", nomeProd);
+                    intent.putExtra("descProd", descProd);
+                    startActivity(intent);
                 }
             }
         });

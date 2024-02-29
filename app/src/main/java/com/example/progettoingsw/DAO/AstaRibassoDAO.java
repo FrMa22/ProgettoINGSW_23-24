@@ -15,6 +15,7 @@ import java.time.format.DateTimeFormatter;
 public class AstaRibassoDAO {
 
     private Connection connection;
+    private String idAsta;
 
     public void openConnection() {
         new DatabaseTask().execute("open");
@@ -57,6 +58,13 @@ public class AstaRibassoDAO {
 
                             statement.executeUpdate("INSERT INTO asta_alribasso"  + " (prezzoBase,intervalloDecrementale, decrementoAutomaticoCifra, prezzoMin, prezzoAttuale, condizione, id_venditore) " +
                                     "VALUES (" + baseAsta + ", INTERVAL '" + intervallo + " minutes', " + soglia + ", " + prezzoMin + ", "+ prezzoAttuale + ", ' " + condizione + "', '" +id_venditore + "')");
+                            //
+                            // Ottenimento dell'ID dell'asta appena creata
+                            ResultSet resultSet = statement.executeQuery("SELECT LASTVAL()");
+                            if (resultSet.next()) {
+                                idAsta = resultSet.getString(1); // ID dell'asta
+                            }
+                            //
                             statement.close();
                             return "Asta al ribasso inserita con successo!";
                         } else {
@@ -84,6 +92,14 @@ public class AstaRibassoDAO {
             // Questo metodo viene chiamato dopo che doInBackground è completato
             // Puoi mostrare il risultato all'utente o gestirlo in modo appropriato
             System.out.println(result);
+            if(result.equals("Asta al ribasso inserita con successo!")) {
+                ProdottoDAO prodottoDao = new ProdottoDAO();
+                String nomeProdotto = "persona 2";
+                String descrizione = "souls-like";
+                prodottoDao.openConnection();
+                prodottoDao.creaProdotto(nomeProdotto, descrizione, null, idAsta, "ribasso");
+                prodottoDao.closeConnection();
+            }
         }
     }
 }
