@@ -2,10 +2,19 @@ package com.example.progettoingsw.gui.acquirente;
 
 import com.example.progettoingsw.R;
 import com.example.progettoingsw.gestori_gui.ElementoListaCategorie;
+
+import android.content.res.Resources;
+import android.content.res.TypedArray;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
@@ -24,11 +33,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AcquirenteFragmentSelezioneCategorie extends Fragment {
-    private Controller controller;
-    private NavigationView navigationView;
     private List<String> selectedRadioButtonItems = new ArrayList<>();
-    private RecyclerView recyclerViewCategoria;
-    private CheckboxGridAdapter checkboxGridAdapter;
+    private LinearLayout linearLayoutCategorie;
+    private ArrayAdapter<String> categorieAdapter;
 
     public AcquirenteFragmentSelezioneCategorie() {
         // Costruttore vuoto richiesto dal framework
@@ -36,74 +43,64 @@ public class AcquirenteFragmentSelezioneCategorie extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.acquirente_fragment_selezione_categorie, container, false);
-        LinearLayout linearLayout = view.findViewById(R.id.linear_layout_checkbox); // Riferimento al tuo LinearLayout
-        populateLinearLayout(linearLayout); // Popola il LinearLayout con ImageView e CheckBox
+        linearLayoutCategorie = view.findViewById(R.id.linear_layout_categorie);
+        populateLinearLayout();
         return view;
     }
+
 
     // Nella tua classe AcquirenteFragmentSelezioneCategorie
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        controller = new Controller();
 
     }
 
-    private void populateLinearLayout(LinearLayout linearLayout) {
-        List<ElementoListaCategorie> elementiLista = createElementiListaFromResources();
+    private void populateLinearLayout() {
+        String[] categorieArray = getResources().getStringArray(R.array.categories_array);
+        TypedArray immaginiArray = getResources().obtainTypedArray(R.array.immagini_categorie);
 
-        for (ElementoListaCategorie elemento : elementiLista) {
-            FrameLayout frameLayout = new FrameLayout(requireContext());
+        for (int i = 0; i < categorieArray.length; i++) {
+            Button button = new Button(requireContext());
+            button.setText(categorieArray[i]);
+            button.setTextSize(28);
+            button.setTextColor(getResources().getColor(R.color.colore_secondario));
 
-            // ImageView con dimensioni fisse (100dp x 100dp)
-            ImageView imageView = new ImageView(requireContext());
-            imageView.setImageResource(elemento.getImmagine());
-            imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-            FrameLayout.LayoutParams imageParams = new FrameLayout.LayoutParams(100, 100);
-            imageView.setLayoutParams(imageParams);
-
-            // CheckBox con altezza fissa (100dp) e larghezza che occupa lo spazio rimanente
-            CheckBox checkBox = new CheckBox(requireContext());
-            checkBox.setText(elemento.getTesto());
-            FrameLayout.LayoutParams checkBoxParams = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, 100);
-            checkBoxParams.leftMargin = 100; // Imposta il margine sinistro per evitare sovrapposizioni
-            checkBox.setLayoutParams(checkBoxParams);
-
-            frameLayout.addView(imageView);
-            frameLayout.addView(checkBox);
-
-            linearLayout.addView(frameLayout);
-        }
-    }
-
-
-
-
-    private List<ElementoListaCategorie> createElementiListaFromResources() {
-        // Recupera gli array di percorsi per immagini e testi
-        String[] arrayPercorsiImmagini = getResources().getStringArray(R.array.array_immagini_categorie);
-        String[] arrayTesti = getResources().getStringArray(R.array.array_testi_categorie);
-
-        // Crea l'ArrayList finale contenente oggetti ElementoListaCategorie
-        List<ElementoListaCategorie> elementiLista = new ArrayList<>();
-
-        // Verifica che gli array abbiano la stessa lunghezza
-        if (arrayPercorsiImmagini.length == arrayTesti.length) {
-            // Itera attraverso gli array e crea gli oggetti ElementoListaCategorie
-            for (int i = 0; i < arrayPercorsiImmagini.length; i++) {
-                // Ottieni l'identificatore della risorsa per l'immagine dal percorso
-                int immagineResId = getResources().getIdentifier(arrayPercorsiImmagini[i], "drawable", requireContext().getPackageName());
-
-                // Aggiungi l'elemento alla lista
-                elementiLista.add(new ElementoListaCategorie(immagineResId, arrayTesti[i]));
+            try {
+                // Imposta l'immagine a sinistra del testo
+                Drawable immagine = immaginiArray.getDrawable(i);
+                immagine.setBounds(0, 0, immagine.getIntrinsicWidth(), immagine.getIntrinsicHeight());
+                button.setCompoundDrawablesWithIntrinsicBounds(immagine, null, getResources().getDrawable(R.drawable.ic_freccia_piccola_dx), null);
+            } catch (Resources.NotFoundException e) {
+                Log.e("Errore", "Impossibile trovare l'immagine per la categoria " + categorieArray[i]);
             }
-        } else {
-            // Se gli array hanno lunghezze diverse, gestisci l'errore o la situazione indesiderata
-            // Puoi loggare un messaggio di errore o eseguire altre azioni a seconda delle tue esigenze
+
+            // Imposta il testo al centro
+            button.setGravity(Gravity.CENTER);
+
+            // Imposta il colore di sfondo del bottone a trasparente
+            button.setBackgroundColor(Color.TRANSPARENT);
+
+            // Imposta il layout personalizzato come sfondo del bottone
+            button.setBackgroundResource(R.drawable.bordo_sotto_grigio);
+
+            // Imposta un ascoltatore di clic per gestire l'evento di clic su ogni bottone
+            button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // Gestisci l'evento di clic qui
+                    // Ad esempio, apri una nuova schermata o esegui un'azione specifica
+                }
+            });
+
+            linearLayoutCategorie.addView(button);
         }
 
-        return elementiLista;
+        immaginiArray.recycle();
     }
+
+
+
 
 
 

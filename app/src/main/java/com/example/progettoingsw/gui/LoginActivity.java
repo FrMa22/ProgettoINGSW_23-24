@@ -2,6 +2,7 @@ package com.example.progettoingsw.gui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -26,7 +27,6 @@ public class LoginActivity extends GestoreComuniImplementazioni {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        controller = new Controller();
         TextView registrazione = (TextView) findViewById(R.id.TextViewRegistrati);
         Button bottoneLogin = (Button) findViewById(R.id.bottonelogin);
         editText_mail = findViewById(R.id.editTextEmail);
@@ -36,7 +36,7 @@ public class LoginActivity extends GestoreComuniImplementazioni {
 
         registrazione.setOnClickListener(v -> {
             //apre schermata registrazione
-            controller.redirectActivity(LoginActivity.this, Registrazione.class);
+            Controller.redirectActivity(LoginActivity.this, Registrazione.class);
 
         });
         bottoneLogin.setOnClickListener(new View.OnClickListener() {
@@ -46,9 +46,17 @@ public class LoginActivity extends GestoreComuniImplementazioni {
                 String mail = editText_mail.getText().toString();
                 String password = editText_password.getText().toString();
 
-                // Chiamata al metodo per cercare nel database
-                logindao.openConnection();
-                logindao.findUser(mail, password);
+                if (!mail.isEmpty() && !password.isEmpty()) {
+                    // Chiamata al metodo per cercare nel database
+                    logindao.openConnection();
+                    logindao.findUser(mail, password);
+                    Log.d("result set" , "fatta finduser");
+
+                } else {
+                    // Gestione del caso in cui uno o entrambi i campi sono vuoti
+                    Toast.makeText(LoginActivity.this, "Inserisci sia l'email che la password", Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
 
@@ -62,18 +70,22 @@ public class LoginActivity extends GestoreComuniImplementazioni {
 
     }
     public void handleLoginResult(boolean result) {
-        if (result) {
-            Toast.makeText(this, "Trovato", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(LoginActivity.this, AcquirenteMainActivity.class);
-            intent.putExtra("email", editText_mail.getText().toString());
-            startActivity(intent);
+        Log.d("handleLoginResult", " result è : " + result);
+        if (!result) {
+            Log.d("caso false", " result è : " + result);
+            Toast.makeText(this, "Non trovato", Toast.LENGTH_SHORT).show();
             // L'utente è stato trovato
             // Esegui le azioni necessarie per il login
         } else {
-            Toast.makeText(this, "Non trovato", Toast.LENGTH_SHORT).show();
+            Log.d("caso true", " result è : " + result);
             // L'utente non è stato trovato
             // Mostra un messaggio di errore o esegui altre azioni necessarie
+             Toast.makeText(this, "Trovato", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(LoginActivity.this, AcquirenteMainActivity.class);
+                        intent.putExtra("email", editText_mail.getText().toString());
+                        startActivity(intent);
         }
     }
+
 
 }

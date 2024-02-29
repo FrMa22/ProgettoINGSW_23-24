@@ -25,5 +25,45 @@
         <item>Testo Categoria 2</item>
         <!-- Aggiungi gli altri elementi testo -->
     </string-array>
+    <string-array name="categories_array">
+        <item>Arte</item>
+        <item>Elettrodomestici</item>
+        <item>Automobili</item>
+        <item>Moto</item>
+        <item>Auto d\'epoca</item>
+        <item>Moto d\'epoca</item>
+        <item>Telefonia</item>
+        <item>Computer</item>
+        <item>Musica</item>
+        <item>Libri</item>
+        <item>Arredamento casa</item>
+        <item>Fumetti</item>
+        <item>Esterni casa</item>
+        <item>Sport</item>
+        <item>Vestiario</item>
+        <item>Gioielli e Accessori</item>
+        <item>Giocattoli</item>
+        <item>Fotografia</item>
+    </string-array>
+    <array name="immagini_categorie">
+        <item>@drawable/ic_elenco_categorie_arte</item>
+        <item>@drawable/ic_elenco_categorie_elettrodomestici</item>
+        <item>@drawable/ic_elenco_categorie_car</item>
+        <item>@drawable/ic_elenco_categorie_moto</item>
+        <item>@drawable/ic_auto_epoca</item>
+        <item>@drawable/ic_moto_epoca</item>
+        <item>@drawable/ic_elenco_categorie_telefonia</item>
+        <item>@drawable/ic_computer</item>
+        <item>@drawable/ic_music</item>
+        <item>@drawable/ic_libri</item>
+        <item>@drawable/ic_arredamento</item>
+        <item>@drawable/ic_fumetti</item>
+        <item>@drawable/ic_arredamento_esterni</item>
+        <item>@drawable/ic_sport_palloni</item>
+        <item>@drawable/ic_vestiario</item>
+        <item>@drawable/ic_gioielli</item>
+        <item>@drawable/ic_giocattoli</item>
+        <item>@drawable/ic_fotografia</item>
+    </array>
 
 </resources>

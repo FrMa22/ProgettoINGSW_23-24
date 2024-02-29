@@ -83,114 +83,12 @@
                     android:textStyle="bold" />
 
 
-                <HorizontalScrollView
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycler_view_prodotti"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp">
+                    android:layout_marginTop="5dp"/>
 
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="260dp"
-                            android:layout_marginStart="10dp"
-                            android:background="@drawable/home_item_design"
-                            android:orientation="vertical">
-
-                            <RelativeLayout
-                                android:layout_width="160dp"
-                                android:layout_height="180dp"
-                                android:layout_margin="10dp"
-                                android:background="@drawable/home_item_design"
-                                android:layout_gravity="center_horizontal"
-                                >
-
-                                <ImageView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:layout_marginStart="20dp"
-                                    android:layout_marginTop="20dp"
-                                    android:layout_marginEnd="20dp"
-                                    android:layout_marginBottom="20dp"
-                                    android:contentDescription="Immagine"
-                                    android:src="@drawable/prova_home_lavatrice" />
-                            </RelativeLayout>
-
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="10dp"
-                                android:layout_marginTop="-5dp"
-                                android:text="Lavatrice"
-                                android:textColor="@color/colore_secondario"
-                                android:textSize="20sp" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="10dp"
-                                android:layout_marginTop="5dp"
-                                android:text="200€"
-                                android:textColor="@color/colore_secondario"
-                                android:textSize="20sp" />
-
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="260dp"
-                            android:layout_marginLeft="15dp"
-                            android:background="@drawable/home_item_design"
-                            android:orientation="vertical">
-
-                            <RelativeLayout
-                                android:layout_width="160dp"
-                                android:layout_height="180dp"
-                                android:layout_margin="10dp"
-                                android:background="@drawable/home_item_design"
-                                android:layout_gravity="center_horizontal"
-                                >
-
-                                <ImageView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:layout_margin="20dp"
-                                    android:contentDescription="Immagine"
-                                    android:src="@drawable/prova_home_albero_di_natale" />
-                            </RelativeLayout>
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="10dp"
-                                android:layout_marginTop="-5dp"
-                                android:text="Albero di natale"
-                                android:textColor="@color/colore_secondario"
-                                android:textSize="20sp" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="10dp"
-                                android:layout_marginTop="5dp"
-                                android:text="40€"
-                                android:textColor="@color/colore_secondario"
-                                android:textSize="20sp" />
-
-
-                        </LinearLayout>
-
-
-                    </LinearLayout>
-
-
-                </HorizontalScrollView>
 
 
                 <TextView
