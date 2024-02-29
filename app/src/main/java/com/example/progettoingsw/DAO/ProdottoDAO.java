@@ -1,82 +1,97 @@
 package com.example.progettoingsw.DAO;
 
 import android.os.AsyncTask;
-import android.util.Log;
 
 import com.example.progettoingsw.controllers_package.DatabaseHelper;
-import com.example.progettoingsw.gui.acquirente.AcquirenteFragmentHome;
-import com.example.progettoingsw.model.Prodotto;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class ProdottoDAO {
 
-    private AcquirenteFragmentHome acquirenteFragmentHome;
     private Connection connection;
-
-    public ProdottoDAO(AcquirenteFragmentHome acquirenteFragmentHome) {
-        this.acquirenteFragmentHome = acquirenteFragmentHome;
-    }
 
     public void openConnection() {
         new DatabaseTask().execute("open");
+    }
+
+    public void creaProdotto(String nome, String descrizione,String path,String idAsta,String tipoAsta) {
+        if (nome.isEmpty() || descrizione.isEmpty() || idAsta.isEmpty() || tipoAsta.isEmpty() ) {
+            // Se uno dei campi è vuoto, non fare nulla
+
+            return;
+        }
+        new DatabaseTask().execute("insert", nome, descrizione,path,idAsta,tipoAsta);
     }
 
     public void closeConnection() {
         new DatabaseTask().execute("close");
     }
 
-    public void getProdotti() {
-        new DatabaseTask().execute("getProdotti");
-    }
-
-    private class DatabaseTask extends AsyncTask<String, Void, List<Prodotto>> {
+    private class DatabaseTask extends AsyncTask<String, Void, String> {
 
         @Override
-        protected List<Prodotto> doInBackground(String... strings) {
-            List<Prodotto> prodotti = new ArrayList<>();
+        protected String doInBackground(String... strings) {
             try {
                 if (strings.length > 0) {
                     String action = strings[0];
                     if (action.equals("open")) {
                         connection = DatabaseHelper.getConnection();
-                    } else if (action.equals("getProdotti")) {
+                        return "Connessione aperta con successo!";
+                    } else if (action.equals("insert")) {
                         if (connection != null && !connection.isClosed()) {
                             Statement statement = connection.createStatement();
-                            ResultSet resultSet = statement.executeQuery("SELECT * FROM Prodotto");
-                            while (resultSet.next()) {
-                                Prodotto prodotto = new Prodotto();
-                                prodotto.setId(resultSet.getInt("id"));
-                                prodotto.setNome(resultSet.getString("nome"));
-                                prodotto.setDescrizione(resultSet.getString("descrizione"));
-                                prodotto.setPathImmagine(resultSet.getString("path_immagine"));
-                                prodotti.add(prodotto);
+
+
+                            String nomeP=strings[1];
+                            String descrizioneP=strings[2];
+                            int idA=Integer.parseInt(strings[4]);
+                            String tipoA=strings[5];
+                            if(tipoA.equals("inglese")) {
+                                statement.executeUpdate("INSERT INTO prodotto" + " (nome,descrizione, id_asta_allinglese) " +
+                                        "VALUES ('" + nomeP + "', '" + descrizioneP + "', " + idA + ")");
+                                statement.close();
+                                return "Prodotto inserito con successo!";
                             }
-                            resultSet.close();
-                            statement.close();
+
+                            if(tipoA.equals("ribasso")) {
+                                statement.executeUpdate("INSERT INTO prodotto" + " (nome,descrizione, id_asta_alribasso) " +
+                                        "VALUES ('" + nomeP + "', '" + descrizioneP + "', " + idA + ")");
+                                statement.close();
+                                return "Prodotto inserito con successo!";
+                            }
+
+
+                        } else {
+                            return "Impossibile inserire il prodotto: connessione non aperta.";
                         }
+
                     } else if (action.equals("close")) {
                         if (connection != null && !connection.isClosed()) {
                             connection.close();
+                            return "Connessione chiusa con successo!";
+                        } else {
+                            return "Connessione già chiusa.";
                         }
                     }
                 }
-            } catch (SQLException e) {
-                Log.e("ProdottoDAO", "Errore durante l'accesso al database: " + e.getMessage());
+                return "Azione non supportata.";
+            } catch (Exception e) {
+                e.printStackTrace();
+                return "Errore durante l'operazione: " + e.getMessage();
             }
-            return prodotti;
         }
 
         @Override
-        protected void onPostExecute(List<Prodotto> prodotti) {
+        protected void onPostExecute(String result) {
             // Questo metodo viene chiamato dopo che doInBackground è completato
             // Puoi mostrare il risultato all'utente o gestirlo in modo appropriato
-            acquirenteFragmentHome.handleProdottiResult(prodotti);
+            System.out.println(result);
         }
     }
 }

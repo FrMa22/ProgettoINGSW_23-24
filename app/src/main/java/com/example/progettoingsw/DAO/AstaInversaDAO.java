@@ -47,8 +47,9 @@ public class AstaInversaDAO {
                         if (connection != null && !connection.isClosed()) {
                             double prezzoMax = Double.parseDouble(strings[2]);
                             String dataDiScadenza = strings[3] +" " +strings[4]+ ":00";
-                            String condizione = strings[1];
+                            String nomeProdotto = strings[1];
                             String id_venditore = "esempio@email.com";
+                            String condizione="aperta";
 
 // Definisci il pattern per il formato della stringa con data e orario
                             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
@@ -57,7 +58,7 @@ public class AstaInversaDAO {
                             LocalDateTime localDateTime = LocalDateTime.parse(dataDiScadenza, formatter);
 
 // Prepara l'istruzione SQL con un segnaposto per il LocalDateTime
-                            String query = "INSERT INTO asta_inversa (prezzoMax, dataDiScadenza, condizione, id_acquirente) VALUES (?, ?, ?, ?)";
+                            String query = "INSERT INTO asta_inversa (prezzoMax, dataDiScadenza, condizione, id_acquirente,nomeProdotto) VALUES (?, ?, ?, ?,?)";
                             PreparedStatement statement = connection.prepareStatement(query);
 
 // Imposta i valori dei parametri
@@ -65,6 +66,7 @@ public class AstaInversaDAO {
                             statement.setObject(2, localDateTime);
                             statement.setString(3, condizione);
                             statement.setString(4, id_venditore);
+                            statement.setString(5, nomeProdotto);
 
 // Esegui l'aggiornamento
                             statement.executeUpdate();
