@@ -16,17 +16,19 @@ public class AstaRibassoDAO {
 
     private Connection connection;
     private String idAsta;
+    private String nomeP;
+    private String descrizioneP;
 
     public void openConnection() {
         new DatabaseTask().execute("open");
     }
 
-    public void creaAstaRibasso(String base, String intervallo,String soglia,String min) {
+    public void creaAstaRibasso(String base, String intervallo,String soglia,String min,String nomeProdotto,String descrizioneProdotto) {
         if (base.isEmpty() || intervallo.isEmpty() || soglia.isEmpty() || min.isEmpty()) {
             // Se uno dei campi è vuoto, non fare nulla
             return;
         }
-        new DatabaseTask().execute("insert", base, intervallo,soglia,min);
+        new DatabaseTask().execute("insert", base, intervallo,soglia,min,nomeProdotto,descrizioneProdotto);
     }
 
     public void closeConnection() {
@@ -55,6 +57,8 @@ public class AstaRibassoDAO {
                             double soglia=Double.parseDouble(strings[3]);
                             double prezzoMin=Double.parseDouble(strings[4]);
                             double prezzoAttuale = baseAsta;
+                            nomeP=strings[5];
+                            descrizioneP=strings[6];
 
                             statement.executeUpdate("INSERT INTO asta_alribasso"  + " (prezzoBase,intervalloDecrementale, decrementoAutomaticoCifra, prezzoMin, prezzoAttuale, condizione, id_venditore) " +
                                     "VALUES (" + baseAsta + ", INTERVAL '" + intervallo + " minutes', " + soglia + ", " + prezzoMin + ", "+ prezzoAttuale + ", ' " + condizione + "', '" +id_venditore + "')");
@@ -94,10 +98,8 @@ public class AstaRibassoDAO {
             System.out.println(result);
             if(result.equals("Asta al ribasso inserita con successo!")) {
                 ProdottoDAO prodottoDao = new ProdottoDAO();
-                String nomeProdotto = "persona 2";
-                String descrizione = "souls-like";
                 prodottoDao.openConnection();
-                prodottoDao.creaProdotto(nomeProdotto, descrizione, null, idAsta, "ribasso");
+                prodottoDao.creaProdotto(nomeP, descrizioneP, null, idAsta, "ribasso");
                 prodottoDao.closeConnection();
             }
         }
