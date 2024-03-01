@@ -30,6 +30,14 @@ public class Controller {
         context.startActivity(intent);
     }
 
+    public static void redirectActivityEmailTipoUtente(Context context, Class<?> targetClass, String email, String tipoUtente) {
+        Intent intent = new Intent(context, targetClass);
+        intent.putExtra("email", email);
+        intent.putExtra("tipoUtente", tipoUtente);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
+    }
+
 
 
 
