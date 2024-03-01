@@ -14,6 +14,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.example.progettoingsw.DAO.RegistrazioneFacoltativaDAO;
+import com.example.progettoingsw.DAO.RegistrazioneSocialDAO;
 import com.example.progettoingsw.R;
 import com.example.progettoingsw.controllers_package.Controller;
 import com.google.android.material.button.MaterialButton;
@@ -22,9 +24,13 @@ public class PopUpRegistrazioneSocial extends Dialog implements View.OnClickList
 
     private Controller controller;
     private String opzioneSelezionata;
+    private String email;
+    private String tipoUtente;
 
-    public PopUpRegistrazioneSocial(@NonNull Context context) {
+    public PopUpRegistrazioneSocial(@NonNull Context context, String email, String tipoUtente) {
         super(context);
+        this.email=email;
+        this.tipoUtente=tipoUtente;
     }
 
     @Override
@@ -34,6 +40,7 @@ public class PopUpRegistrazioneSocial extends Dialog implements View.OnClickList
         setContentView(R.layout.pop_up_registrazione_social);
 
         controller = new Controller();
+
 
         // Riferimenti ai widget all'interno del pop-up
         MaterialButton bottoneChiudiRegistrazioneSocial = findViewById(R.id.bottoneChiudiRegistrazioneSocial);
@@ -79,6 +86,10 @@ public class PopUpRegistrazioneSocial extends Dialog implements View.OnClickList
         String usernameSocialRegistrazione = editTextUsernameRegistrazioneSocial.getText().toString();
         String profiloSocialRegistrazione = "https://www." + opzioneSelezionata + ".com/" + usernameSocialRegistrazione;
 
+        RegistrazioneSocialDAO registrazioneSocialDAO= new RegistrazioneSocialDAO();
+        registrazioneSocialDAO.openConnection();
+        registrazioneSocialDAO.inserimentoSocial(usernameSocialRegistrazione,profiloSocialRegistrazione,email, tipoUtente);
+        registrazioneSocialDAO.closeConnection();
         // Aggiungere social al database o qualcosa di back-end
 
         Toast.makeText(getContext(), "Social aggiunto correttamente! " + profiloSocialRegistrazione, Toast.LENGTH_SHORT).show();

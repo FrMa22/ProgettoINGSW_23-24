@@ -16,17 +16,19 @@ public class AstaIngleseDAO {
 
     private Connection connection;
     private String idAsta;
+    private String nomeP;
+    private String descrizioneP;
 
     public void openConnection() {
         new DatabaseTask().execute("open");
     }
 
-    public void creaAstaInglese(String base, String intervallo, String rialzo) {
+    public void creaAstaInglese(String base, String intervallo, String rialzo,String nomeProdotto,String descrizioneProdotto) {
         if (base.isEmpty() || intervallo.isEmpty() || rialzo.isEmpty()) {
             // Se uno dei campi è vuoto, non fare nulla
             return;
         }
-        new DatabaseTask().execute("insert", base, intervallo, rialzo);
+        new DatabaseTask().execute("insert", base, intervallo, rialzo,nomeProdotto,descrizioneProdotto);
     }
 
     public void closeConnection() {
@@ -55,6 +57,8 @@ public class AstaIngleseDAO {
                             int intervallo = Integer.parseInt(strings[2]);
                             double rialzoMin = Double.parseDouble(strings[3]);
                             double prezzoAttuale = baseAsta;
+                            nomeP=strings[4];
+                            descrizioneP=strings[5];
 
                             // Aggiungere l'intervallo in ore alla data di scadenza
                             dataScadenza = dataScadenza.plusHours(intervallo);
@@ -105,10 +109,8 @@ public class AstaIngleseDAO {
             System.out.println(result);
             if(result.equals("Asta inglese inserita con successo!")) {
                 ProdottoDAO prodottoDao = new ProdottoDAO();
-                String nomeProdotto = "lies of p";
-                String descrizione = "souls-like";
                 prodottoDao.openConnection();
-                prodottoDao.creaProdotto(nomeProdotto, descrizione, null, idAsta, "inglese");
+                prodottoDao.creaProdotto(nomeP, descrizioneP, null, idAsta, "inglese");
                 prodottoDao.closeConnection();
             }
         }

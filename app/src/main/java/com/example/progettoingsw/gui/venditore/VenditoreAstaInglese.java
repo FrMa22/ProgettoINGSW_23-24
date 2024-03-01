@@ -69,7 +69,7 @@ public class VenditoreAstaInglese extends GestoreComuniImplementazioni {
 
             // Chiamata al metodo per creare l'asta nel database
             astaIngleseDao.openConnection();
-            astaIngleseDao.creaAstaInglese(base,intervallo,rialzo);
+            astaIngleseDao.creaAstaInglese(base,intervallo,rialzo,nomeProdotto,descrizioneProdotto);
             astaIngleseDao.closeConnection();
             //Dopo aver creato l'asta,verrà creato anche il prodotto legato all'asta
 
