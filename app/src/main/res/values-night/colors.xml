@@ -15,6 +15,7 @@
     <color name="colore_bordo">#333333</color>
     <color name="bottom_nav_item_not_checked">#777777</color>
     <color name="bottom_nav_item_checked">#FFFFFF</color>
+    <color name="button_pressed">#CCCCCC</color>
 
 
 

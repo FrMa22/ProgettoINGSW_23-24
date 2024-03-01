@@ -34,17 +34,17 @@ public class AcquirenteFragmentHome extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.acquirente_fragment_home, container, false);
         // Inizializza il DAO e l'adapter
-        prodottoDAO = new ProdottoDAO(this);
-        prodottoAdapter = new ProdottoAdapter(getContext(), null);
-
-        // Inizializza il RecyclerView e imposta l'adapter
-        RecyclerView recyclerView = view.findViewById(R.id.recycler_view_prodotti);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setAdapter(prodottoAdapter);
-
-        // Apri la connessione al database e ottieni i prodotti
-        prodottoDAO.openConnection();
-        prodottoDAO.getProdotti();
+//        prodottoDAO = new ProdottoDAO(this);
+//        prodottoAdapter = new ProdottoAdapter(getContext(), null);
+//
+//        // Inizializza il RecyclerView e imposta l'adapter
+//        RecyclerView recyclerView = view.findViewById(R.id.recycler_view_prodotti);
+//        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+//        recyclerView.setAdapter(prodottoAdapter);
+//
+//        // Apri la connessione al database e ottieni i prodotti
+//        prodottoDAO.openConnection();
+//        prodottoDAO.getProdotti();
 
         return view;
     }

@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<shape xmlns:android="http://schemas.android.com/apk/res/android">
-    <solid android:color="@color/colore_secondario" />
-    <corners android:radius="30dp" />
-</shape>
-
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@drawable/button_pressed" android:state_pressed="true">
+        <shape android:shape="rectangle">
+            <corners android:radius="20dp"/>
+        </shape>
+    </item>
+    <item android:drawable="@drawable/button_normal">
+        <shape android:shape="rectangle">
+            <corners android:radius="20dp"/>
+        </shape>
+    </item>
+</selector>
