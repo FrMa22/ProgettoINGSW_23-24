@@ -1,13 +1,14 @@
-package com.example.progettoingsw.DAO;import android.os.AsyncTask;
+package com.example.progettoingsw.DAO;
+import android.os.AsyncTask;
 import android.util.Log;
-
 import com.example.progettoingsw.controllers_package.DatabaseHelper;
 import com.example.progettoingsw.gui.acquirente.AcquirenteFragmentProfilo;
-
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 public class AcquirenteFragmentProfiloDAO {
 
@@ -30,14 +31,22 @@ public class AcquirenteFragmentProfiloDAO {
         new DatabaseTask().execute("find", mail);
     }
 
+    public void getSocialNamesForEmail(String email) {
+        if (email.isEmpty()) {
+            // Se l'email è vuota, non fare nulla
+            return;
+        }
+        new DatabaseTask().execute("get_social_names", email);
+    }
+
     public void closeConnection() {
         new DatabaseTask().execute("close");
     }
 
-    private class DatabaseTask extends AsyncTask<String, Void, Acquirente> {
+    private class DatabaseTask extends AsyncTask<String, Void, Object> {
 
         @Override
-        protected Acquirente doInBackground(String... strings) {
+        protected Object doInBackground(String... strings) {
             try {
                 if (strings.length > 0) {
                     String action = strings[0];
@@ -58,8 +67,21 @@ public class AcquirenteFragmentProfiloDAO {
                                 String sitoWeb = resultSet.getString("link");
                                 String paese = resultSet.getString("areageografica");
                                 String bio = resultSet.getString("bio");
-                                return new Acquirente(nome, cognome, email, sitoWeb, paese,bio);
+                                return new Acquirente(nome, cognome, email, sitoWeb, paese, bio);
                             }
+                        }
+                    } else if (action.equals("get_social_names")) {
+                        if (connection != null && !connection.isClosed()) {
+                            List<String> socialNames = new ArrayList<>();
+                            List<String> socialLinks = new ArrayList<>();
+                            Statement statement = connection.createStatement();
+                            ResultSet resultSet = statement.executeQuery("SELECT s.nome, s.link FROM social s INNER JOIN socialAcquirente sa ON s.nome = sa.nome WHERE sa.indirizzo_email = '" + strings[1] + "'");
+                            while (resultSet.next()) {
+                                socialNames.add(resultSet.getString("nome"));
+                                socialLinks.add(resultSet.getString("link"));
+                                Log.d("AcquirenteFragmentProfiloDAO", "Nome Social: " + resultSet.getString("nome") + ", Link Social: " + resultSet.getString("link")); // Aggiunto
+                            }
+                            return new Object[]{socialNames, socialLinks};
                         }
                     } else if (action.equals("close")) {
                         if (connection != null && !connection.isClosed()) {
@@ -78,15 +100,31 @@ public class AcquirenteFragmentProfiloDAO {
         }
 
         @Override
-        protected void onPostExecute(Acquirente acquirente) {
+        protected void onPostExecute(Object result) {
             // Questo metodo viene chiamato dopo che doInBackground è completato
             // Puoi mostrare il risultato all'utente o gestirlo in modo appropriato
-            if (acquirente != null) {
+            if (result instanceof Acquirente) {
                 // Esempio: restituisci l'acquirente al Fragment
-                acquirenteFragmentProfilo.updateEditTexts(acquirente);
+                acquirenteFragmentProfilo.updateEditTexts((Acquirente) result);
+            } else if (result instanceof Object[]) {
+                Object[] socialData = (Object[]) result;
+                List<String> socialNames = (List<String>) socialData[0];
+                List<String> socialLinks = (List<String>) socialData[1];
+                acquirenteFragmentProfilo.updateSocialNames(socialNames, socialLinks);
             } else {
-                // L'acquirente non è stato trovato
+                // Nessun risultato o errore
+            }
+
+            // Aggiungi un controllo per verificare se result è null
+            if (result != null) {
+                Log.d("DatabaseTask", "Result: " + result.toString());
+            } else {
+                Log.d("DatabaseTask", "Result is null");
             }
         }
+
+
+
+
     }
 }

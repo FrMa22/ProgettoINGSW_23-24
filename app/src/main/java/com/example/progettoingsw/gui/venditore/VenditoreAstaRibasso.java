@@ -38,6 +38,9 @@ public class VenditoreAstaRibasso extends GestoreComuniImplementazioni {
         sogliaDecremento=findViewById(R.id.editTextSogliaDecrementoAstaRibasso);
         prezzominimoAsta=findViewById(R.id.editTextPrezzoSegretoAstaRibasso);
 
+        String nomeProdotto=getIntent().getStringExtra("nomeProd");
+        String descrizioneProdotto=getIntent().getStringExtra("descProd");
+
         bottoneConferma.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 //Controller.redirectActivity(VenditoreAstaRibasso.this, AcquirenteFragmentHome.class);
@@ -49,7 +52,7 @@ public class VenditoreAstaRibasso extends GestoreComuniImplementazioni {
 
                 // Chiamata al metodo per creare l'asta nel database
                 astaRibassoDao.openConnection();
-                astaRibassoDao.creaAstaRibasso(base,intervallo,soglia,min);
+                astaRibassoDao.creaAstaRibasso(base,intervallo,soglia,min,nomeProdotto,descrizioneProdotto);
                 astaRibassoDao.closeConnection();
 
 

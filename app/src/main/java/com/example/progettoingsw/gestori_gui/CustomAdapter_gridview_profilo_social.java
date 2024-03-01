@@ -1,44 +1,44 @@
 package com.example.progettoingsw.gestori_gui;
-
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.EditText;
 import android.widget.TextView;
-
 
 import com.example.progettoingsw.R;
 
 import java.util.ArrayList;
-
+import java.util.List;
 public class CustomAdapter_gridview_profilo_social extends BaseAdapter {
 
-    private Context mContext;
-    private ArrayList<String> array_social_gridview;
-    private ArrayList<String> array_links_gridview;
+    private Context context;
+    private List<String> socialNames;
+    private List<String> socialLinks; // Aggiunto
 
     public CustomAdapter_gridview_profilo_social(Context context) {
-        this.mContext = context;
-        this.array_social_gridview = new ArrayList<>();
-        this.array_links_gridview = new ArrayList<>();
+        this.context = context;
+        this.socialNames = new ArrayList<>();
+        this.socialLinks = new ArrayList<>(); // Aggiunto
     }
 
-    public void setData(ArrayList<String> array_campi, ArrayList<String> array_dati) {
-        this.array_social_gridview = array_campi;
-        this.array_links_gridview = array_dati;
+    public void setData(List<String> socialNames, List<String> socialLinks) {
+        this.socialNames = socialNames;
+        this.socialLinks = socialLinks;
         notifyDataSetChanged();
     }
 
+
+
     @Override
     public int getCount() {
-        return array_social_gridview.size();
+        return socialNames.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return array_social_gridview.get(position);
+        return socialNames.get(position);
     }
 
     @Override
@@ -48,40 +48,38 @@ public class CustomAdapter_gridview_profilo_social extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        com.example.progettoingsw.gestori_gui.CustomAdapter_gridview_profilo_campi.ViewHolder holder;
+        ViewHolder viewHolder;
 
         if (convertView == null) {
-            convertView = LayoutInflater.from(mContext).inflate(R.layout.gridview_profilo_item_layout, parent, false);
-
-            holder = new com.example.progettoingsw.gestori_gui.CustomAdapter_gridview_profilo_campi.ViewHolder();
-            holder.textViewLeft = convertView.findViewById(R.id.textViewLeftSocial);
-            holder.editTextRight = convertView.findViewById(R.id.editTextRightSocial);
-
-            convertView.setTag(holder);
+            convertView = LayoutInflater.from(context).inflate(R.layout.gridview_profilo_item_social, parent, false);
+            viewHolder = new ViewHolder();
+            viewHolder.textViewSocialName = convertView.findViewById(R.id.textview_social_name);
+            viewHolder.textViewSocialLink = convertView.findViewById(R.id.textview_social_link); // Aggiunto
+            convertView.setTag(viewHolder);
         } else {
-            holder = (com.example.progettoingsw.gestori_gui.CustomAdapter_gridview_profilo_campi.ViewHolder) convertView.getTag();
+            viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        // Setta il testo per il TextView a sinistra e l'EditText a destra
-        /*holder.textViewLeft.setText("Elemento " + (position + 1));
-        holder.editTextRight.setText(array_campi_gridview.get(position));*/
-
-        if (position < array_social_gridview.size() && position < array_links_gridview.size()) {
-            holder.textViewLeft.setText(array_social_gridview.get(position));
-            holder.editTextRight.setText(array_links_gridview.get(position));
+        // Verifica che socialNames e socialLinks abbiano la stessa lunghezza
+        if (position < socialNames.size() && position < socialLinks.size()) {
+            String socialName = socialNames.get(position);
+            String socialLink = socialLinks.get(position); // Aggiunto
+            viewHolder.textViewSocialName.setText(socialName);
+            viewHolder.textViewSocialLink.setText(socialLink); // Aggiunto
+        } else {
+            // Gestisci l'errore in modo appropriato
         }
 
-
-        // Impedisce la modifica dell'EditText
-        holder.editTextRight.setFocusable(false);
-        holder.editTextRight.setClickable(false);
-        holder.editTextRight.setFocusableInTouchMode(false);
+        Log.d("CustomAdapter", "Social Name: " + viewHolder.textViewSocialName.getText());
+        Log.d("CustomAdapter", "Social Link: " + viewHolder.textViewSocialLink.getText());
 
         return convertView;
     }
 
-    static class ViewHolder {
-        TextView textViewLeft;
-        EditText editTextRight;
+
+
+    private static class ViewHolder {
+        TextView textViewSocialName;
+        TextView textViewSocialLink; // Aggiunto
     }
 }

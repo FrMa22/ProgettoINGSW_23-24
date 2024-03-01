@@ -15,17 +15,20 @@ import java.time.format.DateTimeFormatter;
 public class AstaRibassoDAO {
 
     private Connection connection;
+    private String idAsta;
+    private String nomeP;
+    private String descrizioneP;
 
     public void openConnection() {
         new DatabaseTask().execute("open");
     }
 
-    public void creaAstaRibasso(String base, String intervallo,String soglia,String min) {
+    public void creaAstaRibasso(String base, String intervallo,String soglia,String min,String nomeProdotto,String descrizioneProdotto) {
         if (base.isEmpty() || intervallo.isEmpty() || soglia.isEmpty() || min.isEmpty()) {
             // Se uno dei campi è vuoto, non fare nulla
             return;
         }
-        new DatabaseTask().execute("insert", base, intervallo,soglia,min);
+        new DatabaseTask().execute("insert", base, intervallo,soglia,min,nomeProdotto,descrizioneProdotto);
     }
 
     public void closeConnection() {
@@ -46,16 +49,26 @@ public class AstaRibassoDAO {
                         if (connection != null && !connection.isClosed()) {
                             Statement statement = connection.createStatement();
 
-                            double prezzoAttuale = 100.00;
+
                             String condizione = "aperta";
                             String id_venditore = "venditore1@example.com";
                             double baseAsta=Double.parseDouble(strings[1]);
                             int intervallo=Integer.parseInt(strings[2]);
                             double soglia=Double.parseDouble(strings[3]);
                             double prezzoMin=Double.parseDouble(strings[4]);
+                            double prezzoAttuale = baseAsta;
+                            nomeP=strings[5];
+                            descrizioneP=strings[6];
 
                             statement.executeUpdate("INSERT INTO asta_alribasso"  + " (prezzoBase,intervalloDecrementale, decrementoAutomaticoCifra, prezzoMin, prezzoAttuale, condizione, id_venditore) " +
                                     "VALUES (" + baseAsta + ", INTERVAL '" + intervallo + " minutes', " + soglia + ", " + prezzoMin + ", "+ prezzoAttuale + ", ' " + condizione + "', '" +id_venditore + "')");
+                            //
+                            // Ottenimento dell'ID dell'asta appena creata
+                            ResultSet resultSet = statement.executeQuery("SELECT LASTVAL()");
+                            if (resultSet.next()) {
+                                idAsta = resultSet.getString(1); // ID dell'asta
+                            }
+                            //
                             statement.close();
                             return "Asta al ribasso inserita con successo!";
                         } else {
@@ -83,6 +96,12 @@ public class AstaRibassoDAO {
             // Questo metodo viene chiamato dopo che doInBackground è completato
             // Puoi mostrare il risultato all'utente o gestirlo in modo appropriato
             System.out.println(result);
+            if(result.equals("Asta al ribasso inserita con successo!")) {
+                ProdottoDAO prodottoDao = new ProdottoDAO();
+                prodottoDao.openConnection();
+                prodottoDao.creaProdotto(nomeP, descrizioneP, null, idAsta, "ribasso");
+                prodottoDao.closeConnection();
+            }
         }
     }
 }
