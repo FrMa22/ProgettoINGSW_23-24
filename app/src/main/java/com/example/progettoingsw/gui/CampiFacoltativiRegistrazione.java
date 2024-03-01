@@ -6,7 +6,6 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.progettoingsw.DAO.RegistrazioneDAO;
 import com.example.progettoingsw.DAO.RegistrazioneFacoltativaDAO;
 import com.example.progettoingsw.R;
 import com.example.progettoingsw.classe_da_estendere.GestoreComuniImplementazioni;
@@ -18,19 +17,21 @@ import java.util.ArrayList;
 public class CampiFacoltativiRegistrazione  extends GestoreComuniImplementazioni {
 
     Controller controller;
-   Intent intent = getIntent();
-    String email =intent.getStringExtra("email");
-    String tipoUtente =intent.getStringExtra("tipoUtene");
+    Intent intent;
+    String email ;
+    String tipoUtente ;
     String opzioneSelezionata;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.campi_facoltativi_registrazione);
+        setContentView(R.layout.registrazione_campi_facoltativi);
         controller = new Controller();
+        intent = getIntent();
+        email =intent.getStringExtra("email");
+        tipoUtente =intent.getStringExtra("tipoUtente");
 
         MaterialButton bottoneAnnulla = (MaterialButton) findViewById(R.id.bottoneAnnullaRegistrazione);
         MaterialButton bottoneSocial = (MaterialButton) findViewById(R.id.bottoneSocialRegistrazione);
-        MaterialButton bottoneSitoWeb = (MaterialButton) findViewById(R.id.bottoneSitoWebRegistrazione);
         MaterialButton bottoneProseguiRegistrazione = (MaterialButton) findViewById(R.id.bottoneProseguiRegistrazione);
         EditText testoBio = (EditText) findViewById(R.id.editTextBio);
         EditText testoProvenienza = (EditText) findViewById(R.id.editTextPaeseDiProvenienza);
@@ -55,12 +56,6 @@ public class CampiFacoltativiRegistrazione  extends GestoreComuniImplementazioni
         });
 
 
-        bottoneSitoWeb.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                //apre pop up per inserire il sito web
-                Toast.makeText(getApplicationContext(), "Sito web!", Toast.LENGTH_SHORT).show();//stampa un messaggio a schermo quando si clicca
-            }
-        });
 
 
         bottoneProseguiRegistrazione.setOnClickListener(new View.OnClickListener() {

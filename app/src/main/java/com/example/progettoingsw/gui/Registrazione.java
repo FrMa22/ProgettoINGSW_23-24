@@ -65,7 +65,7 @@ public class Registrazione extends GestoreComuniImplementazioni {
                     if(password.equals(conferma_password)){
                         registrazioneDAO.openConnection();
                         registrazioneDAO.registraUser(nome,cognome,email,password,tipoUtente);
-                        controller.redirectActivityEmailTipoUtente(Registrazione.this, CampiFacoltativiRegistrazione.class , email , tipoUtente);
+                        Controller.redirectActivityEmailTipoUtente(Registrazione.this, CampiFacoltativiRegistrazione.class , email , tipoUtente);
                     }
                 }
 

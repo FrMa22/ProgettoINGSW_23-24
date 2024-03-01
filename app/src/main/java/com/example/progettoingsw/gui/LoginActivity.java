@@ -41,21 +41,21 @@ public class LoginActivity extends GestoreComuniImplementazioni {
         });
         bottoneLogin.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-//                PopUpLogin popUpLogin = new PopUpLogin(LoginActivity.this);
-//                popUpLogin.show();
-                String mail = editText_mail.getText().toString();
-                String password = editText_password.getText().toString();
-
-                if (!mail.isEmpty() && !password.isEmpty()) {
-                    // Chiamata al metodo per cercare nel database
-                    logindao.openConnection();
-                    logindao.findUser(mail, password);
-                    Log.d("result set" , "fatta finduser");
-
-                } else {
-                    // Gestione del caso in cui uno o entrambi i campi sono vuoti
-                    Toast.makeText(LoginActivity.this, "Inserisci sia l'email che la password", Toast.LENGTH_SHORT).show();
-                }
+                PopUpLogin popUpLogin = new PopUpLogin(LoginActivity.this);
+                popUpLogin.show();
+//                String mail = editText_mail.getText().toString();
+//                String password = editText_password.getText().toString();
+//
+//                if (!mail.isEmpty() && !password.isEmpty()) {
+//                    // Chiamata al metodo per cercare nel database
+//                    logindao.openConnection();
+//                    logindao.findUser(mail, password);
+//                    Log.d("result set" , "fatta finduser");
+//
+//                } else {
+//                    // Gestione del caso in cui uno o entrambi i campi sono vuoti
+//                    Toast.makeText(LoginActivity.this, "Inserisci sia l'email che la password", Toast.LENGTH_SHORT).show();
+//                }
 
             }
         });

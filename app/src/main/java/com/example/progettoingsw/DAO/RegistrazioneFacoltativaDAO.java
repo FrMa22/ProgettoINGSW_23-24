@@ -42,7 +42,7 @@ public class RegistrazioneFacoltativaDAO {
                             String bio =strings[3];
                             String paese = strings[4];
                             String email = strings[1];
-                            String query = "UPDATE INTO " + tipoUtente + "SET bio = ?, paese= ? WHERE email = ?";
+                            String query = "UPDATE " + tipoUtente + " SET bio = ?, areageografica= ? WHERE indirizzo_email = ?";
                             PreparedStatement statement = connection.prepareStatement(query);
                             statement.setString(1, bio);
                             statement.setString(2, paese);

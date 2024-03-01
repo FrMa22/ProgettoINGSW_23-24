@@ -68,7 +68,7 @@ public class AcquirenteFragmentHome extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         // Chiudi la connessione al database quando il fragment viene distrutto
-        prodottoDAO.closeConnection();
+//        prodottoDAO.closeConnection();
     }
 
     public void handleProdottiResult(List<Prodotto> prodotti) {
