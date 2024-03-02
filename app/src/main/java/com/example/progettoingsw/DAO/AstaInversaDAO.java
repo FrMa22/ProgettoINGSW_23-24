@@ -21,12 +21,12 @@ public class AstaInversaDAO {
         new AstaInversaDAO.DatabaseTask().execute("open");
     }
 
-    public void creaAstaInversa(String nome, String prezzo,String data,String ora) {
-        if (nome.isEmpty() || prezzo.isEmpty() || data.isEmpty() || ora.isEmpty()) {
+    public void creaAstaInversa(String nome, String prezzo,String data,String ora,String descrizione,String email) {
+        if (nome.isEmpty() || prezzo.isEmpty() || data.isEmpty() || ora.isEmpty() || email.isEmpty() ) {
             // Se uno dei campi è vuoto, non fare nulla
             return;
         }
-        new AstaInversaDAO.DatabaseTask().execute("insert", nome, prezzo,data,ora);
+        new AstaInversaDAO.DatabaseTask().execute("insert", nome, prezzo,data,ora,descrizione,email);
     }
 
     public void closeConnection() {
@@ -48,8 +48,9 @@ public class AstaInversaDAO {
                             double prezzoMax = Double.parseDouble(strings[2]);
                             String dataDiScadenza = strings[3] +" " +strings[4]+ ":00";
                             String nomeProdotto = strings[1];
-                            String id_venditore = "esempio@email.com";
+                            String id_venditore =strings[6];
                             String condizione="aperta";
+                            String descrizioneP=strings[5];
 
 // Definisci il pattern per il formato della stringa con data e orario
                             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
@@ -58,7 +59,7 @@ public class AstaInversaDAO {
                             LocalDateTime localDateTime = LocalDateTime.parse(dataDiScadenza, formatter);
 
 // Prepara l'istruzione SQL con un segnaposto per il LocalDateTime
-                            String query = "INSERT INTO asta_inversa (prezzoMax, dataDiScadenza, condizione, id_acquirente,nomeProdotto) VALUES (?, ?, ?, ?,?)";
+                            String query = "INSERT INTO asta_inversa (prezzoMax, dataDiScadenza, condizione, id_acquirente,nome,descrizione) VALUES (?, ?, ?, ?,?,?)";
                             PreparedStatement statement = connection.prepareStatement(query);
 
 // Imposta i valori dei parametri
@@ -67,6 +68,7 @@ public class AstaInversaDAO {
                             statement.setString(3, condizione);
                             statement.setString(4, id_venditore);
                             statement.setString(5, nomeProdotto);
+                            statement.setString(6,descrizioneP);
 
 // Esegui l'aggiornamento
                             statement.executeUpdate();

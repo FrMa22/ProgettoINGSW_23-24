@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import com.example.progettoingsw.R;
 import com.example.progettoingsw.classe_da_estendere.GestoreComuniImplementazioni;
+import com.example.progettoingsw.gui.venditore.VenditoreFragmentCreaLaTuaAstaVenditore;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 public class AcquirenteMainActivity extends GestoreComuniImplementazioni {
 
@@ -51,7 +52,12 @@ public class AcquirenteMainActivity extends GestoreComuniImplementazioni {
                 selectedFragment = new AcquirenteFragmentSelezioneCategorie();
             } else if (item.getItemId() == R.id.action_crea_asta) {
                 Log.d("BottomNav", "Selected Crea Asta");
-                selectedFragment = new AcquirenteFragmentCreaLaTuaAstaAcquirente();
+                //selectedFragment = new AcquirenteFragmentCreaLaTuaAstaAcquirente();
+                AcquirenteFragmentCreaLaTuaAstaAcquirente fragmentAstaAcquirente = new AcquirenteFragmentCreaLaTuaAstaAcquirente();
+                Bundle args = new Bundle();
+                args.putString("email", email);
+                fragmentAstaAcquirente.setArguments(args);
+                selectedFragment = fragmentAstaAcquirente;
             } else if (item.getItemId() == R.id.action_search) {
                 Log.d("BottomNav", "Selected Search");
                 selectedFragment = new AcquirenteFragmentRicercaAsta();

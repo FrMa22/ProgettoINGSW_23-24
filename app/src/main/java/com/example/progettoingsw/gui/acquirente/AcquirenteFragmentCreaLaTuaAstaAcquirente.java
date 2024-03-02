@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
@@ -26,6 +27,7 @@ import com.example.progettoingsw.R;
 import com.example.progettoingsw.controllers_package.Controller;
 import com.example.progettoingsw.gui.LoginActivity;
 import com.example.progettoingsw.gui.PopUpLogin;
+import com.example.progettoingsw.gui.venditore.VenditoreAstaInglese;
 import com.google.android.material.button.MaterialButton;
 
 public class AcquirenteFragmentCreaLaTuaAstaAcquirente extends Fragment {
@@ -36,6 +38,8 @@ public class AcquirenteFragmentCreaLaTuaAstaAcquirente extends Fragment {
     Spinner spinnerTipoAsta;
     MaterialButton bottoneProseguiCreaAstaAcquirente;
     ActivityResultLauncher<Intent> resultLauncher;
+    EditText descrizioneProdotto;
+    String descProd;
 
     public AcquirenteFragmentCreaLaTuaAstaAcquirente() {
         // Costruttore vuoto richiesto dal framework
@@ -50,15 +54,22 @@ public class AcquirenteFragmentCreaLaTuaAstaAcquirente extends Fragment {
         super.onViewCreated(view_fragment, savedInstanceState);
         immagineProdotto= view_fragment.findViewById(R.id.imageViewCreaAstaAcquirente);
         bottoneInserisciImmagine = view_fragment.findViewById(R.id.imageButtonInserisciImmagineCreaAstaAcquirente);
-
+        descrizioneProdotto=view_fragment.findViewById(R.id.editTextDescrizioneCreaAstaAcquirente);
         registraRisultati();
+
+        String email = getArguments().getString("email");
 
         bottoneInserisciImmagine.setOnClickListener(view ->prelevaImmagine());//significa che chiama il metodo prelevaImmagine
 
         bottoneProseguiCreaAstaAcquirente = view_fragment.findViewById(R.id.bottoneProseguiCreaAstaAcquirente);
         bottoneProseguiCreaAstaAcquirente.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                Controller.redirectActivity(getActivity(), AcquirenteAstaInversa.class);
+                //Controller.redirectActivity(getActivity(), AcquirenteAstaInversa.class);
+                descProd=descrizioneProdotto.getText().toString();
+                Intent intent = new Intent(getActivity(), AcquirenteAstaInversa.class);
+                intent.putExtra("descProd", descProd);
+                intent.putExtra("email",email);
+                startActivity(intent);
             }
         });
 

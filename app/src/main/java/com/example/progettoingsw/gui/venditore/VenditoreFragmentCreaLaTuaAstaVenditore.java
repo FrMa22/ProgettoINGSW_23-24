@@ -53,6 +53,8 @@ public class VenditoreFragmentCreaLaTuaAstaVenditore extends Fragment {
         controller = new Controller();
         bottone_prosegui=view_fragment.findViewById(R.id.bottoneProsegui);
 
+        String email = getArguments().getString("email");
+
         immagineProdotto=(ImageView) view_fragment.findViewById(R.id.imageViewCreaAstaVenditore);
         ImageButton bottoneInserisciImmagine=(ImageButton) view_fragment.findViewById(R.id.imageButtonInserisciImmagineCreaAstaVenditore);
         nomeProdotto=view_fragment.findViewById(R.id.editTextNomeBeneCreaAstaVenditore);
@@ -73,9 +75,9 @@ public class VenditoreFragmentCreaLaTuaAstaVenditore extends Fragment {
         Spinner spinnerTipoAsta = view_fragment.findViewById(R.id.spinnerTipologiaAstaVenditore);
 
         //Spinner spinnerTipoAsta=(Spinner) view_fragment.findViewById(R.id.spinnerTipologiaAstaVenditore);
-        //ArrayAdapter<CharSequence> adapterSpinnerTipoAsta=(ArrayAdapter<CharSequence>) ArrayAdapter.createFromResource(getContext(), R.array.elencoTipiAstaVenditore, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item);
-        //adapterSpinnerTipoAsta.setDropDownViewResource(androidx.appcompat.R.layout.support_simple_spinner_dropdown_item);
-        //spinnerTipoAsta.setAdapter(adapterSpinnerTipoAsta);
+        ArrayAdapter<CharSequence> adapterSpinnerTipoAsta=(ArrayAdapter<CharSequence>) ArrayAdapter.createFromResource(getContext(), R.array.elencoTipiAstaVenditore, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item);
+        adapterSpinnerTipoAsta.setDropDownViewResource(androidx.appcompat.R.layout.support_simple_spinner_dropdown_item);
+        spinnerTipoAsta.setAdapter(adapterSpinnerTipoAsta);
 
         spinnerTipoAsta.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -108,7 +110,10 @@ public class VenditoreFragmentCreaLaTuaAstaVenditore extends Fragment {
                     Intent intent = new Intent(getActivity(), VenditoreAstaInglese.class);
                     intent.putExtra("nomeProd", nomeProd);
                     intent.putExtra("descProd", descProd);
+                    intent.putExtra("email",email);
                     startActivity(intent);
+
+
                 }
                 else if(selezione_asta==1){
                     nomeProd=nomeProdotto.getText().toString();
@@ -117,7 +122,9 @@ public class VenditoreFragmentCreaLaTuaAstaVenditore extends Fragment {
                     Intent intent = new Intent(getActivity(), VenditoreAstaRibasso.class);
                     intent.putExtra("nomeProd", nomeProd);
                     intent.putExtra("descProd", descProd);
+                    intent.putExtra("email",email);
                     startActivity(intent);
+
                 }
             }
         });

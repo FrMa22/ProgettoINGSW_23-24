@@ -41,6 +41,7 @@ public class VenditoreAstaInglese extends GestoreComuniImplementazioni {
 
         String nomeProdotto=getIntent().getStringExtra("nomeProd");
         String descrizioneProdotto=getIntent().getStringExtra("descProd");
+        String email=getIntent().getStringExtra("email");
 
 
         bottoneConferma =  findViewById(R.id.bottoneConfermaAstaInglese);
@@ -69,7 +70,7 @@ public class VenditoreAstaInglese extends GestoreComuniImplementazioni {
 
             // Chiamata al metodo per creare l'asta nel database
             astaIngleseDao.openConnection();
-            astaIngleseDao.creaAstaInglese(base,intervallo,rialzo,nomeProdotto,descrizioneProdotto);
+            astaIngleseDao.creaAstaInglese(base,intervallo,rialzo,nomeProdotto,descrizioneProdotto,email);
             astaIngleseDao.closeConnection();
             //Dopo aver creato l'asta,verrà creato anche il prodotto legato all'asta
 
