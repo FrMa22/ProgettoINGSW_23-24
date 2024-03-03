@@ -1,4 +1,5 @@
 package com.example.progettoingsw.gui.venditore;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -89,7 +90,10 @@ public class VenditoreFragmentProfilo extends Fragment {
         button_le_mie_aste.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Controller.redirectActivity(getContext(), LeMieAste.class);
+                //Controller.redirectActivity(getContext(), LeMieAste.class);
+                Intent intent = new Intent(getActivity(), LeMieAste.class);
+                intent.putExtra("email",email);
+                startActivity(intent);
             }
         });
 
