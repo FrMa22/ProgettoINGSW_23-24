@@ -68,6 +68,7 @@ public class LeMieAste extends GestoreComuniImplementazioni {
 
     }
 
+    /*
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (actionBarDrawerToggle.onOptionsItemSelected(item)) {
@@ -75,27 +76,32 @@ public class LeMieAste extends GestoreComuniImplementazioni {
         }
         return super.onOptionsItemSelected(item);
     }
+*/
 
+    /*
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
         actionBarDrawerToggle.syncState();
 
     }
-
+*/
+    /*
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         actionBarDrawerToggle.onConfigurationChanged(newConfig);
 
     }
+*/
 
+    /*
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.drawer_menu, menu);
         return true;
     }
-
+*/
 
 
 
