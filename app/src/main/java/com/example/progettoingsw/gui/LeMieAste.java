@@ -58,9 +58,8 @@ public class LeMieAste extends GestoreComuniImplementazioni {
         String email=getIntent().getStringExtra("email");
         // Inizializza il DAO e recupera i dati del venditore
         LeMieAsteDAO lemieAsteDAO = new LeMieAsteDAO(this);
-        lemieAsteDAO.openConnection();
-        lemieAsteDAO.getAsteForEmail(email);
-        lemieAsteDAO.closeConnection();
+
+
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup gruppo, int checkedId) {
@@ -69,11 +68,17 @@ public class LeMieAste extends GestoreComuniImplementazioni {
                     gridLayoutAttive.setVisibility(View.VISIBLE);
                     // Nascondi la ScrollView per "Non Attivi"
                     gridLayoutNonAttive.setVisibility(View.GONE);
+                    lemieAsteDAO.openConnection();
+                    lemieAsteDAO.getAsteForEmail(email,"aperta");
+                    lemieAsteDAO.closeConnection();
                 } else if (checkedId == R.id.bottoneNonAttive) {
                     // Mostra la ScrollView per "Non Attivi"
                     gridLayoutNonAttive.setVisibility(View.VISIBLE);
                     // Nascondi la ScrollView per "Attivi"
                     gridLayoutAttive.setVisibility(View.GONE);
+                    lemieAsteDAO.openConnection();
+                    lemieAsteDAO.getAsteForEmail(email,"chiusa");
+                    lemieAsteDAO.closeConnection();
                 }
             }
         });
@@ -117,31 +122,65 @@ public class LeMieAste extends GestoreComuniImplementazioni {
     }
 */
 
-    public void updateAsteNames(List<String> asteNames) {
-        if (asteNames != null) {
-            // Aggiorna l'interfaccia utente con i nomi delle aste attive
-            GridLayout gridLayoutAttive = findViewById(R.id.gridLayoutAsteAttive);
+    public void updateAsteNames(List<String> asteNames,String cond) {
 
-            // Rimuovi tutte le viste presenti nel GridLayout
-            gridLayoutAttive.removeAllViews();
 
-            for (String nomeAsta : asteNames) {
-                // Crea una nuova TextView per ogni nome asta
-                TextView textView = new TextView(this); // Utilizza 'this' come contesto
-                textView.setText(nomeAsta);
-                textView.setTextSize(16);
-                // Aggiungi la TextView al GridLayout
-                gridLayoutAttive.addView(textView);
+        //
+        if(cond.equals("aperta")) {
+            if (asteNames != null) {
+                // Aggiorna l'interfaccia utente con i nomi delle aste attive
+                GridLayout gridLayoutAttive = findViewById(R.id.gridLayoutAsteAttive);
+
+                // Rimuovi tutte le viste presenti nel GridLayout
+                gridLayoutAttive.removeAllViews();
+
+                for (String nomeAsta : asteNames) {
+                    // Crea una nuova TextView per ogni nome asta
+                    TextView textView = new TextView(this); // Utilizza 'this' come contesto
+                    textView.setText(nomeAsta);
+                    textView.setTextSize(16);
+                    // Aggiungi la TextView al GridLayout
+                    gridLayoutAttive.addView(textView);
+                }
+
+                // Aggiungi stampe nel log per verificare che i dati siano correttamente passati
+                for (String nomeAsta : asteNames) {
+                    Log.d("LeMieAste", "Nome Asta: " + nomeAsta);
+                }
+            } else {
+                // Nessun nome asta trovato per l'email specificata
             }
-
-            // Aggiungi stampe nel log per verificare che i dati siano correttamente passati
-            for (String nomeAsta : asteNames) {
-                Log.d("LeMieAste", "Nome Asta: " + nomeAsta);
-            }
-        } else {
-            // Nessun nome asta trovato per l'email specificata
         }
-    }
+        //
+
+
+        if(cond.equals("chiusa")) {
+            if (asteNames != null) {
+                // Aggiorna l'interfaccia utente con i nomi delle aste attive
+                GridLayout gridLayoutNonAttive = findViewById(R.id.gridLayoutAsteNonAttive);
+
+                // Rimuovi tutte le viste presenti nel GridLayout
+                gridLayoutNonAttive.removeAllViews();
+
+                for (String nomeAsta : asteNames) {
+                    // Crea una nuova TextView per ogni nome asta
+                    TextView textView = new TextView(this); // Utilizza 'this' come contesto
+                    textView.setText(nomeAsta);
+                    textView.setTextSize(16);
+                    // Aggiungi la TextView al GridLayout
+                    gridLayoutNonAttive.addView(textView);
+                }
+
+                // Aggiungi stampe nel log per verificare che i dati siano correttamente passati
+                for (String nomeAsta : asteNames) {
+                    Log.d("LeMieAste", "Nome Asta: " + nomeAsta);
+                }
+            } else {
+                // Nessun nome asta trovato per l'email specificata
+            }
+        }
+
+    }//fine metodo
 
 
 }

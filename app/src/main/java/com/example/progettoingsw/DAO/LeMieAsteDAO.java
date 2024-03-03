@@ -19,6 +19,7 @@ public class LeMieAsteDAO {
 
     private Connection connection;
     private LeMieAste leMieAste;
+    private String flagCondizione;
 
     public LeMieAsteDAO(LeMieAste leMieAste) {
         this.leMieAste = leMieAste;
@@ -30,12 +31,12 @@ public class LeMieAsteDAO {
 
 
 
-    public void getAsteForEmail(String email) {
-        if (email.isEmpty()) {
+    public void getAsteForEmail(String email,String condizione) {
+        if (email.isEmpty() || condizione.isEmpty()) {
             // Se l'email è vuota, non fare nulla
             return;
         }
-        new DatabaseTask().execute("get_aste", email);
+        new DatabaseTask().execute("get_aste", email,condizione);
     }
 
     public void closeConnection() {
@@ -58,20 +59,24 @@ public class LeMieAsteDAO {
                             List<String> asteNames = new ArrayList<>();
 
                            // Crea la query SQL
-                            String sql = "SELECT nome FROM asta_allinglese WHERE id_venditore = ? " +
+                            String sql = "SELECT nome FROM asta_allinglese WHERE id_venditore = ? AND condizione=?" +
                                     "UNION " +
-                                    "SELECT nome FROM asta_alribasso WHERE id_venditore = ? " +
+                                    "SELECT nome FROM asta_alribasso WHERE id_venditore = ? AND condizione=?" +
                                     "UNION " +
-                                    "SELECT nome FROM asta_inversa WHERE id_acquirente = ?";
+                                    "SELECT nome FROM asta_inversa WHERE id_acquirente = ? AND condizione=?";
 
                             // Prepara la dichiarazione
                             PreparedStatement statement = connection.prepareStatement(sql);
 
                             // Imposta i parametri per la query
                             statement.setString(1, strings[1]);
-                            statement.setString(2, strings[1]);
                             statement.setString(3, strings[1]);
+                            statement.setString(5, strings[1]);
+                            statement.setString(2,strings[2]);
+                            statement.setString(4,strings[2]);
+                            statement.setString(6,strings[2]);
 
+                            flagCondizione=strings[2];//da passare in una chiamate a le mie aste
                             // Esegui la query
                             ResultSet resultSet = statement.executeQuery();
 
@@ -104,7 +109,7 @@ public class LeMieAsteDAO {
                 Object[] asteData = (Object[]) result;
                 List<String> asteNames = (List<String>) asteData[0];
 
-                leMieAste.updateAsteNames(asteNames);
+                leMieAste.updateAsteNames(asteNames,flagCondizione);
             } else {
                 // Nessun risultato o errore
             }
