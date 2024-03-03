@@ -68,7 +68,7 @@ public class VenditoreFragmentProfilo extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         // Assegna la variabile view nel metodo onCreateView
-        view = inflater.inflate(R.layout.acquirente_fragment_profilo, container, false);
+        view = inflater.inflate(R.layout.venditore_fragment_profilo, container, false);
         return view;
     }
 

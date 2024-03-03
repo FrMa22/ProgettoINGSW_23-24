@@ -5,8 +5,8 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".gui.venditore.VenditoreFragmentProfilo"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".gui.venditore.VenditoreFragmentProfilo">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -36,7 +36,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginStart="20dp"
-                        android:text="ProfiloVen"
+                        android:text="Profilo"
                         android:textColor="@color/colore_secondario"
                         android:textSize="35sp"
                         android:textStyle="bold" />
@@ -101,178 +101,205 @@
                     <GridLayout
                         android:id="@+id/gridview_activity_profilo"
                         android:layout_width="match_parent"
-                        android:layout_height="250dp"
+                        android:layout_height="wrap_content"
                         android:numColumns="1"
                         android:orientation="vertical">
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="50dp"
-                            android:orientation="horizontal">
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
 
                             <TextView
                                 android:id="@+id/textview_campo_nome"
-                                android:layout_width="0dp"
-                                android:layout_height="match_parent"
-                                android:layout_weight="1"
-                                android:gravity="center"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginStart="25dp"
+                                android:layout_marginEnd="25dp"
+                                android:gravity="start"
+                                android:paddingTop="5dp"
                                 android:text="Nome"
-                                android:textColor="@color/colore_secondario"
-                                android:textSize="20sp"
-                                android:textStyle="bold" />
+                                android:textColor="@color/colore_hint"
+                                android:textSize="12sp" />
 
                             <TextView
                                 android:id="@+id/textview_nome"
-                                android:layout_width="0dp"
-                                android:layout_height="match_parent"
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_gravity="center"
+                                android:layout_marginStart="25dp"
+                                android:layout_marginEnd="25dp"
                                 android:layout_weight="1"
-                                android:gravity="center"
-                                android:text="Mario"
+                                android:gravity="start"
                                 android:textColor="@color/colore_secondario"
-                                android:textSize="20sp" />
+                                android:textSize="22sp"
+                                android:textStyle="bold" />
 
 
                         </LinearLayout>
 
                         <View
-                            android:layout_width="320dp"
+                            android:layout_width="match_parent"
                             android:layout_height="1dp"
                             android:layout_gravity="center"
-                            android:layout_marginTop="-1dp"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginEnd="20dp"
                             android:background="@color/colore_secondario" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="50dp"
-                            android:orientation="horizontal">
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
 
                             <TextView
                                 android:id="@+id/textview_campo_cognome"
-                                android:layout_width="0dp"
-                                android:layout_height="match_parent"
-                                android:layout_weight="1"
-                                android:gravity="center"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginStart="25dp"
+                                android:layout_marginEnd="25dp"
+                                android:gravity="start"
+                                android:paddingTop="5dp"
                                 android:text="Cognome"
-                                android:textColor="@color/colore_secondario"
-                                android:textSize="20sp"
-                                android:textStyle="bold" />
+                                android:textColor="@color/colore_hint"
+                                android:textSize="12sp" />
 
                             <TextView
                                 android:id="@+id/textview_cognome"
-                                android:layout_width="0dp"
-                                android:layout_height="match_parent"
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_gravity="center"
+                                android:layout_marginStart="25dp"
+                                android:layout_marginEnd="25dp"
                                 android:layout_weight="1"
-                                android:gravity="center"
-                                android:text="Rossi"
+                                android:gravity="start"
                                 android:textColor="@color/colore_secondario"
-                                android:textSize="20sp" />
+                                android:textSize="22sp"
+                                android:textStyle="bold" />
 
                         </LinearLayout>
 
                         <View
-                            android:layout_width="320dp"
+                            android:layout_width="match_parent"
                             android:layout_height="1dp"
                             android:layout_gravity="center"
-                            android:layout_marginTop="-1dp"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginEnd="20dp"
                             android:background="@color/colore_secondario" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="50dp"
-                            android:orientation="horizontal">
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
 
                             <TextView
                                 android:id="@+id/textview_campo_email"
-                                android:layout_width="0dp"
-                                android:layout_height="match_parent"
-                                android:layout_weight="1"
-                                android:gravity="center"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginStart="25dp"
+                                android:layout_marginEnd="25dp"
+                                android:gravity="start"
+                                android:paddingTop="5dp"
                                 android:text="Email"
-                                android:textColor="@color/colore_secondario"
-                                android:textSize="20sp"
-                                android:textStyle="bold" />
+                                android:textColor="@color/colore_hint"
+                                android:textSize="12sp" />
 
                             <TextView
                                 android:id="@+id/textview_email"
-                                android:layout_width="0dp"
-                                android:layout_height="match_parent"
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_gravity="center"
+                                android:layout_marginStart="25dp"
+                                android:layout_marginEnd="25dp"
                                 android:layout_weight="1"
-                                android:gravity="center"
-                                android:singleLine="true"
-                                android:text="mariorossi@gmail.com"
+                                android:gravity="start"
                                 android:textColor="@color/colore_secondario"
-                                android:textSize="20sp" />
+                                android:textSize="22sp"
+                                android:textStyle="bold" />
 
                         </LinearLayout>
 
                         <View
-                            android:layout_width="320dp"
+                            android:layout_width="match_parent"
                             android:layout_height="1dp"
                             android:layout_gravity="center"
-                            android:layout_marginTop="-1dp"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginEnd="20dp"
                             android:background="@color/colore_secondario" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="50dp"
-                            android:orientation="horizontal">
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
 
                             <TextView
                                 android:id="@+id/textview_campo_sitoweb"
-                                android:layout_width="0dp"
-                                android:layout_height="match_parent"
-                                android:layout_weight="1"
-                                android:gravity="center"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginStart="25dp"
+                                android:layout_marginEnd="25dp"
+                                android:gravity="start"
+                                android:paddingTop="5dp"
                                 android:text="Sito web"
-                                android:textColor="@color/colore_secondario"
-                                android:textSize="20sp"
-                                android:textStyle="bold" />
+                                android:textColor="@color/colore_hint"
+                                android:textSize="12sp" />
 
                             <TextView
                                 android:id="@+id/textview_sitoweb"
-                                android:layout_width="0dp"
-                                android:layout_height="match_parent"
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_gravity="center"
+                                android:layout_marginStart="25dp"
+                                android:layout_marginEnd="25dp"
                                 android:layout_weight="1"
-                                android:gravity="center"
-                                android:singleLine="true"
-                                android:text="MarioRossi.it"
+                                android:gravity="start"
                                 android:textColor="@color/colore_secondario"
-                                android:textSize="20sp" />
+                                android:textSize="22sp"
+                                android:textStyle="bold" />
 
                         </LinearLayout>
 
                         <View
-                            android:layout_width="320dp"
+                            android:layout_width="match_parent"
                             android:layout_height="1dp"
                             android:layout_gravity="center"
-                            android:layout_marginTop="-1dp"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginEnd="20dp"
                             android:background="@color/colore_secondario" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="50dp"
-                            android:orientation="horizontal">
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
 
                             <TextView
                                 android:id="@+id/textview_campo_paese"
-                                android:layout_width="0dp"
-                                android:layout_height="match_parent"
-                                android:layout_weight="1"
-                                android:gravity="center"
+                                android:layout_width="match_parent"
+                                android:layout_marginStart="25dp"
+                                android:layout_marginEnd="25dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:gravity="start"
+                                android:paddingTop="5dp"
                                 android:text="Paese"
-                                android:textColor="@color/colore_secondario"
-                                android:textSize="20sp"
-                                android:textStyle="bold" />
+                                android:textColor="@color/colore_hint"
+                                android:textSize="12sp" />
 
                             <TextView
                                 android:id="@+id/textview_paese"
-                                android:layout_width="0dp"
-                                android:layout_height="match_parent"
+                                android:layout_width="match_parent"
+                                android:layout_marginStart="25dp"
+                                android:layout_marginEnd="25dp"
+                                android:layout_height="0dp"
+                                android:layout_gravity="center"
                                 android:layout_weight="1"
-                                android:gravity="center"
-                                android:text="Italia"
+                                android:gravity="start"
                                 android:textColor="@color/colore_secondario"
-                                android:textSize="20sp" />
+                                android:textSize="22sp"
+                                android:textStyle="bold" />
 
                         </LinearLayout>
 
@@ -280,28 +307,32 @@
 
 
                     <View
-                        android:layout_width="320dp"
+                        android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:layout_gravity="center"
-                        android:layout_marginTop="-1dp"
-                        android:layout_marginBottom="5dp"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginEnd="20dp"
+                        android:layout_marginBottom="10dp"
                         android:background="@color/colore_secondario" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingLeft="20dp"
-                        android:paddingTop="10dp"
+                        android:layout_gravity="center"
                         android:text="Social:"
+                        android:layout_marginBottom="10dp"
                         android:textColor="@color/colore_secondario"
-                        android:textSize="20sp"
+                        android:textSize="25sp"
                         android:textStyle="bold" />
 
                     <GridView
                         android:id="@+id/gridview_social_activity_profilo"
                         android:layout_width="match_parent"
-                        android:layout_height="220dp"
-                        android:numColumns="1" />
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginEnd="20dp"
+                        android:background="@drawable/bordo_colorato" />
+
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -311,9 +342,11 @@
                         android:textSize="20sp"
                         android:textStyle="bold" />
 
-                    <EditText
-                        android:id="@+id/edittext_bio_profilo"
-                        android:layout_width="350dp"
+                    <TextView
+                        android:id="@+id/text_view_bio_profilo"
+                        android:layout_width="match_parent"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginEnd="20dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginBottom="20dp"
@@ -321,7 +354,8 @@
                         android:hint="Biografia"
                         android:minHeight="48dp"
                         android:paddingLeft="10dp"
-                        android:textColorHint="@color/colore_hint" />
+                        android:textColorHint="@color/colore_hint"
+                        android:textSize="20sp" />
                 </LinearLayout>
 
 
@@ -330,14 +364,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:layout_marginTop="10dp"
                     android:backgroundTint="#E0E0E0"
                     android:contentDescription="Premi per cambiare la password"
                     android:text="Cambia Password"
                     android:textColor="@color/black"
                     android:textSize="20sp"
-                    android:textStyle="bold"
-                    android:layout_marginTop="10dp"/>
-
+                    android:textStyle="bold" />
 
 
             </LinearLayout>
