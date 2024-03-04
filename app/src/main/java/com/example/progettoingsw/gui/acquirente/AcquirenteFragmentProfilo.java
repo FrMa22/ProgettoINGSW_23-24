@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ListAdapter;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,37 +32,22 @@ import com.google.android.material.button.MaterialButton;
 
 import java.util.List;
 public class AcquirenteFragmentProfilo extends Fragment {
-    private Controller controller;
     ImageButton button_log_out;
     MaterialButton button_le_mie_aste;
     ImageButton button_modifica;
     Button button_cambia_password_profilo;
-    ImageButton button_modifica_social;
 
     private GridView gridView;
     private CustomAdapter_gridview_profilo_social adapterSocial;
 
-    private TextView textview_campo_nome;
     private TextView textview_nome;
-    private String testo_textview_nome;
-
-    private TextView textview_campo_cognome;
     private TextView textview_cognome;
-    private String testo_textview_cognome;
-
-    private TextView textview_campo_email;
     private TextView textview_email;
-    private String testo_textview_email;
-
-    private TextView textview_campo_sitoweb;
     private TextView textview_sitoweb;
-    private String testo_textview_sitoweb;
-
-    private TextView textview_campo_paese;
     private TextView textview_paese;
-    private String testo_textview_paese;
 
     private TextView text_view_bio_profilo;
+    private ProgressBar progressBarAcquirenteFragmentProfilo;
 
     // Definisci la variabile di istanza view
     private View view;
@@ -81,6 +67,9 @@ public class AcquirenteFragmentProfilo extends Fragment {
         String email = getArguments().getString("email");
         Toast.makeText(getContext(), "la mail in ingresso è: " + email, Toast.LENGTH_SHORT).show();
 
+        //icona del caricamento
+        progressBarAcquirenteFragmentProfilo = view.findViewById(R.id.progressBarAcquirenteFragmentProfilo);
+        progressBarAcquirenteFragmentProfilo.setVisibility(View.VISIBLE);
 
         // Inizializza la GridView
         GridView gridView = view.findViewById(R.id.gridview_social_activity_profilo);
@@ -162,6 +151,7 @@ public class AcquirenteFragmentProfilo extends Fragment {
     @Override //questo metodo serve per fare un refresh dei valori dei campi dopo una possibile modifica fatta da PopUp
     public void onResume() {
         super.onResume();
+        progressBarAcquirenteFragmentProfilo.setVisibility(View.VISIBLE);
         String email = getArguments().getString("email");
         Toast.makeText(getContext(), "la mail in ingresso è: " + email, Toast.LENGTH_SHORT).show();
 
@@ -232,6 +222,7 @@ public class AcquirenteFragmentProfilo extends Fragment {
             for (int i = 0; i < socialNames.size(); i++) {
                 Log.d("AcquirenteFragmentProfilo", "Nome Social: " + socialNames.get(i) + ", Link Social: " + socialLinks.get(i));
             }
+            progressBarAcquirenteFragmentProfilo.setVisibility(View.INVISIBLE);
         } else {
             // Nessun nome sociale trovato per l'email specificata
         }
