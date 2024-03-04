@@ -1,9 +1,12 @@
 package com.example.progettoingsw.gui.acquirente;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ListAdapter;
@@ -12,26 +15,27 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
 import com.example.progettoingsw.DAO.Acquirente;
 import com.example.progettoingsw.DAO.AcquirenteFragmentProfiloDAO;
+import com.example.progettoingsw.gui.PopUpControlloPassword;
+import com.example.progettoingsw.gui.PopUpModificaCampiProfilo;
 import com.example.progettoingsw.R;
 import com.example.progettoingsw.controllers_package.Controller;
-import com.example.progettoingsw.gestori_gui.CustomAdapter_gridview_profilo_campi;
 import com.example.progettoingsw.gestori_gui.CustomAdapter_gridview_profilo_social;
 import com.example.progettoingsw.gui.LeMieAste;
 import com.example.progettoingsw.gui.LoginActivity;
 import com.google.android.material.button.MaterialButton;
-import com.google.android.material.navigation.NavigationView;
 
 import java.util.List;
 public class AcquirenteFragmentProfilo extends Fragment {
     private Controller controller;
     ImageButton button_log_out;
     MaterialButton button_le_mie_aste;
+    ImageButton button_modifica;
+    Button button_cambia_password_profilo;
+    ImageButton button_modifica_social;
 
     private GridView gridView;
     private CustomAdapter_gridview_profilo_social adapterSocial;
@@ -70,10 +74,29 @@ public class AcquirenteFragmentProfilo extends Fragment {
         return view;
     }
 
+
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         String email = getArguments().getString("email");
         Toast.makeText(getContext(), "la mail in ingresso è: " + email, Toast.LENGTH_SHORT).show();
+
+
+        // Inizializza la GridView
+        GridView gridView = view.findViewById(R.id.gridview_social_activity_profilo);
+
+// Imposta un'altezza minima per la GridView
+        gridView.setMinimumHeight((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 50, getResources().getDisplayMetrics()));
+
+// Chiama il metodo per impostare l'altezza in base agli elementi
+        setGridViewHeightBasedOnChildren(gridView);
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(getContext(), "Ok", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
 
         button_log_out = view.findViewById(R.id.button_log_out_profilo);
         button_log_out.setOnClickListener(new View.OnClickListener() {
@@ -91,12 +114,45 @@ public class AcquirenteFragmentProfilo extends Fragment {
             }
         });
 
+        button_modifica = view.findViewById(R.id.button_modifica);
+        button_modifica.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                PopUpModificaCampiProfilo popUpModificaCampiProfilo = new PopUpModificaCampiProfilo(getContext(), AcquirenteFragmentProfilo.this, email);
+                popUpModificaCampiProfilo.show();
+            }
+        });
+
+        button_cambia_password_profilo = view.findViewById(R.id.button_cambia_password_profilo);
+        button_cambia_password_profilo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                PopUpControlloPassword popUpControlloPassword = new PopUpControlloPassword(getContext(), email);
+                popUpControlloPassword.show();
+            }
+        });
+
+
+
         textview_nome = view.findViewById(R.id.textview_nome);
         textview_cognome = view.findViewById(R.id.textview_cognome);
         textview_email = view.findViewById(R.id.textview_email);
         textview_sitoweb = view.findViewById(R.id.textview_sitoweb);
         textview_paese = view.findViewById(R.id.textview_paese);
         text_view_bio_profilo = view.findViewById(R.id.text_view_bio_profilo);
+
+        // Inizializza il DAO e recupera i dati dell'acquirente
+        AcquirenteFragmentProfiloDAO acquirente_fragment_profilo_DAO = new AcquirenteFragmentProfiloDAO(this);
+        acquirente_fragment_profilo_DAO.openConnection();
+        acquirente_fragment_profilo_DAO.findUser(email);
+        acquirente_fragment_profilo_DAO.getSocialNamesForEmail(email);
+    }
+
+    @Override //questo metodo serve per fare un refresh dei valori dei campi dopo una possibile modifica fatta da PopUp
+    public void onResume() {
+        super.onResume();
+        String email = getArguments().getString("email");
+        Toast.makeText(getContext(), "la mail in ingresso è: " + email, Toast.LENGTH_SHORT).show();
 
         // Inizializza il DAO e recupera i dati dell'acquirente
         AcquirenteFragmentProfiloDAO acquirente_fragment_profilo_DAO = new AcquirenteFragmentProfiloDAO(this);
@@ -120,8 +176,11 @@ public class AcquirenteFragmentProfilo extends Fragment {
     }
     private void setGridViewHeightBasedOnChildren(GridView gridView) {
         ListAdapter listAdapter = gridView.getAdapter();
-        if (listAdapter == null) {
-            // Se l'adapter è null, esci dal metodo
+        if (listAdapter == null || listAdapter.getCount() == 0) {
+            // Se l'adapter è null o non ci sono elementi, imposta l'altezza a 20dp e esci dal metodo
+            ViewGroup.LayoutParams params = gridView.getLayoutParams();
+            params.height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 50, getResources().getDisplayMetrics());
+            gridView.setLayoutParams(params);
             return;
         }
 
@@ -145,6 +204,9 @@ public class AcquirenteFragmentProfilo extends Fragment {
         params.height = totalHeight;
         gridView.setLayoutParams(params);
     }
+
+
+
     public void updateSocialNames(List<String> socialNames, List<String> socialLinks) {
         if (socialNames != null && !socialNames.isEmpty()) {
             // Aggiorna l'interfaccia utente con i nomi dei social
@@ -163,7 +225,6 @@ public class AcquirenteFragmentProfilo extends Fragment {
             // Nessun nome sociale trovato per l'email specificata
         }
     }
-
 
 
 

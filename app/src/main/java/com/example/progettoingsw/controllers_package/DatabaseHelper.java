@@ -4,7 +4,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DatabaseHelper {
-    private static final String URL = "jdbc:postgresql://database-prova.cdce2824inp7.eu-west-3.rds.amazonaws.com:5432/postgres";
+    private static final String URL = "jdbc:postgresql://database-progetto.cdce2824inp7.eu-west-3.rds.amazonaws.com:5432/postgres";
     private static final String USER = "postgres";
     private static final String PASSWORD = "Progetto2324";
 

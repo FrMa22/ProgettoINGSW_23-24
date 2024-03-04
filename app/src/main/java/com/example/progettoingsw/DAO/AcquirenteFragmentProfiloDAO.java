@@ -1,9 +1,15 @@
 package com.example.progettoingsw.DAO;
+import android.content.ContentResolver;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
 import com.example.progettoingsw.controllers_package.DatabaseHelper;
 import com.example.progettoingsw.gui.acquirente.AcquirenteFragmentProfilo;
+
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -38,6 +44,7 @@ public class AcquirenteFragmentProfiloDAO {
         }
         new DatabaseTask().execute("get_social_names", email);
     }
+
 
     public void closeConnection() {
         new DatabaseTask().execute("close");

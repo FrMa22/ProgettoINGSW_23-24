@@ -22,6 +22,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.progettoingsw.DAO.AcquirenteFragmentProfiloDAO;
 import com.example.progettoingsw.R;
 import com.example.progettoingsw.controllers_package.Controller;
 import com.example.progettoingsw.gui.LoginActivity;
@@ -105,4 +106,7 @@ public class AcquirenteFragmentCreaLaTuaAstaAcquirente extends Fragment {
                     }
                 });
     }
-    }
+
+
+
+}
