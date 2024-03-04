@@ -23,12 +23,13 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.progettoingsw.DAO.ImmaginiDAO;
 import com.example.progettoingsw.R;
-import com.example.progettoingsw.controllers_package.Controller;
-import com.example.progettoingsw.gui.LoginActivity;
-import com.example.progettoingsw.gui.PopUpLogin;
-import com.example.progettoingsw.gui.venditore.VenditoreAstaInglese;
 import com.google.android.material.button.MaterialButton;
+import com.google.firebase.crashlytics.buildtools.reloc.org.apache.commons.io.IOUtils;
+
+import java.io.IOException;
+import java.io.InputStream;
 
 public class AcquirenteFragmentCreaLaTuaAstaAcquirente extends Fragment {
 
@@ -40,6 +41,10 @@ public class AcquirenteFragmentCreaLaTuaAstaAcquirente extends Fragment {
     ActivityResultLauncher<Intent> resultLauncher;
     EditText descrizioneProdotto;
     String descProd;
+
+    byte[] imageBytes;
+
+    Uri uriImmagine;
 
     public AcquirenteFragmentCreaLaTuaAstaAcquirente() {
         // Costruttore vuoto richiesto dal framework
@@ -59,6 +64,8 @@ public class AcquirenteFragmentCreaLaTuaAstaAcquirente extends Fragment {
 
         String email = getArguments().getString("email");
 
+        ImmaginiDAO immaginiDAO=new ImmaginiDAO();
+        imageBytes=null;
         bottoneInserisciImmagine.setOnClickListener(view ->prelevaImmagine());//significa che chiama il metodo prelevaImmagine
 
         bottoneProseguiCreaAstaAcquirente = view_fragment.findViewById(R.id.bottoneProseguiCreaAstaAcquirente);
@@ -66,9 +73,29 @@ public class AcquirenteFragmentCreaLaTuaAstaAcquirente extends Fragment {
             public void onClick(View view) {
                 //Controller.redirectActivity(getActivity(), AcquirenteAstaInversa.class);
                 descProd=descrizioneProdotto.getText().toString();
+                //qui sopra era giusto
+
+                // Converti l'URI dell'immagine in byte array
+                try {
+                    InputStream iStream = getActivity().getContentResolver().openInputStream(uriImmagine);
+                    imageBytes = IOUtils.toByteArray(iStream); // Utilizza la libreria Apache Commons IO per convertire l'InputStream in byte array
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                if(imageBytes==null){System.out.println("IMMAGINE VUOTA");Toast.makeText(getContext(), "Si prega di selezionare un'immagine", Toast.LENGTH_SHORT).show();}
+
+                immaginiDAO.openConnection();
+                immaginiDAO.aggiungiImmagine(imageBytes);
+                immaginiDAO.closeConnection();
+
+
+
+                //qui era giusto
                 Intent intent = new Intent(getActivity(), AcquirenteAstaInversa.class);
                 intent.putExtra("descProd", descProd);
                 intent.putExtra("email",email);
+                intent.putExtra("img",imageBytes);
                 startActivity(intent);
             }
         });
@@ -108,7 +135,7 @@ public class AcquirenteFragmentCreaLaTuaAstaAcquirente extends Fragment {
                     @Override
                     public void onActivityResult(ActivityResult result) {
                         try {
-                            Uri uriImmagine = result.getData().getData();
+                             uriImmagine = result.getData().getData();
                             immagineProdotto.setImageURI(uriImmagine);
                         } catch (Exception e) {
                             Toast.makeText(requireContext(), "Nessuna Immagine selezionata", Toast.LENGTH_SHORT).show();
