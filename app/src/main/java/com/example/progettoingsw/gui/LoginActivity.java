@@ -41,8 +41,8 @@ public class LoginActivity extends GestoreComuniImplementazioni {
         });
         bottoneLogin.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-//                PopUpLogin popUpLogin = new PopUpLogin(LoginActivity.this);
-//                popUpLogin.show();
+//              PopUpLogin popUpLogin = new PopUpLogin(LoginActivity.this);
+//              popUpLogin.show();
                 String mail = editText_mail.getText().toString();
                 String password = editText_password.getText().toString();
 
@@ -81,7 +81,7 @@ public class LoginActivity extends GestoreComuniImplementazioni {
             // L'utente non è stato trovato
             // Mostra un messaggio di errore o esegui altre azioni necessarie
              Toast.makeText(this, "Trovato", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(LoginActivity.this, AcquirenteMainActivity.class);
+                        Intent intent = new Intent(LoginActivity.this, AcquirenteMainActivity.class);//test del login
                         intent.putExtra("email", editText_mail.getText().toString());
                         startActivity(intent);
         }

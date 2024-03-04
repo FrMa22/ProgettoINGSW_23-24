@@ -52,6 +52,9 @@ public class AcquirenteAstaInversa extends GestoreComuniImplementazioni {
         prodottoAstaInversa=findViewById(R.id.editTextNomeProdottoAstaAstaInversa);
         prezzoAstaInversa=findViewById(R.id.editTextPrezzoAstaInversa);
 
+        String descrizioneProdotto=getIntent().getStringExtra("descProd");
+        String email=getIntent().getStringExtra("email");
+
 
 
 
@@ -81,7 +84,7 @@ public class AcquirenteAstaInversa extends GestoreComuniImplementazioni {
 
                 // Chiamata al metodo per creare l'asta nel database
                 astaInversaDao.openConnection();
-                astaInversaDao.creaAstaInversa(nome,prezzo,data,ora);
+                astaInversaDao.creaAstaInversa(nome,prezzo,data,ora,descrizioneProdotto,email);
                 astaInversaDao.closeConnection();
 
             }
