@@ -24,6 +24,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.progettoingsw.DAO.ImmaginiDAO;
+import com.example.progettoingsw.DAO.AcquirenteFragmentProfiloDAO;
 import com.example.progettoingsw.R;
 import com.google.android.material.button.MaterialButton;
 import com.google.firebase.crashlytics.buildtools.reloc.org.apache.commons.io.IOUtils;
@@ -143,4 +144,7 @@ public class AcquirenteFragmentCreaLaTuaAstaAcquirente extends Fragment {
                     }
                 });
     }
-    }
+
+
+
+}

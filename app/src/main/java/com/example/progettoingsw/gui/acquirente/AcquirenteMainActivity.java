@@ -63,7 +63,7 @@ public class AcquirenteMainActivity extends GestoreComuniImplementazioni {
                 selectedFragment = new AcquirenteFragmentRicercaAsta();
             } else if (item.getItemId() == R.id.action_profile) {
 //                Log.d("BottomNav", "Selected Profile");
-//                selectedFragment = new AcquirenteFragmentProfilo(email);
+//                selectedFragment = new AcquirenteFragmentProfilo();
                 Log.d("BottomNav", "Selected Profile");
                 AcquirenteFragmentProfilo fragmentProfilo = new AcquirenteFragmentProfilo();
                 Bundle args = new Bundle();
