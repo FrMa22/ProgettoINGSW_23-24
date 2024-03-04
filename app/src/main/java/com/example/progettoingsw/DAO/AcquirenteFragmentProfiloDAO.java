@@ -82,7 +82,7 @@ public class AcquirenteFragmentProfiloDAO {
                             List<String> socialNames = new ArrayList<>();
                             List<String> socialLinks = new ArrayList<>();
                             Statement statement = connection.createStatement();
-                            ResultSet resultSet = statement.executeQuery("SELECT s.nome, s.link FROM social s INNER JOIN socialAcquirente sa ON s.nome = sa.nome WHERE sa.indirizzo_email = '" + strings[1] + "'");
+                            ResultSet resultSet = statement.executeQuery("SELECT nome, link FROM socialAcquirente WHERE indirizzo_email = '" + strings[1] + "'");
                             while (resultSet.next()) {
                                 socialNames.add(resultSet.getString("nome"));
                                 socialLinks.add(resultSet.getString("link"));

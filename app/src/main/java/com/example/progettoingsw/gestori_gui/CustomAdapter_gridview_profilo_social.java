@@ -30,7 +30,13 @@ public class CustomAdapter_gridview_profilo_social extends BaseAdapter {
     }
 
 
+    public List<String> getSocialNames() {
+        return socialNames;
+    }
 
+    public List<String> getSocialLinks() {
+        return socialLinks;
+    }
     @Override
     public int getCount() {
         return socialNames.size();

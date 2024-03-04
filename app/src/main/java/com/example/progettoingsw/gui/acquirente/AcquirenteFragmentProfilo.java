@@ -26,6 +26,7 @@ import com.example.progettoingsw.controllers_package.Controller;
 import com.example.progettoingsw.gestori_gui.CustomAdapter_gridview_profilo_social;
 import com.example.progettoingsw.gui.LeMieAste;
 import com.example.progettoingsw.gui.LoginActivity;
+import com.example.progettoingsw.gui.PopUpModificaSocial;
 import com.google.android.material.button.MaterialButton;
 
 import java.util.List;
@@ -92,9 +93,19 @@ public class AcquirenteFragmentProfilo extends Fragment {
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(getContext(), "Ok", Toast.LENGTH_SHORT).show();
+                CustomAdapter_gridview_profilo_social adapter = (CustomAdapter_gridview_profilo_social) gridView.getAdapter();
+                List<String> socialNames = adapter.getSocialNames();
+                List<String> socialLinks = adapter.getSocialLinks();
+
+                String nome = socialNames.get(position);
+                String link = socialLinks.get(position);
+                PopUpModificaSocial popUpModificaSocial = new PopUpModificaSocial(getContext(), AcquirenteFragmentProfilo.this, email, nome, link);
+                popUpModificaSocial.show();
             }
         });
+
+
+
 
 
 
