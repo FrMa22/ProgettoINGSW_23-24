@@ -1,6 +1,8 @@
 package com.example.progettoingsw.gui.acquirente;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -28,6 +30,7 @@ import com.example.progettoingsw.R;
 import com.google.android.material.button.MaterialButton;
 import com.google.firebase.crashlytics.buildtools.reloc.org.apache.commons.io.IOUtils;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -76,6 +79,17 @@ public class AcquirenteFragmentCreaLaTuaAstaAcquirente extends Fragment {
                 descProd=descrizioneProdotto.getText().toString();
                 //qui sopra era giusto
 
+
+                // Converti l'URI dell'immagine in un'immagine Bitmap
+                Bitmap bitmap = null;
+                try {
+                    InputStream iStream = getActivity().getContentResolver().openInputStream(uriImmagine);
+                    bitmap = BitmapFactory.decodeStream(iStream);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                imageBytes = compressAndConvertToByteArray(bitmap);
+                /*
                 // Converti l'URI dell'immagine in byte array
                 try {
                     InputStream iStream = getActivity().getContentResolver().openInputStream(uriImmagine);
@@ -85,7 +99,7 @@ public class AcquirenteFragmentCreaLaTuaAstaAcquirente extends Fragment {
                 }
 
                 if(imageBytes==null){System.out.println("IMMAGINE VUOTA");Toast.makeText(getContext(), "Si prega di selezionare un'immagine", Toast.LENGTH_SHORT).show();}
-
+*/
                 immaginiDAO.openConnection();
                 immaginiDAO.aggiungiImmagine(imageBytes);
                 immaginiDAO.closeConnection();
@@ -146,6 +160,13 @@ public class AcquirenteFragmentCreaLaTuaAstaAcquirente extends Fragment {
                 });
     }
 
+
+    // Metodo per comprimere un'immagine Bitmap e convertirla in un array di byte
+    private byte[] compressAndConvertToByteArray(Bitmap bitmap) {
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 50, outputStream); // Compressione JPEG con qualità del 50%
+        return outputStream.toByteArray();
+    }
 
 
 }
