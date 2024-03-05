@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -14,6 +15,7 @@ import com.example.progettoingsw.DAO.LoginDAO;
 import com.example.progettoingsw.R;
 import com.example.progettoingsw.classe_da_estendere.GestoreComuniImplementazioni;
 import com.example.progettoingsw.controllers_package.Controller;
+import com.example.progettoingsw.gui.acquirente.AcquirenteFragmentHome;
 import com.example.progettoingsw.gui.acquirente.AcquirenteMainActivity;
 import com.example.progettoingsw.gui.venditore.VenditoreAstaInglese;
 import com.example.progettoingsw.gui.venditore.VenditoreMainActivity;
@@ -22,6 +24,8 @@ public class LoginActivity extends GestoreComuniImplementazioni {
 
     Button bottone;
     Controller controller;
+    ProgressBar progress_bar_login;
+
     EditText editText_mail;
     EditText editText_password;
     @Override
@@ -33,6 +37,8 @@ public class LoginActivity extends GestoreComuniImplementazioni {
         editText_mail = findViewById(R.id.editTextEmail);
         editText_password = findViewById(R.id.editTextPassword);
 
+        progress_bar_login = findViewById(R.id.progress_bar_login);
+
         LoginDAO logindao = new LoginDAO(this);
 
         registrazione.setOnClickListener(v -> {
@@ -42,12 +48,13 @@ public class LoginActivity extends GestoreComuniImplementazioni {
         });
         bottoneLogin.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-               // PopUpLogin popUpLogin = new PopUpLogin(LoginActivity.this);
-                //popUpLogin.show();
+//              PopUpLogin popUpLogin = new PopUpLogin(LoginActivity.this);
+//              popUpLogin.show();
                 String mail = editText_mail.getText().toString();
                 String password = editText_password.getText().toString();
 
                 if (!mail.isEmpty() && !password.isEmpty()) {
+                    progress_bar_login.setVisibility(View.VISIBLE);
                     // Chiamata al metodo per cercare nel database
                     logindao.openConnection();
                     logindao.findUser(mail, password);
@@ -70,21 +77,29 @@ public class LoginActivity extends GestoreComuniImplementazioni {
         });
 
     }
-    public void handleLoginResult(boolean result) {
-        Log.d("handleLoginResult", " result è : " + result);
-        if (!result) {
-            Log.d("caso false", " result è : " + result);
-            Toast.makeText(this, "Non trovato", Toast.LENGTH_SHORT).show();
+    public void handleLoginResult(String tipoUtente) {
+        progress_bar_login.setVisibility(View.INVISIBLE);
+        Log.d("handleLoginResult", "valore di result : " + tipoUtente);
+        if (tipoUtente != null) {
+            if(tipoUtente.equals("acquirente")){
+                Toast.makeText(this, "Trovato Acquirente", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(LoginActivity.this, AcquirenteMainActivity.class);//test del login
+                intent.putExtra("email", editText_mail.getText().toString());
+                startActivity(intent);
+            }else{
+                Toast.makeText(this, "Trovato Venditore", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(LoginActivity.this, VenditoreMainActivity.class);//test del login
+                intent.putExtra("email", editText_mail.getText().toString());
+                startActivity(intent);
+            }
+
             // L'utente è stato trovato
             // Esegui le azioni necessarie per il login
         } else {
-            Log.d("caso true", " result è : " + result);
             // L'utente non è stato trovato
             // Mostra un messaggio di errore o esegui altre azioni necessarie
-             Toast.makeText(this, "Trovato", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(LoginActivity.this, AcquirenteMainActivity.class);//test del login
-                        intent.putExtra("email", editText_mail.getText().toString());
-                        startActivity(intent);
+            Toast.makeText(this, "Non trovato", Toast.LENGTH_SHORT).show();
+
         }
     }
 

@@ -59,6 +59,7 @@
             android:layout_marginEnd="40dp"
             />
 
+
         <EditText
             android:id="@+id/editTextPassword"
             android:layout_width="match_parent"
@@ -67,13 +68,22 @@
             android:layout_marginEnd="20dp"
             android:layout_marginBottom="20dp"
             android:background="@drawable/edit_text_bottom_corners_rounded_grigi"
-            android:drawableLeft="@drawable/ic_lucchetto"
+            android:drawableStart="@drawable/ic_lucchetto"
             android:drawablePadding="15dp"
             android:hint="Password"
             android:inputType="textPassword"
             android:padding="20dp"
             android:textColor="@color/colore_secondario"
             android:textColorHint="@color/colore_hint" />
+
+
+        <ProgressBar
+            android:id="@+id/progress_bar_login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="invisible"
+            android:indeterminate="true"/>
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/bottonelogin"
@@ -131,6 +141,7 @@
         android:layout_gravity="center"
         android:layout_marginTop="80dp"
         android:background="@android:color/transparent"/>
+
 
 
 </LinearLayout>

@@ -4,17 +4,16 @@ import androidx.fragment.app.Fragment;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Toast;
 
 import com.example.progettoingsw.R;
 import com.example.progettoingsw.classe_da_estendere.GestoreComuniImplementazioni;
-import com.example.progettoingsw.gui.venditore.VenditoreFragmentCreaLaTuaAstaVenditore;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 public class AcquirenteMainActivity extends GestoreComuniImplementazioni {
 
     private BottomNavigationView bottomNavigationView;
     private String email;
+    private String tipoUtente;
 
 
     @Override
@@ -23,19 +22,22 @@ public class AcquirenteMainActivity extends GestoreComuniImplementazioni {
         setContentView(R.layout.acquirente_activity_main);
         bottomNavigationView = findViewById(R.id.acquirente_nav_view);
 
-        String email = getIntent().getStringExtra("email");
+        email = getIntent().getStringExtra("email");
+        tipoUtente = "acquirente";
 
-        Toast.makeText(this, "La mail è "+email, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "La mail è "+email + ", il tipoUtente è: " + tipoUtente , Toast.LENGTH_SHORT).show();
 
-        View decorView = getWindow().getDecorView();
-        int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
-        decorView.setSystemUiVisibility(uiOptions);
+//        View decorView = getWindow().getDecorView();
+//        int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+//                | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
+//        decorView.setSystemUiVisibility(uiOptions);
+
 
         // Impostazione del Fragment iniziale
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragment_container, new AcquirenteFragmentHome())
-                .commit();
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container, new AcquirenteFragmentHome())
+                    .commit();
+
 
         bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
             Fragment selectedFragment;
@@ -44,6 +46,7 @@ public class AcquirenteMainActivity extends GestoreComuniImplementazioni {
             Fragment currentFragment =(Fragment) getSupportFragmentManager().findFragmentById(R.id.fragment_container);
             selectedFragment = (currentFragment != null) ? currentFragment : new AcquirenteFragmentHome();
 
+            Log.d("Home" , "main e tipoutente è : " + tipoUtente);
             if (item.getItemId() == R.id.action_home) {
                 Log.d("BottomNav", "Selected Home");
                 selectedFragment = new AcquirenteFragmentHome();
@@ -52,24 +55,13 @@ public class AcquirenteMainActivity extends GestoreComuniImplementazioni {
                 selectedFragment = new AcquirenteFragmentSelezioneCategorie();
             } else if (item.getItemId() == R.id.action_crea_asta) {
                 Log.d("BottomNav", "Selected Crea Asta");
-                //selectedFragment = new AcquirenteFragmentCreaLaTuaAstaAcquirente();
-                AcquirenteFragmentCreaLaTuaAstaAcquirente fragmentAstaAcquirente = new AcquirenteFragmentCreaLaTuaAstaAcquirente();
-                Bundle args = new Bundle();
-                args.putString("email", email);
-                fragmentAstaAcquirente.setArguments(args);
-                selectedFragment = fragmentAstaAcquirente;
+                    selectedFragment = new AcquirenteFragmentCreaLaTuaAstaAcquirente(email);
             } else if (item.getItemId() == R.id.action_search) {
                 Log.d("BottomNav", "Selected Search");
                 selectedFragment = new AcquirenteFragmentRicercaAsta();
             } else if (item.getItemId() == R.id.action_profile) {
-//                Log.d("BottomNav", "Selected Profile");
-//                selectedFragment = new AcquirenteFragmentProfilo(email);
                 Log.d("BottomNav", "Selected Profile");
-                AcquirenteFragmentProfilo fragmentProfilo = new AcquirenteFragmentProfilo();
-                Bundle args = new Bundle();
-                args.putString("email", email);
-                fragmentProfilo.setArguments(args);
-                selectedFragment = fragmentProfilo;
+                selectedFragment = new FragmentProfilo(email,tipoUtente);
             }
 
             // Controlla se il fragment corrente è già quello selezionato

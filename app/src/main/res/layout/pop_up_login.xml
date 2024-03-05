@@ -1,75 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/transparent">
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_width="370dp"
-    android:layout_height="300dp"
-    android:layout_gravity="center"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@drawable/bordo_non_stondato"
-    tools:context=".gui.PopUpLogin">
 
-    <TextView
-        android:id="@+id/TextViewRichiestaAccount"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Abbiamo rilevato due account collegati a questa email, con quale vuoi accedere?"
-        android:gravity="center"
-        android:textSize="30sp"
-        android:textAlignment="center"
-        android:padding="16dp"
-        android:textColor="@color/colore_secondario"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="370dp"
+        android:layout_height="300dp"
+        android:layout_gravity="center"
+        android:background="@drawable/bordo_non_stondato"
+        tools:context=".gui.PopUpLogin">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintTop_toBottomOf="@id/TextViewRichiestaAccount"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="1dp">
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/bottoneAcquirente"
-            android:layout_width="0dp"
-            android:layout_height="80dp"
-            android:layout_marginStart="20dp"
-            android:text="Acquirente"
+        <TextView
+            android:id="@+id/TextViewRichiestaAccount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="16dp"
+            android:text="Abbiamo rilevato due account collegati a questa email, con quale vuoi accedere?"
+            android:textAlignment="center"
             android:textColor="@color/colore_secondario"
-            android:textSize="22sp"
-            android:textStyle="bold"
-            android:background="@drawable/bordo_rettangolare_per_bottone"
-            android:layout_weight="1"/>
+            android:textSize="30sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <View
-            android:layout_width="15dp"
-            android:layout_height="match_parent" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="1dp"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/TextViewRichiestaAccount">
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/bottoneVenditore"
-            android:layout_width="0dp"
-            android:layout_height="80dp"
-            android:layout_gravity="end"
-            android:layout_marginEnd="20dp"
-            android:text="Venditore"
-            android:textColor="@color/colore_secondario"
-            android:textSize="22sp"
-            android:textStyle="bold"
-            android:background="@drawable/bordo_rettangolare_per_bottone"
-            android:layout_weight="1"/>
-    </LinearLayout>
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/bottoneAcquirente"
+                android:layout_width="0dp"
+                android:layout_height="80dp"
+                android:layout_marginStart="20dp"
+                android:layout_weight="1"
+                android:background="@drawable/bordo_rettangolare_per_bottone"
+                android:text="Acquirente"
+                android:textColor="@color/colore_secondario"
+                android:textSize="22sp"
+                android:textStyle="bold" />
+
+            <View
+                android:layout_width="15dp"
+                android:layout_height="match_parent" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/bottoneVenditore"
+                android:layout_width="0dp"
+                android:layout_height="80dp"
+                android:layout_gravity="end"
+                android:layout_marginEnd="20dp"
+                android:layout_weight="1"
+                android:background="@drawable/bordo_rettangolare_per_bottone"
+                android:text="Venditore"
+                android:textColor="@color/colore_secondario"
+                android:textSize="22sp"
+                android:textStyle="bold" />
+        </LinearLayout>
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>
 
 

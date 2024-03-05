@@ -1,6 +1,8 @@
 package com.example.progettoingsw.gui.acquirente;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -23,12 +25,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.progettoingsw.DAO.ImmaginiDAO;
 import com.example.progettoingsw.R;
-import com.example.progettoingsw.controllers_package.Controller;
-import com.example.progettoingsw.gui.LoginActivity;
-import com.example.progettoingsw.gui.PopUpLogin;
-import com.example.progettoingsw.gui.venditore.VenditoreAstaInglese;
 import com.google.android.material.button.MaterialButton;
+import com.google.firebase.crashlytics.buildtools.reloc.org.apache.commons.io.IOUtils;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 
 public class AcquirenteFragmentCreaLaTuaAstaAcquirente extends Fragment {
 
@@ -40,9 +44,15 @@ public class AcquirenteFragmentCreaLaTuaAstaAcquirente extends Fragment {
     ActivityResultLauncher<Intent> resultLauncher;
     EditText descrizioneProdotto;
     String descProd;
+    String email;
 
-    public AcquirenteFragmentCreaLaTuaAstaAcquirente() {
+    byte[] imageBytes;
+
+    Uri uriImmagine;
+
+    public AcquirenteFragmentCreaLaTuaAstaAcquirente(String email) {
         // Costruttore vuoto richiesto dal framework
+        this.email = email;
     }
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -57,8 +67,9 @@ public class AcquirenteFragmentCreaLaTuaAstaAcquirente extends Fragment {
         descrizioneProdotto=view_fragment.findViewById(R.id.editTextDescrizioneCreaAstaAcquirente);
         registraRisultati();
 
-        String email = getArguments().getString("email");
 
+        ImmaginiDAO immaginiDAO=new ImmaginiDAO();
+        imageBytes=null;
         bottoneInserisciImmagine.setOnClickListener(view ->prelevaImmagine());//significa che chiama il metodo prelevaImmagine
 
         bottoneProseguiCreaAstaAcquirente = view_fragment.findViewById(R.id.bottoneProseguiCreaAstaAcquirente);
@@ -66,9 +77,40 @@ public class AcquirenteFragmentCreaLaTuaAstaAcquirente extends Fragment {
             public void onClick(View view) {
                 //Controller.redirectActivity(getActivity(), AcquirenteAstaInversa.class);
                 descProd=descrizioneProdotto.getText().toString();
+                //qui sopra era giusto
+
+
+                // Converti l'URI dell'immagine in un'immagine Bitmap
+                Bitmap bitmap = null;
+                try {
+                    InputStream iStream = getActivity().getContentResolver().openInputStream(uriImmagine);
+                    bitmap = BitmapFactory.decodeStream(iStream);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                imageBytes = compressAndConvertToByteArray(bitmap);
+                /*
+                // Converti l'URI dell'immagine in byte array
+                try {
+                    InputStream iStream = getActivity().getContentResolver().openInputStream(uriImmagine);
+                    imageBytes = IOUtils.toByteArray(iStream); // Utilizza la libreria Apache Commons IO per convertire l'InputStream in byte array
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                if(imageBytes==null){System.out.println("IMMAGINE VUOTA");Toast.makeText(getContext(), "Si prega di selezionare un'immagine", Toast.LENGTH_SHORT).show();}
+*/
+                immaginiDAO.openConnection();
+                immaginiDAO.aggiungiImmagine(imageBytes);
+                immaginiDAO.closeConnection();
+
+
+
+                //qui era giusto
                 Intent intent = new Intent(getActivity(), AcquirenteAstaInversa.class);
                 intent.putExtra("descProd", descProd);
                 intent.putExtra("email",email);
+                intent.putExtra("img",imageBytes);
                 startActivity(intent);
             }
         });
@@ -98,8 +140,16 @@ public class AcquirenteFragmentCreaLaTuaAstaAcquirente extends Fragment {
 
 
     private void prelevaImmagine(){
-        Intent intent= new Intent(MediaStore.ACTION_PICK_IMAGES);
-        resultLauncher.launch(intent);
+//        Intent intent= new Intent(MediaStore.ACTION_PICK_IMAGES);
+//        resultLauncher.launch(intent);
+        // questo codice funziona lo stesso ma va anche sul mio secondo telefono mentre quello sopra non andava
+        Intent intent= new Intent(Intent.ACTION_PICK);
+        intent.setType("image/*");
+        if (intent.resolveActivity(requireContext().getPackageManager()) != null) {
+            resultLauncher.launch(intent);
+        } else {
+            Toast.makeText(requireContext(), "Nessuna app disponibile per gestire la selezione delle immagini", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void registraRisultati() {
@@ -108,12 +158,23 @@ public class AcquirenteFragmentCreaLaTuaAstaAcquirente extends Fragment {
                     @Override
                     public void onActivityResult(ActivityResult result) {
                         try {
-                            Uri uriImmagine = result.getData().getData();
-                            immagineProdotto.setImageURI(uriImmagine);
+                             uriImmagine = result.getData().getData();
+                             immagineProdotto.setImageURI(uriImmagine);
+
                         } catch (Exception e) {
                             Toast.makeText(requireContext(), "Nessuna Immagine selezionata", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
     }
+
+
+    // Metodo per comprimere un'immagine Bitmap e convertirla in un array di byte
+    private byte[] compressAndConvertToByteArray(Bitmap bitmap) {
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 50, outputStream); // Compressione JPEG con qualità del 50%
+        return outputStream.toByteArray();
     }
+
+
+}

@@ -3,11 +3,14 @@ package com.example.progettoingsw.gui.acquirente;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TimePicker;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
@@ -35,6 +38,9 @@ public class AcquirenteAstaInversa extends GestoreComuniImplementazioni {
 
     private String selectedDateString;
     private String selectedHourString;
+    private byte [] img;
+    ImageView immagineProdotto;
+    Bitmap bitmap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,12 +57,16 @@ public class AcquirenteAstaInversa extends GestoreComuniImplementazioni {
 
         prodottoAstaInversa=findViewById(R.id.editTextNomeProdottoAstaAstaInversa);
         prezzoAstaInversa=findViewById(R.id.editTextPrezzoAstaInversa);
+        immagineProdotto=findViewById(R.id.ImageViewAstaInversa);
 
         String descrizioneProdotto=getIntent().getStringExtra("descProd");
         String email=getIntent().getStringExtra("email");
+        img=getIntent().getByteArrayExtra("img");
 
+        bitmap = BitmapFactory.decodeByteArray(img, 0, img.length);
 
-
+        // Imposta l'immagine nel tuo ImageView
+        immagineProdotto.setImageBitmap(bitmap);
 
         bottoneData.setOnClickListener(new View.OnClickListener() {
             @Override

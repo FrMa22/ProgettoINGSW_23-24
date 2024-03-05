@@ -44,10 +44,10 @@
             android:name=".gui.acquirente.AcquirenteFragmentHome"
             android:exported="true" />
         <activity
-            android:name=".gui.acquirente.AcquirenteFragmentProfilo"
+            android:name=".gui.acquirente.FragmentProfilo"
             android:exported="true" />
         <activity
-            android:name=".gui.PopUpModificaCampoProfilo"
+            android:name=".gui.PopUpModificaCampiProfilo"
             android:theme="@style/Base.Theme.ProgettoINGSW.CustomThemeSfocato" />
         <activity
             android:name=".gui.PopUpRicercaCategorie"
