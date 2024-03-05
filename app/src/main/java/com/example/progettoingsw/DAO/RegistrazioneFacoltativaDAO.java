@@ -16,9 +16,9 @@ public class RegistrazioneFacoltativaDAO {
         new DatabaseTask().execute("open");
     }
 
-    public void inserimentoDatiOpzionali(String email, String tipoUtente, String bio, String paese) {
+    public void inserimentoDatiOpzionali(String email, String tipoUtente, String bio,String sitoWeb, String paese) {
 
-        new DatabaseTask().execute("update", email, tipoUtente, bio, paese);
+        new DatabaseTask().execute("update", email, tipoUtente, sitoWeb, bio, paese);
     }
 
     public void closeConnection() {
@@ -40,13 +40,15 @@ public class RegistrazioneFacoltativaDAO {
 
                             String tipoUtente = strings[2];
                             String bio =strings[3];
-                            String paese = strings[4];
+                            String sitoWeb= strings[4];
+                            String paese = strings[5];
                             String email = strings[1];
-                            String query = "UPDATE " + tipoUtente + " SET bio = ?, areageografica= ? WHERE indirizzo_email = ?";
+                            String query = "UPDATE " + tipoUtente + " SET bio = ?,link = ? , areageografica= ? WHERE indirizzo_email = ?";
                             PreparedStatement statement = connection.prepareStatement(query);
                             statement.setString(1, bio);
-                            statement.setString(2, paese);
-                            statement.setString(3, email);
+                            statement.setString(2, sitoWeb);
+                            statement.setString(3, paese);
+                            statement.setString(4, email);
                             statement.executeUpdate();
                             statement.close();
                             return "Dati inseriti con successo!";

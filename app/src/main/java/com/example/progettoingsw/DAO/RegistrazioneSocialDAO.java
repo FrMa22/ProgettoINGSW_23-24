@@ -6,6 +6,8 @@ import com.example.progettoingsw.controllers_package.DatabaseHelper;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
 
 public class RegistrazioneSocialDAO {
 
@@ -16,14 +18,31 @@ public class RegistrazioneSocialDAO {
         new DatabaseTask().execute("open");
     }
 
-    public void inserimentoSocial(String usernameSocialRegistrazione, String profiloSocialRegistrazione,String email, String tipoUtente) {
+    public void inserimentoSocial( String social, String profiloSocialRegistrazione,String email, String tipoUtente) {
 
-        new DatabaseTask().execute("insert",usernameSocialRegistrazione,profiloSocialRegistrazione, email, tipoUtente);
+        new DatabaseTask().execute("insert",social,profiloSocialRegistrazione, email, tipoUtente);
     }
 
     public void closeConnection() {
         new DatabaseTask().execute("close");
     }
+
+    public boolean controlloSocial(String social, String link){
+        try {
+            if (connection != null && !connection.isClosed()) {
+                Statement statement = connection.createStatement();
+                ResultSet resultSet = statement.executeQuery("SELECT * FROM social WHERE nome = '" + social + "' AND link = '" + link + "'");
+                return resultSet.next();
+            } else {
+                return false;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+
 
     private class DatabaseTask extends AsyncTask<String, Void, String> {
 
@@ -38,21 +57,26 @@ public class RegistrazioneSocialDAO {
                     } else if (action.equals("insert")) {
                         if (connection != null && !connection.isClosed()) {
                             String tipoUtente = strings[4];
-                            String nome = strings[1];
                             String link = strings[2];
+                            String social = strings[1];
                             String email = strings[3];
+                            boolean check;
+                            check = controlloSocial(social, link);
+                            if(check==false){
+                            String query1 = "INSERT INTO social ( nome,link ) VALUES ( ?, ?)";
+                            PreparedStatement statement1 = connection.prepareStatement(query1);
+                            statement1.setString(1, social);
+                            statement1.setString(2, link);}
                             if(tipoUtente.equals("aquirente")) {
-                                String query = "INSERT INTO socialacquirente (nome, link, indirizzo_email) VALUES ( ?, ?, ?)";
+                                String query = "INSERT INTO socialacquirente ( nome,indirizzo_email ) VALUES ( ?, ?)";
                                 PreparedStatement statement = connection.prepareStatement(query);
-                                statement.setString(1, nome);
-                                statement.setString(2, link);
-                                statement.setString(3, email);
+                                statement.setString(1, social);
+                                statement.setString(2, email);
                             } else if(tipoUtente.equals("venditore")) {
-                                String query = "INSERT INTO socialvenditore (nome, link, indirizzo_email) VALUES ( ?, ?, ?)";
+                                String query = "INSERT INTO socialvenditore ( nome, indirizzo_email) VALUES ( ?, ?)";
                                 PreparedStatement statement = connection.prepareStatement(query);
-                                statement.setString(1, nome);
-                                statement.setString(2, link);
-                                statement.setString(3, email);
+                                statement.setString(1, social);
+                                statement.setString(2, email);
                             }
                             return "Social con successo!";
                         } else {

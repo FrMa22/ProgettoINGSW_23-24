@@ -7,6 +7,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.progettoingsw.DAO.RegistrazioneFacoltativaDAO;
+import com.example.progettoingsw.DAO.RegistrazioneSocialDAO;
 import com.example.progettoingsw.R;
 import com.example.progettoingsw.classe_da_estendere.GestoreComuniImplementazioni;
 import com.example.progettoingsw.controllers_package.Controller;
@@ -20,7 +21,19 @@ public class CampiFacoltativiRegistrazione  extends GestoreComuniImplementazioni
     Intent intent;
     String email ;
     String tipoUtente ;
-    String opzioneSelezionata;
+    String social;
+    String link;
+    ArrayList<String> elencoLinkSocialRegistrazione = new ArrayList<String>();
+    ArrayList<String> elencoSocialRegistrazione = new ArrayList<String>();
+
+    public void setProfiloSocialRegistrazione(String social,String link) {
+        this.social = social;
+        this.link=link;
+        elencoLinkSocialRegistrazione.add(link);
+        elencoSocialRegistrazione.add(social);
+
+
+    }
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,10 +48,9 @@ public class CampiFacoltativiRegistrazione  extends GestoreComuniImplementazioni
         MaterialButton bottoneProseguiRegistrazione = (MaterialButton) findViewById(R.id.bottoneProseguiRegistrazione);
         EditText testoBio = (EditText) findViewById(R.id.editTextBio);
         EditText testoProvenienza = (EditText) findViewById(R.id.editTextPaeseDiProvenienza);
-        ArrayList<String> ElencoSocialRegistrazione = new ArrayList<String>();
-
+        EditText testoSitoWeb = (EditText) findViewById(R.id.editTextSitoWeb);
         RegistrazioneFacoltativaDAO registrazioneFacoltativaDAO = new RegistrazioneFacoltativaDAO();
-
+        RegistrazioneSocialDAO registrazioneSocialDAO = new RegistrazioneSocialDAO();
 
         bottoneAnnulla.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -50,7 +62,7 @@ public class CampiFacoltativiRegistrazione  extends GestoreComuniImplementazioni
         bottoneSocial.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                PopUpRegistrazioneSocial PopUpRegistrazioneSocial = new PopUpRegistrazioneSocial(CampiFacoltativiRegistrazione.this,email,tipoUtente);
+                PopUpRegistrazioneSocial PopUpRegistrazioneSocial = new PopUpRegistrazioneSocial(CampiFacoltativiRegistrazione.this,CampiFacoltativiRegistrazione.this,email,tipoUtente);
                 PopUpRegistrazioneSocial.show();
             }
         });
@@ -62,9 +74,17 @@ public class CampiFacoltativiRegistrazione  extends GestoreComuniImplementazioni
             public void onClick(View view) {
                 String bio = testoBio.getText().toString();
                 String paese = testoProvenienza.getText().toString();
+                String sitoWeb = testoSitoWeb.getText().toString();
                 registrazioneFacoltativaDAO.openConnection();
-                registrazioneFacoltativaDAO.inserimentoDatiOpzionali(email, tipoUtente, bio, paese);
+                registrazioneFacoltativaDAO.inserimentoDatiOpzionali(email, tipoUtente, bio,sitoWeb, paese);
                 registrazioneFacoltativaDAO.closeConnection();
+                registrazioneSocialDAO.openConnection();
+                for (int i=0; i<elencoSocialRegistrazione.size(); i++) {
+                    String social = elencoSocialRegistrazione.get(i);
+                    String link = elencoLinkSocialRegistrazione.get(i);
+                    registrazioneSocialDAO.inserimentoSocial(social, link, email, tipoUtente);
+                }
+                registrazioneSocialDAO.closeConnection();
                 controller.redirectActivity(CampiFacoltativiRegistrazione.this, InteressiRegistrazione.class);
 
             }

@@ -26,11 +26,13 @@ public class PopUpRegistrazioneSocial extends Dialog implements View.OnClickList
     private String opzioneSelezionata;
     private String email;
     private String tipoUtente;
+    private CampiFacoltativiRegistrazione campiFacoltativiRegistrazione;
 
-    public PopUpRegistrazioneSocial(@NonNull Context context, String email, String tipoUtente) {
+    public PopUpRegistrazioneSocial(@NonNull Context context,CampiFacoltativiRegistrazione campiFacoltativiRegistrazione ,String email, String tipoUtente) {
         super(context);
         this.email=email;
         this.tipoUtente=tipoUtente;
+        this.campiFacoltativiRegistrazione = campiFacoltativiRegistrazione;
     }
 
     @Override
@@ -86,11 +88,7 @@ public class PopUpRegistrazioneSocial extends Dialog implements View.OnClickList
         String usernameSocialRegistrazione = editTextUsernameRegistrazioneSocial.getText().toString();
         String profiloSocialRegistrazione = "https://www." + opzioneSelezionata + ".com/" + usernameSocialRegistrazione;
 
-        RegistrazioneSocialDAO registrazioneSocialDAO= new RegistrazioneSocialDAO();
-        registrazioneSocialDAO.openConnection();
-        registrazioneSocialDAO.inserimentoSocial(usernameSocialRegistrazione,profiloSocialRegistrazione,email, tipoUtente);
-        registrazioneSocialDAO.closeConnection();
-        // Aggiungere social al database o qualcosa di back-end
+        campiFacoltativiRegistrazione.setProfiloSocialRegistrazione(opzioneSelezionata,profiloSocialRegistrazione);
 
         Toast.makeText(getContext(), "Social aggiunto correttamente! " + profiloSocialRegistrazione, Toast.LENGTH_SHORT).show();
 
