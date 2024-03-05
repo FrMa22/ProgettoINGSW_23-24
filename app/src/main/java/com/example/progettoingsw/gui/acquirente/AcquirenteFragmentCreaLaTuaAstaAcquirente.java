@@ -24,7 +24,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.progettoingsw.DAO.ImmaginiDAO;
-import com.example.progettoingsw.DAO.AcquirenteFragmentProfiloDAO;
 import com.example.progettoingsw.R;
 import com.google.android.material.button.MaterialButton;
 import com.google.firebase.crashlytics.buildtools.reloc.org.apache.commons.io.IOUtils;
@@ -42,13 +41,15 @@ public class AcquirenteFragmentCreaLaTuaAstaAcquirente extends Fragment {
     ActivityResultLauncher<Intent> resultLauncher;
     EditText descrizioneProdotto;
     String descProd;
+    String email;
 
     byte[] imageBytes;
 
     Uri uriImmagine;
 
-    public AcquirenteFragmentCreaLaTuaAstaAcquirente() {
+    public AcquirenteFragmentCreaLaTuaAstaAcquirente(String email) {
         // Costruttore vuoto richiesto dal framework
+        this.email = email;
     }
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -63,7 +64,6 @@ public class AcquirenteFragmentCreaLaTuaAstaAcquirente extends Fragment {
         descrizioneProdotto=view_fragment.findViewById(R.id.editTextDescrizioneCreaAstaAcquirente);
         registraRisultati();
 
-        String email = getArguments().getString("email");
 
         ImmaginiDAO immaginiDAO=new ImmaginiDAO();
         imageBytes=null;
@@ -137,7 +137,8 @@ public class AcquirenteFragmentCreaLaTuaAstaAcquirente extends Fragment {
                     public void onActivityResult(ActivityResult result) {
                         try {
                              uriImmagine = result.getData().getData();
-                            immagineProdotto.setImageURI(uriImmagine);
+                             immagineProdotto.setImageURI(uriImmagine);
+
                         } catch (Exception e) {
                             Toast.makeText(requireContext(), "Nessuna Immagine selezionata", Toast.LENGTH_SHORT).show();
                         }

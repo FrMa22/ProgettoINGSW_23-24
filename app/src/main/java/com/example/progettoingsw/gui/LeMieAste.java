@@ -1,12 +1,7 @@
 package com.example.progettoingsw.gui;
 
-import static java.security.AccessController.getContext;
-
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.GridLayout;
 import android.widget.ImageButton;
@@ -14,30 +9,19 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-
 import com.example.progettoingsw.DAO.LeMieAsteDAO;
-import com.example.progettoingsw.DAO.VenditoreFragmentProfiloDAO;
 import com.example.progettoingsw.R;
 import com.example.progettoingsw.classe_da_estendere.GestoreComuniImplementazioni;
 import com.example.progettoingsw.controllers_package.Controller;
-import com.example.progettoingsw.gestori_gui.CustomAdapter_gridview_profilo_social;
-import com.google.android.material.navigation.NavigationView;
 
 import java.util.List;
 
 public class LeMieAste extends GestoreComuniImplementazioni {
 
     Controller controller;
-    private ActionBarDrawerToggle actionBarDrawerToggle;
     private ImageButton preferitiButton;
     private ImageButton profiloButton;
 
-
-    private Menu menu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,40 +71,7 @@ public class LeMieAste extends GestoreComuniImplementazioni {
 
     }
 
-    /*
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (actionBarDrawerToggle.onOptionsItemSelected(item)) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-*/
 
-    /*
-    @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
-        actionBarDrawerToggle.syncState();
-
-    }
-*/
-    /*
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        actionBarDrawerToggle.onConfigurationChanged(newConfig);
-
-    }
-*/
-
-    /*
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.drawer_menu, menu);
-        return true;
-    }
-*/
 
     public void updateAsteNames(List<String> asteNames,String cond) {
 

@@ -15,28 +15,33 @@ import java.sql.Statement;
 public class PopUpControlloPasswordDAO {
     private Connection connection;
     private PopUpControlloPassword popUpControlloPassword;
+    private String email;
+    private String tipoUtente;
 
-    public PopUpControlloPasswordDAO(PopUpControlloPassword popUpControlloPassword) {
+
+    public PopUpControlloPasswordDAO(PopUpControlloPassword popUpControlloPassword, String email, String tipoUtente) {
         this.popUpControlloPassword = popUpControlloPassword;
+        this.email = email;
+        this.tipoUtente = tipoUtente;
     }
 
     public void openConnection() {
         new DatabaseTask().execute("open");
     }
 
-    public void checkPassword(String email, String password) {
+    public void checkPassword( String password) {
         if (email.isEmpty() || password.isEmpty()) {
             // Se uno dei campi è vuoto, non fare nulla
             return;
         }
-        new CheckPasswordTask().execute(email, password);
+        new CheckPasswordTask().execute(password);
     }
-    public void updatePassword(String email, String newPassword) {
+    public void updatePassword(String newPassword) {
         if (email.isEmpty() || newPassword.isEmpty()) {
             // Se uno dei campi è vuoto, non fare nulla
             return;
         }
-        new UpdatePasswordTask().execute(email, newPassword);
+        new UpdatePasswordTask().execute(newPassword);
     }
     private class DatabaseTask extends AsyncTask<String, Void, Boolean> {
 
@@ -74,7 +79,7 @@ public class PopUpControlloPasswordDAO {
             try {
                 if (connection != null && !connection.isClosed()) {
                     Statement statement = connection.createStatement();
-                    ResultSet resultSet = statement.executeQuery("SELECT * FROM acquirente WHERE indirizzo_email = '" + strings[0] + "' AND password = '" + strings[1] + "'");
+                    ResultSet resultSet = statement.executeQuery("SELECT * FROM " + tipoUtente + " WHERE indirizzo_email = '" + email + "' AND password = '" + strings[0] + "'");
                     return resultSet.next();
                 } else {
                     return false;
@@ -101,7 +106,7 @@ public class PopUpControlloPasswordDAO {
             try {
                 if (connection != null && !connection.isClosed()) {
                     Statement statement = connection.createStatement();
-                    int rowsAffected = statement.executeUpdate("UPDATE acquirente SET password = '" + strings[1] + "' WHERE indirizzo_email = '" + strings[0] + "'");
+                    int rowsAffected = statement.executeUpdate("UPDATE " + tipoUtente + " SET password = '" + strings[0] + "' WHERE indirizzo_email = '" + email + "'");
                     Log.d("Update", "il valore di rows è: " + rowsAffected + " .");
                     return rowsAffected > 0;
                 } else {
@@ -118,6 +123,7 @@ public class PopUpControlloPasswordDAO {
             if (!isCancelled()) {
                 if (result) {
                     Toast.makeText(popUpControlloPassword.getContext(), "Password aggiornata con successo", Toast.LENGTH_SHORT).show();
+                    popUpControlloPassword.dismissPopup();
                 } else {
                     Toast.makeText(popUpControlloPassword.getContext(), "Errore durante l'aggiornamento della password", Toast.LENGTH_SHORT).show();
                 }

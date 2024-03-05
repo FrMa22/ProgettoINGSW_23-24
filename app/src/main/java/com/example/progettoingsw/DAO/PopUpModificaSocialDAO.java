@@ -14,28 +14,32 @@ import java.sql.Statement;
 public class PopUpModificaSocialDAO {
     private Connection connection;
     private PopUpModificaSocial popUpModificaSocial;
+    private String email;
+    private String tipoUtente;
 
-    public PopUpModificaSocialDAO(PopUpModificaSocial popUpModificaSocial) {
+    public PopUpModificaSocialDAO(PopUpModificaSocial popUpModificaSocial, String email, String tipoUtente) {
         this.popUpModificaSocial = popUpModificaSocial;
+        this.email=email;
+        this.tipoUtente = tipoUtente;
     }
 
     public void openConnection() {
         new PopUpModificaSocialDAO.DatabaseTask().execute("open");
     }
 
-    public void updateSocial(String email, String nome_vecchio, String link_vecchio, String nome, String link) {
+    public void updateSocial( String nome_vecchio, String link_vecchio, String nome, String link) {
         if (email.isEmpty() || nome.isEmpty() || link.isEmpty()) {
             // Se uno dei campi è vuoto, non fare nulla
             return;
         }
-        new UpdateSocialTask().execute(email, nome_vecchio,link_vecchio, nome,link);
+        new UpdateSocialTask().execute( nome_vecchio,link_vecchio, nome,link);
 
-    }public void deleteSocial(String email, String nome_vecchio, String link_vecchio) {
+    }public void deleteSocial( String nome_vecchio, String link_vecchio) {
         if (email.isEmpty() ) {
             // Se uno dei campi è vuoto, non fare nulla
             return;
         }
-        new DeleteSocialTask().execute(email, nome_vecchio,link_vecchio);
+        new DeleteSocialTask().execute( nome_vecchio,link_vecchio);
     }
 
     private class DatabaseTask extends AsyncTask<String, Void, Boolean> {
@@ -74,14 +78,13 @@ public class PopUpModificaSocialDAO {
             Log.d("UpdateSocialTask", "I valori di nome e link sono : " );
             try {
                 if (connection != null && !connection.isClosed()) {
-                    String email = strings[0];
-                    String nome_vecchio = strings[1];
-                    String link_vecchio = strings[2];
-                    String nome = strings[3];
-                    String link = strings[4];
+                    String nome_vecchio = strings[0];
+                    String link_vecchio = strings[1];
+                    String nome = strings[2];
+                    String link = strings[3];
                     Statement statement = connection.createStatement();
                     Log.d("PopUp", "I valori di nome e link vecchi sono : " + nome_vecchio + link_vecchio + " e i nuovi sono: " + nome + link);
-                    int rowsAffected = statement.executeUpdate("UPDATE socialAcquirente SET nome = '" + nome + "' , link = '" + link + "' where indirizzo_email = '" + email + "' AND nome = '" + nome_vecchio + "' AND link = '"  + link_vecchio + "' ;");
+                    int rowsAffected = statement.executeUpdate("UPDATE social" + tipoUtente + " SET nome = '" + nome + "' , link = '" + link + "' where indirizzo_email = '" + email + "' AND nome = '" + nome_vecchio + "' AND link = '"  + link_vecchio + "' ;");
                     return rowsAffected > 0;
                 } else {
                     return false;
@@ -109,12 +112,11 @@ public class PopUpModificaSocialDAO {
         protected Boolean doInBackground(String... strings) {
             try {
                 if (connection != null && !connection.isClosed()) {
-                    String email = strings[0];
-                    String nome_vecchio = strings[1];
-                    String link_vecchio = strings[2];
+                    String nome_vecchio = strings[0];
+                    String link_vecchio = strings[1];
                     Statement statement = connection.createStatement();
                     Log.d("PopUp", "I valori di nome e link vecchi sono : " + nome_vecchio + link_vecchio );
-                    int rowsAffected = statement.executeUpdate("DELETE FROM socialAcquirente WHERE nome = '" + nome_vecchio + "' AND link = '" + link_vecchio + "' AND indirizzo_email = '" + email + "' ;");
+                    int rowsAffected = statement.executeUpdate("DELETE FROM social" + tipoUtente + " WHERE nome = '" + nome_vecchio + "' AND link = '" + link_vecchio + "' AND indirizzo_email = '" + email + "' ;");
                     return rowsAffected > 0;
                 } else {
                     return false;

@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.appcompat.widget.AppCompatButton;
@@ -23,11 +24,15 @@ public class PopUpControlloPassword extends Dialog implements View.OnClickListen
     private EditText edit_text_password_nuova;
     private String email;
     private PopUpControlloPasswordDAO popUpControlloPasswordDAO;
+    private String tipoUtente;
+    private ProgressBar progress_bar_pop_up_controllo_password;
 
-    public  PopUpControlloPassword(Context context, String email) {
+
+    public  PopUpControlloPassword(Context context, String email, String tipoUtente) {
         super(context);
         this.email = email;
-        this.popUpControlloPasswordDAO = new PopUpControlloPasswordDAO(this);
+        this.tipoUtente = tipoUtente;
+        this.popUpControlloPasswordDAO = new PopUpControlloPasswordDAO(this,email,tipoUtente);
     }
 
     @Override
@@ -35,6 +40,9 @@ public class PopUpControlloPassword extends Dialog implements View.OnClickListen
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.pop_up_controllo_password);
+
+        progress_bar_pop_up_controllo_password = findViewById(R.id.progress_bar_pop_up_controllo_password);
+
 
         edit_text_vecchia_password = findViewById(R.id.edit_text_vecchia_password);
         edit_text_password_nuova = findViewById(R.id.edit_text_password_nuova);
@@ -50,11 +58,11 @@ public class PopUpControlloPassword extends Dialog implements View.OnClickListen
         if (v.getId() == R.id.bottoneAnnullaControlloPassword) {
             dismiss();
         } else if(v.getId() == R.id.bottoneConfermaControlloPassword){
-
+            progress_bar_pop_up_controllo_password.setVisibility(View.VISIBLE);
             String password_vecchia = edit_text_vecchia_password.getText().toString();
             String password_nuova = edit_text_password_nuova.getText().toString();
             popUpControlloPasswordDAO.openConnection();
-            popUpControlloPasswordDAO.checkPassword(email, password_vecchia);
+            popUpControlloPasswordDAO.checkPassword(password_vecchia);
         }
     }
 
@@ -63,9 +71,10 @@ public class PopUpControlloPassword extends Dialog implements View.OnClickListen
         if(result){
             //sostituzione in db
             Log.d("handleResultPassword", "result è positivo: password corretta");
-            popUpControlloPasswordDAO.updatePassword(email, edit_text_password_nuova.getText().toString());
+            popUpControlloPasswordDAO.updatePassword( edit_text_password_nuova.getText().toString());
         }else{
             Toast.makeText(getContext(), "Password non corretta, riprovare.", Toast.LENGTH_SHORT).show();
+            progress_bar_pop_up_controllo_password.setVisibility(View.INVISIBLE);
             Log.d("handleResultPassword", "result è negativo: password non corretta");
         }
 

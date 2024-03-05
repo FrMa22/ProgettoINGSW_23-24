@@ -19,7 +19,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.progettoingsw.DAO.Acquirente;
-import com.example.progettoingsw.DAO.AcquirenteFragmentProfiloDAO;
+import com.example.progettoingsw.DAO.FragmentProfiloDAO;
 import com.example.progettoingsw.gui.PopUpControlloPassword;
 import com.example.progettoingsw.gui.PopUpModificaCampiProfilo;
 import com.example.progettoingsw.R;
@@ -31,10 +31,11 @@ import com.example.progettoingsw.gui.PopUpModificaSocial;
 import com.google.android.material.button.MaterialButton;
 
 import java.util.List;
-public class AcquirenteFragmentProfilo extends Fragment {
+public class FragmentProfilo extends Fragment {
     ImageButton button_log_out;
     MaterialButton button_le_mie_aste;
     ImageButton button_modifica;
+    ImageButton bottone_info;
     Button button_cambia_password_profilo;
 
     private GridView gridView;
@@ -51,21 +52,24 @@ public class AcquirenteFragmentProfilo extends Fragment {
 
     // Definisci la variabile di istanza view
     private View view;
+    private String email;
+    String tipoUtente;
 
-    public AcquirenteFragmentProfilo() {
+    public FragmentProfilo(String email, String tipoUtente) {
+        this.email = email;
+        this.tipoUtente = tipoUtente;
     }
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         // Assegna la variabile view nel metodo onCreateView
-        view = inflater.inflate(R.layout.acquirente_fragment_profilo, container, false);
+        view = inflater.inflate(R.layout.fragment_profilo, container, false);
         return view;
     }
 
 
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        String email = getArguments().getString("email");
-        Toast.makeText(getContext(), "la mail in ingresso è: " + email, Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), "Mail " + email + ", tipo: " + tipoUtente, Toast.LENGTH_SHORT).show();
 
         //icona del caricamento
         progressBarAcquirenteFragmentProfilo = view.findViewById(R.id.progressBarAcquirenteFragmentProfilo);
@@ -88,14 +92,20 @@ public class AcquirenteFragmentProfilo extends Fragment {
 
                 String nome = socialNames.get(position);
                 String link = socialLinks.get(position);
-                PopUpModificaSocial popUpModificaSocial = new PopUpModificaSocial(getContext(), AcquirenteFragmentProfilo.this, email, nome, link);
+                PopUpModificaSocial popUpModificaSocial = new PopUpModificaSocial(getContext(), FragmentProfilo.this, email, tipoUtente, nome, link);
                 popUpModificaSocial.show();
             }
         });
 
 
 
-
+        bottone_info = view.findViewById(R.id.bottone_info);
+        bottone_info.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getContext(), "Clickare un social per modificarlo. ", Toast.LENGTH_SHORT).show();
+            }
+        });
 
 
         button_log_out = view.findViewById(R.id.button_log_out_profilo);
@@ -118,7 +128,7 @@ public class AcquirenteFragmentProfilo extends Fragment {
         button_modifica.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                PopUpModificaCampiProfilo popUpModificaCampiProfilo = new PopUpModificaCampiProfilo(getContext(), AcquirenteFragmentProfilo.this, email);
+                PopUpModificaCampiProfilo popUpModificaCampiProfilo = new PopUpModificaCampiProfilo(getContext(), FragmentProfilo.this, email, tipoUtente);
                 popUpModificaCampiProfilo.show();
             }
         });
@@ -127,7 +137,7 @@ public class AcquirenteFragmentProfilo extends Fragment {
         button_cambia_password_profilo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                PopUpControlloPassword popUpControlloPassword = new PopUpControlloPassword(getContext(), email);
+                PopUpControlloPassword popUpControlloPassword = new PopUpControlloPassword(getContext(), email, tipoUtente);
                 popUpControlloPassword.show();
             }
         });
@@ -142,24 +152,23 @@ public class AcquirenteFragmentProfilo extends Fragment {
         text_view_bio_profilo = view.findViewById(R.id.text_view_bio_profilo);
 
         // Inizializza il DAO e recupera i dati dell'acquirente
-        AcquirenteFragmentProfiloDAO acquirente_fragment_profilo_DAO = new AcquirenteFragmentProfiloDAO(this);
+        FragmentProfiloDAO acquirente_fragment_profilo_DAO = new FragmentProfiloDAO(this, email, tipoUtente);
         acquirente_fragment_profilo_DAO.openConnection();
-        acquirente_fragment_profilo_DAO.findUser(email);
-        acquirente_fragment_profilo_DAO.getSocialNamesForEmail(email);
+        acquirente_fragment_profilo_DAO.findUser();
+        acquirente_fragment_profilo_DAO.getSocialNamesForEmail();
     }
 
     @Override //questo metodo serve per fare un refresh dei valori dei campi dopo una possibile modifica fatta da PopUp
     public void onResume() {
         super.onResume();
         progressBarAcquirenteFragmentProfilo.setVisibility(View.VISIBLE);
-        String email = getArguments().getString("email");
         Toast.makeText(getContext(), "la mail in ingresso è: " + email, Toast.LENGTH_SHORT).show();
 
         // Inizializza il DAO e recupera i dati dell'acquirente
-        AcquirenteFragmentProfiloDAO acquirente_fragment_profilo_DAO = new AcquirenteFragmentProfiloDAO(this);
+        FragmentProfiloDAO acquirente_fragment_profilo_DAO = new FragmentProfiloDAO(this,email, tipoUtente);
         acquirente_fragment_profilo_DAO.openConnection();
-        acquirente_fragment_profilo_DAO.findUser(email);
-        acquirente_fragment_profilo_DAO.getSocialNamesForEmail(email);
+        acquirente_fragment_profilo_DAO.findUser();
+        acquirente_fragment_profilo_DAO.getSocialNamesForEmail();
     }
 
     public void updateEditTexts(Acquirente acquirente) {
@@ -220,14 +229,22 @@ public class AcquirenteFragmentProfilo extends Fragment {
             setGridViewHeightBasedOnChildren(gridView);
             // Aggiungi stampe nel log per verificare che i dati siano correttamente passati
             for (int i = 0; i < socialNames.size(); i++) {
-                Log.d("AcquirenteFragmentProfilo", "Nome Social: " + socialNames.get(i) + ", Link Social: " + socialLinks.get(i));
+                Log.d("FragmentProfilo", "Nome Social: " + socialNames.get(i) + ", Link Social: " + socialLinks.get(i));
             }
-            progressBarAcquirenteFragmentProfilo.setVisibility(View.INVISIBLE);
         } else {
-            // Nessun nome sociale trovato per l'email specificata
-        }
-    }
+            // Rimuovi tutti i dati dall'adattatore e aggiorna la GridView
+            gridView = view.findViewById(R.id.gridview_social_activity_profilo);
+            adapterSocial = new CustomAdapter_gridview_profilo_social(getContext());
+            gridView.setAdapter(adapterSocial);
 
+            // Aggiungi stampe nel log per verificare che i dati siano correttamente passati
+            Log.d("FragmentProfilo", "Nessun social disponibile");
+
+            // Imposta l'altezza della GridView a 50dp
+            gridView.setMinimumHeight((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 50, getResources().getDisplayMetrics()));
+        }
+        progressBarAcquirenteFragmentProfilo.setVisibility(View.INVISIBLE);
+    }
 
 
 

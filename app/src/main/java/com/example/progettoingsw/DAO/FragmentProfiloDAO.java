@@ -2,44 +2,47 @@ package com.example.progettoingsw.DAO;
 import android.os.AsyncTask;
 import android.util.Log;
 import com.example.progettoingsw.controllers_package.DatabaseHelper;
-import com.example.progettoingsw.gui.acquirente.AcquirenteFragmentProfilo;
-import com.example.progettoingsw.gui.venditore.VenditoreFragmentProfilo;
+import com.example.progettoingsw.gui.acquirente.FragmentProfilo;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class VenditoreFragmentProfiloDAO {
+public class FragmentProfiloDAO {
 
     private Connection connection;
-    private VenditoreFragmentProfilo venditoreFragmentProfilo;
+    private FragmentProfilo fragmentProfilo;
+    private String mail;
+    private String tipoUtente;
 
-    public VenditoreFragmentProfiloDAO(VenditoreFragmentProfilo venditoreFragmentProfilo) {
-        this.venditoreFragmentProfilo = venditoreFragmentProfilo;
+    public FragmentProfiloDAO(FragmentProfilo fragmentProfilo, String email, String tipoUtente) {
+        this.fragmentProfilo = fragmentProfilo;
+        this.mail = email;
+        this.tipoUtente = tipoUtente;
     }
 
     public void openConnection() {
         new DatabaseTask().execute("open");
     }
 
-    public void findUser(String mail) {
+    public void findUser() {
         if (mail.isEmpty()) {
             // Se l'ID è vuoto, non fare nulla
             return;
         }
-        new DatabaseTask().execute("find", mail);
+        new DatabaseTask().execute("find");
     }
 
-    public void getSocialNamesForEmail(String email) {
-        if (email.isEmpty()) {
+    public void getSocialNamesForEmail() {
+        if (mail.isEmpty()) {
             // Se l'email è vuota, non fare nulla
             return;
         }
-        new DatabaseTask().execute("get_social_names", email);
+        new DatabaseTask().execute("get_social_names");
     }
+
 
     public void closeConnection() {
         new DatabaseTask().execute("close");
@@ -54,22 +57,24 @@ public class VenditoreFragmentProfiloDAO {
                     String action = strings[0];
                     if (action.equals("open")) {
                         connection = DatabaseHelper.getConnection();
-                        Log.d("VenditoreFragmentProfiloDAO", "Connessione aperta");
+                        Log.d("FragmentProfiloDAO", "Connessione aperta");
                         return null;
                     } else if (action.equals("find")) {
                         if (connection != null && !connection.isClosed()) {
+                            Log.d("find" , "sto qui");
                             Statement statement = connection.createStatement();
-                            ResultSet resultSet = statement.executeQuery("SELECT * FROM venditore WHERE indirizzo_email = '" + strings[1] + "'");
-                            Log.d("VenditoreFragmentProfiloDAO", "result set" + strings[1]);
+                            ResultSet resultSet = statement.executeQuery("SELECT * FROM " + tipoUtente + " WHERE indirizzo_email = '" + mail + "'");
+                            Log.d("FragmentProfiloDAO", "query fatta");
                             if (resultSet.next()) {
-                                Log.d("VenditoreFragmentProfiloDAO", "result set ok");
+                                Log.d("FragmentProfiloDAO", "result set ok");
                                 String nome = resultSet.getString("nome");
                                 String cognome = resultSet.getString("cognome");
                                 String email = resultSet.getString("indirizzo_email");
                                 String sitoWeb = resultSet.getString("link");
                                 String paese = resultSet.getString("areageografica");
                                 String bio = resultSet.getString("bio");
-                                return new Venditore(nome, cognome, email, sitoWeb, paese, bio);
+                                Log.d("Valori di editTexts" , " nome : " + nome + ", cognome : " + cognome + ", email: " + email + ", link : " + sitoWeb + ", paese : " + paese + " , bio: " + bio + " .");
+                                return new Acquirente(nome, cognome, email, sitoWeb, paese, bio);
                             }
                         }
                     } else if (action.equals("get_social_names")) {
@@ -77,18 +82,18 @@ public class VenditoreFragmentProfiloDAO {
                             List<String> socialNames = new ArrayList<>();
                             List<String> socialLinks = new ArrayList<>();
                             Statement statement = connection.createStatement();
-                            ResultSet resultSet = statement.executeQuery("SELECT s.nome, s.link FROM social s INNER JOIN socialVenditore sv ON s.nome = sv.nome WHERE sv.indirizzo_email = '" + strings[1] + "'");
+                            ResultSet resultSet = statement.executeQuery("SELECT nome, link FROM social" + tipoUtente + " WHERE indirizzo_email = '" + mail + "'");
                             while (resultSet.next()) {
                                 socialNames.add(resultSet.getString("nome"));
                                 socialLinks.add(resultSet.getString("link"));
-                                Log.d("VenditoreFragmentProfiloDAO", "Nome Social: " + resultSet.getString("nome") + ", Link Social: " + resultSet.getString("link")); // Aggiunto
+                                Log.d("FragmentProfiloDAO", "Nome Social: " + resultSet.getString("nome") + ", Link Social: " + resultSet.getString("link")); // Aggiunto
                             }
                             return new Object[]{socialNames, socialLinks};
                         }
                     } else if (action.equals("close")) {
                         if (connection != null && !connection.isClosed()) {
                             connection.close();
-                            Log.d("VenditoreFragmentProfiloDAO", "Connessione chiusa");
+                            Log.d("FragmentProfiloDAO", "Connessione chiusa");
                             return null;
                         }
                     }
@@ -96,7 +101,7 @@ public class VenditoreFragmentProfiloDAO {
                 return null;
             } catch (Exception e) {
                 e.printStackTrace();
-                Log.e("VenditoreFragmentProfiloDAO", "Errore durante l'operazione su DB", e);
+                Log.e("FragmentProfiloDAO", "Errore durante l'operazione su DB", e);
                 return null;
             }
         }
@@ -105,14 +110,14 @@ public class VenditoreFragmentProfiloDAO {
         protected void onPostExecute(Object result) {
             // Questo metodo viene chiamato dopo che doInBackground è completato
             // Puoi mostrare il risultato all'utente o gestirlo in modo appropriato
-            if (result instanceof Venditore) {
+            if (result instanceof Acquirente) {
                 // Esempio: restituisci l'acquirente al Fragment
-                venditoreFragmentProfilo.updateEditTexts((Venditore) result);
+                fragmentProfilo.updateEditTexts((Acquirente) result);
             } else if (result instanceof Object[]) {
                 Object[] socialData = (Object[]) result;
                 List<String> socialNames = (List<String>) socialData[0];
                 List<String> socialLinks = (List<String>) socialData[1];
-                venditoreFragmentProfilo.updateSocialNames(socialNames, socialLinks);
+                fragmentProfilo.updateSocialNames(socialNames, socialLinks);
             } else {
                 // Nessun risultato o errore
             }
@@ -130,4 +135,3 @@ public class VenditoreFragmentProfiloDAO {
 
     }
 }
-

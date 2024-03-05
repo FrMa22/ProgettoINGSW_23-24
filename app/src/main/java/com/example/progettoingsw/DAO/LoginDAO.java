@@ -54,31 +54,37 @@ public class LoginDAO {
         }
     }
 
-    private class FindUserTask extends AsyncTask<String, Void, Boolean> {
+    private class FindUserTask extends AsyncTask<String, Void, String> {
 
         @Override
-        protected Boolean doInBackground(String... strings) {
+        protected String doInBackground(String... strings) {
             try {
                 if (connection != null && !connection.isClosed()) {
                     Statement statement = connection.createStatement();
-                    ResultSet resultSet = statement.executeQuery("SELECT * FROM acquirente WHERE indirizzo_email = '" + strings[0] + "' AND password = '" + strings[1] + "'");
-                    return resultSet.next();
-                } else {
-                    return false;
+                    ResultSet resultSet = statement.executeQuery("SELECT * FROM venditore WHERE indirizzo_email = '" + strings[0] + "' AND password = '" + strings[1] + "'");
+                    if (resultSet.next()) {
+                        return "venditore";
+                    }
+
+                    resultSet = statement.executeQuery("SELECT * FROM acquirente WHERE indirizzo_email = '" + strings[0] + "' AND password = '" + strings[1] + "'");
+                    if (resultSet.next()) {
+                        return "acquirente";
+                    }
                 }
             } catch (Exception e) {
                 e.printStackTrace();
-                return false;
             }
+            return null;
         }
 
         @Override
-        protected void onPostExecute(Boolean result) {
+        protected void onPostExecute(String tableName) {
             if (!isCancelled()) {
-                loginActivity.handleLoginResult(result);
+                loginActivity.handleLoginResult(tableName);
             }
         }
     }
+
 
     private class CloseConnectionTask extends AsyncTask<Void, Void, Boolean> {
 

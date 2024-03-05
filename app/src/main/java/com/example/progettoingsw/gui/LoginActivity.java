@@ -15,8 +15,10 @@ import com.example.progettoingsw.DAO.LoginDAO;
 import com.example.progettoingsw.R;
 import com.example.progettoingsw.classe_da_estendere.GestoreComuniImplementazioni;
 import com.example.progettoingsw.controllers_package.Controller;
+import com.example.progettoingsw.gui.acquirente.AcquirenteFragmentHome;
 import com.example.progettoingsw.gui.acquirente.AcquirenteMainActivity;
 import com.example.progettoingsw.gui.venditore.VenditoreAstaInglese;
+import com.example.progettoingsw.gui.venditore.VenditoreMainActivity;
 
 public class LoginActivity extends GestoreComuniImplementazioni {
 
@@ -75,13 +77,22 @@ public class LoginActivity extends GestoreComuniImplementazioni {
         });
 
     }
-    public void handleLoginResult(boolean result) {
+    public void handleLoginResult(String tipoUtente) {
         progress_bar_login.setVisibility(View.INVISIBLE);
-        if (result) {
-            Toast.makeText(this, "Trovato", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(LoginActivity.this, AcquirenteMainActivity.class);//test del login
-            intent.putExtra("email", editText_mail.getText().toString());
-            startActivity(intent);
+        Log.d("handleLoginResult", "valore di result : " + tipoUtente);
+        if (tipoUtente != null) {
+            if(tipoUtente.equals("acquirente")){
+                Toast.makeText(this, "Trovato Acquirente", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(LoginActivity.this, AcquirenteMainActivity.class);//test del login
+                intent.putExtra("email", editText_mail.getText().toString());
+                startActivity(intent);
+            }else{
+                Toast.makeText(this, "Trovato Venditore", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(LoginActivity.this, VenditoreMainActivity.class);//test del login
+                intent.putExtra("email", editText_mail.getText().toString());
+                startActivity(intent);
+            }
+
             // L'utente è stato trovato
             // Esegui le azioni necessarie per il login
         } else {

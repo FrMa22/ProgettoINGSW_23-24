@@ -40,6 +40,10 @@ public class VenditoreFragmentCreaLaTuaAstaVenditore extends Fragment {
     ActivityResultLauncher<Intent> resultLauncher;
     String nomeProd;
     String descProd;
+    String email;
+    public VenditoreFragmentCreaLaTuaAstaVenditore(String email){
+        this.email = email;
+    }
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view_fragment = inflater.inflate(R.layout.venditore_fragment_crea_la_tua_asta_venditore, container, false);
@@ -53,7 +57,6 @@ public class VenditoreFragmentCreaLaTuaAstaVenditore extends Fragment {
         controller = new Controller();
         bottone_prosegui=view_fragment.findViewById(R.id.bottoneProsegui);
 
-        String email = getArguments().getString("email");
 
         immagineProdotto=(ImageView) view_fragment.findViewById(R.id.imageViewCreaAstaVenditore);
         ImageButton bottoneInserisciImmagine=(ImageButton) view_fragment.findViewById(R.id.imageButtonInserisciImmagineCreaAstaVenditore);

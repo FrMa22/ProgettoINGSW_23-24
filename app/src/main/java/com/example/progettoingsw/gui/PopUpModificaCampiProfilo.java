@@ -11,10 +11,9 @@ import android.widget.Toast;
 
 import androidx.appcompat.widget.AppCompatButton;
 
-import com.example.progettoingsw.DAO.AcquirenteFragmentProfiloDAO;
 import com.example.progettoingsw.DAO.PopUpModificaCampiProfiloDAO;
 import com.example.progettoingsw.R;
-import com.example.progettoingsw.gui.acquirente.AcquirenteFragmentProfilo;
+import com.example.progettoingsw.gui.acquirente.FragmentProfilo;
 
 public class PopUpModificaCampiProfilo extends Dialog implements View.OnClickListener {
     private AppCompatButton bottoneAnnullaModifica;
@@ -26,13 +25,15 @@ public class PopUpModificaCampiProfilo extends Dialog implements View.OnClickLis
     private EditText edit_text_modifica_bio;
     private EditText edit_text_modifica_paese;
     private PopUpModificaCampiProfiloDAO popUpModificaCampiProfiloDAO;
-    private AcquirenteFragmentProfilo acquirenteFragmentProfilo;
+    private FragmentProfilo fragmentProfilo;
+    private String tipoUtente;
 
 
-    public PopUpModificaCampiProfilo(Context context, AcquirenteFragmentProfilo acquirenteFragmentProfilo, String email) {
+    public PopUpModificaCampiProfilo(Context context, FragmentProfilo fragmentProfilo, String email, String tipoUtente) {
         super(context);
-        this.acquirenteFragmentProfilo = acquirenteFragmentProfilo;
+        this.fragmentProfilo = fragmentProfilo;
         this.email = email;
+        this.tipoUtente = tipoUtente;
     }
 
     @Override
@@ -47,9 +48,9 @@ public class PopUpModificaCampiProfilo extends Dialog implements View.OnClickLis
         edit_text_modifica_bio = findViewById(R.id.edit_text_modifica_bio);
         edit_text_modifica_paese = findViewById(R.id.edit_text_modifica_paese);
 
-        popUpModificaCampiProfiloDAO = new PopUpModificaCampiProfiloDAO(this);
+        popUpModificaCampiProfiloDAO = new PopUpModificaCampiProfiloDAO(this, email, tipoUtente);
         popUpModificaCampiProfiloDAO.openConnection();
-        popUpModificaCampiProfiloDAO.getFields(email);
+        popUpModificaCampiProfiloDAO.getFields();
 
         bottoneAnnullaModifica = findViewById(R.id.bottoneAnnullaModifica);
         bottoneAnnullaModifica.setOnClickListener(this);
@@ -72,8 +73,8 @@ public class PopUpModificaCampiProfilo extends Dialog implements View.OnClickLis
 
             if (!nome.isEmpty() && !cognome.isEmpty()) {
                 Log.d("bottone", " i valori di nome e cognome sono: " + nome + cognome);
-                popUpModificaCampiProfiloDAO.updateFields(email, nome, cognome, sitoweb, paese, bio);
-                acquirenteFragmentProfilo.onResume();
+                popUpModificaCampiProfiloDAO.updateFields(nome, cognome, sitoweb, paese, bio);
+                fragmentProfilo.onResume();
                 dismiss();
             }else{
                 if(nome.isEmpty() && cognome.isEmpty()){

@@ -62,7 +62,7 @@ public class ImmaginiDAO {
 // Esegui l'aggiornamento
                             statement.executeUpdate();
                             statement.close();
-
+                            Log.d("immagine", "immagine inserita con successo");
                             return "Immagine inserita con successo!";
                         } else {
                             return "Impossibile inserire l'immagine: connessione non aperta.";
@@ -88,6 +88,7 @@ public class ImmaginiDAO {
         protected void onPostExecute(String result) {
             // Questo metodo viene chiamato dopo che doInBackground è completato
             // Puoi mostrare il risultato all'utente o gestirlo in modo appropriato
+            Log.d("IMMAGINE", result);
             System.out.println(result);
         }
     }

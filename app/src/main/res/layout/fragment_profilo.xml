@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".gui.acquirente.AcquirenteFragmentProfilo">
+    tools:context=".gui.acquirente.FragmentProfilo">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -332,15 +332,31 @@
                             android:textStyle="bold"
                             android:layout_alignParentStart="true"
                             android:layout_centerVertical="true"/>
+
                         <ImageButton
-                            android:id="@+id/button_modifica_social"
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
+                            android:id="@+id/bottone_info"
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:src="@drawable/ic_informazioni"
+                            android:layout_toLeftOf="@id/button_aggiungi_social"
+                            android:layout_centerVertical="true"
+                            android:layout_marginEnd="10dp"
                             android:backgroundTint="@android:color/transparent"
-                            android:src="@drawable/ic_edit_outfilled"
+                            android:contentDescription="Premi per informazioni"
+                            tools:ignore="TouchTargetSizeCheck"
+                            />
+
+
+                        <ImageButton
+                            android:id="@+id/button_aggiungi_social"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
                             android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:backgroundTint="@android:color/transparent"
                             android:contentDescription="Premi per modificare i social"
-                            android:layout_centerVertical="true"/>
+                            android:src="@drawable/ic_aggiungi"
+                            tools:ignore="TouchTargetSizeCheck" />
 
                     </RelativeLayout>
 

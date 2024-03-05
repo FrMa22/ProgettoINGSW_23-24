@@ -11,10 +11,9 @@ import android.widget.Toast;
 
 import androidx.appcompat.widget.AppCompatButton;
 
-import com.example.progettoingsw.DAO.PopUpModificaCampiProfiloDAO;
 import com.example.progettoingsw.DAO.PopUpModificaSocialDAO;
 import com.example.progettoingsw.R;
-import com.example.progettoingsw.gui.acquirente.AcquirenteFragmentProfilo;
+import com.example.progettoingsw.gui.acquirente.FragmentProfilo;
 
 public class PopUpModificaSocial extends Dialog implements View.OnClickListener {
     private AppCompatButton bottoneAnnullaModifica;
@@ -26,13 +25,15 @@ public class PopUpModificaSocial extends Dialog implements View.OnClickListener 
     private EditText edit_text_nome_social;
     private EditText edit_text_link_social;
     private PopUpModificaSocialDAO popUpModificaSocialDAO;
-    private AcquirenteFragmentProfilo acquirenteFragmentProfilo;
+    private FragmentProfilo fragmentProfilo;
+    private String tipoUtente;
 
 
-    public PopUpModificaSocial(Context context, AcquirenteFragmentProfilo acquirenteFragmentProfilo, String email, String nome, String link) {
+    public PopUpModificaSocial(Context context, FragmentProfilo fragmentProfilo, String email, String tipoUtente, String nome, String link) {
         super(context);
-        this.acquirenteFragmentProfilo = acquirenteFragmentProfilo;
+        this.fragmentProfilo = fragmentProfilo;
         this.email = email;
+        this.tipoUtente = tipoUtente;
         this.nome_vecchio = nome;
         this.link_vecchio = link;
     }
@@ -48,7 +49,7 @@ public class PopUpModificaSocial extends Dialog implements View.OnClickListener 
         edit_text_link_social = findViewById(R.id.edit_text_link_social);
         edit_text_link_social.setText(link_vecchio);
 
-        popUpModificaSocialDAO = new PopUpModificaSocialDAO(this);
+        popUpModificaSocialDAO = new PopUpModificaSocialDAO(this,email,tipoUtente);
 
         bottoneAnnullaModifica = findViewById(R.id.bottoneAnnullaModifica);
         bottoneAnnullaModifica.setOnClickListener(this);
@@ -71,8 +72,8 @@ public class PopUpModificaSocial extends Dialog implements View.OnClickListener 
             if (!nome.isEmpty() && !link.isEmpty()) {
                 Log.d("bottone", " i valori di nome e link sono: " + nome + link);
                 popUpModificaSocialDAO.openConnection();
-                popUpModificaSocialDAO.updateSocial(email, nome_vecchio, link_vecchio, nome, link);
-                acquirenteFragmentProfilo.onResume();
+                popUpModificaSocialDAO.updateSocial(nome_vecchio, link_vecchio, nome, link);
+                fragmentProfilo.onResume();
                 dismiss();
             }else{
                 if(nome.isEmpty() && link.isEmpty()){
@@ -86,8 +87,8 @@ public class PopUpModificaSocial extends Dialog implements View.OnClickListener 
             }
         }else if(v.getId() == R.id.bottoneEliminaSocial){
             popUpModificaSocialDAO.openConnection();
-            popUpModificaSocialDAO.deleteSocial(email,nome_vecchio,link_vecchio);
-            acquirenteFragmentProfilo.onResume();
+            popUpModificaSocialDAO.deleteSocial(nome_vecchio,link_vecchio);
+            fragmentProfilo.onResume();
             dismiss();
         }
     }

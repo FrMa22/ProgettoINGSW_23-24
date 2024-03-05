@@ -44,7 +44,7 @@
             android:name=".gui.acquirente.AcquirenteFragmentHome"
             android:exported="true" />
         <activity
-            android:name=".gui.acquirente.AcquirenteFragmentProfilo"
+            android:name=".gui.acquirente.FragmentProfilo"
             android:exported="true" />
         <activity
             android:name=".gui.PopUpModificaCampiProfilo"
