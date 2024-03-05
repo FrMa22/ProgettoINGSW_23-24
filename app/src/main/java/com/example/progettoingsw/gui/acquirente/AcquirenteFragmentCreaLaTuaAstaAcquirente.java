@@ -140,8 +140,16 @@ public class AcquirenteFragmentCreaLaTuaAstaAcquirente extends Fragment {
 
 
     private void prelevaImmagine(){
-        Intent intent= new Intent(MediaStore.ACTION_PICK_IMAGES);
-        resultLauncher.launch(intent);
+//        Intent intent= new Intent(MediaStore.ACTION_PICK_IMAGES);
+//        resultLauncher.launch(intent);
+        // questo codice funziona lo stesso ma va anche sul mio secondo telefono mentre quello sopra non andava
+        Intent intent= new Intent(Intent.ACTION_PICK);
+        intent.setType("image/*");
+        if (intent.resolveActivity(requireContext().getPackageManager()) != null) {
+            resultLauncher.launch(intent);
+        } else {
+            Toast.makeText(requireContext(), "Nessuna app disponibile per gestire la selezione delle immagini", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void registraRisultati() {

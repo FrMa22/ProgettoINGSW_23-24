@@ -51,7 +51,7 @@ public class ImmaginiDAO {
                     } else if (action.equals("insert")) {
                         if (connection != null && !connection.isClosed()) {
 
-
+                        Log.d("Insert" , "entrato");
 // Prepara l'istruzione SQL con un segnaposto per il LocalDateTime
                             String query = "INSERT INTO immagini (dati) VALUES (?)";
                             PreparedStatement statement = connection.prepareStatement(query);
