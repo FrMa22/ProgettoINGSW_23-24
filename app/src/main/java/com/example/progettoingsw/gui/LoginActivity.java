@@ -4,8 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,7 +27,7 @@ public class LoginActivity extends GestoreComuniImplementazioni {
     Button bottone;
     Controller controller;
     ProgressBar progress_bar_login;
-
+    LinearLayout linear_layout_login;
     EditText editText_mail;
     EditText editText_password;
     @Override
@@ -36,7 +38,7 @@ public class LoginActivity extends GestoreComuniImplementazioni {
         Button bottoneLogin = (Button) findViewById(R.id.bottonelogin);
         editText_mail = findViewById(R.id.editTextEmail);
         editText_password = findViewById(R.id.editTextPassword);
-
+        linear_layout_login = findViewById(R.id.linear_layout_login);
         progress_bar_login = findViewById(R.id.progress_bar_login);
 
         LoginDAO logindao = new LoginDAO(this);
@@ -50,11 +52,12 @@ public class LoginActivity extends GestoreComuniImplementazioni {
             public void onClick(View view) {
 //              PopUpLogin popUpLogin = new PopUpLogin(LoginActivity.this);
 //              popUpLogin.show();
-                String mail = editText_mail.getText().toString();
-                String password = editText_password.getText().toString();
+                String mail = editText_mail.getText().toString().trim();  // Rimuovi eventuali spazi all'inizio e alla fine
+                String password = editText_password.getText().toString().trim();
 
                 if (!mail.isEmpty() && !password.isEmpty()) {
                     progress_bar_login.setVisibility(View.VISIBLE);
+                    setAllClickable(linear_layout_login,false);
                     // Chiamata al metodo per cercare nel database
                     logindao.openConnection();
                     logindao.findUser(mail, password);
@@ -79,6 +82,7 @@ public class LoginActivity extends GestoreComuniImplementazioni {
     }
     public void handleLoginResult(String tipoUtente) {
         progress_bar_login.setVisibility(View.INVISIBLE);
+        setAllClickable(linear_layout_login,true);
         Log.d("handleLoginResult", "valore di result : " + tipoUtente);
         if (tipoUtente != null) {
             if(tipoUtente.equals("acquirente")){
@@ -100,6 +104,16 @@ public class LoginActivity extends GestoreComuniImplementazioni {
             // Mostra un messaggio di errore o esegui altre azioni necessarie
             Toast.makeText(this, "Non trovato", Toast.LENGTH_SHORT).show();
 
+        }
+    }
+
+    private void setAllClickable(ViewGroup viewGroup, boolean enabled) {
+        for (int i = 0; i < viewGroup.getChildCount(); i++) {
+            View child = viewGroup.getChildAt(i);
+            child.setEnabled(enabled);
+            if (child instanceof ViewGroup) {
+                setAllClickable((ViewGroup) child, enabled);
+            }
         }
     }
 
