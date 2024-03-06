@@ -16,16 +16,18 @@ import java.time.format.DateTimeFormatter;
 public class AstaInversaDAO {
 
     private Connection connection;
+    private byte[] foto;
 
     public void openConnection() {
         new AstaInversaDAO.DatabaseTask().execute("open");
     }
 
-    public void creaAstaInversa(String nome, String prezzo,String data,String ora,String descrizione,String email) {
+    public void creaAstaInversa(String nome, String prezzo,String data,String ora,String descrizione,String email,byte[] datiFoto) {
         if (nome.isEmpty() || prezzo.isEmpty() || data.isEmpty() || ora.isEmpty() || email.isEmpty() ) {
             // Se uno dei campi è vuoto, non fare nulla
             return;
         }
+        foto=datiFoto;
         new AstaInversaDAO.DatabaseTask().execute("insert", nome, prezzo,data,ora,descrizione,email);
     }
 
@@ -59,7 +61,7 @@ public class AstaInversaDAO {
                             LocalDateTime localDateTime = LocalDateTime.parse(dataDiScadenza, formatter);
 
 // Prepara l'istruzione SQL con un segnaposto per il LocalDateTime
-                            String query = "INSERT INTO asta_inversa (prezzoMax, dataDiScadenza, condizione, id_acquirente,nome,descrizione) VALUES (?, ?, ?, ?,?,?)";
+                            String query = "INSERT INTO asta_inversa (prezzoMax, dataDiScadenza, condizione, id_acquirente,nome,descrizione,path_immagine) VALUES (?, ?, ?, ?,?,?,?)";
                             PreparedStatement statement = connection.prepareStatement(query);
 
 // Imposta i valori dei parametri
@@ -69,6 +71,7 @@ public class AstaInversaDAO {
                             statement.setString(4, id_venditore);
                             statement.setString(5, nomeProdotto);
                             statement.setString(6,descrizioneP);
+                            statement.setBytes(7,foto);
 
 // Esegui l'aggiornamento
                             statement.executeUpdate();

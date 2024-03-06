@@ -23,6 +23,7 @@ public class VenditoreAstaRibasso extends GestoreComuniImplementazioni {
     EditText intervalloDecremento;
     EditText sogliaDecremento;
     EditText prezzominimoAsta;
+    private byte [] img;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +42,7 @@ public class VenditoreAstaRibasso extends GestoreComuniImplementazioni {
         String nomeProdotto=getIntent().getStringExtra("nomeProd");
         String descrizioneProdotto=getIntent().getStringExtra("descProd");
         String email=getIntent().getStringExtra("email");
+        img=getIntent().getByteArrayExtra("img");
 
         bottoneConferma.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
@@ -53,7 +55,7 @@ public class VenditoreAstaRibasso extends GestoreComuniImplementazioni {
 
                 // Chiamata al metodo per creare l'asta nel database
                 astaRibassoDao.openConnection();
-                astaRibassoDao.creaAstaRibasso(base,intervallo,soglia,min,nomeProdotto,descrizioneProdotto,email);
+                astaRibassoDao.creaAstaRibasso(base,intervallo,soglia,min,nomeProdotto,descrizioneProdotto,email,img);
                 astaRibassoDao.closeConnection();
 
 

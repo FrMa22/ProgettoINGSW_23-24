@@ -28,6 +28,7 @@ public class VenditoreAstaInglese extends GestoreComuniImplementazioni {
     EditText rialzoAsta;
 
     Controller controller;
+    private byte [] img;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +43,7 @@ public class VenditoreAstaInglese extends GestoreComuniImplementazioni {
         String nomeProdotto=getIntent().getStringExtra("nomeProd");
         String descrizioneProdotto=getIntent().getStringExtra("descProd");
         String email=getIntent().getStringExtra("email");
+        img=getIntent().getByteArrayExtra("img");
 
 
         bottoneConferma =  findViewById(R.id.bottoneConfermaAstaInglese);
@@ -70,7 +72,7 @@ public class VenditoreAstaInglese extends GestoreComuniImplementazioni {
 
             // Chiamata al metodo per creare l'asta nel database
             astaIngleseDao.openConnection();
-            astaIngleseDao.creaAstaInglese(base,intervallo,rialzo,nomeProdotto,descrizioneProdotto,email);
+            astaIngleseDao.creaAstaInglese(base,intervallo,rialzo,nomeProdotto,descrizioneProdotto,email,img);
             astaIngleseDao.closeConnection();
             //Dopo aver creato l'asta,verrà creato anche il prodotto legato all'asta
 

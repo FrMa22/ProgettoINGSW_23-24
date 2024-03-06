@@ -18,16 +18,18 @@ public class AstaIngleseDAO {
     private String idAsta;
     private String nomeP;
     private String descrizioneP;
+    private byte[] foto;
 
     public void openConnection() {
         new DatabaseTask().execute("open");
     }
 
-    public void creaAstaInglese(String base, String intervallo, String rialzo,String nomeProdotto,String descrizioneProdotto,String email) {
+    public void creaAstaInglese(String base, String intervallo, String rialzo,String nomeProdotto,String descrizioneProdotto,String email,byte[] datiFoto) {
         if (base.isEmpty() || intervallo.isEmpty() || rialzo.isEmpty() || nomeProdotto.isEmpty()  || email.isEmpty()) {
             // Se uno dei campi è vuoto, non fare nulla
             return;
         }
+        foto=datiFoto;
         new DatabaseTask().execute("insert", base, intervallo, rialzo,nomeProdotto,descrizioneProdotto,email);
     }
 
@@ -70,8 +72,9 @@ public class AstaIngleseDAO {
                             String formattedDataScadenza = dataScadenza.format(formatter);
 
                             statement.executeUpdate("INSERT INTO asta_allinglese" +
-                                    " (baseAsta, intervalloTempoOfferte, rialzoMin, prezzoAttuale, dataDiScadenza, condizione, nome, descrizione, id_venditore) " +
-                                    "VALUES (" + baseAsta + ", INTERVAL '" + intervallo + " hours', " + rialzoMin + ", " + prezzoAttuale + ", '" + formattedDataScadenza + "', '" + condizione + "', '" + nomeP + "', '" + descrizioneP + "', '" + id_venditore + "')");
+                                    " (baseAsta, intervalloTempoOfferte, rialzoMin, prezzoAttuale, dataDiScadenza, condizione, nome, descrizione, id_venditore, path_immagine) " +
+                                    "VALUES (" + baseAsta + ", INTERVAL '" + intervallo + " hours', " + rialzoMin + ", " + prezzoAttuale + ", '" + formattedDataScadenza + "', '" + condizione + "', '" + nomeP + "', '" + descrizioneP + "', '" + id_venditore + "', '" + foto + "')");
+
                             statement.close();
 
                             return "Asta inglese inserita con successo!";

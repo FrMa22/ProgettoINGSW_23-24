@@ -1,6 +1,8 @@
 package com.example.progettoingsw.gui.venditore;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -27,6 +29,10 @@ import com.example.progettoingsw.R;
 import com.example.progettoingsw.controllers_package.Controller;
 import com.google.android.material.button.MaterialButton;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+
 public class VenditoreFragmentCreaLaTuaAstaVenditore extends Fragment {
     public int selezione_asta=0;
     String opzioneSelezionata;
@@ -41,6 +47,9 @@ public class VenditoreFragmentCreaLaTuaAstaVenditore extends Fragment {
     String nomeProd;
     String descProd;
     String email;
+    byte[] imageBytes;
+
+    Uri uriImmagine;
     public VenditoreFragmentCreaLaTuaAstaVenditore(String email){
         this.email = email;
     }
@@ -57,7 +66,7 @@ public class VenditoreFragmentCreaLaTuaAstaVenditore extends Fragment {
         controller = new Controller();
         bottone_prosegui=view_fragment.findViewById(R.id.bottoneProsegui);
 
-
+        imageBytes=null;
         immagineProdotto=(ImageView) view_fragment.findViewById(R.id.imageViewCreaAstaVenditore);
         ImageButton bottoneInserisciImmagine=(ImageButton) view_fragment.findViewById(R.id.imageButtonInserisciImmagineCreaAstaVenditore);
         nomeProdotto=view_fragment.findViewById(R.id.editTextNomeBeneCreaAstaVenditore);
@@ -114,6 +123,8 @@ public class VenditoreFragmentCreaLaTuaAstaVenditore extends Fragment {
                     intent.putExtra("nomeProd", nomeProd);
                     intent.putExtra("descProd", descProd);
                     intent.putExtra("email",email);
+                    intent.putExtra("img",imageBytes);
+                    if(imageBytes==null){System.out.println("foto vuota porco dio");}
                     startActivity(intent);
 
 
@@ -126,6 +137,8 @@ public class VenditoreFragmentCreaLaTuaAstaVenditore extends Fragment {
                     intent.putExtra("nomeProd", nomeProd);
                     intent.putExtra("descProd", descProd);
                     intent.putExtra("email",email);
+                    if(imageBytes==null){System.out.println("foto vuota porco dio");}
+                    intent.putExtra("img",imageBytes);
                     startActivity(intent);
 
                 }
@@ -136,8 +149,13 @@ public class VenditoreFragmentCreaLaTuaAstaVenditore extends Fragment {
 
 
     private void prelevaImmagine(){
-        Intent intent= new Intent(MediaStore.ACTION_PICK_IMAGES);
-        resultLauncher.launch(intent);
+        Intent intent= new Intent(Intent.ACTION_PICK);
+        intent.setType("image/*");
+        if (intent.resolveActivity(requireContext().getPackageManager()) != null) {
+            resultLauncher.launch(intent);
+        } else {
+            Toast.makeText(requireContext(), "Nessuna app disponibile per gestire la selezione delle immagini", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void registraRisultati() {
@@ -146,14 +164,45 @@ public class VenditoreFragmentCreaLaTuaAstaVenditore extends Fragment {
                     @Override
                     public void onActivityResult(ActivityResult result) {
                         try {
-                            Uri uriImmagine = result.getData().getData();
-                            immagineProdotto.setImageURI(uriImmagine);
+                            uriImmagine = result.getData().getData();
+                            displayImage(uriImmagine);
                         } catch (Exception e) {
-                            Toast.makeText(getContext(), "Nessuna Immagine selezionata", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(requireContext(), "Nessuna Immagine selezionata", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
+    }
 
+
+
+    // Metodo per comprimere un'immagine Bitmap e convertirla in un array di byte
+    private byte[] compressAndConvertToByteArray(Bitmap bitmap) {
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 50, outputStream); // Compressione JPEG con qualità del 50%
+        return outputStream.toByteArray();
+    }
+
+    private void displayImage(Uri uri) {
+        try {
+            InputStream inputStream = getActivity().getContentResolver().openInputStream(uri);
+            Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+
+            // Ridimensiona l'immagine per adattarla alla dimensione desiderata
+            int targetWidth = 500; // Imposta la larghezza desiderata
+            int targetHeight = (int) (bitmap.getHeight() * (targetWidth / (double) bitmap.getWidth())); // Calcola l'altezza in base al rapporto
+            Bitmap resizedBitmap = Bitmap.createScaledBitmap(bitmap, targetWidth, targetHeight, false);
+
+            // Comprimi l'immagine
+            byte[] compressedImageBytes = compressAndConvertToByteArray(resizedBitmap);
+
+            // Imposta l'immagine ridimensionata nella ImageView
+            immagineProdotto.setImageBitmap(resizedBitmap);
+
+            // Salva i byte compressi per l'invio
+            imageBytes = compressedImageBytes;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }

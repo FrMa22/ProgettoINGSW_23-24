@@ -18,16 +18,18 @@ public class AstaRibassoDAO {
     private String idAsta;
     private String nomeP;
     private String descrizioneP;
+    private byte[] foto;
 
     public void openConnection() {
         new DatabaseTask().execute("open");
     }
 
-    public void creaAstaRibasso(String base, String intervallo,String soglia,String min,String nomeProdotto,String descrizioneProdotto,String email) {
+    public void creaAstaRibasso(String base, String intervallo,String soglia,String min,String nomeProdotto,String descrizioneProdotto,String email,byte[] datiFoto) {
         if (base.isEmpty() || intervallo.isEmpty() || soglia.isEmpty() || min.isEmpty() || email.isEmpty()) {
             // Se uno dei campi è vuoto, non fare nulla
             return;
         }
+        foto=datiFoto;
         new DatabaseTask().execute("insert", base, intervallo,soglia,min,nomeProdotto,descrizioneProdotto,email);
     }
 
@@ -60,8 +62,8 @@ public class AstaRibassoDAO {
                             nomeP=strings[5];
                             descrizioneP=strings[6];
 
-                            statement.executeUpdate("INSERT INTO asta_alribasso" + " (prezzoBase, intervalloDecrementale, decrementoAutomaticoCifra, prezzoMin, prezzoAttuale, condizione, nome, descrizione, id_venditore) " +
-                                    "VALUES (" + baseAsta + ", INTERVAL '" + intervallo + " minutes', " + soglia + ", " + prezzoMin + ", " + prezzoAttuale + ", '" + condizione + "', '" + nomeP + "', '" + descrizioneP + "', '" + id_venditore + "')");
+                            statement.executeUpdate("INSERT INTO asta_alribasso" + " (prezzoBase, intervalloDecrementale, decrementoAutomaticoCifra, prezzoMin, prezzoAttuale, condizione, nome, descrizione, id_venditore,path_immagine) " +
+                                    "VALUES (" + baseAsta + ", INTERVAL '" + intervallo + " minutes', " + soglia + ", " + prezzoMin + ", " + prezzoAttuale + ", '" + condizione + "', '" + nomeP + "', '" + descrizioneP + "', '" + id_venditore + "', '" + foto + "')");
                             statement.close();
                             return "Asta al ribasso inserita con successo!";
                         } else {

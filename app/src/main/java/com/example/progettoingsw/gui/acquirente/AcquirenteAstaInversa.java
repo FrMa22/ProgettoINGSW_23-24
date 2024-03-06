@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 
+import com.example.progettoingsw.DAO.ImmaginiDAO;
 import com.example.progettoingsw.R;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
@@ -48,6 +49,7 @@ public class AcquirenteAstaInversa extends GestoreComuniImplementazioni {
         setContentView(R.layout.acquirente_asta_inversa);
 
         AstaInversaDAO astaInversaDao = new AstaInversaDAO();
+        //ImmaginiDAO immaginiDAO=new ImmaginiDAO(this);
 
         MaterialButton bottoneConferma = (MaterialButton) findViewById(R.id.bottoneConfermaAstaInversa);
         ImageButton bottoneBack =  findViewById(R.id.bottoneBackAstaInversa);
@@ -61,12 +63,15 @@ public class AcquirenteAstaInversa extends GestoreComuniImplementazioni {
 
         String descrizioneProdotto=getIntent().getStringExtra("descProd");
         String email=getIntent().getStringExtra("email");
+       // immaginiDAO.openConnection();
+       // immaginiDAO.selectTest();
+       // immaginiDAO.closeConnection();
         img=getIntent().getByteArrayExtra("img");
 
-        bitmap = BitmapFactory.decodeByteArray(img, 0, img.length);
+        //bitmap = BitmapFactory.decodeByteArray(img, 0, img.length);
 
         // Imposta l'immagine nel tuo ImageView
-        immagineProdotto.setImageBitmap(bitmap);
+        //immagineProdotto.setImageBitmap(bitmap);
 
         bottoneData.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,7 +99,7 @@ public class AcquirenteAstaInversa extends GestoreComuniImplementazioni {
 
                 // Chiamata al metodo per creare l'asta nel database
                 astaInversaDao.openConnection();
-                astaInversaDao.creaAstaInversa(nome,prezzo,data,ora,descrizioneProdotto,email);
+                astaInversaDao.creaAstaInversa(nome,prezzo,data,ora,descrizioneProdotto,email,img);
                 astaInversaDao.closeConnection();
 
             }
@@ -131,6 +136,13 @@ public class AcquirenteAstaInversa extends GestoreComuniImplementazioni {
             }
         }, 00, 00, true);
         orologio.show();
+    }
+
+    public void updateFoto(byte[] foto){
+        img=foto;
+        bitmap = BitmapFactory.decodeByteArray(img, 0, img.length);
+        // Imposta l'immagine nel tuo ImageView
+        immagineProdotto.setImageBitmap(bitmap);
     }
 
 }

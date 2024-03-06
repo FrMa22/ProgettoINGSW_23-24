@@ -5,10 +5,13 @@ import android.util.Log;
 
 import com.example.progettoingsw.controllers_package.DatabaseHelper;
 import com.example.progettoingsw.gui.LeMieAste;
+import com.example.progettoingsw.gui.acquirente.AcquirenteAstaInversa;
+import com.example.progettoingsw.gui.acquirente.FragmentProfilo;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -19,6 +22,12 @@ public class ImmaginiDAO {
     private Connection connection;
 
     private byte[] immagine;
+
+    private AcquirenteAstaInversa astaInv;
+
+    public ImmaginiDAO(AcquirenteAstaInversa astaInversa) {
+        this.astaInv = astaInversa;
+    }
 
     public void openConnection() {
         new ImmaginiDAO.DatabaseTask().execute("open");
@@ -38,16 +47,18 @@ public class ImmaginiDAO {
         new ImmaginiDAO.DatabaseTask().execute("close");
     }
 
-    private class DatabaseTask extends AsyncTask<String, Void, String> {
+    public void selectTest() {new ImmaginiDAO.DatabaseTask().execute("select");}
+
+    private class DatabaseTask extends AsyncTask<String, Void, Object> {
 
         @Override
-        protected String doInBackground(String... strings) {
+        protected Object doInBackground(String... strings) {
             try {
                 if (strings.length > 0) {
                     String action = strings[0];
                     if (action.equals("open")) {
                         connection = DatabaseHelper.getConnection();
-                        return "Connessione aperta con successo!";
+                        return null;
                     } else if (action.equals("insert")) {
                         if (connection != null && !connection.isClosed()) {
 
@@ -63,33 +74,66 @@ public class ImmaginiDAO {
                             statement.executeUpdate();
                             statement.close();
                             Log.d("immagine", "immagine inserita con successo");
-                            return "Immagine inserita con successo!";
+                            return null;
                         } else {
-                            return "Impossibile inserire l'immagine: connessione non aperta.";
+                            return null;
                         }
 
-                    } else if (action.equals("close")) {
+                    }
+
+                    else if (action.equals("select")){
+
+
+
+                        if (connection != null && !connection.isClosed()) {
+                            byte[] dati=null ;
+                            Statement statement = connection.createStatement();
+                            ResultSet resultSet = statement.executeQuery("SELECT dati  FROM immagini WHERE id =3 ");
+                            while (resultSet.next()) {
+                            dati=resultSet.getBytes("dati");
+                            }
+                            return new Object[]{dati};
+                        }
+
+
+
+
+                    }
+
+                    else if (action.equals("close")) {
                         if (connection != null && !connection.isClosed()) {
                             connection.close();
-                            return "Connessione chiusa con successo!";
+                            return null;
                         } else {
-                            return "Connessione già chiusa.";
+                            return null;
                         }
                     }
                 }
-                return "Azione non supportata.";
+                return null;
             } catch (Exception e) {
                 e.printStackTrace();
-                return "Errore durante l'operazione: " + e.getMessage();
+                return null;
             }
         }
 
         @Override
-        protected void onPostExecute(String result) {
+        protected void onPostExecute(Object result) {
             // Questo metodo viene chiamato dopo che doInBackground è completato
             // Puoi mostrare il risultato all'utente o gestirlo in modo appropriato
-            Log.d("IMMAGINE", result);
-            System.out.println(result);
+            if (result instanceof Object[]) {
+                Object[] socialData = (Object[]) result;
+                immagine = (byte[]) socialData[0];
+                astaInv.updateFoto(immagine);
+            } else {
+                // Nessun risultato o errore
+            }
+
+            // Aggiungi un controllo per verificare se result è null
+            if (result != null) {
+                Log.d("DatabaseTask", "Result: " + result.toString());
+            } else {
+                Log.d("DatabaseTask", "Result is null");
+            }
         }
     }
 
