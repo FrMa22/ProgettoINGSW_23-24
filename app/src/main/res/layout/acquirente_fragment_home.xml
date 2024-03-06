@@ -138,7 +138,7 @@
                                     android:layout_marginEnd="10dp"
                                     android:layout_marginBottom="10dp"
                                     android:contentDescription="Immagine"
-                                    android:src="@drawable/prova_home_albero_di_natale" />
+                                    android:src="@drawable/img_default" />
                             </RelativeLayout>
 
                             <TextView

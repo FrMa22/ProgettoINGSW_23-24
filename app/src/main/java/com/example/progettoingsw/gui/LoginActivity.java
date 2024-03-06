@@ -34,11 +34,13 @@ public class LoginActivity extends GestoreComuniImplementazioni {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
         TextView registrazione = (TextView) findViewById(R.id.TextViewRegistrati);
         Button bottoneLogin = (Button) findViewById(R.id.bottonelogin);
         editText_mail = findViewById(R.id.editTextEmail);
         editText_password = findViewById(R.id.editTextPassword);
         linear_layout_login = findViewById(R.id.linear_layout_login);
+
         progress_bar_login = findViewById(R.id.progress_bar_login);
 
         LoginDAO logindao = new LoginDAO(this);
@@ -107,15 +109,7 @@ public class LoginActivity extends GestoreComuniImplementazioni {
         }
     }
 
-    private void setAllClickable(ViewGroup viewGroup, boolean enabled) {
-        for (int i = 0; i < viewGroup.getChildCount(); i++) {
-            View child = viewGroup.getChildAt(i);
-            child.setEnabled(enabled);
-            if (child instanceof ViewGroup) {
-                setAllClickable((ViewGroup) child, enabled);
-            }
-        }
-    }
+
 
 
 }
