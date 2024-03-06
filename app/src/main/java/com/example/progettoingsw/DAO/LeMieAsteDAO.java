@@ -27,7 +27,7 @@ public class LeMieAsteDAO {
 
 
     public void getAsteForEmail(String email,String condizione) {
-        if (email.isEmpty() || condizione.isEmpty()) {
+        if (email == null || condizione == null ) {
             // Se l'email è vuota, non fare nulla
             return;
         }
@@ -103,8 +103,12 @@ public class LeMieAsteDAO {
             if (result instanceof Object[]) {
                 Object[] asteData = (Object[]) result;
                 List<String> asteNames = (List<String>) asteData[0];
-
-                leMieAste.updateAsteNames(asteNames,flagCondizione);
+                if (asteNames != null) {
+                    leMieAste.updateAsteNames(asteNames, flagCondizione);
+                } else {
+                    // Nessun risultato trovato per l'utente
+                    leMieAste.updateAsteNames(new ArrayList<>(), flagCondizione);
+                }
             } else {
                 // Nessun risultato o errore
             }
