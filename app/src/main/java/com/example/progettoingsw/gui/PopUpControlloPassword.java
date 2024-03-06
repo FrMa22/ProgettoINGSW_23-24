@@ -59,8 +59,8 @@ public class PopUpControlloPassword extends Dialog implements View.OnClickListen
             dismiss();
         } else if(v.getId() == R.id.bottoneConfermaControlloPassword){
             progress_bar_pop_up_controllo_password.setVisibility(View.VISIBLE);
-            String password_vecchia = edit_text_vecchia_password.getText().toString();
-            String password_nuova = edit_text_password_nuova.getText().toString();
+            String password_vecchia = edit_text_vecchia_password.getText().toString().trim();
+            String password_nuova = edit_text_password_nuova.getText().toString().trim();
             popUpControlloPasswordDAO.openConnection();
             popUpControlloPasswordDAO.checkPassword(password_vecchia);
         }
@@ -71,7 +71,7 @@ public class PopUpControlloPassword extends Dialog implements View.OnClickListen
         if(result){
             //sostituzione in db
             Log.d("handleResultPassword", "result è positivo: password corretta");
-            popUpControlloPasswordDAO.updatePassword( edit_text_password_nuova.getText().toString());
+            popUpControlloPasswordDAO.updatePassword( edit_text_password_nuova.getText().toString().trim());
         }else{
             Toast.makeText(getContext(), "Password non corretta, riprovare.", Toast.LENGTH_SHORT).show();
             progress_bar_pop_up_controllo_password.setVisibility(View.INVISIBLE);

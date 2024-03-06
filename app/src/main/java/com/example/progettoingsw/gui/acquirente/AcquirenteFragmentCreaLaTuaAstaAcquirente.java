@@ -28,7 +28,6 @@ import androidx.fragment.app.Fragment;
 import com.example.progettoingsw.DAO.ImmaginiDAO;
 import com.example.progettoingsw.R;
 import com.google.android.material.button.MaterialButton;
-import com.google.firebase.crashlytics.buildtools.reloc.org.apache.commons.io.IOUtils;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -79,32 +78,9 @@ public class AcquirenteFragmentCreaLaTuaAstaAcquirente extends Fragment {
                 descProd=descrizioneProdotto.getText().toString();
                 //qui sopra era giusto
 
-
-                // Converti l'URI dell'immagine in un'immagine Bitmap
-                Bitmap bitmap = null;
-                try {
-                    InputStream iStream = getActivity().getContentResolver().openInputStream(uriImmagine);
-                    bitmap = BitmapFactory.decodeStream(iStream);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                imageBytes = compressAndConvertToByteArray(bitmap);
-                /*
-                // Converti l'URI dell'immagine in byte array
-                try {
-                    InputStream iStream = getActivity().getContentResolver().openInputStream(uriImmagine);
-                    imageBytes = IOUtils.toByteArray(iStream); // Utilizza la libreria Apache Commons IO per convertire l'InputStream in byte array
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-                if(imageBytes==null){System.out.println("IMMAGINE VUOTA");Toast.makeText(getContext(), "Si prega di selezionare un'immagine", Toast.LENGTH_SHORT).show();}
-*/
                 immaginiDAO.openConnection();
                 immaginiDAO.aggiungiImmagine(imageBytes);
                 immaginiDAO.closeConnection();
-
-
 
                 //qui era giusto
                 Intent intent = new Intent(getActivity(), AcquirenteAstaInversa.class);
@@ -124,7 +100,6 @@ public class AcquirenteFragmentCreaLaTuaAstaAcquirente extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 //fa qualcosa se si è selezionato qualcosa
-
                 opzioneSelezionata=parent.getItemAtPosition(position).toString();
             }
 
@@ -140,9 +115,6 @@ public class AcquirenteFragmentCreaLaTuaAstaAcquirente extends Fragment {
 
 
     private void prelevaImmagine(){
-//        Intent intent= new Intent(MediaStore.ACTION_PICK_IMAGES);
-//        resultLauncher.launch(intent);
-        // questo codice funziona lo stesso ma va anche sul mio secondo telefono mentre quello sopra non andava
         Intent intent= new Intent(Intent.ACTION_PICK);
         intent.setType("image/*");
         if (intent.resolveActivity(requireContext().getPackageManager()) != null) {
@@ -158,9 +130,8 @@ public class AcquirenteFragmentCreaLaTuaAstaAcquirente extends Fragment {
                     @Override
                     public void onActivityResult(ActivityResult result) {
                         try {
-                             uriImmagine = result.getData().getData();
-                             immagineProdotto.setImageURI(uriImmagine);
-
+                            uriImmagine = result.getData().getData();
+                            displayImage(uriImmagine);
                         } catch (Exception e) {
                             Toast.makeText(requireContext(), "Nessuna Immagine selezionata", Toast.LENGTH_SHORT).show();
                         }
@@ -176,5 +147,26 @@ public class AcquirenteFragmentCreaLaTuaAstaAcquirente extends Fragment {
         return outputStream.toByteArray();
     }
 
+    private void displayImage(Uri uri) {
+        try {
+            InputStream inputStream = getActivity().getContentResolver().openInputStream(uri);
+            Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
 
+            // Ridimensiona l'immagine per adattarla alla dimensione desiderata
+            int targetWidth = 500; // Imposta la larghezza desiderata
+            int targetHeight = (int) (bitmap.getHeight() * (targetWidth / (double) bitmap.getWidth())); // Calcola l'altezza in base al rapporto
+            Bitmap resizedBitmap = Bitmap.createScaledBitmap(bitmap, targetWidth, targetHeight, false);
+
+            // Comprimi l'immagine
+            byte[] compressedImageBytes = compressAndConvertToByteArray(resizedBitmap);
+
+            // Imposta l'immagine ridimensionata nella ImageView
+            immagineProdotto.setImageBitmap(resizedBitmap);
+
+            // Salva i byte compressi per l'invio
+            imageBytes = compressedImageBytes;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
