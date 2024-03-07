@@ -27,6 +27,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.progettoingsw.DAO.ImmaginiDAO;
 import com.example.progettoingsw.R;
+import com.example.progettoingsw.gui.venditore.VenditoreAstaInglese;
 import com.google.android.material.button.MaterialButton;
 
 import java.io.ByteArrayOutputStream;
@@ -67,7 +68,7 @@ public class AcquirenteFragmentCreaLaTuaAstaAcquirente extends Fragment {
         registraRisultati();
 
 
-        ImmaginiDAO immaginiDAO=new ImmaginiDAO();
+        //ImmaginiDAO immaginiDAO=new ImmaginiDAO();
         imageBytes=null;
         bottoneInserisciImmagine.setOnClickListener(view ->prelevaImmagine());//significa che chiama il metodo prelevaImmagine
 
@@ -78,9 +79,9 @@ public class AcquirenteFragmentCreaLaTuaAstaAcquirente extends Fragment {
                 descProd=descrizioneProdotto.getText().toString();
                 //qui sopra era giusto
 
-                immaginiDAO.openConnection();
-                immaginiDAO.aggiungiImmagine(imageBytes);
-                immaginiDAO.closeConnection();
+               // immaginiDAO.openConnection();
+                //immaginiDAO.aggiungiImmagine(imageBytes);
+                //immaginiDAO.closeConnection();
 
                 //qui era giusto
                 Intent intent = new Intent(getActivity(), AcquirenteAstaInversa.class);

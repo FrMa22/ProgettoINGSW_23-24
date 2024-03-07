@@ -1,21 +1,13 @@
 package com.example.progettoingsw.gui.venditore;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
@@ -31,36 +23,32 @@ public class VenditoreAstaInglese extends GestoreComuniImplementazioni {
     ImageButton bottoneBack;
     ImageButton bottone_info;
 
-
-    EditText nome;
-    EditText descrizione;
-    EditText rialzoAsta;
     EditText baseAsta;
     EditText intervalloAsta;
-    ImageView immagineProdotto;
-    ImageButton bottoneInserisciImmagine;
-    Controller controller;
+    EditText rialzoAsta;
 
+    Controller controller;
+    private byte [] img;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.venditore_asta_inglese);
-        controller = new Controller();
+         controller = new Controller();
         AstaIngleseDAO astaIngleseDao = new AstaIngleseDAO();
-        nome = findViewById(R.id.editTextNomeBeneCreaAstaInglese);
-        descrizione = findViewById(R.id.editTextDescrizioneCreaAstaInglese);
-        baseAsta = findViewById(R.id.editTextBaseAstaAstaInglese);
-        intervalloAsta = findViewById(R.id.editTextTimerDecrementoAstaInglese);
-        rialzoAsta = findViewById(R.id.editTextSogliaDecrementoAstaInglese);
-        immagineProdotto = (ImageView) findViewById(R.id.imageViewCreaAstaInglese);
-        bottoneInserisciImmagine = (ImageButton) findViewById(R.id.imageButtonInserisciImmagineCreaAstaInglese);
-        String email = getIntent().getStringExtra("email");
+
+        baseAsta=findViewById(R.id.editTextBaseAstaAstaInglese);
+        intervalloAsta=findViewById(R.id.editTextIntervalloTempoAstaInglese);
+        rialzoAsta=findViewById(R.id.editTextSogliaRialzoAstaInglese);
+
+        String nomeProdotto=getIntent().getStringExtra("nomeProd");
+        String descrizioneProdotto=getIntent().getStringExtra("descProd");
+        String email=getIntent().getStringExtra("email");
+        img=getIntent().getByteArrayExtra("img");
 
 
-        bottoneConferma = findViewById(R.id.bottoneConfermaAstaInglese);
-        bottoneBack = findViewById(R.id.bottoneBackAstaInglese);
-        bottone_info = findViewById(R.id.button_info_asta_inglese_venditore);
-
+        bottoneConferma =  findViewById(R.id.bottoneConfermaAstaInglese);
+        bottoneBack =  findViewById(R.id.bottoneBackAstaInglese);
+        bottone_info = findViewById(R.id.button_info_asta_inglese);
 
         bottone_info.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
@@ -80,18 +68,19 @@ public class VenditoreAstaInglese extends GestoreComuniImplementazioni {
 
             String base = baseAsta.getText().toString();
             String intervallo = intervalloAsta.getText().toString();
-            String rialzo = rialzoAsta.getText().toString();
-            String nomeProdotto = nome.getText().toString();
-            String descrizioneProdotto = descrizione.getText().toString();
+            String rialzo=rialzoAsta.getText().toString();
+
             // Chiamata al metodo per creare l'asta nel database
             astaIngleseDao.openConnection();
-            astaIngleseDao.creaAstaInglese(base, intervallo, rialzo, nomeProdotto, descrizioneProdotto, email);
+            astaIngleseDao.creaAstaInglese(base,intervallo,rialzo,nomeProdotto,descrizioneProdotto,email,img);
             astaIngleseDao.closeConnection();
             //Dopo aver creato l'asta,verrà creato anche il prodotto legato all'asta
 
         });
 
     }
+
+
 
 
     private void showPopup() {
@@ -116,4 +105,6 @@ public class VenditoreAstaInglese extends GestoreComuniImplementazioni {
         dialog.show();
     }
 
-    }
+
+
+}
