@@ -20,6 +20,7 @@ import com.example.progettoingsw.controllers_package.Controller;
 import com.example.progettoingsw.gui.acquirente.AcquirenteFragmentHome;
 import com.example.progettoingsw.gui.acquirente.AcquirenteMainActivity;
 import com.example.progettoingsw.gui.venditore.VenditoreAstaInglese;
+import com.example.progettoingsw.gui.venditore.VenditoreAstaRibasso;
 import com.example.progettoingsw.gui.venditore.VenditoreMainActivity;
 
 public class LoginActivity extends GestoreComuniImplementazioni {
@@ -77,7 +78,7 @@ public class LoginActivity extends GestoreComuniImplementazioni {
         bottone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Controller.redirectActivity(LoginActivity.this, VenditoreAstaInglese.class);
+                Controller.redirectActivity(LoginActivity.this, VenditoreAstaRibasso.class);
             }
         });
 

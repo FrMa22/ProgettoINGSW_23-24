@@ -120,6 +120,13 @@
             android:name=".gui.PopUpNuovaOfferta"
             android:exported="true"
             android:theme="@style/Base.Theme.ProgettoINGSW.CustomTheme" />
+        <activity
+            android:name=".gui.venditore.VenditorePopUpCreaAsta"
+            android:theme="@style/Base.Theme.ProgettoINGSW.CustomThemeSfocato" />
+
     </application>
+
+
+
 
 </manifest>

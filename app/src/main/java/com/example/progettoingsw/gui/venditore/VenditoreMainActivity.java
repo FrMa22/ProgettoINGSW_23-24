@@ -1,12 +1,16 @@
 package com.example.progettoingsw.gui.venditore;
 import androidx.fragment.app.Fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
 import com.example.progettoingsw.R;
 import com.example.progettoingsw.classe_da_estendere.GestoreComuniImplementazioni;
+import com.example.progettoingsw.controllers_package.Controller;
+import com.example.progettoingsw.gui.CampiFacoltativiRegistrazione;
+import com.example.progettoingsw.gui.Registrazione;
 import com.example.progettoingsw.gui.acquirente.AcquirenteFragmentHome;
 import com.example.progettoingsw.gui.acquirente.FragmentProfilo;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -54,9 +58,11 @@ public class VenditoreMainActivity extends GestoreComuniImplementazioni {
                 selectedFragment = new VenditoreFragmentSelezioneCategorie();
             } else if (item.getItemId() == R.id.action_crea_asta) {
                 Log.d("BottomNav", "Selected Crea Asta");
+                VenditorePopUpCreaAsta popAsta  = new VenditorePopUpCreaAsta(VenditoreMainActivity.this,email,tipoUtente);
+                popAsta.show();
                 //selectedFragment = new VenditoreFragmentCreaLaTuaAstaVenditore();
-                VenditoreFragmentCreaLaTuaAstaVenditore fragmentAstaVenditore = new VenditoreFragmentCreaLaTuaAstaVenditore(email);
-                selectedFragment = fragmentAstaVenditore;
+               // VenditoreFragmentCreaLaTuaAstaVenditore fragmentAstaVenditore = new VenditoreFragmentCreaLaTuaAstaVenditore(email);
+               // selectedFragment = fragmentAstaVenditore;
             } else if (item.getItemId() == R.id.action_search) {
                 Log.d("BottomNav", "Selected Search");
                 selectedFragment = new VenditoreFragmentRicercaAsta();
