@@ -208,14 +208,14 @@
                 android:textSize="20sp"
                 android:textColor="@color/colore_secondario"
                 android:textStyle="bold"
-                android:text="Soglia di decremento"
+                android:text="Soglia di rialzo"
                 />
 
             <EditText
-                android:id="@+id/editTextSogliaDecrementoAstaInglese"
+                android:id="@+id/editTextSogliaRialzoAstaInglese"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/textViewSogliaDecrementoAstaRibasso"
+                android:layout_below="@id/textViewSogliaRialzoAstaInglese"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
                 android:background="@drawable/edit_text_tutti_lati_grigi_rounded"

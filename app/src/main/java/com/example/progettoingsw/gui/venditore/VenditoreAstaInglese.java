@@ -22,7 +22,8 @@ public class VenditoreAstaInglese extends GestoreComuniImplementazioni {
     MaterialButton bottoneConferma;
     ImageButton bottoneBack;
     ImageButton bottone_info;
-
+    EditText nome;
+    EditText descrizione;
     EditText baseAsta;
     EditText intervalloAsta;
     EditText rialzoAsta;
@@ -37,18 +38,18 @@ public class VenditoreAstaInglese extends GestoreComuniImplementazioni {
         AstaIngleseDAO astaIngleseDao = new AstaIngleseDAO();
 
         baseAsta=findViewById(R.id.editTextBaseAstaAstaInglese);
-        intervalloAsta=findViewById(R.id.editTextIntervalloTempoAstaInglese);
+        intervalloAsta=findViewById(R.id.editTextTimerDecrementoAstaInglese);
         rialzoAsta=findViewById(R.id.editTextSogliaRialzoAstaInglese);
 
-        String nomeProdotto=getIntent().getStringExtra("nomeProd");
-        String descrizioneProdotto=getIntent().getStringExtra("descProd");
+       nome = findViewById(R.id.editTextNomeBeneCreaAstaInglese);
+        descrizione=findViewById(R.id.editTextDescrizioneCreaAstaInglese);
         String email=getIntent().getStringExtra("email");
         img=getIntent().getByteArrayExtra("img");
 
 
         bottoneConferma =  findViewById(R.id.bottoneConfermaAstaInglese);
         bottoneBack =  findViewById(R.id.bottoneBackAstaInglese);
-        bottone_info = findViewById(R.id.button_info_asta_inglese);
+        bottone_info = findViewById(R.id.button_info_asta_inglese_venditore);
 
         bottone_info.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
@@ -65,7 +66,8 @@ public class VenditoreAstaInglese extends GestoreComuniImplementazioni {
         bottoneConferma.setOnClickListener(v -> {
             //
             //Toast.makeText(AstaInglese.this,"Connessione esistente",Toast.LENGTH_SHORT).show();
-
+            String nomeProdotto = nome.getText().toString();
+            String descrizioneProdotto = descrizione.getText().toString();
             String base = baseAsta.getText().toString();
             String intervallo = intervalloAsta.getText().toString();
             String rialzo=rialzoAsta.getText().toString();

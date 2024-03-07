@@ -18,7 +18,8 @@ import com.google.android.material.button.MaterialButton;
 public class VenditoreAstaRibasso extends GestoreComuniImplementazioni {
     MaterialButton bottoneConferma;
     ImageButton bottoneBack;
-
+    EditText nome;
+    EditText descrizione;
     EditText baseAsta;
     EditText intervalloDecremento;
     EditText sogliaDecremento;
@@ -39,16 +40,17 @@ public class VenditoreAstaRibasso extends GestoreComuniImplementazioni {
         sogliaDecremento=findViewById(R.id.editTextSogliaDecrementoAstaRibasso);
         prezzominimoAsta=findViewById(R.id.editTextPrezzoSegretoAstaRibasso);
 
-        String nomeProdotto=getIntent().getStringExtra("nomeProd");
-        String descrizioneProdotto=getIntent().getStringExtra("descProd");
+        nome = findViewById(R.id.editTextNomeBeneCreaAstaRibasso);
+        descrizione=findViewById(R.id.editTextDescrizioneCreaAstaRibasso);
         String email=getIntent().getStringExtra("email");
         img=getIntent().getByteArrayExtra("img");
 
         bottoneConferma.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 //Controller.redirectActivity(VenditoreAstaRibasso.this, AcquirenteFragmentHome.class);
-
-                 String base = baseAsta.getText().toString();
+                String nomeProdotto= nome.getText().toString();
+                String descrizioneProdotto= descrizione.getText().toString();
+                String base = baseAsta.getText().toString();
                 String intervallo = intervalloDecremento.getText().toString();
                 String soglia=sogliaDecremento.getText().toString();
                 String min=prezzominimoAsta.getText().toString();
