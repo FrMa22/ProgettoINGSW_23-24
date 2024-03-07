@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/interessi_registrazione_relativelayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    tools:context=".gui.RegistrazioneCategorie">
+
+    <TextView
+        android:id="@+id/textViewRaccontaciDeiTuoiInteressi"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:background="@color/colore_base"
+        android:gravity="center"
+        android:text="Raccontaci dei tuoi interessi selezionando tra le seguenti categorie"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="@color/colore_secondario"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/colore_secondario"
+        android:layout_gravity="center"
+        android:layout_marginTop="-1dp"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:contentDescription=".">
+            <LinearLayout
+                android:id="@+id/linear_layout_interno_registrazione_social"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/colore_base"
+                android:orientation="vertical">
+            </LinearLayout>
+        </ScrollView>
+        <ProgressBar
+            android:id="@+id/progress_bar_registrazione_categorie"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="invisible"
+            android:indeterminate="true"
+            android:layout_centerInParent="true"/>
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/colore_secondario"
+        android:layout_gravity="center"
+        android:layout_marginTop="-1dp"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:background="@color/colore_base"
+        >
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/bottoneSaltaRegistrazioneCategorie"
+            android:layout_width="150dp"
+            android:layout_height="70dp"
+            android:layout_marginStart="20dp"
+            android:layout_centerVertical="true"
+            android:backgroundTint="@color/colore_secondario"
+            android:textColor="@color/colore_base"
+            android:text="Salta"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_alignParentStart="true"
+            />
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/bottoneProseguiInteressiRegistrazione"
+            android:layout_width="150dp"
+            android:layout_height="70dp"
+            android:layout_marginEnd="20dp"
+            android:layout_centerVertical="true"
+            android:backgroundTint="@color/colore_secondario"
+            android:textColor="@color/colore_base"
+            android:text="Prosegui"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_alignParentEnd="true" />
+    </RelativeLayout>
+
+
+</LinearLayout>

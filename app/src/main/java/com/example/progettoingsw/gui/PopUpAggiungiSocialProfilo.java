@@ -1,46 +1,40 @@
 package com.example.progettoingsw.gui;
 
 import android.app.Dialog;
-import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.EditText;
-import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-
+import com.example.progettoingsw.DAO.RegistrazioneSocialDAO;
 import com.example.progettoingsw.R;
-import com.example.progettoingsw.controllers_package.Controller;
+import com.example.progettoingsw.gui.acquirente.FragmentProfilo;
 import com.google.android.material.button.MaterialButton;
 
-public class PopUpRegistrazioneSocial extends Dialog implements View.OnClickListener {
-
-    private Controller controller;
-    private String opzioneSelezionata;
+public class PopUpAggiungiSocialProfilo extends Dialog implements View.OnClickListener {
     private String email;
     private String tipoUtente;
-    private RegistrazioneCampiFacoltativi registrazioneCampiFacoltativi;
+    private FragmentProfilo fragmentProfilo;
     MaterialButton bottoneChiudiRegistrazioneSocial;
     MaterialButton bottoneConfermaRegistrazioneSocial;
     EditText editTextNomeUtenteSocial;
     EditText editTextNomeSocial;
 
 
-    public PopUpRegistrazioneSocial(@NonNull Context context, RegistrazioneCampiFacoltativi registrazioneCampiFacoltativi, String email, String tipoUtente) {
-        super(context);
+    public PopUpAggiungiSocialProfilo(FragmentProfilo fragmentProfilo, String email, String tipoUtente) {
+        super(fragmentProfilo.getContext()); // Chiama il costruttore della superclasse Dialog
         this.email=email;
         this.tipoUtente=tipoUtente;
-        this.registrazioneCampiFacoltativi = registrazioneCampiFacoltativi;
+        this.fragmentProfilo = fragmentProfilo;
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.pop_up_registrazione_social);
+        setContentView(R.layout.pop_up_aggiungi_social_profilo);
 
-        controller = new Controller();
 
 
         // Riferimenti ai widget all'interno del pop-up
@@ -65,18 +59,22 @@ public class PopUpRegistrazioneSocial extends Dialog implements View.OnClickList
         if (viewId == R.id.bottoneChiudiRegistrazioneSocial) {
             dismiss(); // Chiude il dialog
         } else if (viewId == R.id.bottoneConfermaRegistrazioneSocial) {
-            confermaRegistrazioneSocial();
+            confermaRegistrazioneSocialProfilo();
         }
     }
 
 
-    private void confermaRegistrazioneSocial() {
+    private void confermaRegistrazioneSocialProfilo() {
         String nomeSocial = editTextNomeSocial.getText().toString().trim();
         String nomeUtenteSocial = editTextNomeUtenteSocial.getText().toString().trim();
 
-        registrazioneCampiFacoltativi.setProfiloSocialRegistrazione(nomeSocial,nomeUtenteSocial);
-
+        RegistrazioneSocialDAO registrazioneSocialDAO = new RegistrazioneSocialDAO(email,tipoUtente);
+        Log.d("pop" , "conferma");
+        registrazioneSocialDAO.openConnection();
+        registrazioneSocialDAO.inserimentoSingoloSocial(nomeSocial,nomeUtenteSocial);
+        registrazioneSocialDAO.closeConnection();
         // Chiudi il dialog dopo la conferma
+        fragmentProfilo.onResume();
         dismiss();
     }
 }

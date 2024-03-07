@@ -14,19 +14,17 @@ import com.example.progettoingsw.controllers_package.Controller;
 import com.google.android.material.button.MaterialButton;
 
 public class Registrazione extends GestoreComuniImplementazioni {
-    Controller controller;
-    EditText edittext_nome;
-    EditText edittext_cognome;
-    EditText edittext_email;
-    EditText edittext_password;
-    EditText edittext_conferma_password;
-    Spinner spinner_tipo_utente;
+    private EditText edittext_nome;
+    private EditText edittext_cognome;
+    private EditText edittext_email;
+    private EditText edittext_password;
+    private EditText edittext_conferma_password;
+    private Spinner spinner_tipo_utente;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.registrazione);
-        controller = new Controller();
         MaterialButton bottoneAnnulla = (MaterialButton) findViewById(R.id.bottoneAnnulla);
         MaterialButton bottoneProsegui = (MaterialButton) findViewById(R.id.bottoneProsegui);
 
@@ -45,7 +43,7 @@ public class Registrazione extends GestoreComuniImplementazioni {
         bottoneAnnulla.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 Intent intent = new Intent(String.valueOf(LoginActivity.class));
-                controller.redirectActivity(Registrazione.this, LoginActivity.class);
+                Controller.redirectActivity(Registrazione.this, LoginActivity.class);
 
             }
         });
@@ -63,9 +61,13 @@ public class Registrazione extends GestoreComuniImplementazioni {
                     Toast.makeText(getApplicationContext(), "Inserire tutti i valori", Toast.LENGTH_SHORT).show();
                 }else{
                     if(password.equals(conferma_password)){
-                        registrazioneDAO.openConnection();
-                        registrazioneDAO.registraUser(nome,cognome,email,password,tipoUtente);
-                        Controller.redirectActivityEmailTipoUtente(Registrazione.this, CampiFacoltativiRegistrazione.class , email , tipoUtente);
+                        Intent intent = new Intent(Registrazione.this, RegistrazioneCampiFacoltativi.class);
+                        intent.putExtra("email", email);
+                        intent.putExtra("tipoUtente", tipoUtente);
+                        intent.putExtra("nome", nome);
+                        intent.putExtra("cognome", cognome);
+                        intent.putExtra("password", password);
+                        startActivity(intent);
                     }
                 }
 

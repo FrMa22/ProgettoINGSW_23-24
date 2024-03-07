@@ -5,7 +5,7 @@
     android:id="@+id/campi_facoltativi_registrazione_relativelayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".gui.CampiFacoltativiRegistrazione"
+    tools:context=".gui.RegistrazioneCampiFacoltativi"
     android:background="@color/colore_base"
     android:orientation="vertical">
 
@@ -56,6 +56,7 @@
         android:drawablePadding="15dp"
         android:hint="Paese di provenienza"
         android:padding="20dp"
+        android:singleLine="true"
         />
 
 
@@ -105,6 +106,7 @@
         android:background="@drawable/design_bio_personale"
         android:drawablePadding="15dp"
         android:hint="Indirizzo del sito web"
+        android:singleLine="true"
         android:padding="20dp"
         />
 

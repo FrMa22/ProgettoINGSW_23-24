@@ -78,4 +78,9 @@ public class AcquirenteMainActivity extends GestoreComuniImplementazioni {
             return true;
         });
     }
+
+    public void enableBottomNavigationView(boolean enabled) {
+        bottomNavigationView.setEnabled(enabled);
+    }
+
 }

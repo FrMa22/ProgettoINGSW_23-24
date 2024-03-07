@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="tipoUtente">
-        <item> Acquirente </item>
-        <item> Venditore </item>
+        <item> acquirente </item>
+        <item> venditore </item>
     </string-array>
 
     <string-array name="elencoTipiAstaVenditore">
-        <item>Asta all\'inglese</item>
+        <item>Asta al inglese</item>
         <item>Asta al ribasso</item>
     </string-array>
 
@@ -30,8 +30,8 @@
         <item>Elettrodomestici</item>
         <item>Automobili</item>
         <item>Moto</item>
-        <item>Auto d\'epoca</item>
-        <item>Moto d\'epoca</item>
+        <item>Auto epoca</item>
+        <item>Moto epoca</item>
         <item>Telefonia</item>
         <item>Computer</item>
         <item>Musica</item>

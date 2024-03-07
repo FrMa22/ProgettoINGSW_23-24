@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:layout_gravity="center"
     android:background="@drawable/bordo_non_stondato"
-    tools:context=".gui.PopUpRegistrazioneSocial"
+    tools:context=".gui.PopUpAggiungiSocialProfilo"
     android:orientation="vertical">
 
     <EditText

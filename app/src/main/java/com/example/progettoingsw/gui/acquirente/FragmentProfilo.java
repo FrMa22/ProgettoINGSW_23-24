@@ -11,6 +11,7 @@ import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ListAdapter;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,6 +21,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.progettoingsw.DAO.Acquirente;
 import com.example.progettoingsw.DAO.FragmentProfiloDAO;
+import com.example.progettoingsw.gui.PopUpAggiungiSocialProfilo;
 import com.example.progettoingsw.gui.PopUpControlloPassword;
 import com.example.progettoingsw.gui.PopUpModificaCampiProfilo;
 import com.example.progettoingsw.R;
@@ -28,15 +30,19 @@ import com.example.progettoingsw.gestori_gui.CustomAdapter_gridview_profilo_soci
 import com.example.progettoingsw.gui.LeMieAste;
 import com.example.progettoingsw.gui.LoginActivity;
 import com.example.progettoingsw.gui.PopUpModificaSocial;
+import com.example.progettoingsw.gui.PopUpRegistrazioneSocial;
+import com.example.progettoingsw.gui.venditore.VenditoreMainActivity;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.button.MaterialButton;
 
 import java.util.List;
-public class FragmentProfilo extends Fragment {
+public class FragmentProfilo extends Fragment{
     ImageButton button_log_out;
     MaterialButton button_le_mie_aste;
     ImageButton button_modifica;
     ImageButton bottone_info;
     Button button_cambia_password_profilo;
+    ImageButton button_aggiungi_social;
 
     private GridView gridView;
     private CustomAdapter_gridview_profilo_social adapterSocial;
@@ -54,6 +60,8 @@ public class FragmentProfilo extends Fragment {
     private View view;
     private String email;
     String tipoUtente;
+    private RelativeLayout relative_layout_fragment_profilo;
+    private BottomNavigationView acquirente_nav_view;
 
     public FragmentProfilo(String email, String tipoUtente) {
         this.email = email;
@@ -70,6 +78,10 @@ public class FragmentProfilo extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         Toast.makeText(getContext(), "Mail " + email + ", tipo: " + tipoUtente, Toast.LENGTH_SHORT).show();
+
+
+        acquirente_nav_view = view.findViewById(R.id.acquirente_nav_view);
+        relative_layout_fragment_profilo = view.findViewById(R.id.relative_layout_fragment_profilo);
 
         //icona del caricamento
         progressBarAcquirenteFragmentProfilo = view.findViewById(R.id.progressBarAcquirenteFragmentProfilo);
@@ -142,7 +154,14 @@ public class FragmentProfilo extends Fragment {
             }
         });
 
-
+        button_aggiungi_social = view.findViewById(R.id.button_aggiungi_social);
+        button_aggiungi_social.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                PopUpAggiungiSocialProfilo popUpAggiungiSocialProfilo = new PopUpAggiungiSocialProfilo(FragmentProfilo.this, email,tipoUtente);
+                popUpAggiungiSocialProfilo.show();
+            }
+        });
 
         textview_nome = view.findViewById(R.id.textview_nome);
         textview_cognome = view.findViewById(R.id.textview_cognome);
@@ -162,6 +181,9 @@ public class FragmentProfilo extends Fragment {
     public void onResume() {
         super.onResume();
         progressBarAcquirenteFragmentProfilo.setVisibility(View.VISIBLE);
+        setAllClickable(relative_layout_fragment_profilo,false);
+        setNavigationView(false);
+
         Toast.makeText(getContext(), "la mail in ingresso è: " + email, Toast.LENGTH_SHORT).show();
 
         // Inizializza il DAO e recupera i dati dell'acquirente
@@ -170,6 +192,8 @@ public class FragmentProfilo extends Fragment {
         acquirente_fragment_profilo_DAO.findUser();
         acquirente_fragment_profilo_DAO.getSocialNamesForEmail();
     }
+
+
 
     public void updateEditTexts(Acquirente acquirente) {
         if (acquirente != null) {
@@ -243,12 +267,40 @@ public class FragmentProfilo extends Fragment {
             // Imposta l'altezza della GridView a 50dp
             gridView.setMinimumHeight((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 50, getResources().getDisplayMetrics()));
         }
+        setAllClickable(relative_layout_fragment_profilo,true);
         progressBarAcquirenteFragmentProfilo.setVisibility(View.INVISIBLE);
+        setNavigationView(true);
     }
 
+    protected void setAllClickable(ViewGroup viewGroup, boolean enabled) {
+        for (int i = 0; i < viewGroup.getChildCount(); i++) {
+            View child = viewGroup.getChildAt(i);
+            child.setEnabled(enabled);
+            if (child instanceof ViewGroup) {
+                setAllClickable((ViewGroup) child, enabled);
+            }
+        }
+    }
 
+    private void setNavigationView(Boolean valore) {
+        if(tipoUtente.equals("acquirente")) {
 
+            AcquirenteMainActivity activity = (AcquirenteMainActivity) getActivity();
+            if (activity != null) {
+                // Abilita la BottomNavigationView
+                // Log.d("acquirente", "disabilito");
+                activity.enableBottomNavigationView(true);
+            }
+        }else{
 
+            VenditoreMainActivity activity = (VenditoreMainActivity) getActivity();
+            if (activity != null) {
+                // Abilita la BottomNavigationView
+                // Log.d("acquirente", "disabilito");
+                activity.enableBottomNavigationView(true);
+            }
+        }
+    }
 
 }
 

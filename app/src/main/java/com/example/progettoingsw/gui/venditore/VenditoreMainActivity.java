@@ -9,7 +9,6 @@ import android.widget.Toast;
 import com.example.progettoingsw.R;
 import com.example.progettoingsw.classe_da_estendere.GestoreComuniImplementazioni;
 import com.example.progettoingsw.controllers_package.Controller;
-import com.example.progettoingsw.gui.CampiFacoltativiRegistrazione;
 import com.example.progettoingsw.gui.Registrazione;
 import com.example.progettoingsw.gui.acquirente.AcquirenteFragmentHome;
 import com.example.progettoingsw.gui.acquirente.FragmentProfilo;
@@ -84,5 +83,8 @@ public class VenditoreMainActivity extends GestoreComuniImplementazioni {
 
             return true;
         });
+    }
+    public void enableBottomNavigationView(boolean enabled) {
+        bottomNavigationView.setEnabled(enabled);
     }
 }

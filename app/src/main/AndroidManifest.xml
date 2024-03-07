@@ -73,10 +73,10 @@
         <activity android:name=".gui.Registrazione" />
 
         <activity
-            android:name=".gui.CampiFacoltativiRegistrazione"
+            android:name=".gui.RegistrazioneCampiFacoltativi"
             android:exported="true" />
         <activity
-            android:name=".gui.InteressiRegistrazione"
+            android:name=".gui.RegistrazioneCategorie"
             android:exported="true" />
 
         <activity
