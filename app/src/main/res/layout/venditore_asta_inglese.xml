@@ -47,26 +47,18 @@
 
     </androidx.appcompat.widget.Toolbar>
 
-
-
-
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/toolbarAstaInglese">
 
         <LinearLayout
-
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/view"
-            android:background="@drawable/design_bio_personale"
-            android:layout_below="@id/toolbarAstaInglese"
             android:orientation="vertical"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
-            android:layout_marginTop="20dp"
-
             >
 
             <LinearLayout
@@ -116,30 +108,35 @@
             </LinearLayout>
 
 
-
-            <TextView
-                android:id="@+id/textViewInserisciImmagineAstaInglese"
-                android:layout_width="wrap_content"
+            <RelativeLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="15dp"
-                android:layout_marginBottom="15dp"
-                android:textColor="@color/colore_secondario"
-                android:gravity="left"
-                android:text="Inserisci un'immagine:"
-                android:textSize="25dp"
-                android:textStyle="bold" />
+                >
+                <TextView
+                    android:id="@+id/textViewInserisciImmagineAstaInglese"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="15dp"
+                    android:layout_marginBottom="15dp"
+                    android:textColor="@color/colore_secondario"
+                    android:text="Inserisci un'immagine:"
+                    android:textSize="25sp"
+                    android:textStyle="bold" />
 
-            <ImageButton
-                android:id="@+id/imageButtonInserisciImmagineCreaAstaInglese"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/baseline_add_a_photo_24"
-                android:onClick="onClickMethod"
-                android:layout_alignParentEnd="true"
-                android:layout_marginEnd="20dp"
-                android:contentDescription="Clicca per selezionare un immagine"/>
+                <ImageButton
+                    android:id="@+id/imageButtonInserisciImmagineCreaAstaInglese"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/baseline_add_a_photo_24"
+                    android:onClick="onClickMethod"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:contentDescription="Clicca per selezionare un immagine"/>
+            </RelativeLayout>
+
 
 
             <ImageView
@@ -147,7 +144,10 @@
                 android:layout_width="200dp"
                 android:layout_height="140dp"
                 android:scaleType="fitXY"
+                android:layout_gravity="center"
+                android:background="@drawable/design_bio_personale"
                 />
+
             <TextView
                 android:id="@+id/textViewBaseAstaInglese"
                 android:layout_width="match_parent"
@@ -164,12 +164,17 @@
             <EditText
                 android:id="@+id/editTextBaseAstaAstaInglese"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="€"
-                android:padding="20dp"
+                android:layout_height="48dp"
+                android:hint="10"
+                android:drawableStart="@drawable/ic_euro"
+                android:drawablePadding="10dp"
+                android:padding="10dp"
+                android:singleLine="true"
+                android:maxLength="20"
                 android:textSize="20sp"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
+                android:textColorHint="@color/colore_hint"
                 android:background="@drawable/edit_text_tutti_lati_grigi_rounded"
                 />
 
@@ -193,6 +198,7 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
                 android:background="@drawable/edit_text_tutti_lati_grigi_rounded"
+                android:textColorHint="@color/colore_hint"
                 android:hint="1h"
                 android:padding="20dp"
                 android:textSize="20sp"
@@ -214,21 +220,22 @@
             <EditText
                 android:id="@+id/editTextSogliaRialzoAstaInglese"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/textViewSogliaRialzoAstaInglese"
+                android:layout_height="48dp"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
                 android:background="@drawable/edit_text_tutti_lati_grigi_rounded"
-                android:hint="€"
-                android:padding="20dp"
-                android:textSize="20sp"
-                />
+                android:drawableStart="@drawable/ic_euro"
+                android:drawablePadding="10dp"
+                android:hint="5"
+                android:maxLength="20"
+                android:padding="10dp"
+                android:singleLine="true"
+                android:textSize="20sp" />
+
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/bottoneConfermaAstaInglese"
                 android:layout_width="wrap_content"
                 android:layout_height="60dp"
-                android:layout_below="@id/editTextPrezzoSegretoAstaRibasso"
-                android:layout_alignParentEnd="true"
                 android:textStyle="bold"
                 android:layout_marginVertical="10dp"
                 android:text="Conferma"
@@ -236,6 +243,7 @@
                 android:backgroundTint="@color/colore_secondario"
                 android:textColor="@color/colore_base"
                 android:textSize="20sp"
+                android:layout_marginBottom="20dp"
                 />
 
         </LinearLayout>

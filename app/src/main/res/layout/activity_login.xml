@@ -77,7 +77,6 @@
             android:textColor="@color/colore_secondario"
             android:textColorHint="@color/colore_hint" />
 
-
         <ProgressBar
             android:id="@+id/progress_bar_login"
             android:layout_width="wrap_content"
