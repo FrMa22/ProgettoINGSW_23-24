@@ -35,7 +35,7 @@ public class AcquirenteMainActivity extends GestoreComuniImplementazioni {
 
         // Impostazione del Fragment iniziale
             getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_container, new AcquirenteFragmentHome())
+                    .replace(R.id.fragment_container, new AcquirenteFragmentHome(email))
                     .commit();
 
 
@@ -44,12 +44,12 @@ public class AcquirenteMainActivity extends GestoreComuniImplementazioni {
 
             // Imposta il fragment di default (potrebbe essere il fragment corrente)
             Fragment currentFragment =(Fragment) getSupportFragmentManager().findFragmentById(R.id.fragment_container);
-            selectedFragment = (currentFragment != null) ? currentFragment : new AcquirenteFragmentHome();
+            selectedFragment = (currentFragment != null) ? currentFragment : new AcquirenteFragmentHome(email);
 
             Log.d("Home" , "main e tipoutente è : " + tipoUtente);
             if (item.getItemId() == R.id.action_home) {
                 Log.d("BottomNav", "Selected Home");
-                selectedFragment = new AcquirenteFragmentHome();
+                selectedFragment = new AcquirenteFragmentHome(email);
             } else if (item.getItemId() == R.id.action_categories) {
                 Log.d("BottomNav", "Selected Categories");
                 selectedFragment = new AcquirenteFragmentSelezioneCategorie();

@@ -21,6 +21,8 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TimePicker;
 import android.widget.Toast;
+
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
 
 import androidx.activity.result.ActivityResult;
@@ -48,7 +50,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 public class AcquirenteAstaInversa extends Fragment {
-
+    AppCompatButton bottoneConferma;
     MaterialButton bottoneData;
     MaterialButton bottoneOra;
     ImageView immagineProdotto;
@@ -83,13 +85,13 @@ public class AcquirenteAstaInversa extends Fragment {
         AstaInversaDAO astaInversaDao = new AstaInversaDAO();
         //ImmaginiDAO immaginiDAO=new ImmaginiDAO(this);
 
-        MaterialButton bottoneConferma = (MaterialButton) view2.findViewById(R.id.bottoneConfermaAstaInversa);
+        bottoneConferma = view2.findViewById(R.id.bottoneConfermaAstaInversa);
         immagineProdotto= view2.findViewById(R.id.imageViewCreaAstaAcquirente);
         bottoneInserisciImmagine = view2.findViewById(R.id.imageButtonInserisciImmagineCreaAstaAcquirente);
         bottoneInserisciImmagine.setOnClickListener(view ->prelevaImmagine());//significa che chiama il metodo prelevaImmagine
 
-        bottoneData = (MaterialButton) view2.findViewById(R.id.bottoneDataAstaInversa);
-        bottoneOra = (MaterialButton) view2.findViewById(R.id.bottoneOraAstaInversa);
+        bottoneData =  view2.findViewById(R.id.bottoneDataAstaInversa);
+        bottoneOra =  view2.findViewById(R.id.bottoneOraAstaInversa);
 
         prodottoAstaInversa=view2.findViewById(R.id.editTextNomeProdottoAstaAstaInversa);
         editTextDescrizioneProdottoAstaAstaInversa = view2.findViewById(R.id.editTextDescrizioneProdottoAstaAstaInversa);

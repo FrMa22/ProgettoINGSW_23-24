@@ -1,6 +1,8 @@
 package com.example.progettoingsw.gui.venditore;
 
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -16,6 +18,7 @@ import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.appcompat.widget.AppCompatButton;
 
 import com.example.progettoingsw.DAO.AstaInversaDAO;
 import com.example.progettoingsw.DAO.AstaRibassoDAO;
@@ -31,8 +34,9 @@ import java.io.InputStream;
 
 
 public class VenditoreAstaRibasso extends GestoreComuniImplementazioni {
-    MaterialButton bottoneConferma;
+    AppCompatButton bottoneConferma;
     ImageButton bottoneBack;
+    ImageButton button_info_asta_Ribasso;
     EditText nome;
     EditText descrizione;
     EditText baseAsta;
@@ -50,7 +54,7 @@ public class VenditoreAstaRibasso extends GestoreComuniImplementazioni {
         setContentView(R.layout.venditore_asta_ribasso);
         AstaRibassoDAO astaRibassoDao = new AstaRibassoDAO();
 
-
+        button_info_asta_Ribasso = findViewById(R.id.button_info_asta_Ribasso);
         bottoneConferma =  findViewById(R.id.bottoneConfermaAstaRibasso);
         bottoneBack =  findViewById(R.id.bottoneBackAstaRibasso);
 
@@ -99,9 +103,32 @@ public class VenditoreAstaRibasso extends GestoreComuniImplementazioni {
                 onBackPressed();
             }
         });
+        button_info_asta_Ribasso.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showPopup();
+            }
+        });
     }
 
+    private void showPopup() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Cos'è un asta al ribasso?"); // Puoi impostare un titolo per il popup
+        builder.setMessage(" Un’asta al ribasso è caratterizzata da un prezzo iniziale elevato specificato dal venditore, da un timer per il decremento del prezzo da un importo, in €," +
+                " per ciascun decremento, e da un prezzo minimo (segreto) a cui vendere il prodotto/servizio. Il prodotto/servizio sarà in vendita al prezzo iniziale stabilito dal venditore." +
+                " Al raggiungimento del timer, il prezzo verrà decrementato dell’importo previsto. Il primo compratore a presentare un’offerta si aggiudica il prodotto/servizio. Se il prezzo viene " +
+                "decrementato fino a raggiungere il prezzo minimo segreto, l’asta viene considerata fallita e il venditore visualizza una notifica. "); // Il testo da mostrare nel popup
 
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                // Azione da eseguire quando si preme il pulsante OK
+                dialog.dismiss(); // Chiudi il popup
+            }
+        });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
     private void prelevaImmagine(){
         Intent intent= new Intent(Intent.ACTION_PICK);
         intent.setType("image/*");

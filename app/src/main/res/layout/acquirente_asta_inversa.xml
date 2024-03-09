@@ -13,7 +13,15 @@
         android:layout_height="80dp"
         android:background="@drawable/design_toolbar"
         android:id="@+id/toolbar">
-
+        <ImageButton
+            android:id="@+id/bottoneBackAstaInversa"
+            android:layout_width="60dp"
+            android:layout_height="80dp"
+            android:layout_gravity="start"
+            android:backgroundTint="@android:color/transparent"
+            android:contentDescription="Premi per tornare indietro."
+            android:src="@drawable/baseline_arrow_back_ios_24"
+            />
 
     <TextView
         android:id="@+id/textViewTitoloAstaInversa"
@@ -40,71 +48,52 @@
             />
     </androidx.appcompat.widget.Toolbar>
 
-    <TextView
-        android:id="@+id/textViewNomeProdottoAstaInversa"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginBottom="-1dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:gravity="center"
-        android:textSize="22sp"
-        android:textStyle="bold"
-        android:text="Nome prodotto/servizio richiesto"
-        android:layout_below="@id/toolbar"
-        android:layout_marginTop="10dp"
-        android:background="@color/colore_base"
-        android:textColor="@color/colore_secondario"
-        />
 
     <EditText
         android:id="@+id/editTextNomeProdottoAstaAstaInversa"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_below="@id/textViewNomeProdottoAstaInversa"
+        android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
-        android:background="@drawable/edit_text_tutti_lati_grigi_rounded"
-        android:hint="nome"
+        android:layout_below="@id/toolbar"
+        android:gravity="center"
+        android:hint="Nome"
+        android:minHeight="60dp"
+        android:padding="20dp"
+        android:singleLine="true"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/edit_text_top_corners_rounded_grigi"
         android:maxLines="30"
         android:paddingStart="20dp"
         android:paddingEnd="20dp"
-        android:singleLine="true"
         android:textColor="@color/colore_secondario"
         android:textColorHint="@color/colore_hint"
         android:textSize="20sp"
         />
-    <TextView
-        android:id="@+id/textViewDescrizioneProdottoAstaInversa"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginBottom="-1dp"
-        android:gravity="center"
-        android:textSize="22sp"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:textStyle="bold"
-        android:text="Descrizione"
-        android:layout_below="@id/editTextNomeProdottoAstaAstaInversa"
-        android:background="@color/colore_base"
-        android:textColor="@color/colore_secondario"
-        />
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/editTextNomeProdottoAstaAstaInversa"
+        android:layout_gravity="center"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="-2dp"
+        android:layout_marginEnd="40dp"
+        android:background="#AAAAAA" />
     <EditText
         android:id="@+id/editTextDescrizioneProdottoAstaAstaInversa"
+        android:layout_below="@id/editTextNomeProdottoAstaAstaInversa"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_below="@id/textViewDescrizioneProdottoAstaInversa"
+        android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="20dp"
-        android:background="@drawable/edit_text_tutti_lati_grigi_rounded"
-        android:hint="descrizione"
-        android:paddingStart="20dp"
-        android:paddingEnd="20dp"
-        android:textColor="@color/colore_secondario"
+        android:background="@drawable/edit_text_bottom_corners_rounded_grigi"
+        android:gravity="top|center"
+        android:hint="Descrizione:"
+        android:minHeight="100dp"
+        android:padding="20dp"
         android:textColorHint="@color/colore_hint"
-        android:textSize="20sp"
         />
     <TextView
         android:id="@+id/textViewInserisciImmagineAcquirente"
@@ -128,6 +117,7 @@
         android:layout_below="@id/editTextDescrizioneProdottoAstaAstaInversa"
         android:src="@drawable/baseline_add_a_photo_24"
         android:onClick="onClickMethod"
+        android:backgroundTint="@android:color/transparent"
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="20dp"
         android:contentDescription="Clicca per selezionare un immagine"/>
@@ -143,34 +133,40 @@
         android:scaleType="fitXY"
         />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/bottoneDataAstaInversa"
-        android:layout_width="170dp"
-        android:layout_height="59dp"
-        android:layout_below="@id/imageViewCreaAstaAcquirente"
-        android:layout_marginTop="120dp"
-        android:layout_marginLeft="25dp"
-        android:layout_marginRight="216dp"
-        android:backgroundTint="#D9D9D9"
-        android:textStyle="bold"
-        android:text="Data"
-        android:textColor="@color/black"
-        android:textSize="20dp"/>
+    <RelativeLayout
+        android:id="@+id/relative_layout_bottoni_dataora"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_below="@id/editTextPrezzoAstaInversa"
+        >
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/bottoneDataAstaInversa"
+            android:layout_width="140dp"
+            android:layout_height="60dp"
+            app:strokeColor="#AAAAAA"
+            app:strokeWidth="2dp"
+            android:backgroundTint="@color/colore_base"
+            android:textStyle="bold"
+            android:text="Data"
+            android:textColor="@color/colore_secondario"
+            android:textSize="20sp"/>
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/bottoneOraAstaInversa"
-        android:layout_width="170dp"
-        android:layout_height="59dp"
-        android:layout_below="@id/imageViewCreaAstaAcquirente"
-        android:layout_marginTop="120dp"
-        android:layout_marginRight="25dp"
-        android:layout_marginLeft="216dp"
-        android:backgroundTint="#D9D9D9"
-        android:textStyle="bold"
-        android:text="Orario"
-        android:textColor="@color/black"
-        android:textSize="20dp"
-        />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/bottoneOraAstaInversa"
+            android:layout_width="140dp"
+            android:layout_height="60dp"
+            app:strokeColor="#AAAAAA"
+            app:strokeWidth="2dp"
+            android:backgroundTint="@color/colore_base"
+            android:layout_alignParentEnd="true"
+            android:textStyle="bold"
+            android:text="Orario"
+            android:textColor="@color/colore_secondario"
+            android:textSize="20sp"
+            />
+    </RelativeLayout>
 
     <TextView
         android:layout_width="match_parent"
@@ -178,10 +174,12 @@
         android:id="@+id/textViewPrezzoAstaInversa"
         android:layout_below="@id/imageViewCreaAstaAcquirente"
         android:gravity="center"
-        android:textSize="23dp"
+        android:textSize="23sp"
         android:textStyle="bold"
+        android:textColor="@color/colore_secondario"
         android:text="Inserire prezzo iniziale"
         android:layout_marginTop="20dp"
+        android:layout_marginBottom="5dp"
         />
 
     <EditText
@@ -204,19 +202,18 @@
         android:textSize="20sp"
         />
 
-    <com.google.android.material.button.MaterialButton
+
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/bottoneConfermaAstaInversa"
         android:layout_width="170dp"
-        android:layout_height="59dp"
-        android:layout_below="@id/editTextPrezzoAstaInversa"
-        android:layout_marginTop="85dp"
-        android:layout_marginRight="25dp"
-        android:layout_marginLeft="216dp"
-        android:backgroundTint="#D9D9D9"
+        android:layout_height="60dp"
+        android:layout_below="@id/relative_layout_bottoni_dataora"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/button_background"
         android:textStyle="bold"
         android:text="Conferma"
-        android:textColor="@color/black"
-        android:textSize="20dp"
+        android:textColor="@color/colore_base"
+        android:textSize="20sp"
         />
-
-</RelativeLayout>
+    </RelativeLayout>

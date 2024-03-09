@@ -47,7 +47,7 @@ public class VenditoreMainActivity extends GestoreComuniImplementazioni {
 
             // Imposta il fragment di default (potrebbe essere il fragment corrente)
             Fragment currentFragment =(Fragment) getSupportFragmentManager().findFragmentById(R.id.fragment_container);
-            selectedFragment = (currentFragment != null) ? currentFragment : new AcquirenteFragmentHome();
+            selectedFragment = (currentFragment != null) ? currentFragment : new VenditoreFragmentHome();
 
             if (item.getItemId() == R.id.action_home) {
                 Log.d("BottomNav", "Selected Home");

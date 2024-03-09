@@ -26,4 +26,5 @@
         <item name="android:background">@drawable/custom_dropdown_item_background</item>
     </style>
 
+
 </resources>

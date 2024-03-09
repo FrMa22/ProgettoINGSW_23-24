@@ -78,6 +78,8 @@
                     android:background="@drawable/edit_text_top_corners_rounded_grigi"
                     android:drawablePadding="15dp"
                     android:hint="Nome"
+                    android:textColor="@color/colore_secondario"
+                    android:textColorHint="@color/colore_hint"
                     android:gravity="center"
                     android:padding="20dp"
                     android:singleLine="true"
@@ -95,7 +97,9 @@
                     android:id="@+id/editTextDescrizioneCreaAstaInglese"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textColorHint="@color/colore_hint"
                     android:minHeight="100dp"
+                    android:textColor="@color/colore_secondario"
                     android:layout_marginStart="20dp"
                     android:layout_marginEnd="20dp"
                     android:layout_marginBottom="20dp"
@@ -131,6 +135,7 @@
                     android:layout_height="wrap_content"
                     android:src="@drawable/baseline_add_a_photo_24"
                     android:onClick="onClickMethod"
+                    android:backgroundTint="@android:color/transparent"
                     android:layout_alignParentEnd="true"
                     android:layout_marginStart="20dp"
                     android:layout_marginEnd="20dp"
@@ -185,6 +190,7 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
                 android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
                 android:gravity="center"
                 android:text="Intervallo per presentare nuove offerte"
                 android:textSize="20sp"
@@ -194,14 +200,18 @@
             <EditText
                 android:id="@+id/editTextTimerDecrementoAstaInglese"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="48dp"
+                android:hint="1h"
+                android:drawableStart="@drawable/ic_time"
+                android:drawablePadding="10dp"
+                android:padding="10dp"
+                android:singleLine="true"
+                android:maxLength="20"
+                android:textSize="20sp"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
-                android:background="@drawable/edit_text_tutti_lati_grigi_rounded"
                 android:textColorHint="@color/colore_hint"
-                android:hint="1h"
-                android:padding="20dp"
-                android:textSize="20sp"
+                android:background="@drawable/edit_text_tutti_lati_grigi_rounded"
                 />
 
             <TextView
@@ -214,7 +224,7 @@
                 android:textSize="20sp"
                 android:textColor="@color/colore_secondario"
                 android:textStyle="bold"
-                android:text="Soglia di rialzo"
+                android:text="Soglia di rialzo minimo"
                 />
 
             <EditText
@@ -231,6 +241,8 @@
                 android:padding="10dp"
                 android:singleLine="true"
                 android:textSize="20sp" />
+
+
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/bottoneConfermaAstaInglese"

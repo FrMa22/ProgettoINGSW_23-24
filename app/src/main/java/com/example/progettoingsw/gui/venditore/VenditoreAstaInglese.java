@@ -4,6 +4,8 @@ import static androidx.core.content.ContentProviderCompat.requireContext;
 import static java.security.AccessController.getContext;
 
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -11,10 +13,12 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResult;
@@ -51,6 +55,8 @@ public class VenditoreAstaInglese extends GestoreComuniImplementazioni {
     ImageView immagineProdotto;
     ImageButton bottoneInserisciImmagine;
     ActivityResultLauncher<Intent> resultLauncher;
+    private String selectedDateString;
+    private String selectedHourString;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,10 +77,10 @@ public class VenditoreAstaInglese extends GestoreComuniImplementazioni {
         bottoneBack =  findViewById(R.id.bottoneBackAstaInglese);
         bottone_info = findViewById(R.id.button_info_asta_inglese_venditore);
 
-
         immagineProdotto= findViewById(R.id.imageViewCreaAstaInglese);
         bottoneInserisciImmagine = findViewById(R.id.imageButtonInserisciImmagineCreaAstaInglese);
         bottoneInserisciImmagine.setOnClickListener(view ->prelevaImmagine());//significa che chiama il metodo prelevaImmagine
+
 
         bottone_info.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
@@ -93,22 +99,33 @@ public class VenditoreAstaInglese extends GestoreComuniImplementazioni {
         bottoneConferma.setOnClickListener(v -> {
             //
             //Toast.makeText(AstaInglese.this,"Connessione esistente",Toast.LENGTH_SHORT).show();
-            String nomeProdotto = nome.getText().toString();
-            String descrizioneProdotto = descrizione.getText().toString();
-            String base = baseAsta.getText().toString();
-            String intervallo = intervalloAsta.getText().toString();
-            String rialzo=rialzoAsta.getText().toString();
+            String nomeProdotto = nome.getText().toString().trim();
+            String descrizioneProdotto = descrizione.getText().toString().trim();
+            String base = baseAsta.getText().toString().trim();
+            String intervallo = intervalloAsta.getText().toString().trim();
+            String rialzo=rialzoAsta.getText().toString().trim();
 
-            // Chiamata al metodo per creare l'asta nel database
-            astaIngleseDao.openConnection();
-            astaIngleseDao.creaAstaInglese(base,intervallo,rialzo,nomeProdotto,descrizioneProdotto,email,img);
-            astaIngleseDao.closeConnection();
-            //Dopo aver creato l'asta,verrà creato anche il prodotto legato all'asta
+            if(!nomeProdotto.isEmpty() && !base.isEmpty() && !intervallo.isEmpty() && !rialzo.isEmpty()) {
+                // Chiamata al metodo per creare l'asta nel database
+                astaIngleseDao.openConnection();
+                astaIngleseDao.creaAstaInglese(base, intervallo, rialzo, nomeProdotto, descrizioneProdotto, email, img);
+                astaIngleseDao.closeConnection();
+            }
+            else{
+                if(nomeProdotto.isEmpty()){
+                    Toast.makeText(this, "Si prega di inserire un nome.", Toast.LENGTH_SHORT).show();
+                }else if(base.isEmpty()){
+                    Toast.makeText(this, "Si prega di inserire un prezzo base.", Toast.LENGTH_SHORT).show();
+                }else if(intervallo.isEmpty()){
+                    Toast.makeText(this, "Si prega di inserire un intervallo per le offerte.", Toast.LENGTH_SHORT).show();
+                }else if(rialzo.isEmpty()) {
+                    Toast.makeText(this, "Si prega di inserire un valore minimo di rialzo.", Toast.LENGTH_SHORT).show();
+                }
+            }
 
         });
 
     }
-
 
 
 

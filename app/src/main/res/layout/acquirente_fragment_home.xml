@@ -68,7 +68,78 @@
                     app:strokeColor="#AAAAAA"
                     app:strokeWidth="2dp"
                     android:layout_marginTop="10dp"/>
-                
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_margin="20dp"
+                    android:background="@drawable/edit_text_tutti_lati_grigi_rounded"
+                    >
+                    <TextView
+                        android:id="@+id/textView_condizione_prova"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:textSize="20sp"
+                        android:textColor="@color/colore_secondario"
+                        android:background="@drawable/edit_text_tutti_lati_grigi_rounded"
+                        android:layout_margin="5dp"
+                        android:layout_gravity="center"
+                        />
+                    <ImageView
+                        android:layout_width="160dp"
+                        android:layout_height="180dp"
+                        android:id="@+id/image_view_prova"
+                        android:background="@drawable/design_bio_personale"
+                        android:layout_margin="10dp"
+                        />
+                    <TextView
+                        android:id="@+id/textView_nome_prova"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:textSize="20sp"
+                        android:textColor="@color/colore_secondario"
+                        android:background="@drawable/edit_text_tutti_lati_grigi_rounded"
+                        android:layout_margin="5dp"
+                        android:layout_gravity="center"
+                        />
+                    <TextView
+                        android:id="@+id/textView_descrizione_prova"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:textSize="20sp"
+                        android:textColor="@color/colore_secondario"
+                        android:background="@drawable/edit_text_tutti_lati_grigi_rounded"
+                        android:layout_margin="5dp"
+                        android:layout_gravity="center"
+                        />
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        >
+                        <TextView
+                            android:id="@+id/textView_prezzo_prova"
+                            android:layout_width="70dp"
+                            android:layout_height="40dp"
+                            android:textSize="20sp"
+                            android:textColor="@color/colore_secondario"
+                            android:background="@drawable/edit_text_tutti_lati_grigi_rounded"
+                            android:layout_alignParentStart="true"
+                            />
+                        <TextView
+                            android:id="@+id/textView_data_scadenza_prova"
+                            android:layout_width="70dp"
+                            android:layout_height="wrap_content"
+                            android:textSize="20sp"
+                            android:textColor="@color/colore_secondario"
+                            android:background="@drawable/edit_text_tutti_lati_grigi_rounded"
+                            android:layout_alignParentEnd="true"
+                            />
+                    </RelativeLayout>
+
+
+                </LinearLayout>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
