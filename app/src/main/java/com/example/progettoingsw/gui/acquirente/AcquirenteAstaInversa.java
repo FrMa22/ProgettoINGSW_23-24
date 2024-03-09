@@ -60,7 +60,7 @@ public class AcquirenteAstaInversa extends Fragment {
 
     private String selectedDateString;
     private String selectedHourString;
-    private byte [] img;
+    private byte [] img;//è presente nei metodi per fare select+aggiunta foto nella schermata quindi non serve a livello pratico qui
     Bitmap bitmap;
     Uri uriImmagine;
     byte[] imageBytes;
@@ -94,6 +94,8 @@ public class AcquirenteAstaInversa extends Fragment {
         prodottoAstaInversa=view2.findViewById(R.id.editTextNomeProdottoAstaAstaInversa);
         editTextDescrizioneProdottoAstaAstaInversa = view2.findViewById(R.id.editTextDescrizioneProdottoAstaAstaInversa);
         prezzoAstaInversa=view2.findViewById(R.id.editTextPrezzoAstaInversa);
+
+        imageBytes=null;
 
         bottone_info = view2.findViewById(R.id.bottone_info);
         bottone_info.setOnClickListener(new View.OnClickListener() {
@@ -137,7 +139,7 @@ public class AcquirenteAstaInversa extends Fragment {
 
                 // Chiamata al metodo per creare l'asta nel database
                 astaInversaDao.openConnection();
-                astaInversaDao.creaAstaInversa(nome,prezzo,data,ora,descrizione,email,img);
+                astaInversaDao.creaAstaInversa(nome,prezzo,data,ora,descrizione,email,imageBytes);
                 astaInversaDao.closeConnection();
 
             }
@@ -171,7 +173,7 @@ public class AcquirenteAstaInversa extends Fragment {
         orologio.show();
     }
 
-    public void updateFoto(byte[] foto){
+    public void updateFoto(byte[] foto){//metodo da usare in una select della foto
         img=foto;
         bitmap = BitmapFactory.decodeByteArray(img, 0, img.length);
         // Imposta l'immagine nel tuo ImageView
