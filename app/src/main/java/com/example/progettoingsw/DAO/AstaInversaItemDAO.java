@@ -89,7 +89,7 @@ public class AstaInversaItemDAO {
         protected void onPostExecute(List<AstaInversaItem> result) {
             if (result != null) {
                 // Gestisci il risultato come desiderato, ad esempio passando i dati all'adapter
-                acquirenteFragmentHome.handleProdottiResult(result);
+//                acquirenteFragmentHome.handleProdottiResult(result);
             }
         }
     }

@@ -20,15 +20,23 @@
         android:background="@drawable/bordi_trasparenti"
         android:textColor="@color/colore_secondario"
         android:textSize="20sp" />
-    <ImageView
-        android:id="@+id/image_view_item_asta_inglese"
+    <RelativeLayout
         android:layout_width="160dp"
         android:layout_height="180dp"
+        android:background="@drawable/design_bio_personale"
         android:layout_marginStart="5dp"
         android:layout_marginEnd="5dp"
         android:layout_marginTop="5dp"
         android:layout_marginBottom="2dp"
-        android:background="@drawable/design_bio_personale" />
+        >
+        <ImageView
+            android:id="@+id/image_view_item_asta_inglese"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="5dp"
+            android:layout_centerInParent="true"/>
+    </RelativeLayout>
+
     <TextView
         android:id="@+id/textView_descrizione_item_asta_inglese"
         android:layout_width="match_parent"
