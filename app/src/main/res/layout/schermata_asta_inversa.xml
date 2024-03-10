@@ -66,7 +66,7 @@
                 android:gravity="center"
                 android:textSize="23dp"
                 android:textStyle="bold"
-                android:text="Nome prodotto/servizio richiesto"
+                android:text="Nome astaInversaItem/servizio richiesto"
                 android:layout_below="@id/ImageViewSchermataAstaInversa"
                 android:layout_marginTop="10dp"
                 android:background="#FFFFFF"

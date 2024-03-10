@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout_asta_ribasso"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="20dp"
+    android:background="@drawable/design_bio_personale"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/textView_nome_item_asta_ribasso"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:gravity="center"
+        android:background="@drawable/bordi_trasparenti"
+        android:textColor="@color/colore_secondario"
+        android:textSize="20sp" />
+    <ImageView
+        android:id="@+id/image_view_item_asta_ribasso"
+        android:layout_width="160dp"
+        android:layout_height="180dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="2dp"
+        android:background="@drawable/design_bio_personale" />
+    <TextView
+        android:id="@+id/textView_descrizione_item_asta_ribasso"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="40dp"
+        android:layout_gravity="center"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="5dp"
+        android:gravity="center"
+        android:background="@drawable/bordo_sotto_grigio"
+        android:textColor="@color/colore_secondario"
+        android:textSize="20sp" />
+
+
+    <TextView
+        android:id="@+id/textView_data_scadenza_item_asta_ribasso"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:gravity="center"
+        android:background="@drawable/bordo_sotto_grigio"
+        android:textColor="@color/colore_secondario"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/textView_prezzo_item_asta_ribasso"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="5dp"
+        android:gravity="center"
+        android:background="@drawable/bordo_sotto_grigio"
+        android:textColor="@color/colore_secondario"
+        android:textSize="16sp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="intervallo decrementale:"
+        android:textSize="12sp"
+        android:layout_gravity="start"
+        android:layout_marginStart="10dp"
+        />
+    <TextView
+        android:id="@+id/textView_intervallo_decremento_item_asta_ribasso"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="5dp"
+        android:gravity="center"
+        android:background="@drawable/bordi_trasparenti"
+        android:textColor="@color/colore_secondario"
+        android:textSize="16sp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="prezzo per decremento:"
+        android:textSize="12sp"
+        android:layout_gravity="start"
+        android:layout_marginStart="10dp"
+        />
+    <TextView
+        android:id="@+id/textView_prezzo_decremento_item_asta_ribasso"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="5dp"
+        android:gravity="center"
+        android:background="@drawable/bordi_trasparenti"
+        android:textColor="@color/colore_secondario"
+        android:textSize="16sp"/>
+
+
+</LinearLayout>

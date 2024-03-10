@@ -5,8 +5,8 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".gui.acquirente.AcquirenteFragmentHome"
-    android:backgroundTint="@color/colore_base">
+    android:backgroundTint="@color/colore_base"
+    tools:context=".gui.acquirente.AcquirenteFragmentHome">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -30,27 +30,28 @@
                 <androidx.appcompat.widget.Toolbar
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/design_toolbar"
-                    >
+                    android:background="@drawable/design_toolbar">
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="start"
+                        android:layout_marginLeft="20dp"
                         android:text="Home"
                         android:textColor="@color/colore_secondario"
-                        android:textStyle="bold"
                         android:textSize="50sp"
-                        android:layout_marginLeft="20dp"
-                        android:layout_gravity="start"/>
+                        android:textStyle="bold" />
+
                     <ImageButton
                         android:id="@+id/openPreferiti"
                         android:layout_width="50dp"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/ic_preferiti_non_riempita"
                         android:layout_gravity="end"
                         android:layout_marginRight="20dp"
                         android:backgroundTint="@android:color/transparent"
                         android:contentDescription="Clicca per aprire i preferiti."
-                        android:drawableTint="@android:color/transparent" />
+                        android:drawableTint="@android:color/transparent"
+                        android:src="@drawable/ic_preferiti_non_riempita" />
                 </androidx.appcompat.widget.Toolbar>
 
                 <com.google.android.material.button.MaterialButton
@@ -60,86 +61,85 @@
                     android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
                     android:layout_gravity="center"
+                    android:layout_marginTop="10dp"
                     android:backgroundTint="@color/colore_base"
                     android:text="Le mie aste"
                     android:textColor="@color/colore_secondario"
                     android:textSize="25sp"
                     android:textStyle="bold"
                     app:strokeColor="#AAAAAA"
-                    app:strokeWidth="2dp"
-                    android:layout_marginTop="10dp"/>
+                    app:strokeWidth="2dp" />
 
                 <LinearLayout
+                    android:id="@+id/layout_asta_inversa"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
                     android:layout_margin="20dp"
-                    android:background="@drawable/edit_text_tutti_lati_grigi_rounded"
-                    >
+                    android:background="@drawable/design_bio_personale"
+                    android:orientation="vertical">
+
                     <TextView
-                        android:id="@+id/textView_condizione_prova"
-                        android:layout_width="match_parent"
-                        android:layout_height="40dp"
-                        android:textSize="20sp"
-                        android:textColor="@color/colore_secondario"
-                        android:background="@drawable/edit_text_tutti_lati_grigi_rounded"
-                        android:layout_margin="5dp"
-                        android:layout_gravity="center"
-                        />
-                    <ImageView
-                        android:layout_width="160dp"
-                        android:layout_height="180dp"
-                        android:id="@+id/image_view_prova"
-                        android:background="@drawable/design_bio_personale"
-                        android:layout_margin="10dp"
-                        />
-                    <TextView
-                        android:id="@+id/textView_nome_prova"
-                        android:layout_width="match_parent"
-                        android:layout_height="40dp"
-                        android:textSize="20sp"
-                        android:textColor="@color/colore_secondario"
-                        android:background="@drawable/edit_text_tutti_lati_grigi_rounded"
-                        android:layout_margin="5dp"
-                        android:layout_gravity="center"
-                        />
-                    <TextView
-                        android:id="@+id/textView_descrizione_prova"
-                        android:layout_width="match_parent"
-                        android:layout_height="40dp"
-                        android:textSize="20sp"
-                        android:textColor="@color/colore_secondario"
-                        android:background="@drawable/edit_text_tutti_lati_grigi_rounded"
-                        android:layout_margin="5dp"
-                        android:layout_gravity="center"
-                        />
-                    <RelativeLayout
+                        android:id="@+id/textView_nome_item"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
-                        >
+                        android:layout_gravity="center"
+
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:gravity="center"
+                        android:background="@drawable/bordi_trasparenti"
+                        android:textColor="@color/colore_secondario"
+                        android:textSize="20sp" />
+                    <ImageView
+                        android:id="@+id/image_view_item"
+                        android:layout_width="160dp"
+                        android:layout_height="180dp"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="2dp"
+                        android:background="@drawable/design_bio_personale" />
+                    <TextView
+                        android:id="@+id/textView_descrizione_item"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:minHeight="40dp"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginBottom="5dp"
+                        android:gravity="center"
+                        android:background="@drawable/bordo_sotto_grigio"
+                        android:textColor="@color/colore_secondario"
+                        android:textSize="20sp" />
+
+
                         <TextView
-                            android:id="@+id/textView_prezzo_prova"
-                            android:layout_width="70dp"
-                            android:layout_height="40dp"
-                            android:textSize="20sp"
-                            android:textColor="@color/colore_secondario"
-                            android:background="@drawable/edit_text_tutti_lati_grigi_rounded"
-                            android:layout_alignParentStart="true"
-                            />
-                        <TextView
-                            android:id="@+id/textView_data_scadenza_prova"
-                            android:layout_width="70dp"
+                            android:id="@+id/textView_data_scadenza_item"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:textSize="20sp"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginEnd="10dp"
+                            android:gravity="center"
+                            android:background="@drawable/bordo_sotto_grigio"
                             android:textColor="@color/colore_secondario"
-                            android:background="@drawable/edit_text_tutti_lati_grigi_rounded"
-                            android:layout_alignParentEnd="true"
-                            />
-                    </RelativeLayout>
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/textView_prezzo_item"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginEnd="10dp"
+                            android:layout_marginBottom="5dp"
+                            android:gravity="center"
+                            android:background="@drawable/bordi_trasparenti"
+                            android:textColor="@color/colore_secondario"
+                            android:textSize="16sp"/>
 
 
                 </LinearLayout>
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -158,8 +158,7 @@
                     android:id="@+id/recycler_view_prodotti"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"/>
-
+                    android:layout_marginTop="5dp" />
 
 
                 <TextView
@@ -196,10 +195,9 @@
                             <RelativeLayout
                                 android:layout_width="160dp"
                                 android:layout_height="180dp"
-                                android:layout_margin="10dp"
-                                android:background="@drawable/home_item_design"
                                 android:layout_gravity="center_horizontal"
-                                >
+                                android:layout_margin="10dp"
+                                android:background="@drawable/home_item_design">
 
                                 <ImageView
                                     android:layout_width="match_parent"
@@ -243,10 +241,9 @@
                             <RelativeLayout
                                 android:layout_width="160dp"
                                 android:layout_height="180dp"
-                                android:layout_margin="10dp"
-                                android:background="@drawable/home_item_design"
                                 android:layout_gravity="center_horizontal"
-                                >
+                                android:layout_margin="10dp"
+                                android:background="@drawable/home_item_design">
 
                                 <ImageView
                                     android:layout_width="match_parent"
@@ -316,16 +313,15 @@
                             android:layout_width="180dp"
                             android:layout_height="260dp"
                             android:layout_marginLeft="15dp"
-                            android:orientation="vertical"
-                            android:background="@drawable/home_item_design">
+                            android:background="@drawable/home_item_design"
+                            android:orientation="vertical">
 
                             <RelativeLayout
                                 android:layout_width="160dp"
                                 android:layout_height="180dp"
-                                android:layout_margin="10dp"
-                                android:background="@drawable/home_item_design"
                                 android:layout_gravity="center_horizontal"
-                                >
+                                android:layout_margin="10dp"
+                                android:background="@drawable/home_item_design">
 
                                 <ImageView
                                     android:layout_width="250dp"
@@ -340,10 +336,10 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="10dp"
                                 android:layout_marginTop="-5dp"
+                                android:maxLines="2"
                                 android:text="Varie info sul prodottooooooooooooooooooo"
                                 android:textColor="@color/colore_secondario"
-                                android:textSize="20sp"
-                                android:maxLines="2"/>
+                                android:textSize="20sp" />
 
 
                         </LinearLayout>
@@ -352,16 +348,15 @@
                             android:layout_width="180dp"
                             android:layout_height="260dp"
                             android:layout_marginLeft="15dp"
-                            android:orientation="vertical"
-                            android:background="@drawable/home_item_design">
+                            android:background="@drawable/home_item_design"
+                            android:orientation="vertical">
 
                             <RelativeLayout
                                 android:layout_width="160dp"
                                 android:layout_height="180dp"
-                                android:layout_margin="10dp"
-                                android:background="@drawable/home_item_design"
                                 android:layout_gravity="center_horizontal"
-                                >
+                                android:layout_margin="10dp"
+                                android:background="@drawable/home_item_design">
 
                                 <ImageView
                                     android:layout_width="250dp"
@@ -376,10 +371,10 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="10dp"
                                 android:layout_marginTop="-5dp"
+                                android:maxLines="2"
                                 android:text="Varie info sul prodottooooooooooooooooooo"
                                 android:textColor="@color/colore_secondario"
-                                android:textSize="20sp"
-                                android:maxLines="2"/>
+                                android:textSize="20sp" />
 
 
                         </LinearLayout>
@@ -395,7 +390,6 @@
         </ScrollView>
 
     </LinearLayout>
-
 
 
 </LinearLayout>
