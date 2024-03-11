@@ -89,102 +89,24 @@
             </RadioGroup>
 
 
-            <GridLayout
-                android:id="@+id/gridLayoutAsteAttive"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:columnCount="4"
-                android:layout_below="@+id/radioGroupLeMieAste"
-                android:useDefaultMargins="true"
-                android:visibility="visible">
+        <!-- RecyclerView per le aste attive -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewAsteAttive"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="visible" />
 
-                <!-- Impostato a visible perchè inizialmente "Attive" è selezionato-->
-
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="FotoProva"
-                    android:textSize="16dp"
-                    android:layout_marginEnd="16dp"
-                    android:layout_columnSpan="1" />
-
-                <TextView
-                    android:id="@+id/gridLayoutAttiveNomeAsta"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="NomeProva"
-                    android:textSize="16dp"
-                    android:layout_marginEnd="16dp"
-                    android:layout_columnSpan="1" />
-
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="PrezzoProva"
-                    android:textSize="16dp"
-                    android:layout_columnSpan="1" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="StatoProva"
-                    android:textSize="16dp"
-                    android:layout_columnSpan="1" />
-
-
-            </GridLayout>
+        <!-- RecyclerView per le aste non attive -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewAsteNonAttive"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
 
 
 
 
 
-            <GridLayout
-                android:id="@+id/gridLayoutAsteNonAttive"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:columnCount="4"
-                android:layout_below="@+id/radioGroupLeMieAste"
-                android:useDefaultMargins="true"
-                android:visibility="gone">
-
-                <!-- Impostato a visible perchè inizialmente "Attive" è selezionato-->
-
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="FotoProva2"
-                    android:textSize="16dp"
-                    android:layout_marginEnd="16dp"
-                    android:layout_columnSpan="1" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="NomeProva2"
-                    android:textSize="16dp"
-                    android:layout_marginEnd="16dp"
-                    android:layout_columnSpan="1" />
-
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="PrezzoProva2"
-                    android:textSize="16dp"
-                    android:layout_columnSpan="1" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="StatoProva2"
-                    android:textSize="16dp"
-                    android:layout_columnSpan="1" />
-
-
-            </GridLayout>
 
 
 

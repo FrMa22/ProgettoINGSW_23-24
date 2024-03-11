@@ -1,5 +1,7 @@
 package com.example.progettoingsw.gui;
 
+import static java.security.AccessController.getContext;
+
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -9,11 +11,17 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.progettoingsw.DAO.LeMieAsteDAO;
 import com.example.progettoingsw.R;
 import com.example.progettoingsw.classe_da_estendere.GestoreComuniImplementazioni;
+import com.example.progettoingsw.controllers_package.AstaAdapter;
 import com.example.progettoingsw.controllers_package.Controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class LeMieAste extends GestoreComuniImplementazioni {
@@ -21,6 +29,8 @@ public class LeMieAste extends GestoreComuniImplementazioni {
     Controller controller;
     private ImageButton preferitiButton;
     private ImageButton profiloButton;
+    private AstaAdapter astaAdapter;
+    private LeMieAsteDAO lemieAsteDAO;
 
 
     @Override
@@ -28,20 +38,58 @@ public class LeMieAste extends GestoreComuniImplementazioni {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.le_mie_aste);
         controller = new Controller();
+        astaAdapter = new AstaAdapter(this, null);
 
 
+
+        //
+        // Inizializza il RecyclerView e imposta l'adapter
+        RecyclerView recyclerViewAsteAttive = findViewById(R.id.recyclerViewAsteAttive);
+        // Utilizza LinearLayoutManager con orientamento orizzontale per far si che il recycler sia orizzontale, di default è verticale
+        LinearLayoutManager linearLayoutManagerAttive = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        recyclerViewAsteAttive.setLayoutManager(linearLayoutManagerAttive);
+
+        // Aggiungi un decorator predefinito per ridurre lo spazio tra le aste, superfluo
+        DividerItemDecoration dividerItemDecorationAttive = new DividerItemDecoration(this, linearLayoutManagerAttive.getOrientation());
+        recyclerViewAsteAttive.addItemDecoration(dividerItemDecorationAttive);
+        recyclerViewAsteAttive.setAdapter(astaAdapter);
+
+
+        // Inizializza il RecyclerView e imposta l'adapter
+        RecyclerView recyclerViewAsteNonAttive = findViewById(R.id.recyclerViewAsteNonAttive);
+        // Utilizza LinearLayoutManager con orientamento orizzontale per far si che il recycler sia orizzontale, di default è verticale
+        LinearLayoutManager linearLayoutManagerNonAttive = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        recyclerViewAsteNonAttive.setLayoutManager(linearLayoutManagerNonAttive);
+
+        // Aggiungi un decorator predefinito per ridurre lo spazio tra le aste, superfluo
+        DividerItemDecoration dividerItemDecorationNonAttive = new DividerItemDecoration(this, linearLayoutManagerNonAttive.getOrientation());
+        recyclerViewAsteNonAttive.addItemDecoration(dividerItemDecorationNonAttive);
+        recyclerViewAsteNonAttive.setAdapter(astaAdapter);
+
+
+
+
+
+
+
+        //
 
         //Ora inizia codice solo per LeMieAste
 
         RadioGroup radioGroup = findViewById(R.id.radioGroupLeMieAste);
         RadioButton btnAttivi = findViewById(R.id.bottoneAttive);
         RadioButton btnNonAttivi = findViewById(R.id.bottoneNonAttive);
-        GridLayout gridLayoutAttive = findViewById(R.id.gridLayoutAsteAttive);
-        GridLayout gridLayoutNonAttive = findViewById(R.id.gridLayoutAsteNonAttive);
+       // GridLayout gridLayoutAttive = findViewById(R.id.gridLayoutAsteAttive);
+       // GridLayout gridLayoutNonAttive = findViewById(R.id.gridLayoutAsteNonAttive);
 
-        String email=getIntent().getStringExtra("email");
+        //String email=getIntent().getStringExtra("email");
+        String email="esempio@email.com";//mettere un intent per andare su le mie aste
+        System.out.println("email:"+email);
         // Inizializza il DAO e recupera i dati del venditore
-        LeMieAsteDAO lemieAsteDAO = new LeMieAsteDAO(this);
+         lemieAsteDAO = new LeMieAsteDAO(this);
+        //di default appena si apre la schermata si è già su aste aperte quindi escono già
+        lemieAsteDAO.openConnection();
+        lemieAsteDAO.getAsteForEmail(email,"aperta");
 
 
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -49,20 +97,24 @@ public class LeMieAste extends GestoreComuniImplementazioni {
             public void onCheckedChanged(RadioGroup gruppo, int checkedId) {
                 if (checkedId == R.id.bottoneAttive) {
                     // Mostra la ScrollView per "Attivi"
-                    gridLayoutAttive.setVisibility(View.VISIBLE);
+                    //gridLayoutAttive.setVisibility(View.VISIBLE);
+                    recyclerViewAsteAttive.setVisibility(View.VISIBLE);
                     // Nascondi la ScrollView per "Non Attivi"
-                    gridLayoutNonAttive.setVisibility(View.GONE);
-                    lemieAsteDAO.openConnection();
+                    //gridLayoutNonAttive.setVisibility(View.GONE);
+                    recyclerViewAsteNonAttive.setVisibility(View.GONE);
+
                     lemieAsteDAO.getAsteForEmail(email,"aperta");
-                    lemieAsteDAO.closeConnection();
+
                 } else if (checkedId == R.id.bottoneNonAttive) {
                     // Mostra la ScrollView per "Non Attivi"
-                    gridLayoutNonAttive.setVisibility(View.VISIBLE);
+                    //gridLayoutNonAttive.setVisibility(View.VISIBLE);
+                    recyclerViewAsteNonAttive.setVisibility(View.VISIBLE);
                     // Nascondi la ScrollView per "Attivi"
-                    gridLayoutAttive.setVisibility(View.GONE);
-                    lemieAsteDAO.openConnection();
+                    //gridLayoutAttive.setVisibility(View.GONE);
+                    recyclerViewAsteAttive.setVisibility(View.GONE);
+
                     lemieAsteDAO.getAsteForEmail(email,"chiusa");
-                    lemieAsteDAO.closeConnection();
+
                 }
             }
         });
@@ -73,31 +125,22 @@ public class LeMieAste extends GestoreComuniImplementazioni {
 
 
 
-    public void updateAsteNames(List<String> asteNames,String cond) {
+    public void updateAste(ArrayList<Object> aste, String cond) {
 
 
         //
         if(cond.equals("aperta")) {
-            if (asteNames != null) {
+            if (aste != null) {
                 // Aggiorna l'interfaccia utente con i nomi delle aste attive
-                GridLayout gridLayoutAttive = findViewById(R.id.gridLayoutAsteAttive);
+                RecyclerView recyclerViewAsteAttive = findViewById(R.id.recyclerViewAsteAttive);
+                AstaAdapter astaAdapterAttive = new AstaAdapter(this, aste);
+                recyclerViewAsteAttive.setAdapter(astaAdapterAttive);
+                recyclerViewAsteAttive.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
 
-                // Rimuovi tutte le viste presenti nel GridLayout
-                gridLayoutAttive.removeAllViews();
 
-                for (String nomeAsta : asteNames) {
-                    // Crea una nuova TextView per ogni nome asta
-                    TextView textView = new TextView(this); // Utilizza 'this' come contesto
-                    textView.setText(nomeAsta);
-                    textView.setTextSize(16);
-                    // Aggiungi la TextView al GridLayout
-                    gridLayoutAttive.addView(textView);
-                }
 
                 // Aggiungi stampe nel log per verificare che i dati siano correttamente passati
-                for (String nomeAsta : asteNames) {
-                    Log.d("LeMieAste", "Nome Asta: " + nomeAsta);
-                }
+
             } else {
                 // Nessun nome asta trovato per l'email specificata
             }
@@ -106,26 +149,14 @@ public class LeMieAste extends GestoreComuniImplementazioni {
 
 
         if(cond.equals("chiusa")) {
-            if (asteNames != null) {
-                // Aggiorna l'interfaccia utente con i nomi delle aste attive
-                GridLayout gridLayoutNonAttive = findViewById(R.id.gridLayoutAsteNonAttive);
+            if (aste != null) {
 
-                // Rimuovi tutte le viste presenti nel GridLayout
-                gridLayoutNonAttive.removeAllViews();
+                RecyclerView recyclerViewAsteNonAttive = findViewById(R.id.recyclerViewAsteNonAttive);
+                AstaAdapter astaAdapterAttive = new AstaAdapter(this, aste);
+                recyclerViewAsteNonAttive.setAdapter(astaAdapterAttive);
+                recyclerViewAsteNonAttive.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
 
-                for (String nomeAsta : asteNames) {
-                    // Crea una nuova TextView per ogni nome asta
-                    TextView textView = new TextView(this); // Utilizza 'this' come contesto
-                    textView.setText(nomeAsta);
-                    textView.setTextSize(16);
-                    // Aggiungi la TextView al GridLayout
-                    gridLayoutNonAttive.addView(textView);
-                }
 
-                // Aggiungi stampe nel log per verificare che i dati siano correttamente passati
-                for (String nomeAsta : asteNames) {
-                    Log.d("LeMieAste", "Nome Asta: " + nomeAsta);
-                }
             } else {
                 // Nessun nome asta trovato per l'email specificata
             }
@@ -133,5 +164,12 @@ public class LeMieAste extends GestoreComuniImplementazioni {
 
     }//fine metodo
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        // Chiudi la connessione quando l'Activity viene distrutta
+        lemieAsteDAO.closeConnection();
+    }
 
 }

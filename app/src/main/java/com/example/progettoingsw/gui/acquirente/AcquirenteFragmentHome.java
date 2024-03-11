@@ -21,6 +21,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.progettoingsw.DAO.AstaDAO;
 import com.example.progettoingsw.R;
 import com.example.progettoingsw.controllers_package.AstaAdapter;
+import com.example.progettoingsw.controllers_package.Controller;
+import com.example.progettoingsw.gui.LeMieAste;
+import com.google.android.material.button.MaterialButton;
 
 import java.util.ArrayList;
 
@@ -34,6 +37,7 @@ public class AcquirenteFragmentHome extends Fragment {
     TextView textView_descrizione_prova;
     TextView textView_prezzo_prova;
     TextView textView_data_scadenza_prova;
+    MaterialButton button_le_mie_aste;
     private String email;
 
 
@@ -88,6 +92,14 @@ public class AcquirenteFragmentHome extends Fragment {
 //        acquirenteHomeDAO.findAstaInversaProva();
 //        acquirenteHomeDAO.closeConnection();
 
+        button_le_mie_aste = view.findViewById(R.id.button_le_mie_aste);
+        button_le_mie_aste.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                System.out.println("le aste oooh");
+                Controller.redirectActivity(getContext(), LeMieAste.class);
+            }
+        });
 
 
 
