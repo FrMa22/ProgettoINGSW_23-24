@@ -31,6 +31,7 @@ public class LeMieAste extends GestoreComuniImplementazioni {
     private ImageButton profiloButton;
     private AstaAdapter astaAdapter;
     private LeMieAsteDAO lemieAsteDAO;
+    private String email;
 
 
     @Override
@@ -40,7 +41,7 @@ public class LeMieAste extends GestoreComuniImplementazioni {
         controller = new Controller();
         astaAdapter = new AstaAdapter(this, null);
 
-
+        email = getIntent().getStringExtra("email");
 
         //
         // Inizializza il RecyclerView e imposta l'adapter
@@ -82,14 +83,11 @@ public class LeMieAste extends GestoreComuniImplementazioni {
        // GridLayout gridLayoutAttive = findViewById(R.id.gridLayoutAsteAttive);
        // GridLayout gridLayoutNonAttive = findViewById(R.id.gridLayoutAsteNonAttive);
 
-        //String email=getIntent().getStringExtra("email");
-        String email="esempio@email.com";//mettere un intent per andare su le mie aste
-        System.out.println("email:"+email);
-        // Inizializza il DAO e recupera i dati del venditore
          lemieAsteDAO = new LeMieAsteDAO(this);
         //di default appena si apre la schermata si è già su aste aperte quindi escono già
         lemieAsteDAO.openConnection();
         lemieAsteDAO.getAsteForEmail(email,"aperta");
+        recyclerViewAsteAttive.setVisibility(View.VISIBLE);
 
 
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {

@@ -3,7 +3,9 @@ package com.example.progettoingsw.DAO;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+import android.util.Log;
 
+import com.example.progettoingsw.R;
 import com.example.progettoingsw.controllers_package.DatabaseHelper;
 import com.example.progettoingsw.gui.LoginActivity;
 import com.example.progettoingsw.gui.acquirente.AcquirenteFragmentHome;
@@ -61,18 +63,31 @@ public class AcquirenteHomeDAO {
                 if (connection != null && !connection.isClosed()) {
                     Statement statement = connection.createStatement();
                     ResultSet resultSet = statement.executeQuery("SELECT * FROM asta_inversa WHERE id_acquirente = '" + email + "'");
+                    Log.d("prova", "fuori result set");
                     if (resultSet.next()) {
                         // Estrai i valori dalla tupla
+                        Log.d("prova", "in result set");
                         String nome = resultSet.getString("nome");
                         String descrizione = resultSet.getString("descrizione");
                         // Estrai l'immagine come array di byte e convertila in un'immagine
-                        byte[] immagineBytes = resultSet.getBytes("path_immagine");
-                        Bitmap immagine = BitmapFactory.decodeByteArray(immagineBytes, 0, immagineBytes.length);
+                        byte[] fotoBytes = resultSet.getBytes("path_immagine");
+                        Bitmap immagine = null;
+                        if (fotoBytes != null) {
+                            Log.d("immagine", "impostata immagine");
+                            immagine = BitmapFactory.decodeByteArray(fotoBytes, 0, fotoBytes.length);
+                            Log.d("immagine", "dopo impostata immagine");
+                        } else {
+                            // In caso di immagine non disponibile, puoi impostare un'immagine predefinita o lasciare foto come null
+                            // Ecco un esempio di impostazione di un'immagine predefinita
+                            Log.d("immagine", "impostata default");
+                            immagine = BitmapFactory.decodeResource(acquirenteFragmentHome.getContext().getResources(), R.drawable.img_default);
+                        }
                         float prezzoMax = resultSet.getFloat("prezzoMax");
                         String condizione = resultSet.getString("condizione");
                         String dataScadenza = resultSet.getString("dataDiScadenza");
                         // Crea un array di oggetti per contenere i valori estratti
                         Object[] result = { nome, descrizione, immagine, prezzoMax, condizione, dataScadenza };
+                        Log.d("prova", "prima di return result");
                         return result;
                     }
                 }
@@ -84,6 +99,7 @@ public class AcquirenteHomeDAO {
 
         @Override
         protected void onPostExecute(Object[] result) {
+            Log.d("prova", "on post execute");
             if (!isCancelled()) {
                 // Imposta i valori nei TextView e ImageView corrispondenti
                 if (result != null) {

@@ -1,5 +1,6 @@
 package com.example.progettoingsw.gui.acquirente;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
@@ -18,7 +19,8 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.progettoingsw.DAO.AstaDAO;
+import com.example.progettoingsw.DAO.AcquirenteHomeDAO;
+import com.example.progettoingsw.DAO.AstaDAOAcquirente;
 import com.example.progettoingsw.R;
 import com.example.progettoingsw.controllers_package.AstaAdapter;
 import com.example.progettoingsw.controllers_package.Controller;
@@ -29,8 +31,12 @@ import java.util.ArrayList;
 
 public class AcquirenteFragmentHome extends Fragment {
 
-    private AstaDAO astaDAO;
-    private AstaAdapter astaAdapter;
+    private AstaDAOAcquirente astaDAOAcquirente;
+    private AstaAdapter astaAdapterConsigliate;
+    private AstaAdapter astaAdapterInScadenza;
+    private AstaAdapter astaAdapterNuove;
+
+
     TextView textView_condizione_prova;
     ImageView image_view_prova;
     TextView textView_nome_prova;
@@ -39,11 +45,8 @@ public class AcquirenteFragmentHome extends Fragment {
     TextView textView_data_scadenza_prova;
     MaterialButton button_le_mie_aste;
     private String email;
-
-
-
-
-
+    private ArrayList<String> categorie;
+    private AcquirenteHomeDAO acquirenteHomeDAO;
     public AcquirenteFragmentHome(String email) {
         this.email = email;
     }
@@ -53,24 +56,57 @@ public class AcquirenteFragmentHome extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.acquirente_fragment_home, container, false);
         // Inizializza il DAO e l'adapter
-        astaDAO = new AstaDAO(this, email);
-        astaAdapter = new AstaAdapter(getContext(), null);
+        astaDAOAcquirente = new AstaDAOAcquirente(this, email);
+
+        astaAdapterConsigliate = new AstaAdapter(getContext(), null);
+        categorie = new ArrayList<>();
 
         // Inizializza il RecyclerView e imposta l'adapter
-        RecyclerView recyclerView = view.findViewById(R.id.recycler_view_prodotti);
+        RecyclerView recyclerViewAsteConsigliate = view.findViewById(R.id.recycler_view_aste_consigliate);
         // Utilizza LinearLayoutManager con orientamento orizzontale per far si che il recycler sia orizzontale, di default è verticale
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
-        recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerViewAsteConsigliate.setLayoutManager(linearLayoutManager);
 
         // Aggiungi un decorator predefinito per ridurre lo spazio tra le aste, superfluo
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(getContext(), linearLayoutManager.getOrientation());
-        recyclerView.addItemDecoration(dividerItemDecoration);
-        recyclerView.setAdapter(astaAdapter);
+        recyclerViewAsteConsigliate.addItemDecoration(dividerItemDecoration);
+        recyclerViewAsteConsigliate.setAdapter(astaAdapterConsigliate);
 
         // Apri la connessione al database e ottieni i prodotti
-        astaDAO.openConnection();
-        astaDAO.getAste();
-        astaDAO.closeConnection();
+        astaDAOAcquirente.openConnection();
+        Log.d("categorie in home prima" , "numero di categorie: " + categorie.isEmpty());
+        astaDAOAcquirente.getCategorie();
+        Log.d("categorie in home" , "numero di categorie: " + categorie.size());
+        astaDAOAcquirente.getAsteCategorieAcquirente();
+        astaDAOAcquirente.closeConnection();
+
+
+        // Inizializza il RecyclerView e imposta l'adapter
+        astaAdapterInScadenza = new AstaAdapter(getContext(), null);
+        RecyclerView recyclerViewAsteInScadenza = view.findViewById(R.id.recycler_view_aste_in_scadenza);
+        LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+        recyclerViewAsteInScadenza.setLayoutManager(linearLayoutManager2);
+
+
+        recyclerViewAsteInScadenza.addItemDecoration(dividerItemDecoration);
+        recyclerViewAsteInScadenza.setAdapter(astaAdapterInScadenza);
+
+        astaDAOAcquirente.openConnection();
+        astaDAOAcquirente.getAsteScadenzaRecente();
+        astaDAOAcquirente.closeConnection();
+
+        astaAdapterNuove = new AstaAdapter(getContext(), null);
+        RecyclerView recyclerViewAsteNuove = view.findViewById(R.id.recycler_view_aste_nuove);
+        LinearLayoutManager linearLayoutManager3 = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+        recyclerViewAsteNuove.setLayoutManager(linearLayoutManager3);
+
+
+        recyclerViewAsteNuove.addItemDecoration(dividerItemDecoration);
+        recyclerViewAsteNuove.setAdapter(astaAdapterNuove);
+
+        astaDAOAcquirente.openConnection();
+        astaDAOAcquirente.getAsteNuove();
+        astaDAOAcquirente.closeConnection();
 
         return view;
     }
@@ -87,17 +123,20 @@ public class AcquirenteFragmentHome extends Fragment {
         textView_prezzo_prova = view.findViewById(R.id.textView_prezzo_item);
         textView_data_scadenza_prova = view.findViewById(R.id.textView_data_scadenza_item);
 
-//        AcquirenteHomeDAO acquirenteHomeDAO = new AcquirenteHomeDAO(this, email);
-//        acquirenteHomeDAO.openConnection();
-//        acquirenteHomeDAO.findAstaInversaProva();
-//        acquirenteHomeDAO.closeConnection();
+        AcquirenteHomeDAO acquirenteHomeDAO = new AcquirenteHomeDAO(this, email);
+        acquirenteHomeDAO.openConnection();
+        acquirenteHomeDAO.findAstaInversaProva();
+        acquirenteHomeDAO.closeConnection();
 
         button_le_mie_aste = view.findViewById(R.id.button_le_mie_aste);
         button_le_mie_aste.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 System.out.println("le aste oooh");
-                Controller.redirectActivity(getContext(), LeMieAste.class);
+                Intent intent = new Intent(getContext(), LeMieAste.class);
+                intent.putExtra("email", email);
+                startActivity(intent);
+
             }
         });
 
@@ -124,10 +163,34 @@ public class AcquirenteFragmentHome extends Fragment {
     //questo metodo lo deve chiamare la classe DAO quando termina di recuperare le aste dal DB e gli passa tutto ciò che ha trovato, in questo caso un arraylist di object
     //l'arraylist deve essere di object per passare oggetti di diverse classi (in questo caso AstaInversa, AstaRibasso e AstaInglese
     //se si recupera dal DB solo un tipo di asta basta usare l'arraylist del tipo corrispondente ma questo con object funziona sia con 1 solo tipo che con più
-    public void handleProdottiResult(ArrayList<Object> prodotti) {
+    public void handleAsteConsigliateResult(ArrayList<Object> prodotti) {
         // Aggiorna l'adapter con i nuovi prodotti
-        astaAdapter.setAste(prodotti);
+        if(prodotti != null){
+            astaAdapterConsigliate.setAste(prodotti);
+        }else{
+            Log.d("handleConsigliateResult", "null");
+        }
+
     }
+    public void handleAsteInScadenzaResult(ArrayList<Object> prodotti) {
+        // Aggiorna l'adapter con i nuovi prodotti
+        if(prodotti != null){
+            Log.d("handleScadenzaResult", "ok");
+            astaAdapterInScadenza.setAste(prodotti);
+        }else{
+            Log.d("handleScadenzaResult ", "null");
+        }
+    }
+    public void handleAsteNuoveResult(ArrayList<Object> prodotti) {
+        // Aggiorna l'adapter con i nuovi prodotti
+        if(prodotti != null){
+        astaAdapterNuove.setAste(prodotti);
+        }else{
+            Log.d("handleConsigliateResult", "null");
+        }
+    }
+
+
 
     //metodo per l'asta di prova, commentabile
     public void handleProva( String nome, String descrizione, String prezzo, String data, String condizione, Bitmap foto){
@@ -138,5 +201,8 @@ public class AcquirenteFragmentHome extends Fragment {
         textView_data_scadenza_prova.setText(data);
 //        textView_condizione_prova.setText(condizione);
         image_view_prova.setImageBitmap(foto);
+    }
+    public void setCategorie(ArrayList<String> categorie){
+        this.categorie = categorie;
     }
 }

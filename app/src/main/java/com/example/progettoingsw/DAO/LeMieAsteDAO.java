@@ -104,7 +104,7 @@ public class LeMieAsteDAO {
                             ResultSet resultSetAsteRibasso = statementRibasso.executeQuery();
                             while (resultSetAsteRibasso.next()) {
                                 int id = resultSetAsteRibasso.getInt("id");
-                                Log.d("AstaDAO", "asta al ribasso: id = " + id);
+                                Log.d("AstaDAOAcquirente", "asta al ribasso: id = " + id);
                                 String nome = resultSetAsteRibasso.getString("nome");
                                 String descrizione = resultSetAsteRibasso.getString("descrizione");
                                 byte[] fotoBytes = resultSetAsteRibasso.getBytes("path_immagine");
@@ -137,7 +137,7 @@ public class LeMieAsteDAO {
                             ResultSet resultSetAsteInversa = statementInversa.executeQuery();
                             while (resultSetAsteInversa.next()) {
                                 int id = resultSetAsteInversa.getInt("id");
-                                Log.d("AstaDAO", "asta inversa: id = " + id);
+                                Log.d("AstaDAOAcquirente", "asta inversa: id = " + id);
                                 String nome = resultSetAsteInversa.getString("nome");
                                 String descrizione = resultSetAsteInversa.getString("descrizione");
                                 byte[] fotoBytes = resultSetAsteInversa.getBytes("path_immagine");
