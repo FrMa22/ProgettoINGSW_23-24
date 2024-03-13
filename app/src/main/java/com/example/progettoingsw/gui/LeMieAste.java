@@ -12,6 +12,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -27,6 +28,7 @@ import java.util.List;
 public class LeMieAste extends GestoreComuniImplementazioni {
 
     Controller controller;
+    private ImageButton bottoneBackLeMieAste;
     private ImageButton preferitiButton;
     private ImageButton profiloButton;
     private AstaAdapter astaAdapter;
@@ -47,11 +49,12 @@ public class LeMieAste extends GestoreComuniImplementazioni {
         // Inizializza il RecyclerView e imposta l'adapter
         RecyclerView recyclerViewAsteAttive = findViewById(R.id.recyclerViewAsteAttive);
         // Utilizza LinearLayoutManager con orientamento orizzontale per far si che il recycler sia orizzontale, di default è verticale
-        LinearLayoutManager linearLayoutManagerAttive = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-        recyclerViewAsteAttive.setLayoutManager(linearLayoutManagerAttive);
-
-        // Aggiungi un decorator predefinito per ridurre lo spazio tra le aste, superfluo
-        DividerItemDecoration dividerItemDecorationAttive = new DividerItemDecoration(this, linearLayoutManagerAttive.getOrientation());
+// Utilizza GridLayoutManager con due colonne
+        GridLayoutManager gridLayoutManagerAttive = new GridLayoutManager(this, 2, RecyclerView.VERTICAL, false);
+        recyclerViewAsteAttive.setLayoutManager(gridLayoutManagerAttive);
+//
+//        // Aggiungi un decorator predefinito per ridurre lo spazio tra le aste, superfluo
+        DividerItemDecoration dividerItemDecorationAttive = new DividerItemDecoration(this, gridLayoutManagerAttive.getOrientation());
         recyclerViewAsteAttive.addItemDecoration(dividerItemDecorationAttive);
         recyclerViewAsteAttive.setAdapter(astaAdapter);
 
@@ -59,11 +62,10 @@ public class LeMieAste extends GestoreComuniImplementazioni {
         // Inizializza il RecyclerView e imposta l'adapter
         RecyclerView recyclerViewAsteNonAttive = findViewById(R.id.recyclerViewAsteNonAttive);
         // Utilizza LinearLayoutManager con orientamento orizzontale per far si che il recycler sia orizzontale, di default è verticale
-        LinearLayoutManager linearLayoutManagerNonAttive = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-        recyclerViewAsteNonAttive.setLayoutManager(linearLayoutManagerNonAttive);
-
-        // Aggiungi un decorator predefinito per ridurre lo spazio tra le aste, superfluo
-        DividerItemDecoration dividerItemDecorationNonAttive = new DividerItemDecoration(this, linearLayoutManagerNonAttive.getOrientation());
+        GridLayoutManager gridLayoutManagerNonAttive = new GridLayoutManager(this, 2, RecyclerView.VERTICAL, false);
+        recyclerViewAsteNonAttive.setLayoutManager(gridLayoutManagerNonAttive);
+//        // Aggiungi un decorator predefinito per ridurre lo spazio tra le aste, superfluo
+        DividerItemDecoration dividerItemDecorationNonAttive = new DividerItemDecoration(this, gridLayoutManagerNonAttive.getOrientation());
         recyclerViewAsteNonAttive.addItemDecoration(dividerItemDecorationNonAttive);
         recyclerViewAsteNonAttive.setAdapter(astaAdapter);
 
@@ -117,7 +119,14 @@ public class LeMieAste extends GestoreComuniImplementazioni {
             }
         });
 
-
+        bottoneBackLeMieAste = findViewById(R.id.bottoneBackLeMieAste);
+        bottoneBackLeMieAste.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d("LeMieAste" , "Back");
+                onBackPressed();
+            }
+        });
 
     }
 
@@ -133,7 +142,7 @@ public class LeMieAste extends GestoreComuniImplementazioni {
                 RecyclerView recyclerViewAsteAttive = findViewById(R.id.recyclerViewAsteAttive);
                 AstaAdapter astaAdapterAttive = new AstaAdapter(this, aste);
                 recyclerViewAsteAttive.setAdapter(astaAdapterAttive);
-                recyclerViewAsteAttive.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+                recyclerViewAsteAttive.setLayoutManager(new GridLayoutManager(this, 2, RecyclerView.VERTICAL, false));
 
 
 
@@ -152,7 +161,7 @@ public class LeMieAste extends GestoreComuniImplementazioni {
                 RecyclerView recyclerViewAsteNonAttive = findViewById(R.id.recyclerViewAsteNonAttive);
                 AstaAdapter astaAdapterAttive = new AstaAdapter(this, aste);
                 recyclerViewAsteNonAttive.setAdapter(astaAdapterAttive);
-                recyclerViewAsteNonAttive.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+                recyclerViewAsteNonAttive.setLayoutManager(new GridLayoutManager(this, 2, RecyclerView.VERTICAL, false));
 
 
             } else {
