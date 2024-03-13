@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 import com.example.progettoingsw.controllers_package.DatabaseHelper;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -49,7 +50,7 @@ public class AstaIngleseDAO {
                         return "Connessione aperta con successo!";
                     } else if (action.equals("insert")) {
                         if (connection != null && !connection.isClosed()) {
-                            Statement statement = connection.createStatement();
+                           // Statement statement = connection.createStatement();
 
                             //LocalDateTime dataScadenza = LocalDateTime.of(2024, 3, 10, 12, 0, 0);
                             LocalDateTime dataScadenza = LocalDateTime.now();
@@ -65,17 +66,39 @@ public class AstaIngleseDAO {
                             // Aggiungere l'intervallo in ore alla data di scadenza
                             dataScadenza = dataScadenza.plusHours(intervallo);
 
+                            String intervalloString=strings[2];
+
                             // Creazione del formatter per la data
                             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
                             // Formattazione della data
                             String formattedDataScadenza = dataScadenza.format(formatter);
 
-                            statement.executeUpdate("INSERT INTO asta_allinglese" +
-                                    " (baseAsta, intervalloTempoOfferte, rialzoMin, prezzoAttuale, dataDiScadenza, condizione, nome, descrizione, id_venditore, path_immagine) " +
-                                    "VALUES (" + baseAsta + ", INTERVAL '" + intervallo + " hours', " + rialzoMin + ", " + prezzoAttuale + ", '" + formattedDataScadenza + "', '" + condizione + "', '" + nomeP + "', '" + descrizioneP + "', '" + id_venditore + "', '" + foto + "')");
 
-                            statement.close();
+
+                            String query = "INSERT INTO asta_allinglese " +
+                                    "(baseAsta, intervalloTempoOfferte, rialzoMin, prezzoAttuale, dataDiScadenza, condizione, nome, descrizione, id_venditore, path_immagine) " +
+                                    "VALUES (?, ?::interval, ?, ?, ?, ?, ?, ?, ?, ?)";
+                            PreparedStatement preparedStatement = connection.prepareStatement(query);
+                            preparedStatement.setDouble(1, baseAsta); // Imposta il primo parametro (baseAsta)
+                            preparedStatement.setString(2, intervallo + " hours"); // Imposta il secondo parametro (intervalloTempoOfferte)
+                            preparedStatement.setDouble(3, rialzoMin); // Imposta il terzo parametro (rialzoMin)
+                            preparedStatement.setDouble(4, prezzoAttuale); // Imposta il quarto parametro (prezzoAttuale)
+                            preparedStatement.setTimestamp(5, Timestamp.valueOf(formattedDataScadenza)); // Imposta il quinto parametro (dataDiScadenza)
+                            preparedStatement.setString(6, condizione); // Imposta il sesto parametro (condizione)
+                            preparedStatement.setString(7, nomeP); // Imposta il settimo parametro (nome)
+                            preparedStatement.setString(8, descrizioneP); // Imposta l'ottavo parametro (descrizione)
+                            preparedStatement.setString(9, id_venditore); // Imposta il nono parametro (id_venditore)
+                            preparedStatement.setBytes(10, foto); // Imposta il decimo parametro (path_immagine)
+                            preparedStatement.executeUpdate();
+                            preparedStatement.close();
+
+
+                            //statement.executeUpdate("INSERT INTO asta_allinglese" +
+                              //      " (baseAsta, intervalloTempoOfferte, rialzoMin, prezzoAttuale, dataDiScadenza, condizione, nome, descrizione, id_venditore, path_immagine) " +
+                                //    "VALUES (" + baseAsta + ", INTERVAL '" + intervallo + " hours', " + rialzoMin + ", " + prezzoAttuale + ", '" + formattedDataScadenza + "', '" + condizione + "', '" + nomeP + "', '" + descrizioneP + "', '" + id_venditore + "', '" + foto + "')");
+
+                            //statement.close();
 
                             return "Asta inglese inserita con successo!";
                         } else {
