@@ -62,6 +62,7 @@ public class VenditoreAstaInglese extends GestoreComuniImplementazioni {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.venditore_asta_inglese);
          controller = new Controller();
+
         AstaIngleseDAO astaIngleseDao = new AstaIngleseDAO();
 
         baseAsta=findViewById(R.id.editTextBaseAstaAstaInglese);

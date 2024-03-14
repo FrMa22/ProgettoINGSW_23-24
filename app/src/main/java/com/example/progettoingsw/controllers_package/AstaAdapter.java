@@ -31,6 +31,12 @@ public class AstaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         this.context = context;
         this.astaItemList = astaItemList;
     }
+    private View.OnClickListener mItemClickListener;
+
+    // Metodo per impostare il listener degli eventi di clic
+    public void setOnItemClickListener(View.OnClickListener listener) {
+        mItemClickListener = listener;
+    }
 
     //serve a scegliere quale layout applicare per ogni tipo di asta
     @NonNull
@@ -66,6 +72,15 @@ public class AstaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         } else if (item instanceof AstaInversaItem) {
             ((AstaInversaViewHolder) holder).bind((AstaInversaItem) item);
         }
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Controlla se è stato impostato un listener e se sì, chiama il metodo onClick
+                if (mItemClickListener != null) {
+                    mItemClickListener.onClick(v);
+                }
+            }
+        });
     }
 
     @Override
@@ -78,7 +93,12 @@ public class AstaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             return astaItemList.size();
         }
     }
-
+    public Object getItem(int position) {
+        if (position >= 0 && position < astaItemList.size()) {
+            return astaItemList.get(position);
+        }
+        return null;
+    }
 
     @Override
     public int getItemViewType(int position) {

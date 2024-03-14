@@ -11,7 +11,6 @@ import androidx.appcompat.widget.AppCompatButton;
 import com.example.progettoingsw.R;
 import com.example.progettoingsw.controllers_package.Controller;
 import com.example.progettoingsw.gui.acquirente.AcquirenteMainActivity;
-import com.example.progettoingsw.gui.venditore.VenditoreMainActivity;
 
 public class PopUpLogin extends Dialog implements View.OnClickListener {
     private AppCompatButton bottoneAcquirente;
@@ -46,7 +45,7 @@ public class PopUpLogin extends Dialog implements View.OnClickListener {
             Controller.redirectActivity(getContext(), AcquirenteMainActivity.class);
         } else if(v.getId() == R.id.bottoneVenditore){
             Toast.makeText(getContext(), "ciao", Toast.LENGTH_SHORT).show();
-            Controller.redirectActivity(getContext(), VenditoreMainActivity.class);
+            Controller.redirectActivity(getContext(), AcquirenteMainActivity.class);
         }
         dismiss();
     }

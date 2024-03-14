@@ -7,17 +7,14 @@ import android.widget.ImageButton;
 
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.progettoingsw.DAO.AstePreferiteDAO;
-import com.example.progettoingsw.DAO.LeMieAsteDAO;
 import com.example.progettoingsw.R;
 import com.example.progettoingsw.classe_da_estendere.GestoreComuniImplementazioni;
 import com.example.progettoingsw.controllers_package.AstaAdapter;
 import com.example.progettoingsw.controllers_package.Controller;
 import com.example.progettoingsw.gui.acquirente.AcquirenteMainActivity;
-import com.example.progettoingsw.gui.venditore.VenditoreMainActivity;
 
 import java.util.ArrayList;
 
@@ -62,13 +59,8 @@ public class PreferitiActivity extends GestoreComuniImplementazioni {
         backBottone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (tipoUtente.equals("acquirente")) {
-                    controller.redirectActivityEmail(PreferitiActivity.this, AcquirenteMainActivity.class,email);
-                }
-                else if(tipoUtente.equals("venditore")) {
-                    controller.redirectActivityEmail(PreferitiActivity.this, VenditoreMainActivity.class,email);
+                onBackPressed();
 
-                }
             }
         });
 

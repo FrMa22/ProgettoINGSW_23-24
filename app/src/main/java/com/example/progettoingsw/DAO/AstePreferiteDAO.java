@@ -148,10 +148,11 @@ public class AstePreferiteDAO {
                                     }
 
                                     String prezzoMax = resultSetAsteInversa.getString("prezzoMax");
+                                    String prezzoAttuale = prezzoMax;
                                     String dataDiScadenza = resultSetAsteInversa.getString("dataDiScadenza");
                                     String condizione = resultSetAsteInversa.getString("condizione");
 
-                                    AstaInversaItem astaInversaItem = new AstaInversaItem(id, nome, descrizione, foto, prezzoMax, dataDiScadenza, condizione);
+                                    AstaInversaItem astaInversaItem = new AstaInversaItem(id, nome, descrizione, foto, prezzoMax, dataDiScadenza, condizione, prezzoAttuale);
                                     aste.add(astaInversaItem);
                                 }
                                 resultSetAsteInversa.close();

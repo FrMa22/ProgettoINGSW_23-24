@@ -10,8 +10,9 @@ public class AstaInversaItem {
     private String prezzoMax;
     private String dataDiScadenza;
     private String condizione;
+    private String prezzoAttuale;
 
-    public AstaInversaItem(int id, String nome, String descrizione, Bitmap immagine, String prezzoMax, String dataDiScadenza, String condizione) {
+    public AstaInversaItem(int id, String nome, String descrizione, Bitmap immagine, String prezzoMax, String dataDiScadenza, String condizione, String prezzoAttuale) {
         this.id = id;
         this.nome = nome;
         this.descrizione = descrizione;
@@ -19,8 +20,15 @@ public class AstaInversaItem {
         this.prezzoMax = prezzoMax;
         this.dataDiScadenza = dataDiScadenza;
         this.condizione = condizione;
+        this.prezzoAttuale = prezzoAttuale;
     }
 
+    public String getPrezzoAttuale(){
+        return prezzoAttuale;
+    }
+    public void setPrezzoAttuale(String prezzo){
+        this.prezzoAttuale = prezzo;
+    }
     public int getId() {
         return id;
     }

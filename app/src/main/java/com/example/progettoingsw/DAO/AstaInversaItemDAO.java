@@ -72,7 +72,8 @@ public class AstaInversaItemDAO {
                         String prezzoMax = String.valueOf(resultSet.getFloat("prezzoMax"));
                         String condizione = resultSet.getString("condizione");
                         String dataScadenza = resultSet.getString("dataDiScadenza");
-                        AstaInversaItem asta = new AstaInversaItem(id, nome, descrizione,immagine, prezzoMax, dataScadenza, condizione);
+                        String prezzoAttuale = prezzoMax;
+                        AstaInversaItem asta = new AstaInversaItem(id, nome, descrizione,immagine, prezzoMax, dataScadenza, condizione, prezzoAttuale);
                         aste.add(asta);
                     }
                     resultSet.close();

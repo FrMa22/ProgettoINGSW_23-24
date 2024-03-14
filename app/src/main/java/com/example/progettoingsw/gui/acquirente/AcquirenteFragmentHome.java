@@ -28,7 +28,12 @@ import com.example.progettoingsw.controllers_package.AstaAdapter;
 import com.example.progettoingsw.controllers_package.Controller;
 import com.example.progettoingsw.gui.LeMieAste;
 import com.example.progettoingsw.gui.PreferitiActivity;
-import com.example.progettoingsw.gui.venditore.VenditoreMainActivity;
+import com.example.progettoingsw.gui.SchermataAstaInglese;
+import com.example.progettoingsw.gui.SchermataAstaInversa;
+import com.example.progettoingsw.gui.SchermataAstaRibasso;
+import com.example.progettoingsw.model.AstaIngleseItem;
+import com.example.progettoingsw.model.AstaInversaItem;
+import com.example.progettoingsw.model.AstaRibassoItem;
 import com.google.android.material.button.MaterialButton;
 
 import java.util.ArrayList;
@@ -49,10 +54,12 @@ public class AcquirenteFragmentHome extends Fragment {
     TextView textView_data_scadenza_prova;
     MaterialButton button_le_mie_aste;
     private String email;
+    private String tipoUtente;
     private ArrayList<String> categorie;
     private AcquirenteHomeDAO acquirenteHomeDAO;
-    public AcquirenteFragmentHome(String email) {
+    public AcquirenteFragmentHome(String email, String tipoUtente) {
         this.email = email;
+        this.tipoUtente = tipoUtente;
     }
 
     @Nullable
@@ -83,9 +90,45 @@ public class AcquirenteFragmentHome extends Fragment {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         recyclerViewAsteConsigliate.setLayoutManager(linearLayoutManager);
 
+
         // Aggiungi un decorator predefinito per ridurre lo spazio tra le aste, superfluo
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(getContext(), linearLayoutManager.getOrientation());
         recyclerViewAsteConsigliate.addItemDecoration(dividerItemDecoration);
+        astaAdapterConsigliate.setOnItemClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Ottieni la posizione dell'elemento cliccato
+                int position = recyclerViewAsteConsigliate.getChildAdapterPosition(v);
+
+                // Ottieni l'oggetto Asta corrispondente alla posizione cliccata
+                Object asta = astaAdapterConsigliate.getItem(position);
+
+                // Esegui le azioni desiderate con l'oggetto Asta
+                if (asta instanceof AstaIngleseItem) {
+                    int id = ((AstaIngleseItem) asta).getId();
+                    Log.d("Asta inglese", "id è " + id);
+                    Intent intent = new Intent(getContext(), SchermataAstaInglese.class);//test del login
+                    intent.putExtra("email", email);
+                    intent.putExtra("tipoUtente", tipoUtente);
+                    intent.putExtra("id", id);
+                    startActivity(intent);
+                } else if (asta instanceof AstaRibassoItem) {
+                    int id = ((AstaRibassoItem) asta).getId();
+                    Intent intent = new Intent(getContext(), SchermataAstaRibasso.class);//test del login
+                    intent.putExtra("email", email);
+                    intent.putExtra("tipoUtente", tipoUtente);
+                    intent.putExtra("id", id);
+                    startActivity(intent);
+                } else if (asta instanceof AstaInversaItem) {
+                    int id = ((AstaInversaItem) asta).getId();
+                    Intent intent = new Intent(getContext(), SchermataAstaInversa.class);//test del login
+                    intent.putExtra("email", email);
+                    intent.putExtra("tipoUtente", tipoUtente);
+                    intent.putExtra("id", id);
+                    startActivity(intent);
+                }
+            }
+        });
         recyclerViewAsteConsigliate.setAdapter(astaAdapterConsigliate);
 
         //rendo l'icona di caricamento visibile ad inizio recuperi dal db e il bottom menu non clickabile
@@ -111,6 +154,41 @@ public class AcquirenteFragmentHome extends Fragment {
 
         recyclerViewAsteInScadenza.addItemDecoration(dividerItemDecoration);
         recyclerViewAsteInScadenza.setAdapter(astaAdapterInScadenza);
+        astaAdapterInScadenza.setOnItemClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Ottieni la posizione dell'elemento cliccato
+                int position = recyclerViewAsteInScadenza.getChildAdapterPosition(v);
+
+                // Ottieni l'oggetto Asta corrispondente alla posizione cliccata
+                Object asta = astaAdapterInScadenza.getItem(position);
+
+                // Esegui le azioni desiderate con l'oggetto Asta
+                if (asta instanceof AstaIngleseItem) {
+                    int id = ((AstaIngleseItem) asta).getId();
+                    Log.d("Asta inglese", "id è " + id);
+                    Intent intent = new Intent(getContext(), SchermataAstaInglese.class);//test del login
+                    intent.putExtra("email", email);
+                    intent.putExtra("tipoUtente", tipoUtente);
+                    intent.putExtra("id", id);
+                    startActivity(intent);
+                } else if (asta instanceof AstaRibassoItem) {
+                    int id = ((AstaRibassoItem) asta).getId();
+                    Intent intent = new Intent(getContext(), SchermataAstaRibasso.class);//test del login
+                    intent.putExtra("email", email);
+                    intent.putExtra("tipoUtente", tipoUtente);
+                    intent.putExtra("id", id);
+                    startActivity(intent);
+                } else if (asta instanceof AstaInversaItem) {
+                    int id = ((AstaInversaItem) asta).getId();
+                    Intent intent = new Intent(getContext(), SchermataAstaInversa.class);//test del login
+                    intent.putExtra("email", email);
+                    intent.putExtra("tipoUtente", tipoUtente);
+                    intent.putExtra("id", id);
+                    startActivity(intent);
+                }
+            }
+        });
 
         astaDAOAcquirente.openConnection();
         astaDAOAcquirente.getAsteScadenzaRecente();
@@ -124,6 +202,41 @@ public class AcquirenteFragmentHome extends Fragment {
 
         recyclerViewAsteNuove.addItemDecoration(dividerItemDecoration);
         recyclerViewAsteNuove.setAdapter(astaAdapterNuove);
+        astaAdapterNuove.setOnItemClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Ottieni la posizione dell'elemento cliccato
+                int position = recyclerViewAsteNuove.getChildAdapterPosition(v);
+
+                // Ottieni l'oggetto Asta corrispondente alla posizione cliccata
+                Object asta = astaAdapterNuove.getItem(position);
+
+                // Esegui le azioni desiderate con l'oggetto Asta
+                if (asta instanceof AstaIngleseItem) {
+                    int id = ((AstaIngleseItem) asta).getId();
+                    Log.d("Asta inglese", "id è " + id);
+                    Intent intent = new Intent(getContext(), SchermataAstaInglese.class);//test del login
+                    intent.putExtra("email", email);
+                    intent.putExtra("tipoUtente", tipoUtente);
+                    intent.putExtra("id", id);
+                    startActivity(intent);
+                } else if (asta instanceof AstaRibassoItem) {
+                    int id = ((AstaRibassoItem) asta).getId();
+                    Intent intent = new Intent(getContext(), SchermataAstaRibasso.class);//test del login
+                    intent.putExtra("email", email);
+                    intent.putExtra("tipoUtente", tipoUtente);
+                    intent.putExtra("id", id);
+                    startActivity(intent);
+                } else if (asta instanceof AstaInversaItem) {
+                    int id = ((AstaInversaItem) asta).getId();
+                    Intent intent = new Intent(getContext(), SchermataAstaInversa.class);//test del login
+                    intent.putExtra("email", email);
+                    intent.putExtra("tipoUtente", tipoUtente);
+                    intent.putExtra("id", id);
+                    startActivity(intent);
+                }
+            }
+        });
 
         astaDAOAcquirente.openConnection();
         astaDAOAcquirente.getAsteNuove();

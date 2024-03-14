@@ -153,8 +153,8 @@ public class LeMieAsteDAO {
                                 String prezzoMax = resultSetAsteInversa.getString("prezzoMax");
                                 String dataDiScadenza = resultSetAsteInversa.getString("dataDiScadenza");
                                 String condizione = resultSetAsteInversa.getString("condizione");
-
-                                AstaInversaItem astaInversaItem = new AstaInversaItem(id, nome, descrizione, foto, prezzoMax, dataDiScadenza, condizione);
+                                String prezzoAttuale = prezzoMax;
+                                AstaInversaItem astaInversaItem = new AstaInversaItem(id, nome, descrizione, foto, prezzoMax, dataDiScadenza, condizione, prezzoAttuale);
                                 aste.add(astaInversaItem);
                             }
                             resultSetAsteInversa.close();

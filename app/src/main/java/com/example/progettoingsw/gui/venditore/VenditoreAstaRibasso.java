@@ -92,9 +92,6 @@ public class VenditoreAstaRibasso extends GestoreComuniImplementazioni {
                 astaRibassoDao.openConnection();
                 astaRibassoDao.creaAstaRibasso(base,intervallo,soglia,min,nomeProdotto,descrizioneProdotto,email,img);
                 astaRibassoDao.closeConnection();
-
-
-
             }
         });
 

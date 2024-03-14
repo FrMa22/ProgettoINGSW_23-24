@@ -31,8 +31,6 @@ import com.example.progettoingsw.gestori_gui.CustomAdapter_gridview_profilo_soci
 import com.example.progettoingsw.gui.LeMieAste;
 import com.example.progettoingsw.gui.LoginActivity;
 import com.example.progettoingsw.gui.PopUpModificaSocial;
-import com.example.progettoingsw.gui.PopUpRegistrazioneSocial;
-import com.example.progettoingsw.gui.venditore.VenditoreMainActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.button.MaterialButton;
 
@@ -288,23 +286,13 @@ public class FragmentProfilo extends Fragment{
 
     //metodo per rendere clickabile o non la bottom navigation view, accede alla bottom di main tramite un metodo di main
     private void setNavigationView(Boolean valore) {
-        if(tipoUtente.equals("acquirente")) {
-
             AcquirenteMainActivity activity = (AcquirenteMainActivity) getActivity();
             if (activity != null) {
                 // Abilita la BottomNavigationView
                 // Log.d("acquirente", "disabilito");
                 activity.enableBottomNavigationView(valore);
             }
-        }else{
 
-            VenditoreMainActivity activity = (VenditoreMainActivity) getActivity();
-            if (activity != null) {
-                // Abilita la BottomNavigationView
-                // Log.d("acquirente", "disabilito");
-                activity.enableBottomNavigationView(valore);
-            }
-        }
     }
 
 }

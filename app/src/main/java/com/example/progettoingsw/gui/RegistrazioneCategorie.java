@@ -6,7 +6,6 @@ import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -21,7 +20,6 @@ import com.example.progettoingsw.DAO.RegistrazioneCategorieDAO;
 import com.example.progettoingsw.R;
 import com.example.progettoingsw.classe_da_estendere.GestoreComuniImplementazioni;
 import com.example.progettoingsw.gui.acquirente.AcquirenteMainActivity;
-import com.example.progettoingsw.gui.venditore.VenditoreMainActivity;
 import com.google.android.material.button.MaterialButton;
 
 import java.util.ArrayList;
@@ -61,30 +59,20 @@ public class RegistrazioneCategorie extends GestoreComuniImplementazioni {
                     registrazioneCategorieDAO.insertCategorie(switchTexts);
                     registrazioneCategorieDAO.closeConnection();
                 }
-                if(tipoUtente.equals("acquirente")){
                     Intent intent = new Intent(RegistrazioneCategorie.this, AcquirenteMainActivity.class);//test del login
                     intent.putExtra("email", email);
+                    intent.putExtra("tipoUtente", tipoUtente);
                     startActivity(intent);
-                }else{
-                    Intent intent = new Intent(RegistrazioneCategorie.this, VenditoreMainActivity.class);//test del login
-                    intent.putExtra("email", email);
-                    startActivity(intent);
-                }
             }
         });
 
         bottoneSaltaRegistrazioneCategorie.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(tipoUtente.equals("acquirente")){
                     Intent intent = new Intent(RegistrazioneCategorie.this, AcquirenteMainActivity.class);//test del login
                     intent.putExtra("email", email);
+                    intent.putExtra("tipoUtente", tipoUtente);
                     startActivity(intent);
-                }else{
-                    Intent intent = new Intent(RegistrazioneCategorie.this, VenditoreMainActivity.class);//test del login
-                    intent.putExtra("email", email);
-                    startActivity(intent);
-                }
             }
         });
 
@@ -177,17 +165,10 @@ public class RegistrazioneCategorie extends GestoreComuniImplementazioni {
         progress_bar_registrazione_categorie.setVisibility(View.INVISIBLE);
             if(result){
                 Log.d("handleInsert", "Inseriti");
-                if(tipoUtente.equals("acquirente")) {
                     Intent intent = new Intent(RegistrazioneCategorie.this, AcquirenteMainActivity.class);
                     intent.putExtra("email", email);
+                    intent.putExtra("tipoUtente", tipoUtente);
                     startActivity(intent);
-                } else if(tipoUtente.equals("venditore")) {
-                    Intent intent = new Intent(RegistrazioneCategorie.this, VenditoreMainActivity.class);
-                    intent.putExtra("email", email);
-                    startActivity(intent);
-                } else {
-                    Log.d("handleInsert", "Tipo utente non valido");
-                }
             } else {
                 Log.d("handleInsert", "Errore durante l'inserimento");
             }

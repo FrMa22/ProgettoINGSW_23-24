@@ -1,8 +1,16 @@
 package com.example.progettoingsw.DAO;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+import android.util.Log;
 
+import com.example.progettoingsw.R;
 import com.example.progettoingsw.controllers_package.DatabaseHelper;
+import com.example.progettoingsw.gui.SchermataAstaInglese;
+import com.example.progettoingsw.gui.SchermataAstaRibasso;
+import com.example.progettoingsw.model.AstaIngleseItem;
+import com.example.progettoingsw.model.AstaRibassoItem;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -20,7 +28,13 @@ public class AstaRibassoDAO {
     private String nomeP;
     private String descrizioneP;
     private byte[] foto;
+    private SchermataAstaRibasso schermataAstaRibasso;
+    public AstaRibassoDAO(){
 
+    }
+    public AstaRibassoDAO(SchermataAstaRibasso schermataAstaRibasso){
+        this.schermataAstaRibasso = schermataAstaRibasso;
+    }
     public void openConnection() {
         new DatabaseTask().execute("open");
     }
@@ -33,7 +47,9 @@ public class AstaRibassoDAO {
         foto=datiFoto;
         new DatabaseTask().execute("insert", base, intervallo,soglia,min,nomeProdotto,descrizioneProdotto,email);
     }
-
+    public void getAstaRibassoByID(int idAsta) {
+        new AstaRibassoDAO.SelectAstaTask().execute(String.valueOf(idAsta));
+    }
     public void closeConnection() {
         new DatabaseTask().execute("close");
     }
@@ -115,6 +131,70 @@ public class AstaRibassoDAO {
             // Puoi mostrare il risultato all'utente o gestirlo in modo appropriato
             System.out.println(result);
 
+        }
+    }
+    private class SelectAstaTask extends AsyncTask<String, Void, AstaRibassoItem> {
+
+        @Override
+        protected AstaRibassoItem doInBackground(String... strings) {
+            try {
+                if (strings.length > 0) {
+                    int idAsta = Integer.parseInt(strings[0]);
+                    connection = DatabaseHelper.getConnection();
+                    if (connection != null && !connection.isClosed()) {
+                        String query = "SELECT * FROM asta_alribasso WHERE id = ?";
+                        PreparedStatement preparedStatement = connection.prepareStatement(query);
+                        preparedStatement.setInt(1, idAsta);
+                        ResultSet resultSet = preparedStatement.executeQuery();
+
+                        if (resultSet.next()) {
+                            int id = resultSet.getInt("id");
+                            String nome = resultSet.getString("nome");
+                            String descrizione = resultSet.getString("descrizione");
+                            byte[] fotoBytes = resultSet.getBytes("path_immagine");
+                            Bitmap foto = null;
+                            if (fotoBytes != null) {
+                                foto = BitmapFactory.decodeByteArray(fotoBytes, 0, fotoBytes.length);
+                            } else {
+                                // In caso di immagine non disponibile, puoi impostare un'immagine predefinita o lasciare foto come null
+                                // Ecco un esempio di impostazione di un'immagine predefinita
+                                foto = BitmapFactory.decodeResource(schermataAstaRibasso.getResources(), R.drawable.img_default);
+                            }
+                            String prezzoBase = resultSet.getString("prezzoBase");
+                            String intervalloDecrementale = resultSet.getString("intervalloDecrementale");
+                            String decrementoAutomatico = resultSet.getString("decrementoAutomaticoCifra");
+                            String prezzoMin = resultSet.getString("prezzoMin");
+                            String prezzoAttuale = resultSet.getString("prezzoAttuale");
+                            String condizione = resultSet.getString("condizione");
+
+                            AstaRibassoItem astaRibassoItem = new AstaRibassoItem(id, nome, descrizione, foto, prezzoBase, intervalloDecrementale, decrementoAutomatico, prezzoMin, prezzoAttuale, condizione);
+                            return astaRibassoItem;
+                        } else {
+                            return null; // Nessuna asta trovata con l'ID specificato
+                        }
+                    } else {
+                        return null; // Connessione non aperta
+                    }
+                }
+                return null; // Nessun ID specificato
+            } catch (SQLException e) {
+                e.printStackTrace();
+                return null; // Errore durante l'operazione
+            }
+        }
+
+        @Override
+        protected void onPostExecute(AstaRibassoItem astaRibassoItem) {
+            // Questo metodo viene chiamato dopo che doInBackground è completato
+            // Puoi mostrare il risultato all'utente o gestirlo in modo appropriato
+            if (astaRibassoItem != null) {
+                // Operazione completata con successo, puoi fare qualcosa con l'oggetto AstaIngleseItem
+                Log.d("Asta recuperata", astaRibassoItem.toString());
+                schermataAstaRibasso.setAstaData(astaRibassoItem);
+            } else {
+                // Operazione fallita o nessun risultato trovato
+                Log.d("Errore", "Impossibile recuperare l'asta");
+            }
         }
     }
 }

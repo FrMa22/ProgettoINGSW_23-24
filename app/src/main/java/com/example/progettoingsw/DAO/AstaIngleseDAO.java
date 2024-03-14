@@ -1,8 +1,15 @@
 package com.example.progettoingsw.DAO;
 
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+import android.util.Log;
 
+import com.example.progettoingsw.R;
 import com.example.progettoingsw.controllers_package.DatabaseHelper;
+import com.example.progettoingsw.gui.SchermataAstaInglese;
+import com.example.progettoingsw.model.AstaIngleseItem;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -20,6 +27,13 @@ public class AstaIngleseDAO {
     private String nomeP;
     private String descrizioneP;
     private byte[] foto;
+    private SchermataAstaInglese schermataAstaInglese;
+    public AstaIngleseDAO(){
+
+    }
+    public AstaIngleseDAO(SchermataAstaInglese schermataAstaInglese){
+        this.schermataAstaInglese = schermataAstaInglese;
+    }
 
     public void openConnection() {
         new DatabaseTask().execute("open");
@@ -34,6 +48,9 @@ public class AstaIngleseDAO {
         new DatabaseTask().execute("insert", base, intervallo, rialzo,nomeProdotto,descrizioneProdotto,email);
     }
 
+    public void getAstaIngleseByID(int idAsta) {
+        new SelectAstaTask().execute(String.valueOf(idAsta));
+    }
     public void closeConnection() {
         new DatabaseTask().execute("close");
     }
@@ -105,7 +122,7 @@ public class AstaIngleseDAO {
                             return "Impossibile inserire l'asta: connessione non aperta.";
                         }
 
-                    } else if (action.equals("close")) {
+                    }else if (action.equals("close")) {
                         if (connection != null && !connection.isClosed()) {
                             connection.close();
                             return "Connessione chiusa con successo!";
@@ -128,5 +145,68 @@ public class AstaIngleseDAO {
             System.out.println(result);
             }
         }
+    private class SelectAstaTask extends AsyncTask<String, Void, AstaIngleseItem> {
+
+        @Override
+        protected AstaIngleseItem doInBackground(String... strings) {
+            try {
+                if (strings.length > 0) {
+                    int idAsta = Integer.parseInt(strings[0]);
+                    connection = DatabaseHelper.getConnection();
+                    if (connection != null && !connection.isClosed()) {
+                        String query = "SELECT * FROM asta_allinglese WHERE id = ?";
+                        PreparedStatement preparedStatement = connection.prepareStatement(query);
+                        preparedStatement.setInt(1, idAsta);
+                        ResultSet resultSet = preparedStatement.executeQuery();
+
+                        if (resultSet.next()) {
+                            int id = resultSet.getInt("id");
+                            String nome = resultSet.getString("nome");
+                            String descrizione = resultSet.getString("descrizione");
+                            byte[] fotoBytes = resultSet.getBytes("path_immagine");
+                            Bitmap foto = null;
+                            if (fotoBytes != null) {
+                                foto = BitmapFactory.decodeByteArray(fotoBytes, 0, fotoBytes.length);
+                            } else {
+                                // Imposta un'immagine predefinita se l'immagine non è disponibile
+                                foto = BitmapFactory.decodeResource(schermataAstaInglese.getResources(), R.drawable.img_default);
+                            }
+                            String baseAsta = resultSet.getString("baseAsta");
+                            String intervalloTempoOfferte = resultSet.getString("intervalloTempoOfferte");
+                            String rialzoMin = resultSet.getString("rialzoMin");
+                            String prezzoAttuale = resultSet.getString("prezzoAttuale");
+                            String dataDiScadenza = resultSet.getString("dataDiScadenza");
+                            String condizione = resultSet.getString("condizione");
+
+                            AstaIngleseItem astaIngleseItem = new AstaIngleseItem(id, nome, descrizione, foto, baseAsta, intervalloTempoOfferte, rialzoMin, prezzoAttuale, dataDiScadenza, condizione);
+                            return astaIngleseItem;
+                        } else {
+                            return null; // Nessuna asta trovata con l'ID specificato
+                        }
+                    } else {
+                        return null; // Connessione non aperta
+                    }
+                }
+                return null; // Nessun ID specificato
+            } catch (SQLException e) {
+                e.printStackTrace();
+                return null; // Errore durante l'operazione
+            }
+        }
+
+        @Override
+        protected void onPostExecute(AstaIngleseItem astaIngleseItem) {
+            // Questo metodo viene chiamato dopo che doInBackground è completato
+            // Puoi mostrare il risultato all'utente o gestirlo in modo appropriato
+            if (astaIngleseItem != null) {
+                // Operazione completata con successo, puoi fare qualcosa con l'oggetto AstaIngleseItem
+                Log.d("Asta recuperata", astaIngleseItem.toString());
+                schermataAstaInglese.setAstaData(astaIngleseItem);
+            } else {
+                // Operazione fallita o nessun risultato trovato
+                Log.d("Errore", "Impossibile recuperare l'asta");
+            }
+        }
+    }
     }
 

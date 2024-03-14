@@ -1,144 +1,183 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/relativeLayoutSchermataAstaInversa"
-    android:background="#FFFFFF"
+    android:id="@+id/linearLayoutSchermataAstaInversa"
+    android:orientation="vertical"
+    android:background="@color/colore_base"
     tools:context=".gui.acquirente.AcquirenteFragmentHome">  <!-- da cambiare-->
+
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:background="@drawable/design_toolbar">
+    <TextView
+        android:id="@+id/textViewTitoloSchermataAstaInversa"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:textSize="35sp"
+        android:textStyle="bold"
+        android:text="Asta Inversa"
+        android:textColor="@color/colore_secondario"/>
+        <ImageButton
+            android:id="@+id/bottoneBackSchermataAstaInversa"
+            android:layout_width="60dp"
+            android:layout_height="80dp"
+            android:layout_gravity="start"
+            android:backgroundTint="@android:color/transparent"
+            android:contentDescription="Premi per tornare indietro."
+            android:src="@drawable/baseline_arrow_back_ios_24" />
+        <ImageButton
+            android:id="@+id/aggiuntiPreferitiButtonAstaInversa"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:backgroundTint="@android:color/transparent"
+            android:contentDescription="Clicca per aggiungere ai preferiti."
+            android:drawableTint="@android:color/transparent"
+            android:src="@drawable/baseline_favorite_border_24" />
+    </androidx.appcompat.widget.Toolbar>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
-            <TextView
-                android:id="@+id/textViewTitoloSchermataAstaInversa"
-                android:layout_width="match_parent"
-                android:layout_height="80dp"
-                android:layout_marginBottom="-1dp"
-                android:gravity="center"
-                android:textSize="35sp"
-                android:textStyle="bold"
-                android:text="Prodotto richiesto"
-                android:textColor="@color/black"
-                android:background="@color/toolbar_color"/>
-            <ImageButton
-                android:id="@+id/bottoneBackSchermataAstaInversa"
-                android:layout_width="wrap_content"
-                android:layout_height="80dp"
-                android:backgroundTint="@android:color/transparent"
-                android:src="@drawable/baseline_arrow_back_ios_24"
-                android:contentDescription="Premi per tornare indietro"
-                />
-
-            <ImageView
-                android:id="@+id/ImageViewSchermataAstaInversa"
-                android:layout_width="380dp"
-                android:layout_height="150dp"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
-                android:layout_below="@id/textViewTitoloSchermataAstaInversa"
-                android:layout_marginTop="15dp"
-                android:src="@drawable/sfondoprova"/>
-
-            <ImageButton
-                android:id="@+id/SeguiSchermataAstaInversa"
-                android:layout_width="50dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="345dp"
-                android:layout_marginTop="100dp"
-                android:layout_below="@id/textViewTitoloSchermataAstaInversa"
-                android:src="@drawable/baseline_favorite_border_24"
-                android:backgroundTint="@android:color/transparent"
-                android:contentDescription="Clicca per aggiungere ai preferiti."
-                android:drawableTint="@android:color/transparent" />
-
 
             <TextView
                 android:id="@+id/textViewNomeProdottoSchermataAstaInversa"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_marginBottom="-1dp"
-                android:gravity="center"
-                android:textSize="23dp"
-                android:textStyle="bold"
-                android:text="Nome astaInversaItem/servizio richiesto"
-                android:layout_below="@id/ImageViewSchermataAstaInversa"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
                 android:layout_marginTop="10dp"
-                android:background="#FFFFFF"
+                android:layout_marginEnd="5dp"
+                android:layout_marginBottom="-1dp"
+                android:background="@drawable/design_bio_personale"
+                android:gravity="center"
+                android:text="Nome asta"
+                android:textSize="25sp"
+                android:textStyle="bold"
                 />
+            <ImageView
+                android:id="@+id/ImageViewSchermataAstaInversa"
+                android:layout_width="300dp"
+                android:layout_height="180dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/design_bio_personale"
+                android:scaleType="fitXY"/>
+
+
+
+
 
             <TextView
                 android:id="@+id/textViewDescrizioneSchermataAstaInversa"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
+                android:layout_margin="10dp"
+                android:background="@drawable/design_bio_personale"
                 android:gravity="center"
-                android:textSize="20dp"
-                android:textStyle="bold"
                 android:text="Descrizione Prodotto"
-                android:background="#DCDCDC"
-                android:layout_below="@id/textViewNomeProdottoSchermataAstaInversa"/>
-
-            <TextView
-                android:id="@+id/textViewOffertaAttualeSchermataAstaInversa"
-                android:layout_width="180dp"
-                android:layout_height="40dp"
-                android:layout_marginBottom="-1dp"
-                android:textSize="23dp"
+                android:textSize="20sp"
                 android:textStyle="bold"
-                android:text="Offerta attuale: €"
-                android:layout_below="@id/textViewDescrizioneSchermataAstaInversa"
-                android:background="#FFFFFF"
                 />
 
-            <TextView
-                android:id="@+id/textViewPrezzpAttualeSchermataAstaInversa"
-                android:layout_width="180dp"
-                android:layout_height="40dp"
-                android:layout_marginStart="181dp"
-                android:textSize="23dp"
-                android:textStyle="bold"
-                android:text="150"
-                android:layout_below="@id/textViewDescrizioneSchermataAstaInversa"
-                android:background="#FFFFFF"
-                />
-
-
-            <TextView
-                android:id="@+id/textViewTempoRimanenteSchermataAstaInversa"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_marginBottom="-1dp"
-                android:textSize="23dp"
-                android:textStyle="bold"
-                android:text="  Tempo rimanente: 12:45:36"
-                android:layout_below="@id/textViewOffertaAttualeSchermataAstaInversa"
-                android:background="#FFFFFF"
-                />
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:orientation="horizontal">
 
-            <ImageButton
-                android:id="@+id/bottoneOffertaSchermataAstaInversa"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:layout_marginLeft="300dp"
-                android:background="@drawable/round_button"
-                android:contentDescription="offerta nuova"
-                android:layout_below="@id/textViewTempoRimanenteSchermataAstaInversa"
-                android:src="@drawable/baseline_add_24"
-                />
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_gravity="start"
+                        android:text="Scadenza:"
+                        android:textColor="@color/colore_secondario"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+                    <TextView
+                        android:id="@+id/textViewDataScadenzaSchermataAstaInversa"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:textColor="@color/colore_secondario"
+                        android:text="20/03/2024 10:10:00"
+                        android:textSize="25sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/colore_secondario"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"/>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_gravity="end"
+                        android:text="Offerta attuale:"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/colore_secondario" />
+                    <TextView
+                        android:id="@+id/textViewPrezzoAttualeSchermataAstaInversa"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="150.00"
+                        android:gravity="center"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:textColor="@color/colore_secondario"
+                        android:textSize="25sp"
+                        android:textStyle="bold"
+                        app:drawableEndCompat="@drawable/ic_euro"
+                        android:drawablePadding="5dp"
+                        />
+                </LinearLayout>
+
+            </LinearLayout>
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/bottoneProfiloAcquirenteSchermataAstaInversa"
-                android:layout_width="230dp"
-                android:layout_height="48dp"
-                android:backgroundTint="#FFFFFF"
-                android:hint="bottone acquirente"
-                android:layout_below="@id/textViewTempoRimanenteSchermataAstaInversa"
+                android:id="@+id/bottoneOffertaSchermataAstaInversa"
+                android:layout_width="150dp"
+                android:layout_height="100dp"
+                android:layout_gravity="end"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
+                android:contentDescription="offerta nuova"
+                android:textColor="@color/colore_secondario"
+                android:textStyle="bold"
+                android:textSize="30dp"
+                app:strokeColor="#AAAAAA"
+                app:strokeWidth="2dp"
+                android:backgroundTint="@color/colore_base"
+                android:text="Fai un offerta"
                 />
+
 
 
             <TextView
@@ -146,13 +185,12 @@
                 android:layout_width="230dp"
                 android:layout_height="48dp"
                 android:layout_marginBottom="-1dp"
-                android:textSize="23dp"
-                android:textStyle="bold"
                 android:drawableLeft="@drawable/ic_profilo"
-                android:text="Nome Acquirente"
-                android:layout_below="@id/textViewTempoRimanenteSchermataAstaInversa"
-                android:background="#FFFFFF"
                 android:gravity="center"
+                android:text="Nome venditore"
+                android:textColor="@color/colore_secondario"
+                android:textSize="25sp"
+                android:textStyle="bold"
                 />
 
 
@@ -163,7 +201,8 @@
                 android:text="Altre richieste"
                 android:textSize="30sp"
                 android:textStyle="bold"
-                android:layout_below="@id/bottoneProfiloAcquirenteSchermataAstaInversa"/>
+                android:layout_marginTop="20dp"
+                />
 
             <TextView
                 android:id="@+id/TextViewLineaSchermataAstaInversa"
@@ -171,14 +210,12 @@
                 android:layout_height="2dp"
                 android:layout_marginTop="10dp"
                 android:background="@color/black"
-                android:paddingTop="5dp"
-                android:layout_below="@id/textViewAltreRichiesteSchermataAstaInversa"/>
+                android:paddingTop="5dp"/>
 
 
             <HorizontalScrollView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/TextViewLineaSchermataAstaInversa">
+                android:layout_height="wrap_content">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -250,17 +287,9 @@
 
 
             </HorizontalScrollView>
-            <TextView
-                android:id="@+id/TextViewLineaFinaleSchermataAstaInversa"
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:layout_marginTop="240dp"
-                android:background="@color/black"
-                android:paddingTop="5dp"
-                android:layout_below="@id/textViewAltreRichiesteSchermataAstaInversa"/>
 
-        </RelativeLayout>
+        </LinearLayout>
 
     </ScrollView>
 
-</RelativeLayout>
+</LinearLayout>

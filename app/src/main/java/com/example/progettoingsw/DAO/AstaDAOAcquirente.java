@@ -144,10 +144,11 @@ public class AstaDAOAcquirente {
                     }
 
                     String prezzoMax = resultSetAsteInversa.getString("prezzoMax");
+                    String prezzoAttuale = resultSetAsteInversa.getString("prezzoAttuale");
                     String dataDiScadenza = resultSetAsteInversa.getString("dataDiScadenza");
                     String condizione = resultSetAsteInversa.getString("condizione");
 
-                    AstaInversaItem astaInversaItem = new AstaInversaItem(id, nome, descrizione, foto, prezzoMax, dataDiScadenza, condizione);
+                    AstaInversaItem astaInversaItem = new AstaInversaItem(id, nome, descrizione, foto, prezzoMax, dataDiScadenza, condizione, prezzoAttuale);
                     astaItems.add(astaInversaItem);
                 }
                 resultSetAsteInversa.close();
