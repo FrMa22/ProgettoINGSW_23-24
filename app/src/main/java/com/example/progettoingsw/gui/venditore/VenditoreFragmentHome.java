@@ -37,7 +37,8 @@ public class VenditoreFragmentHome extends Fragment {
         preferitiButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Controller.redirectActivity(getActivity(), PreferitiActivity.class);
+             //Controller.redirectActivityEmailTipoUtente(getActivity(), PreferitiActivity.class,email,"venditore");
+
             }
         });
 

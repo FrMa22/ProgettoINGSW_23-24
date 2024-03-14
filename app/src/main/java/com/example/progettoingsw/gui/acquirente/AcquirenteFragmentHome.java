@@ -27,6 +27,7 @@ import com.example.progettoingsw.R;
 import com.example.progettoingsw.controllers_package.AstaAdapter;
 import com.example.progettoingsw.controllers_package.Controller;
 import com.example.progettoingsw.gui.LeMieAste;
+import com.example.progettoingsw.gui.PreferitiActivity;
 import com.example.progettoingsw.gui.venditore.VenditoreMainActivity;
 import com.google.android.material.button.MaterialButton;
 
@@ -163,8 +164,7 @@ public class AcquirenteFragmentHome extends Fragment {
         preferitiButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Apri l'activity dei preferiti
-                // Controller.redirectActivity(getActivity(), PreferitiActivity.class);
+              Controller.redirectActivityEmailTipoUtente(getActivity(), PreferitiActivity.class,email,"acquirente");
                 Toast.makeText(getContext(), "Apri l'activity dei preferiti", Toast.LENGTH_SHORT).show();
             }
         });
