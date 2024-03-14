@@ -2,6 +2,7 @@ package com.example.progettoingsw.gui;
 
 import static java.security.AccessController.getContext;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -21,6 +22,9 @@ import com.example.progettoingsw.R;
 import com.example.progettoingsw.classe_da_estendere.GestoreComuniImplementazioni;
 import com.example.progettoingsw.controllers_package.AstaAdapter;
 import com.example.progettoingsw.controllers_package.Controller;
+import com.example.progettoingsw.model.AstaIngleseItem;
+import com.example.progettoingsw.model.AstaInversaItem;
+import com.example.progettoingsw.model.AstaRibassoItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,9 +35,11 @@ public class LeMieAste extends GestoreComuniImplementazioni {
     private ImageButton bottoneBackLeMieAste;
     private ImageButton preferitiButton;
     private ImageButton profiloButton;
-    private AstaAdapter astaAdapter;
+    private AstaAdapter astaAdapterAttive;
+    private AstaAdapter astaAdapterNonAttive;
     private LeMieAsteDAO lemieAsteDAO;
     private String email;
+    private String tipoUtente;
 
 
     @Override
@@ -41,9 +47,11 @@ public class LeMieAste extends GestoreComuniImplementazioni {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.le_mie_aste);
         controller = new Controller();
-        astaAdapter = new AstaAdapter(this, null);
+        astaAdapterAttive = new AstaAdapter(this, null);
+        astaAdapterNonAttive = new AstaAdapter(this, null);
 
         email = getIntent().getStringExtra("email");
+        tipoUtente = getIntent().getStringExtra("tipoUtente");
 
         //
         // Inizializza il RecyclerView e imposta l'adapter
@@ -56,8 +64,43 @@ public class LeMieAste extends GestoreComuniImplementazioni {
 //        // Aggiungi un decorator predefinito per ridurre lo spazio tra le aste, superfluo
         DividerItemDecoration dividerItemDecorationAttive = new DividerItemDecoration(this, gridLayoutManagerAttive.getOrientation());
         recyclerViewAsteAttive.addItemDecoration(dividerItemDecorationAttive);
-        recyclerViewAsteAttive.setAdapter(astaAdapter);
+        astaAdapterAttive.setOnItemClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Ottieni la posizione dell'elemento cliccato
+                int position = recyclerViewAsteAttive.getChildAdapterPosition(v);
 
+                // Ottieni l'oggetto Asta corrispondente alla posizione cliccata
+                Object asta = astaAdapterAttive.getItem(position);
+
+                // Esegui le azioni desiderate con l'oggetto Asta
+                if (asta instanceof AstaIngleseItem) {
+                    int id = ((AstaIngleseItem) asta).getId();
+                    Log.d("Asta inglese", "id è " + id);
+                    Intent intent = new Intent(LeMieAste.this, SchermataAstaInglese.class);//test del login
+                    intent.putExtra("email", email);
+                    intent.putExtra("tipoUtente", tipoUtente);
+                    intent.putExtra("id", id);
+                    startActivity(intent);
+                } else if (asta instanceof AstaRibassoItem) {
+                    int id = ((AstaRibassoItem) asta).getId();
+                    Intent intent = new Intent(LeMieAste.this, SchermataAstaRibasso.class);//test del login
+                    intent.putExtra("email", email);
+                    intent.putExtra("tipoUtente", tipoUtente);
+                    intent.putExtra("id", id);
+                    startActivity(intent);
+                } else if (asta instanceof AstaInversaItem) {
+                    int id = ((AstaInversaItem) asta).getId();
+                    Intent intent = new Intent(LeMieAste.this, SchermataAstaInversa.class);//test del login
+                    intent.putExtra("email", email);
+                    intent.putExtra("tipoUtente", tipoUtente);
+                    intent.putExtra("id", id);
+                    startActivity(intent);
+                }
+            }
+        });
+
+        recyclerViewAsteAttive.setAdapter(astaAdapterAttive);
 
         // Inizializza il RecyclerView e imposta l'adapter
         RecyclerView recyclerViewAsteNonAttive = findViewById(R.id.recyclerViewAsteNonAttive);
@@ -67,9 +110,43 @@ public class LeMieAste extends GestoreComuniImplementazioni {
 //        // Aggiungi un decorator predefinito per ridurre lo spazio tra le aste, superfluo
         DividerItemDecoration dividerItemDecorationNonAttive = new DividerItemDecoration(this, gridLayoutManagerNonAttive.getOrientation());
         recyclerViewAsteNonAttive.addItemDecoration(dividerItemDecorationNonAttive);
-        recyclerViewAsteNonAttive.setAdapter(astaAdapter);
+        astaAdapterNonAttive.setOnItemClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Ottieni la posizione dell'elemento cliccato
+                int position = recyclerViewAsteNonAttive.getChildAdapterPosition(v);
 
+                // Ottieni l'oggetto Asta corrispondente alla posizione cliccata
+                Object asta = astaAdapterNonAttive.getItem(position);
 
+                // Esegui le azioni desiderate con l'oggetto Asta
+                if (asta instanceof AstaIngleseItem) {
+                    int id = ((AstaIngleseItem) asta).getId();
+                    Log.d("Asta inglese", "id è " + id);
+                    Intent intent = new Intent(LeMieAste.this, SchermataAstaInglese.class);//test del login
+                    intent.putExtra("email", email);
+                    intent.putExtra("tipoUtente", tipoUtente);
+                    intent.putExtra("id", id);
+                    startActivity(intent);
+                } else if (asta instanceof AstaRibassoItem) {
+                    int id = ((AstaRibassoItem) asta).getId();
+                    Intent intent = new Intent(LeMieAste.this, SchermataAstaRibasso.class);//test del login
+                    intent.putExtra("email", email);
+                    intent.putExtra("tipoUtente", tipoUtente);
+                    intent.putExtra("id", id);
+                    startActivity(intent);
+                } else if (asta instanceof AstaInversaItem) {
+                    int id = ((AstaInversaItem) asta).getId();
+                    Intent intent = new Intent(LeMieAste.this, SchermataAstaInversa.class);//test del login
+                    intent.putExtra("email", email);
+                    intent.putExtra("tipoUtente", tipoUtente);
+                    intent.putExtra("id", id);
+                    startActivity(intent);
+                }
+            }
+        });
+
+        recyclerViewAsteNonAttive.setAdapter(astaAdapterNonAttive);
 
 
 
@@ -138,12 +215,12 @@ public class LeMieAste extends GestoreComuniImplementazioni {
         //
         if(cond.equals("aperta")) {
             if (aste != null) {
-                // Aggiorna l'interfaccia utente con i nomi delle aste attive
-                RecyclerView recyclerViewAsteAttive = findViewById(R.id.recyclerViewAsteAttive);
-                AstaAdapter astaAdapterAttive = new AstaAdapter(this, aste);
-                recyclerViewAsteAttive.setAdapter(astaAdapterAttive);
-                recyclerViewAsteAttive.setLayoutManager(new GridLayoutManager(this, 2, RecyclerView.VERTICAL, false));
-
+//          Questo crea un altro recycler ogni volta sovrascrivendo il vecchio, eliminando il onClickListener di prima perciò non va fatto
+//                RecyclerView recyclerViewAsteAttive = findViewById(R.id.recyclerViewAsteAttive);
+//                AstaAdapter astaAdapterAttive = new AstaAdapter(this, aste);
+//                recyclerViewAsteAttive.setAdapter(astaAdapterAttive);
+//                recyclerViewAsteAttive.setLayoutManager(new GridLayoutManager(this, 2, RecyclerView.VERTICAL, false));
+                astaAdapterAttive.setAste(aste);
 
 
                 // Aggiungi stampe nel log per verificare che i dati siano correttamente passati
@@ -157,12 +234,12 @@ public class LeMieAste extends GestoreComuniImplementazioni {
 
         if(cond.equals("chiusa")) {
             if (aste != null) {
-
-                RecyclerView recyclerViewAsteNonAttive = findViewById(R.id.recyclerViewAsteNonAttive);
-                AstaAdapter astaAdapterAttive = new AstaAdapter(this, aste);
-                recyclerViewAsteNonAttive.setAdapter(astaAdapterAttive);
-                recyclerViewAsteNonAttive.setLayoutManager(new GridLayoutManager(this, 2, RecyclerView.VERTICAL, false));
-
+//          Questo crea un altro recycler ogni volta sovrascrivendo il vecchio, eliminando il onClickListener di prima, perciò non va fatto
+//                RecyclerView recyclerViewAsteNonAttive = findViewById(R.id.recyclerViewAsteNonAttive);
+//                AstaAdapter astaAdapterAttive = new AstaAdapter(this, aste);
+//                recyclerViewAsteNonAttive.setAdapter(astaAdapterAttive);
+//                recyclerViewAsteNonAttive.setLayoutManager(new GridLayoutManager(this, 2, RecyclerView.VERTICAL, false));
+                astaAdapterNonAttive.setAste(aste);
 
             } else {
                 // Nessun nome asta trovato per l'email specificata

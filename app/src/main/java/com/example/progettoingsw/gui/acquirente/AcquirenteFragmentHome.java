@@ -46,12 +46,6 @@ public class AcquirenteFragmentHome extends Fragment {
     private AstaAdapter astaAdapterNuove;
 
     private ProgressBar progressBarAcquirenteFragmentHome;
-    TextView textView_condizione_prova;
-    ImageView image_view_prova;
-    TextView textView_nome_prova;
-    TextView textView_descrizione_prova;
-    TextView textView_prezzo_prova;
-    TextView textView_data_scadenza_prova;
     MaterialButton button_le_mie_aste;
     private String email;
     private String tipoUtente;
@@ -79,7 +73,7 @@ public class AcquirenteFragmentHome extends Fragment {
         progressBarAcquirenteFragmentHome = view.findViewById(R.id.progressBarAcquirenteFragmentHome);
 
         // Inizializza il DAO e l'adapter
-        astaDAOAcquirente = new AstaDAOAcquirente(this, email);
+        astaDAOAcquirente = new AstaDAOAcquirente(this, email,tipoUtente);
 
         astaAdapterConsigliate = new AstaAdapter(getContext(), null);
         categorie = new ArrayList<>();
@@ -94,6 +88,8 @@ public class AcquirenteFragmentHome extends Fragment {
         // Aggiungi un decorator predefinito per ridurre lo spazio tra le aste, superfluo
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(getContext(), linearLayoutManager.getOrientation());
         recyclerViewAsteConsigliate.addItemDecoration(dividerItemDecoration);
+
+        //bisogna aggiungere il setOnItemClickListener per ogni setAdapter di ogni recycler view specificando cosa fare per ogni tipo di asta clickato
         astaAdapterConsigliate.setOnItemClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -241,18 +237,7 @@ public class AcquirenteFragmentHome extends Fragment {
         astaDAOAcquirente.openConnection();
         astaDAOAcquirente.getAsteNuove();
         astaDAOAcquirente.closeConnection();
-        //codice per l'asta di prova, commentato
-//        textView_condizione_prova = view.findViewById(R.id.textView_condizione_prova);
-        image_view_prova = view.findViewById(R.id.image_view_item);
-        textView_nome_prova = view.findViewById(R.id.textView_nome_item);
-        textView_descrizione_prova = view.findViewById(R.id.textView_descrizione_item);
-        textView_prezzo_prova = view.findViewById(R.id.textView_prezzo_item);
-        textView_data_scadenza_prova = view.findViewById(R.id.textView_data_scadenza_item);
 
-        AcquirenteHomeDAO acquirenteHomeDAO = new AcquirenteHomeDAO(this, email);
-        acquirenteHomeDAO.openConnection();
-        acquirenteHomeDAO.findAstaInversaProva();
-        acquirenteHomeDAO.closeConnection();
 
         //rendo l'icona di caricamento non piu visibile e il menu clickabile
         progressBarAcquirenteFragmentHome.setVisibility(View.INVISIBLE);
@@ -321,17 +306,6 @@ public class AcquirenteFragmentHome extends Fragment {
     }
 
 
-
-    //metodo per l'asta di prova, commentabile
-    public void handleProva( String nome, String descrizione, String prezzo, String data, String condizione, Bitmap foto){
-        Log.d("home", "nome , descrizione, prezzo, data, condizione: " + nome + descrizione + prezzo + data + condizione);
-        textView_nome_prova.setText(nome);
-        textView_descrizione_prova.setText(descrizione);
-        textView_prezzo_prova.setText(prezzo);
-        textView_data_scadenza_prova.setText(data);
-//        textView_condizione_prova.setText(condizione);
-        image_view_prova.setImageBitmap(foto);
-    }
     public void setCategorie(ArrayList<String> categorie){
         this.categorie = categorie;
     }

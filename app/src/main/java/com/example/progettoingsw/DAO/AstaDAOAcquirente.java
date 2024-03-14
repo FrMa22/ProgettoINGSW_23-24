@@ -23,11 +23,12 @@ public class AstaDAOAcquirente {
     private Connection connection;
     private AcquirenteFragmentHome acquirenteFragmentHome;
     private String email;
+    private String tipoUtente;
 
-    public AstaDAOAcquirente(AcquirenteFragmentHome acquirenteFragmentHome , String email) {
+    public AstaDAOAcquirente(AcquirenteFragmentHome acquirenteFragmentHome , String email, String tipoUtente) {
         this.acquirenteFragmentHome = acquirenteFragmentHome;
         this.email = email;
-
+        this.tipoUtente = tipoUtente;
     }
 
     public void openConnection() {
@@ -39,17 +40,29 @@ public class AstaDAOAcquirente {
     }
 
     public void getAsteCategorieAcquirente() {
-        new GetAsteCategorieAcquirenteTask().execute();
+        if(tipoUtente.equals("acquirente")){
+            new GetAsteCategorieAcquirenteTask().execute();
+        }else{
+            new GetAsteCategorieVenditoreTask().execute();
+        }
     }
     public void getCategorie(){
         new GetCategorieTask().execute();
     }
 
     public void getAsteScadenzaRecente(){
-        new GetAsteProssimaScadenzaTask().execute();
+        if(tipoUtente.equals("acquirente")) {
+            new GetAsteProssimaScadenzaIngleseTask().execute();
+        }else{
+            new GetAsteProssimaScadenzaInverseTask().execute();
+        }
     }
     public void getAsteNuove(){
-        new GetAsteNuoveTask().execute();
+        if(tipoUtente.equals("acquirente")) {
+            new GetAsteNuoveIngleseTask().execute();
+        }else{
+            new GetAsteNuoveInverseTask().execute();
+        }
     }
     public void closeConnection() {
         new AstaDAOAcquirente.CloseConnectionTask().execute();
@@ -272,7 +285,73 @@ public class AstaDAOAcquirente {
             }
         }
     }
+    private class GetAsteCategorieVenditoreTask extends AsyncTask<String, Void, ArrayList<Object>> {
+        @Override
+        protected ArrayList<Object> doInBackground(String... emails) {
+            ArrayList<Object> astaItems = new ArrayList<>();
+            try {
+                // Query per recuperare le categorie del venditore
+                String queryCategorieVenditore = "SELECT nome  FROM categorieVenditore WHERE indirizzo_email = ?";
+                PreparedStatement stmtCategorieVenditore = connection.prepareStatement(queryCategorieVenditore);
+                stmtCategorieVenditore.setString(1, email);
+                ResultSet resultSetCategorieVenditore = stmtCategorieVenditore.executeQuery();
 
+                // ArrayList per memorizzare le categorie dell'acquirente
+                ArrayList<String> categorieVenditore = new ArrayList<>();
+                while (resultSetCategorieVenditore.next()) {
+                    categorieVenditore.add(resultSetCategorieVenditore.getString("nome"));
+                }
+                resultSetCategorieVenditore.close();
+                stmtCategorieVenditore.close();
+
+                // Query per recuperare le aste inglesi associate alle categorie dell'acquirente
+                String queryAsteInverse = "SELECT * FROM asta_inversa AS a INNER JOIN AsteCategorieInversa AS c ON a.id = c.id_asta_inversa WHERE c.nomeCategoria IN (SELECT nomeCategoria FROM CategorieVenditore WHERE indirizzo_email = ?)";
+                PreparedStatement stmtAsteInverse = connection.prepareStatement(queryAsteInverse);
+                stmtAsteInverse.setString(1, email);
+                ResultSet resultSetAsteInverse = stmtAsteInverse.executeQuery();
+
+                // Recupera le aste inglesi
+                while (resultSetAsteInverse.next()) {
+                    int id = resultSetAsteInverse.getInt("id");
+                    String nome = resultSetAsteInverse.getString("nome");
+                    String descrizione = resultSetAsteInverse.getString("descrizione");
+                    byte[] fotoBytes = resultSetAsteInverse.getBytes("path_immagine");
+                    Bitmap foto = null;
+                    if (fotoBytes != null) {
+                        foto = BitmapFactory.decodeByteArray(fotoBytes, 0, fotoBytes.length);
+                    } else {
+                        // In caso di immagine non disponibile, puoi impostare un'immagine predefinita o lasciare foto come null
+                        // Ecco un esempio di impostazione di un'immagine predefinita
+                        foto = BitmapFactory.decodeResource(acquirenteFragmentHome.getResources(), R.drawable.img_default);
+                    }
+
+                    String prezzoMax = resultSetAsteInverse.getString("prezzoMax");
+                    String prezzoAttuale = resultSetAsteInverse.getString("prezzoAttuale");
+                    String dataDiScadenza = resultSetAsteInverse.getString("dataDiScadenza");
+                    String condizione = resultSetAsteInverse.getString("condizione");
+
+                    AstaInversaItem astaInversaItem = new AstaInversaItem(id, nome, descrizione, foto, prezzoMax, dataDiScadenza, condizione, prezzoAttuale);
+                    astaItems.add(astaInversaItem);
+                }
+                resultSetAsteInverse.close();
+                stmtAsteInverse.close();
+
+                connection.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return astaItems;
+        }
+
+        @Override
+        protected void onPostExecute(ArrayList<Object> astaItems) {
+            super.onPostExecute(astaItems);
+            if (acquirenteFragmentHome != null) {
+                Log.d("AstaDAOAcquirente", "onPostExecute: GetAsteCategorie venditore");
+                acquirenteFragmentHome.handleAsteConsigliateResult(astaItems);
+            }
+        }
+    }
     private class GetCategorieTask extends AsyncTask<Void, Void, ArrayList<String>> {
         @Override
         protected ArrayList<String> doInBackground(Void... voids) {
@@ -303,7 +382,7 @@ public class AstaDAOAcquirente {
         }
     }
 
-    private class GetAsteProssimaScadenzaTask extends AsyncTask<Void, Void, ArrayList<Object>> {
+    private class GetAsteProssimaScadenzaIngleseTask extends AsyncTask<Void, Void, ArrayList<Object>> {
         @Override
         protected ArrayList<Object> doInBackground(Void... voids) {
             ArrayList<Object> astaItems = new ArrayList<>();
@@ -354,8 +433,58 @@ public class AstaDAOAcquirente {
             }
         }
     }
+    private class GetAsteProssimaScadenzaInverseTask extends AsyncTask<Void, Void, ArrayList<Object>> {
+        @Override
+        protected ArrayList<Object> doInBackground(Void... voids) {
+            ArrayList<Object> astaItems = new ArrayList<>();
+            try {
+                Statement statement = connection.createStatement();
 
-    private class GetAsteNuoveTask extends AsyncTask<String, Void, ArrayList<Object>> {
+                // Query per recuperare le 5 aste inglesi con la data di scadenza più vicina
+                String queryAsteInverse = "SELECT * FROM asta_inversa ORDER BY dataDiScadenza ASC LIMIT 5";
+                ResultSet resultSetAsteInverse = statement.executeQuery(queryAsteInverse);
+                while (resultSetAsteInverse.next()) {
+                    int id = resultSetAsteInverse.getInt("id");
+                    String nome = resultSetAsteInverse.getString("nome");
+                    String descrizione = resultSetAsteInverse.getString("descrizione");
+                    byte[] fotoBytes = resultSetAsteInverse.getBytes("path_immagine");
+                    Bitmap foto = null;
+                    if (fotoBytes != null) {
+                        foto = BitmapFactory.decodeByteArray(fotoBytes, 0, fotoBytes.length);
+                    } else {
+                        // In caso di immagine non disponibile, puoi impostare un'immagine predefinita o lasciare foto come null
+                        // Ecco un esempio di impostazione di un'immagine predefinita
+                        foto = BitmapFactory.decodeResource(acquirenteFragmentHome.getResources(), R.drawable.img_default);
+                    }
+
+                    String prezzoMax = resultSetAsteInverse.getString("prezzoMax");
+                    String prezzoAttuale = resultSetAsteInverse.getString("prezzoAttuale");
+                    String dataDiScadenza = resultSetAsteInverse.getString("dataDiScadenza");
+                    String condizione = resultSetAsteInverse.getString("condizione");
+
+                    AstaInversaItem astaInversaItem = new AstaInversaItem(id, nome, descrizione, foto, prezzoMax, dataDiScadenza, condizione, prezzoAttuale);
+                    astaItems.add(astaInversaItem);
+                }
+                resultSetAsteInverse.close();
+                statement.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return astaItems;
+        }
+
+        @Override
+        protected void onPostExecute(ArrayList<Object> astaItems) {
+            super.onPostExecute(astaItems);
+            if (acquirenteFragmentHome != null) {
+                // Gestisci il risultato come desiderato
+                Log.d("AstaDAOAcquirente", "onPostExecute: GetAsteProssimaScadenza");
+                acquirenteFragmentHome.handleAsteInScadenzaResult(astaItems);
+            }
+        }
+    }
+
+    private class GetAsteNuoveIngleseTask extends AsyncTask<String, Void, ArrayList<Object>> {
         @Override
         protected ArrayList<Object> doInBackground(String... emails) {
             ArrayList<Object> astaItems = new ArrayList<>();
@@ -449,7 +578,61 @@ public class AstaDAOAcquirente {
         protected void onPostExecute(ArrayList<Object> astaItems) {
             super.onPostExecute(astaItems);
             if (acquirenteFragmentHome != null) {
-                Log.d("GetAsteNuoveTask", "onPostExecute:");
+                Log.d("GetAsteNuoveIngleseTask", "onPostExecute:");
+                acquirenteFragmentHome.handleAsteNuoveResult(astaItems);
+            }
+        }
+    }
+    private class GetAsteNuoveInverseTask extends AsyncTask<String, Void, ArrayList<Object>> {
+        @Override
+        protected ArrayList<Object> doInBackground(String... emails) {
+            ArrayList<Object> astaItems = new ArrayList<>();
+            try{
+                // Query per recuperare le aste inglesi associate alle categorie dell'acquirente
+                String queryAsteInverse = "SELECT * FROM asta_inversa ORDER BY id DESC LIMIT 5";
+                PreparedStatement stmtAsteInverse = connection.prepareStatement(queryAsteInverse);
+                ResultSet resultSetAsteInverse = stmtAsteInverse.executeQuery();
+
+                // Recupera le aste inglesi
+                while (resultSetAsteInverse.next()) {
+                    int id = resultSetAsteInverse.getInt("id");
+                    String nome = resultSetAsteInverse.getString("nome");
+                    String descrizione = resultSetAsteInverse.getString("descrizione");
+                    byte[] fotoBytes = resultSetAsteInverse.getBytes("path_immagine");
+                    Bitmap foto = null;
+                    if (fotoBytes != null) {
+                        foto = BitmapFactory.decodeByteArray(fotoBytes, 0, fotoBytes.length);
+                    } else {
+                        // In caso di immagine non disponibile, puoi impostare un'immagine predefinita o lasciare foto come null
+                        // Ecco un esempio di impostazione di un'immagine predefinita
+                        foto = BitmapFactory.decodeResource(acquirenteFragmentHome.getResources(), R.drawable.img_default);
+                    }
+
+                    String prezzoMax = resultSetAsteInverse.getString("prezzoMax");
+                    String prezzoAttuale = resultSetAsteInverse.getString("prezzoAttuale");
+                    String dataDiScadenza = resultSetAsteInverse.getString("dataDiScadenza");
+                    String condizione = resultSetAsteInverse.getString("condizione");
+
+                    AstaInversaItem astaInversaItem = new AstaInversaItem(id, nome, descrizione, foto, prezzoMax, dataDiScadenza, condizione, prezzoAttuale);
+                    astaItems.add(astaInversaItem);
+                }
+                resultSetAsteInverse.close();
+                stmtAsteInverse.close();
+
+
+
+                connection.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return astaItems;
+        }
+
+        @Override
+        protected void onPostExecute(ArrayList<Object> astaItems) {
+            super.onPostExecute(astaItems);
+            if (acquirenteFragmentHome != null) {
+                Log.d("GetAsteNuoveIngleseTask", "onPostExecute:");
                 acquirenteFragmentHome.handleAsteNuoveResult(astaItems);
             }
         }
