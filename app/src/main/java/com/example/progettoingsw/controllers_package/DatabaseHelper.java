@@ -4,9 +4,9 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DatabaseHelper {
-    private static final String URL = "jdbc:postgresql://database-progetto.cdce2824inp7.eu-west-3.rds.amazonaws.com:5432/postgres";
+    private static final String URL = "jdbc:postgresql://database-1.cvgowm06egxb.eu-north-1.rds.amazonaws.com:5432/postgres";
     private static final String USER = "postgres";
-    private static final String PASSWORD = "Progetto2324";
+    private static final String PASSWORD = "FozzaNaboli";
 
     public static Connection getConnection() throws SQLException {
         try {
