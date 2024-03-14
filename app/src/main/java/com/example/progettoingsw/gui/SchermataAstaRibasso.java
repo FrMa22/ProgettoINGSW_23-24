@@ -24,7 +24,7 @@ public class SchermataAstaRibasso extends GestoreComuniImplementazioni {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.schermata_asta_ribasso);
-        bottoneBack =  findViewById(R.id.bottoneBackSchermataAstaRibasso);
+        bottoneBack =  findViewById(R.id.bottoneBackLeMieAste);
         bottoneBack.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 Controller.redirectActivity(SchermataAstaRibasso.this, AcquirenteFragmentHome.class);

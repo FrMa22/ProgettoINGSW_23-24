@@ -27,7 +27,7 @@
                 android:text="Prodotto asta"
                 android:background="@color/toolbar_color"/>
             <ImageButton
-                android:id="@+id/bottoneBackSchermataAstaRibasso"
+                android:id="@+id/bottoneBackLeMieAste"
                 android:layout_width="wrap_content"
                 android:layout_height="80dp"
                 android:backgroundTint="@android:color/transparent"

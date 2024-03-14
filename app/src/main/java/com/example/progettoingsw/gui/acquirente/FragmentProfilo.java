@@ -1,4 +1,5 @@
 package com.example.progettoingsw.gui.acquirente;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.TypedValue;
@@ -132,7 +133,10 @@ public class FragmentProfilo extends Fragment{
         button_le_mie_aste.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Controller.redirectActivity(getContext(), LeMieAste.class);
+                System.out.println("le aste oooh");
+                Intent intent = new Intent(getContext(), LeMieAste.class);
+                intent.putExtra("email", email);
+                startActivity(intent);
             }
         });
 
@@ -282,6 +286,7 @@ public class FragmentProfilo extends Fragment{
         }
     }
 
+    //metodo per rendere clickabile o non la bottom navigation view, accede alla bottom di main tramite un metodo di main
     private void setNavigationView(Boolean valore) {
         if(tipoUtente.equals("acquirente")) {
 
@@ -289,7 +294,7 @@ public class FragmentProfilo extends Fragment{
             if (activity != null) {
                 // Abilita la BottomNavigationView
                 // Log.d("acquirente", "disabilito");
-                activity.enableBottomNavigationView(true);
+                activity.enableBottomNavigationView(valore);
             }
         }else{
 
@@ -297,7 +302,7 @@ public class FragmentProfilo extends Fragment{
             if (activity != null) {
                 // Abilita la BottomNavigationView
                 // Log.d("acquirente", "disabilito");
-                activity.enableBottomNavigationView(true);
+                activity.enableBottomNavigationView(valore);
             }
         }
     }

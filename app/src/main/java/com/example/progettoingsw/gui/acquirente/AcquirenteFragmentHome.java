@@ -9,6 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,19 +27,19 @@ import com.example.progettoingsw.R;
 import com.example.progettoingsw.controllers_package.AstaAdapter;
 import com.example.progettoingsw.controllers_package.Controller;
 import com.example.progettoingsw.gui.LeMieAste;
-import com.example.progettoingsw.gui.PreferitiActivity;
+import com.example.progettoingsw.gui.venditore.VenditoreMainActivity;
 import com.google.android.material.button.MaterialButton;
 
 import java.util.ArrayList;
 
 public class AcquirenteFragmentHome extends Fragment {
-
+    private RelativeLayout relative_layout_home_acquirente;
     private AstaDAOAcquirente astaDAOAcquirente;
     private AstaAdapter astaAdapterConsigliate;
     private AstaAdapter astaAdapterInScadenza;
     private AstaAdapter astaAdapterNuove;
 
-
+    private ProgressBar progressBarAcquirenteFragmentHome;
     TextView textView_condizione_prova;
     ImageView image_view_prova;
     TextView textView_nome_prova;
@@ -56,6 +58,18 @@ public class AcquirenteFragmentHome extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.acquirente_fragment_home, container, false);
+
+
+        return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        relative_layout_home_acquirente = view.findViewById(R.id.relative_layout_home_acquirente);
+        progressBarAcquirenteFragmentHome = view.findViewById(R.id.progressBarAcquirenteFragmentHome);
+
         // Inizializza il DAO e l'adapter
         astaDAOAcquirente = new AstaDAOAcquirente(this, email);
 
@@ -72,6 +86,11 @@ public class AcquirenteFragmentHome extends Fragment {
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(getContext(), linearLayoutManager.getOrientation());
         recyclerViewAsteConsigliate.addItemDecoration(dividerItemDecoration);
         recyclerViewAsteConsigliate.setAdapter(astaAdapterConsigliate);
+
+        //rendo l'icona di caricamento visibile ad inizio recuperi dal db e il bottom menu non clickabile
+        progressBarAcquirenteFragmentHome.setVisibility(View.VISIBLE);
+        setNavigationView(false);
+        relative_layout_home_acquirente.setClickable(false);
 
         // Apri la connessione al database e ottieni i prodotti
         astaDAOAcquirente.openConnection();
@@ -108,14 +127,6 @@ public class AcquirenteFragmentHome extends Fragment {
         astaDAOAcquirente.openConnection();
         astaDAOAcquirente.getAsteNuove();
         astaDAOAcquirente.closeConnection();
-
-        return view;
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
         //codice per l'asta di prova, commentato
 //        textView_condizione_prova = view.findViewById(R.id.textView_condizione_prova);
         image_view_prova = view.findViewById(R.id.image_view_item);
@@ -128,6 +139,11 @@ public class AcquirenteFragmentHome extends Fragment {
         acquirenteHomeDAO.openConnection();
         acquirenteHomeDAO.findAstaInversaProva();
         acquirenteHomeDAO.closeConnection();
+
+        //rendo l'icona di caricamento non piu visibile e il menu clickabile
+        progressBarAcquirenteFragmentHome.setVisibility(View.INVISIBLE);
+        setNavigationView(true);
+        relative_layout_home_acquirente.setClickable(true);
 
         button_le_mie_aste = view.findViewById(R.id.button_le_mie_aste);
         button_le_mie_aste.setOnClickListener(new View.OnClickListener() {
@@ -147,7 +163,8 @@ public class AcquirenteFragmentHome extends Fragment {
         preferitiButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Controller.redirectActivityEmailTipoUtente(getActivity(), PreferitiActivity.class,email,"acquirente");
+                // Apri l'activity dei preferiti
+                // Controller.redirectActivity(getActivity(), PreferitiActivity.class);
                 Toast.makeText(getContext(), "Apri l'activity dei preferiti", Toast.LENGTH_SHORT).show();
             }
         });
@@ -205,4 +222,14 @@ public class AcquirenteFragmentHome extends Fragment {
     public void setCategorie(ArrayList<String> categorie){
         this.categorie = categorie;
     }
+
+    private void setNavigationView(Boolean valore) {
+        AcquirenteMainActivity activity = (AcquirenteMainActivity) getActivity();
+        if (activity != null) {
+            // Abilita la BottomNavigationView
+            Log.d("setNavigationView" , "preso comando : " + valore);
+            activity.enableBottomNavigationView(valore);
+        }
+    }
+
 }

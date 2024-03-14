@@ -80,7 +80,13 @@ public class AcquirenteMainActivity extends GestoreComuniImplementazioni {
     }
 
     public void enableBottomNavigationView(boolean enabled) {
-        bottomNavigationView.setEnabled(enabled);
+        Log.d("enable" , "preso comando : " + enabled);
+        bottomNavigationView.getMenu().getItem(0).setEnabled(enabled);
+        bottomNavigationView.getMenu().getItem(1).setEnabled(enabled);
+        bottomNavigationView.getMenu().getItem(2).setEnabled(enabled);
+        bottomNavigationView.getMenu().getItem(3).setEnabled(enabled);
+        bottomNavigationView.getMenu().getItem(4).setEnabled(enabled);
+
     }
 
 }
