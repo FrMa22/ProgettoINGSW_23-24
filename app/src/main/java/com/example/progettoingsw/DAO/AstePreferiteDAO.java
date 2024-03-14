@@ -63,7 +63,7 @@ public class AstePreferiteDAO {
                             ArrayList<Object> aste = new ArrayList<>();
                             String tipoUtente = strings[2];
                             if (tipoUtente.equals("venditore")){
-                                String queryIngleseVenditore= "SELECT aa.* FROM preferitiVenditore pv JOIN asta_allinglese aa ON pv.id_asta = aa.id WHERE pv.indirizzo_email= ? AND pv.tipo_asta=inglese" ;
+                                String queryIngleseVenditore= "SELECT aa.* FROM preferitiVenditore pv JOIN asta_allinglese aa ON pv.id_asta = aa.id WHERE pv.indirizzo_email= ? AND pv.tipo_asta= 'inglese' " ;
                                 PreparedStatement statementInglesiVenditore = connection.prepareStatement(queryIngleseVenditore);
                                 statementInglesiVenditore.setString(1, strings[1]);
                                 ResultSet resultSetAsteIngleseVenditore = statementInglesiVenditore.executeQuery();
@@ -96,7 +96,7 @@ public class AstePreferiteDAO {
                                 statementInglesiVenditore.close();
 
                                 Log.d("AstePreferiteDAO", "asta al ribasso:");
-                                String queryAsteRibassoVenditore = "SELECT aa.* FROM preferitiVenditore pv JOIN asta_alribasso aa ON pv.id_asta = aa.id WHERE pv.indirizzo_email= ? AND pv.tipo_asta=ribasso";
+                                String queryAsteRibassoVenditore = "SELECT aa.* FROM preferitiVenditore pv JOIN asta_alribasso aa ON pv.id_asta = aa.id WHERE pv.indirizzo_email= ? AND pv.tipo_asta= 'ribasso' ";
                                 PreparedStatement statementRibasso = connection.prepareStatement(queryAsteRibassoVenditore);
                                 statementRibasso.setString(1, strings[1]);
                                 ResultSet resultSetAsteRibasso = statementRibasso.executeQuery();
@@ -128,7 +128,7 @@ public class AstePreferiteDAO {
                                 statementRibasso.close();
 
                                 Log.d("LeMieAsteDAO", "asta inversa:");
-                                String queryAsteInverse ="SELECT aa.* FROM preferitiVenditore pv JOIN asta_inversa aa ON pv.id_asta = aa.id WHERE pv.indirizzo_email= ? AND pv.tipo_asta=inversa" ;
+                                String queryAsteInverse ="SELECT aa.* FROM preferitiVenditore pv JOIN asta_inversa aa ON pv.id_asta = aa.id WHERE pv.indirizzo_email= ? AND pv.tipo_asta= 'inversa' " ;
                                 PreparedStatement statementInversa = connection.prepareStatement(queryAsteInverse);
                                 statementInversa.setString(1, strings[1]);
                                 ResultSet resultSetAsteInversa = statementInversa.executeQuery();
@@ -163,7 +163,7 @@ public class AstePreferiteDAO {
                             }
                             else if(tipoUtente.equals("acquirente")){
                                 {
-                                    String queryIngleseAcquirente= "SELECT aa.* FROM preferitiAcquirente pv JOIN asta_allinglese aa ON pv.id_asta = aa.id WHERE pv.indirizzo_email= ? AND pv.tipo_asta=inglese" ;
+                                    String queryIngleseAcquirente= "SELECT aa.* FROM preferitiAcquirente pv JOIN asta_allinglese aa ON pv.id_asta = aa.id WHERE pv.indirizzo_email= ? AND pv.tipo_asta= 'inglese' " ;
                                     PreparedStatement statementInglesi = connection.prepareStatement(queryIngleseAcquirente);
                                     statementInglesi.setString(1, strings[1]);
                                     ResultSet resultSetAsteInglese = statementInglesi.executeQuery();
@@ -196,7 +196,7 @@ public class AstePreferiteDAO {
                                     statementInglesi.close();
 
                                     Log.d("AstePreferiteDAO", "asta al ribasso:");
-                                    String queryAsteRibassoAcquirente = "SELECT aa.* FROM preferitiAcquirente pv JOIN asta_alribasso aa ON pv.id_asta = aa.id WHERE pv.indirizzo_email= ? AND pv.tipo_asta=ribasso";
+                                    String queryAsteRibassoAcquirente = "SELECT aa.* FROM preferitiAcquirente pv JOIN asta_alribasso aa ON pv.id_asta = aa.id WHERE pv.indirizzo_email= ? AND pv.tipo_asta= 'ribasso' ";
                                     PreparedStatement statementRibasso = connection.prepareStatement(queryAsteRibassoAcquirente);
                                     statementRibasso.setString(1, strings[1]);
                                     ResultSet resultSetAsteRibasso = statementRibasso.executeQuery();
