@@ -6,7 +6,7 @@
     android:id="@+id/linearLayoutSchermataAstaInversa"
     android:orientation="vertical"
     android:background="@color/colore_base"
-    tools:context=".gui.acquirente.AcquirenteFragmentHome">  <!-- da cambiare-->
+    tools:context=".gui.SchermataAstaInversa">
 
     <androidx.appcompat.widget.Toolbar
         android:layout_width="match_parent"
@@ -182,7 +182,7 @@
 
             <TextView
                 android:id="@+id/textViewAcquirenteSchermataAstaInversa"
-                android:layout_width="230dp"
+                android:layout_width="wrap_content"
                 android:layout_height="48dp"
                 android:layout_marginBottom="-1dp"
                 android:drawableLeft="@drawable/ic_profilo"

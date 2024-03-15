@@ -13,8 +13,9 @@ public class AstaRibassoItem {
     private String decrementoAutomatico;
     private String prezzoAttuale;
     private String prezzoMin;
+    private String emailVenditore;
 
-    public AstaRibassoItem(int id, String nome, String descrizione, Bitmap immagine, String prezzoBase, String intervalloDecrementale, String decrementoAutomatico, String prezzoMin, String prezzoAttuale, String condizione) {
+    public AstaRibassoItem(int id, String nome, String descrizione, Bitmap immagine, String prezzoBase, String intervalloDecrementale, String decrementoAutomatico, String prezzoMin, String prezzoAttuale, String condizione, String emailVenditore) {
         this.id = id;
         this.nome = nome;
         this.descrizione = descrizione;
@@ -25,6 +26,14 @@ public class AstaRibassoItem {
         this.prezzoMin = prezzoMin;
         this.prezzoAttuale = prezzoAttuale;
         this.condizione = condizione;
+        this.emailVenditore = emailVenditore;
+    }
+    public String getEmailVenditore() {
+        return emailVenditore;
+    }
+
+    public void setEmailVenditore(String emailVenditore) {
+        this.emailVenditore = emailVenditore;
     }
 
     public int getId() {

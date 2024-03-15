@@ -95,6 +95,7 @@ public class SchermataAstaRibasso extends GestoreComuniImplementazioni {
             textViewDescrizione.setText(astaRibassoItem.getDescrizione());
             textViewOffertaAttuale.setText(String.valueOf(astaRibassoItem.getPrezzoAttuale()));
             textViewProssimoDecremento.setText("Da implementare");
+            textViewVenditore.setText(astaRibassoItem.getEmailVenditore());
             // Imposta l'immagine solo se non è nulla
             if (astaRibassoItem.getImmagine() != null) {
                 imageViewProdotto.setImageBitmap(astaRibassoItem.getImmagine());

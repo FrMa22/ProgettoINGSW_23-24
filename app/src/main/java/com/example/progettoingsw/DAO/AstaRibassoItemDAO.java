@@ -76,8 +76,8 @@ public class AstaRibassoItemDAO {
                         String prezzoMin = String.valueOf(resultSet.getFloat("prezzoMin"));
                         String decrementoCifra=String.valueOf(resultSet.getFloat("decrementoAutomaticoCifra"));
                         String intervalloDecremento=String.valueOf(resultSet.getString("intervalloDecrementale"));
-
-                        AstaRibassoItem asta = new AstaRibassoItem(  id,  nome,  descrizione,  immagine,  prezzoBase,  intervalloDecremento,  decrementoCifra,  prezzoMin,  prezzoAttuale,  condizione );
+                        String emailVenditore = resultSet.getString("id_venditore");
+                        AstaRibassoItem asta = new AstaRibassoItem(  id,  nome,  descrizione,  immagine,  prezzoBase,  intervalloDecremento,  decrementoCifra,  prezzoMin,  prezzoAttuale,  condizione ,emailVenditore);
                         aste.add(asta);
                     }
                     resultSet.close();

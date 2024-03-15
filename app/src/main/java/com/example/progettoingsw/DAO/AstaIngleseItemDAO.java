@@ -75,7 +75,9 @@ public class AstaIngleseItemDAO {
                         String prezzoAttuale = String.valueOf(resultSet.getFloat("prezzoAttuale"));
                         String rialzoMin = String.valueOf(resultSet.getFloat("rialzoMin"));
                         String intervalloOfferte=String.valueOf(resultSet.getString("intervalloTempoOfferte"));
-                        AstaIngleseItem asta = new AstaIngleseItem( id, nome, descrizione, immagine,  baseAsta,  intervalloOfferte,  rialzoMin,  prezzoAttuale,  dataScadenza,  condizione);
+                        String emailVenditore = resultSet.getString("id_venditore");
+
+                        AstaIngleseItem asta = new AstaIngleseItem( id, nome, descrizione, immagine,  baseAsta,  intervalloOfferte,  rialzoMin,  prezzoAttuale,  dataScadenza,  condizione,emailVenditore);
                         aste.add(asta);
                     }
                     resultSet.close();

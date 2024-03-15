@@ -177,8 +177,9 @@ public class AstaIngleseDAO {
                             String prezzoAttuale = resultSet.getString("prezzoAttuale");
                             String dataDiScadenza = resultSet.getString("dataDiScadenza");
                             String condizione = resultSet.getString("condizione");
+                            String email_venditore = resultSet.getString("id_venditore");
 
-                            AstaIngleseItem astaIngleseItem = new AstaIngleseItem(id, nome, descrizione, foto, baseAsta, intervalloTempoOfferte, rialzoMin, prezzoAttuale, dataDiScadenza, condizione);
+                            AstaIngleseItem astaIngleseItem = new AstaIngleseItem(id, nome, descrizione, foto, baseAsta, intervalloTempoOfferte, rialzoMin, prezzoAttuale, dataDiScadenza, condizione,email_venditore);
                             return astaIngleseItem;
                         } else {
                             return null; // Nessuna asta trovata con l'ID specificato

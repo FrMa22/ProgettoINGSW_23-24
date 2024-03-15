@@ -89,6 +89,7 @@ public class SchermataAstaInversa extends GestoreComuniImplementazioni {
             textViewDescrizioneSchermataAstaInversa.setText(astaInversaItem.getDescrizione());
             textViewPrezzoAttualeSchermataAstaInversa.setText(String.valueOf(astaInversaItem.getPrezzoAttuale()));
             textViewDataScadenzaSchermataAstaInversa.setText(String.valueOf(astaInversaItem.getDataDiScadenza()));
+            textViewAcquirenteSchermataAstaInversa.setText(astaInversaItem.getEmailAcquirente());
             // Imposta l'immagine solo se non è nulla
             if (astaInversaItem.getImmagine() != null) {
                 ImageViewSchermataAstaInversa.setImageBitmap(astaInversaItem.getImmagine());

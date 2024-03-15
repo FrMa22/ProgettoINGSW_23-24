@@ -13,8 +13,9 @@ public class AstaIngleseItem {
     private String intervalloTempoOfferte;
     private String rialzoMin;
     private String prezzoAttuale;
+    private String emailVenditore;
 
-    public AstaIngleseItem(int id, String nome, String descrizione, Bitmap immagine, String baseAsta, String intervalloTempoOfferte, String rialzoMin, String prezzoAttuale, String dataDiScadenza, String condizione) {
+    public AstaIngleseItem(int id, String nome, String descrizione, Bitmap immagine, String baseAsta, String intervalloTempoOfferte, String rialzoMin, String prezzoAttuale, String dataDiScadenza, String condizione, String emailVenditore) {
         this.id = id;
         this.nome = nome;
         this.descrizione = descrizione;
@@ -25,6 +26,7 @@ public class AstaIngleseItem {
         this.prezzoAttuale = prezzoAttuale;
         this.dataDiScadenza = dataDiScadenza;
         this.condizione = condizione;
+        this.emailVenditore = emailVenditore;
     }
 
     public int getId() {
@@ -35,6 +37,13 @@ public class AstaIngleseItem {
         this.id = id;
     }
 
+    public String getEmailVenditore() {
+        return emailVenditore;
+    }
+
+    public void setEmailVenditore(String email_venditore) {
+        this.emailVenditore = email_venditore;
+    }
     public String getNome() {
         return nome;
     }

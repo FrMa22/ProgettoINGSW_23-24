@@ -7,7 +7,7 @@
     android:id="@+id/linearLayoutSchermataAstaRibasso"
     android:orientation="vertical"
     android:background="@color/colore_base"
-    tools:context=".gui.SchermataAstaRibasso">  <!-- da cambiare-->
+    tools:context=".gui.SchermataAstaRibasso">
 
     <androidx.appcompat.widget.Toolbar
         android:layout_width="match_parent"

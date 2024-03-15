@@ -111,8 +111,9 @@ public class AstaDAOAcquirente {
                     String prezzoAttuale = resultSetAsteInglese.getString("prezzoAttuale");
                     String dataDiScadenza = resultSetAsteInglese.getString("dataDiScadenza");
                     String condizione = resultSetAsteInglese.getString("condizione");
+                    String emailVenditore = resultSetAsteInglese.getString("id_venditore");
 
-                    AstaIngleseItem astaIngleseItem = new AstaIngleseItem(id, nome, descrizione, foto, baseAsta, intervalloTempoOfferte, rialzoMin, prezzoAttuale, dataDiScadenza, condizione);
+                    AstaIngleseItem astaIngleseItem = new AstaIngleseItem(id, nome, descrizione, foto, baseAsta, intervalloTempoOfferte, rialzoMin, prezzoAttuale, dataDiScadenza, condizione, emailVenditore);
                     astaItems.add(astaIngleseItem);
                 }
                 resultSetAsteInglese.close();
@@ -132,8 +133,9 @@ public class AstaDAOAcquirente {
                     String prezzoMin = resultSetAsteRibasso.getString("prezzoMin");
                     String prezzoAttuale = resultSetAsteRibasso.getString("prezzoAttuale");
                     String condizione = resultSetAsteRibasso.getString("condizione");
+                    String emailVenditore = resultSetAsteRibasso.getString("id_venditore");
 
-                    AstaRibassoItem astaRibassoItem = new AstaRibassoItem(id, nome, descrizione, foto, prezzoBase, intervalloDecrementale, decrementoAutomatico, prezzoMin, prezzoAttuale, condizione);
+                    AstaRibassoItem astaRibassoItem = new AstaRibassoItem(id, nome, descrizione, foto, prezzoBase, intervalloDecrementale, decrementoAutomatico, prezzoMin, prezzoAttuale, condizione,emailVenditore);
                     astaItems.add(astaRibassoItem);
                 }
                 resultSetAsteRibasso.close();
@@ -160,8 +162,9 @@ public class AstaDAOAcquirente {
                     String prezzoAttuale = resultSetAsteInversa.getString("prezzoAttuale");
                     String dataDiScadenza = resultSetAsteInversa.getString("dataDiScadenza");
                     String condizione = resultSetAsteInversa.getString("condizione");
+                    String emailAcquirente = resultSetAsteInversa.getString("id_acquirente");
 
-                    AstaInversaItem astaInversaItem = new AstaInversaItem(id, nome, descrizione, foto, prezzoMax, dataDiScadenza, condizione, prezzoAttuale);
+                    AstaInversaItem astaInversaItem = new AstaInversaItem(id, nome, descrizione, foto, prezzoMax, dataDiScadenza, condizione, prezzoAttuale,emailAcquirente);
                     astaItems.add(astaInversaItem);
                 }
                 resultSetAsteInversa.close();
@@ -229,8 +232,9 @@ public class AstaDAOAcquirente {
                     String prezzoAttuale = resultSetAsteInglese.getString("prezzoAttuale");
                     String dataDiScadenza = resultSetAsteInglese.getString("dataDiScadenza");
                     String condizione = resultSetAsteInglese.getString("condizione");
+                    String emailVenditore = resultSetAsteInglese.getString("id_venditore");
 
-                    AstaIngleseItem astaIngleseItem = new AstaIngleseItem(id, nome, descrizione, foto, baseAsta, intervalloTempoOfferte, rialzoMin, prezzoAttuale, dataDiScadenza, condizione);
+                    AstaIngleseItem astaIngleseItem = new AstaIngleseItem(id, nome, descrizione, foto, baseAsta, intervalloTempoOfferte, rialzoMin, prezzoAttuale, dataDiScadenza, condizione,emailVenditore);
                     astaItems.add(astaIngleseItem);
                 }
                 resultSetAsteInglese.close();
@@ -262,8 +266,9 @@ public class AstaDAOAcquirente {
                     String prezzoMin = resultSetAsteRibasso.getString("prezzoMin");
                     String prezzoAttuale = resultSetAsteRibasso.getString("prezzoAttuale");
                     String condizione = resultSetAsteRibasso.getString("condizione");
+                    String emailVenditore = resultSetAsteRibasso.getString("id_venditore");
 
-                    AstaRibassoItem astaRibassoItem = new AstaRibassoItem(id, nome, descrizione, foto, prezzoBase, intervalloDecrementale, decrementoAutomatico, prezzoMin, prezzoAttuale, condizione);
+                    AstaRibassoItem astaRibassoItem = new AstaRibassoItem(id, nome, descrizione, foto, prezzoBase, intervalloDecrementale, decrementoAutomatico, prezzoMin, prezzoAttuale, condizione,emailVenditore);
                     astaItems.add(astaRibassoItem);
                 }
                 resultSetAsteRibasso.close();
@@ -310,7 +315,7 @@ public class AstaDAOAcquirente {
                 stmtAsteInverse.setString(1, email);
                 ResultSet resultSetAsteInverse = stmtAsteInverse.executeQuery();
 
-                // Recupera le aste inglesi
+                // Recupera le aste inverse
                 while (resultSetAsteInverse.next()) {
                     int id = resultSetAsteInverse.getInt("id");
                     String nome = resultSetAsteInverse.getString("nome");
@@ -329,8 +334,9 @@ public class AstaDAOAcquirente {
                     String prezzoAttuale = resultSetAsteInverse.getString("prezzoAttuale");
                     String dataDiScadenza = resultSetAsteInverse.getString("dataDiScadenza");
                     String condizione = resultSetAsteInverse.getString("condizione");
+                    String emailAcquirente = resultSetAsteInverse.getString("id_acquirente");
 
-                    AstaInversaItem astaInversaItem = new AstaInversaItem(id, nome, descrizione, foto, prezzoMax, dataDiScadenza, condizione, prezzoAttuale);
+                    AstaInversaItem astaInversaItem = new AstaInversaItem(id, nome, descrizione, foto, prezzoMax, dataDiScadenza, condizione, prezzoAttuale,emailAcquirente);
                     astaItems.add(astaInversaItem);
                 }
                 resultSetAsteInverse.close();
@@ -411,8 +417,9 @@ public class AstaDAOAcquirente {
                     String prezzoAttuale = resultSetAsteInglese.getString("prezzoAttuale");
                     String dataDiScadenza = resultSetAsteInglese.getString("dataDiScadenza");
                     String condizione = resultSetAsteInglese.getString("condizione");
+                    String emailVenditore = resultSetAsteInglese.getString("id_venditore");
 
-                    AstaIngleseItem astaIngleseItem = new AstaIngleseItem(id, nome, descrizione, foto, baseAsta, intervalloTempoOfferte, rialzoMin, prezzoAttuale, dataDiScadenza, condizione);
+                    AstaIngleseItem astaIngleseItem = new AstaIngleseItem(id, nome, descrizione, foto, baseAsta, intervalloTempoOfferte, rialzoMin, prezzoAttuale, dataDiScadenza, condizione, emailVenditore);
                     astaItems.add(astaIngleseItem);
                 }
                 resultSetAsteInglese.close();
@@ -461,8 +468,9 @@ public class AstaDAOAcquirente {
                     String prezzoAttuale = resultSetAsteInverse.getString("prezzoAttuale");
                     String dataDiScadenza = resultSetAsteInverse.getString("dataDiScadenza");
                     String condizione = resultSetAsteInverse.getString("condizione");
+                    String emailAcquirente = resultSetAsteInverse.getString("id_acquirente");
 
-                    AstaInversaItem astaInversaItem = new AstaInversaItem(id, nome, descrizione, foto, prezzoMax, dataDiScadenza, condizione, prezzoAttuale);
+                    AstaInversaItem astaInversaItem = new AstaInversaItem(id, nome, descrizione, foto, prezzoMax, dataDiScadenza, condizione, prezzoAttuale,emailAcquirente);
                     astaItems.add(astaInversaItem);
                 }
                 resultSetAsteInverse.close();
@@ -520,8 +528,9 @@ public class AstaDAOAcquirente {
                     String prezzoAttuale = resultSetAsteInglese.getString("prezzoAttuale");
                     String dataDiScadenza = resultSetAsteInglese.getString("dataDiScadenza");
                     String condizione = resultSetAsteInglese.getString("condizione");
+                    String emailVenditore = resultSetAsteInglese.getString("id_venditore");
 
-                    AstaIngleseItem astaIngleseItem = new AstaIngleseItem(id, nome, descrizione, foto, baseAsta, intervalloTempoOfferte, rialzoMin, prezzoAttuale, dataDiScadenza, condizione);
+                    AstaIngleseItem astaIngleseItem = new AstaIngleseItem(id, nome, descrizione, foto, baseAsta, intervalloTempoOfferte, rialzoMin, prezzoAttuale, dataDiScadenza, condizione,emailVenditore);
                     astaItems.add(astaIngleseItem);
                     Log.d("asta inglese", "aggiunta");
                 }
@@ -559,8 +568,9 @@ public class AstaDAOAcquirente {
                     String prezzoMin = resultSetAsteRibasso.getString("prezzoMin");
                     String prezzoAttuale = resultSetAsteRibasso.getString("prezzoAttuale");
                     String condizione = resultSetAsteRibasso.getString("condizione");
+                    String emailVenditore = resultSetAsteRibasso.getString("id_venditore");
 
-                    AstaRibassoItem astaRibassoItem = new AstaRibassoItem(id, nome, descrizione, foto, prezzoBase, intervalloDecrementale, decrementoAutomatico, prezzoMin, prezzoAttuale, condizione);
+                    AstaRibassoItem astaRibassoItem = new AstaRibassoItem(id, nome, descrizione, foto, prezzoBase, intervalloDecrementale, decrementoAutomatico, prezzoMin, prezzoAttuale, condizione,emailVenditore);
                     astaItems.add(astaRibassoItem);
                     Log.d("asta ribasso", "aggiunta");
                 }
@@ -612,8 +622,9 @@ public class AstaDAOAcquirente {
                     String prezzoAttuale = resultSetAsteInverse.getString("prezzoAttuale");
                     String dataDiScadenza = resultSetAsteInverse.getString("dataDiScadenza");
                     String condizione = resultSetAsteInverse.getString("condizione");
+                    String emailAcquirente = resultSetAsteInverse.getString("id_acquirente");
 
-                    AstaInversaItem astaInversaItem = new AstaInversaItem(id, nome, descrizione, foto, prezzoMax, dataDiScadenza, condizione, prezzoAttuale);
+                    AstaInversaItem astaInversaItem = new AstaInversaItem(id, nome, descrizione, foto, prezzoMax, dataDiScadenza, condizione, prezzoAttuale,emailAcquirente);
                     astaItems.add(astaInversaItem);
                 }
                 resultSetAsteInverse.close();

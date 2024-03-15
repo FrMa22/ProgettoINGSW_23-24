@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/colore_base"
-    tools:context=".gui.acquirente.AcquirenteFragmentHome">  <!-- da cambiare-->
+    tools:context=".gui.SchermataAstaInglese">
 
     <androidx.appcompat.widget.Toolbar
         android:layout_width="match_parent"

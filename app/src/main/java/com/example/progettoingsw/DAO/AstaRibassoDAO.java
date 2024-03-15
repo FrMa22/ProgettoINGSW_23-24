@@ -166,8 +166,9 @@ public class AstaRibassoDAO {
                             String prezzoMin = resultSet.getString("prezzoMin");
                             String prezzoAttuale = resultSet.getString("prezzoAttuale");
                             String condizione = resultSet.getString("condizione");
+                            String emailVenditore = resultSet.getString("id_venditore");
 
-                            AstaRibassoItem astaRibassoItem = new AstaRibassoItem(id, nome, descrizione, foto, prezzoBase, intervalloDecrementale, decrementoAutomatico, prezzoMin, prezzoAttuale, condizione);
+                            AstaRibassoItem astaRibassoItem = new AstaRibassoItem(id, nome, descrizione, foto, prezzoBase, intervalloDecrementale, decrementoAutomatico, prezzoMin, prezzoAttuale, condizione,emailVenditore);
                             return astaRibassoItem;
                         } else {
                             return null; // Nessuna asta trovata con l'ID specificato
