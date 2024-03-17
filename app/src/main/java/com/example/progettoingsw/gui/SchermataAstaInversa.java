@@ -48,6 +48,7 @@ public class SchermataAstaInversa extends GestoreComuniImplementazioni {
         bottoneOffertaSchermataAstaInversa = findViewById(R.id.bottoneOffertaSchermataAstaInversa);
         textViewAcquirenteSchermataAstaInversa = findViewById(R.id.textViewAcquirenteSchermataAstaInversa);
 
+
         id = getIntent().getIntExtra("id",0);
         email = getIntent().getStringExtra("email");
         tipoUtente = getIntent().getStringExtra("tipoUtente");
@@ -61,6 +62,17 @@ public class SchermataAstaInversa extends GestoreComuniImplementazioni {
             }
         });
 
+
+
+        textViewAcquirenteSchermataAstaInversa.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String emailAcquirente = textViewAcquirenteSchermataAstaInversa.getText().toString();
+                Intent intent=new Intent(SchermataAstaInversa.this, ProfiloAcquirente.class);
+                intent.putExtra("email",emailAcquirente);
+                startActivity(intent);
+            }
+        });
 
 
         bottoneOffertaSchermataAstaInversa.setOnClickListener(new View.OnClickListener() {
@@ -78,7 +90,11 @@ public class SchermataAstaInversa extends GestoreComuniImplementazioni {
         astaInversaDAO.getAstaInversaByID(id);
         astaInversaDAO.closeConnection();
 
+
+
+
     }
+
     public void setAstaData(AstaInversaItem astaInversaItem) {
         if (astaInversaItem != null) {
             // Imposta i dati recuperati sui TextView e ImageView della tua activity

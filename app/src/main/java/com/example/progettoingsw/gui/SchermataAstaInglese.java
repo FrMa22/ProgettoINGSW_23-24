@@ -80,6 +80,18 @@ public class SchermataAstaInglese extends GestoreComuniImplementazioni {
         astaIngleseDAO.getAstaIngleseByID(id);
         astaIngleseDAO.closeConnection();
 
+
+    textViewVenditore.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            String emailVenditore = textViewVenditore.getText().toString();
+            Intent intent=new Intent(SchermataAstaInglese.this, ProfiloVenditore.class);
+            intent.putExtra("email",emailVenditore);
+            startActivity(intent);
+        }
+    });
+
+
     }
 
     public void setAstaData(AstaIngleseItem astaIngleseItem) {

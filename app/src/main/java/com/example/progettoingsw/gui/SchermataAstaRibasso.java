@@ -2,6 +2,7 @@ package com.example.progettoingsw.gui;
 
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -95,6 +96,17 @@ public class SchermataAstaRibasso extends GestoreComuniImplementazioni {
         astaRibassoDAO.openConnection();
         astaRibassoDAO.getAstaRibassoByID(id);
         astaRibassoDAO.closeConnection();
+
+
+        textViewVenditore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String emailVenditore = textViewVenditore.getText().toString();
+                Intent intent=new Intent(SchermataAstaRibasso.this, ProfiloVenditore.class);
+                intent.putExtra("email",emailVenditore);
+                startActivity(intent);
+            }
+        });
 
     }
     public void setAstaData(AstaRibassoItem astaRibassoItem) {

@@ -30,7 +30,7 @@
             android:id="@+id/textViewLeMieAste"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Le mie aste"
+            android:text="Elenco aste"
             android:textSize="35sp"
             android:textStyle="bold"
             android:textColor="@color/colore_secondario"
