@@ -1,108 +1,112 @@
-
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="300dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/transparent">
+<LinearLayout
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    tools:context=".gui.SchermataAstaInglese"
-    android:background="@color/material_dynamic_tertiary95">
+    tools:context=".gui.PopUpNuovaOfferta"
+    android:background="@drawable/bordo_non_stondato">
 
     <TextView
         android:id="@+id/textViewTitoloAsta"
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:background="#99E8FF"
-        android:layout_marginBottom="-1dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
         android:gravity="center"
-        android:textSize="35dp"
+        android:textSize="35sp"
         android:textStyle="bold"
         android:text="Fai un offerta"/>
 
     <TextView
         android:id="@+id/TextViewOffertaAsta"
-        android:layout_width="130dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_below="@id/textViewTitoloAsta"
-        android:background="@color/white"
-        android:drawablePadding="15dp"
+        android:layout_gravity="center"
         android:text="Prezzo attuale :"
-        android:textStyle="bold"
-        android:padding="15dp" />
+        android:textColor="@color/colore_hint"
+        android:textSize="18sp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/TextViewPrezzoOffertaAsta"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="151dp"
-        android:layout_marginEnd="20dp"
-        android:layout_below="@id/textViewTitoloAsta"
-        android:background="@color/white"
-        android:drawablePadding="15dp"
-        android:text="€€€"
-        android:textStyle="bold"
-        android:padding="15dp" />
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:layout_margin="5dp"
+        android:drawableEnd="@drawable/ic_euro"
+        android:drawablePadding="5dp"
+        android:textColor="@color/colore_secondario"
+        android:text="200"
+        android:textSize="25sp"
+        android:textStyle="bold"/>
 
     <TextView
         android:id="@+id/TextViewNuovaOffertaAsta"
-        android:layout_width="130dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_below="@id/TextViewPrezzoOffertaAsta"
-        android:background="@color/white"
-        android:drawablePadding="15dp"
+        android:layout_gravity="center"
         android:text="Fai un\' offerta :"
-        android:textStyle="bold"
-        android:padding="15dp" />
+        android:textColor="@color/colore_hint"
+        android:textStyle="bold" />
 
     <EditText
         android:id="@+id/EditTextPrezzoNuovaOffertaAsta"
-        android:layout_width="150dp"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_margin="5dp"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:background="@drawable/design_bio_personale"
+        android:hint="€"
+        android:drawableTint="@color/colore_hint"
+        android:textColor="@color/colore_secondario"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        android:inputType="number"/>
+
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="151dp"
-        android:layout_marginEnd="20dp"
-        android:layout_below="@id/TextViewPrezzoOffertaAsta"
-        android:background="@color/white"
-        android:text="€€€"
-        android:textStyle="bold"
-        android:padding="12dp" />
+        android:layout_marginBottom="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:orientation="horizontal"
+        android:layout_gravity="center"
+        >
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/bottoneAnnullaPopUpAsta"
+            android:layout_width="150dp"
+            android:layout_height="60dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="5dp"
+            app:strokeColor="#AAAAAA"
+            app:strokeWidth="2dp"
+            android:backgroundTint="@color/colore_base"
+            android:text="Annulla"
+            android:textColor="@color/colore_secondario"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/bottoneConfermaPopUpAsta"
+            android:layout_width="150dp"
+            android:layout_height="60dp"
+            android:layout_marginEnd="10dp"
+            android:backgroundTint="@color/colore_secondario"
+            android:text="Conferma"
+            android:textColor="@color/colore_base"
+            android:textSize="20sp"
+            android:textStyle="bold"  />
+    </LinearLayout>
 
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/textViewErrorePrezzoPopUp"
-        android:textColor="@color/design_default_color_error"
-        android:text=""
-        android:contentDescription="errore prezzo"
-        android:layout_below="@id/TextViewNuovaOffertaAsta"
-        />
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/bottoneConfermaPopUpAsta"
-        android:layout_width="140dp"
-        android:layout_height="59dp"
-        android:layout_marginLeft="156dp"
-        android:backgroundTint="#FFFFFF"
-        android:text="Conferma"
-        android:textColor="@color/black"
-        android:textSize="20dp"
-        android:textStyle="bold"
-        android:layout_below="@id/textViewErrorePrezzoPopUp"/>
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/bottoneAnnullaPopUpAsta"
-        android:layout_width="140dp"
-        android:layout_height="59dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="150dp"
-        android:backgroundTint="#FFFFFF"
-        android:text="Annulla"
-        android:textColor="@color/black"
-        android:textSize="20dp"
-        android:textStyle="bold"
-        android:layout_below="@id/textViewErrorePrezzoPopUp"/>
-
-</RelativeLayout>
+</LinearLayout>
+</FrameLayout>

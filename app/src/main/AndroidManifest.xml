@@ -21,9 +21,6 @@
             android:name=".gui.acquirente.AcquirenteMainActivity"
             android:exported="false" />
         <activity
-            android:name=".gui.venditore.VenditoreMainActivity"
-            android:exported="false" />
-        <activity
             android:name=".gui.ElencoCategorie"
             android:exported="false" />
         <activity
@@ -52,7 +49,9 @@
         <activity
             android:name=".gui.PopUpRicercaCategorie"
             android:theme="@style/Base.Theme.ProgettoINGSW.CustomTheme" />
-
+        <activity
+            android:name=".gui.PopUpNuovaOfferta"
+            android:theme="@style/Base.Theme.ProgettoINGSW.CustomThemeSfocato" />
 
         <activity
             android:name=".gui.PreferitiActivity"
@@ -116,10 +115,6 @@
         <activity
             android:name=".gui.RicercaSenzaRisultati"
             android:exported="true" />
-        <activity
-            android:name=".gui.PopUpNuovaOfferta"
-            android:exported="true"
-            android:theme="@style/Base.Theme.ProgettoINGSW.CustomTheme" />
         <activity
             android:name=".gui.venditore.VenditorePopUpCreaAsta"
             android:theme="@style/Base.Theme.ProgettoINGSW.CustomThemeSfocato" />

@@ -67,11 +67,8 @@ public class SchermataAstaInglese extends GestoreComuniImplementazioni {
         bottoneNuovaOfferta =  findViewById(R.id.bottoneOffertaSchermataAstaInglese);
         bottoneNuovaOfferta.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                String tipo = "inglese";
-                Intent intent = new Intent(SchermataAstaInglese.this, PopUpNuovaOfferta.class);
-                intent.putExtra("textViewPrezzo", textViewPrezzo.getText().toString());
-                intent.putExtra("tipoPopUp", tipo);
-                startActivity(intent);
+                PopUpNuovaOfferta popUpNuovaOfferta = new PopUpNuovaOfferta(SchermataAstaInglese.this,email,id,"inglese", textViewPrezzo.getText().toString());
+                popUpNuovaOfferta.show();
             }
         });
         String valoreDaModificare = getIntent().getStringExtra("editTextPrezzo");

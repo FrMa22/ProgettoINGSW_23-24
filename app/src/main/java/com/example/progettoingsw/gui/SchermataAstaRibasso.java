@@ -71,12 +71,21 @@ public class SchermataAstaRibasso extends GestoreComuniImplementazioni {
                 popUpConfermaOffertaDialog.show();
                 MaterialButton bottoneAnnullaPopuP=(MaterialButton) popUpConfermaOffertaDialog.findViewById(R.id.bottoneAnnullaPopUpAsta);;
                 MaterialButton bottoneConfermaPopUP=(MaterialButton) popUpConfermaOffertaDialog.findViewById(R.id.bottoneConfermaPopUpAsta);;
-                TextView nuovaOfferta= (TextView) popUpConfermaOffertaDialog.findViewById(R.id.TextViewOffertaAsta);
+                TextView offertaAttuale= (TextView) popUpConfermaOffertaDialog.findViewById(R.id.TextViewOffertaAsta);
+                offertaAttuale.setText(textViewOffertaAttuale.getText().toString());
 
                 bottoneAnnullaPopuP.setOnClickListener(new View.OnClickListener(){
                     @Override
                     public void onClick(View v) {
                         popUpConfermaOffertaDialog.dismiss();
+                    }
+                });
+                bottoneConfermaPopUP.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        astaRibassoDAO.openConnection();
+                        astaRibassoDAO.acquistaAsta(id,email,Float.parseFloat(textViewOffertaAttuale.getText().toString()));
+                        astaRibassoDAO.closeConnection();
                     }
                 });
 

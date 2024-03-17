@@ -1,91 +1,101 @@
 package com.example.progettoingsw.gui;
 
-import android.content.Intent;
+import android.app.Dialog;
+import android.content.Context;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
-import android.view.Gravity;
+import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
-
+import com.example.progettoingsw.DAO.AstaIngleseDAO;
+import com.example.progettoingsw.DAO.AstaInversaDAO;
 import com.example.progettoingsw.R;
 import com.example.progettoingsw.controllers_package.Controller;
 import com.google.android.material.button.MaterialButton;
 
-public class PopUpNuovaOfferta extends AppCompatActivity {
+public class PopUpNuovaOfferta extends Dialog implements View.OnClickListener {
     Controller controller;
-    TextView prezzoAttuale;
-    EditText nuovoPrezzo;
-    MaterialButton annullaPopUpOfferta;
-    MaterialButton confermaPopUpOfferta;
+    TextView textviewPrezzoAttuale;
+    EditText textviewNuovoPrezzo;
+    MaterialButton textviewAnnullaPopUpOfferta;
+    MaterialButton textviewConfermaPopUpOfferta;
     String textViewPrezzo;
     String tipo ;
-    TextView errore;
+    String offerta;
+    String prezzoVecchio;
+    String emailOfferente;
+    String tipoAsta;
+    int id_asta;
+    private AstaIngleseDAO astaIngleseDAO;
+    private AstaInversaDAO astaInversaDAO;
+    public PopUpNuovaOfferta(Context context, String emailOfferente, int id_asta,String tipoAsta, String prezzoVecchio) {
+        super(context);
+        this.emailOfferente = emailOfferente;
+        this.id_asta = id_asta;
+        this.tipoAsta = tipoAsta;
+        this.prezzoVecchio = prezzoVecchio;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.pop_up_nuova_offerta);
 
         controller = new Controller();
 
 
-        DisplayMetrics metricaDisplay = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(metricaDisplay);
-        int width = metricaDisplay.widthPixels;
-        int height = metricaDisplay.heightPixels;
-        int offsetY = (int) (height * 0.15);
-        getWindow().setLayout((int) (width * .763), (int) (height * .4475));
-        getWindow().setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL);
-        getWindow().getAttributes().y = offsetY;
 
-        prezzoAttuale= (TextView) findViewById(R.id.TextViewPrezzoOffertaAsta);
-        nuovoPrezzo= (EditText) findViewById(R.id.EditTextPrezzoNuovaOffertaAsta);
-        annullaPopUpOfferta= (MaterialButton) findViewById(R.id.bottoneAnnullaPopUpAsta);
-        confermaPopUpOfferta= (MaterialButton) findViewById(R.id.bottoneConfermaPopUpAsta);
-        errore= (TextView)findViewById(R.id.textViewErrorePrezzoPopUp) ;
+        textviewPrezzoAttuale = (TextView) findViewById(R.id.TextViewPrezzoOffertaAsta);
+        textviewNuovoPrezzo = (EditText) findViewById(R.id.EditTextPrezzoNuovaOffertaAsta);
+        textviewAnnullaPopUpOfferta = (MaterialButton) findViewById(R.id.bottoneAnnullaPopUpAsta);
+        textviewConfermaPopUpOfferta = (MaterialButton) findViewById(R.id.bottoneConfermaPopUpAsta);
+        Log.d("PopupNuovaOfferta", "prezzo vecchio : " + prezzoVecchio);
+        textviewPrezzoAttuale.setText(prezzoVecchio);
+        prezzoVecchio = textviewPrezzoAttuale.getText().toString();
 
-        Intent intent = getIntent();
-        if (intent != null) {
-            textViewPrezzo = intent.getStringExtra("textViewPrezzo");
-           prezzoAttuale.setText(textViewPrezzo);
-        }
-        tipo = intent.getStringExtra("tipoPopUp");
-        confermaPopUpOfferta.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if ( tipo.equals("inversa")){
-                    if ((Integer.parseInt(textViewPrezzo))>(Integer.parseInt(nuovoPrezzo.getText().toString()))){
-                        Intent intent = new Intent(PopUpNuovaOfferta.this, SchermataAstaInversa.class);
-                        intent.putExtra("editTextPrezzo", nuovoPrezzo.getText().toString());
-                        startActivity(intent);
+        textviewConfermaPopUpOfferta.setOnClickListener(this);
+        textviewAnnullaPopUpOfferta.setOnClickListener(this);
+    }
+    @Override
+    public void onClick(View v) {
+        if (v.getId() == R.id.bottoneAnnullaPopUpAsta) {
+            dismiss();
+        } else if (v.getId() == R.id.bottoneConfermaPopUpAsta) {
+            offerta = textviewNuovoPrezzo.getText().toString();
+            if(offerta.isEmpty()){
+                Toast.makeText(getContext(), "Si prega di inserire un offerta!", Toast.LENGTH_SHORT).show();
+            }else{
+                    Float offertaAttuale = Float.parseFloat(offerta);
+                    Float offertaVecchia = Float.parseFloat(prezzoVecchio);
+                    if(tipoAsta.equals("inglese")){
+                        if(offertaAttuale<=offertaVecchia) {
+                            Toast.makeText(getContext(), "Attenzione! L'offerta deve superare il prezzo attuale dell'asta.", Toast.LENGTH_SHORT).show();
+                        }else{
+                            astaIngleseDAO = new AstaIngleseDAO();
+                            astaIngleseDAO.openConnection();
+                            astaIngleseDAO.partecipaAstaInglese(id_asta,emailOfferente,offertaAttuale);
+                            astaIngleseDAO.closeConnection();
+                            Toast.makeText(getContext(), "Partecipazione aggiunta con successo!", Toast.LENGTH_SHORT).show();
+                            dismiss();
+                        }
+                    }else if(tipoAsta.equals("inversa")){
+                        if(offertaAttuale>=offertaVecchia) {
+                            Toast.makeText(getContext(), "Attenzione! L'offerta deve essere inferiore al prezzo attuale dell'asta.", Toast.LENGTH_SHORT).show();
+                        }else{
+                            astaInversaDAO = new AstaInversaDAO();
+                            astaInversaDAO.openConnection();
+                            astaInversaDAO.partecipaAstaInversa(id_asta,emailOfferente,offertaAttuale);
+                            astaInversaDAO.closeConnection();
+                            Toast.makeText(getContext(), "Partecipazione aggiunta con successo!", Toast.LENGTH_SHORT).show();
+                            dismiss();
+                        }
                     }
-                    else{
-                        errore.setText("offerta non valida");
-                    }
-                } else if (tipo.equals("inglese")) {
-                    if ((Integer.parseInt(textViewPrezzo))<(Integer.parseInt(nuovoPrezzo.getText().toString()))){
-                        Intent intent = new Intent(PopUpNuovaOfferta.this, SchermataAstaInglese.class);
-                        intent.putExtra("editTextPrezzo", nuovoPrezzo.getText().toString());
-                        startActivity(intent);
-                    }
-                    else{
-                        errore.setText("offerta non valida");
-                    }
-                }
+
             }
-        });
-     annullaPopUpOfferta.setOnClickListener(new View.OnClickListener() {
-         @Override
-         public void onClick(View v) {
-             if (tipo.equals("inversa")) {
-                 controller.redirectActivity(PopUpNuovaOfferta.this, SchermataAstaInversa.class);
-             } else if (tipo.equals("inglese")) {
-                 controller.redirectActivity(PopUpNuovaOfferta.this, SchermataAstaInglese.class);
-             }
-         }
-     });
+        }
     }
 }

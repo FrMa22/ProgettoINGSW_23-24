@@ -51,6 +51,9 @@ public class AstaIngleseDAO {
     public void getAstaIngleseByID(int idAsta) {
         new SelectAstaTask().execute(String.valueOf(idAsta));
     }
+    public void partecipaAstaInglese(int idAsta, String emailOfferente, Float offerta){
+        new PartecipaAstaTask().execute(String.valueOf(idAsta),emailOfferente, String.valueOf(offerta));
+    }
     public void closeConnection() {
         new DatabaseTask().execute("close");
     }
@@ -209,5 +212,49 @@ public class AstaIngleseDAO {
             }
         }
     }
+    private class PartecipaAstaTask extends AsyncTask<String, Void, Void> {
+
+        @Override
+        protected Void doInBackground(String... strings) {
+            try {
+                if (strings.length > 0) {
+                    int idAsta = Integer.parseInt(strings[0]);
+                    String emailOfferente = strings[1];
+                    float offerta = Float.parseFloat(strings[2]);
+                    LocalDateTime tempoOfferta = LocalDateTime.now();
+                    String stato = "attiva"; // Supponendo che lo stato di partecipazione sia "attiva" per impostazione predefinita
+
+                    connection = DatabaseHelper.getConnection();
+                    if (connection != null && !connection.isClosed()) {
+                        String query = "INSERT INTO partecipazioneAstaAllInglese " +
+                                "(idAstaInglese, indirizzo_email, offerta, tempo_offerta, stato) " +
+                                "VALUES (?, ?, ?, ?, ?)";
+                        PreparedStatement preparedStatement = connection.prepareStatement(query);
+                        preparedStatement.setInt(1, idAsta);
+                        preparedStatement.setString(2, emailOfferente);
+                        preparedStatement.setFloat(3, offerta);
+                        preparedStatement.setTimestamp(4, new Timestamp(System.currentTimeMillis())); // Utilizzo la data e l'ora correnti come valore predefinito
+                        preparedStatement.setString(5, stato);
+                        preparedStatement.executeUpdate();
+                        preparedStatement.close();
+                        return null; // Operazione completata con successo
+                    } else {
+                        return null; // Connessione non aperta
+                    }
+                }
+                return null; // Parametri non validi
+            } catch (SQLException | NumberFormatException e) {
+                e.printStackTrace();
+                return null; // Errore durante l'operazione
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            // Questo metodo viene chiamato dopo che doInBackground è completato
+            // Puoi mostrare il risultato all'utente o gestirlo in modo appropriato
+        }
     }
+
+}
 

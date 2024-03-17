@@ -65,11 +65,8 @@ public class SchermataAstaInversa extends GestoreComuniImplementazioni {
 
         bottoneOffertaSchermataAstaInversa.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                String tipo = "inversa";
-                Intent intent = new Intent(SchermataAstaInversa.this, PopUpNuovaOfferta.class);
-                intent.putExtra("textViewPrezzo", textViewPrezzoAttualeSchermataAstaInversa.getText().toString());
-                intent.putExtra("tipoPopUp", tipo);
-                startActivity(intent);
+                PopUpNuovaOfferta popUpNuovaOfferta = new PopUpNuovaOfferta(SchermataAstaInversa.this,email,id,"inversa", textViewPrezzoAttualeSchermataAstaInversa.getText().toString());
+                popUpNuovaOfferta.show();
             }
         });
         String valoreDaModificare = getIntent().getStringExtra("editTextPrezzo");

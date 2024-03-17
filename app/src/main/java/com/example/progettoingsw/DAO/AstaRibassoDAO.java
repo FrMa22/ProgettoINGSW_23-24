@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.example.progettoingsw.R;
 import com.example.progettoingsw.controllers_package.DatabaseHelper;
@@ -49,6 +50,9 @@ public class AstaRibassoDAO {
     }
     public void getAstaRibassoByID(int idAsta) {
         new AstaRibassoDAO.SelectAstaTask().execute(String.valueOf(idAsta));
+    }
+    public void acquistaAsta(int idAsta, String emailOfferente, Float offerta){
+        new AcquistaAstaTask().execute(String.valueOf(idAsta),emailOfferente, String.valueOf(offerta));
     }
     public void closeConnection() {
         new DatabaseTask().execute("close");
@@ -195,6 +199,42 @@ public class AstaRibassoDAO {
             } else {
                 // Operazione fallita o nessun risultato trovato
                 Log.d("Errore", "Impossibile recuperare l'asta");
+            }
+        }
+    }
+    private class AcquistaAstaTask extends AsyncTask<String, Void, Void> {
+
+        @Override
+        protected Void doInBackground(String... strings) {
+            try {
+                if (strings.length > 0) {
+                    connection = DatabaseHelper.getConnection();
+                    int idAsta = Integer.parseInt(strings[0]);
+                    if (connection != null && !connection.isClosed()) {
+                        // Aggiorna la condizione dell'asta a "chiusa"
+                        String queryUpdate = "UPDATE asta_alribasso SET condizione = 'chiusa' WHERE id = ?";
+                        PreparedStatement preparedStatementUpdate = connection.prepareStatement(queryUpdate);
+                        preparedStatementUpdate.setInt(1, idAsta);
+                        preparedStatementUpdate.executeUpdate();
+                        preparedStatementUpdate.close();
+                        return null; // Operazione completata con successo
+                    } else {
+                        return null; // Connessione non aperta
+                    }
+                }
+                return null; // Parametri non validi
+            } catch (SQLException | NumberFormatException e) {
+                e.printStackTrace();
+                return null; // Errore durante l'operazione
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            if (result != null) {
+                Toast.makeText(schermataAstaRibasso, "Acquisto effettuato con successo", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(schermataAstaRibasso, "Errore nell'acquisto", Toast.LENGTH_SHORT).show();
             }
         }
     }
