@@ -9,6 +9,7 @@
     android:background="@drawable/bordo_non_stondato">
 
     <TextView
+        android:id="@+id/textview_titolo_notifica_popup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="*Titolo notifica*"
@@ -20,10 +21,40 @@
         android:background="@drawable/design_toolbar"
         />
     <TextView
+        android:id="@+id/textview_commento_notifica_popup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="descrizione"
         android:layout_gravity="center"
         android:textColor="@color/colore_secondario"/>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <Button
+            android:id="@+id/button_cancella_notifica_popup_notifica"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cancella notifica"
+            android:layout_gravity="center_vertical"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="8dp"/>
+
+        <Button
+            android:id="@+id/button_chiudi_popup_notifica"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Chiudi"
+            android:layout_gravity="center_vertical"
+            android:layout_marginTop="12dp"
+            android:layout_marginStart="8dp"/>
+
+    </LinearLayout>
+
 </LinearLayout>
+
+
+

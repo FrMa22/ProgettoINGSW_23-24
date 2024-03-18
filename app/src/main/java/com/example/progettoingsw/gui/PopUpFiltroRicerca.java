@@ -30,8 +30,8 @@ public class PopUpFiltroRicerca extends Dialog implements View.OnClickListener {
 
 
 
-        prezzoMin = findViewById(R.id.editTextPrezzoMin);
-        prezzoMax = findViewById(R.id.editTextPrezzoMax);
+        //prezzoMin = findViewById(R.id.editTextPrezzoMin);
+        //prezzoMax = findViewById(R.id.editTextPrezzoMax);
         scrittaPrezzo = findViewById(R.id.textViewPrezzo);
         buttonSalva = findViewById(R.id.buttonSalvaFiltro);
 

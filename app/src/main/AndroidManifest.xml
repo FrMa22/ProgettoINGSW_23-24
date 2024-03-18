@@ -109,6 +109,9 @@
             android:name=".gui.LeMieAste"
             android:exported="true" />
         <activity
+            android:name=".gui.SchermataNotifiche"
+            android:exported="true" />
+        <activity
             android:name=".gui.PopUpRegistrazioneSocial"
             android:exported="true"
             android:theme="@style/Base.Theme.ProgettoINGSW.CustomTheme" />
