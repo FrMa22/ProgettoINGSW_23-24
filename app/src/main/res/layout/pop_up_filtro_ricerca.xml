@@ -134,123 +134,23 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="Prezzo"
+                android:text="Ordinamento"
                 android:textColor="@color/colore_secondario"
                 android:textSize="25sp" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Da"
-                        android:layout_marginStart="10dp"
-                        android:textColor="@color/colore_secondario"
-                        android:textSize="20sp" />
-
-                    <EditText
-                        android:id="@+id/editTextPrezzoMin"
-                        android:layout_width="100dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
-                        android:background="@drawable/bordo_nero_curvo"
-                        android:gravity="center"
-                        android:hint="10"
-                        android:textColor="@color/black"
-                        android:textSize="20sp"
-                        tools:ignore="TouchTargetSizeCheck" />
-
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginTop="10dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
-                        android:text="A"
-                        android:textColor="@color/colore_secondario"
-                        android:textSize="20sp" />
-
-                    <EditText
-                        android:id="@+id/editTextPrezzoMax"
-                        android:layout_width="100dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="20dp"
-                        android:background="@drawable/bordo_nero_curvo"
-                        android:gravity="center"
-                        android:hint="50"
-                        android:textColor="@color/black"
-                        android:textSize="20sp"
-                        tools:ignore="TouchTargetSizeCheck" />
-                </LinearLayout>
-            </LinearLayout>
-
-            <TextView
+            <Switch
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="48dp"
+                android:text="crescente"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:gravity="center"
                 android:layout_gravity="center"
-                android:layout_marginTop="20dp"
-                android:text="Scadenza"
-                android:textColor="@color/colore_secondario"
-                android:textSize="25sp" />
+                />
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/button_1ora"
-                    android:layout_width="90dp"
-                    android:layout_height="50dp"
-                    app:strokeColor="#AAAAAA"
-                    app:strokeWidth="2dp"
-                    android:textColor="@color/colore_secondario"
-                    android:backgroundTint="@color/colore_base"
-                    android:contentDescription="Premi per inserire 1 ora di scadenza"
-                    android:text="1 h"
-                    android:textSize="15sp" />
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/button_1giorno"
-                    android:layout_width="90dp"
-                    android:layout_height="50dp"
-                    android:layout_toEndOf="@id/button_1ora"
-                    app:strokeColor="#AAAAAA"
-                    app:strokeWidth="2dp"
-                    android:textColor="@color/colore_secondario"
-                    android:backgroundTint="@color/colore_base"
-                    android:contentDescription="Premi per inserire 1 giorno di scadenza"
-                    android:text="1 gg"
-                    android:textSize="15sp" />
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/button_1settimana"
-                    android:layout_width="90dp"
-                    android:layout_height="50dp"
-                    android:layout_below="@id/button_1giorno"
-                    app:strokeColor="#AAAAAA"
-                    app:strokeWidth="2dp"
-                    android:textColor="@color/colore_secondario"
-                    android:backgroundTint="@color/colore_base"
-                    android:contentDescription="Premi per inserire 1 settimana di scadenza"
-                    android:text="7 gg"
-                    android:textSize="15sp" />
-
-            </RelativeLayout>
 
 
 

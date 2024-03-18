@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".gui.PopUpNotifiche"
+    android:orientation="vertical"
+    android:background="@drawable/bordo_non_stondato">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="*Titolo notifica*"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:textSize="35sp"
+        android:textStyle="bold"
+        android:textColor="@color/colore_secondario"
+        android:background="@drawable/design_toolbar"
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="descrizione"
+        android:layout_gravity="center"
+        android:textColor="@color/colore_secondario"/>
+
+</LinearLayout>
