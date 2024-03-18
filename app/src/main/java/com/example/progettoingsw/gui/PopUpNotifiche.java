@@ -25,13 +25,15 @@ public class PopUpNotifiche extends Dialog implements View.OnClickListener{
     private Button buttonChiudi;
     private TextView textViewTitolo;
     private TextView textViewCommento;
-    public PopUpNotifiche(Context context,String titolo,String commento,int id,String tipoutente)
+    private SchermataNotifiche schermataNotifiche;
+    public PopUpNotifiche(Context context,String titolo,String commento,int id,String tipoutente,SchermataNotifiche schermataNotifiche)
     {
         super(context);
         this.titolo=titolo;
         this.commento=commento;
         this.idNotifica=id;
         this.tipoUtente=tipoutente;
+        this.schermataNotifiche=schermataNotifiche;
     }
 
     @Override
@@ -62,6 +64,7 @@ public class PopUpNotifiche extends Dialog implements View.OnClickListener{
         }
 //fare un dao che cancella se cliccato cancella e se chiude fa solo il dismiss
         //a prescindere chiude il popup se si preme uno dei bottoni
+        schermataNotifiche.onResume();
         dismiss();
         }
 }

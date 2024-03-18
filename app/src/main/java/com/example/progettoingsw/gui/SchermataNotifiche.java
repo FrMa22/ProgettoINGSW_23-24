@@ -9,7 +9,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
+import com.example.progettoingsw.DAO.FragmentProfiloDAO;
 import com.example.progettoingsw.DAO.NotificheDAO;
 import com.example.progettoingsw.R;
 import com.example.progettoingsw.controllers_package.AstaAdapter;
@@ -23,6 +25,7 @@ public class SchermataNotifiche extends AppCompatActivity {
     private String tipoUtente;
     private String email;
     private NotificheAdapter AdapterNotifiche;
+    private NotificheDAO notificheDAO;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +62,7 @@ public class SchermataNotifiche extends AppCompatActivity {
                     int id = ((NotificaItem) notifica).getId();
                     String titolo=((NotificaItem) notifica).getTitolo();
                     String commento=((NotificaItem) notifica).getCommento();
-                    PopUpNotifiche popUpNotifiche=new PopUpNotifiche(SchermataNotifiche.this,titolo,commento,id,tipoUtente);
+                    PopUpNotifiche popUpNotifiche=new PopUpNotifiche(SchermataNotifiche.this,titolo,commento,id,tipoUtente,SchermataNotifiche.this);
                     popUpNotifiche.show();
                 }
             }
@@ -67,13 +70,24 @@ public class SchermataNotifiche extends AppCompatActivity {
 
         recyclerViewNotifiche.setAdapter(AdapterNotifiche);
 
-        NotificheDAO notificheDAO=new NotificheDAO(this);
+        notificheDAO=new NotificheDAO(this);
         notificheDAO.openConnection();
         notificheDAO.getNotificheForEmail(email,tipoUtente);
+        notificheDAO.closeConnection();
 
 
 
 
+    }
+
+
+    @Override //questo metodo serve per fare un refresh dei valori dei campi dopo una possibile modifica fatta da PopUp
+    public void onResume() {
+        super.onResume();
+
+        notificheDAO.openConnection();
+        notificheDAO.getNotificheForEmail(email,tipoUtente);
+        notificheDAO.closeConnection();
     }
 
 
@@ -89,4 +103,13 @@ public class SchermataNotifiche extends AppCompatActivity {
 
     }
 
+
+    /*
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        // Chiudi la connessione al database quando l'activity viene distrutta
+        notificheDAO.closeConnection();
+    }
+*/
 }
