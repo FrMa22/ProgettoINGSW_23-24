@@ -127,7 +127,6 @@ public class AstaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             textViewNome = itemView.findViewById(R.id.textView_nome_item_asta_inglese);
             textViewDescrizione = itemView.findViewById(R.id.textView_descrizione_item_asta_inglese);
             imageView = itemView.findViewById(R.id.image_view_item_asta_inglese);
-            dataDiScadenza = itemView.findViewById(R.id.textView_data_scadenza_item_asta_inglese);
             prezzo = itemView.findViewById(R.id.textView_prezzo_item_asta_inglese);
             rialzo = itemView.findViewById(R.id.textView_rialzo_item_asta_inglese);
         }
@@ -140,7 +139,6 @@ public class AstaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             }else{
                 imageView.setImageResource(R.drawable.img_default);
             }
-            dataDiScadenza.setText(item.getDataDiScadenza());
             prezzo.setText(item.getPrezzoAttuale());
             rialzo.setText(item.getRialzoMin());
         }

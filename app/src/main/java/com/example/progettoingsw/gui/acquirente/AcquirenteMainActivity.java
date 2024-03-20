@@ -56,7 +56,7 @@ public class AcquirenteMainActivity extends GestoreComuniImplementazioni {
                 }
             } else if (item.getItemId() == R.id.action_search) {
                 Log.d("BottomNav", "Selected Search");
-                selectedFragment = new AcquirenteFragmentRicercaAsta();
+                selectedFragment = new AcquirenteFragmentRicercaAsta(email ,tipoUtente);
             } else if (item.getItemId() == R.id.action_profile) {
                 Log.d("BottomNav", "Selected Profile");
                 selectedFragment = new FragmentProfilo(email,tipoUtente);

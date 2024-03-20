@@ -57,16 +57,6 @@
         android:textSize="20sp" />
 
 
-    <TextView
-        android:id="@+id/textView_data_scadenza_item_asta_inglese"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        android:gravity="center"
-        android:background="@drawable/bordo_sotto_grigio"
-        android:textColor="@color/colore_secondario"
-        android:textSize="16sp" />
 
     <TextView
         android:id="@+id/textView_prezzo_item_asta_inglese"

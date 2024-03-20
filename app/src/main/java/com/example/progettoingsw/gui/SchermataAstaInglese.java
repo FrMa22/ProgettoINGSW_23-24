@@ -100,7 +100,6 @@ public class SchermataAstaInglese extends GestoreComuniImplementazioni {
             textViewNomeProdotto.setText(astaIngleseItem.getNome());
             textViewDescrizione.setText(astaIngleseItem.getDescrizione());
             textViewPrezzo.setText(astaIngleseItem.getPrezzoAttuale());
-            textViewDataScadenza.setText(astaIngleseItem.getDataDiScadenza());
             textViewVenditore.setText(astaIngleseItem.getEmailVenditore());
             // Imposta l'immagine solo se non è nulla
             if (astaIngleseItem.getImmagine() != null) {

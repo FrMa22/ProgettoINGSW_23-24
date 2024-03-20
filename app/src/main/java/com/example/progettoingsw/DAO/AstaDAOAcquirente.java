@@ -109,11 +109,10 @@ public class AstaDAOAcquirente {
                     String intervalloTempoOfferte = resultSetAsteInglese.getString("intervalloTempoOfferte");
                     String rialzoMin = resultSetAsteInglese.getString("rialzoMin");
                     String prezzoAttuale = resultSetAsteInglese.getString("prezzoAttuale");
-                    String dataDiScadenza = resultSetAsteInglese.getString("dataDiScadenza");
                     String condizione = resultSetAsteInglese.getString("condizione");
                     String emailVenditore = resultSetAsteInglese.getString("id_venditore");
 
-                    AstaIngleseItem astaIngleseItem = new AstaIngleseItem(id, nome, descrizione, foto, baseAsta, intervalloTempoOfferte, rialzoMin, prezzoAttuale, dataDiScadenza, condizione, emailVenditore);
+                    AstaIngleseItem astaIngleseItem = new AstaIngleseItem(id, nome, descrizione, foto, baseAsta, intervalloTempoOfferte, rialzoMin, prezzoAttuale, condizione, emailVenditore);
                     astaItems.add(astaIngleseItem);
                 }
                 resultSetAsteInglese.close();
@@ -230,11 +229,10 @@ public class AstaDAOAcquirente {
                     String intervalloTempoOfferte = resultSetAsteInglese.getString("intervalloTempoOfferte");
                     String rialzoMin = resultSetAsteInglese.getString("rialzoMin");
                     String prezzoAttuale = resultSetAsteInglese.getString("prezzoAttuale");
-                    String dataDiScadenza = resultSetAsteInglese.getString("dataDiScadenza");
                     String condizione = resultSetAsteInglese.getString("condizione");
                     String emailVenditore = resultSetAsteInglese.getString("id_venditore");
 
-                    AstaIngleseItem astaIngleseItem = new AstaIngleseItem(id, nome, descrizione, foto, baseAsta, intervalloTempoOfferte, rialzoMin, prezzoAttuale, dataDiScadenza, condizione,emailVenditore);
+                    AstaIngleseItem astaIngleseItem = new AstaIngleseItem(id, nome, descrizione, foto, baseAsta, intervalloTempoOfferte, rialzoMin, prezzoAttuale, condizione,emailVenditore);
                     astaItems.add(astaIngleseItem);
                 }
                 resultSetAsteInglese.close();
@@ -415,11 +413,10 @@ public class AstaDAOAcquirente {
                     String intervalloTempoOfferte = resultSetAsteInglese.getString("intervalloTempoOfferte");
                     String rialzoMin = resultSetAsteInglese.getString("rialzoMin");
                     String prezzoAttuale = resultSetAsteInglese.getString("prezzoAttuale");
-                    String dataDiScadenza = resultSetAsteInglese.getString("dataDiScadenza");
                     String condizione = resultSetAsteInglese.getString("condizione");
                     String emailVenditore = resultSetAsteInglese.getString("id_venditore");
 
-                    AstaIngleseItem astaIngleseItem = new AstaIngleseItem(id, nome, descrizione, foto, baseAsta, intervalloTempoOfferte, rialzoMin, prezzoAttuale, dataDiScadenza, condizione, emailVenditore);
+                    AstaIngleseItem astaIngleseItem = new AstaIngleseItem(id, nome, descrizione, foto, baseAsta, intervalloTempoOfferte, rialzoMin, prezzoAttuale, condizione, emailVenditore);
                     astaItems.add(astaIngleseItem);
                 }
                 resultSetAsteInglese.close();
@@ -526,11 +523,10 @@ public class AstaDAOAcquirente {
                     String intervalloTempoOfferte = resultSetAsteInglese.getString("intervalloTempoOfferte");
                     String rialzoMin = resultSetAsteInglese.getString("rialzoMin");
                     String prezzoAttuale = resultSetAsteInglese.getString("prezzoAttuale");
-                    String dataDiScadenza = resultSetAsteInglese.getString("dataDiScadenza");
                     String condizione = resultSetAsteInglese.getString("condizione");
                     String emailVenditore = resultSetAsteInglese.getString("id_venditore");
 
-                    AstaIngleseItem astaIngleseItem = new AstaIngleseItem(id, nome, descrizione, foto, baseAsta, intervalloTempoOfferte, rialzoMin, prezzoAttuale, dataDiScadenza, condizione,emailVenditore);
+                    AstaIngleseItem astaIngleseItem = new AstaIngleseItem(id, nome, descrizione, foto, baseAsta, intervalloTempoOfferte, rialzoMin, prezzoAttuale, condizione,emailVenditore);
                     astaItems.add(astaIngleseItem);
                     Log.d("asta inglese", "aggiunta");
                 }
