@@ -72,6 +72,11 @@ public class AcquirenteFragmentHome extends Fragment {
         relative_layout_home_acquirente = view.findViewById(R.id.relative_layout_home_acquirente);
         progressBarAcquirenteFragmentHome = view.findViewById(R.id.progressBarAcquirenteFragmentHome);
 
+        //rendo l'icona di caricamento visibile ad inizio recuperi dal db e il bottom menu non clickabile
+        progressBarAcquirenteFragmentHome.setVisibility(View.VISIBLE);
+        setNavigationView(false);
+        setAllClickable(relative_layout_home_acquirente,false);
+
         // Inizializza il DAO e l'adapter
         astaDAOAcquirente = new AstaDAOAcquirente(this, email,tipoUtente);
 
@@ -127,10 +132,6 @@ public class AcquirenteFragmentHome extends Fragment {
         });
         recyclerViewAsteConsigliate.setAdapter(astaAdapterConsigliate);
 
-        //rendo l'icona di caricamento visibile ad inizio recuperi dal db e il bottom menu non clickabile
-        progressBarAcquirenteFragmentHome.setVisibility(View.VISIBLE);
-        setNavigationView(false);
-        relative_layout_home_acquirente.setClickable(false);
 
         // Apri la connessione al database e ottieni i prodotti
         astaDAOAcquirente.openConnection();
@@ -239,10 +240,7 @@ public class AcquirenteFragmentHome extends Fragment {
         astaDAOAcquirente.closeConnection();
 
 
-        //rendo l'icona di caricamento non piu visibile e il menu clickabile
-        progressBarAcquirenteFragmentHome.setVisibility(View.INVISIBLE);
-        setNavigationView(true);
-        relative_layout_home_acquirente.setClickable(true);
+
 
         button_le_mie_aste = view.findViewById(R.id.button_le_mie_aste);
         button_le_mie_aste.setOnClickListener(new View.OnClickListener() {
@@ -303,6 +301,10 @@ public class AcquirenteFragmentHome extends Fragment {
         }else{
             Log.d("handleConsigliateResult", "null");
         }
+        //        //rendo l'icona di caricamento non piu visibile e il menu clickabile
+        progressBarAcquirenteFragmentHome.setVisibility(View.INVISIBLE);
+        setNavigationView(true);
+        setAllClickable(relative_layout_home_acquirente, true);
     }
 
 
@@ -316,6 +318,16 @@ public class AcquirenteFragmentHome extends Fragment {
             // Abilita la BottomNavigationView
             Log.d("setNavigationView" , "preso comando : " + valore);
             activity.enableBottomNavigationView(valore);
+        }
+    }
+
+    protected void setAllClickable(ViewGroup viewGroup, boolean enabled) {
+        for (int i = 0; i < viewGroup.getChildCount(); i++) {
+            View child = viewGroup.getChildAt(i);
+            child.setEnabled(enabled);
+            if (child instanceof ViewGroup) {
+                setAllClickable((ViewGroup) child, enabled);
+            }
         }
     }
 

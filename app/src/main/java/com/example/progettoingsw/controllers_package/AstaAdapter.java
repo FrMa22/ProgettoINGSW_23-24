@@ -17,7 +17,6 @@ import com.example.progettoingsw.model.AstaRibassoItem;
 import com.example.progettoingsw.model.AstaInversaItem;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class AstaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private static final int TIPO_ASTA_INGESE = 1;
@@ -118,7 +117,7 @@ public class AstaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         private TextView textViewNome;
         private TextView textViewDescrizione;
         private ImageView imageView;
-        private TextView dataDiScadenza;
+        private TextView intervalloOfferte;
         private TextView prezzo;
         private TextView rialzo;
 
@@ -129,6 +128,7 @@ public class AstaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             imageView = itemView.findViewById(R.id.image_view_item_asta_inglese);
             prezzo = itemView.findViewById(R.id.textView_prezzo_item_asta_inglese);
             rialzo = itemView.findViewById(R.id.textView_rialzo_item_asta_inglese);
+            intervalloOfferte = itemView.findViewById(R.id.textView_intervallo_offerte_item_asta_inglese);
         }
 
         public void bind(AstaIngleseItem item) {
@@ -139,6 +139,7 @@ public class AstaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             }else{
                 imageView.setImageResource(R.drawable.img_default);
             }
+            intervalloOfferte.setText(item.getIntervalloTempoOfferte());
             prezzo.setText(item.getPrezzoAttuale());
             rialzo.setText(item.getRialzoMin());
         }

@@ -25,7 +25,7 @@
             android:layout_gravity="start"
             android:background="@drawable/bordo_bianco_edittext"
             android:backgroundTint="#ECECEC"
-            android:drawableStart="@drawable/ic_search"
+            android:drawableStart="@drawable/ic_search_vuota"
             android:drawablePadding="10dp"
             android:hint="Cerca"
             android:paddingLeft="10dp"
