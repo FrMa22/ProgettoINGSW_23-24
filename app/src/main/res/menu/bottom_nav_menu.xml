@@ -8,19 +8,19 @@
     <item
         android:id="@+id/action_categories"
         android:title="Categorie"
-        android:icon="@drawable/ic_categorie" />
+        android:icon="@drawable/ic_categorie_vuota" />
 
     <item
         android:id="@+id/action_crea_asta"
         android:title="Crea Asta"
-        android:icon="@drawable/ic_plus" />
+        android:icon="@drawable/ic_plus_vuota" />
     <item
         android:id="@+id/action_search"
         android:title="Ricerca"
-        android:icon="@drawable/ic_search" />
+        android:icon="@drawable/ic_search_vuota" />
 
     <item
         android:id="@+id/action_profile"
         android:title="Profilo"
-        android:icon="@drawable/ic_profilo" />
+        android:icon="@drawable/ic_profilo_vuoto" />
 </menu>

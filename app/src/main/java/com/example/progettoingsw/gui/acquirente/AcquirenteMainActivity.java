@@ -4,6 +4,8 @@ import androidx.fragment.app.Fragment;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import com.example.progettoingsw.R;
 import com.example.progettoingsw.classe_da_estendere.GestoreComuniImplementazioni;
@@ -42,13 +44,20 @@ public class AcquirenteMainActivity extends GestoreComuniImplementazioni {
 
             if (item.getItemId() == R.id.action_home) {
                 Log.d("BottomNav", "Selected Home");
+                item.setIcon(R.drawable.ic_home);
+                resetOtherIcons(bottomNavigationView, item);
                 selectedFragment = new AcquirenteFragmentHome(email, tipoUtente);
             } else if (item.getItemId() == R.id.action_categories) {
+                item.setIcon(R.drawable.ic_categorie);
+                resetOtherIcons(bottomNavigationView, item);
                 Log.d("BottomNav", "Selected Categories");
                 selectedFragment = new AcquirenteFragmentSelezioneCategorie(email, tipoUtente);
             } else if (item.getItemId() == R.id.action_crea_asta) {
                 Log.d("BottomNav", "Selected Crea Asta");
+                item.setIcon(R.drawable.ic_plus);
+                resetOtherIcons(bottomNavigationView, item);
                 if(tipoUtente.equals("acquirente")){
+                    resetOtherIcons(bottomNavigationView, item);
                     selectedFragment = new AcquirenteAstaInversa(email);
                 }else{
                     VenditorePopUpCreaAsta popAsta  = new VenditorePopUpCreaAsta(AcquirenteMainActivity.this,email,tipoUtente);
@@ -56,9 +65,13 @@ public class AcquirenteMainActivity extends GestoreComuniImplementazioni {
                 }
             } else if (item.getItemId() == R.id.action_search) {
                 Log.d("BottomNav", "Selected Search");
+                item.setIcon(R.drawable.ic_search);
+                resetOtherIcons(bottomNavigationView, item);
                 selectedFragment = new AcquirenteFragmentRicercaAsta(email ,tipoUtente);
             } else if (item.getItemId() == R.id.action_profile) {
                 Log.d("BottomNav", "Selected Profile");
+                item.setIcon(R.drawable.ic_profilo);
+                resetOtherIcons(bottomNavigationView, item);
                 selectedFragment = new FragmentProfilo(email,tipoUtente);
             }
 
@@ -86,5 +99,33 @@ public class AcquirenteMainActivity extends GestoreComuniImplementazioni {
         bottomNavigationView.getMenu().getItem(4).setEnabled(enabled);
 
     }
+    // Metodo per resettare le icone degli elementi della BottomNavigationView
+    private void resetOtherIcons(BottomNavigationView bottomNavigationView, MenuItem selectedItem) {
+        Menu menu = bottomNavigationView.getMenu();
+        for (int i = 0; i < menu.size(); i++) {
+            MenuItem item = menu.getItem(i);
+            if (item != selectedItem) {
+                item.setIcon(getIconResource(item.getItemId()));
+            }
+        }
+    }
+
+    // Metodo per ottenere l'icona predefinita in base all'ID dell'elemento del menu
+    private int getIconResource(int itemId) {
+        if (itemId == R.id.action_home) {
+            return R.drawable.ic_home_vuota;
+        } else if (itemId == R.id.action_categories) {
+            return R.drawable.ic_categorie_vuota;
+        } else if (itemId == R.id.action_crea_asta) {
+            return R.drawable.ic_plus_vuota;
+        } else if (itemId == R.id.action_search) {
+            return R.drawable.ic_search_vuota;
+        } else if (itemId == R.id.action_profile) {
+            return R.drawable.ic_profilo_vuoto;
+        } else {
+            return 0;
+        }
+    }
+
 
 }
