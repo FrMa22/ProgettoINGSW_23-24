@@ -121,6 +121,11 @@
         <activity
             android:name=".gui.venditore.VenditorePopUpCreaAsta"
             android:theme="@style/Base.Theme.ProgettoINGSW.CustomThemeSfocato" />
+        <activity
+            android:name=".gui.SchermataAstePerCategoria"
+            android:exported="false" />
+
+
 
     </application>
 

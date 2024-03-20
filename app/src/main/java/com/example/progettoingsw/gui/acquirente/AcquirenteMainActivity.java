@@ -45,7 +45,7 @@ public class AcquirenteMainActivity extends GestoreComuniImplementazioni {
                 selectedFragment = new AcquirenteFragmentHome(email, tipoUtente);
             } else if (item.getItemId() == R.id.action_categories) {
                 Log.d("BottomNav", "Selected Categories");
-                selectedFragment = new AcquirenteFragmentSelezioneCategorie();
+                selectedFragment = new AcquirenteFragmentSelezioneCategorie(email, tipoUtente);
             } else if (item.getItemId() == R.id.action_crea_asta) {
                 Log.d("BottomNav", "Selected Crea Asta");
                 if(tipoUtente.equals("acquirente")){
