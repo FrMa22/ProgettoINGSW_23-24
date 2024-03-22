@@ -29,7 +29,7 @@ public class PreferitiActivity extends GestoreComuniImplementazioni {
     private String email;
     private String tipoUtente;
     private AstaAdapter astaAdapter;
-    private AstePreferiteDAO AstePreferiteDAO;
+    private AstePreferiteDAO astePreferiteDAO;
 
 
     @Override
@@ -90,10 +90,10 @@ public class PreferitiActivity extends GestoreComuniImplementazioni {
         });
         recyclerViewAstePreferite.setAdapter(astaAdapter);
 
-        AstePreferiteDAO = new AstePreferiteDAO(this);
+        astePreferiteDAO = new AstePreferiteDAO(this);
         //di default appena si apre la schermata si è già su aste aperte quindi escono già
-        AstePreferiteDAO.openConnection();
-        AstePreferiteDAO.getAsteForEmailUtente(email,tipoUtente);
+        astePreferiteDAO.openConnection();
+        astePreferiteDAO.getAsteForEmailUtente(email,tipoUtente);
         recyclerViewAstePreferite.setVisibility(View.VISIBLE);
 
 

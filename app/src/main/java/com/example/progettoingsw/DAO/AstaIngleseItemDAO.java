@@ -71,13 +71,12 @@ public class AstaIngleseItemDAO {
                         Bitmap immagine = BitmapFactory.decodeByteArray(immagineBytes, 0, immagineBytes.length);
                         String baseAsta = String.valueOf(resultSet.getFloat("baseAsta"));
                         String condizione = resultSet.getString("condizione");
-                        String dataScadenza = resultSet.getString("dataDiScadenza");
                         String prezzoAttuale = String.valueOf(resultSet.getFloat("prezzoAttuale"));
                         String rialzoMin = String.valueOf(resultSet.getFloat("rialzoMin"));
                         String intervalloOfferte=String.valueOf(resultSet.getString("intervalloTempoOfferte"));
                         String emailVenditore = resultSet.getString("id_venditore");
 
-                        AstaIngleseItem asta = new AstaIngleseItem( id, nome, descrizione, immagine,  baseAsta,  intervalloOfferte,  rialzoMin,  prezzoAttuale,  dataScadenza,  condizione,emailVenditore);
+                        AstaIngleseItem asta = new AstaIngleseItem( id, nome, descrizione, immagine,  baseAsta,  intervalloOfferte,  rialzoMin,  prezzoAttuale,  condizione,emailVenditore);
                         aste.add(asta);
                     }
                     resultSet.close();

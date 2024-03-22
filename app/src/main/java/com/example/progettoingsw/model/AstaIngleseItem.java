@@ -8,14 +8,13 @@ public class AstaIngleseItem {
     private String descrizione;
     private Bitmap immagine;
     private String baseAsta;
-    private String dataDiScadenza;
     private String condizione;
     private String intervalloTempoOfferte;
     private String rialzoMin;
     private String prezzoAttuale;
     private String emailVenditore;
 
-    public AstaIngleseItem(int id, String nome, String descrizione, Bitmap immagine, String baseAsta, String intervalloTempoOfferte, String rialzoMin, String prezzoAttuale, String dataDiScadenza, String condizione, String emailVenditore) {
+    public AstaIngleseItem(int id, String nome, String descrizione, Bitmap immagine, String baseAsta, String intervalloTempoOfferte, String rialzoMin, String prezzoAttuale, String condizione, String emailVenditore) {
         this.id = id;
         this.nome = nome;
         this.descrizione = descrizione;
@@ -24,7 +23,6 @@ public class AstaIngleseItem {
         this.intervalloTempoOfferte = intervalloTempoOfferte;
         this.rialzoMin = rialzoMin;
         this.prezzoAttuale = prezzoAttuale;
-        this.dataDiScadenza = dataDiScadenza;
         this.condizione = condizione;
         this.emailVenditore = emailVenditore;
     }
@@ -76,13 +74,6 @@ public class AstaIngleseItem {
         this.baseAsta = baseAsta;
     }
 
-    public String getDataDiScadenza() {
-        return dataDiScadenza;
-    }
-
-    public void setDataDiScadenza(String dataDiScadenza) {
-        this.dataDiScadenza = dataDiScadenza;
-    }
 
     public String getCondizione() {
         return condizione;

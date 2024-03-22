@@ -72,8 +72,6 @@ public class AstaIngleseDAO {
                         if (connection != null && !connection.isClosed()) {
                            // Statement statement = connection.createStatement();
 
-                            //LocalDateTime dataScadenza = LocalDateTime.of(2024, 3, 10, 12, 0, 0);
-                            LocalDateTime dataScadenza = LocalDateTime.now();
                             String condizione = "aperta";
                             String id_venditore = strings[6];
                             double baseAsta = Double.parseDouble(strings[1]);
@@ -83,33 +81,26 @@ public class AstaIngleseDAO {
                             nomeP=strings[4];
                             descrizioneP=strings[5];
 
-                            // Aggiungere l'intervallo in ore alla data di scadenza
-                            dataScadenza = dataScadenza.plusHours(intervallo);
 
                             String intervalloString=strings[2];
 
-                            // Creazione del formatter per la data
-                            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
-                            // Formattazione della data
-                            String formattedDataScadenza = dataScadenza.format(formatter);
 
 
 
                             String query = "INSERT INTO asta_allinglese " +
-                                    "(baseAsta, intervalloTempoOfferte, rialzoMin, prezzoAttuale, dataDiScadenza, condizione, nome, descrizione, id_venditore, path_immagine) " +
-                                    "VALUES (?, ?::interval, ?, ?, ?, ?, ?, ?, ?, ?)";
+                                    "(baseAsta, intervalloTempoOfferte, rialzoMin, prezzoAttuale, condizione, nome, descrizione, id_venditore, path_immagine) " +
+                                    "VALUES (?, ?::interval, ?, ?, ?, ?, ?, ?, ?)";
                             PreparedStatement preparedStatement = connection.prepareStatement(query);
                             preparedStatement.setDouble(1, baseAsta); // Imposta il primo parametro (baseAsta)
                             preparedStatement.setString(2, intervallo + " hours"); // Imposta il secondo parametro (intervalloTempoOfferte)
                             preparedStatement.setDouble(3, rialzoMin); // Imposta il terzo parametro (rialzoMin)
                             preparedStatement.setDouble(4, prezzoAttuale); // Imposta il quarto parametro (prezzoAttuale)
-                            preparedStatement.setTimestamp(5, Timestamp.valueOf(formattedDataScadenza)); // Imposta il quinto parametro (dataDiScadenza)
-                            preparedStatement.setString(6, condizione); // Imposta il sesto parametro (condizione)
-                            preparedStatement.setString(7, nomeP); // Imposta il settimo parametro (nome)
-                            preparedStatement.setString(8, descrizioneP); // Imposta l'ottavo parametro (descrizione)
-                            preparedStatement.setString(9, id_venditore); // Imposta il nono parametro (id_venditore)
-                            preparedStatement.setBytes(10, foto); // Imposta il decimo parametro (path_immagine)
+                            preparedStatement.setString(5, condizione); // Imposta il sesto parametro (condizione)
+                            preparedStatement.setString(6, nomeP); // Imposta il settimo parametro (nome)
+                            preparedStatement.setString(7, descrizioneP); // Imposta l'ottavo parametro (descrizione)
+                            preparedStatement.setString(8, id_venditore); // Imposta il nono parametro (id_venditore)
+                            preparedStatement.setBytes(9, foto); // Imposta il decimo parametro (path_immagine)
                             preparedStatement.executeUpdate();
                             preparedStatement.close();
 
@@ -178,11 +169,10 @@ public class AstaIngleseDAO {
                             String intervalloTempoOfferte = resultSet.getString("intervalloTempoOfferte");
                             String rialzoMin = resultSet.getString("rialzoMin");
                             String prezzoAttuale = resultSet.getString("prezzoAttuale");
-                            String dataDiScadenza = resultSet.getString("dataDiScadenza");
                             String condizione = resultSet.getString("condizione");
                             String email_venditore = resultSet.getString("id_venditore");
 
-                            AstaIngleseItem astaIngleseItem = new AstaIngleseItem(id, nome, descrizione, foto, baseAsta, intervalloTempoOfferte, rialzoMin, prezzoAttuale, dataDiScadenza, condizione,email_venditore);
+                            AstaIngleseItem astaIngleseItem = new AstaIngleseItem(id, nome, descrizione, foto, baseAsta, intervalloTempoOfferte, rialzoMin, prezzoAttuale, condizione,email_venditore);
                             return astaIngleseItem;
                         } else {
                             return null; // Nessuna asta trovata con l'ID specificato

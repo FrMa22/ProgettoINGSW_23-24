@@ -41,8 +41,6 @@ public class VenditoreFragmentRicercaAsta extends Fragment {
         button_filtro.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                PopUpFiltroRicerca popUpFiltroRicerca = new PopUpFiltroRicerca(getContext());
-                popUpFiltroRicerca.show();
             }
         });
 

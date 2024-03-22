@@ -13,7 +13,6 @@ import com.example.progettoingsw.DAO.AstaIngleseDAO;
 import com.example.progettoingsw.R;
 import com.example.progettoingsw.classe_da_estendere.GestoreComuniImplementazioni;
 import com.example.progettoingsw.controllers_package.Controller;
-import com.example.progettoingsw.gui.acquirente.AcquirenteFragmentHome;
 import com.example.progettoingsw.model.AstaIngleseItem;
 import com.google.android.material.button.MaterialButton;
 
@@ -31,7 +30,7 @@ public class SchermataAstaInglese extends GestoreComuniImplementazioni {
     TextView textViewScadenza;
     TextView textViewPrezzo;
     TextView textViewOffertaAttuale;
-    TextView textViewDataScadenza;
+    TextView textViewIntervalloOfferte;
     TextView textViewVenditore;
     private AstaIngleseDAO astaIngleseDAO;
     @Override
@@ -44,10 +43,9 @@ public class SchermataAstaInglese extends GestoreComuniImplementazioni {
         textViewNomeProdotto = findViewById(R.id.textViewNomeProdottoSchermataAstaInglese);
         imageViewProdotto = findViewById(R.id.ImageViewSchermataAstaInglese);
         textViewDescrizione = findViewById(R.id.textViewDescrizioneSchermataAstaInglese);
-        textViewScadenza = findViewById(R.id.textViewScadenzaSchermataAstaInglese);
         textViewPrezzo = findViewById(R.id.textViewPrezzoAttualeSchermataAstaInglese);
         textViewOffertaAttuale = findViewById(R.id.textViewOffertaAttualeSchermataAstaInglese);
-        textViewDataScadenza = findViewById(R.id.textViewDataScadenzaSchermataAstaInglese);
+        textViewIntervalloOfferte = findViewById(R.id.textViewIntervalloOfferte);
         textViewVenditore = findViewById(R.id.textViewVenditoreSchermataAstaInglese);
 
         id = getIntent().getIntExtra("id",0);
@@ -100,8 +98,8 @@ public class SchermataAstaInglese extends GestoreComuniImplementazioni {
             textViewNomeProdotto.setText(astaIngleseItem.getNome());
             textViewDescrizione.setText(astaIngleseItem.getDescrizione());
             textViewPrezzo.setText(astaIngleseItem.getPrezzoAttuale());
-            textViewDataScadenza.setText(astaIngleseItem.getDataDiScadenza());
             textViewVenditore.setText(astaIngleseItem.getEmailVenditore());
+            textViewIntervalloOfferte.setText(astaIngleseItem.getIntervalloTempoOfferte());
             // Imposta l'immagine solo se non è nulla
             if (astaIngleseItem.getImmagine() != null) {
                 imageViewProdotto.setImageBitmap(astaIngleseItem.getImmagine());

@@ -109,11 +109,10 @@ public class AstaDAOAcquirente {
                     String intervalloTempoOfferte = resultSetAsteInglese.getString("intervalloTempoOfferte");
                     String rialzoMin = resultSetAsteInglese.getString("rialzoMin");
                     String prezzoAttuale = resultSetAsteInglese.getString("prezzoAttuale");
-                    String dataDiScadenza = resultSetAsteInglese.getString("dataDiScadenza");
                     String condizione = resultSetAsteInglese.getString("condizione");
                     String emailVenditore = resultSetAsteInglese.getString("id_venditore");
 
-                    AstaIngleseItem astaIngleseItem = new AstaIngleseItem(id, nome, descrizione, foto, baseAsta, intervalloTempoOfferte, rialzoMin, prezzoAttuale, dataDiScadenza, condizione, emailVenditore);
+                    AstaIngleseItem astaIngleseItem = new AstaIngleseItem(id, nome, descrizione, foto, baseAsta, intervalloTempoOfferte, rialzoMin, prezzoAttuale, condizione, emailVenditore);
                     astaItems.add(astaIngleseItem);
                 }
                 resultSetAsteInglese.close();
@@ -206,7 +205,7 @@ public class AstaDAOAcquirente {
                 stmtCategorieAcquirente.close();
 
                 // Query per recuperare le aste inglesi associate alle categorie dell'acquirente
-                String queryAsteInglese = "SELECT * FROM asta_allinglese AS a INNER JOIN AsteCategorieAllInglese AS c ON a.id = c.id_asta_allinglese WHERE c.nomeCategoria IN (SELECT nomeCategoria FROM CategorieAcquirente WHERE indirizzo_email = ?)";
+                String queryAsteInglese = "SELECT DISTINCT a.id, a.nome, a.descrizione, a.path_immagine, a.baseAsta, a.intervalloTempoOfferte, a.rialzoMin, a.prezzoAttuale, a.condizione, a.id_venditore FROM asta_allinglese AS a INNER JOIN AsteCategorieAllInglese AS c ON a.id = c.id_asta_allinglese WHERE c.nomeCategoria IN (SELECT nomeCategoria FROM CategorieAcquirente WHERE indirizzo_email = ?)";
                 PreparedStatement stmtAsteInglese = connection.prepareStatement(queryAsteInglese);
                 stmtAsteInglese.setString(1, email);
                 ResultSet resultSetAsteInglese = stmtAsteInglese.executeQuery();
@@ -230,18 +229,17 @@ public class AstaDAOAcquirente {
                     String intervalloTempoOfferte = resultSetAsteInglese.getString("intervalloTempoOfferte");
                     String rialzoMin = resultSetAsteInglese.getString("rialzoMin");
                     String prezzoAttuale = resultSetAsteInglese.getString("prezzoAttuale");
-                    String dataDiScadenza = resultSetAsteInglese.getString("dataDiScadenza");
                     String condizione = resultSetAsteInglese.getString("condizione");
                     String emailVenditore = resultSetAsteInglese.getString("id_venditore");
 
-                    AstaIngleseItem astaIngleseItem = new AstaIngleseItem(id, nome, descrizione, foto, baseAsta, intervalloTempoOfferte, rialzoMin, prezzoAttuale, dataDiScadenza, condizione,emailVenditore);
+                    AstaIngleseItem astaIngleseItem = new AstaIngleseItem(id, nome, descrizione, foto, baseAsta, intervalloTempoOfferte, rialzoMin, prezzoAttuale, condizione,emailVenditore);
                     astaItems.add(astaIngleseItem);
                 }
                 resultSetAsteInglese.close();
                 stmtAsteInglese.close();
 
                 // Query per recuperare le aste al ribasso associate alle categorie dell'acquirente
-                String queryAsteRibasso = "SELECT * FROM asta_alribasso AS a INNER JOIN AsteCategorieAlRibasso AS c ON a.id = c.id_asta_alribasso WHERE c.nomeCategoria IN (SELECT nomeCategoria FROM CategorieAcquirente WHERE indirizzo_email = ?)";
+                String queryAsteRibasso = "SELECT DISTINCT a.id, a.nome, a.descrizione, a.path_immagine, a.prezzoBase, a.intervalloDecrementale, a.decrementoAutomaticoCifra, a.prezzoMin, a.prezzoAttuale, a.condizione, a.id_venditore FROM asta_alribasso AS a INNER JOIN AsteCategorieAlRibasso AS c ON a.id = c.id_asta_alribasso WHERE c.nomeCategoria IN (SELECT nomeCategoria FROM CategorieAcquirente WHERE indirizzo_email = ?)";
                 PreparedStatement stmtAsteRibasso = connection.prepareStatement(queryAsteRibasso);
                 stmtAsteRibasso.setString(1, email);
                 ResultSet resultSetAsteRibasso = stmtAsteRibasso.executeQuery();
@@ -310,7 +308,7 @@ public class AstaDAOAcquirente {
                 stmtCategorieVenditore.close();
 
                 // Query per recuperare le aste inglesi associate alle categorie dell'acquirente
-                String queryAsteInverse = "SELECT * FROM asta_inversa AS a INNER JOIN AsteCategorieInversa AS c ON a.id = c.id_asta_inversa WHERE c.nomeCategoria IN (SELECT nomeCategoria FROM CategorieVenditore WHERE indirizzo_email = ?)";
+                String queryAsteInverse = "SELECT DISTINCT a.id, a.nome, a.descrizione, a.path_immagine, a.prezzoMax, a.prezzoAttuale , a.dataDiScadenza , a.condizione, a.id_acquirente FROM asta_inversa AS a INNER JOIN AsteCategorieInversa AS c ON a.id = c.id_asta_inversa WHERE c.nomeCategoria IN (SELECT nomeCategoria FROM CategorieVenditore WHERE indirizzo_email = ?)";
                 PreparedStatement stmtAsteInverse = connection.prepareStatement(queryAsteInverse);
                 stmtAsteInverse.setString(1, email);
                 ResultSet resultSetAsteInverse = stmtAsteInverse.executeQuery();
@@ -396,7 +394,7 @@ public class AstaDAOAcquirente {
                 Statement statement = connection.createStatement();
 
                 // Query per recuperare le 5 aste inglesi con la data di scadenza più vicina
-                String queryAsteInglese = "SELECT * FROM asta_allinglese ORDER BY dataDiScadenza ASC LIMIT 5";
+                String queryAsteInglese = "SELECT * FROM asta_allinglese ORDER BY intervalloTempoOfferte ASC LIMIT 5";
                 ResultSet resultSetAsteInglese = statement.executeQuery(queryAsteInglese);
                 while (resultSetAsteInglese.next()) {
                     int id = resultSetAsteInglese.getInt("id");
@@ -415,11 +413,10 @@ public class AstaDAOAcquirente {
                     String intervalloTempoOfferte = resultSetAsteInglese.getString("intervalloTempoOfferte");
                     String rialzoMin = resultSetAsteInglese.getString("rialzoMin");
                     String prezzoAttuale = resultSetAsteInglese.getString("prezzoAttuale");
-                    String dataDiScadenza = resultSetAsteInglese.getString("dataDiScadenza");
                     String condizione = resultSetAsteInglese.getString("condizione");
                     String emailVenditore = resultSetAsteInglese.getString("id_venditore");
 
-                    AstaIngleseItem astaIngleseItem = new AstaIngleseItem(id, nome, descrizione, foto, baseAsta, intervalloTempoOfferte, rialzoMin, prezzoAttuale, dataDiScadenza, condizione, emailVenditore);
+                    AstaIngleseItem astaIngleseItem = new AstaIngleseItem(id, nome, descrizione, foto, baseAsta, intervalloTempoOfferte, rialzoMin, prezzoAttuale, condizione, emailVenditore);
                     astaItems.add(astaIngleseItem);
                 }
                 resultSetAsteInglese.close();
@@ -526,11 +523,10 @@ public class AstaDAOAcquirente {
                     String intervalloTempoOfferte = resultSetAsteInglese.getString("intervalloTempoOfferte");
                     String rialzoMin = resultSetAsteInglese.getString("rialzoMin");
                     String prezzoAttuale = resultSetAsteInglese.getString("prezzoAttuale");
-                    String dataDiScadenza = resultSetAsteInglese.getString("dataDiScadenza");
                     String condizione = resultSetAsteInglese.getString("condizione");
                     String emailVenditore = resultSetAsteInglese.getString("id_venditore");
 
-                    AstaIngleseItem astaIngleseItem = new AstaIngleseItem(id, nome, descrizione, foto, baseAsta, intervalloTempoOfferte, rialzoMin, prezzoAttuale, dataDiScadenza, condizione,emailVenditore);
+                    AstaIngleseItem astaIngleseItem = new AstaIngleseItem(id, nome, descrizione, foto, baseAsta, intervalloTempoOfferte, rialzoMin, prezzoAttuale, condizione,emailVenditore);
                     astaItems.add(astaIngleseItem);
                     Log.d("asta inglese", "aggiunta");
                 }

@@ -3,6 +3,7 @@ package com.example.progettoingsw.gui.acquirente;
 import com.example.progettoingsw.R;
 import com.example.progettoingsw.gestori_gui.ElementoListaCategorie;
 
+import android.content.Intent;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Color;
@@ -27,6 +28,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.progettoingsw.controllers_package.Controller;
 import com.example.progettoingsw.gestori_gui.CheckboxGridAdapter;
+import com.example.progettoingsw.gui.SchermataAstePerCategoria;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
@@ -36,9 +38,11 @@ public class AcquirenteFragmentSelezioneCategorie extends Fragment {
     private List<String> selectedRadioButtonItems = new ArrayList<>();
     private LinearLayout linearLayoutCategorie;
     private ArrayAdapter<String> categorieAdapter;
-
-    public AcquirenteFragmentSelezioneCategorie() {
-        // Costruttore vuoto richiesto dal framework
+    String email ;
+    String tipoUtente;
+    public AcquirenteFragmentSelezioneCategorie(String email, String tipoUtente) {
+        this.email=email;
+        this.tipoUtente=tipoUtente;
     }
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -88,8 +92,14 @@ public class AcquirenteFragmentSelezioneCategorie extends Fragment {
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    // Gestisci l'evento di clic qui
-                    // Ad esempio, apri una nuova schermata o esegui un'azione specifica
+
+                    String categoriaSelezionata = ((Button) v).getText().toString();
+
+                    Intent intent = new Intent(requireContext(), SchermataAstePerCategoria.class);
+                    intent.putExtra("categoria_selezionata", categoriaSelezionata);
+                    intent.putExtra("email",email);
+                    intent.putExtra("tipoUtente",tipoUtente);
+                    startActivity(intent);
                 }
             });
 

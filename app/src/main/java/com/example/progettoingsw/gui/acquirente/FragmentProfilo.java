@@ -60,7 +60,6 @@ public class FragmentProfilo extends Fragment{
     private String email;
     String tipoUtente;
     private RelativeLayout relative_layout_fragment_profilo;
-    private BottomNavigationView acquirente_nav_view;
 
     public FragmentProfilo(String email, String tipoUtente) {
         this.email = email;
@@ -79,7 +78,6 @@ public class FragmentProfilo extends Fragment{
         Toast.makeText(getContext(), "Mail " + email + ", tipo: " + tipoUtente, Toast.LENGTH_SHORT).show();
 
 
-        acquirente_nav_view = view.findViewById(R.id.acquirente_nav_view);
         relative_layout_fragment_profilo = view.findViewById(R.id.relative_layout_fragment_profilo);
 
         //icona del caricamento
