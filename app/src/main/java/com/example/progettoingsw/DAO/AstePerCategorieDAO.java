@@ -27,7 +27,8 @@ public class AstePerCategorieDAO {
 
     public void openConnection() {new AstePerCategorieDAO.DatabaseTask().execute("open");}
 
-    public void getAsteForCategoriaUtente(String categoria,String tipoUtente) {
+    public void
+    getAsteForCategoriaUtente(String categoria,String tipoUtente) {
         if (categoria == null || tipoUtente == null ) {
 
             return;
@@ -57,7 +58,7 @@ public class AstePerCategorieDAO {
                             ArrayList<Object> aste = new ArrayList<>();
                             String tipoUtente = strings[2];
                             if (tipoUtente.equals("venditore")){
-                                String queryAsteInverse ="SELECT aa.* FROM AsteCategorieInversa pv JOIN asta_inversa aa ON pv.id_asta_inversa = aa.id WHERE pv.nomeCategoria= ? AND aa.condizone='aperta' " ;
+                                String queryAsteInverse ="SELECT aa.* FROM AsteCategorieInversa pv JOIN asta_inversa aa ON pv.id_asta_inversa = aa.id WHERE pv.nomeCategoria= ? AND aa.condizione='aperta' " ;
                                 PreparedStatement statementInversa = connection.prepareStatement(queryAsteInverse);
                                 statementInversa.setString(1, strings[1]);
                                 ResultSet resultSetAsteInversa = statementInversa.executeQuery();
@@ -90,7 +91,7 @@ public class AstePerCategorieDAO {
 
                                 return aste;
                             } else if (tipoUtente.equals("acquirente")) {
-                                String queryIngleseAcquirente= "SELECT aa.* FROM AsteCategorieAllInglese pv JOIN asta_allinglese aa ON pv.id_asta_allinglese = aa.id WHERE pv.nomeCategoria= ? AND aa.condizone='aperta' " ;
+                                String queryIngleseAcquirente= "SELECT aa.* FROM AsteCategorieAllInglese pv JOIN asta_allinglese aa ON pv.id_asta_allinglese = aa.id WHERE pv.nomeCategoria= ? AND aa.condizione='aperta' " ;
                                 PreparedStatement statementInglesi = connection.prepareStatement(queryIngleseAcquirente);
                                 statementInglesi.setString(1, strings[1]);
                                 ResultSet resultSetAsteInglese = statementInglesi.executeQuery();
@@ -122,7 +123,7 @@ public class AstePerCategorieDAO {
                                 statementInglesi.close();
 
                                 Log.d("AstePerCategorieDAO", "asta al ribasso:");
-                                String queryAsteRibassoAcquirente = "SELECT aa.* FROM AsteCategorieAlRibasso pv JOIN asta_alribasso aa ON pv.id_asta_alribasso = aa.id WHERE pv.nomeCategoria= ? AND aa.condizone='aperta' ";
+                                String queryAsteRibassoAcquirente = "SELECT aa.* FROM AsteCategorieAlRibasso pv JOIN asta_alribasso aa ON pv.id_asta_alribasso = aa.id WHERE pv.nomeCategoria= ? AND aa.condizione='aperta' ";
                                 PreparedStatement statementRibasso = connection.prepareStatement(queryAsteRibassoAcquirente);
                                 statementRibasso.setString(1, strings[1]);
                                 ResultSet resultSetAsteRibasso = statementRibasso.executeQuery();
@@ -181,10 +182,25 @@ public class AstePerCategorieDAO {
             // Puoi mostrare il risultato all'utente o gestirlo in modo appropriato
             if (result instanceof ArrayList) {
                 ArrayList<Object> aste = (ArrayList<Object>) result;
+
                 if (aste != null) {
+                    for (Object asta : aste) {
+                    if (asta instanceof AstaInversaItem) {
+                        AstaInversaItem astaInversaItem = (AstaInversaItem) asta;
+                        Log.d("AstePerCategorieDAO", "Nome Asta Inversa: " + astaInversaItem.getNome());
+                    } else if (asta instanceof AstaIngleseItem) {
+                        AstaIngleseItem astaIngleseItem = (AstaIngleseItem) asta;
+                        Log.d("AstePerCategorieDAO", "Nome Asta Inglese: " + astaIngleseItem.getNome());
+                    } else if (asta instanceof AstaRibassoItem) {
+                        AstaRibassoItem astaRibassoItem = (AstaRibassoItem) asta;
+                        Log.d("AstePerCategorieDAO", "Nome Asta Ribasso: " + astaRibassoItem.getNome());
+                    }
+                }
+                    Log.d("astepercategorieDAO" , "chiamo asteCategorie");
                     schermataAstePerCategoria.asteCategorie(aste);
                 } else {
                     // Nessun risultato trovato per l'utente
+                    Log.d("astepercategorieDAO" , "chiamo asteCategorie vuoto");
                     schermataAstePerCategoria.asteCategorie(new ArrayList<>());
                 }
             } else {

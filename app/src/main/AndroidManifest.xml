@@ -8,15 +8,17 @@
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
+        android:enableOnBackInvokedCallback="true"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ProgettoINGSW"
-        android:enableOnBackInvokedCallback="true"
-        tools:targetApi="31"
-        >
+        tools:targetApi="31">
+        <activity
+            android:name=".PopUpAggiungiCategorieAsta"
+            android:exported="false" />
         <activity
             android:name=".gui.acquirente.AcquirenteMainActivity"
             android:exported="false" />
@@ -32,11 +34,9 @@
         <activity
             android:name=".gui.acquirente.AcquirenteFragmentSelezioneCategorie"
             android:exported="false" />
-
         <activity
             android:name=".gui.venditore.VenditoreFragmentCreaLaTuaAstaVenditore"
             android:exported="true" />
-
         <activity
             android:name=".gui.acquirente.AcquirenteFragmentHome"
             android:exported="true" />
@@ -52,7 +52,6 @@
         <activity
             android:name=".gui.PopUpNuovaOfferta"
             android:theme="@style/Base.Theme.ProgettoINGSW.CustomThemeSfocato" />
-
         <activity
             android:name=".gui.PreferitiActivity"
             android:exported="false" />
@@ -68,16 +67,13 @@
         <activity
             android:name=".gui.PopUpLogin"
             android:theme="@style/Base.Theme.ProgettoINGSW.CustomThemeSfocato" />
-
         <activity android:name=".gui.Registrazione" />
-
         <activity
             android:name=".gui.RegistrazioneCampiFacoltativi"
             android:exported="true" />
         <activity
             android:name=".gui.RegistrazioneCategorie"
             android:exported="true" />
-
         <activity
             android:name=".gui.acquirente.AcquirenteFragmentCreaLaTuaAstaAcquirente"
             android:exported="true" />
@@ -124,12 +120,6 @@
         <activity
             android:name=".gui.SchermataAstePerCategoria"
             android:exported="false" />
-
-
-
     </application>
-
-
-
 
 </manifest>

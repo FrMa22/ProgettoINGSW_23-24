@@ -126,6 +126,41 @@ public class AcquirenteMainActivity extends GestoreComuniImplementazioni {
             return 0;
         }
     }
+    public void navigateToFragmentAndSelectIcon(Fragment fragment) {
+        // Controlla se il fragment corrente è già quello selezionato
+        Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
+        if (currentFragment != null && currentFragment.getClass().equals(fragment.getClass())) {
+            // Non fare nulla se il fragment corrente è già quello selezionato
+            Log.d("BottomNav", "Fragment already selected");
+            return;
+        }
+
+        // Imposta il nuovo fragment
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_container, fragment)
+                .commit();
+
+        // Imposta l'icona corrispondente nella BottomNavigationView
+        MenuItem menuItem = null;
+        if (fragment instanceof AcquirenteFragmentHome) {
+            menuItem = bottomNavigationView.getMenu().findItem(R.id.action_home);
+        } else if (fragment instanceof AcquirenteFragmentSelezioneCategorie) {
+            menuItem = bottomNavigationView.getMenu().findItem(R.id.action_categories);
+        } else if (fragment instanceof AcquirenteAstaInversa) {
+            menuItem = bottomNavigationView.getMenu().findItem(R.id.action_crea_asta);
+        } else if (fragment instanceof AcquirenteFragmentRicercaAsta) {
+            menuItem = bottomNavigationView.getMenu().findItem(R.id.action_search);
+        } else if (fragment instanceof FragmentProfilo) {
+            menuItem = bottomNavigationView.getMenu().findItem(R.id.action_profile);
+        }
+
+        // Se l'elemento di menu corrispondente è stato trovato, imposta l'elemento come selezionato
+        if (menuItem != null) {
+            menuItem.setChecked(true);
+            resetOtherIcons(bottomNavigationView, menuItem);
+        }
+    }
+
 
 
 }

@@ -7,8 +7,10 @@ import android.util.Log;
 
 import com.example.progettoingsw.R;
 import com.example.progettoingsw.controllers_package.DatabaseHelper;
+import com.example.progettoingsw.controllers_package.InsertAsta;
 import com.example.progettoingsw.gui.SchermataAstaInglese;
 import com.example.progettoingsw.gui.SchermataAstaInversa;
+import com.example.progettoingsw.gui.acquirente.AcquirenteAstaInversa;
 import com.example.progettoingsw.model.AstaIngleseItem;
 import com.example.progettoingsw.model.AstaInversaItem;
 
@@ -20,14 +22,19 @@ import java.sql.Statement;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 
 public class AstaInversaDAO {
 
     private Connection connection;
     private byte[] foto;
     private SchermataAstaInversa schermataAstaInversa;
+    private AcquirenteAstaInversa acquirenteAstaInversa;
     public AstaInversaDAO(){
 
+    }
+    public AstaInversaDAO(AcquirenteAstaInversa acquirenteAstaInversa){
+        this.acquirenteAstaInversa = acquirenteAstaInversa;
     }
     public AstaInversaDAO(SchermataAstaInversa schermataAstaInversa){
         this.schermataAstaInversa = schermataAstaInversa;
@@ -37,13 +44,16 @@ public class AstaInversaDAO {
         new AstaInversaDAO.DatabaseTask().execute("open");
     }
 
-    public void creaAstaInversa(String nome, String prezzo,String data,String ora,String descrizione,String email,byte[] datiFoto) {
+    public void creaAstaInversa(String nome, String prezzo,String data,String ora,String descrizione,String email,byte[] datiFoto, ArrayList<String> listaCategorieScelte) {
         if (nome.isEmpty() || prezzo.isEmpty() || data.isEmpty() || ora.isEmpty() || email.isEmpty() ) {
             // Se uno dei campi è vuoto, non fare nulla
             return;
         }
         foto=datiFoto;
         new AstaInversaDAO.DatabaseTask().execute("insert", nome, prezzo,data,ora,descrizione,email);
+    }
+    public void inserisciCategorieAstaInglese(InsertAsta asta) {
+        new InsertCategorieAstaIngleseTask().execute(asta);
     }
     public void getAstaInversaByID(int idAsta) {
         new AstaInversaDAO.SelectAstaTask().execute(String.valueOf(idAsta));
@@ -55,16 +65,16 @@ public class AstaInversaDAO {
         new AstaInversaDAO.DatabaseTask().execute("close");
     }
 
-    private class DatabaseTask extends AsyncTask<String, Void, String> {
+    private class DatabaseTask extends AsyncTask<String, Void, Integer> {
 
         @Override
-        protected String doInBackground(String... strings) {
+        protected Integer doInBackground(String... strings) {
             try {
                 if (strings.length > 0) {
                     String action = strings[0];
                     if (action.equals("open")) {
                         connection = DatabaseHelper.getConnection();
-                        return "Connessione aperta con successo!";
+                        return -1; // Connessione aperta con successo, non restituisce alcun ID
                     } else if (action.equals("insert")) {
                         if (connection != null && !connection.isClosed()) {
                             double prezzoMax = Double.parseDouble(strings[2]);
@@ -74,17 +84,17 @@ public class AstaInversaDAO {
                             String condizione="aperta";
                             String descrizioneP=strings[5];
 
-// Definisci il pattern per il formato della stringa con data e orario
+                            // Definisci il pattern per il formato della stringa con data e orario
                             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
-// Effettua la conversione della stringa in LocalDateTime
+                            // Effettua la conversione della stringa in LocalDateTime
                             LocalDateTime localDateTime = LocalDateTime.parse(dataDiScadenza, formatter);
 
-// Prepara l'istruzione SQL con un segnaposto per il LocalDateTime
+                            // Prepara l'istruzione SQL con un segnaposto per il LocalDateTime
                             String query = "INSERT INTO asta_inversa (prezzoMax, dataDiScadenza, condizione, id_acquirente,nome,descrizione,path_immagine, prezzoAttuale) VALUES (?, ?, ?, ?,?,?,?,?)";
-                            PreparedStatement statement = connection.prepareStatement(query);
+                            PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 
-// Imposta i valori dei parametri
+                            // Imposta i valori dei parametri
                             statement.setDouble(1, prezzoMax);
                             statement.setObject(2, localDateTime);
                             statement.setString(3, condizione);
@@ -94,38 +104,50 @@ public class AstaInversaDAO {
                             statement.setBytes(7,foto);
                             statement.setDouble(8,prezzoMax);
 
-// Esegui l'aggiornamento
+                            // Esegui l'aggiornamento
                             statement.executeUpdate();
-                            statement.close();
 
-                            return "Asta inversa inserita con successo!";
+                            // Recupera l'ID generato
+                            ResultSet generatedKeys = statement.getGeneratedKeys();
+                            if (generatedKeys.next()) {
+                                return generatedKeys.getInt(1); // Restituisce l'ID generato
+                            } else {
+                                return -1; // Nessun ID generato
+                            }
                         } else {
-                            return "Impossibile inserire l'asta: connessione non aperta.";
+                            return -1; // Impossibile inserire l'asta: connessione non aperta
                         }
-
                     } else if (action.equals("close")) {
                         if (connection != null && !connection.isClosed()) {
                             connection.close();
-                            return "Connessione chiusa con successo!";
+                            return -1; // Connessione chiusa con successo, non restituisce alcun ID
                         } else {
-                            return "Connessione già chiusa.";
+                            return -1; // Connessione già chiusa, non restituisce alcun ID
                         }
                     }
                 }
-                return "Azione non supportata.";
+                return -1; // Azione non supportata o nessun parametro fornito
             } catch (Exception e) {
                 e.printStackTrace();
-                return "Errore durante l'operazione: " + e.getMessage();
+                return -1; // Errore durante l'operazione, non restituisce alcun ID
             }
         }
 
         @Override
-        protected void onPostExecute(String result) {
+        protected void onPostExecute(Integer generatedId) {
             // Questo metodo viene chiamato dopo che doInBackground è completato
             // Puoi mostrare il risultato all'utente o gestirlo in modo appropriato
-            System.out.println(result);
+            if (generatedId != -1) {
+                // Operazione completata con successo, puoi passare l'ID generato alla classe chiamante
+                // Ad esempio, puoi passarlo tramite un'interfaccia o un callback
+                // Esempio: mListener.onIdGenerated(generatedId);
+                Log.d("ID", "L id è : " + generatedId);
+                acquirenteAstaInversa.handleID(generatedId);
+            } else {
+            }
         }
     }
+
 
     private class SelectAstaTask extends AsyncTask<String, Void, AstaInversaItem> {
 
@@ -234,5 +256,39 @@ public class AstaInversaDAO {
             // Puoi mostrare il risultato all'utente o gestirlo in modo appropriato
         }
     }
+
+    private class InsertCategorieAstaIngleseTask extends AsyncTask<InsertAsta, Void, Void> {
+        @Override
+        protected Void doInBackground(InsertAsta... insertAstaArray) {
+            try {
+                if (insertAstaArray.length > 0) {
+                    InsertAsta insertAsta = insertAstaArray[0];
+                    int idAsta = insertAsta.getIdAsta();
+                    Log.d("id recuperato è DAO: " , " id: " + idAsta);
+                    ArrayList<String> categorie = insertAsta.getCategorie();
+                    connection = DatabaseHelper.getConnection();
+                    if (connection != null && !connection.isClosed()) {
+                        // Iterare sulla lista di categorie e inserire ogni categoria per l'asta specificata
+                        for (String categoria : categorie) {
+                            String query = "INSERT INTO AsteCategorieInversa (id_asta_inversa, nomeCategoria) VALUES (?, ?)";
+                            PreparedStatement statement = connection.prepareStatement(query);
+// Imposta il valore dell'id dell'asta come parametro
+                            Log.d("id recuperato è : " , " id in ciclo: " + idAsta);
+                            statement.setInt(1, idAsta);
+// Imposta il valore della categoria come parametro
+                            statement.setString(2, categoria);
+                            statement.execute();
+                            Log.d("insert" , "inseriti " + categoria + " per " + idAsta + " .");
+                        }
+                    }
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+    }
+
+
 
 }

@@ -12,6 +12,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,6 +35,7 @@ import androidx.core.content.ContextCompat;
 
 
 import com.example.progettoingsw.DAO.ImmaginiDAO;
+import com.example.progettoingsw.PopUpAggiungiCategorieAsta;
 import com.example.progettoingsw.R;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
@@ -42,21 +44,27 @@ import com.example.progettoingsw.DAO.AstaIngleseDAO;
 import com.example.progettoingsw.DAO.AstaInversaDAO;
 import com.example.progettoingsw.classe_da_estendere.GestoreComuniImplementazioni;
 import com.example.progettoingsw.controllers_package.Controller;
+import com.example.progettoingsw.controllers_package.InsertAsta;
 import com.example.progettoingsw.gui.venditore.VenditoreFragmentCreaLaTuaAstaVenditore;
 import com.google.android.material.button.MaterialButton;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 
 public class AcquirenteAstaInversa extends Fragment {
+    private int idAsta;
     AppCompatButton bottoneConferma;
+    AppCompatButton bottoneAnnullaAstaInversa;
     MaterialButton bottoneData;
     MaterialButton bottoneOra;
     ImageView immagineProdotto;
     ImageButton bottoneInserisciImmagine;
     ImageButton bottone_info;
     ActivityResultLauncher<Intent> resultLauncher;
+    private ArrayList<String> listaCategorieScelte;
+    private MaterialButton bottoneCategorieAstaInversa;
     EditText prodottoAstaInversa;
     EditText prezzoAstaInversa;
 
@@ -82,14 +90,23 @@ public class AcquirenteAstaInversa extends Fragment {
     public void onViewCreated(View view2, Bundle savedInstanceState) {
         super.onViewCreated(view2, savedInstanceState);
 
-        AstaInversaDAO astaInversaDao = new AstaInversaDAO();
+        AstaInversaDAO astaInversaDao = new AstaInversaDAO(AcquirenteAstaInversa.this);
         //ImmaginiDAO immaginiDAO=new ImmaginiDAO(this);
-
+        listaCategorieScelte = new ArrayList<>();
+        bottoneAnnullaAstaInversa = view2.findViewById(R.id.bottoneAnnullaAstaInversa);
         bottoneConferma = view2.findViewById(R.id.bottoneConfermaAstaInversa);
         immagineProdotto= view2.findViewById(R.id.imageViewCreaAstaAcquirente);
         bottoneInserisciImmagine = view2.findViewById(R.id.imageButtonInserisciImmagineCreaAstaAcquirente);
         bottoneInserisciImmagine.setOnClickListener(view ->prelevaImmagine());//significa che chiama il metodo prelevaImmagine
 
+        bottoneCategorieAstaInversa =view2.findViewById(R.id.bottoneCategorieAstaInversa);
+        bottoneCategorieAstaInversa.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                PopUpAggiungiCategorieAsta popUpAggiungiCategorieAsta = new PopUpAggiungiCategorieAsta(getContext(),AcquirenteAstaInversa.this,listaCategorieScelte);
+                popUpAggiungiCategorieAsta.show();
+            }
+        });
         bottoneData =  view2.findViewById(R.id.bottoneDataAstaInversa);
         bottoneOra =  view2.findViewById(R.id.bottoneOraAstaInversa);
 
@@ -141,9 +158,19 @@ public class AcquirenteAstaInversa extends Fragment {
 
                 // Chiamata al metodo per creare l'asta nel database
                 astaInversaDao.openConnection();
-                astaInversaDao.creaAstaInversa(nome,prezzo,data,ora,descrizione,email,imageBytes);
-                astaInversaDao.closeConnection();
+                astaInversaDao.creaAstaInversa(nome,prezzo,data,ora,descrizione,email,imageBytes,listaCategorieScelte);
 
+                AppCompatActivity activity = (AppCompatActivity) requireContext();
+                Fragment fragment = new AcquirenteFragmentHome(email, "acquirente");
+                ((AcquirenteMainActivity) activity).navigateToFragmentAndSelectIcon(fragment);
+            }
+        });
+        bottoneAnnullaAstaInversa.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AppCompatActivity activity = (AppCompatActivity) requireContext();
+                Fragment fragment = new AcquirenteFragmentHome(email, "acquirente");
+                ((AcquirenteMainActivity) activity).navigateToFragmentAndSelectIcon(fragment);
             }
         });
 
@@ -254,7 +281,27 @@ public class AcquirenteAstaInversa extends Fragment {
         AlertDialog dialog = builder.create();
         dialog.show();
     }
-
+    public void handlePopUp(ArrayList<String> switchTexts){
+        this.listaCategorieScelte = switchTexts;
+        // Iterare attraverso gli elementi di switchTexts e stamparli nel log
+        for (String categoria : switchTexts) {
+            Log.d("PopUpHandler", "Categoria: " + categoria);
+        }
+    }
+    public void handleID(int id){
+        this.idAsta = id;
+        AstaInversaDAO astaInversaDAO = new AstaInversaDAO(AcquirenteAstaInversa.this);
+        if(!listaCategorieScelte.isEmpty()){
+            astaInversaDAO.openConnection();
+            Log.d("id recuperato è ACquirente : " , " id: " + idAsta);
+            InsertAsta asta = new InsertAsta(idAsta,listaCategorieScelte);
+            astaInversaDAO.inserisciCategorieAstaInglese(asta);
+            astaInversaDAO.closeConnection();
+            Toast.makeText(getContext(), "Asta creata con successo!", Toast.LENGTH_SHORT).show();
+        }else{
+            astaInversaDAO.closeConnection();
+        }
+    }
 }
 
 

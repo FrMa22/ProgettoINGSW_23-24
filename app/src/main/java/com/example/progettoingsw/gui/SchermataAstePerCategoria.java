@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -17,6 +18,9 @@ import com.example.progettoingsw.DAO.AstePreferiteDAO;
 import com.example.progettoingsw.R;
 import com.example.progettoingsw.controllers_package.AstaAdapter;
 import com.example.progettoingsw.controllers_package.Controller;
+import com.example.progettoingsw.model.AstaIngleseItem;
+import com.example.progettoingsw.model.AstaInversaItem;
+import com.example.progettoingsw.model.AstaRibassoItem;
 
 import java.util.ArrayList;
 
@@ -46,18 +50,54 @@ public class SchermataAstePerCategoria extends AppCompatActivity {
 
         //
         // Inizializza il RecyclerView e imposta l'adapter
-        RecyclerView recyclerViewAstePreferite = findViewById(R.id.recycler_view_aste_per_categoria);
+        RecyclerView recyclerViewAstePerCategoria = findViewById(R.id.recycler_view_aste_per_categoria);
         GridLayoutManager gridLayoutManagerAttive = new GridLayoutManager(this, 2 ,RecyclerView.VERTICAL,false);
-        recyclerViewAstePreferite.setLayoutManager(gridLayoutManagerAttive);
+        recyclerViewAstePerCategoria.setLayoutManager(gridLayoutManagerAttive);
         // Aggiungi un decorator predefinito per ridurre lo spazio tra le aste, superfluo
         DividerItemDecoration dividerItemDecorationAttive = new DividerItemDecoration(this, gridLayoutManagerAttive.getOrientation());
-        recyclerViewAstePreferite.addItemDecoration(dividerItemDecorationAttive);
+        recyclerViewAstePerCategoria.addItemDecoration(dividerItemDecorationAttive);
+        recyclerViewAstePerCategoria.setAdapter(astaAdapter);
+        astaAdapter.setOnItemClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Ottieni la posizione dell'elemento cliccato
+                int position = recyclerViewAstePerCategoria.getChildAdapterPosition(v);
+
+                // Ottieni l'oggetto Asta corrispondente alla posizione cliccata
+                Object asta = astaAdapter.getItem(position);
+
+                // Esegui le azioni desiderate con l'oggetto Asta
+                if (asta instanceof AstaIngleseItem) {
+                    int id = ((AstaIngleseItem) asta).getId();
+                    Log.d("Asta inglese", "id è " + id);
+                    Intent intent = new Intent(SchermataAstePerCategoria.this, SchermataAstaInglese.class);//test del login
+                    intent.putExtra("email", email);
+                    intent.putExtra("tipoUtente", tipoUtente);
+                    intent.putExtra("id", id);
+                    startActivity(intent);
+                } else if (asta instanceof AstaRibassoItem) {
+                    int id = ((AstaRibassoItem) asta).getId();
+                    Intent intent = new Intent(SchermataAstePerCategoria.this, SchermataAstaRibasso.class);//test del login
+                    intent.putExtra("email", email);
+                    intent.putExtra("tipoUtente", tipoUtente);
+                    intent.putExtra("id", id);
+                    startActivity(intent);
+                } else if (asta instanceof AstaInversaItem) {
+                    int id = ((AstaInversaItem) asta).getId();
+                    Intent intent = new Intent(SchermataAstePerCategoria.this, SchermataAstaInversa.class);//test del login
+                    intent.putExtra("email", email);
+                    intent.putExtra("tipoUtente", tipoUtente);
+                    intent.putExtra("id", id);
+                    startActivity(intent);
+                }
+            }
+        });
 
         astePerCategorieDAO = new AstePerCategorieDAO(this);
         //di default appena si apre la schermata si è già su aste aperte quindi escono già
         astePerCategorieDAO.openConnection();
         astePerCategorieDAO.getAsteForCategoriaUtente(categoriaSelezionata,tipoUtente);
-        recyclerViewAstePreferite.setVisibility(View.VISIBLE);
+        recyclerViewAstePerCategoria.setVisibility(View.VISIBLE);
 
 
         backBottone.setOnClickListener(new View.OnClickListener() {
@@ -80,12 +120,14 @@ public class SchermataAstePerCategoria extends AppCompatActivity {
 //                AstaAdapter astaAdapterAttive = new AstaAdapter(this, aste);
 //                recyclerViewAsteAttive.setAdapter(astaAdapterAttive);
 //                recyclerViewAsteAttive.setLayoutManager(new GridLayoutManager(this,2, RecyclerView.VERTICAL,false));
+            Log.d("asteCategorie" , "entrato");
             astaAdapter.setAste(aste);
 
 
             // Aggiungi stampe nel log per verificare che i dati siano correttamente passati
 
         } else {
+            Log.d("asteCategorie" , "entrato NULL");
             // Nessun nome asta trovato per l'email specificata
         }
         //
