@@ -31,6 +31,7 @@ import com.example.progettoingsw.gui.PreferitiActivity;
 import com.example.progettoingsw.gui.SchermataAstaInglese;
 import com.example.progettoingsw.gui.SchermataAstaInversa;
 import com.example.progettoingsw.gui.SchermataAstaRibasso;
+import com.example.progettoingsw.gui.SchermataNotifiche;
 import com.example.progettoingsw.model.AstaIngleseItem;
 import com.example.progettoingsw.model.AstaInversaItem;
 import com.example.progettoingsw.model.AstaRibassoItem;
@@ -47,6 +48,7 @@ public class AcquirenteFragmentHome extends Fragment {
 
     private ProgressBar progressBarAcquirenteFragmentHome;
     MaterialButton button_le_mie_aste;
+    ImageButton button_notifiche;
     private String email;
     private String tipoUtente;
     private ArrayList<String> categorie;
@@ -245,12 +247,28 @@ public class AcquirenteFragmentHome extends Fragment {
         relative_layout_home_acquirente.setClickable(true);
 
         button_le_mie_aste = view.findViewById(R.id.button_le_mie_aste);
+
+
         button_le_mie_aste.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                System.out.println("le aste oooh");
                 Intent intent = new Intent(getContext(), LeMieAste.class);
                 intent.putExtra("email", email);
+                intent.putExtra("tipoUtente",tipoUtente);
+                startActivity(intent);
+
+            }
+        });
+
+        button_notifiche= view.findViewById(R.id.openNotifiche);
+
+
+        button_notifiche.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), SchermataNotifiche.class);
+                intent.putExtra("email", email);
+                intent.putExtra("tipoUtente",tipoUtente);
                 startActivity(intent);
 
             }
