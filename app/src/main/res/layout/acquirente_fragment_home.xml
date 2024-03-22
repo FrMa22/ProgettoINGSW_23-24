@@ -45,6 +45,17 @@
                 android:contentDescription="Clicca per aprire i preferiti."
                 android:drawableTint="@android:color/transparent"
                 android:src="@drawable/ic_preferiti_non_riempita" />
+
+            <!-- Aggiungi il pulsante delle notifiche -->
+            <ImageButton
+                android:id="@+id/openNotifiche"
+                android:layout_width="50dp"
+                android:layout_height="60dp"
+                android:layout_gravity="end"
+                android:layout_marginRight="20dp"
+                android:backgroundTint="@android:color/transparent"
+                android:contentDescription="Clicca per aprire le notifiche."
+                android:src="@drawable/baseline_notification_important_24" />
         </androidx.appcompat.widget.Toolbar>
 
         <ScrollView
