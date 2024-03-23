@@ -20,6 +20,8 @@ import android.widget.LinearLayout;
 import android.widget.Switch;
 
 import com.example.progettoingsw.gui.acquirente.AcquirenteAstaInversa;
+import com.example.progettoingsw.gui.venditore.VenditoreAstaInglese;
+import com.example.progettoingsw.gui.venditore.VenditoreAstaRibasso;
 import com.google.android.material.button.MaterialButton;
 
 import java.util.ArrayList;
@@ -31,6 +33,8 @@ public class PopUpAggiungiCategorieAsta extends Dialog implements View.OnClickLi
     private ArrayList<String> categorieScelte;
     private ArrayList<String> switchTexts;
     private AcquirenteAstaInversa acquirenteAstaInversa;
+    private VenditoreAstaInglese venditoreAstaInglese;
+    private VenditoreAstaRibasso venditoreAstaRibasso;
     private Button buttonSalvaCategorieCreaAsta;
     private Button buttonAnnullaCategorieCreaAsta;
 
@@ -38,6 +42,18 @@ public class PopUpAggiungiCategorieAsta extends Dialog implements View.OnClickLi
         super(context);
         mContext = context;
         this.acquirenteAstaInversa = acquirenteAstaInversa;
+        this.categorieScelte = categorieScelte;
+    }
+    public PopUpAggiungiCategorieAsta(Context context, VenditoreAstaInglese venditoreAstaInglese, ArrayList<String> categorieScelte){
+        super(context);
+        mContext = context;
+        this.venditoreAstaInglese = venditoreAstaInglese;
+        this.categorieScelte = categorieScelte;
+    }
+    public PopUpAggiungiCategorieAsta(Context context, VenditoreAstaRibasso venditoreAstaRibasso, ArrayList<String> categorieScelte){
+        super(context);
+        mContext = context;
+        this.venditoreAstaRibasso = venditoreAstaRibasso;
         this.categorieScelte = categorieScelte;
     }
 
@@ -69,8 +85,14 @@ public class PopUpAggiungiCategorieAsta extends Dialog implements View.OnClickLi
             Log.d("Bottoni in popup" , "annulla");
             dismiss();
         } else if (view.getId() == R.id.buttonSalvaCategorieCreaAsta) {
-            Log.d("Bottoni in popup" , "salva");
-            acquirenteAstaInversa.handlePopUp(switchTexts);
+            if (acquirenteAstaInversa != null) {
+                acquirenteAstaInversa.handlePopUp(switchTexts);
+            } else if (venditoreAstaInglese != null) {
+                venditoreAstaInglese.handlePopUp(switchTexts);
+            }
+            else if (venditoreAstaRibasso != null) {
+                venditoreAstaRibasso.handlePopUp(switchTexts);
+            }
             dismiss();
         }
     }

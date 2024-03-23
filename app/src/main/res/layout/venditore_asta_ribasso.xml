@@ -270,13 +270,30 @@
                 android:textColorHint="@color/colore_hint"
                 android:textSize="20sp"/>
 
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/bottoneCategorieAstaRibasso"
+                android:layout_width="140dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center"
+                android:backgroundTint="@color/colore_base"
+                android:text="Categorie"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/colore_secondario"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:strokeColor="#AAAAAA"
+                app:strokeWidth="2dp" />
 
 
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp">
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/bottoneConfermaAstaRibasso"
                 android:layout_width="170dp"
                 android:layout_height="60dp"
-                android:layout_below="@id/editTextPrezzoSegretoAstaRibasso"
                 android:layout_alignParentEnd="true"
                 android:layout_gravity="center"
                 android:layout_marginVertical="10dp"
@@ -284,9 +301,9 @@
                 android:textStyle="bold"
                 android:text="Conferma"
                 android:textColor="@color/colore_base"
-                android:textSize="20sp"
+                android:textSize="20sp"/>
+            </RelativeLayout>
 
-                />
         </LinearLayout>
     </ScrollView>
 

@@ -8,10 +8,8 @@ import android.util.Log;
 import com.example.progettoingsw.R;
 import com.example.progettoingsw.controllers_package.DatabaseHelper;
 import com.example.progettoingsw.controllers_package.InsertAsta;
-import com.example.progettoingsw.gui.SchermataAstaInglese;
 import com.example.progettoingsw.gui.SchermataAstaInversa;
 import com.example.progettoingsw.gui.acquirente.AcquirenteAstaInversa;
-import com.example.progettoingsw.model.AstaIngleseItem;
 import com.example.progettoingsw.model.AstaInversaItem;
 
 import java.sql.Connection;
@@ -52,8 +50,8 @@ public class AstaInversaDAO {
         foto=datiFoto;
         new AstaInversaDAO.DatabaseTask().execute("insert", nome, prezzo,data,ora,descrizione,email);
     }
-    public void inserisciCategorieAstaInglese(InsertAsta asta) {
-        new InsertCategorieAstaIngleseTask().execute(asta);
+    public void inserisciCategorieAstaInversa(InsertAsta asta) {
+        new InsertCategorieAstaInversaTask().execute(asta);
     }
     public void getAstaInversaByID(int idAsta) {
         new AstaInversaDAO.SelectAstaTask().execute(String.valueOf(idAsta));
@@ -135,12 +133,7 @@ public class AstaInversaDAO {
 
         @Override
         protected void onPostExecute(Integer generatedId) {
-            // Questo metodo viene chiamato dopo che doInBackground è completato
-            // Puoi mostrare il risultato all'utente o gestirlo in modo appropriato
             if (generatedId != -1) {
-                // Operazione completata con successo, puoi passare l'ID generato alla classe chiamante
-                // Ad esempio, puoi passarlo tramite un'interfaccia o un callback
-                // Esempio: mListener.onIdGenerated(generatedId);
                 Log.d("ID", "L id è : " + generatedId);
                 acquirenteAstaInversa.handleID(generatedId);
             } else {
@@ -257,7 +250,7 @@ public class AstaInversaDAO {
         }
     }
 
-    private class InsertCategorieAstaIngleseTask extends AsyncTask<InsertAsta, Void, Void> {
+    private class InsertCategorieAstaInversaTask extends AsyncTask<InsertAsta, Void, Void> {
         @Override
         protected Void doInBackground(InsertAsta... insertAstaArray) {
             try {

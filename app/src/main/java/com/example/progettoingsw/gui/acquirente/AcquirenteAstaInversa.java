@@ -1,8 +1,6 @@
 package com.example.progettoingsw.gui.acquirente;
 
 
-import static androidx.core.content.ContentProviderCompat.requireContext;
-
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
@@ -31,21 +29,13 @@ import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 
 
-import com.example.progettoingsw.DAO.ImmaginiDAO;
 import com.example.progettoingsw.PopUpAggiungiCategorieAsta;
 import com.example.progettoingsw.R;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 
-import com.example.progettoingsw.DAO.AstaIngleseDAO;
 import com.example.progettoingsw.DAO.AstaInversaDAO;
-import com.example.progettoingsw.classe_da_estendere.GestoreComuniImplementazioni;
-import com.example.progettoingsw.controllers_package.Controller;
 import com.example.progettoingsw.controllers_package.InsertAsta;
-import com.example.progettoingsw.gui.venditore.VenditoreFragmentCreaLaTuaAstaVenditore;
 import com.google.android.material.button.MaterialButton;
 
 import java.io.ByteArrayOutputStream;
@@ -295,15 +285,13 @@ public class AcquirenteAstaInversa extends Fragment {
             astaInversaDAO.openConnection();
             Log.d("id recuperato è ACquirente : " , " id: " + idAsta);
             InsertAsta asta = new InsertAsta(idAsta,listaCategorieScelte);
-            astaInversaDAO.inserisciCategorieAstaInglese(asta);
+            astaInversaDAO.inserisciCategorieAstaInversa(asta);
             astaInversaDAO.closeConnection();
-            Toast.makeText(getContext(), "Asta creata con successo!", Toast.LENGTH_SHORT).show();
         }else{
             astaInversaDAO.closeConnection();
         }
+        AppCompatActivity activity = (AppCompatActivity) requireContext();
+        Fragment fragment = new AcquirenteFragmentHome(email, "acquirente");
+        ((AcquirenteMainActivity) activity).navigateToFragmentAndSelectIcon(fragment);
     }
 }
-
-
-
-

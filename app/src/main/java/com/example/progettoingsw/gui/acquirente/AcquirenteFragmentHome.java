@@ -57,7 +57,11 @@ public class AcquirenteFragmentHome extends Fragment {
         this.email = email;
         this.tipoUtente = tipoUtente;
     }
-
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setRetainInstance(true); // Conserva il fragment durante i cambiamenti di configurazione
+    }
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

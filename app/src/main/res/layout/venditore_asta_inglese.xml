@@ -242,21 +242,40 @@
                 android:singleLine="true"
                 android:textSize="20sp" />
 
-
-
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/bottoneConfermaAstaInglese"
-                android:layout_width="wrap_content"
+                android:id="@+id/bottoneCategorieAstaInglese"
+                android:layout_width="140dp"
                 android:layout_height="60dp"
-                android:textStyle="bold"
-                android:layout_marginVertical="10dp"
-                android:text="Conferma"
                 android:layout_gravity="center"
-                android:backgroundTint="@color/colore_secondario"
-                android:textColor="@color/colore_base"
+                android:backgroundTint="@color/colore_base"
+                android:text="Categorie"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/colore_secondario"
                 android:textSize="20sp"
-                android:layout_marginBottom="20dp"
-                />
+                android:textStyle="bold"
+                app:strokeColor="#AAAAAA"
+                app:strokeWidth="2dp" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/bottoneCategorieAstaInversa"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp">
+
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/bottoneConfermaAstaInglese"
+                    android:layout_width="170dp"
+                    android:layout_height="60dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/button_background"
+                    android:text="Conferma"
+                    android:textColor="@color/colore_base"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+            </RelativeLayout>
 
         </LinearLayout>
     </ScrollView>

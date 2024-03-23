@@ -8,8 +8,10 @@ import android.widget.Toast;
 
 import com.example.progettoingsw.R;
 import com.example.progettoingsw.controllers_package.DatabaseHelper;
+import com.example.progettoingsw.controllers_package.InsertAsta;
 import com.example.progettoingsw.gui.SchermataAstaInglese;
 import com.example.progettoingsw.gui.SchermataAstaRibasso;
+import com.example.progettoingsw.gui.venditore.VenditoreAstaRibasso;
 import com.example.progettoingsw.model.AstaIngleseItem;
 import com.example.progettoingsw.model.AstaRibassoItem;
 
@@ -21,6 +23,7 @@ import java.sql.Statement;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 
 public class AstaRibassoDAO {
 
@@ -30,11 +33,15 @@ public class AstaRibassoDAO {
     private String descrizioneP;
     private byte[] foto;
     private SchermataAstaRibasso schermataAstaRibasso;
+    private VenditoreAstaRibasso venditoreAstaRibasso;
     public AstaRibassoDAO(){
 
     }
     public AstaRibassoDAO(SchermataAstaRibasso schermataAstaRibasso){
         this.schermataAstaRibasso = schermataAstaRibasso;
+    }
+    public AstaRibassoDAO(VenditoreAstaRibasso venditoreAstaRibasso){
+        this.venditoreAstaRibasso = venditoreAstaRibasso;
     }
     public void openConnection() {
         new DatabaseTask().execute("open");
@@ -51,6 +58,9 @@ public class AstaRibassoDAO {
     public void getAstaRibassoByID(int idAsta) {
         new AstaRibassoDAO.SelectAstaTask().execute(String.valueOf(idAsta));
     }
+    public void inserisciCategorieAstaRibasso(InsertAsta asta) {
+        new AstaRibassoDAO.InsertCategorieAstaRibassoTask().execute(asta);
+    }
     public void acquistaAsta(int idAsta, String emailOfferente, Float offerta){
         new AcquistaAstaTask().execute(String.valueOf(idAsta),emailOfferente, String.valueOf(offerta));
     }
@@ -58,16 +68,16 @@ public class AstaRibassoDAO {
         new DatabaseTask().execute("close");
     }
 
-    private class DatabaseTask extends AsyncTask<String, Void, String> {
+    private class DatabaseTask extends AsyncTask<String, Void, Integer> {
 
         @Override
-        protected String doInBackground(String... strings) {
+        protected Integer doInBackground(String... strings) {
             try {
                 if (strings.length > 0) {
                     String action = strings[0];
                     if (action.equals("open")) {
                         connection = DatabaseHelper.getConnection();
-                        return "Connessione aperta con successo!";
+                        return -1; // Connessione aperta con successo, non restituisce alcun ID
                     } else if (action.equals("insert")) {
                         if (connection != null && !connection.isClosed()) {
                            // Statement statement = connection.createStatement();
@@ -87,7 +97,7 @@ public class AstaRibassoDAO {
                             String query = "INSERT INTO asta_alribasso " +
                                     "(prezzoBase, intervalloDecrementale, decrementoAutomaticoCifra, prezzoMin, prezzoAttuale, condizione, nome, descrizione, id_venditore, path_immagine) " +
                                     "VALUES (?, ?::interval, ?, ?, ?, ?, ?, ?, ?, ?)";
-                            PreparedStatement preparedStatement = connection.prepareStatement(query);
+                            PreparedStatement preparedStatement = connection.prepareStatement(query,Statement.RETURN_GENERATED_KEYS);
                             preparedStatement.setDouble(1, baseAsta); // Imposta il primo parametro (prezzoBase)
                             preparedStatement.setString(2, intervallo + " minutes"); // Imposta il secondo parametro (intervalloDecrementale)
                             preparedStatement.setDouble(3, soglia); // Imposta il terzo parametro (decrementoAutomaticoCifra)
@@ -99,41 +109,41 @@ public class AstaRibassoDAO {
                             preparedStatement.setString(9, id_venditore); // Imposta il nono parametro (id_venditore)
                             preparedStatement.setBytes(10, foto); // Imposta il decimo parametro (path_immagine)
                             preparedStatement.executeUpdate();
-                            preparedStatement.close();
-
-
-
-                            //statement.executeUpdate("INSERT INTO asta_alribasso" + " (prezzoBase, intervalloDecrementale, decrementoAutomaticoCifra, prezzoMin, prezzoAttuale, condizione, nome, descrizione, id_venditore,path_immagine) " +
-                              //      "VALUES (" + baseAsta + ", INTERVAL '" + intervallo + " minutes', " + soglia + ", " + prezzoMin + ", " + prezzoAttuale + ", '" + condizione + "', '" + nomeP + "', '" + descrizioneP + "', '" + id_venditore + "', '" + foto + "')");
-                            //statement.close();
-
-
-                            return "Asta al ribasso inserita con successo!";
+                            Log.d("CreaAstaRibasso" , "Entrato mo");
+                            // Recupera l'ID generato
+                            ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
+                            if (generatedKeys.next()) {
+                                return generatedKeys.getInt(1); // Restituisce l'ID generato
+                            } else {
+                                return -1; // Nessun ID generato
+                            }
                         } else {
-                            return "Impossibile inserire l'asta: connessione non aperta.";
+                            return -1; // Impossibile inserire l'asta: connessione non aperta
                         }
-
                     } else if (action.equals("close")) {
                         if (connection != null && !connection.isClosed()) {
                             connection.close();
-                            return "Connessione chiusa con successo!";
+                            return -1; // Connessione chiusa con successo, non restituisce alcun ID
                         } else {
-                            return "Connessione già chiusa.";
+                            return -1; // Connessione già chiusa, non restituisce alcun ID
                         }
                     }
                 }
-                return "Azione non supportata.";
+                return -1; // Azione non supportata o nessun parametro fornito
             } catch (Exception e) {
                 e.printStackTrace();
-                return "Errore durante l'operazione: " + e.getMessage();
+                return -1; // Errore durante l'operazione, non restituisce alcun ID
             }
         }
 
         @Override
-        protected void onPostExecute(String result) {
-            // Questo metodo viene chiamato dopo che doInBackground è completato
-            // Puoi mostrare il risultato all'utente o gestirlo in modo appropriato
-            System.out.println(result);
+        protected void onPostExecute(Integer generatedId) {
+            if (generatedId != -1) {
+                Log.d("ID", "L id è : " + generatedId);
+                venditoreAstaRibasso.handleID(generatedId);
+            } else {
+                Log.d("ID", "Errore");
+            }
 
         }
     }
@@ -236,6 +246,35 @@ public class AstaRibassoDAO {
             } else {
                 Toast.makeText(schermataAstaRibasso, "Errore nell'acquisto", Toast.LENGTH_SHORT).show();
             }
+        }
+    }
+    private class InsertCategorieAstaRibassoTask extends AsyncTask<InsertAsta, Void, Void> {
+        @Override
+        protected Void doInBackground(InsertAsta... insertAstaArray) {
+            try {
+                if (insertAstaArray.length > 0) {
+                    InsertAsta insertAsta = insertAstaArray[0];
+                    int idAsta = insertAsta.getIdAsta();
+                    Log.d("id recuperato è DAO: " , " id: " + idAsta);
+                    ArrayList<String> categorie = insertAsta.getCategorie();
+                    connection = DatabaseHelper.getConnection();
+                    if (connection != null && !connection.isClosed()) {
+                        // Iterare sulla lista di categorie e inserire ogni categoria per l'asta specificata
+                        for (String categoria : categorie) {
+                            String query = "INSERT INTO AsteCategorieAlRibasso  (id_asta_alribasso  , nomeCategoria) VALUES (?, ?)";
+                            PreparedStatement statement = connection.prepareStatement(query);
+                            Log.d("id recuperato è : " , " id in ciclo: " + idAsta);
+                            statement.setInt(1, idAsta);
+                            statement.setString(2, categoria);
+                            statement.execute();
+                            Log.d("insert" , "inseriti " + categoria + " per " + idAsta + " .");
+                        }
+                    }
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return null;
         }
     }
 }

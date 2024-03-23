@@ -8,6 +8,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -18,25 +19,34 @@ import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
+import androidx.fragment.app.Fragment;
 
+import com.example.progettoingsw.DAO.AstaIngleseDAO;
 import com.example.progettoingsw.DAO.AstaInversaDAO;
 import com.example.progettoingsw.DAO.AstaRibassoDAO;
+import com.example.progettoingsw.PopUpAggiungiCategorieAsta;
 import com.example.progettoingsw.R;
 import com.example.progettoingsw.classe_da_estendere.GestoreComuniImplementazioni;
 import com.example.progettoingsw.controllers_package.Controller;
+import com.example.progettoingsw.controllers_package.InsertAsta;
+import com.example.progettoingsw.gui.LoginActivity;
 import com.example.progettoingsw.gui.acquirente.AcquirenteFragmentHome;
+import com.example.progettoingsw.gui.acquirente.AcquirenteMainActivity;
 import com.google.android.material.button.MaterialButton;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 
 
 public class VenditoreAstaRibasso extends GestoreComuniImplementazioni {
     AppCompatButton bottoneConferma;
     ImageButton bottoneBack;
     ImageButton button_info_asta_Ribasso;
+    private int idAsta;
     EditText nome;
     EditText descrizione;
     EditText baseAsta;
@@ -45,15 +55,19 @@ public class VenditoreAstaRibasso extends GestoreComuniImplementazioni {
     EditText prezzominimoAsta;
     private byte [] img;
     ActivityResultLauncher<Intent> resultLauncher;
+    private ArrayList<String> listaCategorieScelte;
     Uri uriImmagine;
     ImageView immagineProdotto;
     ImageButton bottoneInserisciImmagine;
+    private MaterialButton bottoneCategorieAstaRibasso;
+    private String email;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.venditore_asta_ribasso);
-        AstaRibassoDAO astaRibassoDao = new AstaRibassoDAO();
+        AstaRibassoDAO astaRibassoDao = new AstaRibassoDAO(VenditoreAstaRibasso.this);
 
+        listaCategorieScelte = new ArrayList<>();
         button_info_asta_Ribasso = findViewById(R.id.button_info_asta_Ribasso);
         bottoneConferma =  findViewById(R.id.bottoneConfermaAstaRibasso);
         bottoneBack =  findViewById(R.id.bottoneBackAstaRibasso);
@@ -65,14 +79,21 @@ public class VenditoreAstaRibasso extends GestoreComuniImplementazioni {
 
         nome = findViewById(R.id.editTextNomeBeneCreaAstaRibasso);
         descrizione=findViewById(R.id.editTextDescrizioneCreaAstaRibasso);
-        String email=getIntent().getStringExtra("email");
+        email = getIntent().getStringExtra("email");
         img=null;
 
         immagineProdotto= findViewById(R.id.imageViewCreaAstaRibasso);
         bottoneInserisciImmagine = findViewById(R.id.imageButtonInserisciImmagineCreaAstaRibasso);
         bottoneInserisciImmagine.setOnClickListener(view ->prelevaImmagine());//significa che chiama il metodo prelevaImmagine
 
-
+        bottoneCategorieAstaRibasso = findViewById(R.id.bottoneCategorieAstaRibasso);
+        bottoneCategorieAstaRibasso.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                PopUpAggiungiCategorieAsta popUpAggiungiCategorieAsta = new PopUpAggiungiCategorieAsta(VenditoreAstaRibasso.this, VenditoreAstaRibasso.this,listaCategorieScelte);
+                popUpAggiungiCategorieAsta.show();
+            }
+        });
 
         registraRisultati();
 
@@ -97,7 +118,13 @@ public class VenditoreAstaRibasso extends GestoreComuniImplementazioni {
 
         bottoneBack.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                onBackPressed();
+                Intent intent = new Intent(VenditoreAstaRibasso.this, AcquirenteMainActivity.class);//test del login
+                intent.putExtra("email", email);
+                intent.putExtra("tipoUtente", "venditore");
+                startActivity(intent);
+//        AppCompatActivity activity = (AppCompatActivity) VenditoreAstaRibasso.this;
+//        Fragment fragment = new AcquirenteFragmentHome(email, "venditore");
+//        ((AcquirenteMainActivity) activity).navigateToFragmentAndSelectIcon(fragment);
             }
         });
         button_info_asta_Ribasso.setOnClickListener(new View.OnClickListener() {
@@ -181,6 +208,33 @@ public class VenditoreAstaRibasso extends GestoreComuniImplementazioni {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    public void handlePopUp(ArrayList<String> switchTexts){
+        this.listaCategorieScelte = switchTexts;
+        // Iterare attraverso gli elementi di switchTexts e stamparli nel log
+        for (String categoria : switchTexts) {
+            Log.d("PopUpHandler", "Categoria: " + categoria);
+        }
+    }
+    public void handleID(int id){
+        this.idAsta = id;
+        Log.d("id recuperato è VenditoreRibasso : " , " id: " + idAsta);
+        AstaRibassoDAO astaRibassoDAO = new AstaRibassoDAO(VenditoreAstaRibasso.this);
+        if(!listaCategorieScelte.isEmpty()){
+            astaRibassoDAO.openConnection();
+            InsertAsta asta = new InsertAsta(idAsta,listaCategorieScelte);
+            astaRibassoDAO.inserisciCategorieAstaRibasso(asta);
+            astaRibassoDAO.closeConnection();
+        }else{
+            astaRibassoDAO.closeConnection();
+        }
+        Intent intent = new Intent(VenditoreAstaRibasso.this, AcquirenteMainActivity.class);//test del login
+        intent.putExtra("email", email);
+        intent.putExtra("tipoUtente", "venditore");
+        startActivity(intent);
+//        AppCompatActivity activity = (AppCompatActivity) VenditoreAstaRibasso.this;
+//        Fragment fragment = new AcquirenteFragmentHome(email, "venditore");
+//        ((AcquirenteMainActivity) activity).navigateToFragmentAndSelectIcon(fragment);
     }
 
 

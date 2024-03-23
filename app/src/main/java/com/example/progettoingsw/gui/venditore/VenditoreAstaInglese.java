@@ -12,6 +12,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -26,24 +27,34 @@ import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
 
 import com.example.progettoingsw.DAO.AstaIngleseDAO;
+import com.example.progettoingsw.DAO.AstaInversaDAO;
 import com.example.progettoingsw.DAO.LoginDAO;
+import com.example.progettoingsw.PopUpAggiungiCategorieAsta;
 import com.example.progettoingsw.R;
 import com.example.progettoingsw.classe_da_estendere.GestoreComuniImplementazioni;
 import com.example.progettoingsw.controllers_package.Controller;
+import com.example.progettoingsw.controllers_package.InsertAsta;
+import com.example.progettoingsw.gui.acquirente.AcquirenteAstaInversa;
+import com.example.progettoingsw.gui.acquirente.AcquirenteFragmentHome;
+import com.example.progettoingsw.gui.acquirente.AcquirenteMainActivity;
 import com.google.android.material.button.MaterialButton;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 
 public class VenditoreAstaInglese extends GestoreComuniImplementazioni {
-    MaterialButton bottoneConferma;
+    AppCompatButton bottoneConferma;
     ImageButton bottoneBack;
     ImageButton bottone_info;
     EditText nome;
+    private int idAsta;
     EditText descrizione;
     EditText baseAsta;
     EditText intervalloAsta;
@@ -54,24 +65,27 @@ public class VenditoreAstaInglese extends GestoreComuniImplementazioni {
     private byte [] img;
     ImageView immagineProdotto;
     ImageButton bottoneInserisciImmagine;
+    private ArrayList<String> listaCategorieScelte;
     ActivityResultLauncher<Intent> resultLauncher;
     private String selectedDateString;
     private String selectedHourString;
+    private MaterialButton bottoneCategorieAstaInglese;
+    private String email;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.venditore_asta_inglese);
          controller = new Controller();
 
-        AstaIngleseDAO astaIngleseDao = new AstaIngleseDAO();
-
+        AstaIngleseDAO astaIngleseDao = new AstaIngleseDAO(VenditoreAstaInglese.this);
+        listaCategorieScelte = new ArrayList<>();
         baseAsta=findViewById(R.id.editTextBaseAstaAstaInglese);
         intervalloAsta=findViewById(R.id.editTextTimerDecrementoAstaInglese);
         rialzoAsta=findViewById(R.id.editTextSogliaRialzoAstaInglese);
 
-       nome = findViewById(R.id.editTextNomeBeneCreaAstaInglese);
+        nome = findViewById(R.id.editTextNomeBeneCreaAstaInglese);
         descrizione=findViewById(R.id.editTextDescrizioneCreaAstaInglese);
-        String email=getIntent().getStringExtra("email");
+        email = getIntent().getStringExtra("email");
         img=null;
 
         bottoneConferma =  findViewById(R.id.bottoneConfermaAstaInglese);
@@ -82,6 +96,14 @@ public class VenditoreAstaInglese extends GestoreComuniImplementazioni {
         bottoneInserisciImmagine = findViewById(R.id.imageButtonInserisciImmagineCreaAstaInglese);
         bottoneInserisciImmagine.setOnClickListener(view ->prelevaImmagine());//significa che chiama il metodo prelevaImmagine
 
+        bottoneCategorieAstaInglese = findViewById(R.id.bottoneCategorieAstaInglese);
+        bottoneCategorieAstaInglese.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                PopUpAggiungiCategorieAsta popUpAggiungiCategorieAsta = new PopUpAggiungiCategorieAsta(VenditoreAstaInglese.this, VenditoreAstaInglese.this,listaCategorieScelte);
+                popUpAggiungiCategorieAsta.show();
+            }
+        });
 
         bottone_info.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
@@ -93,7 +115,13 @@ public class VenditoreAstaInglese extends GestoreComuniImplementazioni {
 
         bottoneBack.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                onBackPressed();
+                Intent intent = new Intent(VenditoreAstaInglese.this, AcquirenteMainActivity.class);//test del login
+                intent.putExtra("email", email);
+                intent.putExtra("tipoUtente", "venditore");
+                startActivity(intent);
+//        AppCompatActivity activity = (AppCompatActivity) VenditoreAstaInglese.this;
+//        Fragment fragment = new AcquirenteFragmentHome(email, "venditore");
+//        ((AcquirenteMainActivity) activity).navigateToFragmentAndSelectIcon(fragment);
             }
         });
 
@@ -110,7 +138,6 @@ public class VenditoreAstaInglese extends GestoreComuniImplementazioni {
                 // Chiamata al metodo per creare l'asta nel database
                 astaIngleseDao.openConnection();
                 astaIngleseDao.creaAstaInglese(base, intervallo, rialzo, nomeProdotto, descrizioneProdotto, email, img);
-                astaIngleseDao.closeConnection();
             }
             else{
                 if(nomeProdotto.isEmpty()){
@@ -208,6 +235,34 @@ public class VenditoreAstaInglese extends GestoreComuniImplementazioni {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    public void handlePopUp(ArrayList<String> switchTexts){
+        this.listaCategorieScelte = switchTexts;
+        // Iterare attraverso gli elementi di switchTexts e stamparli nel log
+        for (String categoria : switchTexts) {
+            Log.d("PopUpHandler", "Categoria: " + categoria);
+        }
+    }
+    public void handleID(int id){
+        this.idAsta = id;
+        AstaIngleseDAO astaIngleseDAO = new AstaIngleseDAO(VenditoreAstaInglese.this);
+        if(!listaCategorieScelte.isEmpty()){
+            astaIngleseDAO.openConnection();
+            Log.d("id recuperato è Venditore inglese : " , " id: " + idAsta);
+            InsertAsta asta = new InsertAsta(idAsta,listaCategorieScelte);
+            astaIngleseDAO.inserisciCategorieAstaInglese(asta);
+            astaIngleseDAO.closeConnection();
+
+        }else{
+            astaIngleseDAO.closeConnection();
+        }
+        Intent intent = new Intent(VenditoreAstaInglese.this, AcquirenteMainActivity.class);//test del login
+        intent.putExtra("email", email);
+        intent.putExtra("tipoUtente", "venditore");
+        startActivity(intent);
+//        AppCompatActivity activity = (AppCompatActivity) VenditoreAstaInglese.this;
+//        Fragment fragment = new AcquirenteFragmentHome(email, "venditore");
+//        ((AcquirenteMainActivity) activity).navigateToFragmentAndSelectIcon(fragment);
     }
 
 
