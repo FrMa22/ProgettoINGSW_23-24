@@ -495,7 +495,7 @@ public class AstaDAOAcquirente {
             ArrayList<Object> astaItems = new ArrayList<>();
                 try{
                 // Query per recuperare le aste inglesi associate alle categorie dell'acquirente
-                String queryAsteInglese = "SELECT * FROM asta_allinglese ORDER BY id DESC LIMIT 5";
+                String queryAsteInglese = "SELECT * FROM asta_allinglese WHERE condizione = 'aperta' ORDER BY id DESC LIMIT 5";
                 Log.d("GetAsteRecenti" , " inglesi");
                 PreparedStatement stmtAsteInglese = connection.prepareStatement(queryAsteInglese);
                 ResultSet resultSetAsteInglese = stmtAsteInglese.executeQuery();
@@ -534,7 +534,7 @@ public class AstaDAOAcquirente {
                 stmtAsteInglese.close();
 
                 // Query per recuperare le aste al ribasso associate alle categorie dell'acquirente
-                String queryAsteRibasso = "SELECT * FROM asta_alribasso ORDER BY id DESC LIMIT 5";
+                String queryAsteRibasso = "SELECT * FROM asta_alribasso WHERE condizione = 'aperta' ORDER BY id DESC LIMIT 5";
                     Log.d("GetAsteRecenti" , " ribasso");
                 PreparedStatement stmtAsteRibasso = connection.prepareStatement(queryAsteRibasso);
                 ResultSet resultSetAsteRibasso = stmtAsteRibasso.executeQuery();
@@ -595,7 +595,7 @@ public class AstaDAOAcquirente {
             ArrayList<Object> astaItems = new ArrayList<>();
             try{
                 // Query per recuperare le aste inglesi associate alle categorie dell'acquirente
-                String queryAsteInverse = "SELECT * FROM asta_inversa ORDER BY id DESC LIMIT 5";
+                String queryAsteInverse = "SELECT * FROM asta_inversa WHERE condizione = 'aperta' ORDER BY id DESC LIMIT 5";
                 PreparedStatement stmtAsteInverse = connection.prepareStatement(queryAsteInverse);
                 ResultSet resultSetAsteInverse = stmtAsteInverse.executeQuery();
 

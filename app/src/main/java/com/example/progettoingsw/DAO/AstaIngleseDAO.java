@@ -54,6 +54,9 @@ public class AstaIngleseDAO {
         foto=datiFoto;
         new DatabaseTask().execute("insert", base, intervallo, rialzo,nomeProdotto,descrizioneProdotto,email);
     }
+    public void getPrezzoECondizioneAstaByID(int idAsta) {
+        new GetPrezzoECondizioneAstaTask().execute(idAsta);
+    }
     public void inserisciCategorieAstaInglese(InsertAsta asta) {
         new AstaIngleseDAO.InsertCategorieAstaIngleseTask().execute(asta);
     }
@@ -278,6 +281,48 @@ public class AstaIngleseDAO {
             return null;
         }
     }
+    private class GetPrezzoECondizioneAstaTask extends AsyncTask<Integer, Void, String[]> {
+
+        @Override
+        protected String[] doInBackground(Integer... ids) {
+            try {
+                if (ids.length > 0) {
+                    int idAsta = ids[0];
+                    connection = DatabaseHelper.getConnection();
+                    if (connection != null && !connection.isClosed()) {
+                        String query = "SELECT prezzoAttuale, condizione FROM asta_allinglese WHERE id = ?";
+                        PreparedStatement preparedStatement = connection.prepareStatement(query);
+                        preparedStatement.setInt(1, idAsta);
+                        ResultSet resultSet = preparedStatement.executeQuery();
+
+                        if (resultSet.next()) {
+                            String prezzoAttuale = resultSet.getString("prezzoAttuale");
+                            String condizione = resultSet.getString("condizione");
+                            return new String[]{prezzoAttuale, condizione};
+                        }
+                    }
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String[] result) {
+            if (result != null) {
+                // Aggiorna l'UI con il prezzo attuale e la condizione recuperati dal database
+                String prezzoAttuale = result[0];
+                String condizione = result[1];
+                schermataAstaInglese.getPrezzoeCondizione(prezzoAttuale,condizione);
+            } else {
+                Log.d("Errore", "Impossibile recuperare il prezzo attuale e la condizione dell'asta");
+            }
+        }
+    }
+
+
+
 
 }
 

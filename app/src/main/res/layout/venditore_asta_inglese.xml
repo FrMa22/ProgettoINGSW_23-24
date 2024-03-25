@@ -201,7 +201,7 @@
                 android:id="@+id/editTextTimerDecrementoAstaInglese"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
-                android:hint="1h"
+                android:hint="10 min"
                 android:drawableStart="@drawable/ic_time"
                 android:drawablePadding="10dp"
                 android:padding="10dp"

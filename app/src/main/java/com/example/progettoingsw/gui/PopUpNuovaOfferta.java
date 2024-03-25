@@ -31,12 +31,22 @@ public class PopUpNuovaOfferta extends Dialog implements View.OnClickListener {
     int id_asta;
     private AstaIngleseDAO astaIngleseDAO;
     private AstaInversaDAO astaInversaDAO;
-    public PopUpNuovaOfferta(Context context, String emailOfferente, int id_asta,String tipoAsta, String prezzoVecchio) {
+    private SchermataAstaInglese schermataAstaInglese;
+    private SchermataAstaInversa schermataAstaInversa;
+
+    public PopUpNuovaOfferta(Context context, String emailOfferente, int id_asta, String prezzoVecchio, SchermataAstaInglese schermataAstaInglese) {
         super(context);
         this.emailOfferente = emailOfferente;
         this.id_asta = id_asta;
-        this.tipoAsta = tipoAsta;
         this.prezzoVecchio = prezzoVecchio;
+        this.schermataAstaInglese = schermataAstaInglese;
+    }
+    public PopUpNuovaOfferta(Context context, String emailOfferente, int id_asta, String prezzoVecchio, SchermataAstaInversa schermataAstaInversa) {
+        super(context);
+        this.emailOfferente = emailOfferente;
+        this.id_asta = id_asta;
+        this.prezzoVecchio = prezzoVecchio;
+        this.schermataAstaInversa = schermataAstaInversa;
     }
 
     @Override
@@ -63,6 +73,7 @@ public class PopUpNuovaOfferta extends Dialog implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.bottoneAnnullaPopUpAsta) {
+
             dismiss();
         } else if (v.getId() == R.id.bottoneConfermaPopUpAsta) {
             offerta = textviewNuovoPrezzo.getText().toString();
@@ -71,7 +82,7 @@ public class PopUpNuovaOfferta extends Dialog implements View.OnClickListener {
             }else{
                     Float offertaAttuale = Float.parseFloat(offerta);
                     Float offertaVecchia = Float.parseFloat(prezzoVecchio);
-                    if(tipoAsta.equals("inglese")){
+                    if(schermataAstaInglese != null){
                         if(offertaAttuale<=offertaVecchia) {
                             Toast.makeText(getContext(), "Attenzione! L'offerta deve superare il prezzo attuale dell'asta.", Toast.LENGTH_SHORT).show();
                         }else{
@@ -80,9 +91,10 @@ public class PopUpNuovaOfferta extends Dialog implements View.OnClickListener {
                             astaIngleseDAO.partecipaAstaInglese(id_asta,emailOfferente,offertaAttuale);
                             astaIngleseDAO.closeConnection();
                             Toast.makeText(getContext(), "Partecipazione aggiunta con successo!", Toast.LENGTH_SHORT).show();
+                            schermataAstaInglese.setPrezzo(Math.round(offertaAttuale));
                             dismiss();
                         }
-                    }else if(tipoAsta.equals("inversa")){
+                    }else if(schermataAstaInversa != null){
                         if(offertaAttuale>=offertaVecchia) {
                             Toast.makeText(getContext(), "Attenzione! L'offerta deve essere inferiore al prezzo attuale dell'asta.", Toast.LENGTH_SHORT).show();
                         }else{
@@ -91,6 +103,7 @@ public class PopUpNuovaOfferta extends Dialog implements View.OnClickListener {
                             astaInversaDAO.partecipaAstaInversa(id_asta,emailOfferente,offertaAttuale);
                             astaInversaDAO.closeConnection();
                             Toast.makeText(getContext(), "Partecipazione aggiunta con successo!", Toast.LENGTH_SHORT).show();
+                            schermataAstaInversa.setPrezzo(Math.round(offertaAttuale));
                             dismiss();
                         }
                     }

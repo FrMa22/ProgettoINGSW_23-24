@@ -50,6 +50,9 @@ public class AstaInversaDAO {
         foto=datiFoto;
         new AstaInversaDAO.DatabaseTask().execute("insert", nome, prezzo,data,ora,descrizione,email);
     }
+    public void getPrezzoECondizioneAstaByID(int idAsta) {
+        new AstaInversaDAO.GetPrezzoECondizioneAstaTask().execute(idAsta);
+    }
     public void inserisciCategorieAstaInversa(InsertAsta asta) {
         new InsertCategorieAstaInversaTask().execute(asta);
     }
@@ -281,7 +284,45 @@ public class AstaInversaDAO {
             return null;
         }
     }
+    private class GetPrezzoECondizioneAstaTask extends AsyncTask<Integer, Void, String[]> {
 
+        @Override
+        protected String[] doInBackground(Integer... ids) {
+            try {
+                if (ids.length > 0) {
+                    int idAsta = ids[0];
+                    connection = DatabaseHelper.getConnection();
+                    if (connection != null && !connection.isClosed()) {
+                        String query = "SELECT prezzoAttuale, condizione FROM asta_inversa WHERE id = ?";
+                        PreparedStatement preparedStatement = connection.prepareStatement(query);
+                        preparedStatement.setInt(1, idAsta);
+                        ResultSet resultSet = preparedStatement.executeQuery();
+
+                        if (resultSet.next()) {
+                            String prezzoAttuale = resultSet.getString("prezzoAttuale");
+                            String condizione = resultSet.getString("condizione");
+                            return new String[]{prezzoAttuale, condizione};
+                        }
+                    }
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String[] result) {
+            if (result != null) {
+                // Aggiorna l'UI con il prezzo attuale e la condizione recuperati dal database
+                String prezzoAttuale = result[0];
+                String condizione = result[1];
+                schermataAstaInversa.getPrezzoeCondizione(prezzoAttuale,condizione);
+            } else {
+                Log.d("Errore", "Impossibile recuperare il prezzo attuale e la condizione dell'asta");
+            }
+        }
+    }
 
 
 }

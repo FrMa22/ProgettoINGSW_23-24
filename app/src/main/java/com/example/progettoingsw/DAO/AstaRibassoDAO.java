@@ -55,6 +55,10 @@ public class AstaRibassoDAO {
         foto=datiFoto;
         new DatabaseTask().execute("insert", base, intervallo,soglia,min,nomeProdotto,descrizioneProdotto,email);
     }
+    public void recuperaInfoAsta(int idAsta) {
+        new RecuperaInfoAstaTask().execute(idAsta);
+    }
+
     public void getAstaRibassoByID(int idAsta) {
         new AstaRibassoDAO.SelectAstaTask().execute(String.valueOf(idAsta));
     }
@@ -277,4 +281,57 @@ public class AstaRibassoDAO {
             return null;
         }
     }
+    private class RecuperaInfoAstaTask extends AsyncTask<Integer, Void, String[]> {
+
+        @Override
+        protected String[] doInBackground(Integer... params) {
+            try {
+                if (params.length > 0) {
+                    int idAsta = params[0];
+                    connection = DatabaseHelper.getConnection();
+                    if (connection != null && !connection.isClosed()) {
+                        String query = "SELECT intervalloDecrementale, prezzoAttuale, condizione FROM asta_alribasso WHERE id = ?";
+                        PreparedStatement preparedStatement = connection.prepareStatement(query);
+                        preparedStatement.setInt(1, idAsta);
+                        ResultSet resultSet = preparedStatement.executeQuery();
+
+                        if (resultSet.next()) {
+                            String intervalloDecrementale = resultSet.getString("intervalloDecrementale");
+                            String prezzoAttuale = resultSet.getString("prezzoAttuale");
+                            String condizione = resultSet.getString("condizione");
+                            return new String[]{intervalloDecrementale, prezzoAttuale, condizione};
+                        } else {
+                            return null; // Nessuna asta trovata con l'ID specificato
+                        }
+                    } else {
+                        return null; // Connessione non aperta
+                    }
+                }
+                return null; // Nessun ID specificato
+            } catch (SQLException e) {
+                e.printStackTrace();
+                return null; // Errore durante l'operazione
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String[] result) {
+            // Questo metodo viene chiamato dopo che doInBackground è completato
+            // Puoi mostrare il risultato all'utente o gestirlo in modo appropriato
+            if (result != null) {
+                // Operazione completata con successo, puoi fare qualcosa con i risultati ottenuti
+                String intervalloDecrementale = result[0];
+                String prezzoAttuale = result[1];
+                String condizione = result[2];
+
+                schermataAstaRibasso.getPrezzoCondizioneIntervallo(prezzoAttuale,condizione,intervalloDecrementale);
+
+                // Puoi fare qualcos'altro con i risultati, come aggiornare l'UI
+            } else {
+                // Operazione fallita o nessun risultato trovato
+                Log.d("Errore", "Impossibile recuperare le informazioni dell'asta");
+            }
+        }
+    }
+
 }

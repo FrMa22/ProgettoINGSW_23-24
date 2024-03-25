@@ -4,10 +4,13 @@ package com.example.progettoingsw.gui;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,15 +20,23 @@ import com.example.progettoingsw.R;
 import com.example.progettoingsw.classe_da_estendere.GestoreComuniImplementazioni;
 import com.example.progettoingsw.controllers_package.Controller;
 import com.example.progettoingsw.gui.acquirente.AcquirenteFragmentHome;
+import com.example.progettoingsw.gui.acquirente.AcquirenteMainActivity;
+import com.example.progettoingsw.gui.venditore.VenditoreAstaInglese;
 import com.example.progettoingsw.model.AstaIngleseItem;
 import com.example.progettoingsw.model.AstaRibassoItem;
 import com.google.android.material.button.MaterialButton;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+
 public class SchermataAstaRibasso extends GestoreComuniImplementazioni {
     Controller controller;
+    private RelativeLayout linearLayoutSchermataAstaRibasso;
     ImageButton bottoneBack;
     MaterialButton bottoneNuovaOfferta;
     ImageButton bottonePreferito;
+    private ProgressBar progress_bar_schermata_asta_ribasso;
     private int id;
     private String email;
     private String tipoUtente;
@@ -36,17 +47,25 @@ public class SchermataAstaRibasso extends GestoreComuniImplementazioni {
     TextView textViewOffertaAttuale;
     TextView textViewVenditore;
     private AstaRibassoDAO astaRibassoDAO;
+    private CountDownTimer countDownTimer;
+    private CountDownTimer countDownTimerControlloOgni10sec;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.schermata_asta_ribasso);
         astaRibassoDAO = new AstaRibassoDAO(this);
+        linearLayoutSchermataAstaRibasso = findViewById(R.id.linearLayoutSchermataAstaRibasso);
+        progress_bar_schermata_asta_ribasso = findViewById(R.id.progress_bar_schermata_asta_ribasso);
+
+        progress_bar_schermata_asta_ribasso.setVisibility(View.VISIBLE);
+        setAllClickable(linearLayoutSchermataAstaRibasso, false);
 
         id = getIntent().getIntExtra("id",0);
         email = getIntent().getStringExtra("email");
         tipoUtente = getIntent().getStringExtra("tipoUtente");
         Toast.makeText(this, "l'id è " + id + ", la mail è " + email + ", il tipoutente è " + tipoUtente, Toast.LENGTH_SHORT).show();
+
 
         textViewNomeProdotto = findViewById(R.id.textViewNomeProdottoSchermataAstaRibasso);
         imageViewProdotto = findViewById(R.id.ImageViewSchermataAstaRibasso);
@@ -55,10 +74,27 @@ public class SchermataAstaRibasso extends GestoreComuniImplementazioni {
         textViewOffertaAttuale = findViewById(R.id.textViewOffertaAttualeSchermataAstaRibasso);
         textViewVenditore = findViewById(R.id.textViewVenditoreSchermataAstaRibasso);
 
+        countDownTimerControlloOgni10sec = new CountDownTimer(10000, 1000) {
+            public void onTick(long millisUntilFinished) {
+                // Il timer sta andando avanti, non è necessario fare nulla qui
+                Log.d("Timer ribasso ogni 10sec", "Tempo rimanente: " + millisUntilFinished / 1000 + " secondi");
+            }
+            public void onFinish() {
+                Log.d("Timer ribasso ogni 10sec", "Timer scaduto");
+                astaRibassoDAO.recuperaInfoAsta(id);
+                start();
+            }
+        };
+        // Avvia il timer
+        countDownTimerControlloOgni10sec.start();
+
         bottoneBack =  findViewById(R.id.bottoneBackSchermataAstaRibasso);
         bottoneBack.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                onBackPressed();
+                Intent intent = new Intent(SchermataAstaRibasso.this, AcquirenteMainActivity.class);//test del login
+                intent.putExtra("email", email);
+                intent.putExtra("tipoUtente", tipoUtente);
+                startActivity(intent);
             }
         });
 
@@ -79,6 +115,10 @@ public class SchermataAstaRibasso extends GestoreComuniImplementazioni {
                     @Override
                     public void onClick(View v) {
                         popUpConfermaOffertaDialog.dismiss();
+                        Intent intent = new Intent(SchermataAstaRibasso.this, AcquirenteMainActivity.class);//test del login
+                        intent.putExtra("email", email);
+                        intent.putExtra("tipoUtente", tipoUtente);
+                        startActivity(intent);
                     }
                 });
                 bottoneConfermaPopUP.setOnClickListener(new View.OnClickListener() {
@@ -87,6 +127,11 @@ public class SchermataAstaRibasso extends GestoreComuniImplementazioni {
                         astaRibassoDAO.openConnection();
                         astaRibassoDAO.acquistaAsta(id,email,Float.parseFloat(textViewOffertaAttuale.getText().toString()));
                         astaRibassoDAO.closeConnection();
+                        popUpConfermaOffertaDialog.dismiss();
+                        Intent intent = new Intent(SchermataAstaRibasso.this, AcquirenteMainActivity.class);//test del login
+                        intent.putExtra("email", email);
+                        intent.putExtra("tipoUtente", tipoUtente);
+                        startActivity(intent);
                     }
                 });
 
@@ -107,25 +152,119 @@ public class SchermataAstaRibasso extends GestoreComuniImplementazioni {
                 startActivity(intent);
             }
         });
+        astaRibassoDAO.recuperaInfoAsta(id);
+
+
 
     }
+
     public void setAstaData(AstaRibassoItem astaRibassoItem) {
         if (astaRibassoItem != null) {
             // Imposta i dati recuperati sui TextView e ImageView della tua activity
             textViewNomeProdotto.setText(astaRibassoItem.getNome());
             textViewDescrizione.setText(astaRibassoItem.getDescrizione());
             textViewOffertaAttuale.setText(String.valueOf(astaRibassoItem.getPrezzoAttuale()));
-            textViewProssimoDecremento.setText("Da implementare");
+
+            long orarioAttuale = System.currentTimeMillis();
+            long intervalloMillisecondi = convertiIntervallo(astaRibassoItem.getIntervalloDecrementale());
+            long prossimoDecremento = orarioAttuale + intervalloMillisecondi;
+            String orarioProssimoDecremento = convertiOrario(prossimoDecremento);
+            // Imposta l'orario del prossimo decremento nel TextView
+            textViewProssimoDecremento.setText(orarioProssimoDecremento);
+
             textViewVenditore.setText(astaRibassoItem.getEmailVenditore());
             // Imposta l'immagine solo se non è nulla
             if (astaRibassoItem.getImmagine() != null) {
                 imageViewProdotto.setImageBitmap(astaRibassoItem.getImmagine());
             }
-            // Altri dati da impostare...
+            progress_bar_schermata_asta_ribasso.setVisibility(View.GONE);
+            setAllClickable(linearLayoutSchermataAstaRibasso, true);
         } else {
             // Gestisci il caso in cui non ci siano dati recuperati
             Log.d("Errore", "Impossibile recuperare i dati dell'asta");
         }
     }
+    public void getPrezzoCondizioneIntervallo(String prezzoAttuale, String condizione, String intervallo) {
+        if (condizione.equals("aperta")) {
+            textViewOffertaAttuale.setText(prezzoAttuale);
+
+            long intervalloMillisecondi = convertiIntervallo(intervallo);
+            // Avvia il timer
+            countDownTimer = new CountDownTimer(intervalloMillisecondi, 1000) {
+                public void onTick(long millisUntilFinished) {
+                    // Il timer sta andando avanti, non è necessario fare nulla qui
+                    Log.d("Timer locale ribasso", "Tempo rimanente: " + millisUntilFinished / 1000 + " secondi");
+                }
+                public void onFinish() {
+                    Log.d("Timer locale ribasso", "Timer scaduto");
+                    astaRibassoDAO.getAstaRibassoByID(id);
+                }
+            };
+            countDownTimer.start();
+        } else {
+            Toast.makeText(this, "Accidenti! L'asta si è conclusa", Toast.LENGTH_SHORT).show();
+            bottoneBack.callOnClick();
+        }
+    }
+    private long convertiIntervallo(String intervallo) {
+        // Dividi l'intervallo in ore, minuti e secondi
+        String[] partiIntervallo = intervallo.split(":");
+        long ore = Long.parseLong(partiIntervallo[0]);
+        long minuti = Long.parseLong(partiIntervallo[1]);
+        long secondi = Long.parseLong(partiIntervallo[2]);
+        // Calcola il tempo totale in millisecondi
+        long tempoTotaleMillisecondi = (ore * 3600 + minuti * 60 + secondi) * 1000;
+        return tempoTotaleMillisecondi;
+    }
+    // Metodo per convertire l'orario millisecondi in un formato leggibile (hh:mm)
+    private String convertiOrario(long millisecondi) {
+        // Converti i millisecondi in un oggetto LocalDateTime utilizzando il fuso orario locale
+        LocalDateTime oraLocale = LocalDateTime.ofInstant(
+                java.time.Instant.ofEpochMilli(millisecondi),
+                ZoneId.systemDefault()
+        );
+        // Formatta l'orario locale in una stringa nel formato hh:mm
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+        return oraLocale.format(formatter);
+    }
+    @Override
+    protected void onPause() {
+        super.onPause();
+        // Ferma il countDownTimerControlloOgni10sec se è attivo
+        if (countDownTimerControlloOgni10sec != null) {
+            countDownTimerControlloOgni10sec.cancel();
+        }
+        // Ferma il countDownTimer se è attivo
+        if (countDownTimer != null) {
+            countDownTimer.cancel();
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        // Ferma il countDownTimerControlloOgni10sec se è attivo
+        if (countDownTimerControlloOgni10sec != null) {
+            countDownTimerControlloOgni10sec.cancel();
+        }
+        // Ferma il countDownTimer se è attivo
+        if (countDownTimer != null) {
+            countDownTimer.cancel();
+        }
+    }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        // Ferma il countDownTimerControlloOgni10sec se è attivo
+        if (countDownTimerControlloOgni10sec != null) {
+            countDownTimerControlloOgni10sec.cancel();
+        }
+        // Ferma il countDownTimer se è attivo
+        if (countDownTimer != null) {
+            countDownTimer.cancel();
+        }
+    }
+
+
 }
 

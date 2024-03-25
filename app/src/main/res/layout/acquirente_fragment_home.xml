@@ -92,6 +92,8 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:id="@+id/text_view_aste_consigliate_home"
+                        android:visibility="gone"
                         android:layout_marginStart="5dp"
                         android:layout_marginEnd="30dp"
                         android:layout_marginTop="10dp"
@@ -102,6 +104,7 @@
                         android:textColor="@color/colore_secondario"
                         android:textSize="25sp"
                         android:textStyle="bold" />
+
 
 
                     <androidx.recyclerview.widget.RecyclerView

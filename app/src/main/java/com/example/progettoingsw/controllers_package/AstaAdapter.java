@@ -1,6 +1,7 @@
 package com.example.progettoingsw.controllers_package;
 
 import android.content.Context;
+import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,7 +17,11 @@ import com.example.progettoingsw.model.AstaIngleseItem;
 import com.example.progettoingsw.model.AstaRibassoItem;
 import com.example.progettoingsw.model.AstaInversaItem;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 public class AstaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private static final int TIPO_ASTA_INGESE = 1;
@@ -113,13 +118,15 @@ public class AstaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
     // ViewHolder per l'asta inglese
-    private static class AstaIngleseViewHolder extends RecyclerView.ViewHolder {
+    public class AstaIngleseViewHolder extends RecyclerView.ViewHolder {
         private TextView textViewNome;
         private TextView textViewDescrizione;
         private ImageView imageView;
         private TextView intervalloOfferte;
         private TextView prezzo;
         private TextView rialzo;
+
+        private CountDownTimer countDownTimer;
 
         public AstaIngleseViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -142,8 +149,48 @@ public class AstaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             intervalloOfferte.setText(item.getIntervalloTempoOfferte());
             prezzo.setText(item.getPrezzoAttuale());
             rialzo.setText(item.getRialzoMin());
+
+            startCountDownTimer(item.getIntervalloTempoOfferte());
+        }
+
+        private void startCountDownTimer(String intervalloOfferteString) {
+            long intervalloOfferteSeconds = convertiStringaInSecondi(intervalloOfferteString);
+            countDownTimer = new CountDownTimer(intervalloOfferteSeconds * 1000, 1000) {
+                public void onTick(long millisUntilFinished) {
+                    Log.d("aggiornato", "aggiornato");
+                    intervalloOfferte.setText(calcolaTempoRimanente(millisUntilFinished / 1000));
+                }
+
+                public void onFinish() {
+                    Log.d("scaduto", "scaduto");
+                }
+            }.start();
+        }
+
+        private String calcolaTempoRimanente(long secondsUntilFinished) {
+            long hours = secondsUntilFinished / 3600;
+            long minutes = (secondsUntilFinished % 3600) / 60;
+            long seconds = secondsUntilFinished % 60;
+
+            return String.format("%02d:%02d:%02d", hours, minutes, seconds);
+        }
+
+        private long convertiStringaInSecondi(String intervalloOfferteString) {
+            // Assumiamo che l'intervallo sia nel formato "HH:mm:ss"
+            SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+            try {
+                Date intervallo = sdf.parse(intervalloOfferteString);
+                long milliseconds = intervallo.getTime();
+                return TimeUnit.MILLISECONDS.toSeconds(milliseconds);
+            } catch (ParseException e) {
+                e.printStackTrace();
+                return 0;
+            }
         }
     }
+
+
+
 
     // ViewHolder per l'asta al ribasso
     private static class AstaRibassoViewHolder extends RecyclerView.ViewHolder {

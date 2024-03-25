@@ -282,7 +282,7 @@ public class AcquirenteFragmentHome extends Fragment {
         preferitiButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-              Controller.redirectActivityEmailTipoUtente(getActivity(), PreferitiActivity.class,email,"acquirente");
+                Controller.redirectActivityEmailTipoUtente(getActivity(), PreferitiActivity.class,email,"acquirente");
                 Toast.makeText(getContext(), "Apri l'activity dei preferiti", Toast.LENGTH_SHORT).show();
             }
         });
@@ -319,7 +319,7 @@ public class AcquirenteFragmentHome extends Fragment {
     public void handleAsteNuoveResult(ArrayList<Object> prodotti) {
         // Aggiorna l'adapter con i nuovi prodotti
         if(prodotti != null){
-        astaAdapterNuove.setAste(prodotti);
+            astaAdapterNuove.setAste(prodotti);
         }else{
             Log.d("handleConsigliateResult", "null");
         }

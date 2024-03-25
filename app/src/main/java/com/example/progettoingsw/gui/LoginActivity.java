@@ -77,7 +77,7 @@ public class LoginActivity extends GestoreComuniImplementazioni {
         bottone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Controller.redirectActivity(LoginActivity.this, VenditoreAstaRibasso.class);
+                Controller.redirectActivity(LoginActivity.this, SchermataAstaInglese.class);
             }
         });
 

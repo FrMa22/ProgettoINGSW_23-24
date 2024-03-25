@@ -202,7 +202,7 @@
                 android:background="@drawable/edit_text_tutti_lati_grigi_rounded"
                 android:drawableStart="@drawable/ic_time"
                 android:drawablePadding="10dp"
-                android:hint="1h"
+                android:hint="60 min"
                 android:maxLength="20"
                 android:padding="10dp"
                 android:singleLine="true"

@@ -2,6 +2,7 @@ package com.example.progettoingsw.gui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
@@ -15,6 +16,7 @@ import com.example.progettoingsw.classe_da_estendere.GestoreComuniImplementazion
 import com.example.progettoingsw.controllers_package.AstaAdapter;
 import com.example.progettoingsw.controllers_package.Controller;
 import com.example.progettoingsw.gui.acquirente.AcquirenteFragmentHome;
+import com.example.progettoingsw.gui.acquirente.AcquirenteMainActivity;
 import com.example.progettoingsw.model.AstaInversaItem;
 import com.example.progettoingsw.model.AstaRibassoItem;
 import com.google.android.material.button.MaterialButton;
@@ -25,6 +27,7 @@ public class SchermataAstaInversa extends GestoreComuniImplementazioni {
     private int id;
     private String email;
     private String tipoUtente;
+    private CountDownTimer countDownTimer;
     private TextView textViewNomeProdottoSchermataAstaInversa;
     private ImageView ImageViewSchermataAstaInversa;
     private TextView textViewDescrizioneSchermataAstaInversa;
@@ -54,11 +57,26 @@ public class SchermataAstaInversa extends GestoreComuniImplementazioni {
         tipoUtente = getIntent().getStringExtra("tipoUtente");
         Toast.makeText(this, "l'id è " + id + ", la mail è " + email + ", il tipoutente è " + tipoUtente, Toast.LENGTH_SHORT).show();
 
+        CountDownTimer countDownTimer = new CountDownTimer(10000, 1000) {
+            public void onTick(long millisUntilFinished) {
+                // Il timer sta andando avanti, non è necessario fare nulla qui
+                Log.d("Timer", "Tempo rimanente: " + millisUntilFinished / 1000 + " secondi");
+            }
+            public void onFinish() {
+                Log.d("Timer", "Timer scaduto");
+                astaInversaDAO.getPrezzoECondizioneAstaByID(id);
+            }
+        };
+        countDownTimer.start();
+
         bottoneBack =  findViewById(R.id.bottoneBackSchermataAstaInversa);
 
         bottoneBack.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                onBackPressed();
+                Intent intent = new Intent(SchermataAstaInversa.this, AcquirenteMainActivity.class);//test del login
+                intent.putExtra("email", email);
+                intent.putExtra("tipoUtente", tipoUtente);
+                startActivity(intent);
             }
         });
 
@@ -77,7 +95,8 @@ public class SchermataAstaInversa extends GestoreComuniImplementazioni {
 
         bottoneOffertaSchermataAstaInversa.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                PopUpNuovaOfferta popUpNuovaOfferta = new PopUpNuovaOfferta(SchermataAstaInversa.this,email,id,"inversa", textViewPrezzoAttualeSchermataAstaInversa.getText().toString());
+                astaInversaDAO.getAstaInversaByID(id);
+                PopUpNuovaOfferta popUpNuovaOfferta = new PopUpNuovaOfferta(SchermataAstaInversa.this,email,id, textViewPrezzoAttualeSchermataAstaInversa.getText().toString(), SchermataAstaInversa.this);
                 popUpNuovaOfferta.show();
             }
         });
@@ -112,6 +131,21 @@ public class SchermataAstaInversa extends GestoreComuniImplementazioni {
             // Gestisci il caso in cui non ci siano dati recuperati
             Log.d("Errore", "Impossibile recuperare i dati dell'asta");
         }
+
+    }
+    public void setPrezzo(Integer prezzoNuovo){
+        textViewPrezzoAttualeSchermataAstaInversa.setText(Integer.toString(prezzoNuovo));
+    }
+    public void getPrezzoeCondizione(String prezzo_aggiornato, String condizione_aggiornata){
+        if(condizione_aggiornata.equals("aperta")){
+            textViewPrezzoAttualeSchermataAstaInversa.setText(prezzo_aggiornato);
+            // Resetta il timer per farlo ripartire da 10 secondi
+            countDownTimer.start();
+        }else{
+            Toast.makeText(this, "Accidenti! L'asta si è conclusa", Toast.LENGTH_SHORT).show();
+            bottoneBack.callOnClick();
+        }
+
     }
 }
 
