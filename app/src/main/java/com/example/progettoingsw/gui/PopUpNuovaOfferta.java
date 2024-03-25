@@ -91,7 +91,7 @@ public class PopUpNuovaOfferta extends Dialog implements View.OnClickListener {
                             astaIngleseDAO.partecipaAstaInglese(id_asta,emailOfferente,offertaAttuale);
                             astaIngleseDAO.closeConnection();
                             Toast.makeText(getContext(), "Partecipazione aggiunta con successo!", Toast.LENGTH_SHORT).show();
-                            schermataAstaInglese.setPrezzo(Math.round(offertaAttuale));
+                            schermataAstaInglese.handlePopUp();
                             dismiss();
                         }
                     }else if(schermataAstaInversa != null){

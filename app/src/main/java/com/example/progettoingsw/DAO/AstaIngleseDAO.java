@@ -217,8 +217,7 @@ public class AstaIngleseDAO {
                     String emailOfferente = strings[1];
                     float offerta = Float.parseFloat(strings[2]);
                     LocalDateTime tempoOfferta = LocalDateTime.now();
-                    String stato = "attiva"; // Supponendo che lo stato di partecipazione sia "attiva" per impostazione predefinita
-
+                    String stato = "attiva";
                     connection = DatabaseHelper.getConnection();
                     if (connection != null && !connection.isClosed()) {
                         String query = "INSERT INTO partecipazioneAstaAllInglese " +

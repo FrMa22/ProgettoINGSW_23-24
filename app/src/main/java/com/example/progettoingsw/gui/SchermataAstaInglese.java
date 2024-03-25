@@ -7,6 +7,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,7 +20,12 @@ import com.example.progettoingsw.gui.acquirente.AcquirenteMainActivity;
 import com.example.progettoingsw.model.AstaIngleseItem;
 import com.google.android.material.button.MaterialButton;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 public class SchermataAstaInglese extends GestoreComuniImplementazioni {
+    private ProgressBar progress_bar_schermata_asta_inglese;
+    private RelativeLayout relativeLayoutSchermataAstaInglese;
     Controller controller;
     ImageButton bottoneBack;
     MaterialButton bottoneNuovaOfferta;
@@ -42,7 +49,10 @@ public class SchermataAstaInglese extends GestoreComuniImplementazioni {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.schermata_asta_inglese);
         astaIngleseDAO = new AstaIngleseDAO(this);
-
+        relativeLayoutSchermataAstaInglese = findViewById(R.id.relativeLayoutSchermataAstaInglese);
+        progress_bar_schermata_asta_inglese = findViewById(R.id.progress_bar_schermata_asta_inglese);
+        progress_bar_schermata_asta_inglese.setVisibility(View.VISIBLE);
+        setAllClickable(relativeLayoutSchermataAstaInglese,false);
 
         // Inizializzazione dei TextView, ImageView e altri elementi
         textViewNomeProdotto = findViewById(R.id.textViewNomeProdottoSchermataAstaInglese);
@@ -62,7 +72,6 @@ public class SchermataAstaInglese extends GestoreComuniImplementazioni {
         countDownTimer = new CountDownTimer(10000, 1000) {
             public void onTick(long millisUntilFinished) {
                 // Il timer sta andando avanti, non è necessario fare nulla qui
-                Log.d("Timer inglese", "Tempo rimanente: " + millisUntilFinished / 1000 + " secondi");
             }
             public void onFinish() {
                 Log.d("Timer inglese", "Timer scaduto");
@@ -116,37 +125,7 @@ public class SchermataAstaInglese extends GestoreComuniImplementazioni {
 
 
     }
-    private void startCountDownTimer(long intervalloOfferteInSecondi) {
-        // Calcola il tempo rimanente in millisecondi
-        final long tempoRimanenteInMillisecondi = intervalloOfferteInSecondi * 1000;
 
-        // Inizializza il CountDownTimer
-        countDownTimerTempoRimanente = new CountDownTimer(tempoRimanenteInMillisecondi, 1000) {
-            // Variabile per memorizzare il tempo rimanente
-            long tempoRimanente = tempoRimanenteInMillisecondi / 1000;
-
-            public void onTick(long millisUntilFinished) {
-                // Decrementa il tempo rimanente di un secondo
-                tempoRimanente--;
-
-                // Aggiorna il TextView con il nuovo tempo rimanente
-                textViewIntervalloOfferte.setText(formatTime(tempoRimanente));
-            }
-
-            public void onFinish() {
-                Log.d("Asta", "Scaduto - ID Asta: " + id);
-            }
-        }.start();
-    }
-
-    // Metodo per formattare il tempo in ore:minuti:secondi
-    private String formatTime(long seconds) {
-        long hours = seconds / 3600;
-        long minutes = (seconds % 3600) / 60;
-        long remainingSeconds = seconds % 60;
-
-        return String.format("%02d:%02d:%02d", hours, minutes, remainingSeconds);
-    }
 
     @Override //questo metodo serve per fare un refresh dei valori dei campi dopo una possibile modifica fatta da PopUp
     public void onResume() {
@@ -163,20 +142,40 @@ public class SchermataAstaInglese extends GestoreComuniImplementazioni {
             textViewDescrizione.setText(astaIngleseItem.getDescrizione());
             textViewPrezzo.setText(astaIngleseItem.getPrezzoAttuale());
             textViewVenditore.setText(astaIngleseItem.getEmailVenditore());
-            textViewIntervalloOfferte.setText(astaIngleseItem.getIntervalloTempoOfferte());
+
+
+            String intervalloOfferte = astaIngleseItem.getIntervalloTempoOfferte();
+            // Ottieni la data e l'ora attuali con il giorno incluso
+            LocalDateTime now = LocalDateTime.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+
+            // Analizza l'intervallo in ore e minuti
+            String[] parts = intervalloOfferte.split(":");
+            int hours = Integer.parseInt(parts[0]);
+            int minutes = Integer.parseInt(parts[1]);
+
+            // Calcola l'intervallo totale in minuti
+            int intervalloMinuti = hours * 60 + minutes;
+
+            // Aggiungi l'intervallo alla data e all'ora attuali
+            LocalDateTime scadenza = now.plusMinutes(intervalloMinuti);
+
+            // Formatta il risultato nel formato desiderato
+            String scadenzaFormattata = scadenza.format(formatter);
+            textViewIntervalloOfferte.setText(scadenzaFormattata);
+
             // Imposta l'immagine solo se non è nulla
             if (astaIngleseItem.getImmagine() != null) {
                 imageViewProdotto.setImageBitmap(astaIngleseItem.getImmagine());
             }
-            // Altri dati da impostare...
+
         } else {
             // Gestisci il caso in cui non ci siano dati recuperati
             Log.d("Errore", "Impossibile recuperare i dati dell'asta");
         }
-        String intervalloOfferte = textViewIntervalloOfferte.getText().toString();
-        Log.d("intervalloOfferte", " " + intervalloOfferte);
-        long intervalloOfferteInSecondi = convertiStringaInSecondi(intervalloOfferte);
-        startCountDownTimer(intervalloOfferteInSecondi);
+
+        progress_bar_schermata_asta_inglese.setVisibility(View.GONE);
+        setAllClickable(relativeLayoutSchermataAstaInglese, true);
     }
     private long convertiStringaInSecondi(String intervalloOfferteString) {
         // Assumendo che l'intervallo sia nel formato "HH:mm:ss"
@@ -207,6 +206,14 @@ public class SchermataAstaInglese extends GestoreComuniImplementazioni {
             Toast.makeText(this, "Accidenti! L'asta si è conclusa", Toast.LENGTH_SHORT).show();
             bottoneBack.callOnClick();
         }
+    }
+    public void handlePopUp(){
+        progress_bar_schermata_asta_inglese.setVisibility(View.VISIBLE);
+        setAllClickable(relativeLayoutSchermataAstaInglese,false);
+        astaIngleseDAO.openConnection();
+        astaIngleseDAO.getAstaIngleseByID(id);
+        astaIngleseDAO.closeConnection();
+
     }
 
 }
