@@ -9,6 +9,7 @@ import com.example.progettoingsw.controllers_package.DatabaseHelper;
 import com.example.progettoingsw.controllers_package.NotificheAdapter;
 import com.example.progettoingsw.gui.LeMieAste;
 import com.example.progettoingsw.gui.SchermataNotifiche;
+import com.example.progettoingsw.gui.acquirente.AcquirenteMainActivity;
 import com.example.progettoingsw.model.AstaIngleseItem;
 import com.example.progettoingsw.model.AstaInversaItem;
 import com.example.progettoingsw.model.AstaRibassoItem;
@@ -22,22 +23,26 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class NotificheDAO {
-
     private Connection connection;
     private SchermataNotifiche schermataNotifiche;
     private String flagCondizione;
     private String tipoUtenteNotifica;
+    private String indirizzo_email;
+    private String tipoUtente;
+    private AcquirenteMainActivity acquirenteMainActivity;
 
     public NotificheDAO(SchermataNotifiche schermataNotifiche) {
         this.schermataNotifiche = schermataNotifiche;
+    }
+    public NotificheDAO(AcquirenteMainActivity acquirenteMainActivity, String indirizzo_email, String tipoUtente){
+        this.acquirenteMainActivity = acquirenteMainActivity;
+        this.indirizzo_email = indirizzo_email;
+        this.tipoUtente = tipoUtente;
     }
 
     public void openConnection() {
         new DatabaseTask().execute("open");
     }
-
-
-
     public void getNotificheForEmail(String email,String tipoUtente) {
         if (email == null || tipoUtente == null ) {
             // Se l'email è vuota, non fare nulla
@@ -46,7 +51,9 @@ public class NotificheDAO {
         tipoUtenteNotifica=tipoUtente;
         new DatabaseTask().execute("get_notifiche", email);
     }
-
+    public void checkNotifiche(){
+        new CheckNotificheTask().execute();
+    }
     public void closeConnection() {
         new DatabaseTask().execute("close");
     }
@@ -131,9 +138,39 @@ public class NotificheDAO {
                 Log.d("DatabaseTask", "Result is null");
             }
         }
-
-
-
-
     }
+    private class CheckNotificheTask extends AsyncTask<Void, Void, Integer> {
+
+        @Override
+        protected Integer doInBackground(Void... voids) {
+            try {
+                if (connection != null && !connection.isClosed()) {
+                    String query = "SELECT COUNT(*) AS count FROM notifiche" + tipoUtente + " WHERE id_" + tipoUtente + " = ?";
+                    PreparedStatement statement = connection.prepareStatement(query);
+                    statement.setString(1, indirizzo_email);
+                    ResultSet resultSet = statement.executeQuery();
+                    if (resultSet.next()) {
+                        int count = resultSet.getInt("count");
+                        resultSet.close();
+                        statement.close();
+                        return count;
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                Log.e("CheckNotificheTask", "Errore durante il recupero del numero di notifiche", e);
+            }
+            return 0;
+        }
+
+        @Override
+        protected void onPostExecute(Integer result) {
+            if (result != null) {
+                acquirenteMainActivity.handleGetNumeroNotifiche(result.intValue());
+            } else {
+                // Gestisci il caso in cui non è stato possibile recuperare il numero di notifiche
+            }
+        }
+    }
+
 }

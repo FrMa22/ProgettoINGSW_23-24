@@ -224,11 +224,16 @@ public class AstaRibassoDAO {
                 if (strings.length > 0) {
                     connection = DatabaseHelper.getConnection();
                     int idAsta = Integer.parseInt(strings[0]);
+                    String email_offerente = strings[1];
+                    Float offerta = Float.parseFloat(strings[2]);
                     if (connection != null && !connection.isClosed()) {
-                        // Aggiorna la condizione dell'asta a "chiusa"
-                        String queryUpdate = "UPDATE asta_alribasso SET condizione = 'chiusa' WHERE id = ?";
+                        // inserisce in vincitoriAstaAlRibasso -> un trigger chiuderà l'asta
+                        String queryUpdate = "INSERT INTO vincitoriAstaAlRibasso (idAstaRibasso, indirizzo_email, prezzoAcquisto) VALUES (?,?,?) ";
+//                        String queryUpdate = "UPDATE asta_alribasso SET condizione = 'chiusa' WHERE id = ?";
                         PreparedStatement preparedStatementUpdate = connection.prepareStatement(queryUpdate);
                         preparedStatementUpdate.setInt(1, idAsta);
+                        preparedStatementUpdate.setString(2,email_offerente);
+                        preparedStatementUpdate.setFloat(3,offerta);
                         preparedStatementUpdate.executeUpdate();
                         preparedStatementUpdate.close();
                         return null; // Operazione completata con successo

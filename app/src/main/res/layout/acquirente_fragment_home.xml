@@ -55,7 +55,7 @@
                 android:layout_marginRight="20dp"
                 android:backgroundTint="@android:color/transparent"
                 android:contentDescription="Clicca per aprire le notifiche."
-                android:src="@drawable/baseline_notification_important_24" />
+                android:src="@drawable/ic_notifica" />
         </androidx.appcompat.widget.Toolbar>
 
         <ScrollView
@@ -68,7 +68,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:background="@color/colore_base">
 
 
 
