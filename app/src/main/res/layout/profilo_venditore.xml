@@ -40,7 +40,14 @@
                         android:textColor="@color/colore_secondario"
                         android:textSize="35sp"
                         android:textStyle="bold" />
-
+                    <ImageButton
+                        android:id="@+id/bottoneBackProfiloVenditore"
+                        android:layout_width="60dp"
+                        android:layout_height="80dp"
+                        android:layout_gravity="start"
+                        android:backgroundTint="@android:color/transparent"
+                        android:contentDescription="Premi per tornare indietro."
+                        android:src="@drawable/baseline_arrow_back_ios_24" />
 
 
                 </androidx.appcompat.widget.Toolbar>
@@ -370,6 +377,7 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:visibility="invisible"
-        android:indeterminate="true" />
+        android:indeterminate="true"
+        android:elevation="10dp"/>
 
 </RelativeLayout>

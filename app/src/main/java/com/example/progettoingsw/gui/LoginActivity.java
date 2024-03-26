@@ -2,14 +2,20 @@ package com.example.progettoingsw.gui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.widget.SwitchCompat;
 
 import com.example.progettoingsw.DAO.LoginDAO;
 import com.example.progettoingsw.R;
@@ -19,7 +25,7 @@ import com.example.progettoingsw.gui.acquirente.AcquirenteMainActivity;
 import com.example.progettoingsw.gui.venditore.VenditoreAstaRibasso;
 
 public class LoginActivity extends GestoreComuniImplementazioni {
-
+    private SwitchCompat switch_mostra_password;
     Button bottone;
     Controller controller;
     ProgressBar progress_bar_login;
@@ -31,11 +37,40 @@ public class LoginActivity extends GestoreComuniImplementazioni {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        switch_mostra_password = findViewById(R.id.switch_mostra_password);
         TextView registrazione = (TextView) findViewById(R.id.TextViewRegistrati);
         Button bottoneLogin = (Button) findViewById(R.id.bottonelogin);
         editText_mail = findViewById(R.id.editTextEmail);
         editText_password = findViewById(R.id.editTextPassword);
         linear_layout_login = findViewById(R.id.linear_layout_login);
+        editText_password.setOnEditorActionListener((textView, actionId, keyEvent) -> {
+            if (actionId == EditorInfo.IME_ACTION_DONE || keyEvent.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
+                // Qui esegui l'azione corrispondente a un clic sul pulsante "Accedi"
+                bottoneLogin.performClick();
+                return true; // Indica che l'evento è stato gestito
+            }
+            return false; // Lascia che l'evento venga gestito normalmente
+        });
+        switch_mostra_password.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                // Memorizza la posizione corrente del cursore
+                int cursorPosition = editText_password.getSelectionStart();
+
+                // Se lo switch è selezionato, mostra la password
+                if (isChecked) {
+                    editText_password.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+                } else {
+                    // Altrimenti, nascondi la password
+                    editText_password.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                }
+
+                // Ripristina la posizione del cursore dopo il cambio di tipo di input
+                editText_password.setSelection(cursorPosition);
+            }
+        });
+
+
 
         progress_bar_login = findViewById(R.id.progress_bar_login);
 

@@ -34,7 +34,7 @@ import java.util.List;
 
 public class ProfiloVenditore extends GestoreComuniImplementazioni {
 
-
+    private ImageButton bottoneBackProfiloVenditore;
     ImageButton button_log_out;
     MaterialButton button_le_mie_aste;
     ImageButton button_modifica;
@@ -68,20 +68,25 @@ public class ProfiloVenditore extends GestoreComuniImplementazioni {
 
         email = getIntent().getStringExtra("email");
         System.out.println(email);
-
+        bottoneBackProfiloVenditore = findViewById(R.id.bottoneBackProfiloVenditore);
+        bottoneBackProfiloVenditore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
         relative_layout_profilo_venditore = findViewById(R.id.relative_layout_profilo_venditore);
 
         //icona del caricamento
-      //  progressBarAcquirenteFragmentProfilo = findViewById(R.id.progressBarProfiloVenditore);
-      //  progressBarAcquirenteFragmentProfilo.setVisibility(View.VISIBLE);
+        progressBarAcquirenteFragmentProfilo = findViewById(R.id.progressBarProfiloVenditore);
+        progressBarAcquirenteFragmentProfilo.setVisibility(View.VISIBLE);
+        setAllClickable(relative_layout_profilo_venditore,false);
 
         // Inizializza la GridView
         GridView gridView = findViewById(R.id.gridview_social_activity_profilo);
 
-// Imposta un'altezza minima per la GridView
         gridView.setMinimumHeight((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 50, getResources().getDisplayMetrics()));
 
-// Chiama il metodo per impostare l'altezza in base agli elementi
         setGridViewHeightBasedOnChildren(gridView);
 
         button_le_mie_aste=findViewById(R.id.button_aste_venditore);
@@ -131,6 +136,8 @@ public class ProfiloVenditore extends GestoreComuniImplementazioni {
         } else {
             // L'acquirente non è stato trovato
         }
+        progressBarAcquirenteFragmentProfilo.setVisibility(View.GONE);
+        setAllClickable(relative_layout_profilo_venditore,true);
     }
     private void setGridViewHeightBasedOnChildren(GridView gridView) {
         ListAdapter listAdapter = gridView.getAdapter();
@@ -192,27 +199,8 @@ public class ProfiloVenditore extends GestoreComuniImplementazioni {
             // Imposta l'altezza della GridView a 50dp
             gridView.setMinimumHeight((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 50, getResources().getDisplayMetrics()));
         }
+        progressBarAcquirenteFragmentProfilo.setVisibility(View.GONE);
         setAllClickable(relative_layout_profilo_venditore,true);
-       // progressBarAcquirenteFragmentProfilo.setVisibility(View.INVISIBLE);
 
     }
-
-
-
-
-    protected void setAllClickable(ViewGroup viewGroup, boolean enabled) {
-        for (int i = 0; i < viewGroup.getChildCount(); i++) {
-            View child = viewGroup.getChildAt(i);
-            child.setEnabled(enabled);
-            if (child instanceof ViewGroup) {
-                setAllClickable((ViewGroup) child, enabled);
-            }
-        }
     }
-
-    //metodo per rendere clickabile o non la bottom navigation view, accede alla bottom di main tramite un metodo di main
-
-
-
-
-}

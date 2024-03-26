@@ -2,10 +2,14 @@ package com.example.progettoingsw.gui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
+
+import androidx.appcompat.widget.SwitchCompat;
 
 import com.example.progettoingsw.DAO.RegistrazioneDAO;
 import com.example.progettoingsw.R;
@@ -20,6 +24,7 @@ public class Registrazione extends GestoreComuniImplementazioni {
     private EditText edittext_password;
     private EditText edittext_conferma_password;
     private Spinner spinner_tipo_utente;
+    private SwitchCompat switch_mostra_password_registrazione;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +32,22 @@ public class Registrazione extends GestoreComuniImplementazioni {
         setContentView(R.layout.registrazione);
         MaterialButton bottoneAnnulla = (MaterialButton) findViewById(R.id.bottoneAnnulla);
         MaterialButton bottoneProsegui = (MaterialButton) findViewById(R.id.bottoneProsegui);
+
+        switch_mostra_password_registrazione = findViewById(R.id.switch_mostra_password_registrazione);
+        switch_mostra_password_registrazione.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                // Se lo switch è selezionato, mostra la password
+                if (isChecked) {
+                    edittext_password.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+                    edittext_conferma_password.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+                } else {
+                    // Altrimenti, nascondi la password
+                    edittext_password.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                    edittext_conferma_password.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                }
+            }
+        });
 
         edittext_nome = findViewById(R.id.editTextNomeRegistrazione);
         edittext_cognome = findViewById(R.id.editTextCongnomeRegistrazione);

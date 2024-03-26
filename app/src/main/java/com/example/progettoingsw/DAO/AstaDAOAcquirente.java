@@ -394,7 +394,7 @@ public class AstaDAOAcquirente {
                 Statement statement = connection.createStatement();
 
                 // Query per recuperare le 5 aste inglesi con la data di scadenza più vicina
-                String queryAsteInglese = "SELECT * FROM asta_allinglese ORDER BY intervalloTempoOfferte ASC LIMIT 5";
+                String queryAsteInglese = "SELECT * FROM asta_allinglese WHERE condizione = 'aperta' ORDER BY intervalloTempoOfferte ASC LIMIT 5";
                 ResultSet resultSetAsteInglese = statement.executeQuery(queryAsteInglese);
                 while (resultSetAsteInglese.next()) {
                     int id = resultSetAsteInglese.getInt("id");
@@ -445,7 +445,7 @@ public class AstaDAOAcquirente {
                 Statement statement = connection.createStatement();
 
                 // Query per recuperare le 5 aste inglesi con la data di scadenza più vicina
-                String queryAsteInverse = "SELECT * FROM asta_inversa ORDER BY dataDiScadenza ASC LIMIT 5";
+                String queryAsteInverse = "SELECT * FROM asta_inversa WHERE condizione = 'aperta' ORDER BY dataDiScadenza ASC LIMIT 5";
                 ResultSet resultSetAsteInverse = statement.executeQuery(queryAsteInverse);
                 while (resultSetAsteInverse.next()) {
                     int id = resultSetAsteInverse.getInt("id");

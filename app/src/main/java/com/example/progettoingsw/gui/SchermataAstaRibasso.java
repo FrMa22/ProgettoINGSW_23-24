@@ -227,6 +227,7 @@ public class SchermataAstaRibasso extends GestoreComuniImplementazioni {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
         return oraLocale.format(formatter);
     }
+    // questi metodi onPause, onStop, onDestroy e onResume servono a stoppare il timer quando non si è piu su questa schermata e a farlo ricominciare quando si torna
     @Override
     protected void onPause() {
         super.onPause();
@@ -239,7 +240,6 @@ public class SchermataAstaRibasso extends GestoreComuniImplementazioni {
             countDownTimer.cancel();
         }
     }
-
     @Override
     protected void onStop() {
         super.onStop();
@@ -264,6 +264,21 @@ public class SchermataAstaRibasso extends GestoreComuniImplementazioni {
             countDownTimer.cancel();
         }
     }
+    @Override
+    public void onResume() {
+        super.onResume();
+        // Avvia nuovamente il countDownTimer
+        if (countDownTimerControlloOgni10sec != null) {
+            countDownTimerControlloOgni10sec.cancel();
+            countDownTimerControlloOgni10sec.start();
+        }
+        // Ferma il countDownTimer se è attivo
+        if (countDownTimer != null) {
+            countDownTimer.cancel();
+            countDownTimer.start();
+        }
+    }
+
 
 
 }

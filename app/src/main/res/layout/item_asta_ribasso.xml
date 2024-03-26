@@ -27,7 +27,9 @@
         android:gravity="center"
         android:background="@drawable/bordi_trasparenti"
         android:textColor="@color/colore_secondario"
-        android:textSize="20sp" />
+        android:textSize="16sp"
+        android:maxLines="1"
+        android:ellipsize="end"/>
     <RelativeLayout
         android:layout_width="160dp"
         android:layout_height="180dp"
@@ -64,7 +66,7 @@
         android:gravity="center"
         android:background="@drawable/bordo_sotto_grigio"
         android:textColor="@color/colore_secondario"
-        android:textSize="20sp" />
+        android:textSize="16sp" />
 
     <TextView
         android:layout_width="wrap_content"

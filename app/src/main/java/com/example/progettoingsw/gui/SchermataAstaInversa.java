@@ -7,6 +7,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,10 +26,12 @@ import com.google.android.material.button.MaterialButton;
 public class SchermataAstaInversa extends GestoreComuniImplementazioni {
     Controller controller;
     ImageButton bottoneBack;
+    private CountDownTimer countDownTimer;
+    private ProgressBar progress_bar_schermata_asta_inversa;
+    private RelativeLayout relativeLayoutSchermataAstaInversa;
     private int id;
     private String email;
     private String tipoUtente;
-    private CountDownTimer countDownTimer;
     private TextView textViewNomeProdottoSchermataAstaInversa;
     private ImageView ImageViewSchermataAstaInversa;
     private TextView textViewDescrizioneSchermataAstaInversa;
@@ -43,6 +47,11 @@ public class SchermataAstaInversa extends GestoreComuniImplementazioni {
         setContentView(R.layout.schermata_asta_inversa);
         astaInversaDAO = new AstaInversaDAO(this);
 
+        progress_bar_schermata_asta_inversa = findViewById(R.id.progress_bar_schermata_asta_inversa);
+        relativeLayoutSchermataAstaInversa = findViewById(R.id.relativeLayoutSchermataAstaInversa);
+        progress_bar_schermata_asta_inversa.setVisibility(View.VISIBLE);
+        setAllClickable(relativeLayoutSchermataAstaInversa,false);
+
         textViewNomeProdottoSchermataAstaInversa = findViewById(R.id.textViewNomeProdottoSchermataAstaInversa);
         ImageViewSchermataAstaInversa = findViewById(R.id.ImageViewSchermataAstaInversa);
         textViewDescrizioneSchermataAstaInversa = findViewById(R.id.textViewDescrizioneSchermataAstaInversa);
@@ -55,9 +64,8 @@ public class SchermataAstaInversa extends GestoreComuniImplementazioni {
         id = getIntent().getIntExtra("id",0);
         email = getIntent().getStringExtra("email");
         tipoUtente = getIntent().getStringExtra("tipoUtente");
-        Toast.makeText(this, "l'id è " + id + ", la mail è " + email + ", il tipoutente è " + tipoUtente, Toast.LENGTH_SHORT).show();
 
-        CountDownTimer countDownTimer = new CountDownTimer(10000, 1000) {
+        countDownTimer = new CountDownTimer(10000, 1000) {
             public void onTick(long millisUntilFinished) {
                 // Il timer sta andando avanti, non è necessario fare nulla qui
                 Log.d("Timer", "Tempo rimanente: " + millisUntilFinished / 1000 + " secondi");
@@ -67,6 +75,7 @@ public class SchermataAstaInversa extends GestoreComuniImplementazioni {
                 astaInversaDAO.getPrezzoECondizioneAstaByID(id);
             }
         };
+        Log.d("timer ", "inizia");
         countDownTimer.start();
 
         bottoneBack =  findViewById(R.id.bottoneBackSchermataAstaInversa);
@@ -100,19 +109,46 @@ public class SchermataAstaInversa extends GestoreComuniImplementazioni {
                 popUpNuovaOfferta.show();
             }
         });
-        String valoreDaModificare = getIntent().getStringExtra("editTextPrezzo");
-        if (valoreDaModificare != null) {
-            textViewPrezzoAttualeSchermataAstaInversa.setText(valoreDaModificare);
-        }
-
         astaInversaDAO.openConnection();
         astaInversaDAO.getAstaInversaByID(id);
-        astaInversaDAO.closeConnection();
-
-
-
-
     }
+    // questi metodi onPause, onStop, onDestroy e onResume servono a stoppare il timer quando non si è piu su questa schermata e a farlo ricominciare quando si torna
+    @Override
+    protected void onPause() {
+        super.onPause();
+        // Ferma il countDownTimer se è attivo
+        if (countDownTimer != null) {
+            countDownTimer.cancel();
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        // Ferma il countDownTimer se è attivo
+        if (countDownTimer != null) {
+            countDownTimer.cancel();
+        }
+    }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        // Ferma il countDownTimer se è attivo
+        if (countDownTimer != null) {
+            countDownTimer.cancel();
+        }
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        // Avvia nuovamente il countDownTimer
+        if (countDownTimer != null ) {
+            Log.d("timer ", "inizia on Resume");
+            countDownTimer.cancel();
+            countDownTimer.start();
+        }
+    }
+
 
     public void setAstaData(AstaInversaItem astaInversaItem) {
         if (astaInversaItem != null) {
@@ -131,6 +167,8 @@ public class SchermataAstaInversa extends GestoreComuniImplementazioni {
             // Gestisci il caso in cui non ci siano dati recuperati
             Log.d("Errore", "Impossibile recuperare i dati dell'asta");
         }
+        progress_bar_schermata_asta_inversa.setVisibility(View.GONE);
+        setAllClickable(relativeLayoutSchermataAstaInversa,true);
 
     }
     public void setPrezzo(Integer prezzoNuovo){
@@ -140,6 +178,8 @@ public class SchermataAstaInversa extends GestoreComuniImplementazioni {
         if(condizione_aggiornata.equals("aperta")){
             textViewPrezzoAttualeSchermataAstaInversa.setText(prezzo_aggiornato);
             // Resetta il timer per farlo ripartire da 10 secondi
+            Log.d("timer ", "cancello e faccio iniziare");
+            countDownTimer.cancel();
             countDownTimer.start();
         }else{
             Toast.makeText(this, "Accidenti! L'asta si è conclusa", Toast.LENGTH_SHORT).show();

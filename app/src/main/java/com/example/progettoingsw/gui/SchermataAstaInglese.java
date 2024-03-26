@@ -71,11 +71,14 @@ public class SchermataAstaInglese extends GestoreComuniImplementazioni {
         // Inizializza il timer con una durata di 10 secondi
         countDownTimer = new CountDownTimer(10000, 1000) {
             public void onTick(long millisUntilFinished) {
-                // Il timer sta andando avanti, non è necessario fare nulla qui
+                // Stampa il numero di secondi rimanenti
+                Log.d("Timer inglese", "Secondi mancanti: " + millisUntilFinished / 1000);
             }
             public void onFinish() {
                 Log.d("Timer inglese", "Timer scaduto");
-                astaIngleseDAO.getPrezzoECondizioneAstaByID(id);
+                //test: se getAstaIngleseByID è troppo pesante meglio l'altro ma va aggiunto il recupero e aggiornamento della scadenza
+                astaIngleseDAO.getAstaIngleseByID(id);
+                //astaIngleseDAO.getPrezzoECondizioneAstaByID(id);
                 start();
             }
         };
@@ -125,14 +128,41 @@ public class SchermataAstaInglese extends GestoreComuniImplementazioni {
 
 
     }
-
-
+    // questi metodi onPause, onStop, onDestroy e onResume servono a stoppare il timer quando non si è piu su questa schermata e a farlo ricominciare quando si torna
+    @Override
+    protected void onPause() {
+        super.onPause();
+        // Ferma il countDownTimer se è attivo
+        if (countDownTimer != null) {
+            countDownTimer.cancel();
+        }
+    }
+    @Override
+    protected void onStop() {
+        super.onStop();
+        // Ferma il countDownTimer se è attivo
+        if (countDownTimer != null) {
+            countDownTimer.cancel();
+        }
+    }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        // Ferma il countDownTimer se è attivo
+        if (countDownTimer != null) {
+            countDownTimer.cancel();
+        }
+    }
     @Override //questo metodo serve per fare un refresh dei valori dei campi dopo una possibile modifica fatta da PopUp
     public void onResume() {
         super.onResume();
         astaIngleseDAO.openConnection();
         astaIngleseDAO.getAstaIngleseByID(id);
         astaIngleseDAO.closeConnection();
+        if (countDownTimer != null) {
+            countDownTimer.cancel();
+            countDownTimer.start();
+        }
     }
 
     public void setAstaData(AstaIngleseItem astaIngleseItem) {
