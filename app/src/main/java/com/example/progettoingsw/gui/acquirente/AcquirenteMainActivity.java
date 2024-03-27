@@ -37,7 +37,7 @@ public class AcquirenteMainActivity extends GestoreComuniImplementazioni {
         notificheDAO.openConnection();
         notificheDAO.checkNotifiche();
 
-        countDownTimer = new CountDownTimer(10000, 1000) {
+        countDownTimer = new CountDownTimer(5000, 1000) {
             public void onTick(long millisUntilFinished) {
                 // Stampa il numero di secondi rimanenti
                 Log.d("Timer inglese", "Secondi mancanti: " + millisUntilFinished / 1000);
@@ -191,7 +191,7 @@ public void handleGetNumeroNotifiche(int numero){
             controlloIniziale = false;
             Log.d("handleGetNumeroNotifiche", "controllo inizale, numero = " + numero + ", numero notifiche= " + numeroNotifiche);
         }else{
-            Log.d("handleGetNumeroNotifiche", "controllo");
+            Log.d("handleGetNumeroNotifiche", "controllo, numero: "+ numero + ", num notifich: " + numeroNotifiche);
             if(numero>numeroNotifiche){
                 if(numero - 1 == numeroNotifiche){
                     Toast.makeText(getApplicationContext(), "Hai una nuova notifica!", Toast.LENGTH_LONG).show();
@@ -200,6 +200,9 @@ public void handleGetNumeroNotifiche(int numero){
                 }
                 numeroNotifiche = numero;
                 Log.d("Numero notifiche in handle" , " Notifiche: " + numeroNotifiche );
+            }else{
+                this.numeroNotifiche = numero;
+                Log.d("Numero notifiche in handle" , " Notifiche resettate : " + numeroNotifiche );
             }
         }
 }

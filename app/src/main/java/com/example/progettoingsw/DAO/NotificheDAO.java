@@ -9,6 +9,7 @@ import com.example.progettoingsw.controllers_package.DatabaseHelper;
 import com.example.progettoingsw.controllers_package.NotificheAdapter;
 import com.example.progettoingsw.gui.LeMieAste;
 import com.example.progettoingsw.gui.SchermataNotifiche;
+import com.example.progettoingsw.gui.acquirente.AcquirenteFragmentHome;
 import com.example.progettoingsw.gui.acquirente.AcquirenteMainActivity;
 import com.example.progettoingsw.model.AstaIngleseItem;
 import com.example.progettoingsw.model.AstaInversaItem;
@@ -30,6 +31,7 @@ public class NotificheDAO {
     private String indirizzo_email;
     private String tipoUtente;
     private AcquirenteMainActivity acquirenteMainActivity;
+    private AcquirenteFragmentHome acquirenteFragmentHome;
 
     public NotificheDAO(SchermataNotifiche schermataNotifiche) {
         this.schermataNotifiche = schermataNotifiche;
@@ -39,7 +41,11 @@ public class NotificheDAO {
         this.indirizzo_email = indirizzo_email;
         this.tipoUtente = tipoUtente;
     }
-
+    public NotificheDAO(AcquirenteFragmentHome acquirenteFragmentHome, String indirizzo_email, String tipoUtente){
+        this.acquirenteFragmentHome = acquirenteFragmentHome;
+        this.indirizzo_email = indirizzo_email;
+        this.tipoUtente = tipoUtente;
+    }
     public void openConnection() {
         new DatabaseTask().execute("open");
     }
@@ -166,7 +172,13 @@ public class NotificheDAO {
         @Override
         protected void onPostExecute(Integer result) {
             if (result != null) {
-                acquirenteMainActivity.handleGetNumeroNotifiche(result.intValue());
+                if(acquirenteMainActivity!=null){
+                    Log.d("onPostExecute", "passo result a main");
+                    acquirenteMainActivity.handleGetNumeroNotifiche(result.intValue());
+                }else if(acquirenteFragmentHome!=null){
+                    Log.d("onPostExecute", "passo resylt a home");
+                    acquirenteFragmentHome.handleGetNumeroNotifiche(result.intValue());
+                }
             } else {
                 // Gestisci il caso in cui non è stato possibile recuperare il numero di notifiche
             }

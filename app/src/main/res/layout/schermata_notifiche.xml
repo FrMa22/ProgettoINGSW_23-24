@@ -14,13 +14,21 @@
         android:layout_height="wrap_content"
         android:background="@drawable/design_toolbar">
 
+        <ImageButton
+            android:id="@+id/bottoneBackNotifiche"
+            android:layout_width="wrap_content"
+            android:layout_height="80dp"
+            android:contentDescription="Back"
+            android:backgroundTint="@android:color/transparent"
+            android:src="@drawable/baseline_arrow_back_ios_24"
+            />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="Notifiche"
             android:textColor="@color/colore_secondario"
-            android:textSize="50sp"
+            android:textSize="40sp"
             android:textStyle="bold"
             android:layout_marginBottom="5dp"/>
 
