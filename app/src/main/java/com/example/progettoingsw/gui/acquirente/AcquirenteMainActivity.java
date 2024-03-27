@@ -12,6 +12,7 @@ import android.widget.Toast;
 import com.example.progettoingsw.DAO.NotificheDAO;
 import com.example.progettoingsw.R;
 import com.example.progettoingsw.classe_da_estendere.GestoreComuniImplementazioni;
+import com.example.progettoingsw.gui.PopUpNotificaRicevuta;
 import com.example.progettoingsw.gui.venditore.VenditorePopUpCreaAsta;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 public class AcquirenteMainActivity extends GestoreComuniImplementazioni {
@@ -193,11 +194,9 @@ public void handleGetNumeroNotifiche(int numero){
         }else{
             Log.d("handleGetNumeroNotifiche", "controllo, numero: "+ numero + ", num notifich: " + numeroNotifiche);
             if(numero>numeroNotifiche){
-                if(numero - 1 == numeroNotifiche){
-                    Toast.makeText(getApplicationContext(), "Hai una nuova notifica!", Toast.LENGTH_LONG).show();
-                }else{
-                    Toast.makeText(getApplicationContext(), "Hai " + (numero-numeroNotifiche) + "notifiche!", Toast.LENGTH_LONG).show();
-                }
+                int notificheNuove = numero - numeroNotifiche;
+                PopUpNotificaRicevuta popUpNotificaRicevuta = new PopUpNotificaRicevuta(AcquirenteMainActivity.this,notificheNuove,email,tipoUtente);
+                popUpNotificaRicevuta.show();
                 numeroNotifiche = numero;
                 Log.d("Numero notifiche in handle" , " Notifiche: " + numeroNotifiche );
             }else{

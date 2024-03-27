@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.progettoingsw.DAO.FragmentProfiloDAO;
@@ -31,6 +32,7 @@ public class SchermataNotifiche extends AppCompatActivity {
     private NotificheAdapter AdapterNotifiche;
     private NotificheDAO notificheDAO;
     private int numeroNotifiche;
+    private ProgressBar progressBarSchermataNotifiche;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +40,9 @@ public class SchermataNotifiche extends AppCompatActivity {
         setContentView(R.layout.schermata_notifiche);
         numeroNotifiche = 0;
         AdapterNotifiche = new NotificheAdapter(this, null);
+
+        progressBarSchermataNotifiche = findViewById(R.id.progressBarSchermataNotifiche);
+        progressBarSchermataNotifiche.setVisibility(View.VISIBLE);
 
         email = getIntent().getStringExtra("email");
         tipoUtente=getIntent().getStringExtra("tipoUtente");
@@ -98,7 +103,7 @@ public class SchermataNotifiche extends AppCompatActivity {
     @Override //questo metodo serve per fare un refresh dei valori dei campi dopo una possibile modifica fatta da PopUp
     public void onResume() {
         super.onResume();
-
+        progressBarSchermataNotifiche.setVisibility(View.VISIBLE);
         notificheDAO.openConnection();
         notificheDAO.getNotificheForEmail(email,tipoUtente);
         notificheDAO.closeConnection();
@@ -115,6 +120,7 @@ public class SchermataNotifiche extends AppCompatActivity {
                 numeroNotifiche = 0;
                 // Nessun nome asta trovato per l'email specificata
             }
+        progressBarSchermataNotifiche.setVisibility(View.GONE);
 
     }
 

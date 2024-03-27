@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="220dp"
+    android:layout_height="100dp"
+    android:layout_gravity="center"
+    android:orientation="vertical"
+    android:background="@drawable/bordo_non_stondato"
+    tools:context=".gui.PopUpNotificaRicevuta">
+
+
+    <TextView
+        android:id="@+id/textview_titolo_notifica_arrivata_popup"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_gravity="center"
+        android:layout_marginStart="3dp"
+        android:layout_marginEnd="3dp"
+        android:background="@drawable/bordo_sotto_grigio"
+        android:gravity="center"
+        android:text="Hai ricevuta x notifiche"
+        android:textColor="@color/colore_secondario"
+        android:textSize="18sp" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="25dp"
+        android:layout_marginEnd="25dp"
+        android:layout_marginBottom="5dp">
+
+        <TextView
+            android:id="@+id/textViewChiudi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:gravity="start"
+            android:text="Chiudi"
+            android:textColor="@color/colore_secondario"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textViewApri"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:gravity="end"
+            android:text="Apri"
+            android:textColor="@color/colore_secondario"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+
+    </RelativeLayout>
+
+</LinearLayout>
+
+
+

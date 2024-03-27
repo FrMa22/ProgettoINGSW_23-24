@@ -121,11 +121,17 @@ public class LoginActivity extends GestoreComuniImplementazioni {
         progress_bar_login.setVisibility(View.INVISIBLE);
         setAllClickable(linear_layout_login,true);
         if (tipoUtente != null) {
+            if(tipoUtente.equals("doppioAccount")){
+                PopUpLogin popUpLogin = new PopUpLogin(LoginActivity.this,editText_mail.getText().toString());
+                popUpLogin.show();
+            }else{
                 Toast.makeText(this, "Accesso eseguito come: " + tipoUtente, Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(LoginActivity.this, AcquirenteMainActivity.class);//test del login
                 intent.putExtra("email", editText_mail.getText().toString());
                 intent.putExtra("tipoUtente", tipoUtente);
                 startActivity(intent);
+            }
+
         } else {
             // L'utente non è stato trovato
             // Mostra un messaggio di errore o esegui altre azioni necessarie
