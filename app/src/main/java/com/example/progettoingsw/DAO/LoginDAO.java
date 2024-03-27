@@ -60,14 +60,25 @@ public class LoginDAO {
         protected String doInBackground(String... strings) {
             try {
                 if (connection != null && !connection.isClosed()) {
+                    String email = strings[0];
+                    String password = strings[1];
                     Statement statement = connection.createStatement();
-                    ResultSet resultSet = statement.executeQuery("SELECT * FROM venditore WHERE indirizzo_email = '" + strings[0] + "' AND password = '" + strings[1] + "'");
-                    if (resultSet.next()) {
-                        return "venditore";
-                    }
 
-                    resultSet = statement.executeQuery("SELECT * FROM acquirente WHERE indirizzo_email = '" + strings[0] + "' AND password = '" + strings[1] + "'");
-                    if (resultSet.next()) {
+                    // Query per controllare se l'email e la password corrispondono a un record in venditore
+                    String queryVenditore = "SELECT * FROM venditore WHERE indirizzo_email = '" + email + "' AND password = '" + password + "'";
+                    ResultSet resultSetVenditore = statement.executeQuery(queryVenditore);
+                    boolean isVenditorePresent = resultSetVenditore.next();
+
+                    // Query per controllare se l'email e la password corrispondono a un record in acquirente
+                    String queryAcquirente = "SELECT * FROM acquirente WHERE indirizzo_email = '" + email + "' AND password = '" + password + "'";
+                    ResultSet resultSetAcquirente = statement.executeQuery(queryAcquirente);
+                    boolean isAcquirentePresent = resultSetAcquirente.next();
+
+                    if (isVenditorePresent && isAcquirentePresent) {
+                        return "doppioAccount";
+                    } else if (isVenditorePresent) {
+                        return "venditore";
+                    } else if (isAcquirentePresent) {
                         return "acquirente";
                     }
                 }
@@ -77,10 +88,12 @@ public class LoginDAO {
             return null;
         }
 
+
         @Override
-        protected void onPostExecute(String tableName) {
+        protected void onPostExecute(String result) {
             if (!isCancelled()) {
-                loginActivity.handleLoginResult(tableName);
+                Log.d("LoginDAO on post", "result : " + result);
+                loginActivity.handleLoginResult(result);
             }
         }
     }

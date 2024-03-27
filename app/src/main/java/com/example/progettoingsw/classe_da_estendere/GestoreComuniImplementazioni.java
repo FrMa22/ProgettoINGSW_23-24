@@ -1,13 +1,17 @@
 package com.example.progettoingsw.classe_da_estendere;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.CountDownTimer;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import com.example.progettoingsw.DAO.NotificheDAO;
 import com.example.progettoingsw.R;
 
 public class GestoreComuniImplementazioni extends AppCompatActivity{
@@ -18,6 +22,7 @@ public class GestoreComuniImplementazioni extends AppCompatActivity{
         enableImmersiveMode();
         //serve per avere la barra delle notifiche del cell di un determinato colore:
         getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.status_bar_color));
+
     }
 
     protected void enableImmersiveMode() {
@@ -28,6 +33,7 @@ public class GestoreComuniImplementazioni extends AppCompatActivity{
             decorView.setSystemUiVisibility(uiOptions);
         }
     }
+
     protected void setAllClickable(ViewGroup viewGroup, boolean enabled) {
         for (int i = 0; i < viewGroup.getChildCount(); i++) {
             View child = viewGroup.getChildAt(i);

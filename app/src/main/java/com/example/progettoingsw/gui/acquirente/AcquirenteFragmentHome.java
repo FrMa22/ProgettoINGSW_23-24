@@ -3,6 +3,7 @@ package com.example.progettoingsw.gui.acquirente;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,6 +24,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.progettoingsw.DAO.AcquirenteHomeDAO;
 import com.example.progettoingsw.DAO.AstaDAOAcquirente;
+import com.example.progettoingsw.DAO.NotificheDAO;
 import com.example.progettoingsw.R;
 import com.example.progettoingsw.controllers_package.AstaAdapter;
 import com.example.progettoingsw.controllers_package.Controller;
@@ -40,12 +42,13 @@ import com.google.android.material.button.MaterialButton;
 import java.util.ArrayList;
 
 public class AcquirenteFragmentHome extends Fragment {
+    private CountDownTimer countDownTimerNumeroNotifiche;
     private RelativeLayout relative_layout_home_acquirente;
     private AstaDAOAcquirente astaDAOAcquirente;
     private AstaAdapter astaAdapterConsigliate;
     private AstaAdapter astaAdapterInScadenza;
     private AstaAdapter astaAdapterNuove;
-
+    private TextView iconaNotifiche;
     private ProgressBar progressBarAcquirenteFragmentHome;
     MaterialButton button_le_mie_aste;
     ImageButton button_notifiche;
@@ -263,8 +266,6 @@ public class AcquirenteFragmentHome extends Fragment {
         });
 
         button_notifiche= view.findViewById(R.id.openNotifiche);
-
-
         button_notifiche.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -275,6 +276,25 @@ public class AcquirenteFragmentHome extends Fragment {
 
             }
         });
+        iconaNotifiche = view.findViewById(R.id.iconaNotifiche);
+        NotificheDAO notificheDAO = new NotificheDAO(AcquirenteFragmentHome.this, email,tipoUtente);
+        notificheDAO.openConnection();
+        notificheDAO.checkNotifiche();
+
+        countDownTimerNumeroNotifiche = new CountDownTimer(5000, 1000) {
+            public void onTick(long millisUntilFinished) {
+                // Stampa il numero di secondi rimanenti
+                Log.d("Timer home fragment", "Secondi mancanti: " + millisUntilFinished / 1000);
+            }
+            public void onFinish() {
+                Log.d("Timer home fragment", "Timer scaduto");
+                notificheDAO.checkNotifiche();
+                start();
+            }
+        };
+        // Avvia il timer
+        countDownTimerNumeroNotifiche.start();
+
 
 
 
@@ -352,5 +372,61 @@ public class AcquirenteFragmentHome extends Fragment {
             }
         }
     }
+    public void handleGetNumeroNotifiche(int numero){
+        Log.d("handleGetNumeroNotifiche" , "il numero di notifiche è :" + numero);
+        if(numero>0){
+            iconaNotifiche.setVisibility(View.VISIBLE);
+            iconaNotifiche.setText(String.valueOf(numero));
+        }else{
+            iconaNotifiche.setVisibility(View.GONE);
+        }
+    }
+    // questi metodi onPause, onStop, onDestroy e onResume servono a stoppare il timer quando non si è piu su questa schermata e a farlo ricominciare quando si torna
+    @Override
+    public void onPause() {
+        super.onPause();
+        // Ferma il countDownTimer se è attivo
+        if (countDownTimerNumeroNotifiche != null) {
+            countDownTimerNumeroNotifiche.cancel();
+        }
+    }
+    @Override
+    public void onStop() {
+        super.onStop();
+        // Ferma il countDownTimer se è attivo
+        if (countDownTimerNumeroNotifiche != null) {
+            countDownTimerNumeroNotifiche.cancel();
+        }
+    }
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        // Ferma il countDownTimer se è attivo
+        if (countDownTimerNumeroNotifiche != null) {
+            countDownTimerNumeroNotifiche.cancel();
+        }
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+//        astaDAOAcquirente = new AstaDAOAcquirente(this, email,tipoUtente);
+//        // Apri la connessione al database e ottieni i prodotti
+//        astaDAOAcquirente.openConnection();
+//        astaDAOAcquirente.getCategorie();
+//        astaDAOAcquirente.getAsteCategorieAcquirente();
+//        astaDAOAcquirente.getAsteScadenzaRecente();
+//        astaDAOAcquirente.getAsteNuove();
+//        astaDAOAcquirente.closeConnection();
+        NotificheDAO notificheDAO = new NotificheDAO(AcquirenteFragmentHome.this, email,tipoUtente);
+        notificheDAO.openConnection();
+        notificheDAO.checkNotifiche();
+        notificheDAO.closeConnection();
+        // Ferma il countDownTimer se è attivo
+        if (countDownTimerNumeroNotifiche != null) {
+            countDownTimerNumeroNotifiche.cancel();
+            countDownTimerNumeroNotifiche.start();
+        }
+    }
+
 
 }

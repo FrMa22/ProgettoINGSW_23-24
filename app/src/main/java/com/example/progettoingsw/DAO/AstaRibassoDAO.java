@@ -216,42 +216,47 @@ public class AstaRibassoDAO {
             }
         }
     }
-    private class AcquistaAstaTask extends AsyncTask<String, Void, Void> {
+    private class AcquistaAstaTask extends AsyncTask<String, Void, Boolean> {
 
         @Override
-        protected Void doInBackground(String... strings) {
+        protected Boolean doInBackground(String... strings) {
             try {
                 if (strings.length > 0) {
                     connection = DatabaseHelper.getConnection();
                     int idAsta = Integer.parseInt(strings[0]);
+                    String email_offerente = strings[1];
+                    Float offerta = Float.parseFloat(strings[2]);
                     if (connection != null && !connection.isClosed()) {
-                        // Aggiorna la condizione dell'asta a "chiusa"
-                        String queryUpdate = "UPDATE asta_alribasso SET condizione = 'chiusa' WHERE id = ?";
+                        // inserisce in vincitoriAstaAlRibasso -> un trigger chiuderà l'asta
+                        String queryUpdate = "INSERT INTO vincitoriAstaAlRibasso (idAstaRibasso, indirizzo_email, prezzoAcquisto) VALUES (?,?,?) ";
                         PreparedStatement preparedStatementUpdate = connection.prepareStatement(queryUpdate);
                         preparedStatementUpdate.setInt(1, idAsta);
+                        preparedStatementUpdate.setString(2, email_offerente);
+                        preparedStatementUpdate.setFloat(3, offerta);
                         preparedStatementUpdate.executeUpdate();
                         preparedStatementUpdate.close();
-                        return null; // Operazione completata con successo
+                        return true; // Operazione completata con successo
                     } else {
-                        return null; // Connessione non aperta
+                        return false; // Connessione non aperta
                     }
                 }
-                return null; // Parametri non validi
+                return false; // Parametri non validi
             } catch (SQLException | NumberFormatException e) {
                 e.printStackTrace();
-                return null; // Errore durante l'operazione
+                return false; // Errore durante l'operazione
             }
         }
 
         @Override
-        protected void onPostExecute(Void result) {
-            if (result != null) {
+        protected void onPostExecute(Boolean success) {
+            if (success) {
                 Toast.makeText(schermataAstaRibasso, "Acquisto effettuato con successo", Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(schermataAstaRibasso, "Errore nell'acquisto", Toast.LENGTH_SHORT).show();
             }
         }
     }
+
     private class InsertCategorieAstaRibassoTask extends AsyncTask<InsertAsta, Void, Void> {
         @Override
         protected Void doInBackground(InsertAsta... insertAstaArray) {

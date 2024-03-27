@@ -1,6 +1,7 @@
 package com.example.progettoingsw.gui;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -15,9 +16,11 @@ import com.example.progettoingsw.gui.acquirente.AcquirenteMainActivity;
 public class PopUpLogin extends Dialog implements View.OnClickListener {
     private AppCompatButton bottoneAcquirente;
     private AppCompatButton bottoneVenditore;
+    private String email;
 
-    public  PopUpLogin(Context context) {
+    public  PopUpLogin(Context context, String email) {
         super(context);
+        this.email = email;
     }
 
     @Override
@@ -42,10 +45,17 @@ public class PopUpLogin extends Dialog implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.bottoneAcquirente) {
-            Controller.redirectActivity(getContext(), AcquirenteMainActivity.class);
+            Toast.makeText(getContext(), "Accesso eseguito come acquirente: ", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(getContext(), AcquirenteMainActivity.class);//test del login
+            intent.putExtra("email", email);
+            intent.putExtra("tipoUtente", "acquirente");
+            getContext().startActivity(intent);
         } else if(v.getId() == R.id.bottoneVenditore){
-            Toast.makeText(getContext(), "ciao", Toast.LENGTH_SHORT).show();
-            Controller.redirectActivity(getContext(), AcquirenteMainActivity.class);
+            Toast.makeText(getContext(), "Accesso eseguito come venditore: ", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(getContext(), AcquirenteMainActivity.class);//test del login
+            intent.putExtra("email", email);
+            intent.putExtra("tipoUtente", "venditore");
+            getContext().startActivity(intent);
         }
         dismiss();
     }

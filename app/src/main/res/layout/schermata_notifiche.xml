@@ -1,26 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colore_base"
-    android:orientation="vertical"
     tools:context=".gui.SchermataNotifiche">
 
+    <ProgressBar
+        android:id="@+id/progressBarSchermataNotifiche"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        android:layout_centerInParent="true"
+        android:indeterminate="true"
+        android:layout_gravity="center"
+        android:elevation="10dp"/>
 
     <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_schermata_notifiche"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/design_toolbar">
 
+        <ImageButton
+            android:id="@+id/bottoneBackNotifiche"
+            android:layout_width="wrap_content"
+            android:layout_height="80dp"
+            android:contentDescription="Back"
+            android:backgroundTint="@android:color/transparent"
+            android:src="@drawable/baseline_arrow_back_ios_24"
+            />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="Notifiche"
             android:textColor="@color/colore_secondario"
-            android:textSize="50sp"
+            android:textSize="40sp"
             android:textStyle="bold"
             android:layout_marginBottom="5dp"/>
 
@@ -31,5 +48,6 @@
         android:id="@+id/recycler_view_notifiche"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/toolbar_schermata_notifiche"
         />
-</LinearLayout>
+</RelativeLayout>

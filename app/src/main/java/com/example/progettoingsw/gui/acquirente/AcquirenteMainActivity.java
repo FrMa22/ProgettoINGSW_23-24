@@ -3,12 +3,16 @@ package com.example.progettoingsw.gui.acquirente;
 import androidx.fragment.app.Fragment;
 
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
+import com.example.progettoingsw.DAO.NotificheDAO;
 import com.example.progettoingsw.R;
 import com.example.progettoingsw.classe_da_estendere.GestoreComuniImplementazioni;
+import com.example.progettoingsw.gui.PopUpNotificaRicevuta;
 import com.example.progettoingsw.gui.venditore.VenditorePopUpCreaAsta;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 public class AcquirenteMainActivity extends GestoreComuniImplementazioni {
@@ -16,6 +20,10 @@ public class AcquirenteMainActivity extends GestoreComuniImplementazioni {
     private BottomNavigationView bottomNavigationView;
     private String email;
     private String tipoUtente;
+    private CountDownTimer countDownTimer;
+    private int numeroNotifiche;
+    private int numeroNotificheChecked;
+    private boolean controlloIniziale = true;
 
 
     @Override
@@ -26,6 +34,23 @@ public class AcquirenteMainActivity extends GestoreComuniImplementazioni {
 
         email = getIntent().getStringExtra("email");
         tipoUtente = getIntent().getStringExtra("tipoUtente");
+        NotificheDAO notificheDAO = new NotificheDAO(this,email,tipoUtente);
+        notificheDAO.openConnection();
+        notificheDAO.checkNotifiche();
+
+        countDownTimer = new CountDownTimer(5000, 1000) {
+            public void onTick(long millisUntilFinished) {
+                // Stampa il numero di secondi rimanenti
+                Log.d("Timer inglese", "Secondi mancanti: " + millisUntilFinished / 1000);
+            }
+            public void onFinish() {
+                Log.d("Timer inglese", "Timer scaduto");
+                notificheDAO.checkNotifiche();
+                start();
+            }
+        };
+        // Avvia il timer
+        countDownTimer.start();
 
         Log.d("AcquirenteMainActivity" , "La mail è " + email + ", il tipoUtente è: " + tipoUtente);
 
@@ -161,6 +186,58 @@ public class AcquirenteMainActivity extends GestoreComuniImplementazioni {
         }
     }
 
-
+public void handleGetNumeroNotifiche(int numero){
+        if(controlloIniziale){
+            this.numeroNotifiche = numero;
+            controlloIniziale = false;
+            Log.d("handleGetNumeroNotifiche", "controllo inizale, numero = " + numero + ", numero notifiche= " + numeroNotifiche);
+        }else{
+            Log.d("handleGetNumeroNotifiche", "controllo, numero: "+ numero + ", num notifich: " + numeroNotifiche);
+            if(numero>numeroNotifiche){
+                int notificheNuove = numero - numeroNotifiche;
+                PopUpNotificaRicevuta popUpNotificaRicevuta = new PopUpNotificaRicevuta(AcquirenteMainActivity.this,notificheNuove,email,tipoUtente);
+                popUpNotificaRicevuta.show();
+                numeroNotifiche = numero;
+                Log.d("Numero notifiche in handle" , " Notifiche: " + numeroNotifiche );
+            }else{
+                this.numeroNotifiche = numero;
+                Log.d("Numero notifiche in handle" , " Notifiche resettate : " + numeroNotifiche );
+            }
+        }
+}
+    // questi metodi onPause, onStop, onDestroy e onResume servono a stoppare il timer quando non si è piu su questa schermata e a farlo ricominciare quando si torna
+    @Override
+    protected void onPause() {
+        super.onPause();
+        // Ferma il countDownTimer se è attivo
+        if (countDownTimer != null) {
+            countDownTimer.cancel();
+        }
+    }
+    @Override
+    protected void onStop() {
+        super.onStop();
+        // Ferma il countDownTimer se è attivo
+        if (countDownTimer != null) {
+            countDownTimer.cancel();
+        }
+    }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        // Ferma il countDownTimer se è attivo
+        if (countDownTimer != null) {
+            countDownTimer.cancel();
+        }
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        // Ferma il countDownTimer se è attivo
+        if (countDownTimer != null) {
+            countDownTimer.cancel();
+            countDownTimer.start();
+        }
+    }
 
 }
