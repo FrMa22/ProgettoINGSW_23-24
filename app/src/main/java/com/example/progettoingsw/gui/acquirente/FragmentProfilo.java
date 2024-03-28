@@ -132,6 +132,7 @@ public class FragmentProfilo extends Fragment{
                 System.out.println("le aste oooh");
                 Intent intent = new Intent(getContext(), LeMieAste.class);
                 intent.putExtra("email", email);
+                intent.putExtra("tipoUtente",tipoUtente);
                 startActivity(intent);
             }
         });
