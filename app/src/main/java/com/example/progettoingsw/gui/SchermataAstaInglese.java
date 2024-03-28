@@ -88,10 +88,11 @@ public class SchermataAstaInglese extends GestoreComuniImplementazioni {
         bottoneBack =  findViewById(R.id.bottoneBackSchermataAstaInglese);
         bottoneBack.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                Intent intent = new Intent(SchermataAstaInglese.this, AcquirenteMainActivity.class);//test del login
-                intent.putExtra("email", email);
-                intent.putExtra("tipoUtente", tipoUtente);
-                startActivity(intent);
+//                Intent intent = new Intent(SchermataAstaInglese.this, AcquirenteMainActivity.class);//test del login
+//                intent.putExtra("email", email);
+//                intent.putExtra("tipoUtente", tipoUtente);
+//                startActivity(intent);
+                onBackPressed();
             }
         });
 
@@ -197,6 +198,11 @@ public class SchermataAstaInglese extends GestoreComuniImplementazioni {
             // Imposta l'immagine solo se non è nulla
             if (astaIngleseItem.getImmagine() != null) {
                 imageViewProdotto.setImageBitmap(astaIngleseItem.getImmagine());
+            }
+            if (astaIngleseItem.getCondizione().equals("chiusa")) {
+                bottoneNuovaOfferta.setVisibility(View.INVISIBLE);
+                countDownTimer.cancel();
+                textViewIntervalloOfferte.setText("Asta chiusa.");
             }
 
         } else {

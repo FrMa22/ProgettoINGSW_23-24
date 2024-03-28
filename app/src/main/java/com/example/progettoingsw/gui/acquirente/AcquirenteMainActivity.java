@@ -1,243 +1,243 @@
-package com.example.progettoingsw.gui.acquirente;
+    package com.example.progettoingsw.gui.acquirente;
 
-import androidx.fragment.app.Fragment;
+    import androidx.fragment.app.Fragment;
 
-import android.os.Bundle;
-import android.os.CountDownTimer;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.widget.Toast;
+    import android.os.Bundle;
+    import android.os.CountDownTimer;
+    import android.util.Log;
+    import android.view.Menu;
+    import android.view.MenuItem;
+    import android.widget.Toast;
 
-import com.example.progettoingsw.DAO.NotificheDAO;
-import com.example.progettoingsw.R;
-import com.example.progettoingsw.classe_da_estendere.GestoreComuniImplementazioni;
-import com.example.progettoingsw.gui.PopUpNotificaRicevuta;
-import com.example.progettoingsw.gui.venditore.VenditorePopUpCreaAsta;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-public class AcquirenteMainActivity extends GestoreComuniImplementazioni {
+    import com.example.progettoingsw.DAO.NotificheDAO;
+    import com.example.progettoingsw.R;
+    import com.example.progettoingsw.classe_da_estendere.GestoreComuniImplementazioni;
+    import com.example.progettoingsw.gui.PopUpNotificaRicevuta;
+    import com.example.progettoingsw.gui.venditore.VenditorePopUpCreaAsta;
+    import com.google.android.material.bottomnavigation.BottomNavigationView;
+    public class AcquirenteMainActivity extends GestoreComuniImplementazioni {
 
-    private BottomNavigationView bottomNavigationView;
-    private String email;
-    private String tipoUtente;
-    private CountDownTimer countDownTimer;
-    private int numeroNotifiche;
-    private int numeroNotificheChecked;
-    private boolean controlloIniziale = true;
-
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.acquirente_activity_main);
-        bottomNavigationView = findViewById(R.id.acquirente_nav_view);
-
-        email = getIntent().getStringExtra("email");
-        tipoUtente = getIntent().getStringExtra("tipoUtente");
-        NotificheDAO notificheDAO = new NotificheDAO(this,email,tipoUtente);
-        notificheDAO.openConnection();
-        notificheDAO.checkNotifiche();
-
-        countDownTimer = new CountDownTimer(5000, 1000) {
-            public void onTick(long millisUntilFinished) {
-                // Stampa il numero di secondi rimanenti
-                Log.d("Timer inglese", "Secondi mancanti: " + millisUntilFinished / 1000);
-            }
-            public void onFinish() {
-                Log.d("Timer inglese", "Timer scaduto");
-                notificheDAO.checkNotifiche();
-                start();
-            }
-        };
-        // Avvia il timer
-        countDownTimer.start();
-
-        Log.d("AcquirenteMainActivity" , "La mail è " + email + ", il tipoUtente è: " + tipoUtente);
-
-        // Impostazione del Fragment iniziale
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_container, new AcquirenteFragmentHome(email, tipoUtente))
-                    .commit();
+        private BottomNavigationView bottomNavigationView;
+        private String email;
+        private String tipoUtente;
+        private CountDownTimer countDownTimer;
+        private int numeroNotifiche;
+        private int numeroNotificheChecked;
+        private boolean controlloIniziale = true;
 
 
-        bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
-            Fragment selectedFragment;
+        @Override
+        protected void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.acquirente_activity_main);
+            bottomNavigationView = findViewById(R.id.acquirente_nav_view);
 
-            // Imposta il fragment di default (potrebbe essere il fragment corrente)
-            Fragment currentFragment =(Fragment) getSupportFragmentManager().findFragmentById(R.id.fragment_container);
-            selectedFragment = (currentFragment != null) ? currentFragment : new AcquirenteFragmentHome(email, tipoUtente);
+            email = getIntent().getStringExtra("email");
+            tipoUtente = getIntent().getStringExtra("tipoUtente");
+            NotificheDAO notificheDAO = new NotificheDAO(this,email,tipoUtente);
+            notificheDAO.openConnection();
+            notificheDAO.checkNotifiche();
 
-            if (item.getItemId() == R.id.action_home) {
-                Log.d("BottomNav", "Selected Home");
-                item.setIcon(R.drawable.ic_home);
-                resetOtherIcons(bottomNavigationView, item);
-                selectedFragment = new AcquirenteFragmentHome(email, tipoUtente);
-            } else if (item.getItemId() == R.id.action_categories) {
-                item.setIcon(R.drawable.ic_categorie);
-                resetOtherIcons(bottomNavigationView, item);
-                Log.d("BottomNav", "Selected Categories");
-                selectedFragment = new AcquirenteFragmentSelezioneCategorie(email, tipoUtente);
-            } else if (item.getItemId() == R.id.action_crea_asta) {
-                Log.d("BottomNav", "Selected Crea Asta");
-                item.setIcon(R.drawable.ic_plus);
-                resetOtherIcons(bottomNavigationView, item);
-                if(tipoUtente.equals("acquirente")){
-                    resetOtherIcons(bottomNavigationView, item);
-                    selectedFragment = new AcquirenteAstaInversa(email);
-                }else{
-                    VenditorePopUpCreaAsta popAsta  = new VenditorePopUpCreaAsta(AcquirenteMainActivity.this,email,tipoUtente);
-                    popAsta.show();
+            countDownTimer = new CountDownTimer(5000, 1000) {
+                public void onTick(long millisUntilFinished) {
+                    // Stampa il numero di secondi rimanenti
+                    Log.d("Timer main activity", "Secondi mancanti: " + millisUntilFinished / 1000);
                 }
-            } else if (item.getItemId() == R.id.action_search) {
-                Log.d("BottomNav", "Selected Search");
-                item.setIcon(R.drawable.ic_search);
-                resetOtherIcons(bottomNavigationView, item);
-                selectedFragment = new AcquirenteFragmentRicercaAsta(email ,tipoUtente);
-            } else if (item.getItemId() == R.id.action_profile) {
-                Log.d("BottomNav", "Selected Profile");
-                item.setIcon(R.drawable.ic_profilo);
-                resetOtherIcons(bottomNavigationView, item);
-                selectedFragment = new FragmentProfilo(email,tipoUtente);
-            }
+                public void onFinish() {
+                    Log.d("Timer main activity", "Timer scaduto");
+                    notificheDAO.checkNotifiche();
+                    start();
+                }
+            };
+            // Avvia il timer
+            countDownTimer.start();
 
+            Log.d("AcquirenteMainActivity" , "La mail è " + email + ", il tipoUtente è: " + tipoUtente);
+
+            // Impostazione del Fragment iniziale
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_container, new AcquirenteFragmentHome(email, tipoUtente))
+                        .commit();
+
+
+            bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
+                Fragment selectedFragment;
+
+                // Imposta il fragment di default (potrebbe essere il fragment corrente)
+                Fragment currentFragment =(Fragment) getSupportFragmentManager().findFragmentById(R.id.fragment_container);
+                selectedFragment = (currentFragment != null) ? currentFragment : new AcquirenteFragmentHome(email, tipoUtente);
+
+                if (item.getItemId() == R.id.action_home) {
+                    Log.d("BottomNav", "Selected Home");
+                    item.setIcon(R.drawable.ic_home);
+                    resetOtherIcons(bottomNavigationView, item);
+                    selectedFragment = new AcquirenteFragmentHome(email, tipoUtente);
+                } else if (item.getItemId() == R.id.action_categories) {
+                    item.setIcon(R.drawable.ic_categorie);
+                    resetOtherIcons(bottomNavigationView, item);
+                    Log.d("BottomNav", "Selected Categories");
+                    selectedFragment = new AcquirenteFragmentSelezioneCategorie(email, tipoUtente);
+                } else if (item.getItemId() == R.id.action_crea_asta) {
+                    Log.d("BottomNav", "Selected Crea Asta");
+                    item.setIcon(R.drawable.ic_plus);
+                    resetOtherIcons(bottomNavigationView, item);
+                    if(tipoUtente.equals("acquirente")){
+                        resetOtherIcons(bottomNavigationView, item);
+                        selectedFragment = new AcquirenteAstaInversa(email);
+                    }else{
+                        VenditorePopUpCreaAsta popAsta  = new VenditorePopUpCreaAsta(AcquirenteMainActivity.this,email,tipoUtente);
+                        popAsta.show();
+                    }
+                } else if (item.getItemId() == R.id.action_search) {
+                    Log.d("BottomNav", "Selected Search");
+                    item.setIcon(R.drawable.ic_search);
+                    resetOtherIcons(bottomNavigationView, item);
+                    selectedFragment = new AcquirenteFragmentRicercaAsta(email ,tipoUtente);
+                } else if (item.getItemId() == R.id.action_profile) {
+                    Log.d("BottomNav", "Selected Profile");
+                    item.setIcon(R.drawable.ic_profilo);
+                    resetOtherIcons(bottomNavigationView, item);
+                    selectedFragment = new FragmentProfilo(email,tipoUtente);
+                }
+
+                // Controlla se il fragment corrente è già quello selezionato
+                if (currentFragment != null && currentFragment.getClass().equals(selectedFragment.getClass())) {
+                    // Non fare nulla se il fragment corrente è già quello selezionato
+                    Log.d("BottomNav", "Fragment already selected");
+                    return true;
+                }
+
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_container, selectedFragment)
+                        .commit();
+
+                return true;
+            });
+        }
+
+        public void enableBottomNavigationView(boolean enabled) {
+            Log.d("enable" , "preso comando : " + enabled);
+            bottomNavigationView.getMenu().getItem(0).setEnabled(enabled);
+            bottomNavigationView.getMenu().getItem(1).setEnabled(enabled);
+            bottomNavigationView.getMenu().getItem(2).setEnabled(enabled);
+            bottomNavigationView.getMenu().getItem(3).setEnabled(enabled);
+            bottomNavigationView.getMenu().getItem(4).setEnabled(enabled);
+
+        }
+        // Metodo per resettare le icone degli elementi della BottomNavigationView
+        private void resetOtherIcons(BottomNavigationView bottomNavigationView, MenuItem selectedItem) {
+            Menu menu = bottomNavigationView.getMenu();
+            for (int i = 0; i < menu.size(); i++) {
+                MenuItem item = menu.getItem(i);
+                if (item != selectedItem) {
+                    item.setIcon(getIconResource(item.getItemId()));
+                }
+            }
+        }
+
+        // Metodo per ottenere l'icona predefinita in base all'ID dell'elemento del menu
+        private int getIconResource(int itemId) {
+            if (itemId == R.id.action_home) {
+                return R.drawable.ic_home_vuota;
+            } else if (itemId == R.id.action_categories) {
+                return R.drawable.ic_categorie_vuota;
+            } else if (itemId == R.id.action_crea_asta) {
+                return R.drawable.ic_plus_vuota;
+            } else if (itemId == R.id.action_search) {
+                return R.drawable.ic_search_vuota;
+            } else if (itemId == R.id.action_profile) {
+                return R.drawable.ic_profilo_vuoto;
+            } else {
+                return 0;
+            }
+        }
+        public void navigateToFragmentAndSelectIcon(Fragment fragment) {
             // Controlla se il fragment corrente è già quello selezionato
-            if (currentFragment != null && currentFragment.getClass().equals(selectedFragment.getClass())) {
+            Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
+            if (currentFragment != null && currentFragment.getClass().equals(fragment.getClass())) {
                 // Non fare nulla se il fragment corrente è già quello selezionato
                 Log.d("BottomNav", "Fragment already selected");
-                return true;
+                return;
             }
 
+            // Imposta il nuovo fragment
             getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_container, selectedFragment)
+                    .replace(R.id.fragment_container, fragment)
                     .commit();
 
-            return true;
-        });
-    }
+            // Imposta l'icona corrispondente nella BottomNavigationView
+            MenuItem menuItem = null;
+            if (fragment instanceof AcquirenteFragmentHome) {
+                menuItem = bottomNavigationView.getMenu().findItem(R.id.action_home);
+            } else if (fragment instanceof AcquirenteFragmentSelezioneCategorie) {
+                menuItem = bottomNavigationView.getMenu().findItem(R.id.action_categories);
+            } else if (fragment instanceof AcquirenteAstaInversa) {
+                menuItem = bottomNavigationView.getMenu().findItem(R.id.action_crea_asta);
+            } else if (fragment instanceof AcquirenteFragmentRicercaAsta) {
+                menuItem = bottomNavigationView.getMenu().findItem(R.id.action_search);
+            } else if (fragment instanceof FragmentProfilo) {
+                menuItem = bottomNavigationView.getMenu().findItem(R.id.action_profile);
+            }
 
-    public void enableBottomNavigationView(boolean enabled) {
-        Log.d("enable" , "preso comando : " + enabled);
-        bottomNavigationView.getMenu().getItem(0).setEnabled(enabled);
-        bottomNavigationView.getMenu().getItem(1).setEnabled(enabled);
-        bottomNavigationView.getMenu().getItem(2).setEnabled(enabled);
-        bottomNavigationView.getMenu().getItem(3).setEnabled(enabled);
-        bottomNavigationView.getMenu().getItem(4).setEnabled(enabled);
-
-    }
-    // Metodo per resettare le icone degli elementi della BottomNavigationView
-    private void resetOtherIcons(BottomNavigationView bottomNavigationView, MenuItem selectedItem) {
-        Menu menu = bottomNavigationView.getMenu();
-        for (int i = 0; i < menu.size(); i++) {
-            MenuItem item = menu.getItem(i);
-            if (item != selectedItem) {
-                item.setIcon(getIconResource(item.getItemId()));
+            // Se l'elemento di menu corrispondente è stato trovato, imposta l'elemento come selezionato
+            if (menuItem != null) {
+                menuItem.setChecked(true);
+                resetOtherIcons(bottomNavigationView, menuItem);
             }
         }
-    }
 
-    // Metodo per ottenere l'icona predefinita in base all'ID dell'elemento del menu
-    private int getIconResource(int itemId) {
-        if (itemId == R.id.action_home) {
-            return R.drawable.ic_home_vuota;
-        } else if (itemId == R.id.action_categories) {
-            return R.drawable.ic_categorie_vuota;
-        } else if (itemId == R.id.action_crea_asta) {
-            return R.drawable.ic_plus_vuota;
-        } else if (itemId == R.id.action_search) {
-            return R.drawable.ic_search_vuota;
-        } else if (itemId == R.id.action_profile) {
-            return R.drawable.ic_profilo_vuoto;
-        } else {
-            return 0;
-        }
-    }
-    public void navigateToFragmentAndSelectIcon(Fragment fragment) {
-        // Controlla se il fragment corrente è già quello selezionato
-        Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
-        if (currentFragment != null && currentFragment.getClass().equals(fragment.getClass())) {
-            // Non fare nulla se il fragment corrente è già quello selezionato
-            Log.d("BottomNav", "Fragment already selected");
-            return;
-        }
-
-        // Imposta il nuovo fragment
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragment_container, fragment)
-                .commit();
-
-        // Imposta l'icona corrispondente nella BottomNavigationView
-        MenuItem menuItem = null;
-        if (fragment instanceof AcquirenteFragmentHome) {
-            menuItem = bottomNavigationView.getMenu().findItem(R.id.action_home);
-        } else if (fragment instanceof AcquirenteFragmentSelezioneCategorie) {
-            menuItem = bottomNavigationView.getMenu().findItem(R.id.action_categories);
-        } else if (fragment instanceof AcquirenteAstaInversa) {
-            menuItem = bottomNavigationView.getMenu().findItem(R.id.action_crea_asta);
-        } else if (fragment instanceof AcquirenteFragmentRicercaAsta) {
-            menuItem = bottomNavigationView.getMenu().findItem(R.id.action_search);
-        } else if (fragment instanceof FragmentProfilo) {
-            menuItem = bottomNavigationView.getMenu().findItem(R.id.action_profile);
-        }
-
-        // Se l'elemento di menu corrispondente è stato trovato, imposta l'elemento come selezionato
-        if (menuItem != null) {
-            menuItem.setChecked(true);
-            resetOtherIcons(bottomNavigationView, menuItem);
-        }
-    }
-
-public void handleGetNumeroNotifiche(int numero){
-        if(controlloIniziale){
-            this.numeroNotifiche = numero;
-            controlloIniziale = false;
-            Log.d("handleGetNumeroNotifiche", "controllo inizale, numero = " + numero + ", numero notifiche= " + numeroNotifiche);
-        }else{
-            Log.d("handleGetNumeroNotifiche", "controllo, numero: "+ numero + ", num notifich: " + numeroNotifiche);
-            if(numero>numeroNotifiche){
-                int notificheNuove = numero - numeroNotifiche;
-                PopUpNotificaRicevuta popUpNotificaRicevuta = new PopUpNotificaRicevuta(AcquirenteMainActivity.this,notificheNuove,email,tipoUtente);
-                popUpNotificaRicevuta.show();
-                numeroNotifiche = numero;
-                Log.d("Numero notifiche in handle" , " Notifiche: " + numeroNotifiche );
-            }else{
+    public void handleGetNumeroNotifiche(int numero){
+            if(controlloIniziale){
                 this.numeroNotifiche = numero;
-                Log.d("Numero notifiche in handle" , " Notifiche resettate : " + numeroNotifiche );
+                controlloIniziale = false;
+                Log.d("handleGetNumeroNotifiche", "controllo inizale, numero = " + numero + ", numero notifiche= " + numeroNotifiche);
+            }else{
+                Log.d("handleGetNumeroNotifiche", "controllo, numero: "+ numero + ", num notifich: " + numeroNotifiche);
+                if(numero>numeroNotifiche){
+                    int notificheNuove = numero - numeroNotifiche;
+                    PopUpNotificaRicevuta popUpNotificaRicevuta = new PopUpNotificaRicevuta(AcquirenteMainActivity.this,notificheNuove,email,tipoUtente);
+                    popUpNotificaRicevuta.show();
+                    numeroNotifiche = numero;
+                    Log.d("Numero notifiche in handle" , " Notifiche: " + numeroNotifiche );
+                }else{
+                    this.numeroNotifiche = numero;
+                    Log.d("Numero notifiche in handle" , " Notifiche resettate : " + numeroNotifiche );
+                }
+            }
+    }
+        // questi metodi onPause, onStop, onDestroy e onResume servono a stoppare il timer quando non si è piu su questa schermata e a farlo ricominciare quando si torna
+        @Override
+        protected void onPause() {
+            super.onPause();
+            // Ferma il countDownTimer se è attivo
+            if (countDownTimer != null) {
+                countDownTimer.cancel();
             }
         }
-}
-    // questi metodi onPause, onStop, onDestroy e onResume servono a stoppare il timer quando non si è piu su questa schermata e a farlo ricominciare quando si torna
-    @Override
-    protected void onPause() {
-        super.onPause();
-        // Ferma il countDownTimer se è attivo
-        if (countDownTimer != null) {
-            countDownTimer.cancel();
+        @Override
+        protected void onStop() {
+            super.onStop();
+            // Ferma il countDownTimer se è attivo
+            if (countDownTimer != null) {
+                countDownTimer.cancel();
+            }
         }
-    }
-    @Override
-    protected void onStop() {
-        super.onStop();
-        // Ferma il countDownTimer se è attivo
-        if (countDownTimer != null) {
-            countDownTimer.cancel();
+        @Override
+        protected void onDestroy() {
+            super.onDestroy();
+            // Ferma il countDownTimer se è attivo
+            if (countDownTimer != null) {
+                countDownTimer.cancel();
+            }
         }
-    }
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        // Ferma il countDownTimer se è attivo
-        if (countDownTimer != null) {
-            countDownTimer.cancel();
+        @Override
+        public void onResume() {
+            super.onResume();
+            // Ferma il countDownTimer se è attivo
+            if (countDownTimer != null) {
+                countDownTimer.cancel();
+                countDownTimer.start();
+            }
         }
-    }
-    @Override
-    public void onResume() {
-        super.onResume();
-        // Ferma il countDownTimer se è attivo
-        if (countDownTimer != null) {
-            countDownTimer.cancel();
-            countDownTimer.start();
-        }
-    }
 
-}
+    }

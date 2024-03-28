@@ -13,6 +13,8 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResult;
@@ -61,12 +63,16 @@ public class VenditoreAstaRibasso extends GestoreComuniImplementazioni {
     ImageButton bottoneInserisciImmagine;
     private MaterialButton bottoneCategorieAstaRibasso;
     private String email;
+    private ProgressBar progressBarVenditoreAstaRibasso;
+    private RelativeLayout relativeLayoutAstaRibasso;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.venditore_asta_ribasso);
         AstaRibassoDAO astaRibassoDao = new AstaRibassoDAO(VenditoreAstaRibasso.this);
 
+        progressBarVenditoreAstaRibasso = findViewById(R.id.progressBarVenditoreAstaRibasso);
+        relativeLayoutAstaRibasso = findViewById(R.id.relativeLayoutAstaRibasso);
         listaCategorieScelte = new ArrayList<>();
         button_info_asta_Ribasso = findViewById(R.id.button_info_asta_Ribasso);
         bottoneConferma =  findViewById(R.id.bottoneConfermaAstaRibasso);
@@ -109,7 +115,9 @@ public class VenditoreAstaRibasso extends GestoreComuniImplementazioni {
                 String soglia=sogliaDecremento.getText().toString();
                 String min=prezzominimoAsta.getText().toString();
 
-                // Chiamata al metodo per creare l'asta nel database
+                // Chiamata al metodo per creare l'asta nel databas
+                progressBarVenditoreAstaRibasso.setVisibility(View.VISIBLE);
+                setAllClickable(relativeLayoutAstaRibasso,false);
                 astaRibassoDao.openConnection();
                 astaRibassoDao.creaAstaRibasso(base,intervallo,soglia,min,nomeProdotto,descrizioneProdotto,email,img);
                 astaRibassoDao.closeConnection();
@@ -232,6 +240,9 @@ public class VenditoreAstaRibasso extends GestoreComuniImplementazioni {
         intent.putExtra("email", email);
         intent.putExtra("tipoUtente", "venditore");
         startActivity(intent);
+        progressBarVenditoreAstaRibasso.setVisibility(View.VISIBLE);
+        setAllClickable(relativeLayoutAstaRibasso,false);
+        Toast.makeText(this, "Asta creata con successo!", Toast.LENGTH_SHORT).show();
 //        AppCompatActivity activity = (AppCompatActivity) VenditoreAstaRibasso.this;
 //        Fragment fragment = new AcquirenteFragmentHome(email, "venditore");
 //        ((AcquirenteMainActivity) activity).navigateToFragmentAndSelectIcon(fragment);

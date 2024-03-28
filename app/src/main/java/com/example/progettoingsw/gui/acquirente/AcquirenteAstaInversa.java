@@ -36,6 +36,7 @@ import com.example.progettoingsw.R;
 
 import com.example.progettoingsw.DAO.AstaInversaDAO;
 import com.example.progettoingsw.controllers_package.InsertAsta;
+import com.example.progettoingsw.gui.RegistrazioneCategorie;
 import com.google.android.material.button.MaterialButton;
 
 import java.io.ByteArrayOutputStream;
@@ -149,18 +150,21 @@ public class AcquirenteAstaInversa extends Fragment {
                 // Chiamata al metodo per creare l'asta nel database
                 astaInversaDao.openConnection();
                 astaInversaDao.creaAstaInversa(nome,prezzo,data,ora,descrizione,email,imageBytes,listaCategorieScelte);
-
                 AppCompatActivity activity = (AppCompatActivity) requireContext();
-                Fragment fragment = new AcquirenteFragmentHome(email, "acquirente");
-                ((AcquirenteMainActivity) activity).navigateToFragmentAndSelectIcon(fragment);
+
+                Intent intent = new Intent(getContext(), AcquirenteMainActivity.class);//test del login
+                intent.putExtra("email", email);
+                intent.putExtra("tipoUtente", "acquirente");
+                startActivity(intent);
             }
         });
         bottoneAnnullaAstaInversa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AppCompatActivity activity = (AppCompatActivity) requireContext();
-                Fragment fragment = new AcquirenteFragmentHome(email, "acquirente");
-                ((AcquirenteMainActivity) activity).navigateToFragmentAndSelectIcon(fragment);
+                Intent intent = new Intent(getContext(), AcquirenteMainActivity.class);//test del login
+                intent.putExtra("email", email);
+                intent.putExtra("tipoUtente", "acquirente");
+                startActivity(intent);
             }
         });
 
@@ -290,8 +294,10 @@ public class AcquirenteAstaInversa extends Fragment {
         }else{
             astaInversaDAO.closeConnection();
         }
-        AppCompatActivity activity = (AppCompatActivity) requireContext();
-        Fragment fragment = new AcquirenteFragmentHome(email, "acquirente");
-        ((AcquirenteMainActivity) activity).navigateToFragmentAndSelectIcon(fragment);
+
+        Intent intent = new Intent(getContext(), AcquirenteMainActivity.class);//test del login
+        intent.putExtra("email", email);
+        intent.putExtra("tipoUtente", "acquirente");
+        startActivity(intent);
     }
 }

@@ -75,17 +75,16 @@ public class SchermataAstaInversa extends GestoreComuniImplementazioni {
                 astaInversaDAO.getPrezzoECondizioneAstaByID(id);
             }
         };
-        Log.d("timer ", "inizia");
-        countDownTimer.start();
 
         bottoneBack =  findViewById(R.id.bottoneBackSchermataAstaInversa);
 
         bottoneBack.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                Intent intent = new Intent(SchermataAstaInversa.this, AcquirenteMainActivity.class);//test del login
-                intent.putExtra("email", email);
-                intent.putExtra("tipoUtente", tipoUtente);
-                startActivity(intent);
+//                Intent intent = new Intent(SchermataAstaInversa.this, AcquirenteMainActivity.class);//test del login
+//                intent.putExtra("email", email);
+//                intent.putExtra("tipoUtente", tipoUtente);
+//                startActivity(intent);
+                onBackPressed();
             }
         });
 
@@ -162,15 +161,26 @@ public class SchermataAstaInversa extends GestoreComuniImplementazioni {
             if (astaInversaItem.getImmagine() != null) {
                 ImageViewSchermataAstaInversa.setImageBitmap(astaInversaItem.getImmagine());
             }
-            // Altri dati da impostare...
+            if (astaInversaItem.getCondizione().equals("chiusa")) {
+                bottoneOffertaSchermataAstaInversa.setVisibility(View.INVISIBLE);
+                if(countDownTimer != null){
+                    countDownTimer.cancel();
+                }
+            }else{
+                if(countDownTimer!=null) {
+                    countDownTimer.cancel();
+                    countDownTimer.start();
+                }
+            }
+
+            progress_bar_schermata_asta_inversa.setVisibility(View.GONE);
+            setAllClickable(relativeLayoutSchermataAstaInversa, true);
         } else {
             // Gestisci il caso in cui non ci siano dati recuperati
             Log.d("Errore", "Impossibile recuperare i dati dell'asta");
         }
-        progress_bar_schermata_asta_inversa.setVisibility(View.GONE);
-        setAllClickable(relativeLayoutSchermataAstaInversa,true);
-
     }
+
     public void setPrezzo(Integer prezzoNuovo){
         textViewPrezzoAttualeSchermataAstaInversa.setText(Integer.toString(prezzoNuovo));
     }
@@ -179,11 +189,16 @@ public class SchermataAstaInversa extends GestoreComuniImplementazioni {
             textViewPrezzoAttualeSchermataAstaInversa.setText(prezzo_aggiornato);
             // Resetta il timer per farlo ripartire da 10 secondi
             Log.d("timer ", "cancello e faccio iniziare");
-            countDownTimer.cancel();
-            countDownTimer.start();
+            if(countDownTimer != null) {
+                countDownTimer.cancel();
+                countDownTimer.start();
+            }
         }else{
             Toast.makeText(this, "Accidenti! L'asta si è conclusa", Toast.LENGTH_SHORT).show();
-            bottoneBack.callOnClick();
+            bottoneOffertaSchermataAstaInversa.setVisibility(View.INVISIBLE);
+            if(countDownTimer != null){
+                countDownTimer.cancel();
+            }
         }
 
     }

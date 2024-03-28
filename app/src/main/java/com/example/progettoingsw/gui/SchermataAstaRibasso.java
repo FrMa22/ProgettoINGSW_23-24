@@ -47,7 +47,6 @@ public class SchermataAstaRibasso extends GestoreComuniImplementazioni {
     TextView textViewOffertaAttuale;
     TextView textViewVenditore;
     private AstaRibassoDAO astaRibassoDAO;
-    private CountDownTimer countDownTimer;
     private CountDownTimer countDownTimerControlloOgni10sec;
 
     @Override
@@ -85,16 +84,15 @@ public class SchermataAstaRibasso extends GestoreComuniImplementazioni {
                 start();
             }
         };
-        // Avvia il timer
-        countDownTimerControlloOgni10sec.start();
 
         bottoneBack =  findViewById(R.id.bottoneBackSchermataAstaRibasso);
         bottoneBack.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                Intent intent = new Intent(SchermataAstaRibasso.this, AcquirenteMainActivity.class);//test del login
-                intent.putExtra("email", email);
-                intent.putExtra("tipoUtente", tipoUtente);
-                startActivity(intent);
+//                Intent intent = new Intent(SchermataAstaRibasso.this, AcquirenteMainActivity.class);//test del login
+//                intent.putExtra("email", email);
+//                intent.putExtra("tipoUtente", tipoUtente);
+//                startActivity(intent);
+                onBackPressed();
             }
         });
 
@@ -152,7 +150,7 @@ public class SchermataAstaRibasso extends GestoreComuniImplementazioni {
                 startActivity(intent);
             }
         });
-        astaRibassoDAO.recuperaInfoAsta(id);
+        //astaRibassoDAO.recuperaInfoAsta(id);
 
 
 
@@ -165,45 +163,52 @@ public class SchermataAstaRibasso extends GestoreComuniImplementazioni {
             textViewDescrizione.setText(astaRibassoItem.getDescrizione());
             textViewOffertaAttuale.setText(String.valueOf(astaRibassoItem.getPrezzoAttuale()));
 
-            long orarioAttuale = System.currentTimeMillis();
-            long intervalloMillisecondi = convertiIntervallo(astaRibassoItem.getIntervalloDecrementale());
-            long prossimoDecremento = orarioAttuale + intervalloMillisecondi;
-            String orarioProssimoDecremento = convertiOrario(prossimoDecremento);
-            // Imposta l'orario del prossimo decremento nel TextView
-            textViewProssimoDecremento.setText(orarioProssimoDecremento);
-
             textViewVenditore.setText(astaRibassoItem.getEmailVenditore());
             // Imposta l'immagine solo se non è nulla
             if (astaRibassoItem.getImmagine() != null) {
                 imageViewProdotto.setImageBitmap(astaRibassoItem.getImmagine());
             }
-            progress_bar_schermata_asta_ribasso.setVisibility(View.GONE);
-            setAllClickable(linearLayoutSchermataAstaRibasso, true);
+            if (astaRibassoItem.getCondizione().equals("chiusa")) {
+                bottoneNuovaOfferta.setVisibility(View.INVISIBLE);
+                textViewProssimoDecremento.setText("Asta chiusa.");
+                countDownTimerControlloOgni10sec.cancel();
+            }else{
+                long orarioAttuale = System.currentTimeMillis();
+                long intervalloMillisecondi = convertiIntervallo(astaRibassoItem.getIntervalloDecrementale());
+                long prossimoDecremento = orarioAttuale + intervalloMillisecondi;
+                String orarioProssimoDecremento = convertiOrario(prossimoDecremento);
+                // Imposta l'orario del prossimo decremento nel TextView
+                textViewProssimoDecremento.setText(orarioProssimoDecremento);
+                if (countDownTimerControlloOgni10sec != null) {
+                    countDownTimerControlloOgni10sec.cancel();
+                    countDownTimerControlloOgni10sec.start();
+                }
+            }
+
         } else {
             // Gestisci il caso in cui non ci siano dati recuperati
             Log.d("Errore", "Impossibile recuperare i dati dell'asta");
         }
+        progress_bar_schermata_asta_ribasso.setVisibility(View.GONE);
+        setAllClickable(linearLayoutSchermataAstaRibasso, true);
     }
     public void getPrezzoCondizioneIntervallo(String prezzoAttuale, String condizione, String intervallo) {
         if (condizione.equals("aperta")) {
             textViewOffertaAttuale.setText(prezzoAttuale);
-
+            long orarioAttuale = System.currentTimeMillis();
             long intervalloMillisecondi = convertiIntervallo(intervallo);
-            // Avvia il timer
-            countDownTimer = new CountDownTimer(intervalloMillisecondi, 1000) {
-                public void onTick(long millisUntilFinished) {
-                    // Il timer sta andando avanti, non è necessario fare nulla qui
-                    Log.d("Timer locale ribasso", "Tempo rimanente: " + millisUntilFinished / 1000 + " secondi");
-                }
-                public void onFinish() {
-                    Log.d("Timer locale ribasso", "Timer scaduto");
-                    astaRibassoDAO.getAstaRibassoByID(id);
-                }
-            };
-            countDownTimer.start();
+            long prossimoDecremento = orarioAttuale + intervalloMillisecondi;
+            String orarioProssimoDecremento = convertiOrario(prossimoDecremento);
+            // Imposta l'orario del prossimo decremento nel TextView
+            textViewProssimoDecremento.setText(orarioProssimoDecremento);
         } else {
+            textViewProssimoDecremento.setText("Asta chiusa.");
+            if(countDownTimerControlloOgni10sec != null){
+                countDownTimerControlloOgni10sec.cancel();
+            }
+            bottoneNuovaOfferta.setVisibility(View.INVISIBLE);
             Toast.makeText(this, "Accidenti! L'asta si è conclusa", Toast.LENGTH_SHORT).show();
-            bottoneBack.callOnClick();
+            //bottoneBack.callOnClick();
         }
     }
     private long convertiIntervallo(String intervallo) {
@@ -235,10 +240,7 @@ public class SchermataAstaRibasso extends GestoreComuniImplementazioni {
         if (countDownTimerControlloOgni10sec != null) {
             countDownTimerControlloOgni10sec.cancel();
         }
-        // Ferma il countDownTimer se è attivo
-        if (countDownTimer != null) {
-            countDownTimer.cancel();
-        }
+
     }
     @Override
     protected void onStop() {
@@ -247,10 +249,7 @@ public class SchermataAstaRibasso extends GestoreComuniImplementazioni {
         if (countDownTimerControlloOgni10sec != null) {
             countDownTimerControlloOgni10sec.cancel();
         }
-        // Ferma il countDownTimer se è attivo
-        if (countDownTimer != null) {
-            countDownTimer.cancel();
-        }
+
     }
     @Override
     protected void onDestroy() {
@@ -259,24 +258,18 @@ public class SchermataAstaRibasso extends GestoreComuniImplementazioni {
         if (countDownTimerControlloOgni10sec != null) {
             countDownTimerControlloOgni10sec.cancel();
         }
-        // Ferma il countDownTimer se è attivo
-        if (countDownTimer != null) {
-            countDownTimer.cancel();
-        }
+
     }
     @Override
     public void onResume() {
         super.onResume();
         // Avvia nuovamente il countDownTimer
         if (countDownTimerControlloOgni10sec != null) {
+            Log.d("onResume ribasso" ,"timer ");
             countDownTimerControlloOgni10sec.cancel();
             countDownTimerControlloOgni10sec.start();
         }
-        // Ferma il countDownTimer se è attivo
-        if (countDownTimer != null) {
-            countDownTimer.cancel();
-            countDownTimer.start();
-        }
+
     }
 
 

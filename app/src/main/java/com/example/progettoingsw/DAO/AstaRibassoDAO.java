@@ -81,7 +81,7 @@ public class AstaRibassoDAO {
                     String action = strings[0];
                     if (action.equals("open")) {
                         connection = DatabaseHelper.getConnection();
-                        return -1; // Connessione aperta con successo, non restituisce alcun ID
+                        return 0; // Connessione aperta con successo, non restituisce alcun ID
                     } else if (action.equals("insert")) {
                         if (connection != null && !connection.isClosed()) {
                            // Statement statement = connection.createStatement();
@@ -122,31 +122,37 @@ public class AstaRibassoDAO {
                                 return -1; // Nessun ID generato
                             }
                         } else {
+                            Log.d("DatabaseTask AstaRibasso", "Impossibile inserire l'asta: connessione non aperta");
                             return -1; // Impossibile inserire l'asta: connessione non aperta
                         }
                     } else if (action.equals("close")) {
                         if (connection != null && !connection.isClosed()) {
                             connection.close();
-                            return -1; // Connessione chiusa con successo, non restituisce alcun ID
+                            return 0; // Connessione chiusa con successo, non restituisce alcun ID
                         } else {
+                            Log.d("DatabaseTask AstaRibasso", " Connessione già chiusa, non restituisce alcun ID");
                             return -1; // Connessione già chiusa, non restituisce alcun ID
                         }
                     }
                 }
+                Log.d("DatabaseTask AstaRibasso", " Azione non supportata o nessun parametro fornito");
                 return -1; // Azione non supportata o nessun parametro fornito
             } catch (Exception e) {
                 e.printStackTrace();
+                Log.d("DatabaseTask AstaRibasso", "Errore durante l'operazione, non restituisce alcun ID");
                 return -1; // Errore durante l'operazione, non restituisce alcun ID
             }
         }
 
         @Override
         protected void onPostExecute(Integer generatedId) {
-            if (generatedId != -1) {
+            if (generatedId != -1 && generatedId != 0) {
                 Log.d("ID", "L id è : " + generatedId);
                 venditoreAstaRibasso.handleID(generatedId);
-            } else {
-                Log.d("ID", "Errore");
+            } else if(generatedId == 0){
+                Log.d("ID", "tutto ok");
+            }else{
+                Log.d("ID", "errore");
             }
 
         }

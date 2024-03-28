@@ -5,33 +5,58 @@
     android:layout_width="320dp"
     android:layout_height="300dp"
     android:layout_gravity="center"
+    android:orientation="vertical"
     android:background="@drawable/bordo_non_stondato"
     tools:context=".gui.PopUpNotifiche">
 
 
-        <TextView
-            android:id="@+id/textview_titolo_notifica_popup"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_margin="5dp"
-            android:background="@drawable/design_toolbar"
-            android:gravity="center"
-            android:text="*Titolo notifica*"
-            android:textColor="@color/colore_secondario"
-            android:textSize="35sp"
-            android:textStyle="bold" />
-
+    <TextView
+        android:id="@+id/textview_titolo_notifica_popup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:minHeight="40dp"
+        android:maxHeight="60dp"
+        android:background="@drawable/edit_text_top_corners_rounded_grigi"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="*Titolo notifica"
+        android:textColor="@color/colore_secondario"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:ellipsize="end"
+        android:autoSizeTextType="uniform"
+        android:autoSizeMaxTextSize="30sp"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colore_trattino_separatore"
+        android:layout_below="@id/textview_titolo_notifica_popup"
+        android:layout_gravity="center"
+        android:layout_marginTop="-2dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="40dp"
+        />
         <TextView
             android:id="@+id/textview_commento_notifica_popup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/edit_text_bottom_corners_rounded_grigi"
             android:layout_below="@id/textview_titolo_notifica_popup"
             android:layout_gravity="center"
-            android:layout_margin="5dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
             android:gravity="center"
-            android:minHeight="30dp"
+            android:minHeight="100dp"
+            android:maxHeight="180dp"
+            android:padding="10dp"
             android:text="descrizione"
+            android:textSize="24sp"
+            android:autoSizeTextType="uniform"
+            android:autoSizeMaxTextSize="24sp"
             android:textColor="@color/colore_secondario" />
 
         <RelativeLayout

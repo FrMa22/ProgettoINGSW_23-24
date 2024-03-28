@@ -18,6 +18,8 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -70,13 +72,16 @@ public class VenditoreAstaInglese extends GestoreComuniImplementazioni {
     private String selectedDateString;
     private String selectedHourString;
     private MaterialButton bottoneCategorieAstaInglese;
+    private ProgressBar progressBarVenditoreAstaInglese;
+    private RelativeLayout relativeLayoutAstaInglese;
     private String email;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.venditore_asta_inglese);
          controller = new Controller();
-
+        progressBarVenditoreAstaInglese = findViewById(R.id.progressBarVenditoreAstaInglese);
+        relativeLayoutAstaInglese = findViewById(R.id.relativeLayoutAstaInglese);
         AstaIngleseDAO astaIngleseDao = new AstaIngleseDAO(VenditoreAstaInglese.this);
         listaCategorieScelte = new ArrayList<>();
         baseAsta=findViewById(R.id.editTextBaseAstaAstaInglese);
@@ -136,6 +141,8 @@ public class VenditoreAstaInglese extends GestoreComuniImplementazioni {
 
             if(!nomeProdotto.isEmpty() && !base.isEmpty() && !intervallo.isEmpty() && !rialzo.isEmpty()) {
                 // Chiamata al metodo per creare l'asta nel database
+                progressBarVenditoreAstaInglese.setVisibility(View.VISIBLE);
+                setAllClickable(relativeLayoutAstaInglese,false);
                 astaIngleseDao.openConnection();
                 astaIngleseDao.creaAstaInglese(base, intervallo, rialzo, nomeProdotto, descrizioneProdotto, email, img);
             }
@@ -260,6 +267,9 @@ public class VenditoreAstaInglese extends GestoreComuniImplementazioni {
         intent.putExtra("email", email);
         intent.putExtra("tipoUtente", "venditore");
         startActivity(intent);
+        progressBarVenditoreAstaInglese.setVisibility(View.INVISIBLE);
+        setAllClickable(relativeLayoutAstaInglese,true);
+        Toast.makeText(this, "Asta creata con successo!", Toast.LENGTH_SHORT).show();
 //        AppCompatActivity activity = (AppCompatActivity) VenditoreAstaInglese.this;
 //        Fragment fragment = new AcquirenteFragmentHome(email, "venditore");
 //        ((AcquirenteMainActivity) activity).navigateToFragmentAndSelectIcon(fragment);

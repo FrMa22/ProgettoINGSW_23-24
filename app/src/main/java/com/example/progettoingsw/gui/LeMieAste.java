@@ -6,12 +6,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.GridLayout;
 import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import androidx.appcompat.widget.SwitchCompat;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -30,7 +32,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LeMieAste extends GestoreComuniImplementazioni {
-
+    private SwitchCompat switch_compat_aste_attive_nonattive;
     Controller controller;
     private ImageButton bottoneBackLeMieAste;
     private ImageButton preferitiButton;
@@ -53,15 +55,9 @@ public class LeMieAste extends GestoreComuniImplementazioni {
         email = getIntent().getStringExtra("email");
         tipoUtente = getIntent().getStringExtra("tipoUtente");
 
-        //
-        // Inizializza il RecyclerView e imposta l'adapter
         RecyclerView recyclerViewAsteAttive = findViewById(R.id.recyclerViewAsteAttive);
-        // Utilizza LinearLayoutManager con orientamento orizzontale per far si che il recycler sia orizzontale, di default è verticale
-// Utilizza GridLayoutManager con due colonne
         GridLayoutManager gridLayoutManagerAttive = new GridLayoutManager(this, 2, RecyclerView.VERTICAL, false);
         recyclerViewAsteAttive.setLayoutManager(gridLayoutManagerAttive);
-//
-//        // Aggiungi un decorator predefinito per ridurre lo spazio tra le aste, superfluo
         DividerItemDecoration dividerItemDecorationAttive = new DividerItemDecoration(this, gridLayoutManagerAttive.getOrientation());
         recyclerViewAsteAttive.addItemDecoration(dividerItemDecorationAttive);
         astaAdapterAttive.setOnItemClickListener(new View.OnClickListener() {
@@ -102,12 +98,9 @@ public class LeMieAste extends GestoreComuniImplementazioni {
 
         recyclerViewAsteAttive.setAdapter(astaAdapterAttive);
 
-        // Inizializza il RecyclerView e imposta l'adapter
         RecyclerView recyclerViewAsteNonAttive = findViewById(R.id.recyclerViewAsteNonAttive);
-        // Utilizza LinearLayoutManager con orientamento orizzontale per far si che il recycler sia orizzontale, di default è verticale
         GridLayoutManager gridLayoutManagerNonAttive = new GridLayoutManager(this, 2, RecyclerView.VERTICAL, false);
         recyclerViewAsteNonAttive.setLayoutManager(gridLayoutManagerNonAttive);
-//        // Aggiungi un decorator predefinito per ridurre lo spazio tra le aste, superfluo
         DividerItemDecoration dividerItemDecorationNonAttive = new DividerItemDecoration(this, gridLayoutManagerNonAttive.getOrientation());
         recyclerViewAsteNonAttive.addItemDecoration(dividerItemDecorationNonAttive);
         astaAdapterNonAttive.setOnItemClickListener(new View.OnClickListener() {
@@ -159,9 +152,18 @@ public class LeMieAste extends GestoreComuniImplementazioni {
         RadioGroup radioGroup = findViewById(R.id.radioGroupLeMieAste);
         RadioButton btnAttivi = findViewById(R.id.bottoneAttive);
         RadioButton btnNonAttivi = findViewById(R.id.bottoneNonAttive);
-       // GridLayout gridLayoutAttive = findViewById(R.id.gridLayoutAsteAttive);
-       // GridLayout gridLayoutNonAttive = findViewById(R.id.gridLayoutAsteNonAttive);
 
+        switch_compat_aste_attive_nonattive = findViewById(R.id.switch_compat_aste_attive_nonattive);
+        switch_compat_aste_attive_nonattive.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+           @Override
+           public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+               if (isChecked) {
+                   switch_compat_aste_attive_nonattive.setText("Aste non attive");
+               } else {
+                   switch_compat_aste_attive_nonattive.setText("Aste attive");
+               }
+           }
+       });
          lemieAsteDAO = new LeMieAsteDAO(this);
         //di default appena si apre la schermata si è già su aste aperte quindi escono già
         lemieAsteDAO.openConnection();

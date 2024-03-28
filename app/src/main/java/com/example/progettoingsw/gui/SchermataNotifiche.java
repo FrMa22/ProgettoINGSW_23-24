@@ -82,9 +82,9 @@ public class SchermataNotifiche extends AppCompatActivity {
         bottoneBackNotifiche.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent resultIntent = new Intent();
-                resultIntent.putExtra("numeroNotifiche", numeroNotifiche); // Passa il numero di notifiche come extra
-                setResult(Activity.RESULT_OK, resultIntent);
+//                Intent resultIntent = new Intent();
+//                resultIntent.putExtra("numeroNotifiche", numeroNotifiche); // Passa il numero di notifiche come extra
+//                setResult(Activity.RESULT_OK, resultIntent);
                 onBackPressed();
             }
         });
