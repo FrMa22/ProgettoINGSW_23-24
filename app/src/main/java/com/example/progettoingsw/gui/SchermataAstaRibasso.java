@@ -3,6 +3,7 @@ package com.example.progettoingsw.gui;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
@@ -14,7 +15,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.core.content.ContextCompat;
+
 import com.example.progettoingsw.DAO.AstaIngleseDAO;
+import com.example.progettoingsw.DAO.AstaPreferitaIngleseDAO;
+import com.example.progettoingsw.DAO.AstaPreferitaRibassoDAO;
 import com.example.progettoingsw.DAO.AstaRibassoDAO;
 import com.example.progettoingsw.R;
 import com.example.progettoingsw.classe_da_estendere.GestoreComuniImplementazioni;
@@ -48,12 +53,17 @@ public class SchermataAstaRibasso extends GestoreComuniImplementazioni {
     TextView textViewVenditore;
     private AstaRibassoDAO astaRibassoDAO;
     private CountDownTimer countDownTimerControlloOgni10sec;
-
+    ImageButton imageButtonPreferiti;
+    Drawable drawablePreferiti ;
+    Drawable drawableConfronto ;
+    Drawable drawableCuore;
+    private AstaPreferitaRibassoDAO astaPreferitaRibassoDAO;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.schermata_asta_ribasso);
         astaRibassoDAO = new AstaRibassoDAO(this);
+        astaPreferitaRibassoDAO = new AstaPreferitaRibassoDAO(this);
         linearLayoutSchermataAstaRibasso = findViewById(R.id.linearLayoutSchermataAstaRibasso);
         progress_bar_schermata_asta_ribasso = findViewById(R.id.progress_bar_schermata_asta_ribasso);
 
@@ -72,7 +82,14 @@ public class SchermataAstaRibasso extends GestoreComuniImplementazioni {
         textViewProssimoDecremento = findViewById(R.id.textViewProssimoDecrementoAstaRibasso);
         textViewOffertaAttuale = findViewById(R.id.textViewOffertaAttualeSchermataAstaRibasso);
         textViewVenditore = findViewById(R.id.textViewVenditoreSchermataAstaRibasso);
+        imageButtonPreferiti= findViewById(R.id.aggiuntiPreferitiButtonAstaRibasso);
+        drawablePreferiti = imageButtonPreferiti.getDrawable();
+        drawableConfronto = ContextCompat.getDrawable(this, R.drawable.baseline_favorite_border_24);
+        drawableCuore = ContextCompat.getDrawable(this, R.drawable.baseline_favorite_24);
 
+        astaPreferitaRibassoDAO.openConnection();
+        astaPreferitaRibassoDAO.VerificaByID(id,email);
+        astaPreferitaRibassoDAO.closeConnection();
         countDownTimerControlloOgni10sec = new CountDownTimer(10000, 1000) {
             public void onTick(long millisUntilFinished) {
                 // Il timer sta andando avanti, non è necessario fare nulla qui
@@ -135,7 +152,24 @@ public class SchermataAstaRibasso extends GestoreComuniImplementazioni {
 
             }
         });
+        imageButtonPreferiti.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+                if (drawablePreferiti==drawableConfronto){
+                    imageButtonPreferiti.setImageDrawable(drawableCuore);
+                    astaPreferitaRibassoDAO.openConnection();
+                    astaPreferitaRibassoDAO.InserisciByID(id,email);
+                    astaPreferitaRibassoDAO.closeConnection();
+
+                } else if (drawablePreferiti==drawableCuore) {
+                    imageButtonPreferiti.setImageDrawable(drawableConfronto);
+                    astaPreferitaRibassoDAO.openConnection();
+                    astaPreferitaRibassoDAO.EliminaByID(id,email);
+                    astaPreferitaRibassoDAO.closeConnection();
+                }
+            }
+        });
         astaRibassoDAO.openConnection();
         astaRibassoDAO.getAstaRibassoByID(id);
         astaRibassoDAO.closeConnection();
@@ -272,7 +306,14 @@ public class SchermataAstaRibasso extends GestoreComuniImplementazioni {
 
     }
 
+    public  void Verifica(boolean check){
+        if (check==true){
+            imageButtonPreferiti.setImageDrawable(drawableCuore);
+        }else {
+            imageButtonPreferiti.setImageDrawable(drawableConfronto);
 
+        }
+    }
 
 }
 

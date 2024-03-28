@@ -1,6 +1,7 @@
 package com.example.progettoingsw.gui;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
@@ -12,7 +13,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.core.content.ContextCompat;
+
+import com.example.progettoingsw.DAO.AstaIngleseDAO;
 import com.example.progettoingsw.DAO.AstaInversaDAO;
+import com.example.progettoingsw.DAO.AstaPreferitaIngleseDAO;
+import com.example.progettoingsw.DAO.AstaPreferitaInversaDAO;
 import com.example.progettoingsw.R;
 import com.example.progettoingsw.classe_da_estendere.GestoreComuniImplementazioni;
 import com.example.progettoingsw.controllers_package.AstaAdapter;
@@ -39,13 +45,19 @@ public class SchermataAstaInversa extends GestoreComuniImplementazioni {
     private TextView textViewDataScadenzaSchermataAstaInversa;
     private MaterialButton bottoneOffertaSchermataAstaInversa;
     private TextView textViewAcquirenteSchermataAstaInversa;
-    ImageButton bottonePreferito;
+    ImageButton imageButtonPreferiti;
+    Drawable drawablePreferiti ;
+    Drawable drawableConfronto ;
+    Drawable drawableCuore;
+    private AstaPreferitaInversaDAO astaPreferitaInversaDAO;
+
     private AstaInversaDAO astaInversaDAO;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.schermata_asta_inversa);
         astaInversaDAO = new AstaInversaDAO(this);
+        astaPreferitaInversaDAO = new AstaPreferitaInversaDAO(this);
 
         progress_bar_schermata_asta_inversa = findViewById(R.id.progress_bar_schermata_asta_inversa);
         relativeLayoutSchermataAstaInversa = findViewById(R.id.relativeLayoutSchermataAstaInversa);
@@ -59,11 +71,20 @@ public class SchermataAstaInversa extends GestoreComuniImplementazioni {
         textViewDataScadenzaSchermataAstaInversa = findViewById(R.id.textViewDataScadenzaSchermataAstaInversa);
         bottoneOffertaSchermataAstaInversa = findViewById(R.id.bottoneOffertaSchermataAstaInversa);
         textViewAcquirenteSchermataAstaInversa = findViewById(R.id.textViewAcquirenteSchermataAstaInversa);
+        imageButtonPreferiti= findViewById(R.id.aggiuntiPreferitiButtonAstaInversa);
+        drawablePreferiti = imageButtonPreferiti.getDrawable();
+        drawableConfronto = ContextCompat.getDrawable(this, R.drawable.baseline_favorite_border_24);
+        drawableCuore = ContextCompat.getDrawable(this, R.drawable.baseline_favorite_24);
+
 
 
         id = getIntent().getIntExtra("id",0);
         email = getIntent().getStringExtra("email");
         tipoUtente = getIntent().getStringExtra("tipoUtente");
+
+        astaPreferitaInversaDAO.openConnection();
+        astaPreferitaInversaDAO.VerificaByID(id,email);
+        astaPreferitaInversaDAO.closeConnection();
 
         countDownTimer = new CountDownTimer(10000, 1000) {
             public void onTick(long millisUntilFinished) {
@@ -106,6 +127,25 @@ public class SchermataAstaInversa extends GestoreComuniImplementazioni {
                 astaInversaDAO.getAstaInversaByID(id);
                 PopUpNuovaOfferta popUpNuovaOfferta = new PopUpNuovaOfferta(SchermataAstaInversa.this,email,id, textViewPrezzoAttualeSchermataAstaInversa.getText().toString(), SchermataAstaInversa.this);
                 popUpNuovaOfferta.show();
+            }
+        });
+
+        imageButtonPreferiti.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (drawablePreferiti==drawableConfronto){
+                    imageButtonPreferiti.setImageDrawable(drawableCuore);
+                    astaPreferitaInversaDAO.openConnection();
+                    astaPreferitaInversaDAO.InserisciByID(id,email);
+                    astaPreferitaInversaDAO.closeConnection();
+
+                } else if (drawablePreferiti==drawableCuore) {
+                    imageButtonPreferiti.setImageDrawable(drawableConfronto);
+                    astaPreferitaInversaDAO.openConnection();
+                    astaPreferitaInversaDAO.EliminaByID(id,email);
+                    astaPreferitaInversaDAO.closeConnection();
+                }
             }
         });
         astaInversaDAO.openConnection();
@@ -202,6 +242,16 @@ public class SchermataAstaInversa extends GestoreComuniImplementazioni {
         }
 
     }
+
+    public  void Verifica(boolean check){
+        if (check==true){
+            imageButtonPreferiti.setImageDrawable(drawableCuore);
+        }else {
+            imageButtonPreferiti.setImageDrawable(drawableConfronto);
+
+        }
+    }
+
 }
 
 

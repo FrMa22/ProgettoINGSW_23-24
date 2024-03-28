@@ -1,6 +1,7 @@
 package com.example.progettoingsw.gui;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
@@ -12,7 +13,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.core.content.ContextCompat;
+
 import com.example.progettoingsw.DAO.AstaIngleseDAO;
+import com.example.progettoingsw.DAO.AstaPreferitaIngleseDAO;
 import com.example.progettoingsw.R;
 import com.example.progettoingsw.classe_da_estendere.GestoreComuniImplementazioni;
 import com.example.progettoingsw.controllers_package.Controller;
@@ -43,12 +47,18 @@ public class SchermataAstaInglese extends GestoreComuniImplementazioni {
     TextView textViewOffertaAttuale;
     TextView textViewIntervalloOfferte;
     TextView textViewVenditore;
+    ImageButton imageButtonPreferiti;
+    Drawable drawablePreferiti ;
+    Drawable drawableConfronto ;
+    Drawable drawableCuore;
     private AstaIngleseDAO astaIngleseDAO;
+    private AstaPreferitaIngleseDAO astaPreferitaIngleseDAO;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.schermata_asta_inglese);
         astaIngleseDAO = new AstaIngleseDAO(this);
+        astaPreferitaIngleseDAO = new AstaPreferitaIngleseDAO(this);
         relativeLayoutSchermataAstaInglese = findViewById(R.id.relativeLayoutSchermataAstaInglese);
         progress_bar_schermata_asta_inglese = findViewById(R.id.progress_bar_schermata_asta_inglese);
         progress_bar_schermata_asta_inglese.setVisibility(View.VISIBLE);
@@ -62,11 +72,21 @@ public class SchermataAstaInglese extends GestoreComuniImplementazioni {
         textViewOffertaAttuale = findViewById(R.id.textViewOffertaAttualeSchermataAstaInglese);
         textViewIntervalloOfferte = findViewById(R.id.textViewIntervalloOfferte);
         textViewVenditore = findViewById(R.id.textViewVenditoreSchermataAstaInglese);
+        imageButtonPreferiti= findViewById(R.id.aggiuntiPreferitiButtonAstaInglese);
+        drawablePreferiti = imageButtonPreferiti.getDrawable();
+        drawableConfronto = ContextCompat.getDrawable(this, R.drawable.baseline_favorite_border_24);
+        drawableCuore = ContextCompat.getDrawable(this, R.drawable.baseline_favorite_24);
+
+
 
         id = getIntent().getIntExtra("id",0);
         email = getIntent().getStringExtra("email");
         tipoUtente = getIntent().getStringExtra("tipoUtente");
         Toast.makeText(this, "l'id è " + id + ", la mail è " + email + ", il tipoutente è " + tipoUtente, Toast.LENGTH_SHORT).show();
+
+        astaPreferitaIngleseDAO.openConnection();
+        astaPreferitaIngleseDAO.VerificaByID(id,email);
+        astaPreferitaIngleseDAO.closeConnection();
 
         // Inizializza il timer con una durata di 10 secondi
         countDownTimer = new CountDownTimer(10000, 1000) {
@@ -127,6 +147,27 @@ public class SchermataAstaInglese extends GestoreComuniImplementazioni {
         }
     });
 
+        imageButtonPreferiti.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (drawablePreferiti==drawableConfronto){
+                    imageButtonPreferiti.setImageDrawable(drawableCuore);
+                    astaPreferitaIngleseDAO.openConnection();
+                    astaPreferitaIngleseDAO.InserisciByID(id,email);
+                    astaPreferitaIngleseDAO.closeConnection();
+
+                } else if (drawablePreferiti==drawableCuore) {
+                    imageButtonPreferiti.setImageDrawable(drawableConfronto);
+                    astaPreferitaIngleseDAO.openConnection();
+                    astaPreferitaIngleseDAO.EliminaByID(id,email);
+                    astaPreferitaIngleseDAO.closeConnection();
+                }
+            }
+        });
+
+
+
 
     }
     // questi metodi onPause, onStop, onDestroy e onResume servono a stoppare il timer quando non si è piu su questa schermata e a farlo ricominciare quando si torna
@@ -174,7 +215,6 @@ public class SchermataAstaInglese extends GestoreComuniImplementazioni {
             textViewPrezzo.setText(astaIngleseItem.getPrezzoAttuale());
             textViewVenditore.setText(astaIngleseItem.getEmailVenditore());
 
-
             String intervalloOfferte = astaIngleseItem.getIntervalloTempoOfferte();
             // Ottieni la data e l'ora attuali con il giorno incluso
             LocalDateTime now = LocalDateTime.now();
@@ -213,6 +253,16 @@ public class SchermataAstaInglese extends GestoreComuniImplementazioni {
         progress_bar_schermata_asta_inglese.setVisibility(View.GONE);
         setAllClickable(relativeLayoutSchermataAstaInglese, true);
     }
+
+    public  void Verifica(boolean check){
+        if (check==true){
+            imageButtonPreferiti.setImageDrawable(drawableCuore);
+        }else {
+            imageButtonPreferiti.setImageDrawable(drawableConfronto);
+
+        }
+    }
+
     private long convertiStringaInSecondi(String intervalloOfferteString) {
         // Assumendo che l'intervallo sia nel formato "HH:mm:ss"
         String[] parts = intervalloOfferteString.split(":");
