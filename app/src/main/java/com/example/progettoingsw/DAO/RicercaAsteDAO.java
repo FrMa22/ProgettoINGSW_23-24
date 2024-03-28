@@ -108,9 +108,11 @@ public class RicercaAsteDAO {
                     // Se entrambi sono nulli o vuoti, seleziona tutte le aste senza applicare filtri
                     Log.d("RicercaAstaDAO", "parolaricerca null e categorie null");
                     query = "SELECT DISTINCT a.id, a.nome, a.descrizione, a.path_immagine, a.baseAsta, a.intervalloTempoOfferte, a.rialzoMin, a.prezzoAttuale, a.condizione, a.id_venditore FROM asta_allinglese AS a ";
+                    query += "WHERE a.condizione = 'aperta'";
                 } else {
                     // Altrimenti, costruisci la query con i filtri appropriati
                     query = "SELECT DISTINCT a.id, a.nome, a.descrizione, a.path_immagine, a.baseAsta, a.intervalloTempoOfferte, a.rialzoMin, a.prezzoAttuale, a.condizione, a.id_venditore FROM asta_allinglese AS a LEFT JOIN AsteCategorieAllInglese AS c ON a.id = c.id_asta_allinglese";
+                    query += "WHERE a.condizione = 'aperta'";
                     if (!item.getParolaRicercata().isEmpty()) {
                         Log.d("RicercaAstaDAO", "parolaricerca non null");
                         query += " WHERE UPPER(a.nome) LIKE UPPER(?)";
@@ -194,9 +196,11 @@ public class RicercaAsteDAO {
                     // Se entrambi sono nulli o vuoti, seleziona tutte le aste senza applicare filtri
                     Log.d("RicercaAstaDAO Ribasso", "parolaricerca null e categorie null");
                     query = "SELECT DISTINCT a.id, a.nome, a.descrizione, a.path_immagine, a.prezzoBase, a.intervalloDecrementale, a.decrementoAutomaticoCifra, a.prezzoMin, a.prezzoAttuale, a.condizione, a.id_venditore FROM asta_alribasso AS a ";
+                    query += "WHERE a.condizione = 'aperta'";
                 } else {
                     // Altrimenti, costruisci la query con i filtri appropriati
                     query = "SELECT DISTINCT a.id, a.nome, a.descrizione, a.path_immagine, a.prezzoBase, a.intervalloDecrementale, a.decrementoAutomaticoCifra, a.prezzoMin, a.prezzoAttuale, a.condizione, a.id_venditore FROM asta_alribasso AS a LEFT JOIN AsteCategorieAlRibasso AS c ON a.id = c.id_asta_alribasso";
+                    query += "WHERE a.condizione = 'aperta'";
                     if (!item.getParolaRicercata().isEmpty()) {
                         Log.d("RicercaAstaDAO Ribasso", "parolaricerca non null");
                         query += " WHERE UPPER(a.nome) LIKE UPPER(?)";
@@ -315,9 +319,11 @@ public class RicercaAsteDAO {
                     // Se entrambi sono nulli o vuoti, seleziona tutte le aste senza applicare filtri
                     Log.d("RicercaAstaDAO Inversa", "parolaricerca null e categorie null");
                     query = "SELECT DISTINCT a.id, a.nome, a.descrizione, a.path_immagine, a.prezzoMax, a.prezzoAttuale , a.dataDiScadenza , a.condizione, a.id_acquirente FROM asta_inversa AS a ";
+                    query += "WHERE a.condizione = 'aperta'";
                 } else {
                     // Altrimenti, costruisci la query con i filtri appropriati
                     query = "SELECT DISTINCT a.id, a.nome, a.descrizione, a.path_immagine, a.prezzoMax, a.prezzoAttuale , a.dataDiScadenza ,a.condizione, a.id_acquirente FROM asta_inversa AS a LEFT JOIN AsteCategorieInversa AS c ON a.id = c.id_asta_inversa";
+                    query += "WHERE a.condizione = 'aperta'";
                     if (!item.getParolaRicercata().isEmpty()) {
                         Log.d("RicercaAstaDAO Inversa", "parolaricerca non null");
                         query += " WHERE UPPER(a.nome) LIKE UPPER(?)";

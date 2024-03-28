@@ -15,18 +15,12 @@ import android.widget.Toast;
 
 import androidx.core.content.ContextCompat;
 
-import com.example.progettoingsw.DAO.AstaIngleseDAO;
 import com.example.progettoingsw.DAO.AstaInversaDAO;
-import com.example.progettoingsw.DAO.AstaPreferitaIngleseDAO;
 import com.example.progettoingsw.DAO.AstaPreferitaInversaDAO;
 import com.example.progettoingsw.R;
 import com.example.progettoingsw.classe_da_estendere.GestoreComuniImplementazioni;
-import com.example.progettoingsw.controllers_package.AstaAdapter;
 import com.example.progettoingsw.controllers_package.Controller;
-import com.example.progettoingsw.gui.acquirente.AcquirenteFragmentHome;
-import com.example.progettoingsw.gui.acquirente.AcquirenteMainActivity;
 import com.example.progettoingsw.model.AstaInversaItem;
-import com.example.progettoingsw.model.AstaRibassoItem;
 import com.google.android.material.button.MaterialButton;
 
 public class SchermataAstaInversa extends GestoreComuniImplementazioni {
@@ -47,8 +41,8 @@ public class SchermataAstaInversa extends GestoreComuniImplementazioni {
     private TextView textViewAcquirenteSchermataAstaInversa;
     ImageButton imageButtonPreferiti;
     Drawable drawablePreferiti ;
-    Drawable drawableConfronto ;
-    Drawable drawableCuore;
+    Drawable drawableCuoreVuoto;
+    Drawable drawableCuorePieno;
     private AstaPreferitaInversaDAO astaPreferitaInversaDAO;
 
     private AstaInversaDAO astaInversaDAO;
@@ -73,8 +67,9 @@ public class SchermataAstaInversa extends GestoreComuniImplementazioni {
         textViewAcquirenteSchermataAstaInversa = findViewById(R.id.textViewAcquirenteSchermataAstaInversa);
         imageButtonPreferiti= findViewById(R.id.aggiuntiPreferitiButtonAstaInversa);
         drawablePreferiti = imageButtonPreferiti.getDrawable();
-        drawableConfronto = ContextCompat.getDrawable(this, R.drawable.baseline_favorite_border_24);
-        drawableCuore = ContextCompat.getDrawable(this, R.drawable.baseline_favorite_24);
+        drawableCuoreVuoto = ContextCompat.getDrawable(this, R.drawable.ic_cuore_vuoto);
+        drawableCuorePieno = ContextCompat.getDrawable(this, R.drawable.ic_cuore_pieno);
+
 
 
 
@@ -82,9 +77,7 @@ public class SchermataAstaInversa extends GestoreComuniImplementazioni {
         email = getIntent().getStringExtra("email");
         tipoUtente = getIntent().getStringExtra("tipoUtente");
 
-        astaPreferitaInversaDAO.openConnection();
-        astaPreferitaInversaDAO.VerificaByID(id,email);
-        astaPreferitaInversaDAO.closeConnection();
+
 
         countDownTimer = new CountDownTimer(10000, 1000) {
             public void onTick(long millisUntilFinished) {
@@ -129,25 +122,30 @@ public class SchermataAstaInversa extends GestoreComuniImplementazioni {
                 popUpNuovaOfferta.show();
             }
         });
+        //controllo per far si che un acquirente non possa inserire un asta inversa nei preferiti
+        if(tipoUtente.equals("acquirente")){
+            imageButtonPreferiti.setVisibility(View.INVISIBLE);
+        }else{
+            astaPreferitaInversaDAO.openConnection();
+            astaPreferitaInversaDAO.verificaByID(id,email);
+            imageButtonPreferiti.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Log.d("Preferiti asta inversa", "drawable preferiti");
+                    if (imageButtonPreferiti.getDrawable().getConstantState().equals(drawableCuoreVuoto.getConstantState())){
+                        Log.d("Preferiti asta inversa", "non è in preferito");
+                        setAllClickable(relativeLayoutSchermataAstaInversa,false);
+                        astaPreferitaInversaDAO.inserisciByID(id,email);
 
-        imageButtonPreferiti.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                if (drawablePreferiti==drawableConfronto){
-                    imageButtonPreferiti.setImageDrawable(drawableCuore);
-                    astaPreferitaInversaDAO.openConnection();
-                    astaPreferitaInversaDAO.InserisciByID(id,email);
-                    astaPreferitaInversaDAO.closeConnection();
-
-                } else if (drawablePreferiti==drawableCuore) {
-                    imageButtonPreferiti.setImageDrawable(drawableConfronto);
-                    astaPreferitaInversaDAO.openConnection();
-                    astaPreferitaInversaDAO.EliminaByID(id,email);
-                    astaPreferitaInversaDAO.closeConnection();
+                    } else if (imageButtonPreferiti.getDrawable().getConstantState().equals(drawableCuorePieno.getConstantState())){
+                        Log.d("Preferiti asta inversa", "è in preferito");
+                        setAllClickable(relativeLayoutSchermataAstaInversa,false);
+                        astaPreferitaInversaDAO.eliminaByID(id,email);
+                    }
                 }
-            }
-        });
+            });
+        }
+
         astaInversaDAO.openConnection();
         astaInversaDAO.getAstaInversaByID(id);
     }
@@ -243,13 +241,29 @@ public class SchermataAstaInversa extends GestoreComuniImplementazioni {
 
     }
 
-    public  void Verifica(boolean check){
-        if (check==true){
-            imageButtonPreferiti.setImageDrawable(drawableCuore);
+    public  void verificaPreferiti(boolean check){
+        if (check){
+            imageButtonPreferiti.setImageDrawable(drawableCuorePieno);
         }else {
-            imageButtonPreferiti.setImageDrawable(drawableConfronto);
+            imageButtonPreferiti.setImageDrawable(drawableCuoreVuoto);
 
         }
+    }
+    public void handleInserimento(Boolean result){
+        if(result){
+            imageButtonPreferiti.setImageDrawable(drawableCuorePieno);
+        }else{
+            Toast.makeText(this, "Errore nell'inserimento.", Toast.LENGTH_SHORT).show();
+        }
+        setAllClickable(relativeLayoutSchermataAstaInversa,true);
+    }
+    public void handleEliminazione(Boolean result){
+        if(result){
+            imageButtonPreferiti.setImageDrawable(drawableCuoreVuoto);
+        }else{
+            Toast.makeText(this, "Errore nella rimozione.", Toast.LENGTH_SHORT).show();
+        }
+        setAllClickable(relativeLayoutSchermataAstaInversa,true);
     }
 
 }

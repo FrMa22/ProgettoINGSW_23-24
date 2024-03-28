@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/linearLayoutSchermataAstaRibasso"
+    android:id="@+id/relativeLayoutSchermataAstaRibasso"
     android:orientation="vertical"
     android:background="@color/colore_base"
     tools:context=".gui.SchermataAstaRibasso">
@@ -40,7 +40,8 @@
             android:backgroundTint="@android:color/transparent"
             android:contentDescription="Clicca per aggiungere ai preferiti."
             android:drawableTint="@android:color/transparent"
-            android:src="@drawable/baseline_favorite_border_24" />
+            android:layout_marginEnd="10dp"
+            android:src="@drawable/ic_cuore_vuoto" />
     </androidx.appcompat.widget.Toolbar>
 
     <ProgressBar

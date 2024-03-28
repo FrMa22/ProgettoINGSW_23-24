@@ -20,7 +20,6 @@ import com.example.progettoingsw.DAO.AstaPreferitaIngleseDAO;
 import com.example.progettoingsw.R;
 import com.example.progettoingsw.classe_da_estendere.GestoreComuniImplementazioni;
 import com.example.progettoingsw.controllers_package.Controller;
-import com.example.progettoingsw.gui.acquirente.AcquirenteMainActivity;
 import com.example.progettoingsw.model.AstaIngleseItem;
 import com.google.android.material.button.MaterialButton;
 
@@ -49,10 +48,11 @@ public class SchermataAstaInglese extends GestoreComuniImplementazioni {
     TextView textViewVenditore;
     ImageButton imageButtonPreferiti;
     Drawable drawablePreferiti ;
-    Drawable drawableConfronto ;
-    Drawable drawableCuore;
+    Drawable drawableCuoreVuoto;
+    Drawable drawableCuorePieno;
     private AstaIngleseDAO astaIngleseDAO;
     private AstaPreferitaIngleseDAO astaPreferitaIngleseDAO;
+    boolean isPreferito;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,8 +74,8 @@ public class SchermataAstaInglese extends GestoreComuniImplementazioni {
         textViewVenditore = findViewById(R.id.textViewVenditoreSchermataAstaInglese);
         imageButtonPreferiti= findViewById(R.id.aggiuntiPreferitiButtonAstaInglese);
         drawablePreferiti = imageButtonPreferiti.getDrawable();
-        drawableConfronto = ContextCompat.getDrawable(this, R.drawable.baseline_favorite_border_24);
-        drawableCuore = ContextCompat.getDrawable(this, R.drawable.baseline_favorite_24);
+        drawableCuoreVuoto = ContextCompat.getDrawable(this, R.drawable.ic_cuore_vuoto);
+        drawableCuorePieno = ContextCompat.getDrawable(this, R.drawable.ic_cuore_pieno);
 
 
 
@@ -84,9 +84,7 @@ public class SchermataAstaInglese extends GestoreComuniImplementazioni {
         tipoUtente = getIntent().getStringExtra("tipoUtente");
         Toast.makeText(this, "l'id è " + id + ", la mail è " + email + ", il tipoutente è " + tipoUtente, Toast.LENGTH_SHORT).show();
 
-        astaPreferitaIngleseDAO.openConnection();
-        astaPreferitaIngleseDAO.VerificaByID(id,email);
-        astaPreferitaIngleseDAO.closeConnection();
+
 
         // Inizializza il timer con una durata di 10 secondi
         countDownTimer = new CountDownTimer(10000, 1000) {
@@ -146,25 +144,29 @@ public class SchermataAstaInglese extends GestoreComuniImplementazioni {
             startActivity(intent);
         }
     });
+        if(tipoUtente.equals("venditore")){
+            imageButtonPreferiti.setVisibility(View.INVISIBLE);
+        }else{
+            astaPreferitaIngleseDAO.openConnection();
+            astaPreferitaIngleseDAO.verificaByID(id,email);
+            imageButtonPreferiti.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Log.d("Preferiti asta inglese", "drawable preferiti");
+                    if (imageButtonPreferiti.getDrawable().getConstantState().equals(drawableCuoreVuoto.getConstantState())){
+                        Log.d("Preferiti asta inglese", "non è in preferito");
+                        setAllClickable(relativeLayoutSchermataAstaInglese,false);
+                        astaPreferitaIngleseDAO.inserisciByID(id,email);
 
-        imageButtonPreferiti.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                if (drawablePreferiti==drawableConfronto){
-                    imageButtonPreferiti.setImageDrawable(drawableCuore);
-                    astaPreferitaIngleseDAO.openConnection();
-                    astaPreferitaIngleseDAO.InserisciByID(id,email);
-                    astaPreferitaIngleseDAO.closeConnection();
-
-                } else if (drawablePreferiti==drawableCuore) {
-                    imageButtonPreferiti.setImageDrawable(drawableConfronto);
-                    astaPreferitaIngleseDAO.openConnection();
-                    astaPreferitaIngleseDAO.EliminaByID(id,email);
-                    astaPreferitaIngleseDAO.closeConnection();
+                    } else if (imageButtonPreferiti.getDrawable().getConstantState().equals(drawableCuorePieno.getConstantState())){
+                        Log.d("Preferiti asta inglese", "è in preferito");
+                        setAllClickable(relativeLayoutSchermataAstaInglese,false);
+                        astaPreferitaIngleseDAO.eliminaByID(id,email);
+                    }
                 }
-            }
-        });
+            });
+        }
+
 
 
 
@@ -254,11 +256,13 @@ public class SchermataAstaInglese extends GestoreComuniImplementazioni {
         setAllClickable(relativeLayoutSchermataAstaInglese, true);
     }
 
-    public  void Verifica(boolean check){
-        if (check==true){
-            imageButtonPreferiti.setImageDrawable(drawableCuore);
+    public  void verificaPreferiti(boolean check){
+        if (check){
+            imageButtonPreferiti.setImageDrawable(drawableCuorePieno);
+            isPreferito=true;
         }else {
-            imageButtonPreferiti.setImageDrawable(drawableConfronto);
+            imageButtonPreferiti.setImageDrawable(drawableCuoreVuoto);
+            isPreferito = false;
 
         }
     }
@@ -271,8 +275,6 @@ public class SchermataAstaInglese extends GestoreComuniImplementazioni {
         long secondi = Long.parseLong(parts[2]);
         return ore * 3600 + minuti * 60 + secondi;
     }
-
-
     private String calcolaTempoRimanente(long secondiRimanenti) {
         long ore = secondiRimanenti / 3600;
         long minuti = (secondiRimanenti % 3600) / 60;
@@ -300,6 +302,22 @@ public class SchermataAstaInglese extends GestoreComuniImplementazioni {
         astaIngleseDAO.getAstaIngleseByID(id);
         astaIngleseDAO.closeConnection();
 
+    }
+    public void handleInserimento(Boolean result){
+        if(result){
+            imageButtonPreferiti.setImageDrawable(drawableCuorePieno);
+        }else{
+            Toast.makeText(this, "Errore nell'inserimento.", Toast.LENGTH_SHORT).show();
+        }
+        setAllClickable(relativeLayoutSchermataAstaInglese,true);
+    }
+    public void handleEliminazione(Boolean result){
+        if(result){
+            imageButtonPreferiti.setImageDrawable(drawableCuoreVuoto);
+        }else{
+            Toast.makeText(this, "Errore nella rimozione.", Toast.LENGTH_SHORT).show();
+        }
+        setAllClickable(relativeLayoutSchermataAstaInglese,true);
     }
 
 }

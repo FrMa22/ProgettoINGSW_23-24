@@ -157,7 +157,7 @@ public class AstaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             long intervalloOfferteSeconds = convertiStringaInSecondi(intervalloOfferteString);
             countDownTimer = new CountDownTimer(intervalloOfferteSeconds * 1000, 1000) {
                 public void onTick(long millisUntilFinished) {
-                    Log.d("aggiornato", "aggiornato");
+                    Log.d("asta adapter asta inglese", "aggiornato textview intervallo offerte");
                     intervalloOfferte.setText(calcolaTempoRimanente(millisUntilFinished / 1000));
                 }
 

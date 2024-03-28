@@ -17,17 +17,12 @@ import android.widget.Toast;
 
 import androidx.core.content.ContextCompat;
 
-import com.example.progettoingsw.DAO.AstaIngleseDAO;
-import com.example.progettoingsw.DAO.AstaPreferitaIngleseDAO;
 import com.example.progettoingsw.DAO.AstaPreferitaRibassoDAO;
 import com.example.progettoingsw.DAO.AstaRibassoDAO;
 import com.example.progettoingsw.R;
 import com.example.progettoingsw.classe_da_estendere.GestoreComuniImplementazioni;
 import com.example.progettoingsw.controllers_package.Controller;
-import com.example.progettoingsw.gui.acquirente.AcquirenteFragmentHome;
 import com.example.progettoingsw.gui.acquirente.AcquirenteMainActivity;
-import com.example.progettoingsw.gui.venditore.VenditoreAstaInglese;
-import com.example.progettoingsw.model.AstaIngleseItem;
 import com.example.progettoingsw.model.AstaRibassoItem;
 import com.google.android.material.button.MaterialButton;
 
@@ -37,7 +32,6 @@ import java.time.format.DateTimeFormatter;
 
 public class SchermataAstaRibasso extends GestoreComuniImplementazioni {
     Controller controller;
-    private RelativeLayout linearLayoutSchermataAstaRibasso;
     ImageButton bottoneBack;
     MaterialButton bottoneNuovaOfferta;
     ImageButton bottonePreferito;
@@ -55,20 +49,22 @@ public class SchermataAstaRibasso extends GestoreComuniImplementazioni {
     private CountDownTimer countDownTimerControlloOgni10sec;
     ImageButton imageButtonPreferiti;
     Drawable drawablePreferiti ;
-    Drawable drawableConfronto ;
-    Drawable drawableCuore;
+    Drawable drawableCuoreVuoto;
+    Drawable drawableCuorePieno;
     private AstaPreferitaRibassoDAO astaPreferitaRibassoDAO;
+    private RelativeLayout relativeLayoutSchermataAstaRibasso;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.schermata_asta_ribasso);
+
+        relativeLayoutSchermataAstaRibasso = findViewById(R.id.relativeLayoutSchermataAstaRibasso);
         astaRibassoDAO = new AstaRibassoDAO(this);
         astaPreferitaRibassoDAO = new AstaPreferitaRibassoDAO(this);
-        linearLayoutSchermataAstaRibasso = findViewById(R.id.linearLayoutSchermataAstaRibasso);
         progress_bar_schermata_asta_ribasso = findViewById(R.id.progress_bar_schermata_asta_ribasso);
 
         progress_bar_schermata_asta_ribasso.setVisibility(View.VISIBLE);
-        setAllClickable(linearLayoutSchermataAstaRibasso, false);
+        setAllClickable(relativeLayoutSchermataAstaRibasso, false);
 
         id = getIntent().getIntExtra("id",0);
         email = getIntent().getStringExtra("email");
@@ -84,12 +80,10 @@ public class SchermataAstaRibasso extends GestoreComuniImplementazioni {
         textViewVenditore = findViewById(R.id.textViewVenditoreSchermataAstaRibasso);
         imageButtonPreferiti= findViewById(R.id.aggiuntiPreferitiButtonAstaRibasso);
         drawablePreferiti = imageButtonPreferiti.getDrawable();
-        drawableConfronto = ContextCompat.getDrawable(this, R.drawable.baseline_favorite_border_24);
-        drawableCuore = ContextCompat.getDrawable(this, R.drawable.baseline_favorite_24);
+        drawableCuoreVuoto = ContextCompat.getDrawable(this, R.drawable.ic_cuore_vuoto);
+        drawableCuorePieno = ContextCompat.getDrawable(this, R.drawable.ic_cuore_pieno);
 
-        astaPreferitaRibassoDAO.openConnection();
-        astaPreferitaRibassoDAO.VerificaByID(id,email);
-        astaPreferitaRibassoDAO.closeConnection();
+
         countDownTimerControlloOgni10sec = new CountDownTimer(10000, 1000) {
             public void onTick(long millisUntilFinished) {
                 // Il timer sta andando avanti, non è necessario fare nulla qui
@@ -152,24 +146,29 @@ public class SchermataAstaRibasso extends GestoreComuniImplementazioni {
 
             }
         });
-        imageButtonPreferiti.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        if(tipoUtente.equals("venditore")){
+            imageButtonPreferiti.setVisibility(View.INVISIBLE);
+        }else{
+            astaPreferitaRibassoDAO.openConnection();
+            astaPreferitaRibassoDAO.verificaByID(id,email);
+            imageButtonPreferiti.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Log.d("Preferiti asta ribasso", "drawable preferiti");
+                    if (imageButtonPreferiti.getDrawable().getConstantState().equals(drawableCuoreVuoto.getConstantState())){
+                        Log.d("Preferiti asta ribasso", "non è in preferito");
+                        setAllClickable(relativeLayoutSchermataAstaRibasso,false);
+                        astaPreferitaRibassoDAO.inserisciByID(id,email);
 
-                if (drawablePreferiti==drawableConfronto){
-                    imageButtonPreferiti.setImageDrawable(drawableCuore);
-                    astaPreferitaRibassoDAO.openConnection();
-                    astaPreferitaRibassoDAO.InserisciByID(id,email);
-                    astaPreferitaRibassoDAO.closeConnection();
-
-                } else if (drawablePreferiti==drawableCuore) {
-                    imageButtonPreferiti.setImageDrawable(drawableConfronto);
-                    astaPreferitaRibassoDAO.openConnection();
-                    astaPreferitaRibassoDAO.EliminaByID(id,email);
-                    astaPreferitaRibassoDAO.closeConnection();
+                    } else if (imageButtonPreferiti.getDrawable().getConstantState().equals(drawableCuorePieno.getConstantState())){
+                        Log.d("Preferiti asta ribasso", "è in preferito");
+                        setAllClickable(relativeLayoutSchermataAstaRibasso,false);
+                        astaPreferitaRibassoDAO.eliminaByID(id,email);
+                    }
                 }
-            }
-        });
+            });
+        }
+
         astaRibassoDAO.openConnection();
         astaRibassoDAO.getAstaRibassoByID(id);
         astaRibassoDAO.closeConnection();
@@ -224,7 +223,7 @@ public class SchermataAstaRibasso extends GestoreComuniImplementazioni {
             Log.d("Errore", "Impossibile recuperare i dati dell'asta");
         }
         progress_bar_schermata_asta_ribasso.setVisibility(View.GONE);
-        setAllClickable(linearLayoutSchermataAstaRibasso, true);
+        setAllClickable(relativeLayoutSchermataAstaRibasso, true);
     }
     public void getPrezzoCondizioneIntervallo(String prezzoAttuale, String condizione, String intervallo) {
         if (condizione.equals("aperta")) {
@@ -306,13 +305,29 @@ public class SchermataAstaRibasso extends GestoreComuniImplementazioni {
 
     }
 
-    public  void Verifica(boolean check){
-        if (check==true){
-            imageButtonPreferiti.setImageDrawable(drawableCuore);
+    public  void verificaPreferiti(boolean check){
+        if (check){
+            imageButtonPreferiti.setImageDrawable(drawableCuorePieno);
         }else {
-            imageButtonPreferiti.setImageDrawable(drawableConfronto);
+            imageButtonPreferiti.setImageDrawable(drawableCuoreVuoto);
 
         }
+    }
+    public void handleInserimento(Boolean result){
+        if(result){
+            imageButtonPreferiti.setImageDrawable(drawableCuorePieno);
+        }else{
+            Toast.makeText(this, "Errore nell'inserimento.", Toast.LENGTH_SHORT).show();
+        }
+        setAllClickable(relativeLayoutSchermataAstaRibasso,true);
+    }
+    public void handleEliminazione(Boolean result){
+        if(result){
+            imageButtonPreferiti.setImageDrawable(drawableCuoreVuoto);
+        }else{
+            Toast.makeText(this, "Errore nella rimozione.", Toast.LENGTH_SHORT).show();
+        }
+        setAllClickable(relativeLayoutSchermataAstaRibasso,true);
     }
 
 }

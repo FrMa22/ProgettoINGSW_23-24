@@ -39,7 +39,8 @@
             android:backgroundTint="@android:color/transparent"
             android:contentDescription="Clicca per aggiungere ai preferiti."
             android:drawableTint="@android:color/transparent"
-            android:src="@drawable/baseline_favorite_border_24" />
+            android:layout_marginEnd="10dp"
+            android:src="@drawable/ic_cuore_vuoto" />
     </androidx.appcompat.widget.Toolbar>
     <ProgressBar
         android:id="@+id/progress_bar_schermata_asta_inversa"
