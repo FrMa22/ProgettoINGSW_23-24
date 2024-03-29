@@ -107,22 +107,40 @@ public class VenditoreAstaRibasso extends GestoreComuniImplementazioni {
 
         bottoneConferma.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                //Controller.redirectActivity(VenditoreAstaRibasso.this, AcquirenteFragmentHome.class);
-                String nomeProdotto= nome.getText().toString();
-                String descrizioneProdotto= descrizione.getText().toString();
-                String base = baseAsta.getText().toString();
-                String intervallo = intervalloDecremento.getText().toString();
-                String soglia=sogliaDecremento.getText().toString();
-                String min=prezzominimoAsta.getText().toString();
+                String nomeProdotto = nome.getText().toString().trim();
+                String descrizioneProdotto = descrizione.getText().toString().trim();
+                String base = baseAsta.getText().toString().trim();
+                String intervallo = intervalloDecremento.getText().toString().trim();
+                String soglia = sogliaDecremento.getText().toString().trim();
+                String min = prezzominimoAsta.getText().toString().trim();
 
-                // Chiamata al metodo per creare l'asta nel databas
-                progressBarVenditoreAstaRibasso.setVisibility(View.VISIBLE);
-                setAllClickable(relativeLayoutAstaRibasso,false);
-                astaRibassoDao.openConnection();
-                astaRibassoDao.creaAstaRibasso(base,intervallo,soglia,min,nomeProdotto,descrizioneProdotto,email,img);
-                astaRibassoDao.closeConnection();
+                // Controlli sulla lunghezza del nome e della descrizione
+                if (nomeProdotto.length() > 100) {
+                    nome.setError("Il nome non può superare i 100 caratteri.");
+                } else if (descrizioneProdotto.length() > 250) {
+                    descrizione.setError("La descrizione non può superare i 250 caratteri.");
+                } else if (!base.matches("^\\d*\\.?\\d+$")) {
+                    baseAsta.setError("Si prega di inserire solo numeri per il prezzo base.");
+                } else if (!intervallo.matches("^\\d{1,5}$")) {
+                    intervalloDecremento.setError("L'intervallo deve contenere solo numeri e non può superare i 5 caratteri.");
+                } else if (!soglia.matches("^\\d*\\.?\\d+$")) {
+                    sogliaDecremento.setError("Si prega di inserire solo numeri per la soglia.");
+                } else if (Double.parseDouble(soglia) > Double.parseDouble(base)) {
+                    sogliaDecremento.setError("La soglia non può superare la base asta.");
+                } else if (Double.parseDouble(min) > Double.parseDouble(base)) {
+                    prezzominimoAsta.setError("Il prezzo minimo non può superare la base asta.");
+                } else {
+                    // Chiamata al metodo per creare l'asta nel database
+                    progressBarVenditoreAstaRibasso.setVisibility(View.VISIBLE);
+                    setAllClickable(relativeLayoutAstaRibasso, false);
+                    astaRibassoDao.openConnection();
+                    astaRibassoDao.creaAstaRibasso(base, intervallo, soglia, min, nomeProdotto, descrizioneProdotto, email, img);
+                    astaRibassoDao.closeConnection();
+                }
             }
         });
+
+
 
         bottoneBack.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {

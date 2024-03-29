@@ -42,7 +42,7 @@
         android:layout_marginStart="25dp"
         android:layout_marginEnd="25dp"
         android:singleLine="true"
-        android:maxLength="20"
+        android:maxLength="50"
         android:hint="Nome" />
 
     <View
@@ -63,7 +63,7 @@
         android:layout_marginStart="25dp"
         android:layout_marginEnd="25dp"
         android:layout_marginTop="-2dp"
-        android:maxLength="20"
+        android:maxLength="50"
         android:singleLine="true"/>
     <View
         android:layout_width="320dp"
@@ -83,6 +83,7 @@
         android:layout_marginEnd="25dp"
         android:layout_marginTop="-2dp"
         android:hint="Indirizzo Email"
+        android:maxLength="100"
         android:singleLine="true" />
 
     <View
@@ -104,6 +105,7 @@
         android:layout_marginStart="25dp"
         android:layout_marginEnd="25dp"
         android:layout_marginTop="-2dp"
+        android:maxLength="100"
         android:singleLine="true"/>
     <View
         android:layout_width="320dp"
@@ -124,6 +126,7 @@
         android:layout_marginStart="25dp"
         android:layout_marginEnd="25dp"
         android:layout_marginTop="-2dp"
+        android:maxLength="100"
         android:singleLine="true"/>
     <androidx.appcompat.widget.SwitchCompat
         android:id="@+id/switch_mostra_password_registrazione"

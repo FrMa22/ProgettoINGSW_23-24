@@ -74,9 +74,20 @@ public class PopUpRegistrazioneSocial extends Dialog implements View.OnClickList
         String nomeSocial = editTextNomeSocial.getText().toString().trim();
         String nomeUtenteSocial = editTextNomeUtenteSocial.getText().toString().trim();
 
-        registrazioneCampiFacoltativi.setProfiloSocialRegistrazione(nomeSocial,nomeUtenteSocial);
 
-        // Chiudi il dialog dopo la conferma
-        dismiss();
-    }
+
+        if(nomeSocial.length() > 50){editTextNomeSocial.setError("Nome social oltre i 50 caratteri");}
+        if(nomeSocial.isEmpty()){editTextNomeSocial.setError("Nome  social vuoto");}
+        if(nomeUtenteSocial.length() > 50){editTextNomeUtenteSocial.setError("Nome utente social oltre i 50 caratteri");}
+        if(nomeUtenteSocial.isEmpty()){editTextNomeUtenteSocial.setError("Nome utente social vuoto");}
+        if (!nomeSocial.isEmpty() && nomeSocial.length() <= 50 &&
+                !nomeUtenteSocial.isEmpty() && nomeUtenteSocial.length() <= 50) {
+            editTextNomeUtenteSocial.setError(null);
+            editTextNomeSocial.setError(null);
+            registrazioneCampiFacoltativi.setProfiloSocialRegistrazione(nomeSocial, nomeUtenteSocial);
+
+            // Chiudi il dialog dopo la conferma
+            dismiss();
+        }
+        }
 }

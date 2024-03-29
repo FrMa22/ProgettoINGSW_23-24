@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -70,41 +71,68 @@ public class Registrazione extends GestoreComuniImplementazioni {
 
         bottoneProsegui.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                if(!edittext_email.getText().toString().isEmpty() && !spinner_tipo_utente.getSelectedItem().toString().isEmpty()){
-                    String email = edittext_email.getText().toString();
-                    String tipoUtente = spinner_tipo_utente.getSelectedItem().toString();
-                    Log.d("bottone prosegui", "email: " + email + ", tipo : " + tipoUtente) ;
-                    RegistrazioneDAO registrazioneDAO = new RegistrazioneDAO(Registrazione.this,email,tipoUtente);
-                    registrazioneDAO.openConnection();
-                    registrazioneDAO.checkEmail();
-                }else{
-                    Log.d("bottone prosegui", "errore " );
+                // Ottieni i valori dai campi di input
+                String email = edittext_email.getText().toString().trim();
+                String tipoUtente = spinner_tipo_utente.getSelectedItem().toString().trim();
+
+                // Verifica se email e tipoUtente non sono vuoti
+                if (!email.isEmpty() && !tipoUtente.isEmpty()) {
+                    // Effettua ulteriori controlli sulla validità dell'email
+                    if (Patterns.EMAIL_ADDRESS.matcher(email).matches() && email.length() <= 100) {
+                        // Tutti i controlli sull'email sono passati, procedi con gli altri controlli
+                        // Controlla la lunghezza massima del nome (50 caratteri)
+                        String nome = edittext_nome.getText().toString().trim();
+                        if (nome.length() > 50) {
+                            edittext_nome.setError("Il nome non può superare i 50 caratteri");
+                            return; // Esce dal metodo onClick se il nome supera i 50 caratteri
+                        }
+
+                        // Controlla la lunghezza massima del cognome (50 caratteri)
+                        String cognome = edittext_cognome.getText().toString().trim();
+                        if (cognome.length() > 50) {
+                            edittext_cognome.setError("Il cognome non può superare i 50 caratteri");
+                            return; // Esce dal metodo onClick se il cognome supera i 50 caratteri
+                        }
+
+                        // Controlla la lunghezza massima della password (100 caratteri)
+                        String password = edittext_password.getText().toString().trim();
+                        if (password.length() > 100) {
+                            edittext_password.setError("La password non può superare i 100 caratteri");
+                            return; // Esce dal metodo onClick se la password supera i 100 caratteri
+                        }
+
+                        // Controlla che la conferma della password corrisponda alla password
+                        String conferma_password = edittext_conferma_password.getText().toString().trim();
+                        if (!password.equals(conferma_password)) {
+                            edittext_conferma_password.setError("Le password non corrispondono");
+                            return; // Esce dal metodo onClick se le password non corrispondono
+                        }
+
+                        // Tutti i controlli passati, procedi con l'apertura dell'activity successiva
+                        Log.d("bottone prosegui", "email: " + email + ", tipo: " + tipoUtente);
+                        RegistrazioneDAO registrazioneDAO = new RegistrazioneDAO(Registrazione.this, email, tipoUtente);
+                        registrazioneDAO.openConnection();
+                        registrazioneDAO.checkEmail();
+                    } else {
+                        // Mostra un messaggio di errore se l'email non è valida
+                        edittext_email.setError("Inserire un'email valida (max 100 caratteri)");
+                    }
+                } else {
+                    // Mostra un messaggio di errore se email o tipoUtente sono vuoti
+                    if (email.isEmpty()) {
+                        edittext_email.setError("Inserire un'email");
+                    }
+                    if (tipoUtente.isEmpty()) {
+                        // Mostra un messaggio di errore se il tipoUtente non è stato selezionato
+                        // (potresti voler mostrare un messaggio diverso a seconda del tuo layout)
+                        // Spinner non ha la possibilità di impostare un messaggio di errore direttamente,
+                        // quindi potresti dover gestire questo caso in modo diverso
+                        Log.d("bottone prosegui", "Il tipo utente non è stato selezionato");
+                    }
                 }
-
-//                String nome = edittext_nome.getText().toString();
-//                String cognome = edittext_cognome.getText().toString();
-//                String email = edittext_email.getText().toString();
-//                String password = edittext_password.getText().toString();
-//                String conferma_password = edittext_conferma_password.getText().toString();
-//                String tipoUtente = spinner_tipo_utente.getSelectedItem().toString();
-//
-//                if(nome.isEmpty() || email.isEmpty() || cognome.isEmpty() || password.isEmpty()){
-//                    Toast.makeText(getApplicationContext(), "Inserire tutti i valori", Toast.LENGTH_SHORT).show();
-//                }else{
-//                    if(password.equals(conferma_password)){
-//                        Intent intent = new Intent(Registrazione.this, RegistrazioneCampiFacoltativi.class);
-//                        intent.putExtra("email", email);
-//                        intent.putExtra("tipoUtente", tipoUtente);
-//                        intent.putExtra("nome", nome);
-//                        intent.putExtra("cognome", cognome);
-//                        intent.putExtra("password", password);
-//                        startActivity(intent);
-//                    }
-//                }
-
-
             }
         });
+
     }
 
     public void handleCheckEmail(int result) {

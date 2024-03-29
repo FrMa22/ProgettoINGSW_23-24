@@ -131,34 +131,41 @@ public class VenditoreAstaInglese extends GestoreComuniImplementazioni {
         });
 
         bottoneConferma.setOnClickListener(v -> {
-            //
-            //Toast.makeText(AstaInglese.this,"Connessione esistente",Toast.LENGTH_SHORT).show();
             String nomeProdotto = nome.getText().toString().trim();
             String descrizioneProdotto = descrizione.getText().toString().trim();
             String base = baseAsta.getText().toString().trim();
             String intervallo = intervalloAsta.getText().toString().trim();
-            String rialzo=rialzoAsta.getText().toString().trim();
+            String rialzo = rialzoAsta.getText().toString().trim();
 
-            if(!nomeProdotto.isEmpty() && !base.isEmpty() && !intervallo.isEmpty() && !rialzo.isEmpty()) {
+            if (nomeProdotto.isEmpty()) {
+                nome.setError("Si prega di inserire un nome.");
+            } else if (nomeProdotto.length() > 100) {
+                nome.setError("Il nome non può essere più lungo di 100 caratteri.");
+            } else if (descrizioneProdotto.isEmpty()) {
+                descrizione.setError("Si prega di inserire una descrizione.");
+            } else if (descrizioneProdotto.length() > 250) {
+                descrizione.setError("La descrizione non può essere più lunga di 250 caratteri.");
+            } else if (base.isEmpty()) {
+                baseAsta.setError("Si prega di inserire un prezzo base.");
+            } else if (!base.matches("^\\d*\\.?\\d+$")) {
+                baseAsta.setError("Si prega di inserire solo numeri per il prezzo base.");
+            } else if (intervallo.isEmpty()) {
+                intervalloAsta.setError("Si prega di inserire un intervallo per le offerte.");
+            } else if (!intervallo.matches("^\\d{1,5}$")) {
+                intervalloAsta.setError("L'intervallo deve contenere solo numeri e non può superare i 5 caratteri.");
+            } else if (rialzo.isEmpty()) {
+                rialzoAsta.setError("Si prega di inserire un valore minimo di rialzo.");
+            } else if (!rialzo.matches("^\\d*\\.?\\d+$")) {
+                rialzoAsta.setError("Si prega di inserire solo numeri per il valore minimo di rialzo.");
+            } else {
                 // Chiamata al metodo per creare l'asta nel database
                 progressBarVenditoreAstaInglese.setVisibility(View.VISIBLE);
-                setAllClickable(relativeLayoutAstaInglese,false);
+                setAllClickable(relativeLayoutAstaInglese, false);
                 astaIngleseDao.openConnection();
                 astaIngleseDao.creaAstaInglese(base, intervallo, rialzo, nomeProdotto, descrizioneProdotto, email, img);
             }
-            else{
-                if(nomeProdotto.isEmpty()){
-                    Toast.makeText(this, "Si prega di inserire un nome.", Toast.LENGTH_SHORT).show();
-                }else if(base.isEmpty()){
-                    Toast.makeText(this, "Si prega di inserire un prezzo base.", Toast.LENGTH_SHORT).show();
-                }else if(intervallo.isEmpty()){
-                    Toast.makeText(this, "Si prega di inserire un intervallo per le offerte.", Toast.LENGTH_SHORT).show();
-                }else if(rialzo.isEmpty()) {
-                    Toast.makeText(this, "Si prega di inserire un valore minimo di rialzo.", Toast.LENGTH_SHORT).show();
-                }
-            }
-
         });
+
 
     }
 

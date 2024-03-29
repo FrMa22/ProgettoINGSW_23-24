@@ -74,24 +74,46 @@ public class RegistrazioneCampiFacoltativi extends GestoreComuniImplementazioni 
 
         bottoneProseguiRegistrazione.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                String bio = testoBio.getText().toString();
-                String paese = testoProvenienza.getText().toString();
-                String sitoWeb = testoSitoWeb.getText().toString();
+                // Ottieni i valori dai campi di input
+                String bio = testoBio.getText().toString().trim();
+                String paese = testoProvenienza.getText().toString().trim();
+                String sitoWeb = testoSitoWeb.getText().toString().trim();
+
+                // Verifica che la lunghezza della bio non superi i 100 caratteri
+                if (bio.length() > 100) {
+                    testoBio.setError("La bio non può superare i 100 caratteri");
+                    return; // Esce dal metodo onClick se la bio supera i 100 caratteri
+                }
+
+                // Verifica che la lunghezza del paese non superi i 25 caratteri
+                if (paese.length() > 25) {
+                    testoProvenienza.setError("Il paese non può superare i 25 caratteri");
+                    return; // Esce dal metodo onClick se il paese supera i 25 caratteri
+                }
+
+                // Verifica che la lunghezza del sito web non superi i 50 caratteri
+                if (sitoWeb.length() > 50) {
+                    testoSitoWeb.setError("Il sito web non può superare i 50 caratteri");
+                    return; // Esce dal metodo onClick se il sito web supera i 50 caratteri
+                }
+
+                // Altrimenti, se tutti i controlli passano, procedi con l'inserimento dei dati nel database
                 registrazioneFacoltativaDAO.openConnection();
-                registrazioneFacoltativaDAO.inserimentoDatiRegistrazione(nome, cognome, email,password, tipoUtente, bio,sitoWeb, paese);
+                registrazioneFacoltativaDAO.inserimentoDatiRegistrazione(nome, cognome, email, password, tipoUtente, bio, sitoWeb, paese);
                 registrazioneFacoltativaDAO.closeConnection();
 
                 registrazioneSocialDAO.openConnection();
-                registrazioneSocialDAO.inserimentoSocial(elencoNomeSocialRegistrazione,elencoNomeUtenteSocialRegistrazione );
+                registrazioneSocialDAO.inserimentoSocial(elencoNomeSocialRegistrazione, elencoNomeUtenteSocialRegistrazione);
                 registrazioneSocialDAO.closeConnection();
 
+                // Avvia l'activity successiva
                 Intent intent = new Intent(RegistrazioneCampiFacoltativi.this, RegistrazioneCategorie.class);
                 intent.putExtra("email", email);
                 intent.putExtra("tipoUtente", tipoUtente);
                 startActivity(intent);
-
             }
         });
+
 
     }
 
