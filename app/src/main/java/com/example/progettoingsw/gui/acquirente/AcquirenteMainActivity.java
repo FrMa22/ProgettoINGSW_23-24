@@ -32,7 +32,7 @@
             setContentView(R.layout.acquirente_activity_main);
             bottomNavigationView = findViewById(R.id.acquirente_nav_view);
 
-            email = getIntent().getStringExtra("email");
+            email = getIntent().getStringExtra("email").trim();
             tipoUtente = getIntent().getStringExtra("tipoUtente");
             NotificheDAO notificheDAO = new NotificheDAO(this,email,tipoUtente);
             notificheDAO.openConnection();

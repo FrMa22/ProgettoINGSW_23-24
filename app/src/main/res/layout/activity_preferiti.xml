@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".gui.PreferitiActivity"
+    android:id="@+id/relative_layout_schermata_preferiti"
     android:orientation="vertical"
     android:background="@color/colore_base">
 
     <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_schermata_preferiti"
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:background="@drawable/design_toolbar">
@@ -32,20 +34,42 @@
 
     </androidx.appcompat.widget.Toolbar>
 
+    <TextView
+        android:id="@+id/text_view_nessuna_asta_preferita_trovata"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nessun'asta trovata."
+        android:textColor="@color/colore_secondario"
+        android:layout_gravity="center"
+        android:layout_below="@id/toolbar_schermata_preferiti"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="30dp"
+        android:textSize="35sp"
+        android:textStyle="bold"
+        android:visibility="invisible"
+        />
+
+    <ProgressBar
+        android:id="@+id/progress_bar_schermata_preferiti"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:indeterminate="true"
+        android:visibility="invisible" />
+
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1" >
+        android:layout_height="wrap_content"
+        android:layout_below="@id/toolbar_schermata_preferiti">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerAstePreferiti"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_height="wrap_content"
             />
 
 
     </ScrollView>
 
 
-</LinearLayout>
+</RelativeLayout>

@@ -36,13 +36,13 @@ import com.example.progettoingsw.R;
 
 import com.example.progettoingsw.DAO.AstaInversaDAO;
 import com.example.progettoingsw.controllers_package.InsertAsta;
-import com.example.progettoingsw.gui.RegistrazioneCategorie;
 import com.google.android.material.button.MaterialButton;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class AcquirenteAstaInversa extends Fragment {
     private int idAsta;
@@ -56,7 +56,7 @@ public class AcquirenteAstaInversa extends Fragment {
     ActivityResultLauncher<Intent> resultLauncher;
     private ArrayList<String> listaCategorieScelte;
     private MaterialButton bottoneCategorieAstaInversa;
-    EditText prodottoAstaInversa;
+    EditText nomeAstaInversa;
     EditText prezzoAstaInversa;
 
     private String selectedDateString;
@@ -66,10 +66,10 @@ public class AcquirenteAstaInversa extends Fragment {
     Uri uriImmagine;
     byte[] imageBytes;
     String email;
-    EditText editTextDescrizioneProdottoAstaAstaInversa;
+    EditText DescrizioneProdottoAstaAstaInversa;
 
     public AcquirenteAstaInversa(String email){
-        this.email = email;
+        this.email = email.trim();
     }
 
     @Override
@@ -101,8 +101,8 @@ public class AcquirenteAstaInversa extends Fragment {
         bottoneData =  view2.findViewById(R.id.bottoneDataAstaInversa);
         bottoneOra =  view2.findViewById(R.id.bottoneOraAstaInversa);
 
-        prodottoAstaInversa=view2.findViewById(R.id.editTextNomeProdottoAstaAstaInversa);
-        editTextDescrizioneProdottoAstaAstaInversa = view2.findViewById(R.id.editTextDescrizioneProdottoAstaAstaInversa);
+        nomeAstaInversa =view2.findViewById(R.id.editTextNomeProdottoAstaAstaInversa);
+        DescrizioneProdottoAstaAstaInversa = view2.findViewById(R.id.editTextDescrizioneProdottoAstaAstaInversa);
         prezzoAstaInversa=view2.findViewById(R.id.editTextPrezzoAstaInversa);
 
         imageBytes=null;
@@ -138,24 +138,52 @@ public class AcquirenteAstaInversa extends Fragment {
 
         bottoneConferma.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                //Controller.redirectActivity(AcquirenteAstaInversa.this, AcquirenteFragmentHome.class);
-
-
-                String nome = prodottoAstaInversa.getText().toString();
+                String nome = nomeAstaInversa.getText().toString();
                 String prezzo = prezzoAstaInversa.getText().toString();
-                String descrizione = editTextDescrizioneProdottoAstaAstaInversa.getText().toString();
-                String data=selectedDateString;
-                String ora=selectedHourString;
+                String descrizione = DescrizioneProdottoAstaAstaInversa.getText().toString();
+                String data = selectedDateString;
+                String ora = selectedHourString;
 
-                // Chiamata al metodo per creare l'asta nel database
-                astaInversaDao.openConnection();
-                astaInversaDao.creaAstaInversa(nome,prezzo,data,ora,descrizione,email,imageBytes,listaCategorieScelte);
-                AppCompatActivity activity = (AppCompatActivity) requireContext();
+                if (nome.isEmpty()) {
+                    nomeAstaInversa.setError("Si prega di inserire un nome.");
+                } else if (nome.length() > 100) {
+                    nomeAstaInversa.setError("Il nome non può essere più lungo di 100 caratteri.");
+                } else if (descrizione.isEmpty()) {
+                    DescrizioneProdottoAstaAstaInversa.setError("Si prega di inserire una descrizione.");
+                } else if (descrizione.length() > 250) {
+                    DescrizioneProdottoAstaAstaInversa.setError("La descrizione non può essere più lunga di 250 caratteri.");
+                } else if (prezzo.isEmpty()) {
+                    prezzoAstaInversa.setError("Si prega di inserire un prezzo.");
+                } else if (!prezzo.matches("^\\d+(\\.\\d+)?$")) {
+                    prezzoAstaInversa.setError("Il prezzo deve essere un numero valido.");
+                } else if (data.isEmpty()) {
+                    Toast.makeText(getContext(), "Si prega di selezionare una data valida.", Toast.LENGTH_SHORT).show();
+                } else {
+                    // Converte la data e l'ora in oggetti Calendar per la comparazione
+                    Calendar selectedDateTime = Calendar.getInstance();
+                    selectedDateTime.set(Calendar.YEAR, Integer.parseInt(data.substring(0, 4)));
+                    selectedDateTime.set(Calendar.MONTH, Integer.parseInt(data.substring(5, 7)) - 1);
+                    selectedDateTime.set(Calendar.DAY_OF_MONTH, Integer.parseInt(data.substring(8, 10)));
+                    selectedDateTime.set(Calendar.HOUR_OF_DAY, Integer.parseInt(ora.substring(0, 2)));
+                    selectedDateTime.set(Calendar.MINUTE, Integer.parseInt(ora.substring(3)));
 
-                Intent intent = new Intent(getContext(), AcquirenteMainActivity.class);//test del login
-                intent.putExtra("email", email);
-                intent.putExtra("tipoUtente", "acquirente");
-                startActivity(intent);
+                    Calendar currentDateTime = Calendar.getInstance();
+
+                    // Controlla se la data è precedente a oggi o se la data e l'ora sono precedenti all'istante attuale
+                    if (selectedDateTime.before(currentDateTime)) {
+                        Toast.makeText(getContext(), "La data e l'ora devono essere in futuro.", Toast.LENGTH_SHORT).show();
+                    } else {
+                        // Chiamata al metodo per creare l'asta nel database
+                        astaInversaDao.openConnection();
+                        astaInversaDao.creaAstaInversa(nome, prezzo, data, ora, descrizione, email, imageBytes, listaCategorieScelte);
+                        AppCompatActivity activity = (AppCompatActivity) requireContext();
+
+                        Intent intent = new Intent(getContext(), AcquirenteMainActivity.class);//test del login
+                        intent.putExtra("email", email);
+                        intent.putExtra("tipoUtente", "acquirente");
+                        startActivity(intent);
+                    }
+                }
             }
         });
         bottoneAnnullaAstaInversa.setOnClickListener(new View.OnClickListener() {
@@ -171,18 +199,31 @@ public class AcquirenteAstaInversa extends Fragment {
     }
 
 
-    private void apriCalendario(){
+    private void apriCalendario() {
+        // Ottieni l'anno, il mese e il giorno odierni
+        Calendar cal = Calendar.getInstance();
+        int year = cal.get(Calendar.YEAR);
+        int month = cal.get(Calendar.MONTH);
+        int day = cal.get(Calendar.DAY_OF_MONTH);
+
+        // Crea il DatePickerDialog con la data odierna come minima data selezionabile
         DatePickerDialog calendario = new DatePickerDialog(getContext(), new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int day) {
-                bottoneData.setText(String.valueOf(year) + "." + String.valueOf(month+1) + "." + String.valueOf(day));
-                // Formatta la data selezionata come una stringa unica contenente anno, mese e giorno
+                // Imposta la data selezionata nel bottone e nella variabile di classe
+                bottoneData.setText(String.valueOf(year) + "." + String.valueOf(month + 1) + "." + String.valueOf(day));
                 selectedDateString = String.format("%04d-%02d-%02d", year, month + 1, day);
                 bottoneData.setText(selectedDateString);
             }
-        }, 2023, 0, 1);
+        }, year, month, day);
+
+        // Imposta la data minima selezionabile come data odierna
+        calendario.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
+
+        // Mostra il DatePickerDialog
         calendario.show();
     }
+
 
     private void apriOrologio(){
         TimePickerDialog orologio = new TimePickerDialog(getContext(), new TimePickerDialog.OnTimeSetListener() {

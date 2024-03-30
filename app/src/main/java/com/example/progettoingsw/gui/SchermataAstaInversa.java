@@ -201,6 +201,7 @@ public class SchermataAstaInversa extends GestoreComuniImplementazioni {
             }
             if (astaInversaItem.getCondizione().equals("chiusa")) {
                 bottoneOffertaSchermataAstaInversa.setVisibility(View.INVISIBLE);
+                imageButtonPreferiti.setVisibility(View.INVISIBLE);
                 if(countDownTimer != null){
                     countDownTimer.cancel();
                 }

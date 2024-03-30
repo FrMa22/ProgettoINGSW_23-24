@@ -40,6 +40,7 @@ public class AstePreferiteDAO {
             // Se l'email è vuota, non fare nulla
             return;
         }
+        Log.d("getAsteForEmailUtente", "chiamo");
         new AstePreferiteDAO.DatabaseTask().execute("get_aste", email,tipoUtente);
     }
 
@@ -60,9 +61,11 @@ public class AstePreferiteDAO {
                         return null;
                     } else if (action.equals("get_aste")) {
                         if (connection != null && !connection.isClosed()) {
+                            Log.d("getAsteForEmailUtente", "entrato");
                             ArrayList<Object> aste = new ArrayList<>();
                             String tipoUtente = strings[2];
                             if (tipoUtente.equals("venditore")){
+                                Log.d("getAsteForEmailUtente", "entrato in caso venditore");
                                 String queryIngleseVenditore= "SELECT aa.* FROM preferitiVenditore pv JOIN asta_allinglese aa ON pv.id_asta = aa.id WHERE pv.indirizzo_email= ? AND pv.tipo_asta= 'inglese' " ;
                                 PreparedStatement statementInglesiVenditore = connection.prepareStatement(queryIngleseVenditore);
                                 statementInglesiVenditore.setString(1, strings[1]);

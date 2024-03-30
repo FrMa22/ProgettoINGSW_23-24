@@ -122,7 +122,7 @@
                     <TextView
                         android:id="@+id/textViewIntervalloOfferte"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:gravity="center"
                         android:textColor="@color/colore_secondario"
                         android:textSize="25sp"
@@ -140,7 +140,7 @@
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_weight="1"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:orientation="vertical">
                 <TextView
                     android:id="@+id/textViewOffertaAttualeSchermataAstaInglese"
@@ -164,6 +164,22 @@
                         android:textStyle="bold"
                         app:drawableEndCompat="@drawable/ic_euro"
                         android:drawablePadding="5dp"
+                        />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="Soglia minima di rialzo:"
+                        android:textColor="@color/colore_secondario"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="INSERIRE SOGLIA DI RIALZO"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/colore_secondario"
                         />
                 </LinearLayout>
 

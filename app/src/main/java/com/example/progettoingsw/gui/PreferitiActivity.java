@@ -5,6 +5,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -25,12 +28,14 @@ import java.util.ArrayList;
 public class PreferitiActivity extends GestoreComuniImplementazioni {
     Controller controller;
     private ImageButton backBottone;
+    private TextView text_view_nessuna_asta_preferita_trovata;
     Intent intent;
     private String email;
     private String tipoUtente;
     private AstaAdapter astaAdapter;
     private AstePreferiteDAO astePreferiteDAO;
-
+    private ProgressBar progress_bar_schermata_preferiti;
+    private RelativeLayout relative_layout_schermata_preferiti;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,11 +43,16 @@ public class PreferitiActivity extends GestoreComuniImplementazioni {
         setContentView(R.layout.activity_preferiti);
         controller = new Controller();
          intent= getIntent();
-        email =intent.getStringExtra("email");
+        email =intent.getStringExtra("email").trim();
         tipoUtente =intent.getStringExtra("tipoUtente");
+        Log.d("preferitiActivity", "email : " + email + ", tipoutente: " + tipoUtente);
         backBottone = findViewById(R.id.backButton);
         astaAdapter = new AstaAdapter(this, null);
 
+        progress_bar_schermata_preferiti = findViewById(R.id.progress_bar_schermata_preferiti);
+        progress_bar_schermata_preferiti.setVisibility(View.VISIBLE);
+        relative_layout_schermata_preferiti = findViewById(R.id.relative_layout_schermata_preferiti);
+        text_view_nessuna_asta_preferita_trovata = findViewById(R.id.text_view_nessuna_asta_preferita_trovata);
         //
         // Inizializza il RecyclerView e imposta l'adapter
         RecyclerView recyclerViewAstePreferite = findViewById(R.id.recyclerAstePreferiti);
@@ -92,6 +102,7 @@ public class PreferitiActivity extends GestoreComuniImplementazioni {
 
         astePreferiteDAO = new AstePreferiteDAO(this);
         //di default appena si apre la schermata si è già su aste aperte quindi escono già
+        setAllClickable(relative_layout_schermata_preferiti,false);
         astePreferiteDAO.openConnection();
         astePreferiteDAO.getAsteForEmailUtente(email,tipoUtente);
         recyclerViewAstePreferite.setVisibility(View.VISIBLE);
@@ -109,26 +120,28 @@ public class PreferitiActivity extends GestoreComuniImplementazioni {
     }
 
     public void astePreferite(ArrayList<Object> aste) {
-
-
-
-            if (aste != null) {
-                // Questo sovrascrive -> no
-//                RecyclerView recyclerViewAsteAttive = findViewById(R.id.recyclerAstePreferiti);
-//                AstaAdapter astaAdapterAttive = new AstaAdapter(this, aste);
-//                recyclerViewAsteAttive.setAdapter(astaAdapterAttive);
-//                recyclerViewAsteAttive.setLayoutManager(new GridLayoutManager(this,2, RecyclerView.VERTICAL,false));
+        boolean asteVuote = aste == null || aste.isEmpty();
+            if (!asteVuote)  {
                 astaAdapter.setAste(aste);
-
-
-                // Aggiungi stampe nel log per verificare che i dati siano correttamente passati
-
             } else {
+                astaAdapter.setAste(null);
                 // Nessun nome asta trovato per l'email specificata
             }
-        //
-
-
+            if(asteVuote){
+                text_view_nessuna_asta_preferita_trovata.setVisibility(View.VISIBLE);
+            }else{
+                text_view_nessuna_asta_preferita_trovata.setVisibility(View.INVISIBLE);
+            }
+            progress_bar_schermata_preferiti.setVisibility(View.INVISIBLE);
+            setAllClickable(relative_layout_schermata_preferiti, true);
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        progress_bar_schermata_preferiti.setVisibility(View.VISIBLE);
+        setAllClickable(relative_layout_schermata_preferiti, false);
+        astePreferiteDAO.openConnection();
+        astePreferiteDAO.getAsteForEmailUtente(email, tipoUtente);
     }
 
 }

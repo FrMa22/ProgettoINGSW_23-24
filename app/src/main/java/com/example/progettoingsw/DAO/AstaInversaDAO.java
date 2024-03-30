@@ -48,7 +48,7 @@ public class AstaInversaDAO {
             return;
         }
         foto=datiFoto;
-        new AstaInversaDAO.DatabaseTask().execute("insert", nome, prezzo,data,ora,descrizione,email);
+        new AstaInversaDAO.DatabaseTask().execute("insert", nome, prezzo,data,ora,descrizione,email.trim());
     }
     public void getPrezzoECondizioneAstaByID(int idAsta) {
         new AstaInversaDAO.GetPrezzoECondizioneAstaTask().execute(idAsta);

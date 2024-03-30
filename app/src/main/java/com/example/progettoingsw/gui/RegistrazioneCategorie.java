@@ -40,7 +40,7 @@ public class RegistrazioneCategorie extends GestoreComuniImplementazioni {
 
         Toast.makeText(this, "Registrazione completata! Aiutaci a capire cosa ti piace selezionando le categorie di tuo interesse.", Toast.LENGTH_LONG).show();
 
-        email = getIntent().getStringExtra("email");
+        email = getIntent().getStringExtra("email").trim();
         tipoUtente = getIntent().getStringExtra("tipoUtente");
 
         progress_bar_registrazione_categorie = findViewById(R.id.progress_bar_registrazione_categorie);

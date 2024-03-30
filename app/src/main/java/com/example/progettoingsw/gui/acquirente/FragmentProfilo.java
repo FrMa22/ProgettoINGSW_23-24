@@ -62,8 +62,8 @@ public class FragmentProfilo extends Fragment{
     private RelativeLayout relative_layout_fragment_profilo;
 
     public FragmentProfilo(String email, String tipoUtente) {
-        this.email = email;
-        this.tipoUtente = tipoUtente;
+        this.email = email.trim();
+        this.tipoUtente = tipoUtente.trim();
     }
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -170,6 +170,7 @@ public class FragmentProfilo extends Fragment{
         textview_sitoweb = view.findViewById(R.id.textview_sitoweb);
         textview_paese = view.findViewById(R.id.textview_paese);
         text_view_bio_profilo = view.findViewById(R.id.text_view_bio_profilo);
+        Log.d("Profilo" , "mail " + email +", tipoUtente " + tipoUtente + ".");
 
         // Inizializza il DAO e recupera i dati dell'acquirente
         FragmentProfiloDAO acquirente_fragment_profilo_DAO = new FragmentProfiloDAO(this, email, tipoUtente);

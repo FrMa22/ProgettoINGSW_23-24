@@ -204,6 +204,7 @@ public class SchermataAstaRibasso extends GestoreComuniImplementazioni {
             if (astaRibassoItem.getCondizione().equals("chiusa")) {
                 bottoneNuovaOfferta.setVisibility(View.INVISIBLE);
                 textViewProssimoDecremento.setText("Asta chiusa.");
+                imageButtonPreferiti.setVisibility(View.INVISIBLE);
                 countDownTimerControlloOgni10sec.cancel();
             }else{
                 long orarioAttuale = System.currentTimeMillis();

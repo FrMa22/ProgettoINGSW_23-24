@@ -115,7 +115,7 @@ public class Registrazione extends GestoreComuniImplementazioni {
                         registrazioneDAO.checkEmail();
                     } else {
                         // Mostra un messaggio di errore se l'email non è valida
-                        edittext_email.setError("Inserire un'email valida (max 100 caratteri)");
+                        edittext_email.setError("Inserire un'email nel formato valido e di lunghezza massima 100 caratteri.");
                     }
                 } else {
                     // Mostra un messaggio di errore se email o tipoUtente sono vuoti

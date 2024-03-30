@@ -302,8 +302,10 @@ public class AcquirenteFragmentHome extends Fragment {
         preferitiButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Controller.redirectActivityEmailTipoUtente(getActivity(), PreferitiActivity.class,email,"acquirente");
-                Toast.makeText(getContext(), "Apri l'activity dei preferiti", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getContext(), PreferitiActivity.class);
+                intent.putExtra("email", email);
+                intent.putExtra("tipoUtente",tipoUtente);
+                startActivity(intent);
             }
         });
     }

@@ -92,19 +92,22 @@ public class LoginActivity extends GestoreComuniImplementazioni {
                 String mail = editText_mail.getText().toString().trim();  // Rimuovi eventuali spazi all'inizio e alla fine
                 String password = editText_password.getText().toString().trim();
 
-                if (!mail.isEmpty() && !password.isEmpty()) {
+                if(mail.isEmpty()){
+                    editText_mail.setError("Si prega di inserire un indirizzo email.");
+                }else if(mail.length()>100){
+                    editText_mail.setError("Attenzione! L'indirizzo email non può essere più lungo di 100 caratteri.");
+                }else if(password.isEmpty()){
+                    editText_password.setError("Si prega di inserire una password.");
+                }else if(password.length()>100){
+                    editText_password.setError("Attenzione! La password non può essere più lunga di 100 caratteri.");
+                }else{
                     progress_bar_login.setVisibility(View.VISIBLE);
                     setAllClickable(linear_layout_login,false);
                     // Chiamata al metodo per cercare nel database
                     logindao.openConnection();
                     logindao.findUser(mail, password);
                     Log.d("result set" , "fatta finduser");
-
-                } else {
-                    // Gestione del caso in cui uno o entrambi i campi sono vuoti
-                    Toast.makeText(LoginActivity.this, "Inserisci sia l'email che la password", Toast.LENGTH_SHORT).show();
                 }
-
             }
         });
 

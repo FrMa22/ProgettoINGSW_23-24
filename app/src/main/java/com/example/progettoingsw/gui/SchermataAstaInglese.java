@@ -245,6 +245,7 @@ public class SchermataAstaInglese extends GestoreComuniImplementazioni {
                 bottoneNuovaOfferta.setVisibility(View.INVISIBLE);
                 countDownTimer.cancel();
                 textViewIntervalloOfferte.setText("Asta chiusa.");
+                imageButtonPreferiti.setVisibility(View.INVISIBLE);
             }
 
         } else {

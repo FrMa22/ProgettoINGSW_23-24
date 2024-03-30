@@ -84,7 +84,7 @@ public class AstaPreferitaInversaDAO {
         protected Boolean doInBackground(String... strings) {
             try {
                 if (strings.length > 1) {
-                    String email = strings[0];
+                    String email = strings[2];
                     int idAsta = Integer.parseInt(strings[1]);
                     if (connection != null && !connection.isClosed()) {
                         String queryIngleseAcquirente = "SELECT pv.* FROM preferitiVenditore pv  WHERE pv.indirizzo_email= ? AND pv.id_asta= ? AND pv.tipo_asta= 'inversa'";

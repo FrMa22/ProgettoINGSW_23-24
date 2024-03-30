@@ -36,7 +36,7 @@ public class RegistrazioneCampiFacoltativi extends GestoreComuniImplementazioni 
         setContentView(R.layout.registrazione_campi_facoltativi);
         controller = new Controller();
         intent = getIntent();
-        email =intent.getStringExtra("email");
+        email =intent.getStringExtra("email").trim();
         tipoUtente =intent.getStringExtra("tipoUtente");
         nome =intent.getStringExtra("nome");
         cognome =intent.getStringExtra("cognome");

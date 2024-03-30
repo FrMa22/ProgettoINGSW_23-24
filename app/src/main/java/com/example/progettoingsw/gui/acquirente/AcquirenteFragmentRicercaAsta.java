@@ -128,12 +128,16 @@ public class AcquirenteFragmentRicercaAsta extends Fragment {
             @Override
             public void onClick(View view) {
                 parolaRicercata = edittext_ricerca.getText().toString();
-                progress_bar_schermata_ricerca_asta.setVisibility(View.VISIBLE);
-                setAllClickable(relative_layout_fragment_ricerca,false);
-                setNavigationView(false);
-                ricercaAsteDAO.openConnection();
-                ricercaAsteDAO.ricercaAste(parolaRicercata, listaCategorieScelte, ordinamentoPrezzo);
-                ricercaAsteDAO.closeConnection();
+                if(parolaRicercata.length()>100){
+                    edittext_ricerca.setError("Attenzione! La parola ricercata non può essere più lunga di 100 caratteri.");
+                }else{
+                    progress_bar_schermata_ricerca_asta.setVisibility(View.VISIBLE);
+                    setAllClickable(relative_layout_fragment_ricerca,false);
+                    setNavigationView(false);
+                    ricercaAsteDAO.openConnection();
+                    ricercaAsteDAO.ricercaAste(parolaRicercata, listaCategorieScelte, ordinamentoPrezzo);
+                    ricercaAsteDAO.closeConnection();
+                }
             }
         });
 
