@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,12 +34,18 @@ public class PopUpNuovaOfferta extends Dialog implements View.OnClickListener {
     private AstaInversaDAO astaInversaDAO;
     private SchermataAstaInglese schermataAstaInglese;
     private SchermataAstaInversa schermataAstaInversa;
+    private LinearLayout linear_layout_prezzo_attuale_popup_nuova_offerta;
+    private LinearLayout linear_layout_rialzo_minimo_popup_nuova_offerta;
+    private View view_popup_nuova_offerta;
+    private String rialzoMin;
+    private TextView TextViewPrezzoRialzoMinimo;
 
-    public PopUpNuovaOfferta(Context context, String emailOfferente, int id_asta, String prezzoVecchio, SchermataAstaInglese schermataAstaInglese) {
+    public PopUpNuovaOfferta(Context context, String emailOfferente, int id_asta, String prezzoVecchio, String rialzoMin, SchermataAstaInglese schermataAstaInglese) {
         super(context);
         this.emailOfferente = emailOfferente;
         this.id_asta = id_asta;
         this.prezzoVecchio = prezzoVecchio;
+        this.rialzoMin = rialzoMin;
         this.schermataAstaInglese = schermataAstaInglese;
     }
     public PopUpNuovaOfferta(Context context, String emailOfferente, int id_asta, String prezzoVecchio, SchermataAstaInversa schermataAstaInversa) {
@@ -66,7 +73,18 @@ public class PopUpNuovaOfferta extends Dialog implements View.OnClickListener {
         Log.d("PopupNuovaOfferta", "prezzo vecchio : " + prezzoVecchio);
         textviewPrezzoAttuale.setText(prezzoVecchio);
         prezzoVecchio = textviewPrezzoAttuale.getText().toString();
+        linear_layout_prezzo_attuale_popup_nuova_offerta = findViewById(R.id.linear_layout_prezzo_attuale_popup_nuova_offerta);
+        linear_layout_rialzo_minimo_popup_nuova_offerta = findViewById(R.id.linear_layout_rialzo_minimo_popup_nuova_offerta);
+        view_popup_nuova_offerta = findViewById(R.id.view_popup_nuova_offerta);
+        TextViewPrezzoRialzoMinimo = findViewById(R.id.TextViewPrezzoRialzoMinimo);
 
+        if(schermataAstaInglese!=null){
+            Integer minimaOffeta = Math.round(Float.parseFloat(rialzoMin) + Float.parseFloat(prezzoVecchio));
+            TextViewPrezzoRialzoMinimo.setText(minimaOffeta.toString());
+        }else{
+            linear_layout_rialzo_minimo_popup_nuova_offerta.setVisibility(View.GONE);
+            view_popup_nuova_offerta.setVisibility(View.GONE);
+        }
         textviewConfermaPopUpOfferta.setOnClickListener(this);
         textviewAnnullaPopUpOfferta.setOnClickListener(this);
     }
@@ -82,9 +100,13 @@ public class PopUpNuovaOfferta extends Dialog implements View.OnClickListener {
             }else{
                     Float offertaAttuale = Float.parseFloat(offerta);
                     Float offertaVecchia = Float.parseFloat(prezzoVecchio);
+                    //caso in cui popup è per un'asta inglese
                     if(schermataAstaInglese != null){
+                        Float minimaOffeta = (Float.parseFloat(rialzoMin) + Float.parseFloat(prezzoVecchio));
                         if(offertaAttuale<=offertaVecchia) {
                             Toast.makeText(getContext(), "Attenzione! L'offerta deve superare il prezzo attuale dell'asta.", Toast.LENGTH_SHORT).show();
+                        } else if(offertaAttuale < minimaOffeta){
+                            Toast.makeText(getContext(), "Attenzione! L'offerta deve almeno eguagliare il rialzo minimo.", Toast.LENGTH_SHORT).show();
                         }else{
                             astaIngleseDAO = new AstaIngleseDAO();
                             astaIngleseDAO.openConnection();

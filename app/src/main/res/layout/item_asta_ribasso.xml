@@ -8,28 +8,17 @@
     android:layout_marginBottom="10dp"
     android:background="@drawable/design_bio_personale"
     android:orientation="vertical">
-
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Nome:"
-        android:textSize="12sp"
-        android:layout_gravity="start"
-        android:layout_marginStart="10dp"
-        />
-    <TextView
-        android:id="@+id/textView_nome_item_asta_ribasso"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        android:gravity="center"
-        android:background="@drawable/bordi_trasparenti"
+        android:text="Asta al Ribasso"
+        android:textSize="20sp"
         android:textColor="@color/colore_secondario"
-        android:textSize="16sp"
-        android:maxLines="1"
-        android:ellipsize="end"/>
+        android:textStyle="bold"
+        android:gravity="center"
+        android:layout_gravity="center"
+        />
+
     <RelativeLayout
         android:layout_width="160dp"
         android:layout_height="180dp"
@@ -49,7 +38,30 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="Nome:"
+        android:textColor="@color/colore_hint"
+        android:textSize="12sp"
+        android:layout_gravity="start"
+        android:layout_marginStart="10dp"
+        />
+    <TextView
+        android:id="@+id/textView_nome_item_asta_ribasso"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:gravity="center"
+        android:background="@drawable/bordi_trasparenti"
+        android:textColor="@color/colore_secondario"
+        android:textSize="16sp"
+        android:maxLines="1"
+        android:ellipsize="end"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="Descrizione:"
+        android:textColor="@color/colore_hint"
         android:textSize="12sp"
         android:layout_gravity="start"
         android:layout_marginStart="10dp"
@@ -58,7 +70,7 @@
         android:id="@+id/textView_descrizione_item_asta_ribasso"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:minHeight="40dp"
+        android:hint="Assente"
         android:layout_gravity="center"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
@@ -72,6 +84,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Prezzo:"
+        android:textColor="@color/colore_hint"
         android:textSize="12sp"
         android:layout_gravity="start"
         android:layout_marginStart="10dp"
@@ -92,6 +105,7 @@
         android:layout_height="wrap_content"
         android:text="intervallo decrementale:"
         android:textSize="12sp"
+        android:textColor="@color/colore_hint"
         android:layout_gravity="start"
         android:layout_marginStart="10dp"
         />
@@ -112,6 +126,7 @@
         android:text="prezzo per decremento:"
         android:textSize="12sp"
         android:layout_gravity="start"
+        android:textColor="@color/colore_hint"
         android:layout_marginStart="10dp"
         />
     <TextView

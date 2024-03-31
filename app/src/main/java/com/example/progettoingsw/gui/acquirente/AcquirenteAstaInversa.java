@@ -148,8 +148,6 @@ public class AcquirenteAstaInversa extends Fragment {
                     nomeAstaInversa.setError("Si prega di inserire un nome.");
                 } else if (nome.length() > 100) {
                     nomeAstaInversa.setError("Il nome non può essere più lungo di 100 caratteri.");
-                } else if (descrizione.isEmpty()) {
-                    DescrizioneProdottoAstaAstaInversa.setError("Si prega di inserire una descrizione.");
                 } else if (descrizione.length() > 250) {
                     DescrizioneProdottoAstaAstaInversa.setError("La descrizione non può essere più lunga di 250 caratteri.");
                 } else if (prezzo.isEmpty()) {

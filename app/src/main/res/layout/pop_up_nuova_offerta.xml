@@ -23,29 +23,88 @@
         android:textStyle="bold"
         android:text="Fai un offerta"/>
 
-    <TextView
-        android:id="@+id/TextViewOffertaAsta"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="Prezzo attuale :"
-        android:textColor="@color/colore_hint"
-        android:textSize="18sp"
-        android:textStyle="bold" />
+        android:orientation="horizontal"
+        >
+        <LinearLayout
+            android:id="@+id/linear_layout_prezzo_attuale_popup_nuova_offerta"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+            <TextView
+                android:id="@+id/TextViewOffertaAsta"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Prezzo attuale :"
+                android:textColor="@color/colore_hint"
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/TextViewPrezzoOffertaAsta"
-        android:layout_width="wrap_content"
-        android:layout_height="50dp"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:layout_margin="5dp"
-        android:drawableEnd="@drawable/ic_euro"
-        android:drawablePadding="5dp"
-        android:textColor="@color/colore_secondario"
-        android:text="200"
-        android:textSize="25sp"
-        android:textStyle="bold"/>
+            <TextView
+                android:id="@+id/TextViewPrezzoOffertaAsta"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:layout_margin="5dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginBottom="5dp"
+                android:drawableEnd="@drawable/ic_euro"
+                android:drawablePadding="5dp"
+                android:gravity="center"
+                android:textColor="@color/colore_secondario"
+                android:textSize="25sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <View
+            android:id="@+id/view_popup_nuova_offerta"
+            android:layout_width="2dp"
+            android:layout_height="match_parent"
+            android:background="@color/colore_hint"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            />
+        <LinearLayout
+            android:id="@+id/linear_layout_rialzo_minimo_popup_nuova_offerta"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+            <TextView
+                android:id="@+id/TextViewRialzoMinimo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Offerta minima :"
+                android:textColor="@color/colore_hint"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/TextViewPrezzoRialzoMinimo"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:layout_margin="5dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginBottom="5dp"
+                android:drawableEnd="@drawable/ic_euro"
+                android:drawablePadding="5dp"
+                android:gravity="center"
+                android:textColor="@color/colore_secondario"
+                android:textSize="25sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+    </LinearLayout>
+
 
     <TextView
         android:id="@+id/TextViewNuovaOffertaAsta"

@@ -53,6 +53,7 @@ public class SchermataAstaInglese extends GestoreComuniImplementazioni {
     private AstaIngleseDAO astaIngleseDAO;
     private AstaPreferitaIngleseDAO astaPreferitaIngleseDAO;
     boolean isPreferito;
+    private TextView textViewSogliaRialzoSchermataAstaInglese;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,6 +66,7 @@ public class SchermataAstaInglese extends GestoreComuniImplementazioni {
         setAllClickable(relativeLayoutSchermataAstaInglese,false);
 
         // Inizializzazione dei TextView, ImageView e altri elementi
+        textViewSogliaRialzoSchermataAstaInglese = findViewById(R.id.textViewSogliaRialzoSchermataAstaInglese);
         textViewNomeProdotto = findViewById(R.id.textViewNomeProdottoSchermataAstaInglese);
         imageViewProdotto = findViewById(R.id.ImageViewSchermataAstaInglese);
         textViewDescrizione = findViewById(R.id.textViewDescrizioneSchermataAstaInglese);
@@ -120,7 +122,7 @@ public class SchermataAstaInglese extends GestoreComuniImplementazioni {
         bottoneNuovaOfferta.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 astaIngleseDAO.getAstaIngleseByID(id);
-                PopUpNuovaOfferta popUpNuovaOfferta = new PopUpNuovaOfferta(SchermataAstaInglese.this,email,id, textViewPrezzo.getText().toString(), SchermataAstaInglese.this);
+                PopUpNuovaOfferta popUpNuovaOfferta = new PopUpNuovaOfferta(SchermataAstaInglese.this,email,id, textViewPrezzo.getText().toString(),textViewSogliaRialzoSchermataAstaInglese.getText().toString(), SchermataAstaInglese.this);
                 popUpNuovaOfferta.show();
             }
         });
@@ -216,7 +218,7 @@ public class SchermataAstaInglese extends GestoreComuniImplementazioni {
             textViewDescrizione.setText(astaIngleseItem.getDescrizione());
             textViewPrezzo.setText(astaIngleseItem.getPrezzoAttuale());
             textViewVenditore.setText(astaIngleseItem.getEmailVenditore());
-
+            textViewSogliaRialzoSchermataAstaInglese.setText(astaIngleseItem.getRialzoMin());
             String intervalloOfferte = astaIngleseItem.getIntervalloTempoOfferte();
             // Ottieni la data e l'ora attuali con il giorno incluso
             LocalDateTime now = LocalDateTime.now();

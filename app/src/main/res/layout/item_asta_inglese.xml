@@ -12,24 +12,13 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="nome:"
-        android:textSize="12sp"
-        android:layout_gravity="start"
-        android:layout_marginStart="10dp"
-        />
-    <TextView
-        android:id="@+id/textView_nome_item_asta_inglese"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        android:gravity="center"
-        android:background="@drawable/bordi_trasparenti"
+        android:text="Asta All'inglese"
+        android:textSize="20sp"
         android:textColor="@color/colore_secondario"
-        android:textSize="16sp"
-        android:maxLines="1"
-        android:ellipsize="end"/>
+        android:textStyle="bold"
+        android:gravity="center"
+        android:layout_gravity="center"
+        />
     <RelativeLayout
         android:layout_width="160dp"
         android:layout_height="180dp"
@@ -53,8 +42,31 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="nome:"
+        android:textSize="12sp"
+        android:textColor="@color/colore_hint"
+        android:layout_gravity="start"
+        android:layout_marginStart="10dp"
+        />
+    <TextView
+        android:id="@+id/textView_nome_item_asta_inglese"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:gravity="center"
+        android:background="@drawable/bordi_trasparenti"
+        android:textColor="@color/colore_secondario"
+        android:textSize="16sp"
+        android:maxLines="1"
+        android:ellipsize="end"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="descrizione:"
         android:textSize="12sp"
+        android:textColor="@color/colore_hint"
         android:layout_gravity="start"
         android:layout_marginStart="10dp"
         />
@@ -62,7 +74,7 @@
         android:id="@+id/textView_descrizione_item_asta_inglese"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:minHeight="40dp"
+        android:hint="Assente"
         android:layout_gravity="center"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
@@ -78,6 +90,7 @@
         android:layout_height="wrap_content"
         android:text="intervallo offerte:"
         android:textSize="12sp"
+        android:textColor="@color/colore_hint"
         android:layout_gravity="start"
         android:layout_marginStart="10dp"
         />
@@ -85,7 +98,6 @@
         android:id="@+id/textView_intervallo_offerte_item_asta_inglese"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:minHeight="40dp"
         android:layout_gravity="center"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
@@ -102,6 +114,7 @@
         android:text="prezzo attuale:"
         android:textSize="12sp"
         android:layout_gravity="start"
+        android:textColor="@color/colore_hint"
         android:layout_marginStart="10dp"
         />
     <TextView
@@ -118,9 +131,10 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="rialzo:"
+        android:text="rialzo minimo:"
         android:textSize="12sp"
         android:layout_gravity="start"
+        android:textColor="@color/colore_hint"
         android:layout_marginStart="10dp"
         />
     <TextView

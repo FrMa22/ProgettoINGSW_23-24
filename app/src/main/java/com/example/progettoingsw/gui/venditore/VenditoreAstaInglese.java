@@ -141,8 +141,6 @@ public class VenditoreAstaInglese extends GestoreComuniImplementazioni {
                 nome.setError("Si prega di inserire un nome.");
             } else if (nomeProdotto.length() > 100) {
                 nome.setError("Il nome non può essere più lungo di 100 caratteri.");
-            } else if (descrizioneProdotto.isEmpty()) {
-                descrizione.setError("Si prega di inserire una descrizione.");
             } else if (descrizioneProdotto.length() > 250) {
                 descrizione.setError("La descrizione non può essere più lunga di 250 caratteri.");
             } else if (base.isEmpty()) {

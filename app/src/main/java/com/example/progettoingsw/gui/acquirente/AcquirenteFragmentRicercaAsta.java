@@ -50,7 +50,7 @@ public class AcquirenteFragmentRicercaAsta extends Fragment {
     private String email;
     private ProgressBar progress_bar_schermata_ricerca_asta;
     private RelativeLayout relative_layout_fragment_ricerca;
-
+    private TextView text_view_nessuna_asta_ricercata;
 
     public AcquirenteFragmentRicercaAsta(String email, String tipoUtente) {
         this.tipoUtente = tipoUtente;
@@ -71,6 +71,7 @@ public class AcquirenteFragmentRicercaAsta extends Fragment {
         //la lista è vuota di default
         listaCategorieScelte = new ArrayList<>();
 
+        text_view_nessuna_asta_ricercata = view.findViewById(R.id.text_view_nessuna_asta_ricercata);
         relative_layout_fragment_ricerca = view.findViewById(R.id.relative_layout_fragment_ricerca);
         progress_bar_schermata_ricerca_asta = view.findViewById(R.id.progress_bar_schermata_ricerca_asta);
 
@@ -169,15 +170,21 @@ public class AcquirenteFragmentRicercaAsta extends Fragment {
     }
 
     public void handleAsteRecuperate(ArrayList<Object> asteItems){
-        if(asteItems != null){
-            Log.d("handleAsteRecuperate", "ok");
+        boolean asteVuote = asteItems == null || asteItems.isEmpty();
+        if (!asteVuote)  {
             asteRecuperate.setAste(asteItems);
+        } else {
+            asteRecuperate.setAste(null);
+            // Nessun nome asta trovato per l'email specificata
+        }
+        if(asteVuote){
+            text_view_nessuna_asta_ricercata.setVisibility(View.VISIBLE);
+        }else{
+            text_view_nessuna_asta_ricercata.setVisibility(View.INVISIBLE);
+        }
             progress_bar_schermata_ricerca_asta.setVisibility(View.INVISIBLE);
             setAllClickable(relative_layout_fragment_ricerca,true);
             setNavigationView(true);
-        }else{
-            Log.d("handleConsigliateResult", "null");
-        }
     }
     private void setNavigationView(Boolean valore) {
         AcquirenteMainActivity activity = (AcquirenteMainActivity) getActivity();

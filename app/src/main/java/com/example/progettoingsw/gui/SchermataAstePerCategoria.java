@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.progettoingsw.DAO.AstePerCategorieDAO;
@@ -32,6 +33,8 @@ public class SchermataAstePerCategoria extends AppCompatActivity {
      String tipoUtente;
       ImageButton backBottone;
      AstaAdapter astaAdapter;
+     private ProgressBar progress_bar_schermata_aste_per_categoria;
+     private TextView text_view_nessuna_asta_ricercata_per_categoria;
     AstePerCategorieDAO astePerCategorieDAO;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +44,9 @@ public class SchermataAstePerCategoria extends AppCompatActivity {
         String categoriaSelezionata = intent.getStringExtra("categoria_selezionata");
         textViewTtitoloCategorie = findViewById(R.id.titoloRicercaCategoria);
         textViewTtitoloCategorie.setText(categoriaSelezionata);
+        progress_bar_schermata_aste_per_categoria = findViewById(R.id.progress_bar_schermata_aste_per_categoria);
+        progress_bar_schermata_aste_per_categoria.setVisibility(View.VISIBLE);
+        text_view_nessuna_asta_ricercata_per_categoria = findViewById(R.id.text_view_nessuna_asta_ricercata_per_categoria);
 
         controller = new Controller();
         email =intent.getStringExtra("email");
@@ -111,30 +117,19 @@ public class SchermataAstePerCategoria extends AppCompatActivity {
     }
 
     public void asteCategorie(ArrayList<Object> aste) {
-
-
-
-        if (aste != null) {
-            // Questo sovrascrive -> no
-//                RecyclerView recyclerViewAsteAttive = findViewById(R.id.recyclerAstePreferiti);
-//                AstaAdapter astaAdapterAttive = new AstaAdapter(this, aste);
-//                recyclerViewAsteAttive.setAdapter(astaAdapterAttive);
-//                recyclerViewAsteAttive.setLayoutManager(new GridLayoutManager(this,2, RecyclerView.VERTICAL,false));
-            Log.d("asteCategorie" , "entrato");
+        boolean asteVuote = aste == null || aste.isEmpty();
+        if (!asteVuote)  {
             astaAdapter.setAste(aste);
-
-
-            // Aggiungi stampe nel log per verificare che i dati siano correttamente passati
-
         } else {
-            Log.d("asteCategorie" , "entrato NULL");
+            astaAdapter.setAste(null);
             // Nessun nome asta trovato per l'email specificata
         }
-        //
-
-
+        if(asteVuote){
+            text_view_nessuna_asta_ricercata_per_categoria.setVisibility(View.VISIBLE);
+        }else{
+            text_view_nessuna_asta_ricercata_per_categoria.setVisibility(View.INVISIBLE);
+        }
+        progress_bar_schermata_aste_per_categoria.setVisibility(View.INVISIBLE);
     }
-
-
 
 }

@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+    android:background="@color/colore_base"
     tools:context=".gui.SchermataAstePerCategoria">
 
     <androidx.appcompat.widget.Toolbar
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:background="@drawable/design_toolbar">
+        android:background="@drawable/design_toolbar"
+        android:id="@+id/toolbar_schermata_aste_per_categoria">
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -34,7 +35,27 @@
         android:id="@+id/recycler_view_aste_per_categoria"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/toolbar_schermata_aste_per_categoria"
+        />
+    <ProgressBar
+        android:id="@+id/progress_bar_schermata_aste_per_categoria"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="invisible"
+        android:elevation="10dp"
+        android:indeterminate="true"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/text_view_nessuna_asta_ricercata_per_categoria"
+        android:text="Nessuna asta trovata."
+        android:textSize="35sp"
+        android:textColor="@color/colore_secondario"
+        android:textStyle="bold"
+        android:layout_centerInParent="true"
+        android:visibility="invisible"
         />
 
-
-</LinearLayout>
+</RelativeLayout>

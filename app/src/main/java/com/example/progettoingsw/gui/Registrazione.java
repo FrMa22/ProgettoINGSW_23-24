@@ -84,7 +84,7 @@ public class Registrazione extends GestoreComuniImplementazioni {
                         String nome = edittext_nome.getText().toString().trim();
                         if (nome.length() > 50) {
                             edittext_nome.setError("Il nome non può superare i 50 caratteri");
-                            return; // Esce dal metodo onClick se il nome supera i 50 caratteri
+                            return;
                         }
 
                         // Controlla la lunghezza massima del cognome (50 caratteri)
@@ -141,12 +141,12 @@ public class Registrazione extends GestoreComuniImplementazioni {
         if (result == 1) {
             Toast.makeText(getApplicationContext(), "L'indirizzo email inserito è gia stato utilizzato. Si prega di utilizzarne un altro.", Toast.LENGTH_LONG).show();
         } else if(result == 0){
-            String nome = edittext_nome.getText().toString();
-            String cognome = edittext_cognome.getText().toString();
-            String email = edittext_email.getText().toString();
-            String password = edittext_password.getText().toString();
-            String conferma_password = edittext_conferma_password.getText().toString();
-            String tipoUtente = spinner_tipo_utente.getSelectedItem().toString();
+            String nome = edittext_nome.getText().toString().trim();
+            String cognome = edittext_cognome.getText().toString().trim();
+            String email = edittext_email.getText().toString().trim();
+            String password = edittext_password.getText().toString().trim();
+            String conferma_password = edittext_conferma_password.getText().toString().trim();
+            String tipoUtente = spinner_tipo_utente.getSelectedItem().toString().trim();
 
             if (nome.isEmpty() || email.isEmpty() || cognome.isEmpty() || password.isEmpty()) {
                 Toast.makeText(getApplicationContext(), "Inserire tutti i valori", Toast.LENGTH_SHORT).show();
