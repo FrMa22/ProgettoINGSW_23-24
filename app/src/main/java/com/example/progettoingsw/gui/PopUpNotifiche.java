@@ -14,8 +14,9 @@ import android.widget.Toast;
 import com.example.progettoingsw.DAO.NotificheDAO;
 import com.example.progettoingsw.DAO.PopUpNotificheDAO;
 import com.example.progettoingsw.R;
+import com.example.progettoingsw.classe_da_estendere.DialogPersonalizzato;
 
-public class PopUpNotifiche extends Dialog implements View.OnClickListener{
+public class PopUpNotifiche extends DialogPersonalizzato implements View.OnClickListener{
 
     private String titolo;
     private String commento;

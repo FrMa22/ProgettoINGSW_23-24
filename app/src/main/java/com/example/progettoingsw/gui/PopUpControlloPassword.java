@@ -15,9 +15,10 @@ import androidx.appcompat.widget.AppCompatButton;
 
 import com.example.progettoingsw.DAO.PopUpControlloPasswordDAO;
 import com.example.progettoingsw.R;
+import com.example.progettoingsw.classe_da_estendere.DialogPersonalizzato;
 import com.example.progettoingsw.gui.acquirente.AcquirenteMainActivity;
 
-public class PopUpControlloPassword extends Dialog implements View.OnClickListener {
+public class PopUpControlloPassword extends DialogPersonalizzato implements View.OnClickListener {
     private AppCompatButton bottoneAnnullaControlloPassword;
     private AppCompatButton bottoneConfermaControlloPassword;
     private EditText edit_text_vecchia_password;

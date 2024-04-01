@@ -12,7 +12,7 @@
         android:layout_height="80dp"
         android:layout_gravity="center"
         android:gravity="center"
-        android:textSize="30sp"
+        android:textSize="30dp"
         android:textStyle="bold"
         android:text="Accetta offerta"/>
 
@@ -27,7 +27,7 @@
         android:background="@drawable/edit_text_tutti_lati_grigi_rounded"
         android:gravity="center"
         android:layout_gravity="center"
-       android:textSize="25sp"
+       android:textSize="25dp"
         android:drawableEnd="@drawable/ic_euro"
         android:textStyle="bold"
         android:text="100"
@@ -53,7 +53,7 @@
             android:backgroundTint="@color/colore_base"
             android:text="Annulla"
             android:textColor="@color/colore_secondario"
-            android:textSize="20sp"
+            android:textSize="20dp"
             android:textStyle="bold" />
 
         <com.google.android.material.button.MaterialButton
@@ -64,7 +64,7 @@
             android:backgroundTint="@color/colore_secondario"
             android:text="Conferma"
             android:textColor="@color/colore_base"
-            android:textSize="20sp"
+            android:textSize="20dp"
             android:textStyle="bold" />
     </LinearLayout>
 </LinearLayout>

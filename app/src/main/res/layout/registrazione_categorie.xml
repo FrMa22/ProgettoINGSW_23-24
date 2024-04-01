@@ -15,7 +15,7 @@
         android:background="@color/colore_base"
         android:gravity="center"
         android:text="Raccontaci dei tuoi interessi selezionando tra le seguenti categorie"
-        android:textSize="20sp"
+        android:textSize="20dp"
         android:textStyle="bold"
         android:textColor="@color/colore_secondario"/>
     <View
@@ -74,7 +74,7 @@
             android:backgroundTint="@color/colore_secondario"
             android:textColor="@color/colore_base"
             android:text="Salta"
-            android:textSize="20sp"
+            android:textSize="20dp"
             android:textStyle="bold"
             android:layout_alignParentStart="true"
             />
@@ -89,7 +89,7 @@
             android:backgroundTint="@color/colore_secondario"
             android:textColor="@color/colore_base"
             android:text="Prosegui"
-            android:textSize="20sp"
+            android:textSize="20dp"
             android:textStyle="bold"
             android:layout_alignParentEnd="true" />
     </RelativeLayout>

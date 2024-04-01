@@ -103,7 +103,7 @@ public class RegistrazioneCategorie extends GestoreComuniImplementazioni {
         for (int i = 0; i < categorieArray.length; i++) {
             Switch switchButton = new Switch(this);
             switchButton.setText(categorieArray[i]);
-            switchButton.setTextSize(36); // Aumentato il testo per renderlo più alto
+            switchButton.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 36); // Aumentato il testo per renderlo più alto
             switchButton.setTextColor(getResources().getColor(R.color.colore_secondario));
 
             try {

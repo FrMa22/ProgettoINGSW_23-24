@@ -14,10 +14,11 @@ import android.widget.Toast;
 import com.example.progettoingsw.DAO.AstaIngleseDAO;
 import com.example.progettoingsw.DAO.AstaInversaDAO;
 import com.example.progettoingsw.R;
+import com.example.progettoingsw.classe_da_estendere.DialogPersonalizzato;
 import com.example.progettoingsw.controllers_package.Controller;
 import com.google.android.material.button.MaterialButton;
 
-public class PopUpNuovaOfferta extends Dialog implements View.OnClickListener {
+public class PopUpNuovaOfferta extends DialogPersonalizzato implements View.OnClickListener {
     Controller controller;
     TextView textviewPrezzoAttuale;
     EditText textviewNuovoPrezzo;

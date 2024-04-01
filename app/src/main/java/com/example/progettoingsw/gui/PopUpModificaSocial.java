@@ -13,9 +13,10 @@ import androidx.appcompat.widget.AppCompatButton;
 
 import com.example.progettoingsw.DAO.PopUpModificaSocialDAO;
 import com.example.progettoingsw.R;
+import com.example.progettoingsw.classe_da_estendere.DialogPersonalizzato;
 import com.example.progettoingsw.gui.acquirente.FragmentProfilo;
 
-public class PopUpModificaSocial extends Dialog implements View.OnClickListener {
+public class PopUpModificaSocial extends DialogPersonalizzato implements View.OnClickListener {
     private AppCompatButton bottoneAnnullaModifica;
     private AppCompatButton bottoneConfermaModifica;
     private AppCompatButton bottoneEliminaSocial;

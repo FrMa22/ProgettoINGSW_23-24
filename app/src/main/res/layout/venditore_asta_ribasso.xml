@@ -30,7 +30,7 @@
             android:gravity="center"
             android:text="Asta al ribasso"
             android:textColor="@color/colore_secondario"
-            android:textSize="35sp"
+            android:textSize="35dp"
             android:textStyle="bold" />
 
         <ImageButton
@@ -86,6 +86,7 @@
                     android:background="@drawable/edit_text_top_corners_rounded_grigi"
                     android:gravity="center"
                     android:hint="Nome"
+                    android:textSize="20dp"
                     android:textColorHint="@color/colore_hint"
                     android:minHeight="60dp"
                     android:textColor="@color/colore_secondario"
@@ -109,6 +110,7 @@
                     android:textColor="@color/colore_secondario"
                     android:layout_marginEnd="20dp"
                     android:layout_marginBottom="20dp"
+                    android:textSize="20dp"
                     android:background="@drawable/edit_text_bottom_corners_rounded_grigi"
                     android:gravity="top|center"
                     android:hint="Descrizione:"
@@ -167,7 +169,7 @@
                 android:gravity="center"
                 android:text="Base d\'asta"
                 android:textColor="@color/colore_secondario"
-                android:textSize="25sp"
+                android:textSize="25dp"
                 android:textStyle="bold" />
 
             <EditText
@@ -185,7 +187,7 @@
                 android:singleLine="true"
                 android:textColorHint="@color/colore_hint"
                 android:textColor="@color/colore_secondario"
-                android:textSize="20sp" />
+                android:textSize="20dp" />
 
             <TextView
                 android:id="@+id/textViewTimerDecrementoAstaRibasso"
@@ -198,7 +200,7 @@
                 android:gravity="center"
                 android:text="Intervallo per il quale il prezzo viene decrementato"
                 android:textColor="@color/colore_secondario"
-                android:textSize="20sp"
+                android:textSize="20dp"
                 android:textStyle="bold" />
 
             <EditText
@@ -216,7 +218,7 @@
                 android:singleLine="true"
                 android:textColorHint="@color/colore_hint"
                 android:textColor="@color/colore_secondario"
-                android:textSize="20sp" />
+                android:textSize="20dp" />
 
             <TextView
                 android:id="@+id/textViewSogliaDecrementoAstaRibasso"
@@ -229,7 +231,7 @@
                 android:text="Soglia di decremento"
                 android:textColor="@color/colore_secondario"
                 android:textColorHint="@color/colore_hint"
-                android:textSize="20sp"
+                android:textSize="20dp"
                 android:textStyle="bold" />
 
             <EditText
@@ -247,7 +249,7 @@
                 android:singleLine="true"
                 android:textColorHint="@color/colore_hint"
                 android:textColor="@color/colore_secondario"
-                android:textSize="20sp" />
+                android:textSize="20dp" />
 
             <TextView
                 android:id="@+id/textViewPrezzoSegretoAstaRibasso"
@@ -259,7 +261,7 @@
                 android:gravity="center"
                 android:text="Prezzo (segreto) a cui vendere"
                 android:textColor="@color/colore_secondario"
-                android:textSize="20sp"
+                android:textSize="20dp"
                 android:textStyle="bold" />
 
             <EditText
@@ -276,7 +278,7 @@
                 android:padding="10dp"
                 android:singleLine="true"
                 android:textColorHint="@color/colore_hint"
-                android:textSize="20sp"/>
+                android:textSize="20dp"/>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/bottoneCategorieAstaRibasso"
@@ -287,7 +289,7 @@
                 android:text="Categorie"
                 android:layout_marginTop="10dp"
                 android:textColor="@color/colore_secondario"
-                android:textSize="20sp"
+                android:textSize="20dp"
                 android:textStyle="bold"
                 app:strokeColor="#AAAAAA"
                 app:strokeWidth="2dp" />
@@ -309,7 +311,7 @@
                 android:textStyle="bold"
                 android:text="Conferma"
                 android:textColor="@color/colore_base"
-                android:textSize="20sp"/>
+                android:textSize="20dp"/>
             </RelativeLayout>
 
         </LinearLayout>

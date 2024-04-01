@@ -1,7 +1,6 @@
 package com.example.progettoingsw.gui.acquirente;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
@@ -9,11 +8,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -22,13 +19,10 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.progettoingsw.DAO.AcquirenteHomeDAO;
 import com.example.progettoingsw.DAO.AstaDAOAcquirente;
 import com.example.progettoingsw.DAO.NotificheDAO;
 import com.example.progettoingsw.R;
 import com.example.progettoingsw.controllers_package.AstaAdapter;
-import com.example.progettoingsw.controllers_package.Controller;
-import com.example.progettoingsw.gui.LeMieAste;
 import com.example.progettoingsw.gui.PreferitiActivity;
 import com.example.progettoingsw.gui.SchermataAstaInglese;
 import com.example.progettoingsw.gui.SchermataAstaInversa;
@@ -37,7 +31,6 @@ import com.example.progettoingsw.gui.SchermataNotifiche;
 import com.example.progettoingsw.model.AstaIngleseItem;
 import com.example.progettoingsw.model.AstaInversaItem;
 import com.example.progettoingsw.model.AstaRibassoItem;
-import com.google.android.material.button.MaterialButton;
 
 import java.util.ArrayList;
 
@@ -50,12 +43,13 @@ public class AcquirenteFragmentHome extends Fragment {
     private AstaAdapter astaAdapterNuove;
     private TextView iconaNotifiche;
     private ProgressBar progressBarAcquirenteFragmentHome;
-    MaterialButton button_le_mie_aste;
     ImageButton button_notifiche;
     private String email;
     private String tipoUtente;
     private ArrayList<String> categorie;
-    private AcquirenteHomeDAO acquirenteHomeDAO;
+    private TextView text_view_nessuna_asta_in_scadenza;
+    private TextView text_view_aste_consigliate_home;
+    private TextView text_view_nessuna_asta_in_categorie;
     public AcquirenteFragmentHome(String email, String tipoUtente) {
         this.email = email;
         this.tipoUtente = tipoUtente;
@@ -80,6 +74,9 @@ public class AcquirenteFragmentHome extends Fragment {
 
         relative_layout_home_acquirente = view.findViewById(R.id.relative_layout_home_acquirente);
         progressBarAcquirenteFragmentHome = view.findViewById(R.id.progressBarAcquirenteFragmentHome);
+        text_view_nessuna_asta_in_scadenza = view.findViewById(R.id.text_view_nessuna_asta_in_scadenza);
+        text_view_aste_consigliate_home = view.findViewById(R.id.text_view_aste_consigliate_home);
+        text_view_nessuna_asta_in_categorie = view.findViewById(R.id.text_view_nessuna_asta_in_categorie);
 
         //rendo l'icona di caricamento visibile ad inizio recuperi dal db e il bottom menu non clickabile
         progressBarAcquirenteFragmentHome.setVisibility(View.VISIBLE);
@@ -251,19 +248,6 @@ public class AcquirenteFragmentHome extends Fragment {
 
 
 
-        button_le_mie_aste = view.findViewById(R.id.button_le_mie_aste);
-
-
-        button_le_mie_aste.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getContext(), LeMieAste.class);
-                intent.putExtra("email", email);
-                intent.putExtra("tipoUtente",tipoUtente);
-                startActivity(intent);
-
-            }
-        });
 
         button_notifiche= view.findViewById(R.id.openNotifiche);
         button_notifiche.setOnClickListener(new View.OnClickListener() {
@@ -308,7 +292,9 @@ public class AcquirenteFragmentHome extends Fragment {
                 startActivity(intent);
             }
         });
+
     }
+
 
     @Override
     public void onDestroyView() {
@@ -321,22 +307,38 @@ public class AcquirenteFragmentHome extends Fragment {
     //l'arraylist deve essere di object per passare oggetti di diverse classi (in questo caso AstaInversa, AstaRibasso e AstaInglese
     //se si recupera dal DB solo un tipo di asta basta usare l'arraylist del tipo corrispondente ma questo con object funziona sia con 1 solo tipo che con più
     public void handleAsteConsigliateResult(ArrayList<Object> prodotti) {
-        // Aggiorna l'adapter con i nuovi prodotti
-        if(prodotti != null){
-            astaAdapterConsigliate.setAste(prodotti);
-        }else{
-            Log.d("handleConsigliateResult", "null");
-        }
+        boolean prodottiVuoto = prodotti == null || prodotti.isEmpty();
+        if(categorie.size()==0){
+            text_view_nessuna_asta_in_categorie.setVisibility(View.GONE);
+            astaAdapterConsigliate.setAste(null);
+            text_view_aste_consigliate_home.setVisibility(View.GONE);
+        }else {
 
+            if (!prodottiVuoto) {
+                astaAdapterConsigliate.setAste(prodotti);
+            } else {
+                astaAdapterConsigliate.setAste(null);
+            }
+            if (prodottiVuoto) {
+                text_view_nessuna_asta_in_categorie.setVisibility(View.VISIBLE);
+            } else {
+                text_view_nessuna_asta_in_categorie.setVisibility(View.GONE);
+            }
+        }
     }
     public void handleAsteInScadenzaResult(ArrayList<Object> prodotti) {
-        // Aggiorna l'adapter con i nuovi prodotti
-        if(prodotti != null){
-            Log.d("handleScadenzaResult", "ok");
+        boolean prodottiVuoto = prodotti == null || prodotti.isEmpty();
+        if (!prodottiVuoto) {
             astaAdapterInScadenza.setAste(prodotti);
         }else{
-            Log.d("handleScadenzaResult ", "null");
+            astaAdapterInScadenza.setAste(null);
         }
+        if(prodottiVuoto){
+            text_view_nessuna_asta_in_scadenza.setVisibility(View.VISIBLE);
+        }else {
+            text_view_nessuna_asta_in_scadenza.setVisibility(View.GONE);
+        }
+
     }
     public void handleAsteNuoveResult(ArrayList<Object> prodotti) {
         // Aggiorna l'adapter con i nuovi prodotti
@@ -352,8 +354,16 @@ public class AcquirenteFragmentHome extends Fragment {
     }
 
 
-    public void setCategorie(ArrayList<String> categorie){
-        this.categorie = categorie;
+    public void setCategorie(ArrayList<String> categorieRecuperate){
+        if(categorieRecuperate.size() == 0){
+            text_view_aste_consigliate_home.setVisibility(View.GONE);
+            text_view_nessuna_asta_in_categorie.setVisibility(View.GONE);
+        }else{
+            text_view_aste_consigliate_home.setVisibility(View.VISIBLE);
+            text_view_nessuna_asta_in_categorie.setVisibility(View.VISIBLE);
+        }
+        this.categorie = categorieRecuperate;
+        Log.d("setCategorie", "numero di categorie: " + categorieRecuperate.size() );
     }
 
     private void setNavigationView(Boolean valore) {

@@ -25,7 +25,7 @@
             android:gravity="center"
             android:background="@drawable/bordi_trasparenti"
             android:textColor="@color/colore_secondario"
-            android:textSize="20sp" />
+            android:textSize="20dp" />
 
     </RelativeLayout>
 

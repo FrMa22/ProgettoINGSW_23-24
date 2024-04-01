@@ -362,7 +362,7 @@ public class AstaDAOAcquirente {
             ArrayList<String> categorie = new ArrayList<>();
             try {
                 Statement statement = connection.createStatement();
-                String queryCategorie = "SELECT nome FROM categorieAcquirente WHERE indirizzo_email = '" + email + "' ";
+                String queryCategorie = "SELECT nome FROM categorie"+ tipoUtente + " WHERE indirizzo_email = '" + email + "' ";
                 ResultSet resultSetCategorie = statement.executeQuery(queryCategorie);
                 while (resultSetCategorie.next()) {
                     String nome = resultSetCategorie.getString("nome");

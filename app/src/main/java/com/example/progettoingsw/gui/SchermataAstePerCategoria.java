@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.example.progettoingsw.DAO.AstePerCategorieDAO;
 import com.example.progettoingsw.DAO.AstePreferiteDAO;
 import com.example.progettoingsw.R;
+import com.example.progettoingsw.classe_da_estendere.GestoreComuniImplementazioni;
 import com.example.progettoingsw.controllers_package.AstaAdapter;
 import com.example.progettoingsw.controllers_package.Controller;
 import com.example.progettoingsw.model.AstaIngleseItem;
@@ -25,7 +26,7 @@ import com.example.progettoingsw.model.AstaRibassoItem;
 
 import java.util.ArrayList;
 
-public class SchermataAstePerCategoria extends AppCompatActivity {
+public class SchermataAstePerCategoria extends GestoreComuniImplementazioni {
      TextView textViewTtitoloCategorie;
      Controller controller;
      Intent intent;

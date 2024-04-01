@@ -36,6 +36,7 @@ import com.google.android.material.button.MaterialButton;
 
 import java.util.List;
 public class FragmentProfilo extends Fragment{
+    private TextView text_view_nessun_social;
     ImageButton button_log_out;
     MaterialButton button_le_mie_aste;
     ImageButton button_modifica;
@@ -54,8 +55,6 @@ public class FragmentProfilo extends Fragment{
 
     private TextView text_view_bio_profilo;
     private ProgressBar progressBarAcquirenteFragmentProfilo;
-
-    // Definisci la variabile di istanza view
     private View view;
     private String email;
     String tipoUtente;
@@ -112,7 +111,7 @@ public class FragmentProfilo extends Fragment{
         bottone_info.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getContext(), "Clickare un social per modificarlo. ", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Cliccare un social per modificarlo. ", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -164,6 +163,7 @@ public class FragmentProfilo extends Fragment{
             }
         });
 
+        text_view_nessun_social = view.findViewById(R.id.text_view_nessun_social);
         textview_nome = view.findViewById(R.id.textview_nome);
         textview_cognome = view.findViewById(R.id.textview_cognome);
         textview_email = view.findViewById(R.id.textview_email);
@@ -244,34 +244,47 @@ public class FragmentProfilo extends Fragment{
 
 
     public void updateSocialNames(List<String> socialNames, List<String> socialLinks) {
-        if (socialNames != null && !socialNames.isEmpty()) {
-            // Aggiorna l'interfaccia utente con i nomi dei social
+        try {
             gridView = view.findViewById(R.id.gridview_social_activity_profilo);
-            adapterSocial = new CustomAdapter_gridview_profilo_social(getContext());
-            gridView.setAdapter(adapterSocial);
+            if (socialNames != null && !socialNames.isEmpty()) {
+                // Aggiorna l'interfaccia utente con i nomi dei social
+                gridView.setVisibility(View.VISIBLE);
+                text_view_nessun_social.setVisibility(View.GONE);
+                adapterSocial = new CustomAdapter_gridview_profilo_social(getContext());
+                gridView.setAdapter(adapterSocial);
 
-            // Aggiungi i nomi dei social alla tua adapter
-            adapterSocial.setData(socialNames, socialLinks);
-            setGridViewHeightBasedOnChildren(gridView);
-            // Aggiungi stampe nel log per verificare che i dati siano correttamente passati
-            for (int i = 0; i < socialNames.size(); i++) {
-                Log.d("FragmentProfilo", "Nome Social: " + socialNames.get(i) + ", Link Social: " + socialLinks.get(i));
+                // Aggiungi i nomi dei social alla tua adapter
+                adapterSocial.setData(socialNames, socialLinks);
+                setGridViewHeightBasedOnChildren(gridView);
+                // Aggiungi stampe nel log per verificare che i dati siano correttamente passati
+                for (int i = 0; i < socialNames.size(); i++) {
+                    Log.d("FragmentProfilo", "Nome Social: " + socialNames.get(i) + ", Link Social: " + socialLinks.get(i));
+                }
+            } else {
+                text_view_nessun_social.setVisibility(View.VISIBLE);
+                gridView.setVisibility(View.GONE);
+                // Rimuovi tutti i dati dall'adattatore e aggiorna la GridView
+//                gridView = view.findViewById(R.id.gridview_social_activity_profilo);
+//                adapterSocial = new CustomAdapter_gridview_profilo_social(getContext());
+//                gridView.setAdapter(adapterSocial);
+//
+//                // Aggiungi stampe nel log per verificare che i dati siano correttamente passati
+//                Log.d("FragmentProfilo", "Nessun social disponibile");
+//
+//                // Imposta l'altezza della GridView a 50dp
+//                gridView.setMinimumHeight((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 50, getResources().getDisplayMetrics()));
             }
-        } else {
-            // Rimuovi tutti i dati dall'adattatore e aggiorna la GridView
-            gridView = view.findViewById(R.id.gridview_social_activity_profilo);
-            adapterSocial = new CustomAdapter_gridview_profilo_social(getContext());
-            gridView.setAdapter(adapterSocial);
-
-            // Aggiungi stampe nel log per verificare che i dati siano correttamente passati
-            Log.d("FragmentProfilo", "Nessun social disponibile");
-
-            // Imposta l'altezza della GridView a 50dp
-            gridView.setMinimumHeight((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 50, getResources().getDisplayMetrics()));
+            setAllClickable(relative_layout_fragment_profilo, true);
+            progressBarAcquirenteFragmentProfilo.setVisibility(View.INVISIBLE);
+            Log.d("update social names", "sblocco navigation bar");
+            setNavigationView(true);
+        }catch (IllegalStateException e) {
+            // Gestione dell'eccezione
+            Log.e("FragmentProfilo", "Error updating social names: " + e.getMessage());
+        } catch (NullPointerException e) {
+            // Gestione dell'eccezione
+            Log.e("FragmentProfilo", "Error updating social names: NUll pointer " + e.getMessage());
         }
-        setAllClickable(relative_layout_fragment_profilo,true);
-        progressBarAcquirenteFragmentProfilo.setVisibility(View.INVISIBLE);
-        setNavigationView(true);
     }
 
     protected void setAllClickable(ViewGroup viewGroup, boolean enabled) {

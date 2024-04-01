@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="350dp"
+    android:layout_width="370dp"
     android:layout_height="400dp"
     android:layout_gravity="center"
     android:background="@drawable/bordo_non_stondato"
@@ -29,7 +29,7 @@
                 android:text="Ordine: "
                 android:textColor="@color/colore_secondario"
                 android:textStyle="bold"
-                android:textSize="25sp" />
+                android:textSize="25dp" />
 
             <androidx.appcompat.widget.SwitchCompat
                 android:id="@+id/switch_ordinamento_popup_ricerca"
@@ -38,7 +38,7 @@
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:text="Crescente"
-                android:textSize="20sp"/>
+                android:textSize="20dp"/>
 
 
         </LinearLayout>
@@ -48,9 +48,9 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
+        android:layout_height="280dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
         android:background="@drawable/design_bio_personale"
         >
 
@@ -65,7 +65,7 @@
                 android:layout_gravity="center"
                 android:text="Categorie"
                 android:textColor="@color/colore_secondario"
-                android:textSize="25sp"
+                android:textSize="25dp"
                 android:textStyle="bold"/>
 
             <LinearLayout
@@ -86,7 +86,8 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="15dp">
+        android:layout_margin="15dp"
+        >
 
         <Button
             android:id="@+id/buttonAnnullaFiltro"
@@ -97,7 +98,7 @@
             android:backgroundTint="@color/colore_secondario"
             android:text="Annulla"
             android:textColor="@color/colore_base"
-            android:textSize="20sp"
+            android:textSize="20dp"
             android:textStyle="bold" />
 
         <Button
@@ -109,7 +110,7 @@
             android:backgroundTint="@color/colore_secondario"
             android:text="Salva"
             android:textColor="@color/colore_base"
-            android:textSize="20sp"
+            android:textSize="20dp"
             android:textStyle="bold" />
     </RelativeLayout>
 

@@ -31,7 +31,7 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
 
-import com.example.progettoingsw.PopUpAggiungiCategorieAsta;
+import com.example.progettoingsw.gui.PopUpAggiungiCategorieAsta;
 import com.example.progettoingsw.R;
 
 import com.example.progettoingsw.DAO.AstaInversaDAO;
@@ -44,7 +44,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-public class AcquirenteAstaInversa extends Fragment {
+public class AcquirenteFragmentAstaInversa extends Fragment {
     private int idAsta;
     AppCompatButton bottoneConferma;
     AppCompatButton bottoneAnnullaAstaInversa;
@@ -68,20 +68,20 @@ public class AcquirenteAstaInversa extends Fragment {
     String email;
     EditText DescrizioneProdottoAstaAstaInversa;
 
-    public AcquirenteAstaInversa(String email){
+    public AcquirenteFragmentAstaInversa(String email){
         this.email = email.trim();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.acquirente_asta_inversa, container, false);
+        return inflater.inflate(R.layout.acquirente_fragment_asta_inversa, container, false);
     }
 
     @Override
     public void onViewCreated(View view2, Bundle savedInstanceState) {
         super.onViewCreated(view2, savedInstanceState);
 
-        AstaInversaDAO astaInversaDao = new AstaInversaDAO(AcquirenteAstaInversa.this);
+        AstaInversaDAO astaInversaDao = new AstaInversaDAO(AcquirenteFragmentAstaInversa.this);
         //ImmaginiDAO immaginiDAO=new ImmaginiDAO(this);
         listaCategorieScelte = new ArrayList<>();
         bottoneAnnullaAstaInversa = view2.findViewById(R.id.bottoneAnnullaAstaInversa);
@@ -94,7 +94,7 @@ public class AcquirenteAstaInversa extends Fragment {
         bottoneCategorieAstaInversa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                PopUpAggiungiCategorieAsta popUpAggiungiCategorieAsta = new PopUpAggiungiCategorieAsta(getContext(),AcquirenteAstaInversa.this,listaCategorieScelte);
+                PopUpAggiungiCategorieAsta popUpAggiungiCategorieAsta = new PopUpAggiungiCategorieAsta(getContext(), AcquirenteFragmentAstaInversa.this,listaCategorieScelte);
                 popUpAggiungiCategorieAsta.show();
             }
         });
@@ -313,6 +313,7 @@ public class AcquirenteAstaInversa extends Fragment {
 
         AlertDialog dialog = builder.create();
         dialog.show();
+
     }
     public void handlePopUp(ArrayList<String> switchTexts){
         this.listaCategorieScelte = switchTexts;
@@ -323,7 +324,7 @@ public class AcquirenteAstaInversa extends Fragment {
     }
     public void handleID(int id){
         this.idAsta = id;
-        AstaInversaDAO astaInversaDAO = new AstaInversaDAO(AcquirenteAstaInversa.this);
+        AstaInversaDAO astaInversaDAO = new AstaInversaDAO(AcquirenteFragmentAstaInversa.this);
         if(!listaCategorieScelte.isEmpty()){
             astaInversaDAO.openConnection();
             Log.d("id recuperato è ACquirente : " , " id: " + idAsta);

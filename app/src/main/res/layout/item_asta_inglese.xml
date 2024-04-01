@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/layout_asta_inglese"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
@@ -13,7 +14,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Asta All'inglese"
-        android:textSize="20sp"
+        android:textSize="20dp"
         android:textColor="@color/colore_secondario"
         android:textStyle="bold"
         android:gravity="center"
@@ -39,15 +40,16 @@
             android:layout_marginEnd="5dp"
             android:layout_marginBottom="5dp" />
     </RelativeLayout>
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="nome:"
-        android:textSize="12sp"
-        android:textColor="@color/colore_hint"
         android:layout_gravity="start"
         android:layout_marginStart="10dp"
-        />
+        android:text="nome:"
+        android:textColor="@color/colore_hint"
+        android:textSize="12dp"
+        tools:ignore="TextSizeCheck" />
     <TextView
         android:id="@+id/textView_nome_item_asta_inglese"
         android:layout_width="match_parent"
@@ -58,42 +60,42 @@
         android:gravity="center"
         android:background="@drawable/bordi_trasparenti"
         android:textColor="@color/colore_secondario"
-        android:textSize="16sp"
-        android:maxLines="1"
-        android:ellipsize="end"/>
+        android:textSize="16dp"/>
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="descrizione:"
-        android:textSize="12sp"
-        android:textColor="@color/colore_hint"
         android:layout_gravity="start"
         android:layout_marginStart="10dp"
-        />
+        android:text="descrizione:"
+        android:textColor="@color/colore_hint"
+        android:textSize="12dp"
+        tools:ignore="TextSizeCheck" />
+
     <TextView
         android:id="@+id/textView_descrizione_item_asta_inglese"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Assente"
         android:layout_gravity="center"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="5dp"
-        android:gravity="center"
         android:background="@drawable/bordo_sotto_grigio"
+        android:gravity="center"
+        android:hint="Assente"
         android:textColor="@color/colore_secondario"
-        android:textSize="14sp"
-        android:maxLines="2"
-        android:ellipsize="end"/>
+        android:textSize="14dp"
+        tools:ignore="TextSizeCheck" />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="intervallo offerte:"
-        android:textSize="12sp"
-        android:textColor="@color/colore_hint"
         android:layout_gravity="start"
         android:layout_marginStart="10dp"
-        />
+        android:text="intervallo offerte:"
+        android:textColor="@color/colore_hint"
+        android:textSize="12dp"
+        tools:ignore="TextSizeCheck" />
     <TextView
         android:id="@+id/textView_intervallo_offerte_item_asta_inglese"
         android:layout_width="match_parent"
@@ -105,18 +107,18 @@
         android:gravity="center"
         android:background="@drawable/bordo_sotto_grigio"
         android:textColor="@color/colore_secondario"
-        android:textSize="18sp" />
+        android:textSize="18dp" />
 
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="prezzo attuale:"
-        android:textSize="12sp"
         android:layout_gravity="start"
-        android:textColor="@color/colore_hint"
         android:layout_marginStart="10dp"
-        />
+        android:text="prezzo attuale:"
+        android:textColor="@color/colore_hint"
+        android:textSize="12dp"
+        tools:ignore="TextSizeCheck" />
     <TextView
         android:id="@+id/textView_prezzo_item_asta_inglese"
         android:layout_width="match_parent"
@@ -127,16 +129,17 @@
         android:gravity="center"
         android:background="@drawable/bordo_sotto_grigio"
         android:textColor="@color/colore_secondario"
-        android:textSize="16sp"/>
+        android:textSize="16dp"/>
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="rialzo minimo:"
-        android:textSize="12sp"
         android:layout_gravity="start"
-        android:textColor="@color/colore_hint"
         android:layout_marginStart="10dp"
-        />
+        android:text="rialzo minimo:"
+        android:textColor="@color/colore_hint"
+        android:textSize="12dp"
+        tools:ignore="TextSizeCheck" />
     <TextView
         android:id="@+id/textView_rialzo_item_asta_inglese"
         android:layout_width="match_parent"
@@ -147,7 +150,7 @@
         android:gravity="center"
         android:background="@drawable/bordi_trasparenti"
         android:textColor="@color/colore_secondario"
-        android:textSize="16sp"/>
+        android:textSize="16dp"/>
 
 
 </LinearLayout>

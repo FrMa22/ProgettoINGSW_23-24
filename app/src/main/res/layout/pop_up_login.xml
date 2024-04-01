@@ -23,7 +23,8 @@
             android:text="Abbiamo rilevato due account collegati a questa email, con quale vuoi accedere?"
             android:textAlignment="center"
             android:textColor="@color/colore_secondario"
-            android:textSize="28sp"/>
+            android:textSize="30dp"
+            android:layout_margin="5dp"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -39,7 +40,7 @@
                 android:text="Acquirente"
                 android:background="@drawable/bordo_sopra_destra_curvi"
                 android:textColor="@color/colore_secondario"
-                android:textSize="24sp"
+                android:textSize="24dp"
                 android:textStyle="bold" />
 
 
@@ -53,7 +54,7 @@
                 android:text="Venditore"
                 android:background="@drawable/bordo_sopra_sinistra_curvi"
                 android:textColor="@color/colore_secondario"
-                android:textSize="24sp"
+                android:textSize="24dp"
                 android:textStyle="bold" />
         </LinearLayout>
 

@@ -4,18 +4,12 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import com.example.progettoingsw.controllers_package.DatabaseHelper;
-import com.example.progettoingsw.gui.LeMieAste;
-import com.example.progettoingsw.gui.acquirente.AcquirenteAstaInversa;
-import com.example.progettoingsw.gui.acquirente.FragmentProfilo;
+import com.example.progettoingsw.gui.acquirente.AcquirenteFragmentAstaInversa;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
 
 public class ImmaginiDAO {
 
@@ -23,9 +17,9 @@ public class ImmaginiDAO {
 
     private byte[] immagine;
 
-    private AcquirenteAstaInversa astaInv;
+    private AcquirenteFragmentAstaInversa astaInv;
 
-    public ImmaginiDAO(AcquirenteAstaInversa astaInversa) {
+    public ImmaginiDAO(AcquirenteFragmentAstaInversa astaInversa) {
         this.astaInv = astaInversa;
     }
 

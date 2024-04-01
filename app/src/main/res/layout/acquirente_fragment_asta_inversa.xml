@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colore_base"
-    tools:context=".gui.acquirente.AcquirenteAstaInversa"> <!-- da cambiare-->
+    tools:context=".gui.acquirente.AcquirenteFragmentAstaInversa">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
@@ -22,7 +22,7 @@
             android:background="@color/colore_base"
             android:text="Asta Inversa"
             android:textColor="@color/colore_secondario"
-            android:textSize="35sp"
+            android:textSize="35dp"
             android:textStyle="bold" />
 
         <ImageButton
@@ -58,14 +58,13 @@
                 android:gravity="center"
                 android:maxLength="100"
                 android:hint="Nome"
-                android:maxLines="30"
                 android:minHeight="60dp"
                 android:padding="20dp"
                 android:paddingStart="20dp"
                 android:paddingEnd="20dp"
                 android:textColor="@color/colore_secondario"
                 android:textColorHint="@color/colore_hint"
-                android:textSize="20sp" />
+                android:textSize="20dp" />
 
             <View
                 android:layout_width="match_parent"
@@ -91,7 +90,8 @@
                 android:hint="Descrizione:"
                 android:minHeight="100dp"
                 android:padding="20dp"
-                android:textColorHint="@color/colore_hint" />
+                android:textColorHint="@color/colore_hint"
+                android:textSize="20dp" />
 
             <TextView
                 android:id="@+id/textViewInserisciImmagineAcquirente"
@@ -105,7 +105,7 @@
                 android:gravity="start"
                 android:text="Inserisci un'immagine:"
                 android:textColor="@color/colore_secondario"
-                android:textSize="25sp"
+                android:textSize="25dp"
                 android:textStyle="bold" />
 
             <ImageButton
@@ -145,7 +145,7 @@
                     android:backgroundTint="@color/colore_base"
                     android:text="Data"
                     android:textColor="@color/colore_secondario"
-                    android:textSize="20sp"
+                    android:textSize="20dp"
                     android:textStyle="bold"
                     app:strokeColor="#AAAAAA"
                     app:strokeWidth="2dp" />
@@ -158,7 +158,7 @@
                     android:backgroundTint="@color/colore_base"
                     android:text="Orario"
                     android:textColor="@color/colore_secondario"
-                    android:textSize="20sp"
+                    android:textSize="20dp"
                     android:textStyle="bold"
                     app:strokeColor="#AAAAAA"
                     app:strokeWidth="2dp" />
@@ -175,7 +175,7 @@
                 android:gravity="center"
                 android:text="Inserire prezzo iniziale"
                 android:textColor="@color/colore_secondario"
-                android:textSize="23sp"
+                android:textSize="23dp"
                 android:textStyle="bold" />
 
             <EditText
@@ -196,7 +196,7 @@
                 android:singleLine="true"
                 android:textColor="@color/colore_secondario"
                 android:textColorHint="@color/colore_hint"
-                android:textSize="20sp" />
+                android:textSize="20dp" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/bottoneCategorieAstaInversa"
@@ -207,7 +207,7 @@
                 android:backgroundTint="@color/colore_base"
                 android:text="Categorie"
                 android:textColor="@color/colore_secondario"
-                android:textSize="20sp"
+                android:textSize="20dp"
                 android:textStyle="bold"
                 app:strokeColor="#AAAAAA"
                 app:strokeWidth="2dp" />
@@ -229,7 +229,7 @@
                     android:background="@drawable/button_background"
                     android:text="Annulla"
                     android:textColor="@color/colore_base"
-                    android:textSize="20sp"
+                    android:textSize="20dp"
                     android:textStyle="bold" />
 
                 <androidx.appcompat.widget.AppCompatButton
@@ -241,7 +241,7 @@
                     android:background="@drawable/button_background"
                     android:text="Conferma"
                     android:textColor="@color/colore_base"
-                    android:textSize="20sp"
+                    android:textSize="20dp"
                     android:textStyle="bold" />
             </RelativeLayout>
         </RelativeLayout>

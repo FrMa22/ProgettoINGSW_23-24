@@ -6,13 +6,18 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.EditText;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.example.progettoingsw.DAO.RegistrazioneSocialDAO;
 import com.example.progettoingsw.R;
+import com.example.progettoingsw.classe_da_estendere.DialogPersonalizzato;
 import com.example.progettoingsw.gui.acquirente.FragmentProfilo;
 import com.google.android.material.button.MaterialButton;
 
-public class PopUpAggiungiSocialProfilo extends Dialog implements View.OnClickListener {
+import org.postgresql.util.PSQLException;
+
+public class PopUpAggiungiSocialProfilo extends DialogPersonalizzato implements View.OnClickListener {
     private String email;
     private String tipoUtente;
     private FragmentProfilo fragmentProfilo;
@@ -20,7 +25,7 @@ public class PopUpAggiungiSocialProfilo extends Dialog implements View.OnClickLi
     MaterialButton bottoneConfermaRegistrazioneSocial;
     EditText editTextNomeUtenteSocial;
     EditText editTextNomeSocial;
-
+    private ProgressBar progressBarPopUpAggiungiSocialProfilo;
 
     public PopUpAggiungiSocialProfilo(FragmentProfilo fragmentProfilo, String email, String tipoUtente) {
         super(fragmentProfilo.getContext()); // Chiama il costruttore della superclasse Dialog
@@ -42,7 +47,7 @@ public class PopUpAggiungiSocialProfilo extends Dialog implements View.OnClickLi
         bottoneConfermaRegistrazioneSocial = findViewById(R.id.bottoneConfermaRegistrazioneSocial);
         editTextNomeUtenteSocial = findViewById(R.id.editTextNomeUtenteSocial);
         editTextNomeSocial = findViewById(R.id.editTextNomeSocial);
-
+        progressBarPopUpAggiungiSocialProfilo = findViewById(R.id.progressBarPopUpAggiungiSocialProfilo);
 
 
 
@@ -68,13 +73,30 @@ public class PopUpAggiungiSocialProfilo extends Dialog implements View.OnClickLi
         String nomeSocial = editTextNomeSocial.getText().toString().trim();
         String nomeUtenteSocial = editTextNomeUtenteSocial.getText().toString().trim();
 
-        RegistrazioneSocialDAO registrazioneSocialDAO = new RegistrazioneSocialDAO(email,tipoUtente);
+        RegistrazioneSocialDAO registrazioneSocialDAO = new RegistrazioneSocialDAO(PopUpAggiungiSocialProfilo.this,email,tipoUtente);
         Log.d("pop" , "conferma");
-        registrazioneSocialDAO.openConnection();
-        registrazioneSocialDAO.inserimentoSingoloSocial(nomeSocial,nomeUtenteSocial);
-        registrazioneSocialDAO.closeConnection();
-        // Chiudi il dialog dopo la conferma
-        fragmentProfilo.onResume();
-        dismiss();
+        if(!nomeSocial.isEmpty() && !nomeUtenteSocial.isEmpty()) {
+            progressBarPopUpAggiungiSocialProfilo.setVisibility(View.VISIBLE);
+            registrazioneSocialDAO.openConnection();
+            registrazioneSocialDAO.inserimentoSingoloSocial(nomeSocial, nomeUtenteSocial);
+            registrazioneSocialDAO.closeConnection();
+        }else{
+            Toast.makeText(getContext(), "Si prega di inserire tutti i valori", Toast.LENGTH_SHORT).show();
+        }
+    }
+    public void handleRegistrazioneSocial(Integer result){
+        Log.d("handleRegistrazioneSocial", "valore di result: " + result);
+        progressBarPopUpAggiungiSocialProfilo.setVisibility(View.INVISIBLE);
+        if(result == 0 ){
+            Toast.makeText(getContext(), "Problema con la connessione rilevato", Toast.LENGTH_SHORT).show();
+        }else if(result == -1){
+            Toast.makeText(getContext(), "Valori già presenti in social", Toast.LENGTH_SHORT).show();
+        }else{
+            Log.d("handleRegistrazioneSocial", "entrato nell'else");
+            // Chiudi il dialog dopo la conferma
+            fragmentProfilo.onResume();
+            dismiss();
+        }
+
     }
 }

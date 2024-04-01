@@ -9,7 +9,7 @@ import com.example.progettoingsw.R;
 import com.example.progettoingsw.controllers_package.DatabaseHelper;
 import com.example.progettoingsw.controllers_package.InsertAsta;
 import com.example.progettoingsw.gui.SchermataAstaInversa;
-import com.example.progettoingsw.gui.acquirente.AcquirenteAstaInversa;
+import com.example.progettoingsw.gui.acquirente.AcquirenteFragmentAstaInversa;
 import com.example.progettoingsw.model.AstaInversaItem;
 
 import java.sql.Connection;
@@ -27,12 +27,12 @@ public class AstaInversaDAO {
     private Connection connection;
     private byte[] foto;
     private SchermataAstaInversa schermataAstaInversa;
-    private AcquirenteAstaInversa acquirenteAstaInversa;
+    private AcquirenteFragmentAstaInversa acquirenteFragmentAstaInversa;
     public AstaInversaDAO(){
 
     }
-    public AstaInversaDAO(AcquirenteAstaInversa acquirenteAstaInversa){
-        this.acquirenteAstaInversa = acquirenteAstaInversa;
+    public AstaInversaDAO(AcquirenteFragmentAstaInversa acquirenteFragmentAstaInversa){
+        this.acquirenteFragmentAstaInversa = acquirenteFragmentAstaInversa;
     }
     public AstaInversaDAO(SchermataAstaInversa schermataAstaInversa){
         this.schermataAstaInversa = schermataAstaInversa;
@@ -138,7 +138,7 @@ public class AstaInversaDAO {
         protected void onPostExecute(Integer generatedId) {
             if (generatedId != -1) {
                 Log.d("ID", "L id è : " + generatedId);
-                acquirenteAstaInversa.handleID(generatedId);
+                acquirenteFragmentAstaInversa.handleID(generatedId);
             } else {
             }
         }

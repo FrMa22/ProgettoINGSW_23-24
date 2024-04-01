@@ -16,7 +16,20 @@
         android:indeterminate="true"
         android:layout_gravity="center"
         android:elevation="10dp"/>
-
+    <TextView
+        android:id="@+id/text_view_nessuna_notifica"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Non hai notifiche"
+        android:textColor="@color/colore_secondario"
+        android:layout_gravity="center"
+        android:layout_below="@id/toolbar_schermata_notifiche"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="40dp"
+        android:textSize="35dp"
+        android:textStyle="bold"
+        android:visibility="invisible"
+        />
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar_schermata_notifiche"
         android:layout_width="match_parent"
@@ -37,7 +50,7 @@
             android:layout_gravity="center"
             android:text="Notifiche"
             android:textColor="@color/colore_secondario"
-            android:textSize="40sp"
+            android:textSize="40dp"
             android:textStyle="bold"
             android:layout_marginBottom="5dp"/>
 
@@ -50,4 +63,5 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/toolbar_schermata_notifiche"
         />
+
 </RelativeLayout>

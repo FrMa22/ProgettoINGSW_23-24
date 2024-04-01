@@ -10,6 +10,7 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -67,7 +68,7 @@ public class AcquirenteFragmentSelezioneCategorie extends Fragment {
         for (int i = 0; i < categorieArray.length; i++) {
             Button button = new Button(requireContext());
             button.setText(categorieArray[i]);
-            button.setTextSize(28);
+            button.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 28);
             button.setTextColor(getResources().getColor(R.color.colore_secondario));
 
             try {

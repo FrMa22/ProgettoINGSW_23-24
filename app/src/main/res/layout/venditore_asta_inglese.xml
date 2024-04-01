@@ -28,7 +28,7 @@
             android:layout_width="wrap_content"
             android:layout_height="80dp"
             android:gravity="center"
-            android:textSize="35sp"
+            android:textSize="35dp"
             android:textColor="@color/colore_secondario"
             android:textStyle="bold"
             android:layout_gravity="center"
@@ -88,6 +88,7 @@
                     android:hint="Nome"
                     android:textColor="@color/colore_secondario"
                     android:textColorHint="@color/colore_hint"
+                    android:textSize="20dp"
                     android:gravity="center"
                     android:padding="20dp"
                     android:singleLine="true"
@@ -113,6 +114,7 @@
                     android:layout_marginBottom="20dp"
                     android:background="@drawable/edit_text_bottom_corners_rounded_grigi"
                     android:drawablePadding="15dp"
+                    android:textSize="20dp"
                     android:hint="Descrizione:"
                     android:gravity="top|center"
                     android:padding="20dp"
@@ -134,7 +136,7 @@
                     android:layout_marginBottom="15dp"
                     android:textColor="@color/colore_secondario"
                     android:text="Inserisci un'immagine:"
-                    android:textSize="25sp"
+                    android:textSize="25dp"
                     android:textStyle="bold" />
 
                 <ImageButton
@@ -169,7 +171,7 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
                 android:gravity="center"
-                android:textSize="25sp"
+                android:textSize="25dp"
                 android:textStyle="bold"
                 android:text="Base d\'asta"
                 android:textColor="@color/colore_secondario"
@@ -184,7 +186,7 @@
                 android:padding="10dp"
                 android:singleLine="true"
                 android:maxLength="20"
-                android:textSize="20sp"
+                android:textSize="20dp"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
                 android:textColorHint="@color/colore_hint"
@@ -201,7 +203,7 @@
                 android:layout_marginBottom="5dp"
                 android:gravity="center"
                 android:text="Intervallo per presentare nuove offerte"
-                android:textSize="20sp"
+                android:textSize="20dp"
                 android:textStyle="bold"
                 android:textColor="@color/colore_secondario"/>
 
@@ -215,7 +217,7 @@
                 android:padding="10dp"
                 android:singleLine="true"
                 android:maxLength="20"
-                android:textSize="20sp"
+                android:textSize="20dp"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
                 android:textColorHint="@color/colore_hint"
@@ -229,7 +231,7 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
                 android:gravity="center"
-                android:textSize="20sp"
+                android:textSize="20dp"
                 android:textColor="@color/colore_secondario"
                 android:textStyle="bold"
                 android:text="Soglia di rialzo minimo"
@@ -248,7 +250,7 @@
                 android:maxLength="20"
                 android:padding="10dp"
                 android:singleLine="true"
-                android:textSize="20sp" />
+                android:textSize="20dp" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/bottoneCategorieAstaInglese"
@@ -259,7 +261,7 @@
                 android:text="Categorie"
                 android:layout_marginTop="10dp"
                 android:textColor="@color/colore_secondario"
-                android:textSize="20sp"
+                android:textSize="20dp"
                 android:textStyle="bold"
                 app:strokeColor="#AAAAAA"
                 app:strokeWidth="2dp" />
@@ -281,7 +283,7 @@
                     android:background="@drawable/button_background"
                     android:text="Conferma"
                     android:textColor="@color/colore_base"
-                    android:textSize="20sp"
+                    android:textSize="20dp"
                     android:textStyle="bold" />
             </RelativeLayout>
 

@@ -64,7 +64,7 @@ public class RegistrazioneCampiFacoltativi extends GestoreComuniImplementazioni 
         bottoneSocial.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                PopUpRegistrazioneSocial PopUpRegistrazioneSocial = new PopUpRegistrazioneSocial( RegistrazioneCampiFacoltativi.this,RegistrazioneCampiFacoltativi.this,email,tipoUtente);
+                PopUpRegistrazioneSocial PopUpRegistrazioneSocial = new PopUpRegistrazioneSocial( RegistrazioneCampiFacoltativi.this,RegistrazioneCampiFacoltativi.this,email,tipoUtente,elencoNomeSocialRegistrazione,elencoNomeUtenteSocialRegistrazione);
                 PopUpRegistrazioneSocial.show();
             }
         });
@@ -125,8 +125,3 @@ public class RegistrazioneCampiFacoltativi extends GestoreComuniImplementazioni 
     }
 
     }
-
-
-
-
-

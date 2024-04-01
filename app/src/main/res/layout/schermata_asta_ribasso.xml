@@ -20,7 +20,7 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:layout_gravity="center"
-            android:textSize="35sp"
+            android:textSize="35dp"
             android:textStyle="bold"
             android:text="Asta Ribasso"
             android:textColor="@color/colore_secondario"/>
@@ -73,7 +73,7 @@
                 android:background="@drawable/design_bio_personale"
                 android:gravity="center"
                 android:text="Nome asta"
-                android:textSize="25sp"
+                android:textSize="25dp"
                 android:textStyle="bold"
                 />
 
@@ -99,7 +99,7 @@
                 android:gravity="center"
                 android:hint="Descrizione Prodotto"
                 android:textColor="@color/colore_secondario"
-                android:textSize="20sp"
+                android:textSize="20dp"
                 android:textStyle="bold"/>
 
             <LinearLayout
@@ -120,7 +120,7 @@
                         android:layout_gravity="start"
                         android:text="Prossimo decremento:"
                         android:textColor="@color/colore_secondario"
-                        android:textSize="20sp"
+                        android:textSize="20dp"
                         android:textStyle="bold" />
                     <TextView
                         android:id="@+id/textViewProssimoDecrementoAstaRibasso"
@@ -128,7 +128,7 @@
                         android:layout_height="match_parent"
                         android:gravity="center"
                         android:textColor="@color/colore_secondario"
-                        android:textSize="25sp"
+                        android:textSize="25dp"
                         android:textStyle="bold" />
                 </LinearLayout>
 
@@ -150,7 +150,7 @@
                         android:layout_height="50dp"
                         android:layout_gravity="end"
                         android:text="Offerta attuale:"
-                        android:textSize="20sp"
+                        android:textSize="20dp"
                         android:textStyle="bold"
                         android:textColor="@color/colore_secondario" />
                     <TextView
@@ -162,7 +162,7 @@
                         android:layout_marginStart="5dp"
                         android:layout_marginEnd="5dp"
                         android:textColor="@color/colore_secondario"
-                        android:textSize="25sp"
+                        android:textSize="25dp"
                         android:textStyle="bold"
                         app:drawableEndCompat="@drawable/ic_euro"
                         android:drawablePadding="5dp"
@@ -198,7 +198,7 @@
                 android:gravity="center"
                 android:text="Nome venditore"
                 android:textColor="@color/colore_secondario"
-                android:textSize="25sp"
+                android:textSize="25dp"
                 android:textStyle="bold"
                 />
 

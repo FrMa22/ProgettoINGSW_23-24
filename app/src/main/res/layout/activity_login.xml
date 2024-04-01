@@ -19,7 +19,7 @@
             android:gravity="center"
             android:text="AstApp"
             android:textColor="@color/colore_secondario"
-            android:textSize="70sp"
+            android:textSize="70dp"
             android:textStyle="bold"
             android:fontFamily="casual"
             android:layout_marginTop="20dp"/>
@@ -42,10 +42,11 @@
             android:layout_marginTop="20dp"
             android:layout_marginEnd="20dp"
             android:background="@drawable/edit_text_top_corners_rounded_grigi"
-            android:drawableLeft="@drawable/baseline_alternate_email_24"
+            android:drawableStart="@drawable/baseline_alternate_email_24"
             android:drawablePadding="15dp"
             android:hint="Indirizzo Email"
             android:singleLine="true"
+            android:textSize="24dp"
             android:padding="20dp"
             android:maxLength="100"
             android:textColor="@color/colore_secondario"
@@ -71,6 +72,7 @@
             android:background="@drawable/edit_text_bottom_corners_rounded_grigi"
             android:drawableStart="@drawable/ic_lucchetto"
             android:drawablePadding="15dp"
+            android:textSize="24dp"
             android:hint="Password"
             android:inputType="textPassword"
             android:padding="20dp"
@@ -83,6 +85,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Mostra password"
+            android:textSize="16dp"
             android:textColor="@color/colore_secondario"
             android:layout_gravity="end"
             android:layout_marginEnd="30dp"
@@ -108,7 +111,7 @@
             android:background="@drawable/button_background"
             android:text="Accedi"
             android:textColor="@color/colore_base"
-            android:textSize="30sp"
+            android:textSize="30dp"
             android:textStyle="bold"/>
 
 
@@ -126,8 +129,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Non hai un account?"
-            android:textColor="#555555"
-            android:textSize="25sp" />
+            android:textColor="@color/colore_hint"
+            android:textSize="25dp" />
 
         <TextView
             android:id="@+id/TextViewRegistrati"
@@ -135,23 +138,13 @@
             android:layout_height="wrap_content"
             android:text="Registrati"
             android:textColor="@color/colore_secondario"
-            android:textSize="25sp"
+            android:textSize="25dp"
             android:textStyle="bold"
-            android:layout_marginLeft="5dp"/>
+            android:layout_marginStart="5dp"/>
     </LinearLayout>
 
 
 
-
-    <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="BottoneAstaProva"
-        android:textColor="@color/colore_secondario"
-        android:layout_gravity="center"
-        android:layout_marginTop="80dp"
-        android:background="@android:color/transparent"/>
 
 
 

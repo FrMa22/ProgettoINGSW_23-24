@@ -1,6 +1,4 @@
-package com.example.progettoingsw;
-
-import androidx.appcompat.app.AppCompatActivity;
+package com.example.progettoingsw.gui;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -19,29 +17,30 @@ import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.Switch;
 
-import com.example.progettoingsw.gui.acquirente.AcquirenteAstaInversa;
+import com.example.progettoingsw.R;
+import com.example.progettoingsw.classe_da_estendere.DialogPersonalizzato;
+import com.example.progettoingsw.gui.acquirente.AcquirenteFragmentAstaInversa;
 import com.example.progettoingsw.gui.venditore.VenditoreAstaInglese;
 import com.example.progettoingsw.gui.venditore.VenditoreAstaRibasso;
-import com.google.android.material.button.MaterialButton;
 
 import java.util.ArrayList;
 
-public class PopUpAggiungiCategorieAsta extends Dialog implements View.OnClickListener {
+public class PopUpAggiungiCategorieAsta extends DialogPersonalizzato implements View.OnClickListener {
     private LinearLayout linear_layout_categorie_crea_asta;
     private Context mContext;
     private Resources resources;
     private ArrayList<String> categorieScelte;
     private ArrayList<String> switchTexts;
-    private AcquirenteAstaInversa acquirenteAstaInversa;
+    private AcquirenteFragmentAstaInversa acquirenteFragmentAstaInversa;
     private VenditoreAstaInglese venditoreAstaInglese;
     private VenditoreAstaRibasso venditoreAstaRibasso;
     private Button buttonSalvaCategorieCreaAsta;
     private Button buttonAnnullaCategorieCreaAsta;
 
-    public PopUpAggiungiCategorieAsta(Context context, AcquirenteAstaInversa acquirenteAstaInversa, ArrayList<String> categorieScelte){
+    public PopUpAggiungiCategorieAsta(Context context, AcquirenteFragmentAstaInversa acquirenteFragmentAstaInversa, ArrayList<String> categorieScelte){
         super(context);
         mContext = context;
-        this.acquirenteAstaInversa = acquirenteAstaInversa;
+        this.acquirenteFragmentAstaInversa = acquirenteFragmentAstaInversa;
         this.categorieScelte = categorieScelte;
     }
     public PopUpAggiungiCategorieAsta(Context context, VenditoreAstaInglese venditoreAstaInglese, ArrayList<String> categorieScelte){
@@ -85,8 +84,8 @@ public class PopUpAggiungiCategorieAsta extends Dialog implements View.OnClickLi
             Log.d("Bottoni in popup" , "annulla");
             dismiss();
         } else if (view.getId() == R.id.buttonSalvaCategorieCreaAsta) {
-            if (acquirenteAstaInversa != null) {
-                acquirenteAstaInversa.handlePopUp(switchTexts);
+            if (acquirenteFragmentAstaInversa != null) {
+                acquirenteFragmentAstaInversa.handlePopUp(switchTexts);
             } else if (venditoreAstaInglese != null) {
                 venditoreAstaInglese.handlePopUp(switchTexts);
             }
@@ -119,7 +118,7 @@ public class PopUpAggiungiCategorieAsta extends Dialog implements View.OnClickLi
         for (int i = 0; i < categorieArray.length; i++) {
             Switch switchButton = new Switch(getContext());
             switchButton.setText(categorieArray[i]);
-            switchButton.setTextSize(15); // Aumentato il testo per renderlo più alto
+            switchButton.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20);
             switchButton.setTextColor(resources.getColor(R.color.colore_secondario));
             // Controllo se la categoria corrente è già stata selezionata
             if (categorieScelte.contains(categorieArray[i])) {

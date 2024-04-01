@@ -4,14 +4,14 @@
     android:id="@+id/relativeLayoutSchermataAstaInglese"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@color/colore_base"
+    android:orientation="vertical"
     tools:context=".gui.SchermataAstaInglese">
 
     <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_schermata_asta_inglese"
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:id="@+id/toolbar_schermata_asta_inglese"
         android:background="@drawable/design_toolbar">
 
         <TextView
@@ -21,7 +21,7 @@
             android:layout_marginStart="20dp"
             android:text="AstaInglese"
             android:textColor="@color/colore_secondario"
-            android:textSize="35sp"
+            android:textSize="35dp"
             android:textStyle="bold" />
 
         <ImageButton
@@ -38,21 +38,23 @@
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
+            android:layout_marginEnd="10dp"
             android:backgroundTint="@android:color/transparent"
             android:contentDescription="Clicca per aggiungere ai preferiti."
             android:drawableTint="@android:color/transparent"
-            android:layout_marginEnd="10dp"
             android:src="@drawable/ic_cuore_vuoto" />
 
     </androidx.appcompat.widget.Toolbar>
+
     <ProgressBar
         android:id="@+id/progress_bar_schermata_asta_inglese"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:visibility="invisible"
+        android:elevation="10dp"
         android:indeterminate="true"
-        android:elevation="10dp"/>
+        android:visibility="invisible" />
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -75,7 +77,7 @@
                 android:background="@drawable/design_bio_personale"
                 android:gravity="center"
                 android:text="Nome asta"
-                android:textSize="25sp"
+                android:textSize="25dp"
                 android:textStyle="bold" />
 
             <ImageView
@@ -96,7 +98,7 @@
                 android:background="@drawable/design_bio_personale"
                 android:gravity="center"
                 android:text="Descrizione Prodotto"
-                android:textSize="20sp"
+                android:textSize="20dp"
                 android:textStyle="bold" />
 
             <LinearLayout
@@ -108,24 +110,26 @@
 
                 <LinearLayout
                     android:layout_width="0dp"
-                    android:layout_weight="1"
                     android:layout_height="match_parent"
+                    android:layout_weight="1"
                     android:orientation="vertical">
+
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:text="L'intervallo per nuove offerte si chiude in:"
                         android:textColor="@color/colore_secondario"
-                        android:textSize="20sp"
+                        android:textSize="20dp"
                         android:textStyle="bold" />
+
                     <TextView
                         android:id="@+id/textViewIntervalloOfferte"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:textColor="@color/colore_secondario"
-                        android:textSize="25sp"
+                        android:textSize="25dp"
                         android:textStyle="bold" />
                 </LinearLayout>
 
@@ -133,67 +137,66 @@
                 <View
                     android:layout_width="1dp"
                     android:layout_height="match_parent"
-                    android:background="@color/colore_secondario"
                     android:layout_marginStart="5dp"
-                    android:layout_marginEnd="5dp"/>
+                    android:layout_marginEnd="5dp"
+                    android:background="@color/colore_secondario" />
 
                 <LinearLayout
                     android:layout_width="0dp"
-                    android:layout_weight="1"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:orientation="vertical">
-                <TextView
-                    android:id="@+id/textViewOffertaAttualeSchermataAstaInglese"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:layout_gravity="end"
-                    android:text="Offerta attuale:"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/colore_secondario" />
+
+                    <TextView
+                        android:id="@+id/textViewOffertaAttualeSchermataAstaInglese"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_gravity="end"
+                        android:text="Offerta attuale:"
+                        android:textColor="@color/colore_secondario"
+                        android:textSize="20dp"
+                        android:textStyle="bold" />
+
                     <TextView
                         android:id="@+id/textViewPrezzoAttualeSchermataAstaInglese"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:gravity="center"
                         android:layout_gravity="center"
                         android:layout_marginStart="5dp"
                         android:layout_marginEnd="5dp"
-                        android:textColor="@color/colore_secondario"
-                        android:textSize="25sp"
-                        android:textStyle="bold"
-                        app:drawableEndCompat="@drawable/ic_euro"
                         android:drawablePadding="5dp"
-                        />
+                        android:gravity="center"
+                        android:textColor="@color/colore_secondario"
+                        android:textSize="25dp"
+                        android:textStyle="bold"
+                        app:drawableEndCompat="@drawable/ic_euro" />
+
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:text="Soglia minima di rialzo:"
                         android:textColor="@color/colore_secondario"
-                        android:textSize="20sp"
+                        android:textSize="20dp"
                         android:textStyle="bold" />
+
                     <TextView
                         android:id="@+id/textViewSogliaRialzoSchermataAstaInglese"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:gravity="center"
                         android:layout_gravity="center"
                         android:layout_marginStart="5dp"
                         android:layout_marginEnd="5dp"
-                        android:textColor="@color/colore_secondario"
-                        android:textSize="25sp"
-                        android:textStyle="bold"
-                        app:drawableEndCompat="@drawable/ic_euro"
                         android:drawablePadding="5dp"
-                        />
+                        android:gravity="center"
+                        android:textColor="@color/colore_secondario"
+                        android:textSize="25dp"
+                        android:textStyle="bold"
+                        app:drawableEndCompat="@drawable/ic_euro" />
 
                 </LinearLayout>
 
             </LinearLayout>
-
-
-
 
 
             <com.google.android.material.button.MaterialButton
@@ -203,15 +206,14 @@
                 android:layout_gravity="end"
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="20dp"
-                android:contentDescription="offerta nuova"
-                android:textColor="@color/colore_secondario"
-                android:textStyle="bold"
-                android:textSize="30dp"
-                app:strokeColor="#AAAAAA"
-                app:strokeWidth="2dp"
                 android:backgroundTint="@color/colore_base"
-                android:text="Fai un offerta"/>
-
+                android:contentDescription="offerta nuova"
+                android:text="Fai un offerta"
+                android:textColor="@color/colore_secondario"
+                android:textSize="30dp"
+                android:textStyle="bold"
+                app:strokeColor="#AAAAAA"
+                app:strokeWidth="2dp" />
 
 
             <TextView
@@ -223,9 +225,8 @@
                 android:gravity="center"
                 android:text="Nome venditore"
                 android:textColor="@color/colore_secondario"
-                android:textSize="25sp"
+                android:textSize="25dp"
                 android:textStyle="bold" />
-
 
 
         </LinearLayout>

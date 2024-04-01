@@ -22,11 +22,12 @@ import android.widget.Toast;
 import androidx.appcompat.widget.SwitchCompat;
 
 import com.example.progettoingsw.R;
+import com.example.progettoingsw.classe_da_estendere.DialogPersonalizzato;
 import com.example.progettoingsw.gui.acquirente.AcquirenteFragmentRicercaAsta;
 
 import java.util.ArrayList;
 
-public class PopUpFiltroRicerca extends Dialog implements View.OnClickListener {
+public class PopUpFiltroRicerca extends DialogPersonalizzato implements View.OnClickListener {
     private Button buttonSalva;
     private Button buttonAnnullaFiltro;
     private String ordinamentoPrezzo;
@@ -131,7 +132,7 @@ public class PopUpFiltroRicerca extends Dialog implements View.OnClickListener {
         for (int i = 0; i < categorieArray.length; i++) {
             Switch switchButton = new Switch(getContext());
             switchButton.setText(categorieArray[i]);
-            switchButton.setTextSize(20); // Aumentato il testo per renderlo più alto
+            switchButton.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20); // Aumentato il testo per renderlo più alto
             switchButton.setTextColor(resources.getColor(R.color.colore_secondario));
             // Controllo se la categoria corrente è già stata selezionata
             if (categorieScelte.contains(categorieArray[i])) {

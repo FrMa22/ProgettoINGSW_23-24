@@ -5,7 +5,9 @@ import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
 import android.util.Patterns;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -68,6 +70,7 @@ public class Registrazione extends GestoreComuniImplementazioni {
 
             }
         });
+
 
         bottoneProsegui.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
@@ -132,6 +135,7 @@ public class Registrazione extends GestoreComuniImplementazioni {
                 }
             }
         });
+
 
     }
 

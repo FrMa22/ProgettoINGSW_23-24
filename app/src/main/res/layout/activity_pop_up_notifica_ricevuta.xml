@@ -2,8 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="220dp"
-    android:layout_height="100dp"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     android:layout_gravity="center"
     android:orientation="vertical"
     android:background="@drawable/bordo_non_stondato"
@@ -16,46 +16,54 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:layout_gravity="center"
-        android:layout_marginStart="3dp"
-        android:layout_marginEnd="3dp"
-        android:background="@drawable/bordo_sotto_grigio"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
         android:gravity="center"
         android:text="Hai ricevuta x notifiche"
         android:textColor="@color/colore_secondario"
-        android:textSize="18sp" />
+        android:textSize="25dp"/>
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="25dp"
-        android:layout_marginEnd="25dp"
-        android:layout_marginBottom="5dp">
+        android:layout_height="0dp"
+        android:layout_weight="0.5"
+        android:layout_marginBottom="3dp"
+        android:layout_marginStart="3dp"
+        android:layout_marginEnd="3dp"
+        android:orientation="horizontal"
+        android:background="@drawable/bordo_sopra_grigio">
 
         <TextView
             android:id="@+id/textViewChiudi"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:gravity="start"
+            android:gravity="center"
             android:text="Chiudi"
+            android:layout_gravity="center"
             android:textColor="@color/colore_secondario"
-            android:textSize="20sp"
+            android:textSize="20dp"
             android:textStyle="bold" />
 
+        <View
+            android:layout_width="2dp"
+            android:layout_height="match_parent"
+            android:background="@color/colore_hint"
+            />
         <TextView
             android:id="@+id/textViewApri"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:gravity="end"
+            android:gravity="center"
+            android:layout_gravity="center"
             android:text="Apri"
             android:textColor="@color/colore_secondario"
-            android:textSize="20sp"
+            android:textSize="20dp"
             android:textStyle="bold" />
 
 
-    </RelativeLayout>
+    </LinearLayout>
 
 </LinearLayout>
 

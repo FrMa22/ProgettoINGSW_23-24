@@ -11,9 +11,10 @@ import android.widget.Toast;
 import androidx.appcompat.widget.AppCompatButton;
 
 import com.example.progettoingsw.R;
+import com.example.progettoingsw.classe_da_estendere.DialogPersonalizzato;
 import com.example.progettoingsw.gui.acquirente.AcquirenteMainActivity;
 
-public class PopUpLogin extends Dialog implements View.OnClickListener {
+public class PopUpLogin extends DialogPersonalizzato implements View.OnClickListener {
     private TextView bottoneAcquirente;
     private TextView bottoneVenditore;
     private String email;

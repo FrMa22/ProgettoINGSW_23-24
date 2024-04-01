@@ -12,11 +12,13 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.progettoingsw.DAO.FragmentProfiloDAO;
 import com.example.progettoingsw.DAO.NotificheDAO;
 import com.example.progettoingsw.R;
+import com.example.progettoingsw.classe_da_estendere.GestoreComuniImplementazioni;
 import com.example.progettoingsw.controllers_package.AstaAdapter;
 import com.example.progettoingsw.controllers_package.NotificheAdapter;
 import com.example.progettoingsw.gui.acquirente.AcquirenteFragmentHome;
@@ -25,7 +27,7 @@ import com.example.progettoingsw.model.NotificaItem;
 import java.util.ArrayList;
 
 
-public class SchermataNotifiche extends AppCompatActivity {
+public class SchermataNotifiche extends GestoreComuniImplementazioni {
     private ImageButton bottoneBackNotifiche;
     private String tipoUtente;
     private String email;
@@ -33,6 +35,7 @@ public class SchermataNotifiche extends AppCompatActivity {
     private NotificheDAO notificheDAO;
     private int numeroNotifiche;
     private ProgressBar progressBarSchermataNotifiche;
+    private TextView text_view_nessuna_notifica;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +46,7 @@ public class SchermataNotifiche extends AppCompatActivity {
 
         progressBarSchermataNotifiche = findViewById(R.id.progressBarSchermataNotifiche);
         progressBarSchermataNotifiche.setVisibility(View.VISIBLE);
+        text_view_nessuna_notifica = findViewById(R.id.text_view_nessuna_notifica);
 
         email = getIntent().getStringExtra("email");
         tipoUtente=getIntent().getStringExtra("tipoUtente");
@@ -112,14 +116,21 @@ public class SchermataNotifiche extends AppCompatActivity {
 
 
     public void updateNotifiche(ArrayList<Object> notifiche) {
-
-            if (notifiche != null) {
+        boolean notificheVuote = notifiche == null || notifiche.isEmpty();
+        Log.d("updateNotifiche", "notificheVuote: " + notificheVuote);
+            if (!notificheVuote) {
                 AdapterNotifiche.setNotifiche(notifiche);
                 numeroNotifiche = notifiche.size();
             } else {
                 numeroNotifiche = 0;
                 // Nessun nome asta trovato per l'email specificata
             }
+            if(notificheVuote){
+                Log.d("updateNotifiche", "caso vuoto: ");
+                text_view_nessuna_notifica.setVisibility(View.VISIBLE);
+            }else{
+            text_view_nessuna_notifica.setVisibility(View.INVISIBLE);
+        }
         progressBarSchermataNotifiche.setVisibility(View.GONE);
 
     }

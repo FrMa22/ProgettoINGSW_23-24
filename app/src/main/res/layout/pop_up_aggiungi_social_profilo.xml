@@ -1,42 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="370dp"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
     android:background="@drawable/bordo_non_stondato"
-    tools:context=".gui.PopUpAggiungiSocialProfilo"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".gui.PopUpAggiungiSocialProfilo">
 
+    <ProgressBar
+        android:id="@+id/progressBarPopUpAggiungiSocialProfilo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center"
+        android:elevation="10dp"
+        android:indeterminate="true"
+        android:visibility="invisible" />
     <EditText
         android:id="@+id/editTextNomeSocial"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
+        android:layout_alignParentTop="true"
         android:background="@drawable/edit_text_tutti_lati_grigi_rounded"
         android:drawablePadding="15dp"
         android:hint="Nome Social"
+        android:maxLength="25"
         android:padding="20dp"
+        android:singleLine="true"
         android:textColor="@color/colore_secondario"
-        android:textColorHint="@color/colore_hint"/>
+        android:textColorHint="@color/colore_hint"
+        android:textSize="20dp" />
 
     <EditText
         android:id="@+id/editTextNomeUtenteSocial"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/editTextNomeSocial"
         android:layout_margin="10dp"
         android:background="@drawable/edit_text_tutti_lati_grigi_rounded"
         android:drawablePadding="15dp"
         android:hint="Nome Utente"
+        android:maxLength="25"
         android:padding="20dp"
+        android:singleLine="true"
         android:textColor="@color/colore_secondario"
-        android:textColorHint="@color/colore_hint"/>
+        android:textColorHint="@color/colore_hint"
+        android:textSize="20dp" />
 
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
+        android:layout_below="@id/editTextNomeUtenteSocial"
         android:layout_marginEnd="10dp">
 
         <com.google.android.material.button.MaterialButton
@@ -50,18 +68,18 @@
             android:backgroundTint="@color/colore_secondario"
             android:text="Chiudi"
             android:textColor="@color/colore_base"
-            android:textSize="20sp"
+            android:textSize="20dp"
             android:textStyle="bold" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/bottoneConfermaRegistrazioneSocial"
             android:layout_width="140dp"
             android:layout_height="60dp"
+            android:layout_alignParentEnd="true"
             android:layout_marginStart="10dp"
             android:layout_marginTop="20dp"
             android:layout_marginEnd="10dp"
             android:layout_marginBottom="20dp"
-            android:layout_alignParentEnd="true"
             android:backgroundTint="@color/colore_secondario"
             android:text="Aggiungi"
             android:textColor="@color/colore_base"
@@ -70,4 +88,4 @@
     </RelativeLayout>
 
 
-</LinearLayout>
+</RelativeLayout>

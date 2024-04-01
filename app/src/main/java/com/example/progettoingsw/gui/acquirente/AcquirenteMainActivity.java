@@ -7,7 +7,6 @@
     import android.util.Log;
     import android.view.Menu;
     import android.view.MenuItem;
-    import android.widget.Toast;
 
     import com.example.progettoingsw.DAO.NotificheDAO;
     import com.example.progettoingsw.R;
@@ -83,7 +82,7 @@
                     resetOtherIcons(bottomNavigationView, item);
                     if(tipoUtente.equals("acquirente")){
                         resetOtherIcons(bottomNavigationView, item);
-                        selectedFragment = new AcquirenteAstaInversa(email);
+                        selectedFragment = new AcquirenteFragmentAstaInversa(email);
                     }else{
                         VenditorePopUpCreaAsta popAsta  = new VenditorePopUpCreaAsta(AcquirenteMainActivity.this,email,tipoUtente);
                         popAsta.show();
@@ -171,7 +170,7 @@
                 menuItem = bottomNavigationView.getMenu().findItem(R.id.action_home);
             } else if (fragment instanceof AcquirenteFragmentSelezioneCategorie) {
                 menuItem = bottomNavigationView.getMenu().findItem(R.id.action_categories);
-            } else if (fragment instanceof AcquirenteAstaInversa) {
+            } else if (fragment instanceof AcquirenteFragmentAstaInversa) {
                 menuItem = bottomNavigationView.getMenu().findItem(R.id.action_crea_asta);
             } else if (fragment instanceof AcquirenteFragmentRicercaAsta) {
                 menuItem = bottomNavigationView.getMenu().findItem(R.id.action_search);

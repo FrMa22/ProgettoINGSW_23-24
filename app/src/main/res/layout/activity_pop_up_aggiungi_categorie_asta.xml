@@ -20,35 +20,29 @@
             android:text="Seleziona Categorie"
             android:textColor="@color/colore_secondario"
             android:layout_marginTop="5dp"
-            android:textSize="25sp"
+            android:layout_marginBottom="5dp"
+            android:textSize="25dp"
             android:textStyle="bold"/>
+
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
-            android:background="@drawable/design_bio_personale"
-            >
+            android:layout_weight="1"
+            android:background="@drawable/design_elenco_categorie_popup"
+            tools:ignore="SpeakableTextPresentCheck"
+            android:padding="2dp">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
 
 
                 <LinearLayout
                     android:id="@+id/linear_layout_categorie_crea_asta"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginEnd="20dp"
                     android:orientation="vertical"/>
 
 
-
-            </LinearLayout>
         </ScrollView>
 
         <RelativeLayout
@@ -58,26 +52,26 @@
 
             <Button
                 android:id="@+id/buttonAnnullaCategorieCreaAsta"
-                android:layout_width="130dp"
+                android:layout_width="140dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
-                android:layout_marginStart="20dp"
+                android:layout_marginStart="15dp"
                 android:backgroundTint="@color/colore_secondario"
                 android:text="Annulla"
                 android:textColor="@color/colore_base"
-                android:textSize="20sp"
+                android:textSize="25dp"
                 android:textStyle="bold" />
 
             <Button
                 android:id="@+id/buttonSalvaCategorieCreaAsta"
-                android:layout_width="130dp"
+                android:layout_width="140dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
-                android:layout_marginEnd="20dp"
+                android:layout_marginEnd="15dp"
                 android:backgroundTint="@color/colore_secondario"
                 android:text="Salva"
                 android:textColor="@color/colore_base"
-                android:textSize="20sp"
+                android:textSize="25dp"
                 android:textStyle="bold" />
         </RelativeLayout>
     </LinearLayout>

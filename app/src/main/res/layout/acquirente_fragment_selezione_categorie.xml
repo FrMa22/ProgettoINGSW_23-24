@@ -20,7 +20,7 @@
             android:layout_gravity="center"
             android:text="Categorie"
             android:textColor="@color/colore_secondario"
-            android:textSize="35sp"
+            android:textSize="35dp"
             android:textStyle="bold" />
 
     </androidx.appcompat.widget.Toolbar>

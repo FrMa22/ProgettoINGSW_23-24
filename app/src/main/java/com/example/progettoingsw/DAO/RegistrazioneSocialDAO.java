@@ -2,8 +2,13 @@ package com.example.progettoingsw.DAO;
 
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.example.progettoingsw.controllers_package.DatabaseHelper;
+import com.example.progettoingsw.gui.PopUpAggiungiSocialProfilo;
+import com.example.progettoingsw.gui.acquirente.FragmentProfilo;
+
+import org.postgresql.util.PSQLException;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -17,6 +22,12 @@ public class RegistrazioneSocialDAO {
     private Connection connection;
     private String email;
     private String tipoUtente;
+    private PopUpAggiungiSocialProfilo popUpAggiungiSocialProfilo;
+    public RegistrazioneSocialDAO(PopUpAggiungiSocialProfilo popUpAggiungiSocialProfilo, String email, String tipoUtente){
+        this.popUpAggiungiSocialProfilo = popUpAggiungiSocialProfilo;
+        this.email=email;
+        this.tipoUtente=tipoUtente;
+    }
     public RegistrazioneSocialDAO(String email, String tipoUtente){
         this.email=email;
         this.tipoUtente=tipoUtente;
@@ -32,7 +43,7 @@ public class RegistrazioneSocialDAO {
     }
     public void inserimentoSingoloSocial(String nomeSocial,String nomeUtenteSocial) {
 
-        new DatabaseTask().execute("insertSingolo",nomeSocial,nomeUtenteSocial);
+        new InsertSingoloAsyncTask().execute(nomeSocial,nomeUtenteSocial);
     }
 
     public void closeConnection() {
@@ -65,7 +76,7 @@ public class RegistrazioneSocialDAO {
                     String action = (String) params[0];
                     if (action.equals("open")) {
                         connection = DatabaseHelper.getConnection();
-                        return "Connessione aperta con successo!";
+                        return "Connessione aperta con successo";
                     } else if (action.equals("insert")) {
                         Log.d("insert", "valori email e tipoutente: " + email + tipoUtente);
                         if (connection != null && !connection.isClosed()) {
@@ -85,51 +96,74 @@ public class RegistrazioneSocialDAO {
                                     statement.setString(3, email);
                                     statement.executeUpdate();
                                 }
-                                return "Social inseriti con successo!";
+                                return "ok";
                             } else {
-                                return "Errore: Le liste dei nomi social e dei nomi utente social hanno lunghezze diverse.";
+                                return "ok";
                             }
                         } else {
-                            return "Impossibile inserire il social: connessione non aperta.";
+                            return "Problema con la connessione rilevato.";
                         }
 
-                    }else if(action.equals("insertSingolo")){
-                        Log.d("Prima" , "valori : " + params[1].toString() + params[2].toString());
+                    }else if (action.equals("close")) {
                         if (connection != null && !connection.isClosed()) {
-                            String nomeSocial = params[1].toString();
-                            String nomeUtenteSocial = params[2].toString();
-                            Log.d("Dopo" , "valori : " + params[1].toString() + params[2].toString());
+                            connection.close();
+                            return "ok";
+                        } else {
+                            return "ok";
+                        }
+                    }
+                }
+            } catch (PSQLException e) {
+                e.printStackTrace();
+                return "Errore durante l'operazione: Duplicate key value violates unique constraint" ;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return "ok";
+        }
+
+        @Override
+        protected void onPostExecute(String resul) {
+
+        }
+    }
+    private class InsertSingoloAsyncTask extends AsyncTask<Object, Void, Integer> {
+            @Override
+            protected Integer doInBackground(Object... params) {
+                try {
+                    if (params.length > 0) {
+                        connection = DatabaseHelper.getConnection();
+                        if (connection != null && !connection.isClosed()) {
+                            String nomeSocial = params[0].toString();
+                            String nomeUtenteSocial = params[1].toString();
                             String query = "INSERT INTO social" + tipoUtente + " (nome, link, indirizzo_email) VALUES (?, ?, ?)";
                             PreparedStatement statement = connection.prepareStatement(query);
                             statement.setString(1, nomeSocial);
                             statement.setString(2, nomeUtenteSocial);
                             statement.setString(3, email);
                             statement.executeUpdate();
-                            return "Social inseriti con successo!";
+                            return 1;
                         }else {
-                            return "Impossibile inserire il social: connessione non aperta.";
-                        }
-                    }else if (action.equals("close")) {
-                        if (connection != null && !connection.isClosed()) {
-                            connection.close();
-                            return "Connessione chiusa con successo!";
-                        } else {
-                            return "Connessione già chiusa.";
+                            return 0;
                         }
                     }
-                }
-                return "Azione non supportata.";
+            } catch (PSQLException e) {
+                e.printStackTrace();
+                return -1 ;
+                //"Errore durante l'operazione: Duplicate key value violates unique constraint"
             } catch (Exception e) {
                 e.printStackTrace();
-                return "Errore durante l'operazione: " + e.getMessage();
+                return 0;
             }
+            return 1;
         }
 
         @Override
-        protected void onPostExecute(String result) {
-            // Questo metodo viene chiamato dopo che doInBackground è completato
-            // Puoi mostrare il risultato all'utente o gestirlo in modo appropriato
-            System.out.println(result);
+        protected void onPostExecute(Integer result) {
+            if(popUpAggiungiSocialProfilo != null){
+                Log.d("RegistrazioneSocialDAO" , "onPostExecute");
+                popUpAggiungiSocialProfilo.handleRegistrazioneSocial(result);
+            }
         }
     }
 

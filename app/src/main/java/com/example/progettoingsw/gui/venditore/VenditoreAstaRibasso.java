@@ -21,20 +21,13 @@ import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
-import androidx.fragment.app.Fragment;
 
-import com.example.progettoingsw.DAO.AstaIngleseDAO;
-import com.example.progettoingsw.DAO.AstaInversaDAO;
 import com.example.progettoingsw.DAO.AstaRibassoDAO;
-import com.example.progettoingsw.PopUpAggiungiCategorieAsta;
+import com.example.progettoingsw.gui.PopUpAggiungiCategorieAsta;
 import com.example.progettoingsw.R;
 import com.example.progettoingsw.classe_da_estendere.GestoreComuniImplementazioni;
-import com.example.progettoingsw.controllers_package.Controller;
 import com.example.progettoingsw.controllers_package.InsertAsta;
-import com.example.progettoingsw.gui.LoginActivity;
-import com.example.progettoingsw.gui.acquirente.AcquirenteFragmentHome;
 import com.example.progettoingsw.gui.acquirente.AcquirenteMainActivity;
 import com.google.android.material.button.MaterialButton;
 

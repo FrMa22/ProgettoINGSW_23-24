@@ -19,7 +19,7 @@
         android:layout_marginStart="5dp"
         android:layout_marginEnd="5dp"
         android:gravity="center"
-        android:textSize="35sp"
+        android:textSize="35dp"
         android:textStyle="bold"
         android:text="Fai un offerta"/>
 
@@ -41,7 +41,7 @@
                 android:layout_height="wrap_content"
                 android:text="Prezzo attuale :"
                 android:textColor="@color/colore_hint"
-                android:textSize="18sp"
+                android:textSize="18dp"
                 android:textStyle="bold" />
 
             <TextView
@@ -58,7 +58,7 @@
                 android:drawablePadding="5dp"
                 android:gravity="center"
                 android:textColor="@color/colore_secondario"
-                android:textSize="25sp"
+                android:textSize="25dp"
                 android:textStyle="bold" />
         </LinearLayout>
 
@@ -82,7 +82,7 @@
                 android:layout_height="wrap_content"
                 android:text="Offerta minima :"
                 android:textColor="@color/colore_hint"
-                android:textSize="18sp"
+                android:textSize="18dp"
                 android:textStyle="bold" />
 
             <TextView
@@ -99,7 +99,7 @@
                 android:drawablePadding="5dp"
                 android:gravity="center"
                 android:textColor="@color/colore_secondario"
-                android:textSize="25sp"
+                android:textSize="25dp"
                 android:textStyle="bold" />
         </LinearLayout>
 
@@ -112,6 +112,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:text="Fai un\' offerta :"
+        android:layout_marginTop="10dp"
+        android:textSize="20dp"
         android:textColor="@color/colore_hint"
         android:textStyle="bold" />
 
@@ -126,7 +128,7 @@
         android:hint="€"
         android:drawableTint="@color/colore_hint"
         android:textColor="@color/colore_secondario"
-        android:textSize="25sp"
+        android:textSize="25dp"
         android:textStyle="bold"
         android:inputType="number"/>
 
@@ -152,8 +154,9 @@
             android:backgroundTint="@color/colore_base"
             android:text="Annulla"
             android:textColor="@color/colore_secondario"
-            android:textSize="20sp"
+            android:textSize="20dp"
             android:textStyle="bold" />
+
         <com.google.android.material.button.MaterialButton
             android:id="@+id/bottoneConfermaPopUpAsta"
             android:layout_width="150dp"
@@ -162,7 +165,7 @@
             android:backgroundTint="@color/colore_secondario"
             android:text="Conferma"
             android:textColor="@color/colore_base"
-            android:textSize="20sp"
+            android:textSize="20dp"
             android:textStyle="bold"  />
     </LinearLayout>
 

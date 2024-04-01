@@ -26,8 +26,6 @@ import com.example.progettoingsw.gui.venditore.VenditoreAstaRibasso;
 
 public class LoginActivity extends GestoreComuniImplementazioni {
     private SwitchCompat switch_mostra_password;
-    Button bottone;
-    Controller controller;
     ProgressBar progress_bar_login;
     LinearLayout linear_layout_login;
     EditText editText_mail;
@@ -111,13 +109,7 @@ public class LoginActivity extends GestoreComuniImplementazioni {
             }
         });
 
-        bottone = findViewById(R.id.button);
-        bottone.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Controller.redirectActivity(LoginActivity.this, SchermataAstaInglese.class);
-            }
-        });
+
 
     }
     public void handleLoginResult(String tipoUtente) {

@@ -20,7 +20,7 @@
             android:gravity="center"
             android:text="Modifica Social"
             android:textColor="@color/colore_secondario"
-            android:textSize="30sp"
+            android:textSize="30dp"
             android:textStyle="bold" />
 
         <EditText
@@ -36,7 +36,7 @@
             android:paddingEnd="15dp"
             android:hint="nome social"
             android:textColor="@color/colore_secondario"
-            android:textSize="22sp" />
+            android:textSize="22dp" />
 
         <EditText
             android:id="@+id/edit_text_link_social"
@@ -51,7 +51,7 @@
             android:paddingEnd="15dp"
             android:hint="link social"
             android:textColor="@color/colore_secondario"
-            android:textSize="22sp" />
+            android:textSize="22dp" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/bottoneEliminaSocial"
@@ -62,7 +62,7 @@
             android:background="@drawable/bordo_rettangolare_per_bottone"
             android:text="Elimina"
             android:textColor="@color/colore_secondario"
-            android:textSize="22sp"
+            android:textSize="22dp"
             android:textStyle="bold" />
 
         <LinearLayout
@@ -81,7 +81,7 @@
                 android:background="@drawable/bordo_rettangolare_per_bottone"
                 android:text="Annulla"
                 android:textColor="@color/colore_secondario"
-                android:textSize="22sp"
+                android:textSize="22dp"
                 android:textStyle="bold" />
 
             <View
@@ -98,7 +98,7 @@
                 android:background="@drawable/bordo_rettangolare_per_bottone"
                 android:text="Conferma"
                 android:textColor="@color/colore_secondario"
-                android:textSize="22sp"
+                android:textSize="22dp"
                 android:textStyle="bold" />
         </LinearLayout>
     </LinearLayout>

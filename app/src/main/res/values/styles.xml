@@ -17,7 +17,7 @@
     </style>
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="android:windowBackground">@color/backgroundColorLight</item>
-        
+
     </style>
     <style name="AppTheme.Dark" parent="Theme.AppCompat">
         <item name="android:windowBackground">@color/backgroundColorDark</item>

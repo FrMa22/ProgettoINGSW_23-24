@@ -7,12 +7,9 @@
     android:layout_height="match_parent"
     tools:context=".gui.acquirente.AcquirenteFragmentRicercaAsta">
 
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
 
     <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_fragment_ricerca_asta"
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:background="@drawable/design_toolbar">
@@ -28,11 +25,12 @@
             android:drawableStart="@drawable/ic_search_vuota"
             android:drawablePadding="10dp"
             android:hint="Cerca"
-            android:paddingLeft="10dp"
+            android:paddingStart="10dp"
+            android:paddingEnd="5dp"
             android:singleLine="true"
             android:textColor="@color/black"
             android:textColorHint="@color/colore_hint"
-            android:textSize="30sp" />
+            android:textSize="30dp" />
 
         <ImageButton
             android:id="@+id/button_filtro"
@@ -46,44 +44,55 @@
 
     </androidx.appcompat.widget.Toolbar>
 
-<com.google.android.material.button.MaterialButton
-    android:id="@+id/button_cerca_asta"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="Cerca"
-    android:textSize="30sp"
-    android:layout_gravity="center"
-    android:layout_marginTop="10dp"
-    android:layout_marginBottom="10dp"
-    android:backgroundTint="@color/colore_secondario"
-    android:textColor="@color/colore_base"
-    />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_view_aste_per_ricerca"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="match_parent"
+        android:layout_below="@id/toolbar_fragment_ricerca_asta">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/button_cerca_asta"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:backgroundTint="@color/colore_secondario"
+            android:text="Cerca"
+            android:textColor="@color/colore_base"
+            android:textSize="30dp" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view_aste_per_ricerca"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
 
-</LinearLayout>
-    <ProgressBar
-        android:id="@+id/progress_bar_schermata_ricerca_asta"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:elevation="10dp"
-        android:visibility="invisible"
-        android:indeterminate="true"
-        />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/text_view_nessuna_asta_ricercata"
-        android:text="Nessuna asta trovata."
-        android:textSize="35sp"
-        android:textColor="@color/colore_secondario"
-        android:textStyle="bold"
-        android:layout_centerInParent="true"
-        android:visibility="invisible"
-        />
-</RelativeLayout>
+    </LinearLayout>
+</ScrollView>
+
+<ProgressBar
+android:elevation="10dp"
+android:id="@+id/progress_bar_schermata_ricerca_asta"
+android:indeterminate="true"
+android:layout_centerInParent="true"
+android:layout_height="wrap_content"
+android:layout_width="wrap_content"
+android:visibility="invisible" />
+
+<TextView
+android:id="@+id/text_view_nessuna_asta_ricercata"
+android:layout_centerInParent="true"
+android:layout_height="wrap_content"
+android:layout_width="wrap_content"
+android:text="Nessuna asta trovata."
+android:textColor="@color/colore_secondario"
+android:textSize="35dp"
+android:textStyle="bold"
+android:visibility="invisible" />
+
+    </RelativeLayout>

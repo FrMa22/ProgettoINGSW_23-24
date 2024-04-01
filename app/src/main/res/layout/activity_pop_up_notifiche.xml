@@ -25,11 +25,10 @@
         android:padding="10dp"
         android:text="*Titolo notifica"
         android:textColor="@color/colore_secondario"
-        android:textSize="30sp"
+        android:textSize="30dp"
         android:textStyle="bold"
         android:ellipsize="end"
-        android:autoSizeTextType="uniform"
-        android:autoSizeMaxTextSize="30sp"/>
+        android:autoSizeTextType="uniform"/>
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
@@ -54,9 +53,7 @@
             android:maxHeight="180dp"
             android:padding="10dp"
             android:text="descrizione"
-            android:textSize="24sp"
-            android:autoSizeTextType="uniform"
-            android:autoSizeMaxTextSize="24sp"
+            android:textSize="24dp"
             android:textColor="@color/colore_secondario" />
 
         <RelativeLayout
@@ -72,8 +69,9 @@
                 android:layout_alignParentStart="true"
                 android:backgroundTint="@color/colore_secondario"
                 android:text="Chiudi"
-                android:textSize="16sp"
-                android:textColor="@color/colore_base"/>
+                android:textColor="@color/colore_base"
+                android:textSize="16dp"
+                tools:ignore="TouchTargetSizeCheck" />
 
             <Button
                 android:id="@+id/button_cancella_notifica_popup_notifica"
@@ -82,8 +80,9 @@
                 android:layout_alignParentEnd="true"
                 android:backgroundTint="@color/colore_secondario"
                 android:text="Cancella notifica"
-                android:textSize="12sp"
-                android:textColor="@color/colore_base"/>
+                android:textColor="@color/colore_base"
+                android:textSize="12dp"
+                tools:ignore="TextSizeCheck,TouchTargetSizeCheck" />
 
 
         </RelativeLayout>

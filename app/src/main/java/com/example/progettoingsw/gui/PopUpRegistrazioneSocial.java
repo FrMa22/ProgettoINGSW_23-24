@@ -3,6 +3,7 @@ package com.example.progettoingsw.gui;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.EditText;
@@ -11,10 +12,13 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 
 import com.example.progettoingsw.R;
+import com.example.progettoingsw.classe_da_estendere.DialogPersonalizzato;
 import com.example.progettoingsw.controllers_package.Controller;
 import com.google.android.material.button.MaterialButton;
 
-public class PopUpRegistrazioneSocial extends Dialog implements View.OnClickListener {
+import java.util.ArrayList;
+
+public class PopUpRegistrazioneSocial extends DialogPersonalizzato implements View.OnClickListener {
 
     private Controller controller;
     private String opzioneSelezionata;
@@ -25,13 +29,16 @@ public class PopUpRegistrazioneSocial extends Dialog implements View.OnClickList
     MaterialButton bottoneConfermaRegistrazioneSocial;
     EditText editTextNomeUtenteSocial;
     EditText editTextNomeSocial;
+    private ArrayList<String> elencoNomeSocialRegistrazioneStrings;
+    ArrayList<String> elencoNomeUtenteSocialRegistrazione;
 
-
-    public PopUpRegistrazioneSocial(@NonNull Context context, RegistrazioneCampiFacoltativi registrazioneCampiFacoltativi, String email, String tipoUtente) {
+    public PopUpRegistrazioneSocial(@NonNull Context context, RegistrazioneCampiFacoltativi registrazioneCampiFacoltativi, String email, String tipoUtente, ArrayList<String> elencoNomeSocialRegistrazioneStrings, ArrayList<String> elencoNomeUtenteSocialRegistrazione) {
         super(context);
         this.email=email;
         this.tipoUtente=tipoUtente;
         this.registrazioneCampiFacoltativi = registrazioneCampiFacoltativi;
+        this.elencoNomeSocialRegistrazioneStrings = elencoNomeSocialRegistrazioneStrings;
+        this.elencoNomeUtenteSocialRegistrazione = elencoNomeUtenteSocialRegistrazione;
     }
 
     @Override
@@ -41,6 +48,10 @@ public class PopUpRegistrazioneSocial extends Dialog implements View.OnClickList
         setContentView(R.layout.pop_up_registrazione_social);
 
         controller = new Controller();
+
+        // Stampa dei valori negli arraylist nel log
+        Log.d("PopUpRegistrazioneSocial", "Valori in elencoNomeSocialRegistrazioneStrings: " + elencoNomeSocialRegistrazioneStrings.toString());
+        Log.d("PopUpRegistrazioneSocial", "Valori in elencoNomeUtenteSocialRegistrazione: " + elencoNomeUtenteSocialRegistrazione.toString());
 
 
         // Riferimenti ai widget all'interno del pop-up
@@ -82,12 +93,19 @@ public class PopUpRegistrazioneSocial extends Dialog implements View.OnClickList
         if(nomeUtenteSocial.isEmpty()){editTextNomeUtenteSocial.setError("Nome utente social vuoto");}
         if (!nomeSocial.isEmpty() && nomeSocial.length() <= 50 &&
                 !nomeUtenteSocial.isEmpty() && nomeUtenteSocial.length() <= 50) {
-            editTextNomeUtenteSocial.setError(null);
-            editTextNomeSocial.setError(null);
-            registrazioneCampiFacoltativi.setProfiloSocialRegistrazione(nomeSocial, nomeUtenteSocial);
+            //aggiungere qui il controllo negli array se i valori sono gia presenti con stessa posizione
+            int indiceNomeSocialTrovato = elencoNomeSocialRegistrazioneStrings.indexOf(nomeSocial);
+            int indiceNomeUtenteTrovato = elencoNomeUtenteSocialRegistrazione.indexOf(nomeUtenteSocial);
+            if(indiceNomeSocialTrovato != -1 && indiceNomeUtenteTrovato==indiceNomeSocialTrovato){
+                Toast.makeText(getContext(), "I valori per social e nome utente sono già stati inseriti", Toast.LENGTH_SHORT).show();
+            }else{
+                editTextNomeUtenteSocial.setError(null);
+                editTextNomeSocial.setError(null);
+                registrazioneCampiFacoltativi.setProfiloSocialRegistrazione(nomeSocial, nomeUtenteSocial);
 
-            // Chiudi il dialog dopo la conferma
-            dismiss();
+                // Chiudi il dialog dopo la conferma
+                dismiss();
+            }
         }
         }
 }

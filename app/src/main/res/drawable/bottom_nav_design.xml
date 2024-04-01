@@ -7,7 +7,7 @@
         android:left="-2dp"
         android:right="-2dp">
         <shape>
-            <corners android:topLeftRadius="10dp" android:topRightRadius="10dp" />
+            <corners android:topLeftRadius="0dp" android:topRightRadius="0dp" />
             <solid android:color="@color/colore_base" />
             <stroke
                 android:width="2dp"

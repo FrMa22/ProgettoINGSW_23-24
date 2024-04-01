@@ -5,7 +5,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,9 +24,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.example.progettoingsw.DAO.ImmaginiDAO;
 import com.example.progettoingsw.R;
-import com.example.progettoingsw.gui.venditore.VenditoreAstaInglese;
 import com.google.android.material.button.MaterialButton;
 
 import java.io.ByteArrayOutputStream;
@@ -75,7 +72,7 @@ public class AcquirenteFragmentCreaLaTuaAstaAcquirente extends Fragment {
         bottoneProseguiCreaAstaAcquirente = view_fragment.findViewById(R.id.bottoneProseguiCreaAstaAcquirente);
         bottoneProseguiCreaAstaAcquirente.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                //Controller.redirectActivity(getActivity(), AcquirenteAstaInversa.class);
+                //Controller.redirectActivity(getActivity(), AcquirenteFragmentAstaInversa.class);
                 descProd=descrizioneProdotto.getText().toString();
                 //qui sopra era giusto
 
@@ -84,7 +81,7 @@ public class AcquirenteFragmentCreaLaTuaAstaAcquirente extends Fragment {
                 //immaginiDAO.closeConnection();
 
                 //qui era giusto
-                Intent intent = new Intent(getActivity(), AcquirenteAstaInversa.class);
+                Intent intent = new Intent(getActivity(), AcquirenteFragmentAstaInversa.class);
                 intent.putExtra("descProd", descProd);
                 intent.putExtra("email",email);
                 intent.putExtra("img",imageBytes);

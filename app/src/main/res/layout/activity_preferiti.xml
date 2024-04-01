@@ -17,10 +17,11 @@
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="start"
             android:id="@+id/backButton"
             android:contentDescription="Clicca per tornare indietro."
             android:backgroundTint="@android:color/transparent"
-            android:src="@drawable/ic_back_arrow"
+            android:src="@drawable/baseline_arrow_back_ios_24"
             />
 
         <TextView
@@ -29,7 +30,7 @@
             android:layout_gravity="center"
             android:text="Preferiti"
             android:textColor="@color/colore_secondario"
-            android:textSize="35sp"
+            android:textSize="35dp"
             android:textStyle="bold" />
 
     </androidx.appcompat.widget.Toolbar>
@@ -44,7 +45,7 @@
         android:layout_below="@id/toolbar_schermata_preferiti"
         android:layout_centerInParent="true"
         android:layout_marginTop="30dp"
-        android:textSize="35sp"
+        android:textSize="35dp"
         android:textStyle="bold"
         android:visibility="invisible"
         />

@@ -20,7 +20,7 @@
             android:name=".gui.PopUpNotificaRicevuta"
             android:exported="false" />
         <activity
-            android:name=".PopUpAggiungiCategorieAsta"
+            android:name=".gui.PopUpAggiungiCategorieAsta"
             android:exported="false" />
         <activity
             android:name=".gui.acquirente.AcquirenteMainActivity"
@@ -87,7 +87,7 @@
             android:name=".gui.venditore.VenditoreAstaRibasso"
             android:exported="true" />
         <activity
-            android:name=".gui.acquirente.AcquirenteAstaInversa"
+            android:name=".gui.acquirente.AcquirenteFragmentAstaInversa"
             android:exported="true" />
         <activity
             android:name=".gui.ProfiloAcquirente"

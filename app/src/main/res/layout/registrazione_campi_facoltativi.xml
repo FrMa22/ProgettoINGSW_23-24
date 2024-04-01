@@ -14,13 +14,15 @@
         android:id="@+id/textViewCampiFacoltativi"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Campi Facoltativi:"
-        android:layout_margin="15dp"
-        android:textSize="30sp"
-        android:textStyle="bold"
-        android:textColor="@color/colore_secondario"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="15dp"
         android:gravity="center"
-        />
+        android:text="Campi Facoltativi:"
+        android:textColor="@color/colore_secondario"
+        android:textSize="30dp"
+        android:textStyle="bold" />
 
 
     <EditText
@@ -35,7 +37,7 @@
         android:background="@drawable/design_bio_personale"
         android:drawablePadding="15dp"
         android:hint="Bio personale"
-        android:textSize="20sp"
+        android:textSize="20dp"
         android:gravity="center"
         android:maxLength="100"
         android:padding="20dp"
@@ -56,6 +58,7 @@
         android:background="@drawable/design_bio_personale"
         android:drawablePadding="15dp"
         android:hint="Paese di provenienza"
+        android:textSize="20dp"
         android:padding="20dp"
         android:maxLength="25"
         android:singleLine="true"
@@ -67,12 +70,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/editTextSitoWeb"
-        android:text="Premi per inserire:"
-        android:layout_margin="15dp"
-        android:textSize="25dp"
-        android:textStyle="bold"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="15dp"
         android:gravity="center"
-        />
+        android:text="Premi per inserire:"
+        android:textSize="25dp"
+        android:textStyle="bold" />
 
 
     <com.google.android.material.button.MaterialButton
@@ -89,7 +94,7 @@
         android:backgroundTint="@color/colore_base"
         android:text="Social"
         android:textColor="@color/colore_secondario"
-        android:textSize="20sp"
+        android:textSize="20dp"
         android:textStyle="bold"
         android:layout_centerHorizontal="true"
         />
@@ -108,6 +113,7 @@
         android:background="@drawable/design_bio_personale"
         android:drawablePadding="15dp"
         android:hint="Indirizzo del sito web"
+        android:textSize="20dp"
         android:singleLine="true"
         android:maxLength="50"
         android:padding="20dp"
@@ -123,7 +129,7 @@
         android:backgroundTint="@color/colore_secondario"
         android:textColor="@color/colore_base"
         android:text="Annulla"
-        android:textSize="20sp"
+        android:textSize="20dp"
         android:textStyle="bold"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
@@ -139,7 +145,7 @@
         android:backgroundTint="@color/colore_secondario"
         android:textColor="@color/colore_base"
         android:text="Prosegui"
-        android:textSize="20sp"
+        android:textSize="20dp"
         android:textStyle="bold"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true" />

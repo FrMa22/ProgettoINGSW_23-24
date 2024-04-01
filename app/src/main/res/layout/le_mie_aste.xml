@@ -6,6 +6,7 @@
     android:id="@+id/relative_layout_home_acquirente"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colore_base"
     tools:context=".gui.LeMieAste">
 
 
@@ -18,7 +19,7 @@
         <ImageButton
             android:id="@+id/bottoneBackLeMieAste"
             android:layout_width="wrap_content"
-            android:layout_height="80dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="start"
             android:backgroundTint="@android:color/transparent"
             android:contentDescription="Back"
@@ -31,15 +32,15 @@
             android:layout_gravity="center"
             android:text="Elenco aste"
             android:textColor="@color/colore_secondario"
-            android:textSize="35sp"
+            android:textSize="35dp"
             android:textStyle="bold" />
 
         <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/switch_compat_aste_attive_nonattive"
-            android:layout_width="100dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
-            android:layout_marginEnd="5dp"
+            android:layout_marginEnd="20dp"
             android:textColor="@color/colore_secondario"
             android:checked="true"/>
 
@@ -56,55 +57,28 @@
         android:id="@+id/text_view_nessuna_asta_trovata"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Nessun'asta trovata."
+        android:text="Non hai aste"
         android:textColor="@color/colore_secondario"
         android:layout_gravity="center"
         android:layout_below="@id/text_view_aste_attive_non_attive"
         android:layout_centerInParent="true"
         android:layout_marginTop="20dp"
-        android:textSize="35sp"
+        android:textSize="35dp"
         android:textStyle="bold"
         android:visibility="invisible"
         />
+
     <TextView
         android:id="@+id/text_view_aste_attive_non_attive"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:text="Aste attive"
-        android:textSize="25sp"
-        android:layout_marginTop="5dp"
-        android:textStyle="italic"
         android:layout_below="@id/toolbar_le_mie_aste"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="5dp"
+        android:text="Aste attive"
+        android:textSize="25dp"
+        android:textStyle="italic" />
 
-        />
-
-<!--    <RadioGroup-->
-<!--                android:id="@+id/radioGroupLeMieAste"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:orientation="horizontal"-->
-<!--                android:layout_below="@+id/textViewLeMieAste"-->
-<!--                >-->
-
-<!--                &lt;!&ndash; Impostato a true per farlo partire come selezionato &ndash;&gt;-->
-
-<!--                <RadioButton-->
-<!--                    android:id="@+id/bottoneAttive"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="80dp"-->
-<!--                    android:checked="true"-->
-<!--                    android:text="Attive" />-->
-
-<!--                <RadioButton-->
-<!--                    android:id="@+id/bottoneNonAttive"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="80dp"-->
-<!--                    android:text="Non Attive" />-->
-<!--            </RadioGroup>-->
-
-
-        <!-- RecyclerView per le aste attive -->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewAsteAttive"
             android:layout_width="match_parent"

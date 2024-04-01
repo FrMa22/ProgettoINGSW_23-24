@@ -8,8 +8,9 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.example.progettoingsw.R;
+import com.example.progettoingsw.classe_da_estendere.DialogPersonalizzato;
 
-public class PopUpNotificaRicevuta extends Dialog implements View.OnClickListener {
+public class PopUpNotificaRicevuta extends DialogPersonalizzato implements View.OnClickListener {
     private TextView textview_titolo_notifica_arrivata_popup;
     private TextView textViewChiudi;
     private TextView textViewApri;
