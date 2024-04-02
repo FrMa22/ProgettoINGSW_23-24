@@ -182,8 +182,6 @@ public class AcquirenteFragmentRicercaAsta extends Fragment {
     private void setNavigationView(Boolean valore) {
         AcquirenteMainActivity activity = (AcquirenteMainActivity) getActivity();
         if (activity != null) {
-            // Abilita la BottomNavigationView
-            // Log.d("acquirente", "disabilito");
             activity.enableBottomNavigationView(valore);
         }
 

@@ -23,7 +23,7 @@
         private int numeroNotifiche;
         private int numeroNotificheChecked;
         private boolean controlloIniziale = true;
-
+private Fragment selectedFragment;
 
         @Override
         protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +60,7 @@
 
 
             bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
-                Fragment selectedFragment;
+
 
                 // Imposta il fragment di default (potrebbe essere il fragment corrente)
                 Fragment currentFragment =(Fragment) getSupportFragmentManager().findFragmentById(R.id.fragment_container);
@@ -236,6 +236,24 @@
             if (countDownTimer != null) {
                 countDownTimer.cancel();
                 countDownTimer.start();
+            }
+        }
+        public void selectFragment(int numeroFragment){
+            if(numeroFragment==1){
+                selectedFragment = new AcquirenteFragmentHome(email, tipoUtente);
+            }else if(numeroFragment == 2){
+                selectedFragment = new AcquirenteFragmentSelezioneCategorie(email, tipoUtente);
+            }else if(numeroFragment == 3){
+                if(tipoUtente.equals("acquirente")){
+                    selectedFragment = new AcquirenteFragmentAstaInversa(email);
+                }else{
+                    VenditorePopUpCreaAsta popAsta  = new VenditorePopUpCreaAsta(AcquirenteMainActivity.this,email,tipoUtente);
+                    popAsta.show();
+                }
+            }else if(numeroFragment == 4){
+                selectedFragment = new AcquirenteFragmentRicercaAsta(email ,tipoUtente);
+            }else if(numeroFragment == 5){
+                selectedFragment = new FragmentProfilo(email,tipoUtente);
             }
         }
 
