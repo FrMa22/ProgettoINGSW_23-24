@@ -44,9 +44,7 @@ public class AstaRibassoDAO {
         this.venditoreAstaRibasso = venditoreAstaRibasso;
     }
 
-    public AstaRibassoDAO() {
 
-    }
 
     public void openConnection() {
         new DatabaseTask().execute("open");
