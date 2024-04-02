@@ -98,12 +98,17 @@ public class PopUpNuovaOfferta extends DialogPersonalizzato implements View.OnCl
             offerta = textviewNuovoPrezzo.getText().toString();
             if(offerta.isEmpty()){
                 Toast.makeText(getContext(), "Si prega di inserire un offerta!", Toast.LENGTH_SHORT).show();
-            }else{
+            }else if (!offerta.matches("^\\d*\\.?\\d+$")) {
+                textviewNuovoPrezzo.setError("Si prega di inserire solo numeri per la nuova offerta.");
+            } else if (offerta.length()<=20) {
+                textviewNuovoPrezzo.setError("offerta fuori limite, inseriti più di 20 numeri");
+            } else {
                     Float offertaAttuale = Float.parseFloat(offerta);
                     Float offertaVecchia = Float.parseFloat(prezzoVecchio);
                     //caso in cui popup è per un'asta inglese
                     if(schermataAstaInglese != null){
                         Float minimaOffeta = (Float.parseFloat(rialzoMin) + Float.parseFloat(prezzoVecchio));
+
                         if(offertaAttuale<=offertaVecchia) {
                             Toast.makeText(getContext(), "Attenzione! L'offerta deve superare il prezzo attuale dell'asta.", Toast.LENGTH_SHORT).show();
                         } else if(offertaAttuale < minimaOffeta){
@@ -120,7 +125,9 @@ public class PopUpNuovaOfferta extends DialogPersonalizzato implements View.OnCl
                     }else if(schermataAstaInversa != null){
                         if(offertaAttuale>=offertaVecchia) {
                             Toast.makeText(getContext(), "Attenzione! L'offerta deve essere inferiore al prezzo attuale dell'asta.", Toast.LENGTH_SHORT).show();
-                        }else{
+                        } else if (offertaAttuale>=0.10) {
+                            Toast.makeText(getContext(), "Attenzione! L'offerta deve essere almeno di 10 centesimi.", Toast.LENGTH_SHORT).show();
+                        } else{
                             astaInversaDAO = new AstaInversaDAO();
                             astaInversaDAO.openConnection();
                             astaInversaDAO.partecipaAstaInversa(id_asta,emailOfferente,offertaAttuale);

@@ -59,15 +59,30 @@ public class PopUpControlloPassword extends DialogPersonalizzato implements View
         if (v.getId() == R.id.bottoneAnnullaControlloPassword) {
             dismiss();
         } else if(v.getId() == R.id.bottoneConfermaControlloPassword){
-            progress_bar_pop_up_controllo_password.setVisibility(View.VISIBLE);
-            String password_vecchia = edit_text_vecchia_password.getText().toString().trim();
-            String password_nuova = edit_text_password_nuova.getText().toString().trim();
-            popUpControlloPasswordDAO.openConnection();
-            popUpControlloPasswordDAO.checkPassword(password_vecchia);
+            confermaPassword();
+
         }
     }
 
+private void confermaPassword(){
+    String password_vecchia = edit_text_vecchia_password.getText().toString().trim();
+    String password_nuova = edit_text_password_nuova.getText().toString().trim();
+    if (password_vecchia.length() > 100) {
+        edit_text_vecchia_password.setError("La password non può superare i 100 caratteri");
+        return; // Esce dal metodo onClick se la password supera i 100 caratteri
+    }
+    if (password_nuova.length() > 100) {
+        edit_text_password_nuova.setError("La password non può superare i 100 caratteri");
+        return; // Esce dal metodo onClick se la password supera i 100 caratteri
+    }
+    if (!password_nuova.isEmpty() && password_nuova.length() <= 100 &&
+            !password_vecchia.isEmpty() && password_vecchia.length() <= 100){
+        progress_bar_pop_up_controllo_password.setVisibility(View.VISIBLE);
+        popUpControlloPasswordDAO.openConnection();
+        popUpControlloPasswordDAO.checkPassword(password_vecchia);
+    }
 
+}
     public void handleResultPassword(Boolean result){
         if(result){
             //sostituzione in db
