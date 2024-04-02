@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
@@ -53,6 +54,8 @@ public class AcquirenteFragmentRicercaAsta extends Fragment {
     private RelativeLayout relative_layout_fragment_ricerca;
     private TextView text_view_nessuna_asta_ricercata;
     private RicercaAsteDAO ricercaAsteDAO;
+    //da eliminare:
+    private Button bottone_prova;
 
     public AcquirenteFragmentRicercaAsta(String email, String tipoUtente) {
         this.tipoUtente = tipoUtente;
@@ -76,6 +79,7 @@ public class AcquirenteFragmentRicercaAsta extends Fragment {
         text_view_nessuna_asta_ricercata = view.findViewById(R.id.text_view_nessuna_asta_ricercata);
         relative_layout_fragment_ricerca = view.findViewById(R.id.relative_layout_fragment_ricerca);
         progress_bar_schermata_ricerca_asta = view.findViewById(R.id.progress_bar_schermata_ricerca_asta);
+        bottone_prova = view.findViewById(R.id.bottone_prova);
 
         button_cerca_asta = view.findViewById(R.id.button_cerca_asta);
         asteRecuperate = new AstaAdapter(getContext(),null) ;
@@ -175,15 +179,16 @@ public class AcquirenteFragmentRicercaAsta extends Fragment {
         }else{
             text_view_nessuna_asta_ricercata.setVisibility(View.INVISIBLE);
         }
+
             progress_bar_schermata_ricerca_asta.setVisibility(View.INVISIBLE);
             setAllClickable(relative_layout_fragment_ricerca,true);
             setNavigationView(true);
+            System.out.println("Aste gestite con successo");
+
     }
     private void setNavigationView(Boolean valore) {
         AcquirenteMainActivity activity = (AcquirenteMainActivity) getActivity();
         if (activity != null) {
-            // Abilita la BottomNavigationView
-            // Log.d("acquirente", "disabilito");
             activity.enableBottomNavigationView(valore);
         }
 
@@ -196,20 +201,24 @@ public class AcquirenteFragmentRicercaAsta extends Fragment {
                 setAllClickable((ViewGroup) child, enabled);
             }
         }
+
+
+
     }
 
 
-    private void eseguiRicercaAste(String parolaRicercata, ArrayList<String> listaCategorieScelte, String ordinamentoPrezzo) {
-        if(parolaRicercata.length()>100){
-            edittext_ricerca.setError("Attenzione! La parola ricercata non può essere più lunga di 100 caratteri.");
-        }else{
-            progress_bar_schermata_ricerca_asta.setVisibility(View.VISIBLE);
-            setAllClickable(relative_layout_fragment_ricerca,false);
-            setNavigationView(false);
-            ricercaAsteDAO.openConnection();
-            ricercaAsteDAO.ricercaAste(parolaRicercata, listaCategorieScelte, ordinamentoPrezzo);
-            ricercaAsteDAO.closeConnection();
-        }
+    public void eseguiRicercaAste(String parolaRicercata, ArrayList<String> listaCategorieScelte, String ordinamentoPrezzo) {
+
+            if (parolaRicercata.length() > 100) {
+                edittext_ricerca.setError("Attenzione! La parola ricercata non può essere più lunga di 100 caratteri.");
+            } else {
+                progress_bar_schermata_ricerca_asta.setVisibility(View.VISIBLE);
+                setAllClickable(relative_layout_fragment_ricerca, false);
+                setNavigationView(false);
+                ricercaAsteDAO.openConnection();
+                ricercaAsteDAO.ricercaAste(parolaRicercata, listaCategorieScelte, ordinamentoPrezzo);
+                ricercaAsteDAO.closeConnection();
+            }
     }
 
 

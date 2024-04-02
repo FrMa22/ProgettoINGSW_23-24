@@ -81,13 +81,13 @@ public class LoginActivity extends GestoreComuniImplementazioni {
         });
         bottoneLogin.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-//                Intent intent = new Intent(LoginActivity.this, AcquirenteMainActivity.class);
-//                intent.putExtra("email", "eml");
-//                intent.putExtra("tipoUtente", "Utente");
-//                startActivity(intent);
+         //       Intent intent = new Intent(LoginActivity.this, AcquirenteMainActivity.class);
+           //     intent.putExtra("email", "eml");
+             //   intent.putExtra("tipoUtente", "Utente");
+             //   startActivity(intent);
 
 
-                String mail = editText_mail.getText().toString().trim();  // Rimuovi eventuali spazi all'inizio e alla fine
+               String mail = editText_mail.getText().toString().trim();  // Rimuovi eventuali spazi all'inizio e alla fine
                 String password = editText_password.getText().toString().trim();
 
                 if(mail.isEmpty()){
