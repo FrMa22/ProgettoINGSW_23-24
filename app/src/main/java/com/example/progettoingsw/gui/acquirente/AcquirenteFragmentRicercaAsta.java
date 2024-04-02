@@ -54,8 +54,6 @@ public class AcquirenteFragmentRicercaAsta extends Fragment {
     private RelativeLayout relative_layout_fragment_ricerca;
     private TextView text_view_nessuna_asta_ricercata;
     private RicercaAsteDAO ricercaAsteDAO;
-    //da eliminare:
-    private Button bottone_prova;
 
     public AcquirenteFragmentRicercaAsta(String email, String tipoUtente) {
         this.tipoUtente = tipoUtente;
@@ -79,7 +77,6 @@ public class AcquirenteFragmentRicercaAsta extends Fragment {
         text_view_nessuna_asta_ricercata = view.findViewById(R.id.text_view_nessuna_asta_ricercata);
         relative_layout_fragment_ricerca = view.findViewById(R.id.relative_layout_fragment_ricerca);
         progress_bar_schermata_ricerca_asta = view.findViewById(R.id.progress_bar_schermata_ricerca_asta);
-        bottone_prova = view.findViewById(R.id.bottone_prova);
 
         button_cerca_asta = view.findViewById(R.id.button_cerca_asta);
         asteRecuperate = new AstaAdapter(getContext(),null) ;

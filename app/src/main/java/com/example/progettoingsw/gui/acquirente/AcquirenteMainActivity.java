@@ -238,32 +238,5 @@ private Fragment selectedFragment;
                 countDownTimer.start();
             }
         }
-        public Fragment selectFragment(int numeroFragment) {
-            Fragment selectedFragment = null;
-            if (numeroFragment == 1) {
-                selectedFragment = new AcquirenteFragmentHome(email, tipoUtente);
-            } else if (numeroFragment == 2) {
-                selectedFragment = new AcquirenteFragmentSelezioneCategorie(email, tipoUtente);
-            } else if (numeroFragment == 3) {
-                if (tipoUtente.equals("acquirente")) {
-                    selectedFragment = new AcquirenteFragmentAstaInversa(email);
-                } else {
-                    VenditorePopUpCreaAsta popAsta  = new VenditorePopUpCreaAsta(AcquirenteMainActivity.this,email,tipoUtente);
-                    popAsta.show();
-                }
-            } else if (numeroFragment == 4) {
-                selectedFragment = new AcquirenteFragmentRicercaAsta(email ,tipoUtente);
-            } else if (numeroFragment == 5) {
-                selectedFragment = new FragmentProfilo(email,tipoUtente);
-            }
-
-            // Sostituisci il fragment corrente con il nuovo fragment selezionato
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_container, selectedFragment)
-                    .addToBackStack(null)
-                    .commit();
-
-            return selectedFragment;
-        }
 
     }

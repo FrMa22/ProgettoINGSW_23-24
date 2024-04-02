@@ -15,6 +15,8 @@ import com.example.progettoingsw.gui.venditore.VenditoreAstaRibasso;
 import com.example.progettoingsw.model.AstaIngleseItem;
 import com.example.progettoingsw.model.AstaRibassoItem;
 
+import org.postgresql.util.PSQLException;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -26,7 +28,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class AstaRibassoDAO {
-
     private Connection connection;
     private String idAsta;
     private String nomeP;
@@ -43,8 +44,6 @@ public class AstaRibassoDAO {
     public AstaRibassoDAO(VenditoreAstaRibasso venditoreAstaRibasso){
         this.venditoreAstaRibasso = venditoreAstaRibasso;
     }
-
-
 
     public void openConnection() {
         new DatabaseTask().execute("open");
@@ -68,7 +67,7 @@ public class AstaRibassoDAO {
     public void inserisciCategorieAstaRibasso(InsertAsta asta) {
         new AstaRibassoDAO.InsertCategorieAstaRibassoTask().execute(asta);
     }
-    public void acquistaAsta(int idAsta, String emailOfferente, Float offerta){
+    public void acquistaAsta(Integer idAsta, String emailOfferente, Float offerta){
         new AcquistaAstaTask().execute(String.valueOf(idAsta),emailOfferente, String.valueOf(offerta));
     }
     public void closeConnection() {
@@ -235,7 +234,8 @@ public class AstaRibassoDAO {
                     int idAsta = Integer.parseInt(strings[0]);
                     String email_offerente = strings[1];
                     Float offerta = Float.parseFloat(strings[2]);
-                    if (connection != null && !connection.isClosed() && email_offerente!=null && !email_offerente.isEmpty() && offerta>0) {
+                    //forse aggiungere l'if per offerta e di null
+                    if (connection != null && !connection.isClosed() && idAsta>0 && email_offerente!=null && !email_offerente.isEmpty() && offerta>0) {
                         // inserisce in vincitoriAstaAlRibasso -> un trigger chiuderà l'asta
                         String queryUpdate = "INSERT INTO vincitoriAstaAlRibasso (idAstaRibasso, indirizzo_email, prezzoAcquisto) VALUES (?,?,?) ";
                         PreparedStatement preparedStatementUpdate = connection.prepareStatement(queryUpdate);
@@ -250,7 +250,11 @@ public class AstaRibassoDAO {
                     }
                 }
                 return false; // Parametri non validi
-            } catch (SQLException | NumberFormatException e) {
+            }catch(PSQLException e){
+                e.printStackTrace();
+                return false;
+            }
+            catch (SQLException | NumberFormatException e) {
                 e.printStackTrace();
                 return false; // Errore durante l'operazione
             }
@@ -264,6 +268,7 @@ public class AstaRibassoDAO {
                 Toast.makeText(schermataAstaRibasso, "Errore nell'acquisto", Toast.LENGTH_SHORT).show();
             }
         }
+
     }
 
     private class InsertCategorieAstaRibassoTask extends AsyncTask<InsertAsta, Void, Void> {

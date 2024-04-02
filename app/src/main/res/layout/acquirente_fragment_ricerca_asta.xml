@@ -66,13 +66,6 @@
             android:textColor="@color/colore_base"
             android:textSize="30dp" />
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Prova"
-            android:id="@+id/bottone_prova"
-            />
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view_aste_per_ricerca"
             android:layout_width="match_parent"

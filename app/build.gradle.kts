@@ -53,5 +53,5 @@ dependencies {
     implementation ("commons-io:commons-io:2.11.0")
     implementation ("com.github.bumptech.glide:glide:4.12.0")
     annotationProcessor ("com.github.bumptech.glide:compiler:4.12.0")
-
+    testImplementation ("org.robolectric:robolectric:4.12")
 }
