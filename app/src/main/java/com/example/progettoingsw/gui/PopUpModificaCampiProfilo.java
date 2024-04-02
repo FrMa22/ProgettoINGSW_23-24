@@ -72,7 +72,7 @@ public class PopUpModificaCampiProfilo extends DialogPersonalizzato implements V
             String paese = edit_text_modifica_paese.getText().toString();
             String bio = edit_text_modifica_bio.getText().toString();
 
-            if (!nome.isEmpty() && !cognome.isEmpty()) {
+            if (!nome.isEmpty() && !cognome.isEmpty() && nome.length()<=50 && cognome.length()<=50 && sitoweb.length()<=50 && paese.length()<=25 && bio.length()<=100) {
                 Log.d("bottone", " i valori di nome e cognome sono: " + nome + cognome);
                 popUpModificaCampiProfiloDAO.updateFields(nome, cognome, sitoweb, paese, bio);
                 fragmentProfilo.onResume();
@@ -85,7 +85,27 @@ public class PopUpModificaCampiProfilo extends DialogPersonalizzato implements V
                 }else{
                     Toast.makeText(getContext(), "Il valore di Cognome non può essere vuoto!", Toast.LENGTH_SHORT).show();
                 }
+                if (nome.length() > 50) {
+                    edit_text_modifica_nome.setError("Il nome non può superare i 50 caratteri");
+                    return;
+                }
+                if (cognome.length() > 50) {
+                    edit_text_modifica_cognome.setError("Il cognome non può superare i 50 caratteri");
+                    return;
+                }
+                if (bio.length() > 100) {
+                    edit_text_modifica_bio.setError("La bio non può superare i 100 caratteri");
+                    return;
+                }
 
+                if (paese.length() > 25) {
+                    edit_text_modifica_paese.setError("Il paese non può superare i 25 caratteri");
+                    return;
+                }
+                if (sitoweb.length() > 50) {
+                    edit_text_modifica_sitoweb.setError("Il sito web non può superare i 50 caratteri");
+                    return;
+                }
             }
         }
     }

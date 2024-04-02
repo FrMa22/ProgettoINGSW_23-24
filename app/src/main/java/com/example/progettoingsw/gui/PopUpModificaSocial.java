@@ -77,12 +77,20 @@ public class PopUpModificaSocial extends DialogPersonalizzato implements View.On
                 fragmentProfilo.onResume();
                 dismiss();
             }else{
-                if(nome.isEmpty() && link.isEmpty()){
-                    Toast.makeText(getContext(), "I valori di Nome e Cognome non possono essere vuoti!", Toast.LENGTH_SHORT).show();
+                if(nome.isEmpty() && link.isEmpty() && nome.length()<=50 && link.length()<=50){
+                    Toast.makeText(getContext(), "I valori di Nome e link non possono essere vuoti!", Toast.LENGTH_SHORT).show();
                 }else if(nome.isEmpty()){
                     Toast.makeText(getContext(), "Il valore di Nome non può essere vuoto!", Toast.LENGTH_SHORT).show();
                 }else{
-                    Toast.makeText(getContext(), "Il valore di Cognome non può essere vuoto!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Il valore di link non può essere vuoto!", Toast.LENGTH_SHORT).show();
+                }
+                if (nome.length() > 50) {
+                    edit_text_nome_social.setError("Il nome non può superare i 50 caratteri");
+                    return;
+                }
+                if (link.length() > 50) {
+                    edit_text_link_social.setError("Il link non può superare i 50 caratteri");
+                    return;
                 }
 
             }

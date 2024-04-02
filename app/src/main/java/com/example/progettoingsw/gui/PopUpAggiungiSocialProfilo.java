@@ -73,17 +73,30 @@ public class PopUpAggiungiSocialProfilo extends DialogPersonalizzato implements 
         String nomeSocial = editTextNomeSocial.getText().toString().trim();
         String nomeUtenteSocial = editTextNomeUtenteSocial.getText().toString().trim();
 
-        RegistrazioneSocialDAO registrazioneSocialDAO = new RegistrazioneSocialDAO(PopUpAggiungiSocialProfilo.this,email,tipoUtente);
-        Log.d("pop" , "conferma");
-        if(!nomeSocial.isEmpty() && !nomeUtenteSocial.isEmpty()) {
-            progressBarPopUpAggiungiSocialProfilo.setVisibility(View.VISIBLE);
-            registrazioneSocialDAO.openConnection();
-            registrazioneSocialDAO.inserimentoSingoloSocial(nomeSocial, nomeUtenteSocial);
-            registrazioneSocialDAO.closeConnection();
-        }else{
-            Toast.makeText(getContext(), "Si prega di inserire tutti i valori", Toast.LENGTH_SHORT).show();
+        RegistrazioneSocialDAO registrazioneSocialDAO = new RegistrazioneSocialDAO(PopUpAggiungiSocialProfilo.this, email, tipoUtente);
+        Log.d("pop", "conferma");
+        if (nomeSocial.length() > 50) {
+            editTextNomeSocial.setError("Nome social oltre i 50 caratteri");
         }
-    }
+        if (nomeSocial.isEmpty()) {
+            editTextNomeSocial.setError("Nome  social vuoto");
+        }
+        if (nomeUtenteSocial.length() > 50) {
+            editTextNomeUtenteSocial.setError("Nome utente social oltre i 50 caratteri");
+        }
+        if (nomeUtenteSocial.isEmpty()) {
+            editTextNomeUtenteSocial.setError("Nome utente social vuoto");
+        }
+        if (!nomeSocial.isEmpty() && nomeSocial.length() <= 50 &&
+                !nomeUtenteSocial.isEmpty() && nomeUtenteSocial.length() <= 50) {
+                progressBarPopUpAggiungiSocialProfilo.setVisibility(View.VISIBLE);
+                registrazioneSocialDAO.openConnection();
+                registrazioneSocialDAO.inserimentoSingoloSocial(nomeSocial, nomeUtenteSocial);
+                registrazioneSocialDAO.closeConnection();
+            }
+
+        }
+
     public void handleRegistrazioneSocial(Integer result){
         Log.d("handleRegistrazioneSocial", "valore di result: " + result);
         progressBarPopUpAggiungiSocialProfilo.setVisibility(View.INVISIBLE);
