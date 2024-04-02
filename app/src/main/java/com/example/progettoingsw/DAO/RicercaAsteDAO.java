@@ -13,6 +13,8 @@ import com.example.progettoingsw.model.AstaIngleseItem;
 import com.example.progettoingsw.model.AstaInversaItem;
 import com.example.progettoingsw.model.AstaRibassoItem;
 
+import org.postgresql.util.PSQLException;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -30,6 +32,10 @@ public class RicercaAsteDAO {
 
     public RicercaAsteDAO(AcquirenteFragmentRicercaAsta acquirenteFragmentRicercaAsta, String tipoUtente) {
         this.acquirenteFragmentRicercaAsta = acquirenteFragmentRicercaAsta;
+        this.tipoUtente = tipoUtente;
+    }
+
+    public RicercaAsteDAO( String tipoUtente) {
         this.tipoUtente = tipoUtente;
     }
 
@@ -288,7 +294,13 @@ public class RicercaAsteDAO {
                 astaItems.addAll(asteInglesi);
                 astaItems.addAll(asteAlRibasso);
                 connection.close();
-            } catch (Exception e) {
+            }catch(NullPointerException e){
+                e.printStackTrace();System.out.println("Puntatore con riferimento null");
+            }
+            catch(PSQLException e ){
+                e.printStackTrace();System.out.println("Errore nella query");
+            }
+            catch (Exception e) {
                 e.printStackTrace();
             }
             return astaItems;
@@ -400,9 +412,17 @@ public class RicercaAsteDAO {
                 resultSet.close();
                 statement.close();
                 connection.close();
-            } catch (Exception e) {
+            }
+        catch(NullPointerException e){
+            e.printStackTrace();System.out.println("Puntatore con riferimento null");
+        }
+            catch(PSQLException e ){
+            e.printStackTrace();System.out.println("Errore nella query");
+        }
+            catch (Exception e) {
                 e.printStackTrace();
             }
+
             return astaItems;
         }
 
@@ -410,7 +430,13 @@ public class RicercaAsteDAO {
         protected void onPostExecute(ArrayList<Object> astaItems) {
             // Aggiorna l'interfaccia utente con i risultati della ricerca dell'utente venditore
             if (astaItems != null) {
+
+            if(acquirenteFragmentRicercaAsta!=null) {
                 acquirenteFragmentRicercaAsta.handleAsteRecuperate(astaItems);
+            }
+
+            else{System.out.println("Ricerca effettuata con successo");}
+
             }
         }
     }

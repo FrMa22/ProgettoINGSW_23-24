@@ -43,6 +43,11 @@ public class AstaRibassoDAO {
     public AstaRibassoDAO(VenditoreAstaRibasso venditoreAstaRibasso){
         this.venditoreAstaRibasso = venditoreAstaRibasso;
     }
+
+    public AstaRibassoDAO() {
+
+    }
+
     public void openConnection() {
         new DatabaseTask().execute("open");
     }
@@ -232,7 +237,7 @@ public class AstaRibassoDAO {
                     int idAsta = Integer.parseInt(strings[0]);
                     String email_offerente = strings[1];
                     Float offerta = Float.parseFloat(strings[2]);
-                    if (connection != null && !connection.isClosed()) {
+                    if (connection != null && !connection.isClosed() && email_offerente!=null && !email_offerente.isEmpty() && offerta>0) {
                         // inserisce in vincitoriAstaAlRibasso -> un trigger chiuderà l'asta
                         String queryUpdate = "INSERT INTO vincitoriAstaAlRibasso (idAstaRibasso, indirizzo_email, prezzoAcquisto) VALUES (?,?,?) ";
                         PreparedStatement preparedStatementUpdate = connection.prepareStatement(queryUpdate);

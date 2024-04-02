@@ -80,19 +80,7 @@ public class AcquirenteFragmentRicercaAsta extends Fragment {
         relative_layout_fragment_ricerca = view.findViewById(R.id.relative_layout_fragment_ricerca);
         progress_bar_schermata_ricerca_asta = view.findViewById(R.id.progress_bar_schermata_ricerca_asta);
         bottone_prova = view.findViewById(R.id.bottone_prova);
-        bottone_prova.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.d("prova bottone", "premuto ");
-                AcquirenteMainActivity mainActivity = (AcquirenteMainActivity) getActivity();
-                if (mainActivity != null) {
-                    Log.d("prova bottone", "entrato ");
-                    // Chiama il metodo selectFragment con il numero del fragment desiderato
-                    mainActivity.selectFragment(2); // Cambia il numero del fragment secondo le tue esigenze
-                }
 
-            }
-        });
         button_cerca_asta = view.findViewById(R.id.button_cerca_asta);
         asteRecuperate = new AstaAdapter(getContext(),null) ;
         RecyclerView recyclerViewAsteRecuperate = view.findViewById(R.id.recycler_view_aste_per_ricerca);
@@ -191,9 +179,12 @@ public class AcquirenteFragmentRicercaAsta extends Fragment {
         }else{
             text_view_nessuna_asta_ricercata.setVisibility(View.INVISIBLE);
         }
+
             progress_bar_schermata_ricerca_asta.setVisibility(View.INVISIBLE);
             setAllClickable(relative_layout_fragment_ricerca,true);
             setNavigationView(true);
+            System.out.println("Aste gestite con successo");
+
     }
     private void setNavigationView(Boolean valore) {
         AcquirenteMainActivity activity = (AcquirenteMainActivity) getActivity();
@@ -210,20 +201,24 @@ public class AcquirenteFragmentRicercaAsta extends Fragment {
                 setAllClickable((ViewGroup) child, enabled);
             }
         }
+
+
+
     }
 
 
-    private void eseguiRicercaAste(String parolaRicercata, ArrayList<String> listaCategorieScelte, String ordinamentoPrezzo) {
-        if(parolaRicercata.length()>100){
-            edittext_ricerca.setError("Attenzione! La parola ricercata non può essere più lunga di 100 caratteri.");
-        }else{
-            progress_bar_schermata_ricerca_asta.setVisibility(View.VISIBLE);
-            setAllClickable(relative_layout_fragment_ricerca,false);
-            setNavigationView(false);
-            ricercaAsteDAO.openConnection();
-            ricercaAsteDAO.ricercaAste(parolaRicercata, listaCategorieScelte, ordinamentoPrezzo);
-            ricercaAsteDAO.closeConnection();
-        }
+    public void eseguiRicercaAste(String parolaRicercata, ArrayList<String> listaCategorieScelte, String ordinamentoPrezzo) {
+
+            if (parolaRicercata.length() > 100) {
+                edittext_ricerca.setError("Attenzione! La parola ricercata non può essere più lunga di 100 caratteri.");
+            } else {
+                progress_bar_schermata_ricerca_asta.setVisibility(View.VISIBLE);
+                setAllClickable(relative_layout_fragment_ricerca, false);
+                setNavigationView(false);
+                ricercaAsteDAO.openConnection();
+                ricercaAsteDAO.ricercaAste(parolaRicercata, listaCategorieScelte, ordinamentoPrezzo);
+                ricercaAsteDAO.closeConnection();
+            }
     }
 
 
