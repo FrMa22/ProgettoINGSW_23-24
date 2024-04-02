@@ -251,7 +251,7 @@ public class AstaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 imageView.setImageResource(R.drawable.img_default);
             }
             dataScadenza.setText(item.getDataDiScadenza());
-            prezzo.setText(item.getPrezzoMax());
+            prezzo.setText(item.getPrezzoAttuale());
         }
     }
 
