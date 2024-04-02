@@ -22,6 +22,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.progettoingsw.DAO.Acquirente;
 import com.example.progettoingsw.DAO.FragmentProfiloDAO;
+import com.example.progettoingsw.DAO.SchermataPartecipazioneAsteDAO;
 import com.example.progettoingsw.gui.PopUpAggiungiSocialProfilo;
 import com.example.progettoingsw.gui.PopUpControlloPassword;
 import com.example.progettoingsw.gui.PopUpModificaCampiProfilo;
@@ -31,12 +32,14 @@ import com.example.progettoingsw.gestori_gui.CustomAdapter_gridview_profilo_soci
 import com.example.progettoingsw.gui.LeMieAste;
 import com.example.progettoingsw.gui.LoginActivity;
 import com.example.progettoingsw.gui.PopUpModificaSocial;
+import com.example.progettoingsw.gui.SchermataPartecipazioneAste;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.button.MaterialButton;
 
 import java.util.List;
 public class FragmentProfilo extends Fragment{
     private TextView text_view_nessun_social;
+    private MaterialButton button_partecipazione_aste;
     ImageButton button_log_out;
     MaterialButton button_le_mie_aste;
     ImageButton button_modifica;
@@ -177,6 +180,17 @@ public class FragmentProfilo extends Fragment{
         acquirente_fragment_profilo_DAO.openConnection();
         acquirente_fragment_profilo_DAO.findUser();
         acquirente_fragment_profilo_DAO.getSocialNamesForEmail();
+
+        button_partecipazione_aste = view.findViewById(R.id.button_partecipazione_aste);
+        button_partecipazione_aste.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), SchermataPartecipazioneAste.class);
+                intent.putExtra("email", email);
+                intent.putExtra("tipoUtente",tipoUtente);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override //questo metodo serve per fare un refresh dei valori dei campi dopo una possibile modifica fatta da PopUp

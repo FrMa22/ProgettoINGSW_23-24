@@ -88,6 +88,18 @@
                         app:strokeWidth="2dp" />
                 </RelativeLayout>
 
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/button_partecipazione_aste"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center"
+                    android:backgroundTint="@color/colore_base"
+                    android:text="Le aste a cui partecipi"
+                    android:textColor="@color/colore_secondario"
+                    android:textSize="25dp"
+                    android:textStyle="bold"
+                    app:strokeColor="#AAAAAA"
+                    app:strokeWidth="2dp" />
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

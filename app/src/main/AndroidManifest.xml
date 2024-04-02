@@ -17,6 +17,9 @@
         android:theme="@style/Theme.ProgettoINGSW"
         tools:targetApi="31">
         <activity
+            android:name=".gui.SchermataPartecipazioneAste"
+            android:exported="false" />
+        <activity
             android:name=".gui.PopUpNotificaRicevuta"
             android:exported="false" />
         <activity
