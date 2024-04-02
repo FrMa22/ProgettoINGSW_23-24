@@ -255,6 +255,11 @@ private Fragment selectedFragment;
             }else if(numeroFragment == 5){
                 selectedFragment = new FragmentProfilo(email,tipoUtente);
             }
+            // Sostituisci il fragment corrente con il nuovo fragment selezionato
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container, selectedFragment)
+                    .addToBackStack(null)
+                    .commit();
         }
 
     }

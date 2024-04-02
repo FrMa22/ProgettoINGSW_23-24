@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
@@ -53,6 +54,8 @@ public class AcquirenteFragmentRicercaAsta extends Fragment {
     private RelativeLayout relative_layout_fragment_ricerca;
     private TextView text_view_nessuna_asta_ricercata;
     private RicercaAsteDAO ricercaAsteDAO;
+    //da eliminare:
+    private Button bottone_prova;
 
     public AcquirenteFragmentRicercaAsta(String email, String tipoUtente) {
         this.tipoUtente = tipoUtente;
@@ -76,7 +79,20 @@ public class AcquirenteFragmentRicercaAsta extends Fragment {
         text_view_nessuna_asta_ricercata = view.findViewById(R.id.text_view_nessuna_asta_ricercata);
         relative_layout_fragment_ricerca = view.findViewById(R.id.relative_layout_fragment_ricerca);
         progress_bar_schermata_ricerca_asta = view.findViewById(R.id.progress_bar_schermata_ricerca_asta);
+        bottone_prova = view.findViewById(R.id.bottone_prova);
+        bottone_prova.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d("prova bottone", "premuto ");
+                AcquirenteMainActivity mainActivity = (AcquirenteMainActivity) getActivity();
+                if (mainActivity != null) {
+                    Log.d("prova bottone", "entrato ");
+                    // Chiama il metodo selectFragment con il numero del fragment desiderato
+                    mainActivity.selectFragment(2); // Cambia il numero del fragment secondo le tue esigenze
+                }
 
+            }
+        });
         button_cerca_asta = view.findViewById(R.id.button_cerca_asta);
         asteRecuperate = new AstaAdapter(getContext(),null) ;
         RecyclerView recyclerViewAsteRecuperate = view.findViewById(R.id.recycler_view_aste_per_ricerca);
