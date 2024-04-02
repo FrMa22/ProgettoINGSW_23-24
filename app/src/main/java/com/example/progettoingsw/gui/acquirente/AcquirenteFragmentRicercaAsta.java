@@ -37,6 +37,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.button.MaterialButton;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class AcquirenteFragmentRicercaAsta extends Fragment {
     private EditText edittext_ricerca;
@@ -51,6 +52,7 @@ public class AcquirenteFragmentRicercaAsta extends Fragment {
     private ProgressBar progress_bar_schermata_ricerca_asta;
     private RelativeLayout relative_layout_fragment_ricerca;
     private TextView text_view_nessuna_asta_ricercata;
+    private RicercaAsteDAO ricercaAsteDAO;
 
     public AcquirenteFragmentRicercaAsta(String email, String tipoUtente) {
         this.tipoUtente = tipoUtente;
@@ -64,7 +66,7 @@ public class AcquirenteFragmentRicercaAsta extends Fragment {
     }
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        RicercaAsteDAO ricercaAsteDAO = new RicercaAsteDAO(this, tipoUtente);
+         ricercaAsteDAO = new RicercaAsteDAO(this, tipoUtente);
 
         //l'ordinamento rispetto al prezzo di default è crescente
         ordinamentoPrezzo = "ASC";
@@ -129,16 +131,7 @@ public class AcquirenteFragmentRicercaAsta extends Fragment {
             @Override
             public void onClick(View view) {
                 parolaRicercata = edittext_ricerca.getText().toString();
-                if(parolaRicercata.length()>100){
-                    edittext_ricerca.setError("Attenzione! La parola ricercata non può essere più lunga di 100 caratteri.");
-                }else{
-                    progress_bar_schermata_ricerca_asta.setVisibility(View.VISIBLE);
-                    setAllClickable(relative_layout_fragment_ricerca,false);
-                    setNavigationView(false);
-                    ricercaAsteDAO.openConnection();
-                    ricercaAsteDAO.ricercaAste(parolaRicercata, listaCategorieScelte, ordinamentoPrezzo);
-                    ricercaAsteDAO.closeConnection();
-                }
+                eseguiRicercaAste(parolaRicercata,listaCategorieScelte,ordinamentoPrezzo);
             }
         });
 
@@ -204,4 +197,20 @@ public class AcquirenteFragmentRicercaAsta extends Fragment {
             }
         }
     }
+
+
+    private void eseguiRicercaAste(String parolaRicercata, ArrayList<String> listaCategorieScelte, String ordinamentoPrezzo) {
+        if(parolaRicercata.length()>100){
+            edittext_ricerca.setError("Attenzione! La parola ricercata non può essere più lunga di 100 caratteri.");
+        }else{
+            progress_bar_schermata_ricerca_asta.setVisibility(View.VISIBLE);
+            setAllClickable(relative_layout_fragment_ricerca,false);
+            setNavigationView(false);
+            ricercaAsteDAO.openConnection();
+            ricercaAsteDAO.ricercaAste(parolaRicercata, listaCategorieScelte, ordinamentoPrezzo);
+            ricercaAsteDAO.closeConnection();
+        }
+    }
+
+
 }

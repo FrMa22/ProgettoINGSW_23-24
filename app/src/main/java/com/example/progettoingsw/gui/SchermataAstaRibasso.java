@@ -53,6 +53,7 @@ public class SchermataAstaRibasso extends GestoreComuniImplementazioni {
     Drawable drawableCuorePieno;
     private AstaPreferitaRibassoDAO astaPreferitaRibassoDAO;
     private RelativeLayout relativeLayoutSchermataAstaRibasso;
+    private Dialog popUpConfermaOffertaDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -112,7 +113,7 @@ public class SchermataAstaRibasso extends GestoreComuniImplementazioni {
 
         bottoneNuovaOfferta.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Dialog popUpConfermaOffertaDialog = new Dialog(SchermataAstaRibasso.this);
+                popUpConfermaOffertaDialog = new Dialog(SchermataAstaRibasso.this);
                 popUpConfermaOffertaDialog.setContentView(R.layout.pop_up_conferma_offerta);
                 popUpConfermaOffertaDialog.show();
                 MaterialButton bottoneAnnullaPopuP=(MaterialButton) popUpConfermaOffertaDialog.findViewById(R.id.bottoneAnnullaPopUpAsta);;
@@ -133,14 +134,8 @@ public class SchermataAstaRibasso extends GestoreComuniImplementazioni {
                 bottoneConfermaPopUP.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        astaRibassoDAO.openConnection();
-                        astaRibassoDAO.acquistaAsta(id,email,Float.parseFloat(textViewOffertaAttuale.getText().toString()));
-                        astaRibassoDAO.closeConnection();
-                        popUpConfermaOffertaDialog.dismiss();
-                        Intent intent = new Intent(SchermataAstaRibasso.this, AcquirenteMainActivity.class);//test del login
-                        intent.putExtra("email", email);
-                        intent.putExtra("tipoUtente", tipoUtente);
-                        startActivity(intent);
+                        float offertaAttuale = Float.parseFloat(textViewOffertaAttuale.getText().toString());
+                        eseguiAcquistoAsta(id, email, offertaAttuale);
                     }
                 });
 
@@ -329,6 +324,20 @@ public class SchermataAstaRibasso extends GestoreComuniImplementazioni {
             Toast.makeText(this, "Errore nella rimozione.", Toast.LENGTH_SHORT).show();
         }
         setAllClickable(relativeLayoutSchermataAstaRibasso,true);
+    }
+
+
+    private void eseguiAcquistoAsta(int id, String email, float offertaAttuale) {
+        astaRibassoDAO.openConnection();
+        astaRibassoDAO.acquistaAsta(id, email, offertaAttuale);
+        astaRibassoDAO.closeConnection();
+
+        popUpConfermaOffertaDialog.dismiss();
+
+        Intent intent = new Intent(SchermataAstaRibasso.this, AcquirenteMainActivity.class);
+        intent.putExtra("email", email);
+        intent.putExtra("tipoUtente", tipoUtente);
+        startActivity(intent);
     }
 
 }
