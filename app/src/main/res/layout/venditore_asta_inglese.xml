@@ -205,7 +205,7 @@
                 android:singleLine="true"
                 android:maxLength="20"
                 android:textSize="20dp"
-                android:inputType="number"
+                android:inputType="numberDecimal"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
                 android:textColorHint="@color/colore_hint"
@@ -268,7 +268,7 @@
                 android:drawablePadding="10dp"
                 android:hint="5"
                 android:maxLength="20"
-                android:inputType="number"
+                android:inputType="numberDecimal"
                 android:padding="10dp"
                 android:singleLine="true"
                 android:textSize="20dp" />
