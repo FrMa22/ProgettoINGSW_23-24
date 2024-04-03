@@ -29,6 +29,7 @@ import java.time.format.DateTimeFormatter;
 public class SchermataAstaInglese extends GestoreComuniImplementazioni {
     private ProgressBar progress_bar_schermata_asta_inglese;
     private RelativeLayout relativeLayoutSchermataAstaInglese;
+    private TextView text_view_tua_offerta_attuale;
     Controller controller;
     ImageButton bottoneBack;
     MaterialButton bottoneNuovaOfferta;
@@ -78,6 +79,7 @@ public class SchermataAstaInglese extends GestoreComuniImplementazioni {
         drawablePreferiti = imageButtonPreferiti.getDrawable();
         drawableCuoreVuoto = ContextCompat.getDrawable(this, R.drawable.ic_cuore_vuoto);
         drawableCuorePieno = ContextCompat.getDrawable(this, R.drawable.ic_cuore_pieno);
+        text_view_tua_offerta_attuale = findViewById(R.id.text_view_tua_offerta_attuale);
 
 
 
@@ -133,6 +135,7 @@ public class SchermataAstaInglese extends GestoreComuniImplementazioni {
 
         astaIngleseDAO.openConnection();
         astaIngleseDAO.getAstaIngleseByID(id);
+        astaIngleseDAO.verificaAttualeVincitore(email,id);
 //        astaIngleseDAO.closeConnection();
 
 
@@ -298,11 +301,20 @@ public class SchermataAstaInglese extends GestoreComuniImplementazioni {
             bottoneBack.callOnClick();
         }
     }
+    public void handleOffertaAttualeTua(Boolean result){
+        Log.d("handleOffertaAttuale", "result : " + result);
+        if(result){
+            text_view_tua_offerta_attuale.setVisibility(View.VISIBLE);
+        }else{
+            text_view_tua_offerta_attuale.setVisibility(View.INVISIBLE);
+        }
+    }
     public void handlePopUp(){
         progress_bar_schermata_asta_inglese.setVisibility(View.VISIBLE);
         setAllClickable(relativeLayoutSchermataAstaInglese,false);
         astaIngleseDAO.openConnection();
         astaIngleseDAO.getAstaIngleseByID(id);
+        astaIngleseDAO.verificaAttualeVincitore(email,id);
         astaIngleseDAO.closeConnection();
 
     }

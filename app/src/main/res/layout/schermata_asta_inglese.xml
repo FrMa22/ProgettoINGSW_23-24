@@ -214,6 +214,17 @@
                 android:textStyle="bold"
                 app:strokeColor="#AAAAAA"
                 app:strokeWidth="2dp" />
+            <TextView
+                android:id="@+id/text_view_tua_offerta_attuale"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="L'attuale offerta è la tua."
+                android:textSize="20dp"
+                android:textStyle="italic"
+                android:layout_gravity="end"
+                android:visibility="invisible"
+                android:textColor="@color/colore_secondario"
+                />
 
 
             <TextView

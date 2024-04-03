@@ -26,6 +26,7 @@ import com.google.android.material.button.MaterialButton;
 public class SchermataAstaInversa extends GestoreComuniImplementazioni {
     Controller controller;
     ImageButton bottoneBack;
+    private TextView text_view_tua_offerta_attuale_asta_inversa;
     private CountDownTimer countDownTimer;
     private ProgressBar progress_bar_schermata_asta_inversa;
     private RelativeLayout relativeLayoutSchermataAstaInversa;
@@ -69,6 +70,7 @@ public class SchermataAstaInversa extends GestoreComuniImplementazioni {
         drawablePreferiti = imageButtonPreferiti.getDrawable();
         drawableCuoreVuoto = ContextCompat.getDrawable(this, R.drawable.ic_cuore_vuoto);
         drawableCuorePieno = ContextCompat.getDrawable(this, R.drawable.ic_cuore_pieno);
+        text_view_tua_offerta_attuale_asta_inversa = findViewById(R.id.text_view_tua_offerta_attuale_asta_inversa);
 
 
 
@@ -148,6 +150,7 @@ public class SchermataAstaInversa extends GestoreComuniImplementazioni {
 
         astaInversaDAO.openConnection();
         astaInversaDAO.getAstaInversaByID(id);
+        astaInversaDAO.verificaAttualeVincitore(email,id);
     }
     // questi metodi onPause, onStop, onDestroy e onResume servono a stoppare il timer quando non si è piu su questa schermata e a farlo ricominciare quando si torna
     @Override
@@ -222,6 +225,7 @@ public class SchermataAstaInversa extends GestoreComuniImplementazioni {
 
     public void setPrezzo(Integer prezzoNuovo){
         textViewPrezzoAttualeSchermataAstaInversa.setText(Integer.toString(prezzoNuovo));
+        astaInversaDAO.verificaAttualeVincitore(email,id);
     }
     public void getPrezzoeCondizione(String prezzo_aggiornato, String condizione_aggiornata){
         if(condizione_aggiornata.equals("aperta")){
@@ -248,6 +252,13 @@ public class SchermataAstaInversa extends GestoreComuniImplementazioni {
         }else {
             imageButtonPreferiti.setImageDrawable(drawableCuoreVuoto);
 
+        }
+    }
+    public void handleOffertaAttualeTua(Boolean result){
+        if(result){
+            text_view_tua_offerta_attuale_asta_inversa.setVisibility(View.VISIBLE);
+        }else{
+            text_view_tua_offerta_attuale_asta_inversa.setVisibility(View.INVISIBLE);
         }
     }
     public void handleInserimento(Boolean result){

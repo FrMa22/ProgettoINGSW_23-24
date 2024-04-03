@@ -59,6 +59,9 @@ public class AstaInversaDAO {
     public void getAstaInversaByID(int idAsta) {
         new AstaInversaDAO.SelectAstaTask().execute(String.valueOf(idAsta));
     }
+    public void verificaAttualeVincitore(String email_offerente, int idAsta){
+        new AstaInversaDAO.VerificaOffertaVincenteTask().execute(email_offerente,String.valueOf(idAsta));
+    }
     public void partecipaAstaInversa(int idAsta, String emailOfferente, Float offerta){
         new AstaInversaDAO.PartecipaAstaTask().execute(String.valueOf(idAsta),emailOfferente, String.valueOf(offerta));
     }
@@ -170,7 +173,7 @@ public class AstaInversaDAO {
                             } else {
                                 // In caso di immagine non disponibile, puoi impostare un'immagine predefinita o lasciare foto come null
                                 // Ecco un esempio di impostazione di un'immagine predefinita
-                                foto = BitmapFactory.decodeResource(schermataAstaInversa.getResources(), R.drawable.img_default);
+                                foto = BitmapFactory.decodeResource(schermataAstaInversa.getResources(), R.drawable.no_image_available);
                             }
 
                             String prezzoMax = resultSet.getString("prezzoMax");
@@ -323,6 +326,56 @@ public class AstaInversaDAO {
             }
         }
     }
+    private class VerificaOffertaVincenteTask extends AsyncTask<String, Void, Boolean> {
 
+        private String emailOfferente;
+
+        @Override
+        protected Boolean doInBackground(String... params) {
+            if (params.length >= 2) {
+                try {
+                    int idAsta = Integer.parseInt(params[1]); // Correzione qui
+                    String emailVincente = params[0];
+                    connection = DatabaseHelper.getConnection();
+
+                    if (connection != null && !connection.isClosed()) {
+                        String query = "SELECT indirizzo_email FROM partecipazioneAstaInversa " +
+                                "WHERE idAstaInversa = ? " +
+                                "ORDER BY offerta ASC " +
+                                "LIMIT 1"; // Ottieni solo il primo risultato, che corrisponde all'offerta più alta
+                        PreparedStatement preparedStatement = connection.prepareStatement(query);
+                        preparedStatement.setInt(1, idAsta);
+
+                        ResultSet resultSet = preparedStatement.executeQuery();
+                        if (resultSet.next()) {
+                            String emailOffertaPiùAlta = resultSet.getString("indirizzo_email");
+                            return emailVincente.equals(emailOffertaPiùAlta); // Restituisce true se l'email vincente è uguale a emailOfferente, altrimenti false
+                        } else {
+                            return false; // Nessun risultato trovato
+                        }
+                    } else {
+                        Log.e("VerificaOffertaVincente", "Connessione non aperta");
+                        return false;
+                    }
+                } catch (SQLException e) {
+                    Log.e("VerificaOffertaVincente", "Errore durante la verifica dell'offerta vincente", e);
+                    return false;
+                }
+            } else {
+                Log.e("VerificaOffertaVincente", "Parametri insufficienti");
+                return false;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+            if (result != null) {
+                schermataAstaInversa.handleOffertaAttualeTua(result);
+            } else {
+                // Errore durante la verifica o nessun risultato trovato
+                // Puoi gestire la situazione qui
+            }
+        }
+    }
 
 }

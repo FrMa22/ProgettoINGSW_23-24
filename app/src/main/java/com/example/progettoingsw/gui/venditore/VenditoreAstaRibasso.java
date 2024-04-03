@@ -6,6 +6,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
+import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -211,6 +213,14 @@ public class VenditoreAstaRibasso extends GestoreComuniImplementazioni {
             InputStream inputStream = this.getContentResolver().openInputStream(uri);
             Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
 
+            // Controllo dell'orientamento dell'immagine e rotazione se necessario
+            int orientation = getImageOrientation(uri);
+            if (orientation != 0) {
+                Matrix matrix = new Matrix();
+                matrix.postRotate(orientation);
+                bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+            }
+
             // Ridimensiona l'immagine per adattarla alla dimensione desiderata
             int targetWidth = 500; // Imposta la larghezza desiderata
             int targetHeight = (int) (bitmap.getHeight() * (targetWidth / (double) bitmap.getWidth())); // Calcola l'altezza in base al rapporto
@@ -226,6 +236,33 @@ public class VenditoreAstaRibasso extends GestoreComuniImplementazioni {
             img = compressedImageBytes;
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    // Metodo per ottenere l'orientamento dell'immagine dalla Uri
+    private int getImageOrientation(Uri uri) {
+        int orientation = ExifInterface.ORIENTATION_UNDEFINED;
+        try {
+            InputStream inputStream = this.getContentResolver().openInputStream(uri);
+            ExifInterface exifInterface = new ExifInterface(inputStream);
+            orientation = exifInterface.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_UNDEFINED);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return getImageRotation(orientation);
+    }
+
+    // Metodo per ottenere la rotazione in gradi in base all'orientamento
+    private int getImageRotation(int orientation) {
+        switch (orientation) {
+            case ExifInterface.ORIENTATION_ROTATE_90:
+                return 90;
+            case ExifInterface.ORIENTATION_ROTATE_180:
+                return 180;
+            case ExifInterface.ORIENTATION_ROTATE_270:
+                return 270;
+            default:
+                return 0;
         }
     }
     public void handlePopUp(ArrayList<String> switchTexts){
@@ -254,9 +291,6 @@ public class VenditoreAstaRibasso extends GestoreComuniImplementazioni {
         progressBarVenditoreAstaRibasso.setVisibility(View.VISIBLE);
         setAllClickable(relativeLayoutAstaRibasso,false);
         Toast.makeText(this, "Asta creata con successo!", Toast.LENGTH_SHORT).show();
-//        AppCompatActivity activity = (AppCompatActivity) VenditoreAstaRibasso.this;
-//        Fragment fragment = new AcquirenteFragmentHome(email, "venditore");
-//        ((AcquirenteMainActivity) activity).navigateToFragmentAndSelectIcon(fragment);
     }
 
 

@@ -154,7 +154,7 @@ public class AstaDAOAcquirente {
                     } else {
                         // In caso di immagine non disponibile, puoi impostare un'immagine predefinita o lasciare foto come null
                         // Ecco un esempio di impostazione di un'immagine predefinita
-                        foto = BitmapFactory.decodeResource(acquirenteFragmentHome.getContext().getResources(), R.drawable.img_default);
+                        foto = BitmapFactory.decodeResource(acquirenteFragmentHome.getContext().getResources(), R.drawable.no_image_available);
                     }
 
                     String prezzoMax = resultSetAsteInversa.getString("prezzoMax");
@@ -223,7 +223,7 @@ public class AstaDAOAcquirente {
                     } else {
                         // In caso di immagine non disponibile, puoi impostare un'immagine predefinita o lasciare foto come null
                         // Ecco un esempio di impostazione di un'immagine predefinita
-                        foto = BitmapFactory.decodeResource(acquirenteFragmentHome.getContext().getResources(), R.drawable.img_default);
+                        foto = BitmapFactory.decodeResource(acquirenteFragmentHome.getContext().getResources(), R.drawable.no_image_available);
                     }
                     String baseAsta = resultSetAsteInglese.getString("baseAsta");
                     String intervalloTempoOfferte = resultSetAsteInglese.getString("intervalloTempoOfferte");
@@ -256,7 +256,7 @@ public class AstaDAOAcquirente {
                     } else {
                         // In caso di immagine non disponibile, puoi impostare un'immagine predefinita o lasciare foto come null
                         // Ecco un esempio di impostazione di un'immagine predefinita
-                        foto = BitmapFactory.decodeResource(acquirenteFragmentHome.getContext().getResources(), R.drawable.img_default);
+                        foto = BitmapFactory.decodeResource(acquirenteFragmentHome.getContext().getResources(), R.drawable.no_image_available);
                     }
                     String prezzoBase = resultSetAsteRibasso.getString("prezzoBase");
                     String intervalloDecrementale = resultSetAsteRibasso.getString("intervalloDecrementale");
@@ -325,7 +325,7 @@ public class AstaDAOAcquirente {
                     } else {
                         // In caso di immagine non disponibile, puoi impostare un'immagine predefinita o lasciare foto come null
                         // Ecco un esempio di impostazione di un'immagine predefinita
-                        foto = BitmapFactory.decodeResource(acquirenteFragmentHome.getResources(), R.drawable.img_default);
+                        foto = BitmapFactory.decodeResource(acquirenteFragmentHome.getResources(), R.drawable.no_image_available);
                     }
 
                     String prezzoMax = resultSetAsteInverse.getString("prezzoMax");
@@ -407,7 +407,7 @@ public class AstaDAOAcquirente {
                     } else {
                         // In caso di immagine non disponibile, puoi impostare un'immagine predefinita o lasciare foto come null
                         // Ecco un esempio di impostazione di un'immagine predefinita
-                        foto = BitmapFactory.decodeResource(acquirenteFragmentHome.getContext().getResources(), R.drawable.img_default);
+                        foto = BitmapFactory.decodeResource(acquirenteFragmentHome.getContext().getResources(), R.drawable.no_image_available);
                     }
                     String baseAsta = resultSetAsteInglese.getString("baseAsta");
                     String intervalloTempoOfferte = resultSetAsteInglese.getString("intervalloTempoOfferte");
@@ -458,7 +458,7 @@ public class AstaDAOAcquirente {
                     } else {
                         // In caso di immagine non disponibile, puoi impostare un'immagine predefinita o lasciare foto come null
                         // Ecco un esempio di impostazione di un'immagine predefinita
-                        foto = BitmapFactory.decodeResource(acquirenteFragmentHome.getResources(), R.drawable.img_default);
+                        foto = BitmapFactory.decodeResource(acquirenteFragmentHome.getResources(), R.drawable.no_image_available);
                     }
 
                     String prezzoMax = resultSetAsteInverse.getString("prezzoMax");
@@ -516,7 +516,7 @@ public class AstaDAOAcquirente {
                         // In caso di immagine non disponibile, puoi impostare un'immagine predefinita o lasciare foto come null
                         // Ecco un esempio di impostazione di un'immagine predefinita
                         Log.d("immagine", "impostata default");
-                        foto = BitmapFactory.decodeResource(acquirenteFragmentHome.getContext().getResources(), R.drawable.img_default);
+                        foto = BitmapFactory.decodeResource(acquirenteFragmentHome.getContext().getResources(), R.drawable.no_image_available);
                     }
                     Log.d("foto ", " foto : " + foto);
                     String baseAsta = resultSetAsteInglese.getString("baseAsta");
@@ -555,7 +555,7 @@ public class AstaDAOAcquirente {
                         // In caso di immagine non disponibile, puoi impostare un'immagine predefinita o lasciare foto come null
                         // Ecco un esempio di impostazione di un'immagine predefinita
                         Log.d("immagine", "impostata default");
-                        foto = BitmapFactory.decodeResource(acquirenteFragmentHome.getContext().getResources(), R.drawable.img_default);
+                        foto = BitmapFactory.decodeResource(acquirenteFragmentHome.getContext().getResources(), R.drawable.no_image_available);
                     }
                     Log.d("foto ", " foto : " + foto);
                     String prezzoBase = resultSetAsteRibasso.getString("prezzoBase");
@@ -611,7 +611,7 @@ public class AstaDAOAcquirente {
                     } else {
                         // In caso di immagine non disponibile, puoi impostare un'immagine predefinita o lasciare foto come null
                         // Ecco un esempio di impostazione di un'immagine predefinita
-                        foto = BitmapFactory.decodeResource(acquirenteFragmentHome.getResources(), R.drawable.img_default);
+                        foto = BitmapFactory.decodeResource(acquirenteFragmentHome.getResources(), R.drawable.no_image_available);
                     }
 
                     String prezzoMax = resultSetAsteInverse.getString("prezzoMax");

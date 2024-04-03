@@ -265,19 +265,19 @@ public class AcquirenteFragmentHome extends Fragment {
         notificheDAO.openConnection();
         notificheDAO.checkNotifiche();
 
-        countDownTimerNumeroNotifiche = new CountDownTimer(5000, 1000) {
-            public void onTick(long millisUntilFinished) {
-                // Stampa il numero di secondi rimanenti
-                Log.d("Timer home fragment", "Secondi mancanti: " + millisUntilFinished / 1000);
-            }
-            public void onFinish() {
-                Log.d("Timer home fragment", "Timer scaduto");
-                notificheDAO.checkNotifiche();
-                start();
-            }
-        };
-        // Avvia il timer
-        countDownTimerNumeroNotifiche.start();
+//        countDownTimerNumeroNotifiche = new CountDownTimer(5000, 1000) {
+//            public void onTick(long millisUntilFinished) {
+//                // Stampa il numero di secondi rimanenti
+//                Log.d("Timer home fragment", "Secondi mancanti: " + millisUntilFinished / 1000);
+//            }
+//            public void onFinish() {
+//                Log.d("Timer home fragment", "Timer scaduto");
+//                notificheDAO.checkNotifiche();
+//                start();
+//            }
+//        };
+//        // Avvia il timer
+//        countDownTimerNumeroNotifiche.start();
 
 
 
