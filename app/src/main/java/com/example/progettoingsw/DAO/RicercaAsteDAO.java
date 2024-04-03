@@ -197,7 +197,7 @@ public class RicercaAsteDAO {
                         // In caso di immagine non disponibile, puoi impostare un'immagine predefinita o lasciare foto come null
                         // Ecco un esempio di impostazione di un'immagine predefinita
                         if(acquirenteFragmentRicercaAsta!=null)
-                            foto = BitmapFactory.decodeResource(acquirenteFragmentRicercaAsta.getContext().getResources(), R.drawable.img_default);
+                            foto = BitmapFactory.decodeResource(acquirenteFragmentRicercaAsta.getContext().getResources(), R.drawable.no_image_available);
                     }
                     String baseAsta = resultSet.getString("baseAsta");
                     String intervalloTempoOfferte = resultSet.getString("intervalloTempoOfferte");
@@ -289,7 +289,7 @@ public class RicercaAsteDAO {
                         // Ecco un esempio di impostazione di un'immagine predefinita
                         Log.d("immagine", "impostata default");
                         if(acquirenteFragmentRicercaAsta!=null)
-                            foto = BitmapFactory.decodeResource(acquirenteFragmentRicercaAsta.getContext().getResources(), R.drawable.img_default);
+                            foto = BitmapFactory.decodeResource(acquirenteFragmentRicercaAsta.getContext().getResources(), R.drawable.no_image_available);
                     }
                     Log.d("foto ", " foto : " + foto);
                     String prezzoBase = resultSet.getString("prezzoBase");
@@ -366,7 +366,7 @@ public class RicercaAsteDAO {
                         !(item.getOrdinamentoPrezzo().equals("ASC") || item.getOrdinamentoPrezzo().equals("DESC"))) {
                     return astaItems;
                 }
-                 astaItems = new ArrayList<>();
+                astaItems = new ArrayList<>();
                 Log.d("ricercaAsteDAO", "entrato in ricerca venditore");
                 if (item.getParolaRicercata().isEmpty() && item.getCategorieScelteList().isEmpty() ) {
                     // Se entrambi sono nulli o vuoti, seleziona tutte le aste senza applicare filtri
@@ -439,7 +439,7 @@ public class RicercaAsteDAO {
                         // In caso di immagine non disponibile, puoi impostare un'immagine predefinita o lasciare foto come null
                         // Ecco un esempio di impostazione di un'immagine predefinita
                         if(acquirenteFragmentRicercaAsta != null) {
-                            foto = BitmapFactory.decodeResource(acquirenteFragmentRicercaAsta.getResources(), R.drawable.img_default);
+                            foto = BitmapFactory.decodeResource(acquirenteFragmentRicercaAsta.getResources(), R.drawable.no_image_available);
                         }
                     }
 
@@ -458,7 +458,7 @@ public class RicercaAsteDAO {
                 connection.close();
             } catch (NullPointerException e) {
                 e.printStackTrace();
-                 System.out.println("Puntatore con riferimento null");
+                System.out.println("Puntatore con riferimento null");
             } catch (PSQLException e) {
                 e.printStackTrace();
                 System.out.println("Errore nella query");
@@ -497,4 +497,3 @@ public class RicercaAsteDAO {
 
     }
 }
-

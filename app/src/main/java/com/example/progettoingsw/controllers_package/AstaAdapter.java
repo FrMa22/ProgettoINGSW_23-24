@@ -144,17 +144,18 @@ public class AstaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             if(item.getImmagine() != null){
                 imageView.setImageBitmap(item.getImmagine());
             }else{
-                imageView.setImageResource(R.drawable.img_default);
+                imageView.setImageResource(R.drawable.no_image_available);
             }
             intervalloOfferte.setText(item.getIntervalloTempoOfferte());
             prezzo.setText(item.getPrezzoAttuale());
             rialzo.setText(item.getRialzoMin());
-
             startCountDownTimer(item.getIntervalloTempoOfferte());
         }
 
         private void startCountDownTimer(String intervalloOfferteString) {
+            Log.d("startCountDownTimer", "intervallo prima: " + intervalloOfferteString);
             long intervalloOfferteSeconds = convertiStringaInSecondi(intervalloOfferteString);
+            Log.d("startCountDownTimer", "intervallo : " + intervalloOfferteSeconds);
             countDownTimer = new CountDownTimer(intervalloOfferteSeconds * 1000, 1000) {
                 public void onTick(long millisUntilFinished) {
                     Log.d("asta adapter asta inglese", "aggiornato textview intervallo offerte");
@@ -163,6 +164,7 @@ public class AstaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
                 public void onFinish() {
                     Log.d("scaduto", "scaduto");
+                    intervalloOfferte.setText("Asta Scaduta");
                 }
             }.start();
         }
@@ -176,17 +178,23 @@ public class AstaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         }
 
         private long convertiStringaInSecondi(String intervalloOfferteString) {
-            // Assumiamo che l'intervallo sia nel formato "HH:mm:ss"
-            SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
-            try {
-                Date intervallo = sdf.parse(intervalloOfferteString);
-                long milliseconds = intervallo.getTime();
-                return TimeUnit.MILLISECONDS.toSeconds(milliseconds);
-            } catch (ParseException e) {
-                e.printStackTrace();
-                return 0;
-            }
+            String[] tokens = intervalloOfferteString.split(":");
+            int hours = Integer.parseInt(tokens[0]);
+            int minutes = Integer.parseInt(tokens[1]);
+            int seconds = Integer.parseInt(tokens[2]);
+
+            long intervalloTotaleSecondi = hours * 3600 + minutes * 60 + seconds;
+
+            // Ottieni il numero di secondi trascorsi nel minuto corrente
+            long secondiTrascorsi = TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis()) % 60;
+
+            // Calcola i secondi rimanenti fino al prossimo minuto
+            long secondiRimanenti = intervalloTotaleSecondi - secondiTrascorsi;
+
+            return secondiRimanenti;
         }
+
+
     }
 
 
@@ -217,7 +225,7 @@ public class AstaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             if(item.getImmagine() != null){
                 imageView.setImageBitmap(item.getImmagine());
             }else{
-                imageView.setImageResource(R.drawable.img_default);
+                imageView.setImageResource(R.drawable.no_image_available);
             }
             prezzoAttuale.setText(item.getPrezzoAttuale());
             intervalloDecremento.setText(item.getIntervalloDecrementale());
@@ -248,7 +256,7 @@ public class AstaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             if(item.getImmagine() != null){
                 imageView.setImageBitmap(item.getImmagine());
             }else{
-                imageView.setImageResource(R.drawable.img_default);
+                imageView.setImageResource(R.drawable.no_image_available);
             }
             dataScadenza.setText(item.getDataDiScadenza());
             prezzo.setText(item.getPrezzoAttuale());

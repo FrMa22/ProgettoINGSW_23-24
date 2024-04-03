@@ -79,7 +79,9 @@ public class SchermataAstaInversa extends GestoreComuniImplementazioni {
         email = getIntent().getStringExtra("email");
         tipoUtente = getIntent().getStringExtra("tipoUtente");
 
-
+        if(tipoUtente.equals("acquirente")){
+            bottoneOffertaSchermataAstaInversa.setVisibility(View.INVISIBLE);
+        }
 
         countDownTimer = new CountDownTimer(10000, 1000) {
             public void onTick(long millisUntilFinished) {

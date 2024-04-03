@@ -82,8 +82,11 @@
 
             <ImageView
                 android:id="@+id/ImageViewSchermataAstaInglese"
-                android:layout_width="300dp"
-                android:layout_height="180dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minWidth="200dp"
+                android:minHeight="180dp"
+                android:layout_margin="25dp"
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/design_bio_personale"
@@ -222,6 +225,7 @@
                 android:textSize="20dp"
                 android:textStyle="italic"
                 android:layout_gravity="end"
+                android:layout_marginEnd="10dp"
                 android:visibility="invisible"
                 android:textColor="@color/colore_secondario"
                 />

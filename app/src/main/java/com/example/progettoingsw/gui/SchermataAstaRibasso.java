@@ -110,7 +110,9 @@ public class SchermataAstaRibasso extends GestoreComuniImplementazioni {
 
 
         bottoneNuovaOfferta =  findViewById(R.id.bottoneOffertaSchermataAstaRibasso);
-
+        if(tipoUtente.equals("venditore")){
+            bottoneNuovaOfferta.setVisibility(View.INVISIBLE);
+        }
         bottoneNuovaOfferta.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 popUpConfermaOffertaDialog = new Dialog(SchermataAstaRibasso.this);

@@ -150,12 +150,27 @@
                     android:contentDescription="Clicca per selezionare un immagine"
                     android:onClick="onClickMethod"
                     android:src="@drawable/baseline_add_a_photo_24" />
+                <ImageButton
+                    android:id="@+id/imageButtonRimuoviImmagineCreaAstaRibasso"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/imageButtonInserisciImmagineCreaAstaRibasso"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginEnd="20dp"
+                    android:backgroundTint="@android:color/transparent"
+                    android:contentDescription="Clicca per selezionare un immagine"
+                    android:onClick="onClickMethod"
+                    android:src="@drawable/ic_rimuovi" />
             </RelativeLayout>
 
             <ImageView
                 android:id="@+id/imageViewCreaAstaRibasso"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:minWidth="200dp"
+                android:minHeight="140dp"
+                android:layout_marginTop="-60dp"
                 android:layout_below="@+id/textViewInserisciImmagineVenditore"
                 android:layout_gravity="center"
                 android:background="@drawable/design_bio_personale"

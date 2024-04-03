@@ -121,6 +121,9 @@ public class SchermataAstaInglese extends GestoreComuniImplementazioni {
 
 
         bottoneNuovaOfferta =  findViewById(R.id.bottoneOffertaSchermataAstaInglese);
+        if(tipoUtente.equals("venditore")){
+            bottoneNuovaOfferta.setVisibility(View.INVISIBLE);
+        }
         bottoneNuovaOfferta.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 astaIngleseDAO.getAstaIngleseByID(id);

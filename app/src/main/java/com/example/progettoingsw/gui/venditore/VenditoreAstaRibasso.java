@@ -46,6 +46,7 @@ public class VenditoreAstaRibasso extends GestoreComuniImplementazioni {
     private int idAsta;
     EditText nome;
     EditText descrizione;
+    private ImageButton imageButtonRimuoviImmagineCreaAstaRibasso;
     EditText baseAsta;
     EditText intervalloDecremento;
     EditText sogliaDecremento;
@@ -72,6 +73,7 @@ public class VenditoreAstaRibasso extends GestoreComuniImplementazioni {
         button_info_asta_Ribasso = findViewById(R.id.button_info_asta_Ribasso);
         bottoneConferma =  findViewById(R.id.bottoneConfermaAstaRibasso);
         bottoneBack =  findViewById(R.id.bottoneBackAstaRibasso);
+        imageButtonRimuoviImmagineCreaAstaRibasso = findViewById(R.id.imageButtonRimuoviImmagineCreaAstaRibasso);
 
         baseAsta=findViewById(R.id.editTextBaseAstaAstaRibasso);
         intervalloDecremento=findViewById(R.id.editTextTimerDecrementoAstaRibasso);
@@ -93,6 +95,15 @@ public class VenditoreAstaRibasso extends GestoreComuniImplementazioni {
             public void onClick(View view) {
                 PopUpAggiungiCategorieAsta popUpAggiungiCategorieAsta = new PopUpAggiungiCategorieAsta(VenditoreAstaRibasso.this, VenditoreAstaRibasso.this,listaCategorieScelte);
                 popUpAggiungiCategorieAsta.show();
+            }
+        });
+
+        imageButtonRimuoviImmagineCreaAstaRibasso.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                immagineProdotto.setImageResource(android.R.color.transparent); // Rimuove l'immagine
+                img = null; // Reimposta il byte array a null
+                uriImmagine = null;
             }
         });
 

@@ -100,7 +100,7 @@ public class AstaIngleseDAO {
                                     "VALUES (?, ?::interval, ?, ?, ?, ?, ?, ?, ?)";
                             PreparedStatement preparedStatement = connection.prepareStatement(query,Statement.RETURN_GENERATED_KEYS);
                             preparedStatement.setDouble(1, baseAsta); // Imposta il primo parametro (baseAsta)
-                            preparedStatement.setString(2, intervallo + " hours"); // Imposta il secondo parametro (intervalloTempoOfferte)
+                            preparedStatement.setString(2, intervallo + " minutes"); // Imposta il secondo parametro (intervalloTempoOfferte)
                             preparedStatement.setDouble(3, rialzoMin); // Imposta il terzo parametro (rialzoMin)
                             preparedStatement.setDouble(4, prezzoAttuale); // Imposta il quarto parametro (prezzoAttuale)
                             preparedStatement.setString(5, condizione); // Imposta il sesto parametro (condizione)

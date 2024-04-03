@@ -48,6 +48,7 @@ import java.util.Calendar;
 
 public class AcquirenteFragmentAstaInversa extends Fragment {
     private int idAsta;
+    private ImageButton imageButtonRimuoviImmagine;
     AppCompatButton bottoneConferma;
     AppCompatButton bottoneAnnullaAstaInversa;
     MaterialButton bottoneData;
@@ -91,6 +92,15 @@ public class AcquirenteFragmentAstaInversa extends Fragment {
         immagineProdotto= view2.findViewById(R.id.imageViewCreaAstaAcquirente);
         bottoneInserisciImmagine = view2.findViewById(R.id.imageButtonInserisciImmagineCreaAstaAcquirente);
         bottoneInserisciImmagine.setOnClickListener(view ->prelevaImmagine());//significa che chiama il metodo prelevaImmagine
+        imageButtonRimuoviImmagine = view2.findViewById(R.id.imageButtonRimuoviImmagineCreaAstaInversa);
+        imageButtonRimuoviImmagine.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                immagineProdotto.setImageResource(android.R.color.transparent); // Rimuove l'immagine
+                imageBytes = null; // Reimposta il byte array a null
+                uriImmagine = null;
+            }
+        });
 
         bottoneCategorieAstaInversa =view2.findViewById(R.id.bottoneCategorieAstaInversa);
         bottoneCategorieAstaInversa.setOnClickListener(new View.OnClickListener() {

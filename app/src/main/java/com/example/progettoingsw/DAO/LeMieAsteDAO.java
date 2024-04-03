@@ -81,7 +81,7 @@ public class LeMieAsteDAO {
                                 } else {
                                     // In caso di immagine non disponibile, puoi impostare un'immagine predefinita o lasciare foto come null
                                     // Ecco un esempio di impostazione di un'immagine predefinita
-                                    foto = BitmapFactory.decodeResource(leMieAste.getResources(), R.drawable.img_default);
+                                    foto = BitmapFactory.decodeResource(leMieAste.getResources(), R.drawable.no_image_available);
                                 }
 
                                 String baseAsta = resultSetAsteInglese.getString("baseAsta");
@@ -113,7 +113,7 @@ public class LeMieAsteDAO {
                                 } else {
                                     // In caso di immagine non disponibile, puoi impostare un'immagine predefinita o lasciare foto come null
                                     // Ecco un esempio di impostazione di un'immagine predefinita
-                                    foto = BitmapFactory.decodeResource(leMieAste.getResources(), R.drawable.img_default);
+                                    foto = BitmapFactory.decodeResource(leMieAste.getResources(), R.drawable.no_image_available);
                                 }
                                 String prezzoBase = resultSetAsteRibasso.getString("prezzoBase");
                                 String intervalloDecrementale = resultSetAsteRibasso.getString("intervalloDecrementale");
@@ -146,7 +146,7 @@ public class LeMieAsteDAO {
                                 } else {
                                     // In caso di immagine non disponibile, puoi impostare un'immagine predefinita o lasciare foto come null
                                     // Ecco un esempio di impostazione di un'immagine predefinita
-                                    foto = BitmapFactory.decodeResource(leMieAste.getResources(), R.drawable.img_default);
+                                    foto = BitmapFactory.decodeResource(leMieAste.getResources(), R.drawable.no_image_available);
                                 }
 
                                 String prezzoMax = resultSetAsteInversa.getString("prezzoMax");
