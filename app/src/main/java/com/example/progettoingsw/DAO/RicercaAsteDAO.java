@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.example.progettoingsw.R;
 import com.example.progettoingsw.controllers_package.DatabaseHelper;
@@ -29,13 +30,15 @@ public class RicercaAsteDAO {
     private String[] listaCategorieScelte;
     private String ordinamentoPrezzo;
     private String tipoUtente;
+    private ItemRicercaAste item;
+    private ArrayList<Object> astaItems;
 
     public RicercaAsteDAO(AcquirenteFragmentRicercaAsta acquirenteFragmentRicercaAsta, String tipoUtente) {
         this.acquirenteFragmentRicercaAsta = acquirenteFragmentRicercaAsta;
         this.tipoUtente = tipoUtente;
     }
 
-    public RicercaAsteDAO( String tipoUtente) {
+    public RicercaAsteDAO(String tipoUtente) {
         this.tipoUtente = tipoUtente;
     }
 
@@ -98,19 +101,27 @@ public class RicercaAsteDAO {
     private class RicercaAstaAcquirenteTask extends AsyncTask<ItemRicercaAste, Void, ArrayList<Object>> {
         @Override
         protected ArrayList<Object> doInBackground(ItemRicercaAste... items) {
-            ArrayList<Object> astaItems = new ArrayList<>();
             try {
-                ItemRicercaAste item = items[0];
+                item = items[0];
                 String parolaRicercata = item.getParolaRicercata();
                 ArrayList<String> categorieScelte = item.getCategorieScelteList();
                 String ordinamentoPrezzo = item.getOrdinamentoPrezzo();
 
                 String query = "";
+
+                if (item.getParolaRicercata() == null ||
+                        item.getCategorieScelteList() == null ||
+                        item.getOrdinamentoPrezzo() == null ||
+                        item.getOrdinamentoPrezzo().isEmpty() ||
+                        !(item.getOrdinamentoPrezzo().equals("ASC") || item.getOrdinamentoPrezzo().equals("DESC"))) {
+                    return astaItems;
+                }
+                astaItems = new ArrayList<>();
                 ArrayList<Object> asteInglesi = new ArrayList<>();
                 ArrayList<Object> asteAlRibasso = new ArrayList<>();
                 Log.d("ricercaAsteDAO", "entrato in ricerca acquirente");
                 // Query per recuperare le aste inglesi associate alle categorie dell'acquirente
-                if (item.getParolaRicercata().isEmpty() && item.getCategorieScelteList().isEmpty()) {
+                if (item.getParolaRicercata().isEmpty() && item.getCategorieScelteList().isEmpty()    ) {
                     // Se entrambi sono nulli o vuoti, seleziona tutte le aste senza applicare filtri
                     Log.d("RicercaAstaDAO", "parolaricerca null e categorie null");
                     query = "SELECT DISTINCT a.id, a.nome, a.descrizione, a.path_immagine, a.baseAsta, a.intervalloTempoOfferte, a.rialzoMin, a.prezzoAttuale, a.condizione, a.id_venditore FROM asta_allinglese AS a ";
@@ -126,29 +137,33 @@ public class RicercaAsteDAO {
                     if (!item.getCategorieScelteList().isEmpty()) {
                         Log.d("RicercaAstaDAO", " categorie non null");
                         String categoriePlaceholders = String.join(",", Collections.nCopies(item.getCategorieScelteList().size(), "?"));
+
+
 //                        if (item.getParolaRicercata().isEmpty()) {
 //                            query += " WHERE";
-//                        } else {
+//                        } else{
 //                            query += " AND";
 //                        }
                         query += " AND c.nomeCategoria IN (" + categoriePlaceholders + ")";
+
                     }
                 }
                 query += " ORDER BY prezzoAttuale " + ordinamentoPrezzo;
                 Log.d("Query SQL", "Query: " + query);
                 // Esegui la query SQL per le aste inglesi
+                connection = DatabaseHelper.getConnection();
                 PreparedStatement statement = connection.prepareStatement(query);
                 if (!parolaRicercata.isEmpty()) {
                     statement.setString(1, parolaRicercata + "%");
                 }
                 if (!categorieScelte.isEmpty()) {
                     int k;
-                    if(parolaRicercata.isEmpty()){
-                        k=1;
-                    }else{
-                        k=2;
+                    if (parolaRicercata.isEmpty()) {
+                        k = 1;
+                    } else {
+                        k = 2;
                     }
-                    Log.d("SIZE ", "size: " + categorieScelte.size() );
+                    Log.d("SIZE ", "size: " + categorieScelte.size());
                     for (int i = 0; i < categorieScelte.size(); i++) {
                         statement.setString(i + k, categorieScelte.get(i));
                     }
@@ -181,7 +196,8 @@ public class RicercaAsteDAO {
                     } else {
                         // In caso di immagine non disponibile, puoi impostare un'immagine predefinita o lasciare foto come null
                         // Ecco un esempio di impostazione di un'immagine predefinita
-                        foto = BitmapFactory.decodeResource(acquirenteFragmentRicercaAsta.getContext().getResources(), R.drawable.img_default);
+                        if(acquirenteFragmentRicercaAsta!=null)
+                            foto = BitmapFactory.decodeResource(acquirenteFragmentRicercaAsta.getContext().getResources(), R.drawable.img_default);
                     }
                     String baseAsta = resultSet.getString("baseAsta");
                     String intervalloTempoOfferte = resultSet.getString("intervalloTempoOfferte");
@@ -231,14 +247,14 @@ public class RicercaAsteDAO {
                 }
                 if (!categorieScelte.isEmpty()) {
                     int k;
-                    if(parolaRicercata.isEmpty()){
-                        k=1;
-                    }else{
-                        k=2;
+                    if (parolaRicercata.isEmpty()) {
+                        k = 1;
+                    } else {
+                        k = 2;
                     }
-                    Log.d("SIZE ", "size: " + categorieScelte.size() );
+                    Log.d("SIZE ", "size: " + categorieScelte.size());
                     for (int i = 0; i < categorieScelte.size(); i++) {
-                        Log.d("categorie inserite " , "inserisco in " + (i+k) + "parola " + categorieScelte.get(i));
+                        Log.d("categorie inserite ", "inserisco in " + (i + k) + "parola " + categorieScelte.get(i));
                         statement.setString(i + k, categorieScelte.get(i));
                     }
                 }
@@ -272,7 +288,8 @@ public class RicercaAsteDAO {
                         // In caso di immagine non disponibile, puoi impostare un'immagine predefinita o lasciare foto come null
                         // Ecco un esempio di impostazione di un'immagine predefinita
                         Log.d("immagine", "impostata default");
-                        foto = BitmapFactory.decodeResource(acquirenteFragmentRicercaAsta.getContext().getResources(), R.drawable.img_default);
+                        if(acquirenteFragmentRicercaAsta!=null)
+                            foto = BitmapFactory.decodeResource(acquirenteFragmentRicercaAsta.getContext().getResources(), R.drawable.img_default);
                     }
                     Log.d("foto ", " foto : " + foto);
                     String prezzoBase = resultSet.getString("prezzoBase");
@@ -294,13 +311,13 @@ public class RicercaAsteDAO {
                 astaItems.addAll(asteInglesi);
                 astaItems.addAll(asteAlRibasso);
                 connection.close();
-            }catch(NullPointerException e){
-                e.printStackTrace();System.out.println("Puntatore con riferimento null");
-            }
-            catch(PSQLException e ){
-                e.printStackTrace();System.out.println("Errore nella query");
-            }
-            catch (Exception e) {
+            } catch (NullPointerException e) {
+                e.printStackTrace();
+                System.out.println("Puntatore con riferimento null");
+            } catch (PSQLException e) {
+                e.printStackTrace();
+                System.out.println("Errore nella query");
+            } catch (Exception e) {
                 e.printStackTrace();
             }
             return astaItems;
@@ -308,26 +325,50 @@ public class RicercaAsteDAO {
 
         @Override
         protected void onPostExecute(ArrayList<Object> astaItems) {
-            // Aggiorna l'interfaccia utente con i risultati della ricerca
+            // Aggiorna l'interfaccia utente con i risultati della ricerca dell'utente venditore
+
             if (astaItems != null) {
-                acquirenteFragmentRicercaAsta.handleAsteRecuperate(astaItems);
+
+                if (acquirenteFragmentRicercaAsta != null) {
+                    acquirenteFragmentRicercaAsta.handleAsteRecuperate(astaItems);
+                    Toast.makeText(acquirenteFragmentRicercaAsta.getActivity(), "Ricerca effettuata con successo", Toast.LENGTH_SHORT).show();
+                } else {
+                    System.out.println("Ricerca effettuata con successo");
+                }
+
+            } else {//astaItems vuota quindi errore
+                if (acquirenteFragmentRicercaAsta != null) {
+                    Toast.makeText(acquirenteFragmentRicercaAsta.getActivity(), "Errore nella ricerca", Toast.LENGTH_SHORT).show();
+                }
+                System.out.println("Errore ricerca");
             }
+
+
         }
     }
 
     private class RicercaAstaVenditoreTask extends AsyncTask<ItemRicercaAste, Void, ArrayList<Object>> {
         @Override
         protected ArrayList<Object> doInBackground(ItemRicercaAste... items) {
-            ArrayList<Object> astaItems = new ArrayList<>();
+
             try {
-                ItemRicercaAste item = items[0];
+                item = items[0];
                 String parolaRicercata = item.getParolaRicercata();
                 ArrayList<String> categorieScelte = item.getCategorieScelteList();
                 String ordinamentoPrezzo = item.getOrdinamentoPrezzo();
                 // Costruisci la query SQL base in base al tipo di utente
                 String query = "";
+
+                if (item.getParolaRicercata() == null ||
+                        item.getCategorieScelteList() == null ||
+                        item.getOrdinamentoPrezzo() == null ||
+                        item.getOrdinamentoPrezzo().isEmpty() ||
+                        !(item.getOrdinamentoPrezzo().equals("ASC") || item.getOrdinamentoPrezzo().equals("DESC"))) {
+                    return astaItems;
+                }
+                 astaItems = new ArrayList<>();
                 Log.d("ricercaAsteDAO", "entrato in ricerca venditore");
-                if (item.getParolaRicercata().isEmpty() && item.getCategorieScelteList().isEmpty()) {
+                if (item.getParolaRicercata().isEmpty() && item.getCategorieScelteList().isEmpty() ) {
                     // Se entrambi sono nulli o vuoti, seleziona tutte le aste senza applicare filtri
                     Log.d("RicercaAstaDAO Inversa", "parolaricerca null e categorie null");
                     query = "SELECT DISTINCT a.id, a.nome, a.descrizione, a.path_immagine, a.prezzoMax, a.prezzoAttuale , a.dataDiScadenza , a.condizione, a.id_acquirente FROM asta_inversa AS a ";
@@ -335,16 +376,16 @@ public class RicercaAsteDAO {
                 } else {
                     // Altrimenti, costruisci la query con i filtri appropriati
                     query = "SELECT DISTINCT a.id, a.nome, a.descrizione, a.path_immagine, a.prezzoMax, a.prezzoAttuale , a.dataDiScadenza ,a.condizione, a.id_acquirente FROM asta_inversa AS a LEFT JOIN AsteCategorieInversa AS c ON a.id = c.id_asta_inversa";
-                    query += "WHERE a.condizione = 'aperta'";
+                    query += " WHERE a.condizione = 'aperta'";
                     if (!item.getParolaRicercata().isEmpty()) {
-                        Log.d("RicercaAstaDAO Inversa", "parolaricerca non null");
-                        query += " WHERE UPPER(a.nome) LIKE UPPER(?)";
+                        Log.d("RicercaAstaDAO", "parolaricerca non null");
+                        query += " AND UPPER(a.nome) LIKE UPPER(?)";
                     }
                     if (!item.getCategorieScelteList().isEmpty()) {
-                        Log.d("RicercaAstaDAO Inversa", " categorie non null");
+                        Log.d("RicercaAstaDAO ", " categorie non null");
                         String categoriePlaceholders = String.join(",", Collections.nCopies(item.getCategorieScelteList().size(), "?"));
                         if (item.getParolaRicercata().isEmpty()) {
-                            query += " WHERE";
+                            query += " AND";
                         } else {
                             query += " AND";
                         }
@@ -354,20 +395,21 @@ public class RicercaAsteDAO {
                 query += " ORDER BY prezzoAttuale " + ordinamentoPrezzo;
                 Log.d("Query SQL Ribasso", "Query: " + query);
                 // Esegui la query SQL per le aste inverse
+                connection = DatabaseHelper.getConnection();
                 PreparedStatement statement = connection.prepareStatement(query);
                 if (!parolaRicercata.isEmpty()) {
                     statement.setString(1, parolaRicercata + "%");
                 }
                 if (!categorieScelte.isEmpty()) {
                     int k;
-                    if(parolaRicercata.isEmpty()){
-                        k=1;
-                    }else{
-                        k=2;
+                    if (parolaRicercata.isEmpty()) {
+                        k = 1;
+                    } else {
+                        k = 2;
                     }
-                    Log.d("SIZE ", "size: " + categorieScelte.size() );
+                    Log.d("SIZE ", "size: " + categorieScelte.size());
                     for (int i = 0; i < categorieScelte.size(); i++) {
-                        Log.d("categorie inserite " , "inserisco in " + (i+k) + "parola " + categorieScelte.get(i));
+                        Log.d("categorie inserite ", "inserisco in " + (i + k) + "parola " + categorieScelte.get(i));
                         statement.setString(i + k, categorieScelte.get(i));
                     }
                 }
@@ -396,7 +438,9 @@ public class RicercaAsteDAO {
                     } else {
                         // In caso di immagine non disponibile, puoi impostare un'immagine predefinita o lasciare foto come null
                         // Ecco un esempio di impostazione di un'immagine predefinita
-                        foto = BitmapFactory.decodeResource(acquirenteFragmentRicercaAsta.getResources(), R.drawable.img_default);
+                        if(acquirenteFragmentRicercaAsta != null) {
+                            foto = BitmapFactory.decodeResource(acquirenteFragmentRicercaAsta.getResources(), R.drawable.img_default);
+                        }
                     }
 
                     String prezzoMax = resultSet.getString("prezzoMax");
@@ -412,14 +456,13 @@ public class RicercaAsteDAO {
                 resultSet.close();
                 statement.close();
                 connection.close();
-            }
-        catch(NullPointerException e){
-            e.printStackTrace();System.out.println("Puntatore con riferimento null");
-        }
-            catch(PSQLException e ){
-            e.printStackTrace();System.out.println("Errore nella query");
-        }
-            catch (Exception e) {
+            } catch (NullPointerException e) {
+                e.printStackTrace();
+                 System.out.println("Puntatore con riferimento null");
+            } catch (PSQLException e) {
+                e.printStackTrace();
+                System.out.println("Errore nella query");
+            } catch (Exception e) {
                 e.printStackTrace();
             }
 
@@ -429,17 +472,29 @@ public class RicercaAsteDAO {
         @Override
         protected void onPostExecute(ArrayList<Object> astaItems) {
             // Aggiorna l'interfaccia utente con i risultati della ricerca dell'utente venditore
+
             if (astaItems != null) {
 
-            if(acquirenteFragmentRicercaAsta!=null) {
-                acquirenteFragmentRicercaAsta.handleAsteRecuperate(astaItems);
+                if (acquirenteFragmentRicercaAsta != null) {
+                    acquirenteFragmentRicercaAsta.handleAsteRecuperate(astaItems);
+                    Toast.makeText(acquirenteFragmentRicercaAsta.getActivity(), "Ricerca effettuata con successo", Toast.LENGTH_SHORT).show();
+                } else {
+                    System.out.println("Ricerca effettuata con successo");
+                }
+
+            } else {//astaItems vuota quindi errore
+                if (acquirenteFragmentRicercaAsta != null) {
+                    Toast.makeText(acquirenteFragmentRicercaAsta.getActivity(), "Errore nella ricerca", Toast.LENGTH_SHORT).show();
+                }
+                System.out.println("Errore ricerca");
             }
 
-            else{System.out.println("Ricerca effettuata con successo");}
 
-            }
         }
+
+
+
+
     }
-
-
 }
+
