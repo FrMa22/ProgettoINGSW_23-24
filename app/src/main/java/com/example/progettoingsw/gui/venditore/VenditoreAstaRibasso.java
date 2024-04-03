@@ -125,16 +125,22 @@ public class VenditoreAstaRibasso extends GestoreComuniImplementazioni {
                     nome.setError("Il nome non può superare i 100 caratteri.");
                 } else if (descrizioneProdotto.length() > 250) {
                     descrizione.setError("La descrizione non può superare i 250 caratteri.");
-                } else if (!base.matches("^\\d*\\.?\\d+$")) {
+                }else if(base.isEmpty()){
+                    baseAsta.setError("Si prega di inserire un prezzo.");
+                }else if (!base.matches("^\\d*\\.?\\d+$")) {
                     baseAsta.setError("Si prega di inserire solo numeri per il prezzo base.");
-                } else if (!intervallo.matches("^\\d{1,5}$")) {
+                }else if(Float.parseFloat(base)<=0){
+                    baseAsta.setError("Si prega di inserire un prezzo maggiore di 0.");
+                }else if (!intervallo.matches("^\\d{1,5}$")) {
                     intervalloDecremento.setError("L'intervallo deve contenere solo numeri e non può superare i 5 caratteri.");
-                } else if (!soglia.matches("^\\d*\\.?\\d+$")) {
+                }else if(Float.parseFloat(intervallo)<=0){
+                    intervalloDecremento.setError("L'intervallo deve essere di almeno 1 minuto.");
+                }else if (!soglia.matches("^\\d*\\.?\\d+$")) {
                     sogliaDecremento.setError("Si prega di inserire solo numeri per la soglia.");
-                } else if (Double.parseDouble(soglia) > Double.parseDouble(base)) {
-                    sogliaDecremento.setError("La soglia non può superare la base asta.");
-                } else if (Double.parseDouble(min) > Double.parseDouble(base)) {
-                    prezzominimoAsta.setError("Il prezzo minimo non può superare la base asta.");
+                }else if (Double.parseDouble(soglia) >= Double.parseDouble(base)) {
+                    sogliaDecremento.setError("La soglia deve essere inferiore al prezzo base.");
+                } else if (Double.parseDouble(min) >= Double.parseDouble(base)) {
+                    prezzominimoAsta.setError("Il prezzo minimo deve essere minore della base asta.");
                 } else {
                     // Chiamata al metodo per creare l'asta nel database
                     progressBarVenditoreAstaRibasso.setVisibility(View.VISIBLE);

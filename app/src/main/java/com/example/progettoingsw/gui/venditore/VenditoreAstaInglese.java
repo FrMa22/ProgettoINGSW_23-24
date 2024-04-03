@@ -144,15 +144,21 @@ public class VenditoreAstaInglese extends GestoreComuniImplementazioni {
                 baseAsta.setError("Si prega di inserire un prezzo base.");
             } else if (!base.matches("^\\d*\\.?\\d+$")) {
                 baseAsta.setError("Si prega di inserire solo numeri per il prezzo base.");
-            } else if (intervallo.isEmpty()) {
+            }else if(Float.parseFloat(base) <=0){
+                baseAsta.setError("Inserire un prezzo maggiore di 0");
+            }else if (intervallo.isEmpty()) {
                 intervalloAsta.setError("Si prega di inserire un intervallo per le offerte.");
             } else if (!intervallo.matches("^\\d{1,5}$")) {
                 intervalloAsta.setError("L'intervallo deve contenere solo numeri e non può superare i 5 caratteri.");
-            } else if (rialzo.isEmpty()) {
+            }else if(Float.parseFloat(intervallo)<=0){
+                intervalloAsta.setError("L'intervallo deve essere di almeno 1 minuto.");
+            }else if (rialzo.isEmpty()) {
                 rialzoAsta.setError("Si prega di inserire un valore minimo di rialzo.");
             } else if (!rialzo.matches("^\\d*\\.?\\d+$")) {
                 rialzoAsta.setError("Si prega di inserire solo numeri per il valore minimo di rialzo.");
-            } else {
+            }else if(Float.parseFloat(rialzo)<=0){
+                rialzoAsta.setError("Inserire un prezzo maggiore di 0");
+            }else {
                 // Chiamata al metodo per creare l'asta nel database
                 progressBarVenditoreAstaInglese.setVisibility(View.VISIBLE);
                 setAllClickable(relativeLayoutAstaInglese, false);

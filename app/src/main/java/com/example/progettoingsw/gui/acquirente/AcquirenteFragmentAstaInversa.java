@@ -166,7 +166,9 @@ public class AcquirenteFragmentAstaInversa extends Fragment {
                     prezzoAstaInversa.setError("Si prega di inserire un prezzo.");
                 } else if (!prezzo.matches("^\\d+(\\.\\d+)?$")) {
                     prezzoAstaInversa.setError("Il prezzo deve essere un numero valido.");
-                } else if (data.isEmpty()) {
+                }else if(Float.parseFloat(prezzo)<=0){
+                    prezzoAstaInversa.setError("Il prezzo deve essere maggiore di 0.");
+                }else if (data.isEmpty()) {
                     Toast.makeText(getContext(), "Si prega di selezionare una data valida.", Toast.LENGTH_SHORT).show();
                 } else {
                     // Converte la data e l'ora in oggetti Calendar per la comparazione
