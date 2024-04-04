@@ -22,6 +22,7 @@ import com.example.progettoingsw.classe_da_estendere.GestoreComuniImplementazion
 import com.example.progettoingsw.controllers_package.AstaAdapter;
 import com.example.progettoingsw.controllers_package.NotificheAdapter;
 import com.example.progettoingsw.gui.acquirente.AcquirenteFragmentHome;
+import com.example.progettoingsw.gui.acquirente.AcquirenteMainActivity;
 import com.example.progettoingsw.model.NotificaItem;
 
 import java.util.ArrayList;
@@ -89,7 +90,11 @@ public class SchermataNotifiche extends GestoreComuniImplementazioni {
 //                Intent resultIntent = new Intent();
 //                resultIntent.putExtra("numeroNotifiche", numeroNotifiche); // Passa il numero di notifiche come extra
 //                setResult(Activity.RESULT_OK, resultIntent);
-                onBackPressed();
+                //onBackPressed();
+                Intent intent = new Intent(SchermataNotifiche.this, AcquirenteMainActivity.class);//test del login
+                intent.putExtra("email", email);
+                intent.putExtra("tipoUtente", tipoUtente);
+                startActivity(intent);
             }
         });
 

@@ -15,4 +15,7 @@
     <color name="bottom_nav_item_not_checked">#666666</color>
     <color name="bottom_nav_item_checked">#000000</color>
     <color name="button_pressed">#555555</color>
+    <color name="rosso">#FF0000</color>
+    <color name="verde">#B0BF1A</color>
+    <color name="colore_bordo_edit_text">#AAAAAA</color>
 </resources>

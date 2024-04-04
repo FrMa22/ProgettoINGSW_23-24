@@ -119,7 +119,7 @@ public class PopUpAggiungiCategorieAsta extends DialogPersonalizzato implements 
             Switch switchButton = new Switch(getContext());
             switchButton.setText(categorieArray[i]);
             switchButton.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20);
-            switchButton.setTextColor(resources.getColor(R.color.colore_secondario));
+            switchButton.setTextColor(resources.getColor(R.color.colore_hint));
             // Controllo se la categoria corrente è già stata selezionata
             if (categorieScelte.contains(categorieArray[i])) {
                 switchButton.setChecked(true);
@@ -154,8 +154,10 @@ public class PopUpAggiungiCategorieAsta extends DialogPersonalizzato implements 
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     // Se lo switch è stato selezionato, aggiungi il testo all'array
                     if (isChecked) {
+                        switchButton.setTextColor(resources.getColor(R.color.colore_secondario));
                         switchTexts.add(switchButton.getText().toString());
                     } else { // Se lo switch è stato deselezionato, rimuovi il testo dall'array
+                        switchButton.setTextColor(resources.getColor(R.color.colore_hint));
                         switchTexts.remove(switchButton.getText().toString());
                     }
                 }

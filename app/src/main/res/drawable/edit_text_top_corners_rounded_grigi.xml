@@ -11,7 +11,7 @@
                 android:topRightRadius="30dp" />
             <stroke
                 android:width="2dp"
-                android:color="#AAAAAA" />
+                android:color="@color/colore_bordo_edit_text" />
         </shape>
     </item>
 

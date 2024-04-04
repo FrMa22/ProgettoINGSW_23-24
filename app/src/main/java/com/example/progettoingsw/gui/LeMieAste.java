@@ -168,13 +168,15 @@ public class LeMieAste extends GestoreComuniImplementazioni {
                    recyclerViewAsteAttive.setVisibility(View.VISIBLE);
                    recyclerViewAsteNonAttive.setVisibility(View.GONE);
                    lemieAsteDAO.getAsteForEmail(email,"aperta");
-                   text_view_aste_attive_non_attive.setText("Aste Attive");
+                   text_view_aste_attive_non_attive.setText("ASTE ATTIVE");
+                   text_view_aste_attive_non_attive.setTextColor(getResources().getColor(R.color.verde));
                } else {
                    text_view_nessuna_asta_trovata.setVisibility(View.INVISIBLE);
                    recyclerViewAsteNonAttive.setVisibility(View.VISIBLE);
                    recyclerViewAsteAttive.setVisibility(View.GONE);
                    lemieAsteDAO.getAsteForEmail(email,"chiusa");
-                   text_view_aste_attive_non_attive.setText("Aste Non Attive");
+                   text_view_aste_attive_non_attive.setText("ASTE NON ATTIVE");
+                   text_view_aste_attive_non_attive.setTextColor(getResources().getColor(R.color.rosso));
                }
            }
        });

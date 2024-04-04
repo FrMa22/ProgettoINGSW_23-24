@@ -104,7 +104,7 @@ public class RegistrazioneCategorie extends GestoreComuniImplementazioni {
             Switch switchButton = new Switch(this);
             switchButton.setText(categorieArray[i]);
             switchButton.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 36); // Aumentato il testo per renderlo più alto
-            switchButton.setTextColor(getResources().getColor(R.color.colore_secondario));
+            switchButton.setTextColor(getResources().getColor(R.color.colore_hint));
 
             try {
                 // Imposta l'immagine a sinistra del testo
@@ -135,8 +135,10 @@ public class RegistrazioneCategorie extends GestoreComuniImplementazioni {
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     // Se lo switch è stato selezionato, aggiungi il testo all'array
                     if (isChecked) {
+                        switchButton.setTextColor(getResources().getColor(R.color.colore_secondario));
                         switchTexts.add(switchButton.getText().toString());
                     } else { // Se lo switch è stato deselezionato, rimuovi il testo dall'array
+                        switchButton.setTextColor(getResources().getColor(R.color.colore_hint));
                         switchTexts.remove(switchButton.getText().toString());
                     }
                 }

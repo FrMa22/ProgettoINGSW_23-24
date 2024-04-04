@@ -76,6 +76,7 @@
         android:layout_marginBottom="15dp"
         android:gravity="center"
         android:text="Premi per inserire:"
+        android:textColor="@color/colore_hint"
         android:textSize="25dp"
         android:textStyle="bold" />
 
@@ -89,7 +90,7 @@
         android:layout_marginTop="20dp"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="20dp"
-        app:strokeColor="#AAAAAA"
+        app:strokeColor="@color/colore_hint"
         app:strokeWidth="2dp"
         android:backgroundTint="@color/colore_base"
         android:text="Social"

@@ -111,7 +111,11 @@ public class PreferitiActivity extends GestoreComuniImplementazioni {
         backBottone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onBackPressed();
+                //onBackPressed();
+                Intent intent = new Intent(PreferitiActivity.this, AcquirenteMainActivity.class);//test del login
+                intent.putExtra("email", email);
+                intent.putExtra("tipoUtente", tipoUtente);
+                startActivity(intent);
 
             }
         });
