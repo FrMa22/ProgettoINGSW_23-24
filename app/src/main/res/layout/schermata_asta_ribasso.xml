@@ -7,7 +7,7 @@
     android:id="@+id/relativeLayoutSchermataAstaRibasso"
     android:orientation="vertical"
     android:background="@color/colore_base"
-    tools:context=".gui.SchermataAstaRibasso">
+    tools:context=".view.SchermataAstaRibasso">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar_schermata_asta_ribasso"

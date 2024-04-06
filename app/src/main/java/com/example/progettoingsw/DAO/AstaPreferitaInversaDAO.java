@@ -4,7 +4,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import com.example.progettoingsw.controllers_package.DatabaseHelper;
-import com.example.progettoingsw.gui.SchermataAstaInversa;
+import com.example.progettoingsw.view.SchermataAstaInversa;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

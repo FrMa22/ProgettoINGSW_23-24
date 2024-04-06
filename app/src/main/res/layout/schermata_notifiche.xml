@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colore_base"
-    tools:context=".gui.SchermataNotifiche">
+    tools:context=".view.SchermataNotifiche">
 
     <ProgressBar
         android:id="@+id/progressBarSchermataNotifiche"

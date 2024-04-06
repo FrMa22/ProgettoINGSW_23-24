@@ -5,20 +5,15 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.progettoingsw.R;
-import com.example.progettoingsw.model.AstaIngleseItem;
-import com.example.progettoingsw.model.AstaRibassoItem;
-import com.example.progettoingsw.model.AstaInversaItem;
-import com.example.progettoingsw.model.NotificaItem;
+import com.example.progettoingsw.item.NotificaItem;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class NotificheAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 

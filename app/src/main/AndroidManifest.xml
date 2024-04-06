@@ -4,8 +4,11 @@
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+
 
     <application
+        android:usesCleartextTraffic="true"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:enableOnBackInvokedCallback="true"
@@ -17,52 +20,49 @@
         android:theme="@style/Theme.ProgettoINGSW"
         tools:targetApi="31">
         <activity
-            android:name=".gui.SchermataPartecipazioneAste"
+            android:name=".view.SchermataPartecipazioneAste"
             android:exported="false" />
         <activity
-            android:name=".gui.PopUpNotificaRicevuta"
+            android:name=".view.PopUpNotificaRicevuta"
             android:exported="false" />
         <activity
-            android:name=".gui.PopUpAggiungiCategorieAsta"
+            android:name=".view.PopUpAggiungiCategorieAsta"
             android:exported="false" />
         <activity
-            android:name=".gui.acquirente.AcquirenteMainActivity"
+            android:name=".view.acquirente.AcquirenteMainActivity"
             android:exported="false" />
         <activity
-            android:name=".gui.ElencoCategorie"
+            android:name=".view.ElencoCategorie"
             android:exported="false" />
         <activity
-            android:name=".gui.PopUpFiltroRicerca"
+            android:name=".view.PopUpFiltroRicerca"
             android:theme="@style/Base.Theme.ProgettoINGSW.CustomThemeSfocato" />
         <activity
-            android:name=".gui.acquirente.AcquirenteFragmentRicercaAsta"
+            android:name=".view.acquirente.AcquirenteFragmentRicercaAsta"
             android:exported="false" />
         <activity
-            android:name=".gui.acquirente.AcquirenteFragmentSelezioneCategorie"
+            android:name=".view.acquirente.AcquirenteFragmentSelezioneCategorie"
             android:exported="false" />
         <activity
-            android:name=".gui.venditore.VenditoreFragmentCreaLaTuaAstaVenditore"
+            android:name=".view.acquirente.AcquirenteFragmentHome"
             android:exported="true" />
         <activity
-            android:name=".gui.acquirente.AcquirenteFragmentHome"
+            android:name=".view.acquirente.FragmentProfilo"
             android:exported="true" />
         <activity
-            android:name=".gui.acquirente.FragmentProfilo"
-            android:exported="true" />
-        <activity
-            android:name=".gui.PopUpModificaCampiProfilo"
+            android:name=".view.PopUpModificaCampiProfilo"
             android:theme="@style/Base.Theme.ProgettoINGSW.CustomThemeSfocato" />
         <activity
-            android:name=".gui.PopUpRicercaCategorie"
+            android:name=".view.PopUpRicercaCategorie"
             android:theme="@style/Base.Theme.ProgettoINGSW.CustomTheme" />
         <activity
-            android:name=".gui.PopUpNuovaOfferta"
+            android:name=".view.PopUpNuovaOfferta"
             android:theme="@style/Base.Theme.ProgettoINGSW.CustomThemeSfocato" />
         <activity
-            android:name=".gui.PreferitiActivity"
+            android:name=".view.PreferitiActivity"
             android:exported="false" />
         <activity
-            android:name=".gui.LoginActivity"
+            android:name=".view.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -71,60 +71,57 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".gui.PopUpLogin"
+            android:name=".view.PopUpLogin"
             android:theme="@style/Base.Theme.ProgettoINGSW.CustomThemeSfocato" />
-        <activity android:name=".gui.Registrazione" />
+        <activity android:name=".view.Registrazione" />
         <activity
-            android:name=".gui.RegistrazioneCampiFacoltativi"
+            android:name=".view.RegistrazioneCampiFacoltativi"
             android:exported="true" />
         <activity
-            android:name=".gui.RegistrazioneCategorie"
+            android:name=".view.RegistrazioneCategorie"
             android:exported="true" />
         <activity
-            android:name=".gui.acquirente.AcquirenteFragmentCreaLaTuaAstaAcquirente"
+            android:name=".view.acquirente.AcquirenteFragmentCreaLaTuaAstaAcquirente"
             android:exported="true" />
         <activity
-            android:name=".gui.venditore.VenditoreAstaInglese"
+            android:name=".view.venditore.VenditoreAstaInglese"
             android:exported="true" />
         <activity
-            android:name=".gui.venditore.VenditoreAstaRibasso"
+            android:name=".view.venditore.VenditoreAstaRibasso"
             android:exported="true" />
         <activity
-            android:name=".gui.acquirente.AcquirenteFragmentAstaInversa"
+            android:name=".view.acquirente.AcquirenteFragmentAstaInversa"
             android:exported="true" />
         <activity
-            android:name=".gui.ProfiloAcquirente"
+            android:name=".view.ProfiloAcquirente"
             android:exported="true" />
         <activity
-            android:name=".gui.ProfiloVenditore"
+            android:name=".view.ProfiloVenditore"
             android:exported="true" />
         <activity
-            android:name=".gui.SchermataAstaInglese"
+            android:name=".view.SchermataAstaInglese"
             android:exported="true" />
         <activity
-            android:name=".gui.SchermataAstaInversa"
+            android:name=".view.SchermataAstaInversa"
             android:exported="true" />
         <activity
-            android:name=".gui.SchermataAstaRibasso"
+            android:name=".view.SchermataAstaRibasso"
             android:exported="true" />
         <activity
-            android:name=".gui.LeMieAste"
+            android:name=".view.LeMieAste"
             android:exported="true" />
         <activity
-            android:name=".gui.SchermataNotifiche"
+            android:name=".view.SchermataNotifiche"
             android:exported="true" />
         <activity
-            android:name=".gui.PopUpRegistrazioneSocial"
+            android:name=".view.PopUpRegistrazioneSocial"
             android:exported="true"
             android:theme="@style/Base.Theme.ProgettoINGSW.CustomTheme" />
         <activity
-            android:name=".gui.RicercaSenzaRisultati"
-            android:exported="true" />
-        <activity
-            android:name=".gui.venditore.VenditorePopUpCreaAsta"
+            android:name=".view.venditore.VenditorePopUpCreaAsta"
             android:theme="@style/Base.Theme.ProgettoINGSW.CustomThemeSfocato" />
         <activity
-            android:name=".gui.SchermataAstePerCategoria"
+            android:name=".view.SchermataAstePerCategoria"
             android:exported="false" />
     </application>
 

@@ -7,7 +7,7 @@
     android:layout_gravity="center"
     android:orientation="vertical"
     android:background="@drawable/bordo_non_stondato"
-    tools:context=".gui.PopUpNotifiche">
+    tools:context=".view.PopUpNotifiche">
 
 
     <TextView

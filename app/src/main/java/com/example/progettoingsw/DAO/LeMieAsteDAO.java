@@ -6,17 +6,15 @@ import android.util.Log;
 
 import com.example.progettoingsw.R;
 import com.example.progettoingsw.controllers_package.DatabaseHelper;
-import com.example.progettoingsw.gui.LeMieAste;
-import com.example.progettoingsw.model.AstaIngleseItem;
-import com.example.progettoingsw.model.AstaInversaItem;
-import com.example.progettoingsw.model.AstaRibassoItem;
+import com.example.progettoingsw.view.LeMieAste;
+import com.example.progettoingsw.item.AstaIngleseItem;
+import com.example.progettoingsw.item.AstaInversaItem;
+import com.example.progettoingsw.item.AstaRibassoItem;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.List;
 
 public class LeMieAsteDAO {
 

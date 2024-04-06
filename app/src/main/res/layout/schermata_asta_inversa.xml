@@ -6,7 +6,7 @@
     android:id="@+id/relativeLayoutSchermataAstaInversa"
     android:orientation="vertical"
     android:background="@color/colore_base"
-    tools:context=".gui.SchermataAstaInversa">
+    tools:context=".view.SchermataAstaInversa">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar_schermata_asta_inversa"

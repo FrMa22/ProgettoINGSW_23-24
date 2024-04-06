@@ -9,7 +9,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    tools:context=".gui.PopUpNuovaOfferta"
+    tools:context=".view.PopUpNuovaOfferta"
     android:background="@drawable/bordo_non_stondato">
 
     <TextView

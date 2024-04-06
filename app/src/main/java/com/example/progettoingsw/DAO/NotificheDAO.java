@@ -1,27 +1,17 @@
 package com.example.progettoingsw.DAO;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.example.progettoingsw.R;
 import com.example.progettoingsw.controllers_package.DatabaseHelper;
-import com.example.progettoingsw.controllers_package.NotificheAdapter;
-import com.example.progettoingsw.gui.LeMieAste;
-import com.example.progettoingsw.gui.SchermataNotifiche;
-import com.example.progettoingsw.gui.acquirente.AcquirenteFragmentHome;
-import com.example.progettoingsw.gui.acquirente.AcquirenteMainActivity;
-import com.example.progettoingsw.model.AstaIngleseItem;
-import com.example.progettoingsw.model.AstaInversaItem;
-import com.example.progettoingsw.model.AstaRibassoItem;
-import com.example.progettoingsw.model.NotificaItem;
+import com.example.progettoingsw.view.SchermataNotifiche;
+import com.example.progettoingsw.view.acquirente.AcquirenteFragmentHome;
+import com.example.progettoingsw.view.acquirente.AcquirenteMainActivity;
+import com.example.progettoingsw.item.NotificaItem;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.List;
 
 public class NotificheDAO {
     private Connection connection;

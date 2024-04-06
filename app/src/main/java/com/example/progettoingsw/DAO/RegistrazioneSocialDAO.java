@@ -2,11 +2,9 @@ package com.example.progettoingsw.DAO;
 
 import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.example.progettoingsw.controllers_package.DatabaseHelper;
-import com.example.progettoingsw.gui.PopUpAggiungiSocialProfilo;
-import com.example.progettoingsw.gui.acquirente.FragmentProfilo;
+import com.example.progettoingsw.view.PopUpAggiungiSocialProfilo;
 
 import org.postgresql.util.PSQLException;
 

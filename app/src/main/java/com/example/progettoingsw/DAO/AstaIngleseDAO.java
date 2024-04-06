@@ -1,6 +1,5 @@
 package com.example.progettoingsw.DAO;
 
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -9,9 +8,9 @@ import android.util.Log;
 import com.example.progettoingsw.R;
 import com.example.progettoingsw.controllers_package.DatabaseHelper;
 import com.example.progettoingsw.controllers_package.InsertAsta;
-import com.example.progettoingsw.gui.SchermataAstaInglese;
-import com.example.progettoingsw.gui.venditore.VenditoreAstaInglese;
-import com.example.progettoingsw.model.AstaIngleseItem;
+import com.example.progettoingsw.view.SchermataAstaInglese;
+import com.example.progettoingsw.view.venditore.VenditoreAstaInglese;
+import com.example.progettoingsw.item.AstaIngleseItem;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -20,7 +19,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class AstaIngleseDAO {

@@ -4,7 +4,7 @@
     import android.util.Log;
     
     import com.example.progettoingsw.controllers_package.DatabaseHelper;
-    import com.example.progettoingsw.gui.SchermataAstaInglese;
+    import com.example.progettoingsw.view.SchermataAstaInglese;
     
     import java.sql.Connection;
     import java.sql.PreparedStatement;

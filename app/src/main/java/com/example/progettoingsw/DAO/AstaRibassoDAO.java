@@ -9,11 +9,9 @@ import android.widget.Toast;
 import com.example.progettoingsw.R;
 import com.example.progettoingsw.controllers_package.DatabaseHelper;
 import com.example.progettoingsw.controllers_package.InsertAsta;
-import com.example.progettoingsw.gui.SchermataAstaInglese;
-import com.example.progettoingsw.gui.SchermataAstaRibasso;
-import com.example.progettoingsw.gui.venditore.VenditoreAstaRibasso;
-import com.example.progettoingsw.model.AstaIngleseItem;
-import com.example.progettoingsw.model.AstaRibassoItem;
+import com.example.progettoingsw.view.SchermataAstaRibasso;
+import com.example.progettoingsw.view.venditore.VenditoreAstaRibasso;
+import com.example.progettoingsw.item.AstaRibassoItem;
 
 import org.postgresql.util.PSQLException;
 
@@ -22,9 +20,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class AstaRibassoDAO {

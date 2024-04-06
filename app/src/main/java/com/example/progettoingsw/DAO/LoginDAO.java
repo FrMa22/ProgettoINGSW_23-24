@@ -4,12 +4,10 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import com.example.progettoingsw.controllers_package.DatabaseHelper;
-import com.example.progettoingsw.gui.LoginActivity;
+import com.example.progettoingsw.view.LoginActivity;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
 public class LoginDAO {
 

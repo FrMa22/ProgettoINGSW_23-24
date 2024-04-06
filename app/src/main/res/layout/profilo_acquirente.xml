@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:id="@+id/relative_layout_profilo_acquirente"
-    tools:context=".gui.ProfiloAcquirente">
+    tools:context=".view.ProfiloAcquirente">
 
     <LinearLayout
         android:layout_width="match_parent"

@@ -5,7 +5,7 @@
     android:id="@+id/relative_layout_fragment_ricerca"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".gui.acquirente.AcquirenteFragmentRicercaAsta">
+    tools:context=".view.acquirente.AcquirenteFragmentRicercaAsta">
 
 
     <androidx.appcompat.widget.Toolbar

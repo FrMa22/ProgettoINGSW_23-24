@@ -3,7 +3,7 @@ package com.example.progettoingsw.controllers_package;
 import android.content.Context;
 import android.content.Intent;
 
-import com.example.progettoingsw.gui.acquirente.FragmentProfilo;
+import com.example.progettoingsw.view.acquirente.FragmentProfilo;
 
 public class Controller {
 

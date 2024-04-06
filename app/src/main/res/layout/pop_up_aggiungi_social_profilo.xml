@@ -6,7 +6,7 @@
     android:layout_gravity="center"
     android:background="@drawable/bordo_non_stondato"
     android:orientation="vertical"
-    tools:context=".gui.PopUpAggiungiSocialProfilo">
+    tools:context=".view.PopUpAggiungiSocialProfilo">
 
     <ProgressBar
         android:id="@+id/progressBarPopUpAggiungiSocialProfilo"

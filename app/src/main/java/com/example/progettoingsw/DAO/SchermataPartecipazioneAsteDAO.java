@@ -7,15 +7,13 @@ import android.util.Log;
 
 import com.example.progettoingsw.R;
 import com.example.progettoingsw.controllers_package.DatabaseHelper;
-import com.example.progettoingsw.gui.SchermataPartecipazioneAste;
-import com.example.progettoingsw.model.AstaIngleseItem;
-import com.example.progettoingsw.model.AstaInversaItem;
+import com.example.progettoingsw.view.SchermataPartecipazioneAste;
+import com.example.progettoingsw.item.AstaIngleseItem;
+import com.example.progettoingsw.item.AstaInversaItem;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 
 public class SchermataPartecipazioneAsteDAO {

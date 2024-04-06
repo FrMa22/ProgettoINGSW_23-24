@@ -5,12 +5,10 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.example.progettoingsw.controllers_package.DatabaseHelper;
-import com.example.progettoingsw.gui.LoginActivity;
-import com.example.progettoingsw.gui.PopUpControlloPassword;
+import com.example.progettoingsw.view.PopUpControlloPassword;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
 public class PopUpControlloPasswordDAO {
     private Connection connection;

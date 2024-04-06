@@ -10,7 +10,7 @@
         android:layout_height="300dp"
         android:layout_gravity="center"
         android:background="@drawable/bordo_non_stondato"
-        tools:context=".gui.PopUpModificaCampiProfilo"
+        tools:context=".view.PopUpModificaCampiProfilo"
         android:orientation="vertical">
 
         <TextView

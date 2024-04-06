@@ -2,7 +2,7 @@ package com.example.progettoingsw.DAO;
 import android.os.AsyncTask;
 
 import com.example.progettoingsw.controllers_package.DatabaseHelper;
-import com.example.progettoingsw.gui.Registrazione;
+import com.example.progettoingsw.view.Registrazione;
 
 import java.sql.Connection;
 import java.sql.ResultSet;

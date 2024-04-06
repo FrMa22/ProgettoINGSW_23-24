@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:id="@+id/relativeLayoutAstaInglese"
     android:background="@color/colore_base"
-    tools:context=".gui.venditore.VenditoreAstaInglese">
+    tools:context=".view.venditore.VenditoreAstaInglese">
     <ProgressBar
         android:id="@+id/progressBarVenditoreAstaInglese"
         android:layout_width="wrap_content"

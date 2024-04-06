@@ -6,7 +6,7 @@
     android:layout_height="500dp"
     android:orientation="vertical"
     android:layout_gravity="center"
-    tools:context=".gui.PopUpRicercaCategorie"
+    tools:context=".view.PopUpRicercaCategorie"
     android:background="#C0C0C0">
         <TextView
             android:layout_width="match_parent"

@@ -5,10 +5,9 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.example.progettoingsw.controllers_package.DatabaseHelper;
-import com.example.progettoingsw.gui.PopUpModificaSocial;
+import com.example.progettoingsw.view.PopUpModificaSocial;
 
 import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.Statement;
 
 public class PopUpModificaSocialDAO {

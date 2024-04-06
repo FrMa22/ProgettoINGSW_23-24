@@ -1,27 +1,12 @@
 package com.example.progettoingsw.DAO;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
-import android.util.Log;
-import android.widget.Toast;
 
-import com.example.progettoingsw.R;
 import com.example.progettoingsw.controllers_package.DatabaseHelper;
-import com.example.progettoingsw.gui.PopUpNotifiche;
-import com.example.progettoingsw.gui.SchermataAstaInglese;
-import com.example.progettoingsw.gui.SchermataAstaRibasso;
-import com.example.progettoingsw.model.AstaIngleseItem;
-import com.example.progettoingsw.model.AstaRibassoItem;
+import com.example.progettoingsw.view.PopUpNotifiche;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 public class PopUpNotificheDAO {
 

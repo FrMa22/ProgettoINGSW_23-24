@@ -13,14 +13,11 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.progettoingsw.R;
-import com.example.progettoingsw.model.AstaIngleseItem;
-import com.example.progettoingsw.model.AstaRibassoItem;
-import com.example.progettoingsw.model.AstaInversaItem;
+import com.example.progettoingsw.item.AstaIngleseItem;
+import com.example.progettoingsw.item.AstaRibassoItem;
+import com.example.progettoingsw.item.AstaInversaItem;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 public class AstaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {

@@ -7,10 +7,10 @@ import android.util.Log;
 
 import com.example.progettoingsw.R;
 import com.example.progettoingsw.controllers_package.DatabaseHelper;
-import com.example.progettoingsw.gui.acquirente.AcquirenteFragmentHome;
-import com.example.progettoingsw.model.AstaIngleseItem;
-import com.example.progettoingsw.model.AstaRibassoItem;
-import com.example.progettoingsw.model.AstaInversaItem;
+import com.example.progettoingsw.view.acquirente.AcquirenteFragmentHome;
+import com.example.progettoingsw.item.AstaIngleseItem;
+import com.example.progettoingsw.item.AstaRibassoItem;
+import com.example.progettoingsw.item.AstaInversaItem;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

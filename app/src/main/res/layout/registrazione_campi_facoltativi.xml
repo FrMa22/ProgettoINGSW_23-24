@@ -5,7 +5,7 @@
     android:id="@+id/campi_facoltativi_registrazione_relativelayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".gui.RegistrazioneCampiFacoltativi"
+    tools:context=".view.RegistrazioneCampiFacoltativi"
     android:background="@color/colore_base"
     android:orientation="vertical">
 

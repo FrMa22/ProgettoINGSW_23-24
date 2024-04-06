@@ -1,15 +1,13 @@
 package com.example.progettoingsw.DAO;
 
-import com.example.progettoingsw.gui.RegistrazioneCategorie;
+import com.example.progettoingsw.view.RegistrazioneCategorie;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
 
 import com.example.progettoingsw.controllers_package.DatabaseHelper;
-import com.example.progettoingsw.gui.PopUpControlloPassword;
 
 import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 
