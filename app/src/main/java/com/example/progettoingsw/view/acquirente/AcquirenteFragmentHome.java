@@ -50,7 +50,6 @@ public class AcquirenteFragmentHome extends Fragment {
     private TextView text_view_nessuna_asta_in_scadenza;
     private TextView text_view_aste_consigliate_home;
     private TextView text_view_nessuna_asta_in_categorie;
-    private int viewCounter = 0;
     public AcquirenteFragmentHome() {
     }
     @Override
@@ -62,8 +61,6 @@ public class AcquirenteFragmentHome extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.acquirente_fragment_home, container, false);
-        viewCounter = 0;
-        Log.d("Home" , "contatore : " + viewCounter);
 
         return view;
     }
