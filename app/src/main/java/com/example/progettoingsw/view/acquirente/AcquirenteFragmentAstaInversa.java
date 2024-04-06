@@ -71,8 +71,7 @@ public class AcquirenteFragmentAstaInversa extends Fragment {
     String email;
     EditText DescrizioneProdottoAstaAstaInversa;
 
-    public AcquirenteFragmentAstaInversa(String email){
-        this.email = email.trim();
+    public AcquirenteFragmentAstaInversa(){
     }
 
     @Override
@@ -84,129 +83,129 @@ public class AcquirenteFragmentAstaInversa extends Fragment {
     public void onViewCreated(View view2, Bundle savedInstanceState) {
         super.onViewCreated(view2, savedInstanceState);
 
-        AstaInversaDAO astaInversaDao = new AstaInversaDAO(AcquirenteFragmentAstaInversa.this);
-        //ImmaginiDAO immaginiDAO=new ImmaginiDAO(this);
-        listaCategorieScelte = new ArrayList<>();
-        bottoneAnnullaAstaInversa = view2.findViewById(R.id.bottoneAnnullaAstaInversa);
-        bottoneConferma = view2.findViewById(R.id.bottoneConfermaAstaInversa);
-        immagineProdotto= view2.findViewById(R.id.imageViewCreaAstaAcquirente);
-        bottoneInserisciImmagine = view2.findViewById(R.id.imageButtonInserisciImmagineCreaAstaAcquirente);
-        bottoneInserisciImmagine.setOnClickListener(view ->prelevaImmagine());//significa che chiama il metodo prelevaImmagine
-        imageButtonRimuoviImmagine = view2.findViewById(R.id.imageButtonRimuoviImmagineCreaAstaInversa);
-        imageButtonRimuoviImmagine.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                immagineProdotto.setImageResource(android.R.color.transparent); // Rimuove l'immagine
-                imageBytes = null; // Reimposta il byte array a null
-                uriImmagine = null;
-            }
-        });
-
-        bottoneCategorieAstaInversa =view2.findViewById(R.id.bottoneCategorieAstaInversa);
-        bottoneCategorieAstaInversa.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                PopUpAggiungiCategorieAsta popUpAggiungiCategorieAsta = new PopUpAggiungiCategorieAsta(getContext(), AcquirenteFragmentAstaInversa.this,listaCategorieScelte);
-                popUpAggiungiCategorieAsta.show();
-            }
-        });
-        bottoneData =  view2.findViewById(R.id.bottoneDataAstaInversa);
-        bottoneOra =  view2.findViewById(R.id.bottoneOraAstaInversa);
-
-        nomeAstaInversa =view2.findViewById(R.id.editTextNomeProdottoAstaAstaInversa);
-        DescrizioneProdottoAstaAstaInversa = view2.findViewById(R.id.editTextDescrizioneProdottoAstaAstaInversa);
-        prezzoAstaInversa=view2.findViewById(R.id.editTextPrezzoAstaInversa);
-
-        imageBytes=null;
-
-        bottone_info = view2.findViewById(R.id.bottone_info);
-        bottone_info.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showPopup();
-            }
-        });
-
-        registraRisultati();
-
-        //bitmap = BitmapFactory.decodeByteArray(img, 0, img.length);
-
-        // Imposta l'immagine nel tuo ImageView
-        //immagineProdotto.setImageBitmap(bitmap);
-
-        bottoneData.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                apriCalendario();
-            }
-        });
-
-        bottoneOra.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                apriOrologio();
-            }
-        });
-
-        bottoneConferma.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
-                String nome = nomeAstaInversa.getText().toString();
-                String prezzo = prezzoAstaInversa.getText().toString();
-                String descrizione = DescrizioneProdottoAstaAstaInversa.getText().toString();
-                String data = selectedDateString;
-                String ora = selectedHourString;
-
-                if (nome.isEmpty()) {
-                    nomeAstaInversa.setError("Si prega di inserire un nome.");
-                } else if (nome.length() > 100) {
-                    nomeAstaInversa.setError("Il nome non può essere più lungo di 100 caratteri.");
-                } else if (descrizione.length() > 250) {
-                    DescrizioneProdottoAstaAstaInversa.setError("La descrizione non può essere più lunga di 250 caratteri.");
-                } else if (prezzo.isEmpty()) {
-                    prezzoAstaInversa.setError("Si prega di inserire un prezzo.");
-                } else if (!prezzo.matches("^\\d+(\\.\\d+)?$")) {
-                    prezzoAstaInversa.setError("Il prezzo deve essere un numero valido.");
-                }else if(Float.parseFloat(prezzo)<=0){
-                    prezzoAstaInversa.setError("Il prezzo deve essere maggiore di 0.");
-                }else if (data.isEmpty()) {
-                    Toast.makeText(getContext(), "Si prega di selezionare una data valida.", Toast.LENGTH_SHORT).show();
-                } else {
-                    // Converte la data e l'ora in oggetti Calendar per la comparazione
-                    Calendar selectedDateTime = Calendar.getInstance();
-                    selectedDateTime.set(Calendar.YEAR, Integer.parseInt(data.substring(0, 4)));
-                    selectedDateTime.set(Calendar.MONTH, Integer.parseInt(data.substring(5, 7)) - 1);
-                    selectedDateTime.set(Calendar.DAY_OF_MONTH, Integer.parseInt(data.substring(8, 10)));
-                    selectedDateTime.set(Calendar.HOUR_OF_DAY, Integer.parseInt(ora.substring(0, 2)));
-                    selectedDateTime.set(Calendar.MINUTE, Integer.parseInt(ora.substring(3)));
-
-                    Calendar currentDateTime = Calendar.getInstance();
-
-                    // Controlla se la data è precedente a oggi o se la data e l'ora sono precedenti all'istante attuale
-                    if (selectedDateTime.before(currentDateTime)) {
-                        Toast.makeText(getContext(), "La data e l'ora devono essere in futuro.", Toast.LENGTH_SHORT).show();
-                    } else {
-                        // Chiamata al metodo per creare l'asta nel database
-                        astaInversaDao.openConnection();
-                        astaInversaDao.creaAstaInversa(nome, prezzo, data, ora, descrizione, email, imageBytes, listaCategorieScelte);
-                        AppCompatActivity activity = (AppCompatActivity) requireContext();
-
-                        Intent intent = new Intent(getContext(), AcquirenteMainActivity.class);//test del login
-                        intent.putExtra("email", email);
-                        intent.putExtra("tipoUtente", "acquirente");
-                        startActivity(intent);
-                    }
-                }
-            }
-        });
-        bottoneAnnullaAstaInversa.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getContext(), AcquirenteMainActivity.class);//test del login
-                intent.putExtra("email", email);
-                intent.putExtra("tipoUtente", "acquirente");
-                startActivity(intent);
-            }
-        });
+//        AstaInversaDAO astaInversaDao = new AstaInversaDAO(AcquirenteFragmentAstaInversa.this);
+//        //ImmaginiDAO immaginiDAO=new ImmaginiDAO(this);
+//        listaCategorieScelte = new ArrayList<>();
+//        bottoneAnnullaAstaInversa = view2.findViewById(R.id.bottoneAnnullaAstaInversa);
+//        bottoneConferma = view2.findViewById(R.id.bottoneConfermaAstaInversa);
+//        immagineProdotto= view2.findViewById(R.id.imageViewCreaAstaAcquirente);
+//        bottoneInserisciImmagine = view2.findViewById(R.id.imageButtonInserisciImmagineCreaAstaAcquirente);
+//        bottoneInserisciImmagine.setOnClickListener(view ->prelevaImmagine());//significa che chiama il metodo prelevaImmagine
+//        imageButtonRimuoviImmagine = view2.findViewById(R.id.imageButtonRimuoviImmagineCreaAstaInversa);
+//        imageButtonRimuoviImmagine.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                immagineProdotto.setImageResource(android.R.color.transparent); // Rimuove l'immagine
+//                imageBytes = null; // Reimposta il byte array a null
+//                uriImmagine = null;
+//            }
+//        });
+//
+//        bottoneCategorieAstaInversa =view2.findViewById(R.id.bottoneCategorieAstaInversa);
+//        bottoneCategorieAstaInversa.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                PopUpAggiungiCategorieAsta popUpAggiungiCategorieAsta = new PopUpAggiungiCategorieAsta(getContext(), AcquirenteFragmentAstaInversa.this,listaCategorieScelte);
+//                popUpAggiungiCategorieAsta.show();
+//            }
+//        });
+//        bottoneData =  view2.findViewById(R.id.bottoneDataAstaInversa);
+//        bottoneOra =  view2.findViewById(R.id.bottoneOraAstaInversa);
+//
+//        nomeAstaInversa =view2.findViewById(R.id.editTextNomeProdottoAstaAstaInversa);
+//        DescrizioneProdottoAstaAstaInversa = view2.findViewById(R.id.editTextDescrizioneProdottoAstaAstaInversa);
+//        prezzoAstaInversa=view2.findViewById(R.id.editTextPrezzoAstaInversa);
+//
+//        imageBytes=null;
+//
+//        bottone_info = view2.findViewById(R.id.bottone_info);
+//        bottone_info.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                showPopup();
+//            }
+//        });
+//
+//        registraRisultati();
+//
+//        //bitmap = BitmapFactory.decodeByteArray(img, 0, img.length);
+//
+//        // Imposta l'immagine nel tuo ImageView
+//        //immagineProdotto.setImageBitmap(bitmap);
+//
+//        bottoneData.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                apriCalendario();
+//            }
+//        });
+//
+//        bottoneOra.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                apriOrologio();
+//            }
+//        });
+//
+//        bottoneConferma.setOnClickListener(new View.OnClickListener() {
+//            public void onClick(View view) {
+//                String nome = nomeAstaInversa.getText().toString();
+//                String prezzo = prezzoAstaInversa.getText().toString();
+//                String descrizione = DescrizioneProdottoAstaAstaInversa.getText().toString();
+//                String data = selectedDateString;
+//                String ora = selectedHourString;
+//
+//                if (nome.isEmpty()) {
+//                    nomeAstaInversa.setError("Si prega di inserire un nome.");
+//                } else if (nome.length() > 100) {
+//                    nomeAstaInversa.setError("Il nome non può essere più lungo di 100 caratteri.");
+//                } else if (descrizione.length() > 250) {
+//                    DescrizioneProdottoAstaAstaInversa.setError("La descrizione non può essere più lunga di 250 caratteri.");
+//                } else if (prezzo.isEmpty()) {
+//                    prezzoAstaInversa.setError("Si prega di inserire un prezzo.");
+//                } else if (!prezzo.matches("^\\d+(\\.\\d+)?$")) {
+//                    prezzoAstaInversa.setError("Il prezzo deve essere un numero valido.");
+//                }else if(Float.parseFloat(prezzo)<=0){
+//                    prezzoAstaInversa.setError("Il prezzo deve essere maggiore di 0.");
+//                }else if (data.isEmpty()) {
+//                    Toast.makeText(getContext(), "Si prega di selezionare una data valida.", Toast.LENGTH_SHORT).show();
+//                } else {
+//                    // Converte la data e l'ora in oggetti Calendar per la comparazione
+//                    Calendar selectedDateTime = Calendar.getInstance();
+//                    selectedDateTime.set(Calendar.YEAR, Integer.parseInt(data.substring(0, 4)));
+//                    selectedDateTime.set(Calendar.MONTH, Integer.parseInt(data.substring(5, 7)) - 1);
+//                    selectedDateTime.set(Calendar.DAY_OF_MONTH, Integer.parseInt(data.substring(8, 10)));
+//                    selectedDateTime.set(Calendar.HOUR_OF_DAY, Integer.parseInt(ora.substring(0, 2)));
+//                    selectedDateTime.set(Calendar.MINUTE, Integer.parseInt(ora.substring(3)));
+//
+//                    Calendar currentDateTime = Calendar.getInstance();
+//
+//                    // Controlla se la data è precedente a oggi o se la data e l'ora sono precedenti all'istante attuale
+//                    if (selectedDateTime.before(currentDateTime)) {
+//                        Toast.makeText(getContext(), "La data e l'ora devono essere in futuro.", Toast.LENGTH_SHORT).show();
+//                    } else {
+//                        // Chiamata al metodo per creare l'asta nel database
+//                        astaInversaDao.openConnection();
+//                        astaInversaDao.creaAstaInversa(nome, prezzo, data, ora, descrizione, email, imageBytes, listaCategorieScelte);
+//                        AppCompatActivity activity = (AppCompatActivity) requireContext();
+//
+//                        Intent intent = new Intent(getContext(), AcquirenteMainActivity.class);//test del login
+//                        intent.putExtra("email", email);
+//                        intent.putExtra("tipoUtente", "acquirente");
+//                        startActivity(intent);
+//                    }
+//                }
+//            }
+//        });
+//        bottoneAnnullaAstaInversa.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(getContext(), AcquirenteMainActivity.class);//test del login
+//                intent.putExtra("email", email);
+//                intent.putExtra("tipoUtente", "acquirente");
+//                startActivity(intent);
+//            }
+//        });
 
     }
 

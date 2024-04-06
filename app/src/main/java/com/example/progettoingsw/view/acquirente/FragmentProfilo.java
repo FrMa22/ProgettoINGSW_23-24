@@ -61,9 +61,7 @@ public class FragmentProfilo extends Fragment{
     String tipoUtente;
     private RelativeLayout relative_layout_fragment_profilo;
 
-    public FragmentProfilo(String email, String tipoUtente) {
-        this.email = email.trim();
-        this.tipoUtente = tipoUtente.trim();
+    public FragmentProfilo() {
     }
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -75,36 +73,35 @@ public class FragmentProfilo extends Fragment{
 
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Toast.makeText(getContext(), "Mail " + email + ", tipo: " + tipoUtente, Toast.LENGTH_SHORT).show();
 
 
         relative_layout_fragment_profilo = view.findViewById(R.id.relative_layout_fragment_profilo);
 
         //icona del caricamento
         progressBarAcquirenteFragmentProfilo = view.findViewById(R.id.progressBarAcquirenteFragmentProfilo);
-        progressBarAcquirenteFragmentProfilo.setVisibility(View.VISIBLE);
+        //progressBarAcquirenteFragmentProfilo.setVisibility(View.VISIBLE);
 
         // Inizializza la GridView
-        GridView gridView = view.findViewById(R.id.gridview_social_activity_profilo);
-
-// Imposta un'altezza minima per la GridView
-        gridView.setMinimumHeight((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 50, getResources().getDisplayMetrics()));
-
-// Chiama il metodo per impostare l'altezza in base agli elementi
-        setGridViewHeightBasedOnChildren(gridView);
-        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                CustomAdapter_gridview_profilo_social adapter = (CustomAdapter_gridview_profilo_social) gridView.getAdapter();
-                List<String> socialNames = adapter.getSocialNames();
-                List<String> socialLinks = adapter.getSocialLinks();
-
-                String nome = socialNames.get(position);
-                String link = socialLinks.get(position);
-                PopUpModificaSocial popUpModificaSocial = new PopUpModificaSocial(getContext(), FragmentProfilo.this, email, tipoUtente, nome, link);
-                popUpModificaSocial.show();
-            }
-        });
+//        GridView gridView = view.findViewById(R.id.gridview_social_activity_profilo);
+//
+//// Imposta un'altezza minima per la GridView
+//        gridView.setMinimumHeight((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 50, getResources().getDisplayMetrics()));
+//
+//// Chiama il metodo per impostare l'altezza in base agli elementi
+//        setGridViewHeightBasedOnChildren(gridView);
+//        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                CustomAdapter_gridview_profilo_social adapter = (CustomAdapter_gridview_profilo_social) gridView.getAdapter();
+//                List<String> socialNames = adapter.getSocialNames();
+//                List<String> socialLinks = adapter.getSocialLinks();
+//
+//                String nome = socialNames.get(position);
+//                String link = socialLinks.get(position);
+//                PopUpModificaSocial popUpModificaSocial = new PopUpModificaSocial(getContext(), FragmentProfilo.this, email, tipoUtente, nome, link);
+//                popUpModificaSocial.show();
+//            }
+//        });
 
 
 
@@ -125,86 +122,86 @@ public class FragmentProfilo extends Fragment{
             }
         });
 
-        button_le_mie_aste = view.findViewById(R.id.button_le_mie_aste);
-        button_le_mie_aste.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                System.out.println("le aste oooh");
-                Intent intent = new Intent(getContext(), LeMieAste.class);
-                intent.putExtra("email", email);
-                intent.putExtra("tipoUtente",tipoUtente);
-                startActivity(intent);
-            }
-        });
+//        button_le_mie_aste = view.findViewById(R.id.button_le_mie_aste);
+//        button_le_mie_aste.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                System.out.println("le aste oooh");
+//                Intent intent = new Intent(getContext(), LeMieAste.class);
+//                intent.putExtra("email", email);
+//                intent.putExtra("tipoUtente",tipoUtente);
+//                startActivity(intent);
+//            }
+//        });
 
-        button_modifica = view.findViewById(R.id.button_modifica);
-        button_modifica.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                PopUpModificaCampiProfilo popUpModificaCampiProfilo = new PopUpModificaCampiProfilo(getContext(), FragmentProfilo.this, email, tipoUtente);
-                popUpModificaCampiProfilo.show();
-            }
-        });
+//        button_modifica = view.findViewById(R.id.button_modifica);
+//        button_modifica.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                PopUpModificaCampiProfilo popUpModificaCampiProfilo = new PopUpModificaCampiProfilo(getContext(), FragmentProfilo.this, email, tipoUtente);
+//                popUpModificaCampiProfilo.show();
+//            }
+//        });
 
-        button_cambia_password_profilo = view.findViewById(R.id.button_cambia_password_profilo);
-        button_cambia_password_profilo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                PopUpControlloPassword popUpControlloPassword = new PopUpControlloPassword(getContext(), email, tipoUtente);
-                popUpControlloPassword.show();
-            }
-        });
-
-        button_aggiungi_social = view.findViewById(R.id.button_aggiungi_social);
-        button_aggiungi_social.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                PopUpAggiungiSocialProfilo popUpAggiungiSocialProfilo = new PopUpAggiungiSocialProfilo(FragmentProfilo.this, email,tipoUtente);
-                popUpAggiungiSocialProfilo.show();
-            }
-        });
-
-        text_view_nessun_social = view.findViewById(R.id.text_view_nessun_social);
-        textview_nome = view.findViewById(R.id.textview_nome);
-        textview_cognome = view.findViewById(R.id.textview_cognome);
-        textview_email = view.findViewById(R.id.textview_email);
-        textview_sitoweb = view.findViewById(R.id.textview_sitoweb);
-        textview_paese = view.findViewById(R.id.textview_paese);
-        text_view_bio_profilo = view.findViewById(R.id.text_view_bio_profilo);
-        Log.d("Profilo" , "mail " + email +", tipoUtente " + tipoUtente + ".");
-
-        // Inizializza il DAO e recupera i dati dell'acquirente
-        FragmentProfiloDAO acquirente_fragment_profilo_DAO = new FragmentProfiloDAO(this, email, tipoUtente);
-        acquirente_fragment_profilo_DAO.openConnection();
-        acquirente_fragment_profilo_DAO.findUser();
-        acquirente_fragment_profilo_DAO.getSocialNamesForEmail();
-
-        button_partecipazione_aste = view.findViewById(R.id.button_partecipazione_aste);
-        button_partecipazione_aste.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getContext(), SchermataPartecipazioneAste.class);
-                intent.putExtra("email", email);
-                intent.putExtra("tipoUtente",tipoUtente);
-                startActivity(intent);
-            }
-        });
+//        button_cambia_password_profilo = view.findViewById(R.id.button_cambia_password_profilo);
+//        button_cambia_password_profilo.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                PopUpControlloPassword popUpControlloPassword = new PopUpControlloPassword(getContext(), email, tipoUtente);
+//                popUpControlloPassword.show();
+//            }
+//        });
+//
+//        button_aggiungi_social = view.findViewById(R.id.button_aggiungi_social);
+//        button_aggiungi_social.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                PopUpAggiungiSocialProfilo popUpAggiungiSocialProfilo = new PopUpAggiungiSocialProfilo(FragmentProfilo.this, email,tipoUtente);
+//                popUpAggiungiSocialProfilo.show();
+//            }
+//        });
+//
+//        text_view_nessun_social = view.findViewById(R.id.text_view_nessun_social);
+//        textview_nome = view.findViewById(R.id.textview_nome);
+//        textview_cognome = view.findViewById(R.id.textview_cognome);
+//        textview_email = view.findViewById(R.id.textview_email);
+//        textview_sitoweb = view.findViewById(R.id.textview_sitoweb);
+//        textview_paese = view.findViewById(R.id.textview_paese);
+//        text_view_bio_profilo = view.findViewById(R.id.text_view_bio_profilo);
+//        Log.d("Profilo" , "mail " + email +", tipoUtente " + tipoUtente + ".");
+//
+//        // Inizializza il DAO e recupera i dati dell'acquirente
+//        FragmentProfiloDAO acquirente_fragment_profilo_DAO = new FragmentProfiloDAO(this, email, tipoUtente);
+//        acquirente_fragment_profilo_DAO.openConnection();
+//        acquirente_fragment_profilo_DAO.findUser();
+//        acquirente_fragment_profilo_DAO.getSocialNamesForEmail();
+//
+//        button_partecipazione_aste = view.findViewById(R.id.button_partecipazione_aste);
+//        button_partecipazione_aste.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(getContext(), SchermataPartecipazioneAste.class);
+//                intent.putExtra("email", email);
+//                intent.putExtra("tipoUtente",tipoUtente);
+//                startActivity(intent);
+//            }
+//        });
     }
 
     @Override //questo metodo serve per fare un refresh dei valori dei campi dopo una possibile modifica fatta da PopUp
     public void onResume() {
         super.onResume();
-        progressBarAcquirenteFragmentProfilo.setVisibility(View.VISIBLE);
-        setAllClickable(relative_layout_fragment_profilo,false);
-        setNavigationView(false);
-
-        Toast.makeText(getContext(), "la mail in ingresso è: " + email, Toast.LENGTH_SHORT).show();
-
-        // Inizializza il DAO e recupera i dati dell'acquirente
-        FragmentProfiloDAO acquirente_fragment_profilo_DAO = new FragmentProfiloDAO(this,email, tipoUtente);
-        acquirente_fragment_profilo_DAO.openConnection();
-        acquirente_fragment_profilo_DAO.findUser();
-        acquirente_fragment_profilo_DAO.getSocialNamesForEmail();
+//        progressBarAcquirenteFragmentProfilo.setVisibility(View.VISIBLE);
+//        setAllClickable(relative_layout_fragment_profilo,false);
+//        setNavigationView(false);
+//
+//        Toast.makeText(getContext(), "la mail in ingresso è: " + email, Toast.LENGTH_SHORT).show();
+//
+//        // Inizializza il DAO e recupera i dati dell'acquirente
+//        FragmentProfiloDAO acquirente_fragment_profilo_DAO = new FragmentProfiloDAO(this,email, tipoUtente);
+//        acquirente_fragment_profilo_DAO.openConnection();
+//        acquirente_fragment_profilo_DAO.findUser();
+//        acquirente_fragment_profilo_DAO.getSocialNamesForEmail();
     }
 
 

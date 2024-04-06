@@ -48,9 +48,7 @@ public class AcquirenteFragmentRicercaAsta extends Fragment {
     private TextView text_view_nessuna_asta_ricercata;
     private RicercaAsteDAO ricercaAsteDAO;
 
-    public AcquirenteFragmentRicercaAsta(String email, String tipoUtente) {
-        this.tipoUtente = tipoUtente;
-        this.email = email;
+    public AcquirenteFragmentRicercaAsta() {
     }
 
     @Override
@@ -60,87 +58,87 @@ public class AcquirenteFragmentRicercaAsta extends Fragment {
     }
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-         ricercaAsteDAO = new RicercaAsteDAO(this, tipoUtente);
-
-        //l'ordinamento rispetto al prezzo di default è crescente
-        ordinamentoPrezzo = "ASC";
-        //la lista è vuota di default
-        listaCategorieScelte = new ArrayList<>();
-
-        text_view_nessuna_asta_ricercata = view.findViewById(R.id.text_view_nessuna_asta_ricercata);
-        relative_layout_fragment_ricerca = view.findViewById(R.id.relative_layout_fragment_ricerca);
-        progress_bar_schermata_ricerca_asta = view.findViewById(R.id.progress_bar_schermata_ricerca_asta);
-
-        button_cerca_asta = view.findViewById(R.id.button_cerca_asta);
-        asteRecuperate = new AstaAdapter(getContext(),null) ;
-        RecyclerView recyclerViewAsteRecuperate = view.findViewById(R.id.recycler_view_aste_per_ricerca);
-        // Utilizza LinearLayoutManager con orientamento orizzontale per far si che il recycler sia orizzontale, di default è verticale
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2, RecyclerView.VERTICAL, false);
-        recyclerViewAsteRecuperate.setLayoutManager(gridLayoutManager);
-
-
-        // Aggiungi un decorator predefinito per ridurre lo spazio tra le aste, superfluo
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(getContext(), gridLayoutManager.getOrientation());
-        recyclerViewAsteRecuperate.addItemDecoration(dividerItemDecoration);
-
-        //bisogna aggiungere il setOnItemClickListener per ogni setAdapter di ogni recycler view specificando cosa fare per ogni tipo di asta clickato
-        asteRecuperate.setOnItemClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Ottieni la posizione dell'elemento cliccato
-                int position = recyclerViewAsteRecuperate.getChildAdapterPosition(v);
-
-                // Ottieni l'oggetto Asta corrispondente alla posizione cliccata
-                Object asta = asteRecuperate.getItem(position);
-
-                // Esegui le azioni desiderate con l'oggetto Asta
-                if (asta instanceof AstaIngleseItem) {
-                    int id = ((AstaIngleseItem) asta).getId();
-                    Log.d("Asta inglese", "id è " + id);
-                    Intent intent = new Intent(getContext(), SchermataAstaInglese.class);//test del login
-                    intent.putExtra("email", email);
-                    intent.putExtra("tipoUtente", tipoUtente);
-                    intent.putExtra("id", id);
-                    startActivity(intent);
-                } else if (asta instanceof AstaRibassoItem) {
-                    int id = ((AstaRibassoItem) asta).getId();
-                    Intent intent = new Intent(getContext(), SchermataAstaRibasso.class);//test del login
-                    intent.putExtra("email", email);
-                    intent.putExtra("tipoUtente", tipoUtente);
-                    intent.putExtra("id", id);
-                    startActivity(intent);
-                } else if (asta instanceof AstaInversaItem) {
-                    int id = ((AstaInversaItem) asta).getId();
-                    Intent intent = new Intent(getContext(), SchermataAstaInversa.class);//test del login
-                    intent.putExtra("email", email);
-                    intent.putExtra("tipoUtente", tipoUtente);
-                    intent.putExtra("id", id);
-                    startActivity(intent);
-                }
-            }
-        });
-        recyclerViewAsteRecuperate.setAdapter(asteRecuperate);
-
-        button_cerca_asta.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                parolaRicercata = edittext_ricerca.getText().toString();
-                eseguiRicercaAste(parolaRicercata,listaCategorieScelte,ordinamentoPrezzo);
-            }
-        });
-
-        edittext_ricerca = view.findViewById(R.id.edittext_ricerca);
-
-
-        button_filtro = view.findViewById(R.id.button_filtro);
-        button_filtro.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.d("ricerca" , "premuto popup");
-                PopUpFiltroRicerca popUpFiltroRicerca = new PopUpFiltroRicerca(getContext(),AcquirenteFragmentRicercaAsta.this,listaCategorieScelte, ordinamentoPrezzo);
-                popUpFiltroRicerca.show();
-            }
-        });
+//         ricercaAsteDAO = new RicercaAsteDAO(this, tipoUtente);
+//
+//        //l'ordinamento rispetto al prezzo di default è crescente
+//        ordinamentoPrezzo = "ASC";
+//        //la lista è vuota di default
+//        listaCategorieScelte = new ArrayList<>();
+//
+//        text_view_nessuna_asta_ricercata = view.findViewById(R.id.text_view_nessuna_asta_ricercata);
+//        relative_layout_fragment_ricerca = view.findViewById(R.id.relative_layout_fragment_ricerca);
+//        progress_bar_schermata_ricerca_asta = view.findViewById(R.id.progress_bar_schermata_ricerca_asta);
+//
+//        button_cerca_asta = view.findViewById(R.id.button_cerca_asta);
+//        asteRecuperate = new AstaAdapter(getContext(),null) ;
+//        RecyclerView recyclerViewAsteRecuperate = view.findViewById(R.id.recycler_view_aste_per_ricerca);
+//        // Utilizza LinearLayoutManager con orientamento orizzontale per far si che il recycler sia orizzontale, di default è verticale
+//        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2, RecyclerView.VERTICAL, false);
+//        recyclerViewAsteRecuperate.setLayoutManager(gridLayoutManager);
+//
+//
+//        // Aggiungi un decorator predefinito per ridurre lo spazio tra le aste, superfluo
+//        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(getContext(), gridLayoutManager.getOrientation());
+//        recyclerViewAsteRecuperate.addItemDecoration(dividerItemDecoration);
+//
+//        //bisogna aggiungere il setOnItemClickListener per ogni setAdapter di ogni recycler view specificando cosa fare per ogni tipo di asta clickato
+//        asteRecuperate.setOnItemClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                // Ottieni la posizione dell'elemento cliccato
+//                int position = recyclerViewAsteRecuperate.getChildAdapterPosition(v);
+//
+//                // Ottieni l'oggetto Asta corrispondente alla posizione cliccata
+//                Object asta = asteRecuperate.getItem(position);
+//
+//                // Esegui le azioni desiderate con l'oggetto Asta
+//                if (asta instanceof AstaIngleseItem) {
+//                    int id = ((AstaIngleseItem) asta).getId();
+//                    Log.d("Asta inglese", "id è " + id);
+//                    Intent intent = new Intent(getContext(), SchermataAstaInglese.class);//test del login
+//                    intent.putExtra("email", email);
+//                    intent.putExtra("tipoUtente", tipoUtente);
+//                    intent.putExtra("id", id);
+//                    startActivity(intent);
+//                } else if (asta instanceof AstaRibassoItem) {
+//                    int id = ((AstaRibassoItem) asta).getId();
+//                    Intent intent = new Intent(getContext(), SchermataAstaRibasso.class);//test del login
+//                    intent.putExtra("email", email);
+//                    intent.putExtra("tipoUtente", tipoUtente);
+//                    intent.putExtra("id", id);
+//                    startActivity(intent);
+//                } else if (asta instanceof AstaInversaItem) {
+//                    int id = ((AstaInversaItem) asta).getId();
+//                    Intent intent = new Intent(getContext(), SchermataAstaInversa.class);//test del login
+//                    intent.putExtra("email", email);
+//                    intent.putExtra("tipoUtente", tipoUtente);
+//                    intent.putExtra("id", id);
+//                    startActivity(intent);
+//                }
+//            }
+//        });
+//        recyclerViewAsteRecuperate.setAdapter(asteRecuperate);
+//
+//        button_cerca_asta.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                parolaRicercata = edittext_ricerca.getText().toString();
+//                eseguiRicercaAste(parolaRicercata,listaCategorieScelte,ordinamentoPrezzo);
+//            }
+//        });
+//
+//        edittext_ricerca = view.findViewById(R.id.edittext_ricerca);
+//
+//
+//        button_filtro = view.findViewById(R.id.button_filtro);
+//        button_filtro.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Log.d("ricerca" , "premuto popup");
+//                PopUpFiltroRicerca popUpFiltroRicerca = new PopUpFiltroRicerca(getContext(),AcquirenteFragmentRicercaAsta.this,listaCategorieScelte, ordinamentoPrezzo);
+//                popUpFiltroRicerca.show();
+//            }
+//        });
 
 
     }

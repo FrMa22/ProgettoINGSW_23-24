@@ -47,9 +47,7 @@ public class AcquirenteFragmentCreaLaTuaAstaAcquirente extends Fragment {
 
     Uri uriImmagine;
 
-    public AcquirenteFragmentCreaLaTuaAstaAcquirente(String email) {
-        // Costruttore vuoto richiesto dal framework
-        this.email = email;
+    public AcquirenteFragmentCreaLaTuaAstaAcquirente() {
     }
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -59,53 +57,53 @@ public class AcquirenteFragmentCreaLaTuaAstaAcquirente extends Fragment {
 
     public void onViewCreated(@NonNull View view_fragment, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view_fragment, savedInstanceState);
-        immagineProdotto= view_fragment.findViewById(R.id.imageViewCreaAstaAcquirente);
-        bottoneInserisciImmagine = view_fragment.findViewById(R.id.imageButtonInserisciImmagineCreaAstaAcquirente);
-        descrizioneProdotto=view_fragment.findViewById(R.id.editTextDescrizioneCreaAstaAcquirente);
-        registraRisultati();
-
-
-        //ImmaginiDAO immaginiDAO=new ImmaginiDAO();
-        imageBytes=null;
-        bottoneInserisciImmagine.setOnClickListener(view ->prelevaImmagine());//significa che chiama il metodo prelevaImmagine
-
-        bottoneProseguiCreaAstaAcquirente = view_fragment.findViewById(R.id.bottoneProseguiCreaAstaAcquirente);
-        bottoneProseguiCreaAstaAcquirente.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
-                //Controller.redirectActivity(getActivity(), AcquirenteFragmentAstaInversa.class);
-                descProd=descrizioneProdotto.getText().toString();
-                //qui sopra era giusto
-
-               // immaginiDAO.openConnection();
-                //immaginiDAO.aggiungiImmagine(imageBytes);
-                //immaginiDAO.closeConnection();
-
-                //qui era giusto
-                Intent intent = new Intent(getActivity(), AcquirenteFragmentAstaInversa.class);
-                intent.putExtra("descProd", descProd);
-                intent.putExtra("email",email);
-                intent.putExtra("img",imageBytes);
-                startActivity(intent);
-            }
-        });
-
-        spinnerTipoAsta = view_fragment.findViewById(R.id.spinnerTipologiaAstaAcquirente);
-        ArrayAdapter<CharSequence> adapterSpinnerTipoAsta=(ArrayAdapter<CharSequence>) ArrayAdapter.createFromResource(requireContext(), R.array.elencoTipiAstaAcquirente, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item);
-        adapterSpinnerTipoAsta.setDropDownViewResource(androidx.appcompat.R.layout.support_simple_spinner_dropdown_item);
-        spinnerTipoAsta.setAdapter(adapterSpinnerTipoAsta);
-
-        spinnerTipoAsta.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                //fa qualcosa se si è selezionato qualcosa
-                opzioneSelezionata=parent.getItemAtPosition(position).toString();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                //non fa nulla
-            }
-        });
+//        immagineProdotto= view_fragment.findViewById(R.id.imageViewCreaAstaAcquirente);
+//        bottoneInserisciImmagine = view_fragment.findViewById(R.id.imageButtonInserisciImmagineCreaAstaAcquirente);
+//        descrizioneProdotto=view_fragment.findViewById(R.id.editTextDescrizioneCreaAstaAcquirente);
+//        registraRisultati();
+//
+//
+//        //ImmaginiDAO immaginiDAO=new ImmaginiDAO();
+//        imageBytes=null;
+//        bottoneInserisciImmagine.setOnClickListener(view ->prelevaImmagine());//significa che chiama il metodo prelevaImmagine
+//
+//        bottoneProseguiCreaAstaAcquirente = view_fragment.findViewById(R.id.bottoneProseguiCreaAstaAcquirente);
+//        bottoneProseguiCreaAstaAcquirente.setOnClickListener(new View.OnClickListener() {
+//            public void onClick(View view) {
+//                //Controller.redirectActivity(getActivity(), AcquirenteFragmentAstaInversa.class);
+//                descProd=descrizioneProdotto.getText().toString();
+//                //qui sopra era giusto
+//
+//               // immaginiDAO.openConnection();
+//                //immaginiDAO.aggiungiImmagine(imageBytes);
+//                //immaginiDAO.closeConnection();
+//
+//                //qui era giusto
+//                Intent intent = new Intent(getActivity(), AcquirenteFragmentAstaInversa.class);
+//                intent.putExtra("descProd", descProd);
+//                intent.putExtra("email",email);
+//                intent.putExtra("img",imageBytes);
+//                startActivity(intent);
+//            }
+//        });
+//
+//        spinnerTipoAsta = view_fragment.findViewById(R.id.spinnerTipologiaAstaAcquirente);
+//        ArrayAdapter<CharSequence> adapterSpinnerTipoAsta=(ArrayAdapter<CharSequence>) ArrayAdapter.createFromResource(requireContext(), R.array.elencoTipiAstaAcquirente, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item);
+//        adapterSpinnerTipoAsta.setDropDownViewResource(androidx.appcompat.R.layout.support_simple_spinner_dropdown_item);
+//        spinnerTipoAsta.setAdapter(adapterSpinnerTipoAsta);
+//
+//        spinnerTipoAsta.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//                //fa qualcosa se si è selezionato qualcosa
+//                opzioneSelezionata=parent.getItemAtPosition(position).toString();
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> parent) {
+//                //non fa nulla
+//            }
+//        });
 
 
     }

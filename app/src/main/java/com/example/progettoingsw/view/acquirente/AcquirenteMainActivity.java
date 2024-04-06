@@ -11,12 +11,15 @@
     import com.example.progettoingsw.DAO.NotificheDAO;
     import com.example.progettoingsw.R;
     import com.example.progettoingsw.classe_da_estendere.GestoreComuniImplementazioni;
+    import com.example.progettoingsw.model.AcquirenteModel;
+    import com.example.progettoingsw.model.VenditoreModel;
     import com.example.progettoingsw.repository.Repository;
     import com.example.progettoingsw.view.PopUpNotificaRicevuta;
     import com.example.progettoingsw.view.venditore.VenditorePopUpCreaAsta;
     import com.google.android.material.bottomnavigation.BottomNavigationView;
     public class AcquirenteMainActivity extends GestoreComuniImplementazioni {
-
+        private AcquirenteModel acquirenteModel;
+        private VenditoreModel venditoreModel;
         private BottomNavigationView bottomNavigationView;
         private String email;
         private String tipoUtente;
@@ -34,36 +37,54 @@ private Fragment selectedFragment;
             bottomNavigationView = findViewById(R.id.acquirente_nav_view);
 
             repository = Repository.getInstance();
-            if(repository.getAcquirenteModel()!=null){
-                System.out.println("entrato come acquirente");
-            }else if(repository.getVenditoreModel()!=null){
-                System.out.println("entrato come venditore");
+            acquirenteModel = repository.getAcquirenteModel();
+            venditoreModel = repository.getVenditoreModel();
+            if (acquirenteModel != null) {
+                Log.d("Main acitivity", "entrato come acquirente");
+                Log.d("Main activiy", "Valori di acquirente: " +
+                        "Indirizzo email: " + acquirenteModel.getIndirizzoEmail() +
+                        ", Nome: " + acquirenteModel.getNome() +
+                        ", Cognome: " + acquirenteModel.getCognome() +
+                        ", Password: " + acquirenteModel.getPassword() +
+                        ", Bio: " + acquirenteModel.getBio() +
+                        ", Link: " + acquirenteModel.getLink() +
+                        ", Area geografica: " + acquirenteModel.getAreaGeografica());
+            } else if (venditoreModel != null) {
+                Log.d("Main acitivity", "entrato come venditore");
+                Log.d("Main activiy", "Valori di venditore: " +
+                        "Indirizzo email: " + venditoreModel.getIndirizzoEmail() +
+                        ", Nome: " + venditoreModel.getNome() +
+                        ", Cognome: " + venditoreModel.getCognome() +
+                        ", Password: " + venditoreModel.getPassword() +
+                        ", Bio: " + venditoreModel.getBio() +
+                        ", Link: " + venditoreModel.getLink() +
+                        ", Area geografica: " + venditoreModel.getAreaGeografica());
             }
+
 //            email = getIntent().getStringExtra("email").trim();
 //            tipoUtente = getIntent().getStringExtra("tipoUtente");
-            NotificheDAO notificheDAO = new NotificheDAO(this,email,tipoUtente);
-            notificheDAO.openConnection();
-            notificheDAO.checkNotifiche();
+//            NotificheDAO notificheDAO = new NotificheDAO(this,email,tipoUtente);
+//            notificheDAO.openConnection();
+//            notificheDAO.checkNotifiche();
 
-            countDownTimer = new CountDownTimer(5000, 1000) {
-                public void onTick(long millisUntilFinished) {
-                    // Stampa il numero di secondi rimanenti
-                    Log.d("Timer main activity", "Secondi mancanti: " + millisUntilFinished / 1000);
-                }
-                public void onFinish() {
-                    Log.d("Timer main activity", "Timer scaduto");
-                    notificheDAO.checkNotifiche();
-                    start();
-                }
-            };
-            // Avvia il timer
-            countDownTimer.start();
+//            countDownTimer = new CountDownTimer(5000, 1000) {
+//                public void onTick(long millisUntilFinished) {
+//                    // Stampa il numero di secondi rimanenti
+//                    Log.d("Timer main activity", "Secondi mancanti: " + millisUntilFinished / 1000);
+//                }
+//                public void onFinish() {
+//                    Log.d("Timer main activity", "Timer scaduto");
+//                    notificheDAO.checkNotifiche();
+//                    start();
+//                }
+//            };
+//            // Avvia il timer
+//            countDownTimer.start();
 
-            Log.d("AcquirenteMainActivity" , "La mail è " + email + ", il tipoUtente è: " + tipoUtente);
 
             // Impostazione del Fragment iniziale
                 getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_container, new AcquirenteFragmentHome(email, tipoUtente))
+                        .replace(R.id.fragment_container, new AcquirenteFragmentHome())
                         .commit();
 
 
@@ -72,25 +93,26 @@ private Fragment selectedFragment;
 
                 // Imposta il fragment di default (potrebbe essere il fragment corrente)
                 Fragment currentFragment =(Fragment) getSupportFragmentManager().findFragmentById(R.id.fragment_container);
-                selectedFragment = (currentFragment != null) ? currentFragment : new AcquirenteFragmentHome(email, tipoUtente);
+                selectedFragment = (currentFragment != null) ? currentFragment : new AcquirenteFragmentHome();
 
                 if (item.getItemId() == R.id.action_home) {
                     Log.d("BottomNav", "Selected Home");
                     item.setIcon(R.drawable.ic_home);
                     resetOtherIcons(bottomNavigationView, item);
-                    selectedFragment = new AcquirenteFragmentHome(email, tipoUtente);
+                    selectedFragment = new AcquirenteFragmentHome();
                 } else if (item.getItemId() == R.id.action_categories) {
                     item.setIcon(R.drawable.ic_categorie);
                     resetOtherIcons(bottomNavigationView, item);
                     Log.d("BottomNav", "Selected Categories");
-                    selectedFragment = new AcquirenteFragmentSelezioneCategorie(email, tipoUtente);
+                    selectedFragment = new AcquirenteFragmentSelezioneCategorie();
                 } else if (item.getItemId() == R.id.action_crea_asta) {
                     Log.d("BottomNav", "Selected Crea Asta");
                     item.setIcon(R.drawable.ic_plus);
                     resetOtherIcons(bottomNavigationView, item);
-                    if(tipoUtente.equals("acquirente")){
+                    //if(tipoUtente.equals("acquirente")){
+                    if(acquirenteModel!=null){
                         resetOtherIcons(bottomNavigationView, item);
-                        selectedFragment = new AcquirenteFragmentAstaInversa(email);
+                        selectedFragment = new AcquirenteFragmentAstaInversa();
                     }else{
                         VenditorePopUpCreaAsta popAsta  = new VenditorePopUpCreaAsta(AcquirenteMainActivity.this,email,tipoUtente);
                         popAsta.show();
@@ -99,12 +121,12 @@ private Fragment selectedFragment;
                     Log.d("BottomNav", "Selected Search");
                     item.setIcon(R.drawable.ic_search);
                     resetOtherIcons(bottomNavigationView, item);
-                    selectedFragment = new AcquirenteFragmentRicercaAsta(email ,tipoUtente);
+                    selectedFragment = new AcquirenteFragmentRicercaAsta();
                 } else if (item.getItemId() == R.id.action_profile) {
                     Log.d("BottomNav", "Selected Profile");
                     item.setIcon(R.drawable.ic_profilo);
                     resetOtherIcons(bottomNavigationView, item);
-                    selectedFragment = new FragmentProfilo(email,tipoUtente);
+                    selectedFragment = new FragmentProfilo();
                 }
 
                 // Controlla se il fragment corrente è già quello selezionato
@@ -113,6 +135,7 @@ private Fragment selectedFragment;
                     Log.d("BottomNav", "Fragment already selected");
                     return true;
                 }
+
 
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.fragment_container, selectedFragment)
@@ -213,38 +236,38 @@ private Fragment selectedFragment;
             }
     }
         // questi metodi onPause, onStop, onDestroy e onResume servono a stoppare il timer quando non si è piu su questa schermata e a farlo ricominciare quando si torna
-        @Override
-        protected void onPause() {
-            super.onPause();
-            // Ferma il countDownTimer se è attivo
-            if (countDownTimer != null) {
-                countDownTimer.cancel();
-            }
-        }
-        @Override
-        protected void onStop() {
-            super.onStop();
-            // Ferma il countDownTimer se è attivo
-            if (countDownTimer != null) {
-                countDownTimer.cancel();
-            }
-        }
-        @Override
-        protected void onDestroy() {
-            super.onDestroy();
-            // Ferma il countDownTimer se è attivo
-            if (countDownTimer != null) {
-                countDownTimer.cancel();
-            }
-        }
-        @Override
-        public void onResume() {
-            super.onResume();
-            // Ferma il countDownTimer se è attivo
-            if (countDownTimer != null) {
-                countDownTimer.cancel();
-                countDownTimer.start();
-            }
-        }
+//        @Override
+//        protected void onPause() {
+//            super.onPause();
+//            // Ferma il countDownTimer se è attivo
+//            if (countDownTimer != null) {
+//                countDownTimer.cancel();
+//            }
+//        }
+//        @Override
+//        protected void onStop() {
+//            super.onStop();
+//            // Ferma il countDownTimer se è attivo
+//            if (countDownTimer != null) {
+//                countDownTimer.cancel();
+//            }
+//        }
+//        @Override
+//        protected void onDestroy() {
+//            super.onDestroy();
+//            // Ferma il countDownTimer se è attivo
+//            if (countDownTimer != null) {
+//                countDownTimer.cancel();
+//            }
+//        }
+//        @Override
+//        public void onResume() {
+//            super.onResume();
+//            // Ferma il countDownTimer se è attivo
+//            if (countDownTimer != null) {
+//                countDownTimer.cancel();
+//                countDownTimer.start();
+//            }
+//        }
 
     }

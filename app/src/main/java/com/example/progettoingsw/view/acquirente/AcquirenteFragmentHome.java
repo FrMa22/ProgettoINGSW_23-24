@@ -50,9 +50,8 @@ public class AcquirenteFragmentHome extends Fragment {
     private TextView text_view_nessuna_asta_in_scadenza;
     private TextView text_view_aste_consigliate_home;
     private TextView text_view_nessuna_asta_in_categorie;
-    public AcquirenteFragmentHome(String email, String tipoUtente) {
-        this.email = email;
-        this.tipoUtente = tipoUtente;
+    private int viewCounter = 0;
+    public AcquirenteFragmentHome() {
     }
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -63,7 +62,8 @@ public class AcquirenteFragmentHome extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.acquirente_fragment_home, container, false);
-
+        viewCounter = 0;
+        Log.d("Home" , "contatore : " + viewCounter);
 
         return view;
     }
@@ -78,220 +78,220 @@ public class AcquirenteFragmentHome extends Fragment {
         text_view_aste_consigliate_home = view.findViewById(R.id.text_view_aste_consigliate_home);
         text_view_nessuna_asta_in_categorie = view.findViewById(R.id.text_view_nessuna_asta_in_categorie);
 
-        //rendo l'icona di caricamento visibile ad inizio recuperi dal db e il bottom menu non clickabile
-        progressBarAcquirenteFragmentHome.setVisibility(View.VISIBLE);
-        setNavigationView(false);
-        setAllClickable(relative_layout_home_acquirente,false);
-
-        // Inizializza il DAO e l'adapter
-        astaDAOAcquirente = new AstaDAOAcquirente(this, email,tipoUtente);
-
-        astaAdapterConsigliate = new AstaAdapter(getContext(), null);
-        categorie = new ArrayList<>();
-
-        // Inizializza il RecyclerView e imposta l'adapter
-        RecyclerView recyclerViewAsteConsigliate = view.findViewById(R.id.recycler_view_aste_consigliate);
-        // Utilizza LinearLayoutManager con orientamento orizzontale per far si che il recycler sia orizzontale, di default è verticale
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
-        recyclerViewAsteConsigliate.setLayoutManager(linearLayoutManager);
-
-
-        // Aggiungi un decorator predefinito per ridurre lo spazio tra le aste, superfluo
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(getContext(), linearLayoutManager.getOrientation());
-        recyclerViewAsteConsigliate.addItemDecoration(dividerItemDecoration);
-
-        //bisogna aggiungere il setOnItemClickListener per ogni setAdapter di ogni recycler view specificando cosa fare per ogni tipo di asta clickato
-        astaAdapterConsigliate.setOnItemClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Ottieni la posizione dell'elemento cliccato
-                int position = recyclerViewAsteConsigliate.getChildAdapterPosition(v);
-
-                // Ottieni l'oggetto Asta corrispondente alla posizione cliccata
-                Object asta = astaAdapterConsigliate.getItem(position);
-
-                // Esegui le azioni desiderate con l'oggetto Asta
-                if (asta instanceof AstaIngleseItem) {
-                    int id = ((AstaIngleseItem) asta).getId();
-                    Log.d("Asta inglese", "id è " + id);
-                    Intent intent = new Intent(getContext(), SchermataAstaInglese.class);//test del login
-                    intent.putExtra("email", email);
-                    intent.putExtra("tipoUtente", tipoUtente);
-                    intent.putExtra("id", id);
-                    startActivity(intent);
-                } else if (asta instanceof AstaRibassoItem) {
-                    int id = ((AstaRibassoItem) asta).getId();
-                    Intent intent = new Intent(getContext(), SchermataAstaRibasso.class);//test del login
-                    intent.putExtra("email", email);
-                    intent.putExtra("tipoUtente", tipoUtente);
-                    intent.putExtra("id", id);
-                    startActivity(intent);
-                } else if (asta instanceof AstaInversaItem) {
-                    int id = ((AstaInversaItem) asta).getId();
-                    Intent intent = new Intent(getContext(), SchermataAstaInversa.class);//test del login
-                    intent.putExtra("email", email);
-                    intent.putExtra("tipoUtente", tipoUtente);
-                    intent.putExtra("id", id);
-                    startActivity(intent);
-                }
-            }
-        });
-        recyclerViewAsteConsigliate.setAdapter(astaAdapterConsigliate);
-
-
-        // Apri la connessione al database e ottieni i prodotti
-        astaDAOAcquirente.openConnection();
-        Log.d("categorie in home prima" , "numero di categorie: " + categorie.isEmpty());
-        astaDAOAcquirente.getCategorie();
-        Log.d("categorie in home" , "numero di categorie: " + categorie.size());
-        astaDAOAcquirente.getAsteCategorieAcquirente();
-        astaDAOAcquirente.closeConnection();
-
-
-        // Inizializza il RecyclerView e imposta l'adapter
-        astaAdapterInScadenza = new AstaAdapter(getContext(), null);
-        RecyclerView recyclerViewAsteInScadenza = view.findViewById(R.id.recycler_view_aste_in_scadenza);
-        LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
-        recyclerViewAsteInScadenza.setLayoutManager(linearLayoutManager2);
-
-
-        recyclerViewAsteInScadenza.addItemDecoration(dividerItemDecoration);
-        recyclerViewAsteInScadenza.setAdapter(astaAdapterInScadenza);
-        astaAdapterInScadenza.setOnItemClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Ottieni la posizione dell'elemento cliccato
-                int position = recyclerViewAsteInScadenza.getChildAdapterPosition(v);
-
-                // Ottieni l'oggetto Asta corrispondente alla posizione cliccata
-                Object asta = astaAdapterInScadenza.getItem(position);
-
-                // Esegui le azioni desiderate con l'oggetto Asta
-                if (asta instanceof AstaIngleseItem) {
-                    int id = ((AstaIngleseItem) asta).getId();
-                    Log.d("Asta inglese", "id è " + id);
-                    Intent intent = new Intent(getContext(), SchermataAstaInglese.class);//test del login
-                    intent.putExtra("email", email);
-                    intent.putExtra("tipoUtente", tipoUtente);
-                    intent.putExtra("id", id);
-                    startActivity(intent);
-                } else if (asta instanceof AstaRibassoItem) {
-                    int id = ((AstaRibassoItem) asta).getId();
-                    Intent intent = new Intent(getContext(), SchermataAstaRibasso.class);//test del login
-                    intent.putExtra("email", email);
-                    intent.putExtra("tipoUtente", tipoUtente);
-                    intent.putExtra("id", id);
-                    startActivity(intent);
-                } else if (asta instanceof AstaInversaItem) {
-                    int id = ((AstaInversaItem) asta).getId();
-                    Intent intent = new Intent(getContext(), SchermataAstaInversa.class);//test del login
-                    intent.putExtra("email", email);
-                    intent.putExtra("tipoUtente", tipoUtente);
-                    intent.putExtra("id", id);
-                    startActivity(intent);
-                }
-            }
-        });
-
-        astaDAOAcquirente.openConnection();
-        astaDAOAcquirente.getAsteScadenzaRecente();
-        astaDAOAcquirente.closeConnection();
-
-        astaAdapterNuove = new AstaAdapter(getContext(), null);
-        RecyclerView recyclerViewAsteNuove = view.findViewById(R.id.recycler_view_aste_nuove);
-        LinearLayoutManager linearLayoutManager3 = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
-        recyclerViewAsteNuove.setLayoutManager(linearLayoutManager3);
-
-
-        recyclerViewAsteNuove.addItemDecoration(dividerItemDecoration);
-        recyclerViewAsteNuove.setAdapter(astaAdapterNuove);
-        astaAdapterNuove.setOnItemClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Ottieni la posizione dell'elemento cliccato
-                int position = recyclerViewAsteNuove.getChildAdapterPosition(v);
-
-                // Ottieni l'oggetto Asta corrispondente alla posizione cliccata
-                Object asta = astaAdapterNuove.getItem(position);
-
-                // Esegui le azioni desiderate con l'oggetto Asta
-                if (asta instanceof AstaIngleseItem) {
-                    int id = ((AstaIngleseItem) asta).getId();
-                    Log.d("Asta inglese", "id è " + id);
-                    Intent intent = new Intent(getContext(), SchermataAstaInglese.class);//test del login
-                    intent.putExtra("email", email);
-                    intent.putExtra("tipoUtente", tipoUtente);
-                    intent.putExtra("id", id);
-                    startActivity(intent);
-                } else if (asta instanceof AstaRibassoItem) {
-                    int id = ((AstaRibassoItem) asta).getId();
-                    Intent intent = new Intent(getContext(), SchermataAstaRibasso.class);//test del login
-                    intent.putExtra("email", email);
-                    intent.putExtra("tipoUtente", tipoUtente);
-                    intent.putExtra("id", id);
-                    startActivity(intent);
-                } else if (asta instanceof AstaInversaItem) {
-                    int id = ((AstaInversaItem) asta).getId();
-                    Intent intent = new Intent(getContext(), SchermataAstaInversa.class);//test del login
-                    intent.putExtra("email", email);
-                    intent.putExtra("tipoUtente", tipoUtente);
-                    intent.putExtra("id", id);
-                    startActivity(intent);
-                }
-            }
-        });
-
-        astaDAOAcquirente.openConnection();
-        astaDAOAcquirente.getAsteNuove();
-        astaDAOAcquirente.closeConnection();
-
-
-
-
-
-        button_notifiche= view.findViewById(R.id.openNotifiche);
-        button_notifiche.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getContext(), SchermataNotifiche.class);
-                intent.putExtra("email", email);
-                intent.putExtra("tipoUtente",tipoUtente);
-                startActivity(intent);
-
-            }
-        });
-        iconaNotifiche = view.findViewById(R.id.iconaNotifiche);
-        NotificheDAO notificheDAO = new NotificheDAO(AcquirenteFragmentHome.this, email,tipoUtente);
-        notificheDAO.openConnection();
-        notificheDAO.checkNotifiche();
-
-//        countDownTimerNumeroNotifiche = new CountDownTimer(5000, 1000) {
-//            public void onTick(long millisUntilFinished) {
-//                // Stampa il numero di secondi rimanenti
-//                Log.d("Timer home fragment", "Secondi mancanti: " + millisUntilFinished / 1000);
+//        //rendo l'icona di caricamento visibile ad inizio recuperi dal db e il bottom menu non clickabile
+//        progressBarAcquirenteFragmentHome.setVisibility(View.VISIBLE);
+//        setNavigationView(false);
+//        setAllClickable(relative_layout_home_acquirente,false);
+//
+//        // Inizializza il DAO e l'adapter
+//        astaDAOAcquirente = new AstaDAOAcquirente(this, email,tipoUtente);
+//
+//        astaAdapterConsigliate = new AstaAdapter(getContext(), null);
+//        categorie = new ArrayList<>();
+//
+//        // Inizializza il RecyclerView e imposta l'adapter
+//        RecyclerView recyclerViewAsteConsigliate = view.findViewById(R.id.recycler_view_aste_consigliate);
+//        // Utilizza LinearLayoutManager con orientamento orizzontale per far si che il recycler sia orizzontale, di default è verticale
+//        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+//        recyclerViewAsteConsigliate.setLayoutManager(linearLayoutManager);
+//
+//
+//        // Aggiungi un decorator predefinito per ridurre lo spazio tra le aste, superfluo
+//        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(getContext(), linearLayoutManager.getOrientation());
+//        recyclerViewAsteConsigliate.addItemDecoration(dividerItemDecoration);
+//
+//        //bisogna aggiungere il setOnItemClickListener per ogni setAdapter di ogni recycler view specificando cosa fare per ogni tipo di asta clickato
+//        astaAdapterConsigliate.setOnItemClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                // Ottieni la posizione dell'elemento cliccato
+//                int position = recyclerViewAsteConsigliate.getChildAdapterPosition(v);
+//
+//                // Ottieni l'oggetto Asta corrispondente alla posizione cliccata
+//                Object asta = astaAdapterConsigliate.getItem(position);
+//
+//                // Esegui le azioni desiderate con l'oggetto Asta
+//                if (asta instanceof AstaIngleseItem) {
+//                    int id = ((AstaIngleseItem) asta).getId();
+//                    Log.d("Asta inglese", "id è " + id);
+//                    Intent intent = new Intent(getContext(), SchermataAstaInglese.class);//test del login
+//                    intent.putExtra("email", email);
+//                    intent.putExtra("tipoUtente", tipoUtente);
+//                    intent.putExtra("id", id);
+//                    startActivity(intent);
+//                } else if (asta instanceof AstaRibassoItem) {
+//                    int id = ((AstaRibassoItem) asta).getId();
+//                    Intent intent = new Intent(getContext(), SchermataAstaRibasso.class);//test del login
+//                    intent.putExtra("email", email);
+//                    intent.putExtra("tipoUtente", tipoUtente);
+//                    intent.putExtra("id", id);
+//                    startActivity(intent);
+//                } else if (asta instanceof AstaInversaItem) {
+//                    int id = ((AstaInversaItem) asta).getId();
+//                    Intent intent = new Intent(getContext(), SchermataAstaInversa.class);//test del login
+//                    intent.putExtra("email", email);
+//                    intent.putExtra("tipoUtente", tipoUtente);
+//                    intent.putExtra("id", id);
+//                    startActivity(intent);
+//                }
 //            }
-//            public void onFinish() {
-//                Log.d("Timer home fragment", "Timer scaduto");
-//                notificheDAO.checkNotifiche();
-//                start();
+//        });
+//        recyclerViewAsteConsigliate.setAdapter(astaAdapterConsigliate);
+//
+//
+//        // Apri la connessione al database e ottieni i prodotti
+//        astaDAOAcquirente.openConnection();
+//        Log.d("categorie in home prima" , "numero di categorie: " + categorie.isEmpty());
+//        astaDAOAcquirente.getCategorie();
+//        Log.d("categorie in home" , "numero di categorie: " + categorie.size());
+//        astaDAOAcquirente.getAsteCategorieAcquirente();
+//        astaDAOAcquirente.closeConnection();
+//
+//
+//        // Inizializza il RecyclerView e imposta l'adapter
+//        astaAdapterInScadenza = new AstaAdapter(getContext(), null);
+//        RecyclerView recyclerViewAsteInScadenza = view.findViewById(R.id.recycler_view_aste_in_scadenza);
+//        LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+//        recyclerViewAsteInScadenza.setLayoutManager(linearLayoutManager2);
+//
+//
+//        recyclerViewAsteInScadenza.addItemDecoration(dividerItemDecoration);
+//        recyclerViewAsteInScadenza.setAdapter(astaAdapterInScadenza);
+//        astaAdapterInScadenza.setOnItemClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                // Ottieni la posizione dell'elemento cliccato
+//                int position = recyclerViewAsteInScadenza.getChildAdapterPosition(v);
+//
+//                // Ottieni l'oggetto Asta corrispondente alla posizione cliccata
+//                Object asta = astaAdapterInScadenza.getItem(position);
+//
+//                // Esegui le azioni desiderate con l'oggetto Asta
+//                if (asta instanceof AstaIngleseItem) {
+//                    int id = ((AstaIngleseItem) asta).getId();
+//                    Log.d("Asta inglese", "id è " + id);
+//                    Intent intent = new Intent(getContext(), SchermataAstaInglese.class);//test del login
+//                    intent.putExtra("email", email);
+//                    intent.putExtra("tipoUtente", tipoUtente);
+//                    intent.putExtra("id", id);
+//                    startActivity(intent);
+//                } else if (asta instanceof AstaRibassoItem) {
+//                    int id = ((AstaRibassoItem) asta).getId();
+//                    Intent intent = new Intent(getContext(), SchermataAstaRibasso.class);//test del login
+//                    intent.putExtra("email", email);
+//                    intent.putExtra("tipoUtente", tipoUtente);
+//                    intent.putExtra("id", id);
+//                    startActivity(intent);
+//                } else if (asta instanceof AstaInversaItem) {
+//                    int id = ((AstaInversaItem) asta).getId();
+//                    Intent intent = new Intent(getContext(), SchermataAstaInversa.class);//test del login
+//                    intent.putExtra("email", email);
+//                    intent.putExtra("tipoUtente", tipoUtente);
+//                    intent.putExtra("id", id);
+//                    startActivity(intent);
+//                }
 //            }
-//        };
-//        // Avvia il timer
-//        countDownTimerNumeroNotifiche.start();
-
-
-
-
-        ImageButton preferitiButton = view.findViewById(R.id.openPreferiti);
-        preferitiButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getContext(), PreferitiActivity.class);
-                intent.putExtra("email", email);
-                intent.putExtra("tipoUtente",tipoUtente);
-                startActivity(intent);
-            }
-        });
+//        });
+//
+//        astaDAOAcquirente.openConnection();
+//        astaDAOAcquirente.getAsteScadenzaRecente();
+//        astaDAOAcquirente.closeConnection();
+//
+//        astaAdapterNuove = new AstaAdapter(getContext(), null);
+//        RecyclerView recyclerViewAsteNuove = view.findViewById(R.id.recycler_view_aste_nuove);
+//        LinearLayoutManager linearLayoutManager3 = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+//        recyclerViewAsteNuove.setLayoutManager(linearLayoutManager3);
+//
+//
+//        recyclerViewAsteNuove.addItemDecoration(dividerItemDecoration);
+//        recyclerViewAsteNuove.setAdapter(astaAdapterNuove);
+//        astaAdapterNuove.setOnItemClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                // Ottieni la posizione dell'elemento cliccato
+//                int position = recyclerViewAsteNuove.getChildAdapterPosition(v);
+//
+//                // Ottieni l'oggetto Asta corrispondente alla posizione cliccata
+//                Object asta = astaAdapterNuove.getItem(position);
+//
+//                // Esegui le azioni desiderate con l'oggetto Asta
+//                if (asta instanceof AstaIngleseItem) {
+//                    int id = ((AstaIngleseItem) asta).getId();
+//                    Log.d("Asta inglese", "id è " + id);
+//                    Intent intent = new Intent(getContext(), SchermataAstaInglese.class);//test del login
+//                    intent.putExtra("email", email);
+//                    intent.putExtra("tipoUtente", tipoUtente);
+//                    intent.putExtra("id", id);
+//                    startActivity(intent);
+//                } else if (asta instanceof AstaRibassoItem) {
+//                    int id = ((AstaRibassoItem) asta).getId();
+//                    Intent intent = new Intent(getContext(), SchermataAstaRibasso.class);//test del login
+//                    intent.putExtra("email", email);
+//                    intent.putExtra("tipoUtente", tipoUtente);
+//                    intent.putExtra("id", id);
+//                    startActivity(intent);
+//                } else if (asta instanceof AstaInversaItem) {
+//                    int id = ((AstaInversaItem) asta).getId();
+//                    Intent intent = new Intent(getContext(), SchermataAstaInversa.class);//test del login
+//                    intent.putExtra("email", email);
+//                    intent.putExtra("tipoUtente", tipoUtente);
+//                    intent.putExtra("id", id);
+//                    startActivity(intent);
+//                }
+//            }
+//        });
+//
+//        astaDAOAcquirente.openConnection();
+//        astaDAOAcquirente.getAsteNuove();
+//        astaDAOAcquirente.closeConnection();
+//
+//
+//
+//
+//
+//        button_notifiche= view.findViewById(R.id.openNotifiche);
+//        button_notifiche.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(getContext(), SchermataNotifiche.class);
+//                intent.putExtra("email", email);
+//                intent.putExtra("tipoUtente",tipoUtente);
+//                startActivity(intent);
+//
+//            }
+//        });
+//        iconaNotifiche = view.findViewById(R.id.iconaNotifiche);
+//        NotificheDAO notificheDAO = new NotificheDAO(AcquirenteFragmentHome.this, email,tipoUtente);
+//        notificheDAO.openConnection();
+//        notificheDAO.checkNotifiche();
+//
+////        countDownTimerNumeroNotifiche = new CountDownTimer(5000, 1000) {
+////            public void onTick(long millisUntilFinished) {
+////                // Stampa il numero di secondi rimanenti
+////                Log.d("Timer home fragment", "Secondi mancanti: " + millisUntilFinished / 1000);
+////            }
+////            public void onFinish() {
+////                Log.d("Timer home fragment", "Timer scaduto");
+////                notificheDAO.checkNotifiche();
+////                start();
+////            }
+////        };
+////        // Avvia il timer
+////        countDownTimerNumeroNotifiche.start();
+//
+//
+//
+//
+//        ImageButton preferitiButton = view.findViewById(R.id.openPreferiti);
+//        preferitiButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(getContext(), PreferitiActivity.class);
+//                intent.putExtra("email", email);
+//                intent.putExtra("tipoUtente",tipoUtente);
+//                startActivity(intent);
+//            }
+//        });
 
     }
 
@@ -394,32 +394,33 @@ public class AcquirenteFragmentHome extends Fragment {
         }
     }
     // questi metodi onPause, onStop, onDestroy e onResume servono a stoppare il timer quando non si è piu su questa schermata e a farlo ricominciare quando si torna
-    @Override
-    public void onPause() {
-        super.onPause();
-        // Ferma il countDownTimer se è attivo
-        if (countDownTimerNumeroNotifiche != null) {
-            countDownTimerNumeroNotifiche.cancel();
-        }
-    }
-    @Override
-    public void onStop() {
-        super.onStop();
-        // Ferma il countDownTimer se è attivo
-        if (countDownTimerNumeroNotifiche != null) {
-            countDownTimerNumeroNotifiche.cancel();
-        }
-    }
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        // Ferma il countDownTimer se è attivo
-        if (countDownTimerNumeroNotifiche != null) {
-            countDownTimerNumeroNotifiche.cancel();
-        }
-    }
+//    @Override
+//    public void onPause() {
+//        super.onPause();
+//        // Ferma il countDownTimer se è attivo
+//        if (countDownTimerNumeroNotifiche != null) {
+//            countDownTimerNumeroNotifiche.cancel();
+//        }
+//    }
+//    @Override
+//    public void onStop() {
+//        super.onStop();
+//        // Ferma il countDownTimer se è attivo
+//        if (countDownTimerNumeroNotifiche != null) {
+//            countDownTimerNumeroNotifiche.cancel();
+//        }
+//    }
+//    @Override
+//    public void onDestroy() {
+//        super.onDestroy();
+//        // Ferma il countDownTimer se è attivo
+//        if (countDownTimerNumeroNotifiche != null) {
+//            countDownTimerNumeroNotifiche.cancel();
+//        }
+//    }
     @Override
     public void onResume() {
+        Log.d("Home" , "entrato in onResume");
         super.onResume();
 //        astaDAOAcquirente = new AstaDAOAcquirente(this, email,tipoUtente);
 //        // Apri la connessione al database e ottieni i prodotti
@@ -429,15 +430,15 @@ public class AcquirenteFragmentHome extends Fragment {
 //        astaDAOAcquirente.getAsteScadenzaRecente();
 //        astaDAOAcquirente.getAsteNuove();
 //        astaDAOAcquirente.closeConnection();
-        NotificheDAO notificheDAO = new NotificheDAO(AcquirenteFragmentHome.this, email,tipoUtente);
-        notificheDAO.openConnection();
-        notificheDAO.checkNotifiche();
-        notificheDAO.closeConnection();
-        // Ferma il countDownTimer se è attivo
-        if (countDownTimerNumeroNotifiche != null) {
-            countDownTimerNumeroNotifiche.cancel();
-            countDownTimerNumeroNotifiche.start();
-        }
+//        NotificheDAO notificheDAO = new NotificheDAO(AcquirenteFragmentHome.this, email,tipoUtente);
+//        notificheDAO.openConnection();
+//        notificheDAO.checkNotifiche();
+//        notificheDAO.closeConnection();
+//        // Ferma il countDownTimer se è attivo
+//        if (countDownTimerNumeroNotifiche != null) {
+//            countDownTimerNumeroNotifiche.cancel();
+//            countDownTimerNumeroNotifiche.start();
+//        }
     }
 
 

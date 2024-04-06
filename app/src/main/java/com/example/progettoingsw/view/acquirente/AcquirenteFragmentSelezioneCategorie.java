@@ -33,9 +33,7 @@ public class AcquirenteFragmentSelezioneCategorie extends Fragment {
     private ArrayAdapter<String> categorieAdapter;
     String email ;
     String tipoUtente;
-    public AcquirenteFragmentSelezioneCategorie(String email, String tipoUtente) {
-        this.email=email;
-        this.tipoUtente=tipoUtente;
+    public AcquirenteFragmentSelezioneCategorie() {
     }
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

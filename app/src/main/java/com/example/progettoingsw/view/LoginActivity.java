@@ -19,6 +19,8 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.progettoingsw.R;
 import com.example.progettoingsw.classe_da_estendere.GestoreComuniImplementazioni;
+import com.example.progettoingsw.model.AcquirenteModel;
+import com.example.progettoingsw.repository.Repository;
 import com.example.progettoingsw.view.acquirente.AcquirenteMainActivity;
 import com.example.progettoingsw.viewmodel.LoginViewModel;
 
@@ -85,34 +87,22 @@ public class LoginActivity extends GestoreComuniImplementazioni {
         osservaMessaggioUtenteNonTrovato();
         bottoneLogin.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-//                Intent intent = new Intent(LoginActivity.this, AcquirenteMainActivity.class);
-//                intent.putExtra("email", "eml");
-//                intent.putExtra("tipoUtente", "Utente");
-//                startActivity(intent);
-                String mail = editText_mail.getText().toString().trim();  // Rimuovi eventuali spazi all'inizio e alla fine
-                String password = editText_password.getText().toString().trim();
-                System.out.println("premuto bottone");
+                //commentare per avere app con connesione al back end:
+                Repository repository = Repository.getInstance();
+                AcquirenteModel acquirenteModel = new AcquirenteModel("emailprova", "nomeprova", "cognomeprova","passwordprova", "biorprova", "linkprova", "italia");
+                repository.setAcquirenteModel(acquirenteModel);
+                Intent intent = new Intent(LoginActivity.this, AcquirenteMainActivity.class);
+                startActivity(intent);
 
-                loginViewModel.loginVenditore(mail,password);
-                loginViewModel.loginAcquirente(mail,password);
+                //commentare per testare app senza connessione al back end:
+//                String mail = editText_mail.getText().toString().trim();  // Rimuovi eventuali spazi all'inizio e alla fine
+//                String password = editText_password.getText().toString().trim();
+//                System.out.println("premuto bottone");
+//
+//                loginViewModel.loginVenditore(mail,password);
+//                loginViewModel.loginAcquirente(mail,password);
 
 
-//                if(mail.isEmpty()){
-//                    editText_mail.setError("Si prega di inserire un indirizzo email.");
-//                }else if(mail.length()>100){
-//                    editText_mail.setError("Attenzione! L'indirizzo email non può essere più lungo di 100 caratteri.");
-//                }else if(password.isEmpty()){
-//                    editText_password.setError("Si prega di inserire una password.");
-//                }else if(password.length()>100){
-//                    editText_password.setError("Attenzione! La password non può essere più lunga di 100 caratteri.");
-//                }else{
-//                    progress_bar_login.setVisibility(View.VISIBLE);
-//                    setAllClickable(linear_layout_login,false);
-//                    // Chiamata al metodo per cercare nel database
-//                    logindao.openConnection();
-//                    logindao.findUser(mail, password);
-//                    Log.d("result set" , "fatta finduser");
-//                }
             }
         });
 
