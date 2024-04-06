@@ -1,10 +1,12 @@
 package com.example.progettoingsw.repository;
 
 import com.example.progettoingsw.model.AcquirenteModel;
+import com.example.progettoingsw.model.VenditoreModel;
 
 public class Repository {
     private AcquirenteModel acquirenteModel;
-    public static final String backendUrl = "http://15.236.37.19:8080/";
+    private VenditoreModel venditoreModel;
+    public static final String backendUrl = "http://15.237.219.56:8080/";
     public static Repository questaRepository = null;
 
     private Repository(){
@@ -23,6 +25,13 @@ public class Repository {
 
     public AcquirenteModel getAcquirenteModel(){
         return acquirenteModel;
+    }
+    public void setVenditoreModel(VenditoreModel venditoreModel){
+        this.venditoreModel = venditoreModel;
+    }
+
+    public VenditoreModel getVenditoreModel(){
+        return venditoreModel;
     }
 
 }

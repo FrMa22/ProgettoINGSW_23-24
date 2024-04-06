@@ -3,7 +3,6 @@ package com.example.progettoingsw.view;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -18,10 +17,8 @@ import android.widget.Toast;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.progettoingsw.DAO.LoginDAO;
 import com.example.progettoingsw.R;
 import com.example.progettoingsw.classe_da_estendere.GestoreComuniImplementazioni;
-import com.example.progettoingsw.controllers_package.Controller;
 import com.example.progettoingsw.view.acquirente.AcquirenteMainActivity;
 import com.example.progettoingsw.viewmodel.LoginViewModel;
 
@@ -85,6 +82,7 @@ public class LoginActivity extends GestoreComuniImplementazioni {
         osservaMessaggioErroreEmail();
         osservaMessaggioErrorePassword();
         osservaProseguiLogin();
+        osservaMessaggioUtenteNonTrovato();
         bottoneLogin.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
 //                Intent intent = new Intent(LoginActivity.this, AcquirenteMainActivity.class);
@@ -94,7 +92,9 @@ public class LoginActivity extends GestoreComuniImplementazioni {
                 String mail = editText_mail.getText().toString().trim();  // Rimuovi eventuali spazi all'inizio e alla fine
                 String password = editText_password.getText().toString().trim();
                 System.out.println("premuto bottone");
-                loginViewModel.login(mail,password);
+
+                loginViewModel.loginVenditore(mail,password);
+                loginViewModel.loginAcquirente(mail,password);
 
 
 //                if(mail.isEmpty()){
@@ -164,12 +164,27 @@ public class LoginActivity extends GestoreComuniImplementazioni {
             }
         });
     }
-    public void osservaProseguiLogin() {
+    public void osservaProseguiLogin(){
         loginViewModel.proseguiLogin.observe(this, (messaggio) -> {
-            if (loginViewModel.isProseguiLogin()) {
-                Intent intent = new Intent(LoginActivity.this, AcquirenteMainActivity.class);
-                startActivity(intent);
-                Toast.makeText(this, "Login effettuato!", Toast.LENGTH_SHORT).show();
+            if (loginViewModel.isProseguiLogin("acquirente")) {
+//                Intent intent = new Intent(LoginActivity.this, AcquirenteMainActivity.class);
+//                startActivity(intent);
+                Toast.makeText(this, "Login effettuato come acquirente!", Toast.LENGTH_SHORT).show();
+            }else if(loginViewModel.isProseguiLogin("venditore")){
+                Toast.makeText(this, "Login effettuato come venditore!", Toast.LENGTH_SHORT).show();
+            }else if(loginViewModel.isProseguiLogin("entrambi")){
+                Toast.makeText(this, "Login effettuato come entrambi->popup!", Toast.LENGTH_SHORT).show();
+            }else{
+                System.out.println("errore in osserva Prosegui Login");
+            }
+        });
+    }
+    public void osservaMessaggioUtenteNonTrovato() {
+        loginViewModel.messaggioUtenteNonTrovato.observe(this, (messaggio) -> {
+            if (loginViewModel.isMessaggioUtenteNonTrovato()) {
+//                Intent intent = new Intent(LoginActivity.this, AcquirenteMainActivity.class);
+//                startActivity(intent);
+                Toast.makeText(this, "Utente non trovato!", Toast.LENGTH_SHORT).show();
             }
         });
     }

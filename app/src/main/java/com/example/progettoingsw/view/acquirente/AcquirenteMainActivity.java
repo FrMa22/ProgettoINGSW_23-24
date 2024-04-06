@@ -11,6 +11,7 @@
     import com.example.progettoingsw.DAO.NotificheDAO;
     import com.example.progettoingsw.R;
     import com.example.progettoingsw.classe_da_estendere.GestoreComuniImplementazioni;
+    import com.example.progettoingsw.repository.Repository;
     import com.example.progettoingsw.view.PopUpNotificaRicevuta;
     import com.example.progettoingsw.view.venditore.VenditorePopUpCreaAsta;
     import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -23,6 +24,7 @@
         private int numeroNotifiche;
         private int numeroNotificheChecked;
         private boolean controlloIniziale = true;
+        private Repository repository;
 private Fragment selectedFragment;
 
         @Override
@@ -31,8 +33,14 @@ private Fragment selectedFragment;
             setContentView(R.layout.acquirente_activity_main);
             bottomNavigationView = findViewById(R.id.acquirente_nav_view);
 
-            email = getIntent().getStringExtra("email").trim();
-            tipoUtente = getIntent().getStringExtra("tipoUtente");
+            repository = Repository.getInstance();
+            if(repository.getAcquirenteModel()!=null){
+                System.out.println("entrato come acquirente");
+            }else if(repository.getVenditoreModel()!=null){
+                System.out.println("entrato come venditore");
+            }
+//            email = getIntent().getStringExtra("email").trim();
+//            tipoUtente = getIntent().getStringExtra("tipoUtente");
             NotificheDAO notificheDAO = new NotificheDAO(this,email,tipoUtente);
             notificheDAO.openConnection();
             notificheDAO.checkNotifiche();

@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.progettoingsw.model.AcquirenteModel;
+import com.example.progettoingsw.model.VenditoreModel;
 import com.example.progettoingsw.repository.LoginRepository;
 import com.example.progettoingsw.repository.Repository;
 
@@ -11,7 +12,7 @@ public class LoginViewModel extends ViewModel {
     public MutableLiveData<String> messaggioErrorePassword = new MutableLiveData<>("");
     public MutableLiveData<String> messaggioErroreEmail = new MutableLiveData<>("");
     public MutableLiveData<String> messaggioUtenteNonTrovato = new MutableLiveData<>("");
-    public MutableLiveData<Boolean> proseguiLogin = new MutableLiveData<>(false);
+    public MutableLiveData<String> proseguiLogin = new MutableLiveData<>("");
     private LoginRepository loginRepository;
     private Repository repository;
     private AcquirenteModel acquirenteModel;
@@ -20,39 +21,76 @@ public class LoginViewModel extends ViewModel {
         loginRepository = new LoginRepository();
     }
 
-    public void login(String email, String password){
+    public void loginAcquirente(String email, String password){
         System.out.println("entrato in login di viewmodel");
         if(loginValido(email,password)){
             System.out.println("in login di viewmodel prima del try");
             try{
-                    trovaUtente(email,password);
+                    trovaAcquirente(email,password);
                     if(repository.getAcquirenteModel()==null){
                         setMessaggioUtenteNonTrovato("utente non trovato");
                     }else{
-                        setProseguiLogin();
+                        setProseguiLogin("acquirente");
                     }
             } catch (Exception e){
                 e.printStackTrace();
             }
         }
     }
-
-    private void setProseguiLogin() {
-        proseguiLogin.setValue(true);
+    public void loginVenditore(String email, String password){
+        System.out.println("entrato in login di viewmodel");
+        if(loginValido(email,password)){
+            System.out.println("in login di viewmodel prima del try");
+            try{
+                trovaVenditore(email,password);
+                if(isProseguiLogin("acquirente")){
+                    if(repository.getVenditoreModel() == null){
+                        return;
+                    }else{
+                        setProseguiLogin("venditore");
+                    }
+                }else {
+                    if (repository.getVenditoreModel() == null) {
+                        setMessaggioUtenteNonTrovato("utente non trovato");
+                    } else {
+                        setProseguiLogin("venditore");
+                    }
+                }
+            } catch (Exception e){
+                e.printStackTrace();
+            }
+        }
     }
-    public Boolean getProseguiLogin(){
+
+    private void setProseguiLogin(String tipo) {
+        if(getProseguiLogin().equals("")){
+            proseguiLogin.setValue(tipo);
+        }else{
+            proseguiLogin.setValue("entrambi");
+        }
+    }
+    public String getProseguiLogin(){
         return proseguiLogin.getValue();
     }
-    public Boolean isProseguiLogin(){
-        return getProseguiLogin();
+    public Boolean isProseguiLogin(String tipo){
+        return getProseguiLogin().equals(tipo);
     }
 
-    private void trovaUtente(String email, String password) {
-        System.out.println("entrato in trova utente di view model");
-        loginRepository.loginBackend(email, password, new LoginRepository.OnLoginListener() {
+    private void trovaAcquirente(String email, String password) {
+        System.out.println("entrato in trova acquirente di view model");
+        loginRepository.loginAcquirenteBackend(email, password, new LoginRepository.OnLoginAcquirenteListener() {
             @Override
             public void onLogin(AcquirenteModel acquirenteModel) {
                 repository.setAcquirenteModel(acquirenteModel);
+            }
+        });
+    }
+    private void trovaVenditore(String email, String password) {
+        System.out.println("entrato in trova venditore di view model");
+        loginRepository.loginVenditoreBackend(email, password, new LoginRepository.OnLoginVenditoreListener() {
+            @Override
+            public void onLogin(VenditoreModel venditoreModel) {
+                repository.setVenditoreModel(venditoreModel);
             }
         });
     }
@@ -95,6 +133,13 @@ public class LoginViewModel extends ViewModel {
     }
     public void setMessaggioUtenteNonTrovato(String messaggio){
         messaggioUtenteNonTrovato.setValue(messaggio);
+    }
+    public Boolean isMessaggioUtenteNonTrovato(){
+        return !getMessaggioUtenteNonTrovato().equals("");
+    }
+
+    private String getMessaggioUtenteNonTrovato() {
+        return messaggioUtenteNonTrovato.getValue();
     }
 
 
