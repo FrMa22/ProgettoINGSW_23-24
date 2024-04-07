@@ -8,7 +8,6 @@
     import android.view.Menu;
     import android.view.MenuItem;
 
-    import com.example.progettoingsw.DAO.NotificheDAO;
     import com.example.progettoingsw.R;
     import com.example.progettoingsw.classe_da_estendere.GestoreComuniImplementazioni;
     import com.example.progettoingsw.model.AcquirenteModel;
@@ -84,7 +83,7 @@ private Fragment selectedFragment;
 
             // Impostazione del Fragment iniziale
                 getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_container, new AcquirenteFragmentHome())
+                        .replace(R.id.fragment_container, new FragmentHome())
                         .commit();
 
 
@@ -93,13 +92,13 @@ private Fragment selectedFragment;
 
                 // Imposta il fragment di default (potrebbe essere il fragment corrente)
                 Fragment currentFragment =(Fragment) getSupportFragmentManager().findFragmentById(R.id.fragment_container);
-                selectedFragment = (currentFragment != null) ? currentFragment : new AcquirenteFragmentHome();
+                selectedFragment = (currentFragment != null) ? currentFragment : new FragmentHome();
 
                 if (item.getItemId() == R.id.action_home) {
                     Log.d("BottomNav", "Selected Home");
                     item.setIcon(R.drawable.ic_home);
                     resetOtherIcons(bottomNavigationView, item);
-                    selectedFragment = new AcquirenteFragmentHome();
+                    selectedFragment = new FragmentHome();
                 } else if (item.getItemId() == R.id.action_categories) {
                     item.setIcon(R.drawable.ic_categorie);
                     resetOtherIcons(bottomNavigationView, item);
@@ -197,7 +196,7 @@ private Fragment selectedFragment;
 
             // Imposta l'icona corrispondente nella BottomNavigationView
             MenuItem menuItem = null;
-            if (fragment instanceof AcquirenteFragmentHome) {
+            if (fragment instanceof FragmentHome) {
                 menuItem = bottomNavigationView.getMenu().findItem(R.id.action_home);
             } else if (fragment instanceof AcquirenteFragmentSelezioneCategorie) {
                 menuItem = bottomNavigationView.getMenu().findItem(R.id.action_categories);

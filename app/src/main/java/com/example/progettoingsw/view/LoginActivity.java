@@ -20,9 +20,12 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.progettoingsw.R;
 import com.example.progettoingsw.classe_da_estendere.GestoreComuniImplementazioni;
 import com.example.progettoingsw.model.AcquirenteModel;
+import com.example.progettoingsw.model.Asta_allingleseModel;
 import com.example.progettoingsw.repository.Repository;
 import com.example.progettoingsw.view.acquirente.AcquirenteMainActivity;
 import com.example.progettoingsw.viewmodel.LoginViewModel;
+
+import java.util.ArrayList;
 
 public class LoginActivity extends GestoreComuniImplementazioni {
     private SwitchCompat switch_mostra_password;
@@ -88,20 +91,24 @@ public class LoginActivity extends GestoreComuniImplementazioni {
         bottoneLogin.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 //commentare per avere app con connesione al back end:
-                Repository repository = Repository.getInstance();
-                AcquirenteModel acquirenteModel = new AcquirenteModel("emailprova", "nomeprova", "cognomeprova","passwordprova", "biorprova", "linkprova", "italia");
-                repository.setAcquirenteModel(acquirenteModel);
-                Intent intent = new Intent(LoginActivity.this, AcquirenteMainActivity.class);
-                startActivity(intent);
+                //Attenzione, la view non puo avere istanza di Repository, questo è solo per far funzionare senza db e connessione
+//                Repository repository = Repository.getInstance();
+//                AcquirenteModel acquirenteModel = new AcquirenteModel("emailprova", "nomeprova", "cognomeprova","passwordprova", "biorprova", "linkprova", "italia");
+//                Asta_allingleseModel astaAllingleseModel = new Asta_allingleseModel(1L,"nomeasta" , "descrizioneasta" , null, 1f, "00:05:00" , "00:05:00", 1f, 1f, "aperta" , "d" );
+//                ArrayList<Asta_allingleseModel> lista = new ArrayList<>();
+//                lista.add(astaAllingleseModel);
+//                repository.setListaAsteAllInglese(lista);
+//                repository.setAcquirenteModel(acquirenteModel);
+//                Intent intent = new Intent(LoginActivity.this, AcquirenteMainActivity.class);
+//                startActivity(intent);
 
                 //commentare per testare app senza connessione al back end:
-//                String mail = editText_mail.getText().toString().trim();  // Rimuovi eventuali spazi all'inizio e alla fine
-//                String password = editText_password.getText().toString().trim();
-//                System.out.println("premuto bottone");
-//
-//                loginViewModel.loginVenditore(mail,password);
-//                loginViewModel.loginAcquirente(mail,password);
+                String mail = editText_mail.getText().toString().trim();  // Rimuovi eventuali spazi all'inizio e alla fine
+                String password = editText_password.getText().toString().trim();
+                System.out.println("premuto bottone");
 
+                loginViewModel.loginAcquirente(mail,password);
+                loginViewModel.loginVenditore(mail,password);
 
             }
         });
@@ -157,8 +164,8 @@ public class LoginActivity extends GestoreComuniImplementazioni {
     public void osservaProseguiLogin(){
         loginViewModel.proseguiLogin.observe(this, (messaggio) -> {
             if (loginViewModel.isProseguiLogin("acquirente")) {
-//                Intent intent = new Intent(LoginActivity.this, AcquirenteMainActivity.class);
-//                startActivity(intent);
+                Intent intent = new Intent(LoginActivity.this, AcquirenteMainActivity.class);
+                startActivity(intent);
                 Toast.makeText(this, "Login effettuato come acquirente!", Toast.LENGTH_SHORT).show();
             }else if(loginViewModel.isProseguiLogin("venditore")){
                 Toast.makeText(this, "Login effettuato come venditore!", Toast.LENGTH_SHORT).show();
@@ -174,7 +181,7 @@ public class LoginActivity extends GestoreComuniImplementazioni {
             if (loginViewModel.isMessaggioUtenteNonTrovato()) {
 //                Intent intent = new Intent(LoginActivity.this, AcquirenteMainActivity.class);
 //                startActivity(intent);
-                Toast.makeText(this, "Utente non trovato!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, messaggio, Toast.LENGTH_SHORT).show();
             }
         });
     }

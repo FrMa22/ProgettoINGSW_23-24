@@ -5,7 +5,7 @@ import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 
 import com.example.progettoingsw.controllers_package.DatabaseHelper;
-import com.example.progettoingsw.view.acquirente.AcquirenteFragmentHome;
+import com.example.progettoingsw.view.acquirente.FragmentHome;
 import com.example.progettoingsw.item.AstaIngleseItem;
 
 import java.sql.Connection;
@@ -18,9 +18,9 @@ public class AstaIngleseItemDAO {
 
     private Connection connection;
     private String email;
-    private AcquirenteFragmentHome acquirenteFragmentHome;
-    public AstaIngleseItemDAO(AcquirenteFragmentHome acquirenteFragmentHome , String email){//per ora lascio fragmentAcquirente
-        this.acquirenteFragmentHome = acquirenteFragmentHome;
+    private FragmentHome fragmentHome;
+    public AstaIngleseItemDAO(FragmentHome fragmentHome, String email){//per ora lascio fragmentAcquirente
+        this.fragmentHome = fragmentHome;
         this.email = email;
     }
     public void openConnection() {
@@ -93,7 +93,7 @@ public class AstaIngleseItemDAO {
         protected void onPostExecute(List<AstaIngleseItem> result) {
             if (result != null) {
                 // Gestisci il risultato come desiderato, ad esempio passando i dati all'adapter
-//                acquirenteFragmentHome.handleProdottiResult(result);
+//                fragmentHome.handleProdottiResult(result);
             }
         }
     }

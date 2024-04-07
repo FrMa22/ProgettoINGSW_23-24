@@ -161,7 +161,7 @@ public class VenditoreAstaRibasso extends GestoreComuniImplementazioni {
                 intent.putExtra("tipoUtente", "venditore");
                 startActivity(intent);
 //        AppCompatActivity activity = (AppCompatActivity) VenditoreAstaRibasso.this;
-//        Fragment fragment = new AcquirenteFragmentHome(email, "venditore");
+//        Fragment fragment = new FragmentHome(email, "venditore");
 //        ((AcquirenteMainActivity) activity).navigateToFragmentAndSelectIcon(fragment);
             }
         });

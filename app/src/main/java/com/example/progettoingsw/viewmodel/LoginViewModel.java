@@ -1,5 +1,7 @@
 package com.example.progettoingsw.viewmodel;
 
+import android.util.Log;
+
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -26,12 +28,7 @@ public class LoginViewModel extends ViewModel {
         if(loginValido(email,password)){
             System.out.println("in login di viewmodel prima del try");
             try{
-                    trovaAcquirente(email,password);
-                    if(repository.getAcquirenteModel()==null){
-                        setMessaggioUtenteNonTrovato("utente non trovato");
-                    }else{
-                        setProseguiLogin("acquirente");
-                    }
+                trovaAcquirente(email,password);
             } catch (Exception e){
                 e.printStackTrace();
             }
@@ -43,19 +40,7 @@ public class LoginViewModel extends ViewModel {
             System.out.println("in login di viewmodel prima del try");
             try{
                 trovaVenditore(email,password);
-                if(isProseguiLogin("acquirente")){
-                    if(repository.getVenditoreModel() == null){
-                        return;
-                    }else{
-                        setProseguiLogin("venditore");
-                    }
-                }else {
-                    if (repository.getVenditoreModel() == null) {
-                        setMessaggioUtenteNonTrovato("utente non trovato");
-                    } else {
-                        setProseguiLogin("venditore");
-                    }
-                }
+
             } catch (Exception e){
                 e.printStackTrace();
             }
@@ -66,7 +51,7 @@ public class LoginViewModel extends ViewModel {
         if(getProseguiLogin().equals("")){
             proseguiLogin.setValue(tipo);
         }else{
-            proseguiLogin.setValue("entrambi");
+            proseguiLogin.setValue(tipo);
         }
     }
     public String getProseguiLogin(){
@@ -82,6 +67,12 @@ public class LoginViewModel extends ViewModel {
             @Override
             public void onLogin(AcquirenteModel acquirenteModel) {
                 repository.setAcquirenteModel(acquirenteModel);
+                Log.d("trovaAcquirente on Login " , "valore di acquirente model : " + acquirenteModel);
+                if(repository.getAcquirenteModel()==null){
+                    setMessaggioUtenteNonTrovato("acquirente non trovato");
+                }else{
+                    setProseguiLogin("acquirente");
+                }
             }
         });
     }
@@ -91,6 +82,37 @@ public class LoginViewModel extends ViewModel {
             @Override
             public void onLogin(VenditoreModel venditoreModel) {
                 repository.setVenditoreModel(venditoreModel);
+                if(repository.getVenditoreModel()!=null){
+                    if(repository.getAcquirenteModel()!=null){
+                        setProseguiLogin("entrambi");
+                    }else{
+                        setProseguiLogin("venditore");
+                    }
+                }else{
+                    if(repository.getAcquirenteModel()==null){
+                        setMessaggioUtenteNonTrovato("nessuna tipologia di utente trovato");
+                    }else{
+                        setMessaggioUtenteNonTrovato("venditore non trovato");
+                    }
+                }
+                Log.d("trovaVenditore on Login " , "valore di venditore model : " + venditoreModel);
+//                if(isProseguiLogin("acquirente")){
+//                    Log.d("trovaVenditore" , "isProseguiLogin è acquirente");
+//                    if(repository.getVenditoreModel() == null){
+//                        Log.d("trovaVenditore" , "isProseguiLogin è acquirente e venditore null");
+//                        return;
+//                    }else{
+//                        Log.d("trovaVenditore" , "isProseguiLogin è acquirente e venditore non null");
+//                        setProseguiLogin("venditore");
+//                    }
+//                }else {
+//                    Log.d("trovaVenditore" , "isProseguiLogin non è acquirente");
+//                    if (repository.getVenditoreModel() == null) {
+//                        setMessaggioUtenteNonTrovato("utente non trovato");
+//                    } else {
+//                        setProseguiLogin("venditore");
+//                    }
+//                }
             }
         });
     }

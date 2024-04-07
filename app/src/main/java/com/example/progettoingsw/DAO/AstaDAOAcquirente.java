@@ -7,7 +7,7 @@ import android.util.Log;
 
 import com.example.progettoingsw.R;
 import com.example.progettoingsw.controllers_package.DatabaseHelper;
-import com.example.progettoingsw.view.acquirente.AcquirenteFragmentHome;
+import com.example.progettoingsw.view.acquirente.FragmentHome;
 import com.example.progettoingsw.item.AstaIngleseItem;
 import com.example.progettoingsw.item.AstaRibassoItem;
 import com.example.progettoingsw.item.AstaInversaItem;
@@ -21,12 +21,12 @@ import java.util.ArrayList;
 public class AstaDAOAcquirente {
 
     private Connection connection;
-    private AcquirenteFragmentHome acquirenteFragmentHome;
+    private FragmentHome fragmentHome;
     private String email;
     private String tipoUtente;
 
-    public AstaDAOAcquirente(AcquirenteFragmentHome acquirenteFragmentHome , String email, String tipoUtente) {
-        this.acquirenteFragmentHome = acquirenteFragmentHome;
+    public AstaDAOAcquirente(FragmentHome fragmentHome, String email, String tipoUtente) {
+        this.fragmentHome = fragmentHome;
         this.email = email;
         this.tipoUtente = tipoUtente;
     }
@@ -154,7 +154,7 @@ public class AstaDAOAcquirente {
                     } else {
                         // In caso di immagine non disponibile, puoi impostare un'immagine predefinita o lasciare foto come null
                         // Ecco un esempio di impostazione di un'immagine predefinita
-                        foto = BitmapFactory.decodeResource(acquirenteFragmentHome.getContext().getResources(), R.drawable.no_image_available);
+                        foto = BitmapFactory.decodeResource(fragmentHome.getContext().getResources(), R.drawable.no_image_available);
                     }
 
                     String prezzoMax = resultSetAsteInversa.getString("prezzoMax");
@@ -178,9 +178,9 @@ public class AstaDAOAcquirente {
         @Override
         protected void onPostExecute(ArrayList<Object> astaItems) {
             super.onPostExecute(astaItems);
-            if (acquirenteFragmentHome != null) {
+            if (fragmentHome != null) {
                 Log.d("AstaDAOAcquirente", "onPostExecute:");
-                acquirenteFragmentHome.handleAsteConsigliateResult(astaItems);
+                fragmentHome.handleAsteConsigliateResult(astaItems);
             }
         }
     }
@@ -223,7 +223,7 @@ public class AstaDAOAcquirente {
                     } else {
                         // In caso di immagine non disponibile, puoi impostare un'immagine predefinita o lasciare foto come null
                         // Ecco un esempio di impostazione di un'immagine predefinita
-                        foto = BitmapFactory.decodeResource(acquirenteFragmentHome.getContext().getResources(), R.drawable.no_image_available);
+                        foto = BitmapFactory.decodeResource(fragmentHome.getContext().getResources(), R.drawable.no_image_available);
                     }
                     String baseAsta = resultSetAsteInglese.getString("baseAsta");
                     String intervalloTempoOfferte = resultSetAsteInglese.getString("intervalloTempoOfferte");
@@ -256,7 +256,7 @@ public class AstaDAOAcquirente {
                     } else {
                         // In caso di immagine non disponibile, puoi impostare un'immagine predefinita o lasciare foto come null
                         // Ecco un esempio di impostazione di un'immagine predefinita
-                        foto = BitmapFactory.decodeResource(acquirenteFragmentHome.getContext().getResources(), R.drawable.no_image_available);
+                        foto = BitmapFactory.decodeResource(fragmentHome.getContext().getResources(), R.drawable.no_image_available);
                     }
                     String prezzoBase = resultSetAsteRibasso.getString("prezzoBase");
                     String intervalloDecrementale = resultSetAsteRibasso.getString("intervalloDecrementale");
@@ -282,9 +282,9 @@ public class AstaDAOAcquirente {
         @Override
         protected void onPostExecute(ArrayList<Object> astaItems) {
             super.onPostExecute(astaItems);
-            if (acquirenteFragmentHome != null) {
+            if (fragmentHome != null) {
                 Log.d("AstaDAOAcquirente", "onPostExecute: GetAsteCategorie");
-                acquirenteFragmentHome.handleAsteConsigliateResult(astaItems);
+                fragmentHome.handleAsteConsigliateResult(astaItems);
             }
         }
     }
@@ -325,7 +325,7 @@ public class AstaDAOAcquirente {
                     } else {
                         // In caso di immagine non disponibile, puoi impostare un'immagine predefinita o lasciare foto come null
                         // Ecco un esempio di impostazione di un'immagine predefinita
-                        foto = BitmapFactory.decodeResource(acquirenteFragmentHome.getResources(), R.drawable.no_image_available);
+                        foto = BitmapFactory.decodeResource(fragmentHome.getResources(), R.drawable.no_image_available);
                     }
 
                     String prezzoMax = resultSetAsteInverse.getString("prezzoMax");
@@ -350,9 +350,9 @@ public class AstaDAOAcquirente {
         @Override
         protected void onPostExecute(ArrayList<Object> astaItems) {
             super.onPostExecute(astaItems);
-            if (acquirenteFragmentHome != null) {
+            if (fragmentHome != null) {
                 Log.d("AstaDAOAcquirente", "onPostExecute: GetAsteCategorie venditore");
-                acquirenteFragmentHome.handleAsteConsigliateResult(astaItems);
+                fragmentHome.handleAsteConsigliateResult(astaItems);
             }
         }
     }
@@ -379,9 +379,9 @@ public class AstaDAOAcquirente {
         @Override
         protected void onPostExecute(ArrayList<String> categorie) {
             super.onPostExecute(categorie);
-            if (acquirenteFragmentHome != null) {
+            if (fragmentHome != null) {
                 Log.d("numero di categorie" , "numero : " + categorie.size());
-                acquirenteFragmentHome.setCategorie(categorie);
+                fragmentHome.setCategorie(categorie);
             }
         }
     }
@@ -407,7 +407,7 @@ public class AstaDAOAcquirente {
                     } else {
                         // In caso di immagine non disponibile, puoi impostare un'immagine predefinita o lasciare foto come null
                         // Ecco un esempio di impostazione di un'immagine predefinita
-                        foto = BitmapFactory.decodeResource(acquirenteFragmentHome.getContext().getResources(), R.drawable.no_image_available);
+                        foto = BitmapFactory.decodeResource(fragmentHome.getContext().getResources(), R.drawable.no_image_available);
                     }
                     String baseAsta = resultSetAsteInglese.getString("baseAsta");
                     String intervalloTempoOfferte = resultSetAsteInglese.getString("intervalloTempoOfferte");
@@ -430,10 +430,10 @@ public class AstaDAOAcquirente {
         @Override
         protected void onPostExecute(ArrayList<Object> astaItems) {
             super.onPostExecute(astaItems);
-            if (acquirenteFragmentHome != null) {
+            if (fragmentHome != null) {
                 // Gestisci il risultato come desiderato
                 Log.d("AstaDAOAcquirente", "onPostExecute: GetAsteProssimaScadenza");
-                acquirenteFragmentHome.handleAsteInScadenzaResult(astaItems);
+                fragmentHome.handleAsteInScadenzaResult(astaItems);
             }
         }
     }
@@ -458,7 +458,7 @@ public class AstaDAOAcquirente {
                     } else {
                         // In caso di immagine non disponibile, puoi impostare un'immagine predefinita o lasciare foto come null
                         // Ecco un esempio di impostazione di un'immagine predefinita
-                        foto = BitmapFactory.decodeResource(acquirenteFragmentHome.getResources(), R.drawable.no_image_available);
+                        foto = BitmapFactory.decodeResource(fragmentHome.getResources(), R.drawable.no_image_available);
                     }
 
                     String prezzoMax = resultSetAsteInverse.getString("prezzoMax");
@@ -481,10 +481,10 @@ public class AstaDAOAcquirente {
         @Override
         protected void onPostExecute(ArrayList<Object> astaItems) {
             super.onPostExecute(astaItems);
-            if (acquirenteFragmentHome != null) {
+            if (fragmentHome != null) {
                 // Gestisci il risultato come desiderato
                 Log.d("AstaDAOAcquirente", "onPostExecute: GetAsteProssimaScadenza");
-                acquirenteFragmentHome.handleAsteInScadenzaResult(astaItems);
+                fragmentHome.handleAsteInScadenzaResult(astaItems);
             }
         }
     }
@@ -516,7 +516,7 @@ public class AstaDAOAcquirente {
                         // In caso di immagine non disponibile, puoi impostare un'immagine predefinita o lasciare foto come null
                         // Ecco un esempio di impostazione di un'immagine predefinita
                         Log.d("immagine", "impostata default");
-                        foto = BitmapFactory.decodeResource(acquirenteFragmentHome.getContext().getResources(), R.drawable.no_image_available);
+                        foto = BitmapFactory.decodeResource(fragmentHome.getContext().getResources(), R.drawable.no_image_available);
                     }
                     Log.d("foto ", " foto : " + foto);
                     String baseAsta = resultSetAsteInglese.getString("baseAsta");
@@ -555,7 +555,7 @@ public class AstaDAOAcquirente {
                         // In caso di immagine non disponibile, puoi impostare un'immagine predefinita o lasciare foto come null
                         // Ecco un esempio di impostazione di un'immagine predefinita
                         Log.d("immagine", "impostata default");
-                        foto = BitmapFactory.decodeResource(acquirenteFragmentHome.getContext().getResources(), R.drawable.no_image_available);
+                        foto = BitmapFactory.decodeResource(fragmentHome.getContext().getResources(), R.drawable.no_image_available);
                     }
                     Log.d("foto ", " foto : " + foto);
                     String prezzoBase = resultSetAsteRibasso.getString("prezzoBase");
@@ -583,9 +583,9 @@ public class AstaDAOAcquirente {
         @Override
         protected void onPostExecute(ArrayList<Object> astaItems) {
             super.onPostExecute(astaItems);
-            if (acquirenteFragmentHome != null) {
+            if (fragmentHome != null) {
                 Log.d("GetAsteNuoveIngleseTask", "onPostExecute:");
-                acquirenteFragmentHome.handleAsteNuoveResult(astaItems);
+                fragmentHome.handleAsteNuoveResult(astaItems);
             }
         }
     }
@@ -611,7 +611,7 @@ public class AstaDAOAcquirente {
                     } else {
                         // In caso di immagine non disponibile, puoi impostare un'immagine predefinita o lasciare foto come null
                         // Ecco un esempio di impostazione di un'immagine predefinita
-                        foto = BitmapFactory.decodeResource(acquirenteFragmentHome.getResources(), R.drawable.no_image_available);
+                        foto = BitmapFactory.decodeResource(fragmentHome.getResources(), R.drawable.no_image_available);
                     }
 
                     String prezzoMax = resultSetAsteInverse.getString("prezzoMax");
@@ -638,9 +638,9 @@ public class AstaDAOAcquirente {
         @Override
         protected void onPostExecute(ArrayList<Object> astaItems) {
             super.onPostExecute(astaItems);
-            if (acquirenteFragmentHome != null) {
+            if (fragmentHome != null) {
                 Log.d("GetAsteNuoveIngleseTask", "onPostExecute:");
-                acquirenteFragmentHome.handleAsteNuoveResult(astaItems);
+                fragmentHome.handleAsteNuoveResult(astaItems);
             }
         }
     }

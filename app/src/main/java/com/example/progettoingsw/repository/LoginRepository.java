@@ -1,6 +1,7 @@
 package com.example.progettoingsw.repository;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.example.progettoingsw.DTO.AcquirenteDTO;
 import com.example.progettoingsw.DTO.VenditoreDTO;
@@ -11,6 +12,7 @@ import com.example.progettoingsw.model.VenditoreModel;
 
 import okhttp3.OkHttpClient;
 
+import java.io.EOFException;
 import java.io.IOException;
 
 import retrofit2.Call;
@@ -58,7 +60,8 @@ import retrofit2.converter.gson.GsonConverterFactory;public class LoginRepositor
 
             try {
                 Response<AcquirenteDTO> response = call.execute();
-                if (response.isSuccessful()) {
+                if (response.body() != null && response.isSuccessful()) {
+                    System.out.println("valore di response " + response.body());
                     System.out.println("response successful");
                     AcquirenteDTO acquirenteDTO = response.body();
                     if (acquirenteDTO != null) {
@@ -69,9 +72,12 @@ import retrofit2.converter.gson.GsonConverterFactory;public class LoginRepositor
                     System.out.println("acquirente dto null");
                 }
                 System.out.println("response non successful");
-            } catch (IOException e) {
-                System.out.println("exception IOEXC");
-                e.printStackTrace();
+            } catch(EOFException e){
+                Log.d("LoginAcquirenteTask" ,"catch di EOFException");
+                //e.printStackTrace();
+            }catch (IOException e) {
+                //e.printStackTrace();
+                Log.d("LoginAcquirenteTask" ,"catch di IOException");
             }
             return null;
         }
@@ -113,7 +119,8 @@ import retrofit2.converter.gson.GsonConverterFactory;public class LoginRepositor
 
             try {
                 Response<VenditoreDTO> response = call.execute();
-                if (response.isSuccessful()) {
+                if (response.body() != null && response.isSuccessful()) {
+                    System.out.println("valore di response " + response.body());
                     System.out.println("response successful");
                     VenditoreDTO venditoreDTO = response.body();
                     if (venditoreDTO != null) {
@@ -124,9 +131,12 @@ import retrofit2.converter.gson.GsonConverterFactory;public class LoginRepositor
                     System.out.println("venditore dto null");
                 }
                 System.out.println("response non successful");
-            } catch (IOException e) {
-                System.out.println("exception IOEXC");
-                e.printStackTrace();
+            } catch(EOFException e){
+                Log.d("LoginAcquirenteTask" ,"catch di EOFException");
+                //e.printStackTrace();
+            }catch (IOException e) {
+                //e.printStackTrace();
+                Log.d("LoginVenditoreTask" ,"catch di IOException");
             }
             return null;
         }
