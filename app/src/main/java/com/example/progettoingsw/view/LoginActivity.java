@@ -19,13 +19,8 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.progettoingsw.R;
 import com.example.progettoingsw.classe_da_estendere.GestoreComuniImplementazioni;
-import com.example.progettoingsw.model.AcquirenteModel;
-import com.example.progettoingsw.model.Asta_allingleseModel;
-import com.example.progettoingsw.repository.Repository;
 import com.example.progettoingsw.view.acquirente.AcquirenteMainActivity;
 import com.example.progettoingsw.viewmodel.LoginViewModel;
-
-import java.util.ArrayList;
 
 public class LoginActivity extends GestoreComuniImplementazioni {
     private SwitchCompat switch_mostra_password;
@@ -84,10 +79,7 @@ public class LoginActivity extends GestoreComuniImplementazioni {
 //            Controller.redirectActivity(LoginActivity.this, Registrazione.class);
 //
 //        });
-        osservaMessaggioErroreEmail();
-        osservaMessaggioErrorePassword();
-        osservaProseguiLogin();
-        osservaMessaggioUtenteNonTrovato();
+
         bottoneLogin.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 //commentare per avere app con connesione al back end:
@@ -107,8 +99,13 @@ public class LoginActivity extends GestoreComuniImplementazioni {
                 String password = editText_password.getText().toString().trim();
                 System.out.println("premuto bottone");
 
+                osservaMessaggioErroreEmail();
+                osservaMessaggioErrorePassword();
+                osservaProseguiLogin();
+                osservaMessaggioUtenteNonTrovato();
+
                 loginViewModel.loginAcquirente(mail,password);
-                loginViewModel.loginVenditore(mail,password);
+                //loginViewModel.loginVenditore(mail,password);
 
             }
         });
@@ -164,11 +161,17 @@ public class LoginActivity extends GestoreComuniImplementazioni {
     public void osservaProseguiLogin(){
         loginViewModel.proseguiLogin.observe(this, (messaggio) -> {
             if (loginViewModel.isProseguiLogin("acquirente")) {
+
                 Intent intent = new Intent(LoginActivity.this, AcquirenteMainActivity.class);
                 startActivity(intent);
                 Toast.makeText(this, "Login effettuato come acquirente!", Toast.LENGTH_SHORT).show();
+
             }else if(loginViewModel.isProseguiLogin("venditore")){
+
+                Intent intent = new Intent(LoginActivity.this, AcquirenteMainActivity.class);
+                startActivity(intent);
                 Toast.makeText(this, "Login effettuato come venditore!", Toast.LENGTH_SHORT).show();
+
             }else if(loginViewModel.isProseguiLogin("entrambi")){
                 Toast.makeText(this, "Login effettuato come entrambi->popup!", Toast.LENGTH_SHORT).show();
             }else{

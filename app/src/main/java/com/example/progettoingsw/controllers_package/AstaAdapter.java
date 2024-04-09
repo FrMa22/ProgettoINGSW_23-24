@@ -20,6 +20,7 @@ import com.example.progettoingsw.item.AstaRibassoItem;
 import com.example.progettoingsw.item.AstaInversaItem;
 import com.example.progettoingsw.model.Asta_allingleseModel;
 import com.example.progettoingsw.model.Asta_alribassoModel;
+import com.example.progettoingsw.model.Asta_inversaModel;
 
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
@@ -83,10 +84,8 @@ public class AstaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             if(astaModel.getPath_immagine() != null && astaModel.getPath_immagine().length > 0){
                 bitmap = BitmapFactory.decodeByteArray(astaModel.getPath_immagine(), 0, astaModel.getPath_immagine().length);
             }
-
             AstaIngleseItem astaItem = new AstaIngleseItem(Math.toIntExact(astaModel.getId()),astaModel.getNome(),astaModel.getDescrizione(), bitmap, Float.toString(astaModel.getBaseAsta()),astaModel.getIntervalloTempoOfferte()
             ,Float.toString(astaModel.getRialzoMin()),Float.toString(astaModel.getPrezzoAttuale()),astaModel.getCondizione(), astaModel.getId_venditore());
-
             ((AstaIngleseViewHolder) holder).bind((AstaIngleseItem) astaItem);
         } else if(item instanceof Asta_alribassoModel){
             Asta_alribassoModel astaModel = (Asta_alribassoModel) item;
@@ -97,6 +96,15 @@ public class AstaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             AstaRibassoItem astaItem = new AstaRibassoItem(Math.toIntExact(astaModel.getId()), astaModel.getNome(), astaModel.getDescrizione(), bitmap, Float.toString(astaModel.getPrezzoBase()), astaModel.getIntervalloDecrementale(),Float.toString(astaModel.getDecrementoAutomaticoCifra()),
                     Float.toString(astaModel.getPrezzoMin()),Float.toString(astaModel.getPrezzoAttuale()), astaModel.getCondizione(), astaModel.getId_venditore());
             ((AstaRibassoViewHolder) holder).bind((AstaRibassoItem) astaItem);
+        } else if(item instanceof Asta_inversaModel){
+            Asta_inversaModel astaModel = (Asta_inversaModel) item;
+            Bitmap bitmap = null;
+            if(astaModel.getPath_immagine() != null && astaModel.getPath_immagine().length > 0){
+                bitmap = BitmapFactory.decodeByteArray(astaModel.getPath_immagine(), 0, astaModel.getPath_immagine().length);
+            }
+            AstaInversaItem astaItem = new AstaInversaItem(Math.toIntExact(astaModel.getId()),astaModel.getNome(),astaModel.getDescrizione(), bitmap, Float.toString(astaModel.getPrezzoMax()),astaModel.getDataDiScadenza()
+                    ,astaModel.getCondizione(),Float.toString(astaModel.getPrezzoAttuale()), astaModel.getId_acquirente());
+            ((AstaInversaViewHolder) holder).bind((AstaInversaItem) astaItem);
         }
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -139,6 +147,8 @@ public class AstaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             return TIPO_ASTA_INGLESE;
         } else if(item instanceof Asta_alribassoModel){
             return TIPO_ASTA_RIBASSO;
+        } else if(item instanceof Asta_inversaModel){
+            return TIPO_ASTA_INVERSA;
         }
         return -1;
     }
@@ -294,8 +304,12 @@ public class AstaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
     public void setAste(ArrayList<Object> astaList) {
-        this.astaItemList = astaList;
-        notifyDataSetChanged(); // Notifica all'adapter che i dati sono stati modificati
+        if (astaItemList == null) {
+            astaItemList = new ArrayList<>();
+        }
+        int startPosition = getItemCount();
+        astaItemList.addAll(astaList);
+        notifyItemRangeInserted(startPosition, astaList.size());
     }
     public void stopAllTimers() {
         for (CountDownTimer timer : countDownTimers) {

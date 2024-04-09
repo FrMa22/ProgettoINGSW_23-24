@@ -9,14 +9,14 @@ public class Asta_inversa_DTO {
     private byte[] path_immagine;
     private float prezzoMax;
     private float prezzoAttuale;
-    private Timestamp dataDiScadenza;
+    private String dataDiScadenza;
     private String condizione;
     private String id_acquirente;
 
     public Asta_inversa_DTO(){
 
     }
-    public Asta_inversa_DTO(Long id, String nome, String descrizione, byte[] path_immagine, float prezzoMax, float prezzoAttuale, Timestamp dataDiScadenza, String condizione, String id_acquirente) {
+    public Asta_inversa_DTO(Long id, String nome, String descrizione, byte[] path_immagine, float prezzoMax, float prezzoAttuale, String dataDiScadenza, String condizione, String id_acquirente) {
         this.id = id;
         this.nome = nome;
         this.descrizione = descrizione;
@@ -84,11 +84,11 @@ public class Asta_inversa_DTO {
     }
 
     // Getter e setter per dataDiScadenza
-    public Timestamp getDataDiScadenza() {
+    public String getDataDiScadenza() {
         return dataDiScadenza;
     }
 
-    public void setDataDiScadenza(Timestamp dataDiScadenza) {
+    public void setDataDiScadenza(String dataDiScadenza) {
         this.dataDiScadenza = dataDiScadenza;
     }
 

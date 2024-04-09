@@ -10,6 +10,9 @@ import com.example.progettoingsw.model.VenditoreModel;
 import com.example.progettoingsw.repository.LoginRepository;
 import com.example.progettoingsw.repository.Repository;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class LoginViewModel extends ViewModel {
     public MutableLiveData<String> messaggioErrorePassword = new MutableLiveData<>("");
     public MutableLiveData<String> messaggioErroreEmail = new MutableLiveData<>("");
@@ -17,7 +20,6 @@ public class LoginViewModel extends ViewModel {
     public MutableLiveData<String> proseguiLogin = new MutableLiveData<>("");
     private LoginRepository loginRepository;
     private Repository repository;
-    private AcquirenteModel acquirenteModel;
     public LoginViewModel(){
         repository = Repository.getInstance();
         loginRepository = new LoginRepository();
@@ -40,7 +42,6 @@ public class LoginViewModel extends ViewModel {
             System.out.println("in login di viewmodel prima del try");
             try{
                 trovaVenditore(email,password);
-
             } catch (Exception e){
                 e.printStackTrace();
             }
@@ -70,9 +71,21 @@ public class LoginViewModel extends ViewModel {
                 Log.d("trovaAcquirente on Login " , "valore di acquirente model : " + acquirenteModel);
                 if(repository.getAcquirenteModel()==null){
                     setMessaggioUtenteNonTrovato("acquirente non trovato");
+                    trovaVenditore(email,password);
                 }else{
-                    setProseguiLogin("acquirente");
+                    trovaCategorieAcquirente(email,password);
                 }
+            }
+        });
+    }
+    private void trovaCategorieAcquirente(String email,String password) {
+        loginRepository.recuperaCategorieAcquirenteBackend(email, new LoginRepository.OnRecuperaCategorieAcquirenteListener() {
+            @Override
+            public void onRecuperaCategorieAcquirente(ArrayList<String> list) {
+                repository.setListaCategorieAcquirente(list);
+                trovaVenditore(email,password);
+                Log.d("categorie acquirente", "" + list);
+                //setProseguiLogin("acquirente");
             }
         });
     }
@@ -83,36 +96,30 @@ public class LoginViewModel extends ViewModel {
             public void onLogin(VenditoreModel venditoreModel) {
                 repository.setVenditoreModel(venditoreModel);
                 if(repository.getVenditoreModel()!=null){
-                    if(repository.getAcquirenteModel()!=null){
-                        setProseguiLogin("entrambi");
-                    }else{
-                        setProseguiLogin("venditore");
-                    }
+                        trovaCategorieVenditore(email);
                 }else{
                     if(repository.getAcquirenteModel()==null){
                         setMessaggioUtenteNonTrovato("nessuna tipologia di utente trovato");
                     }else{
                         setMessaggioUtenteNonTrovato("venditore non trovato");
+                        setProseguiLogin("acquirente");
                     }
                 }
                 Log.d("trovaVenditore on Login " , "valore di venditore model : " + venditoreModel);
-//                if(isProseguiLogin("acquirente")){
-//                    Log.d("trovaVenditore" , "isProseguiLogin è acquirente");
-//                    if(repository.getVenditoreModel() == null){
-//                        Log.d("trovaVenditore" , "isProseguiLogin è acquirente e venditore null");
-//                        return;
-//                    }else{
-//                        Log.d("trovaVenditore" , "isProseguiLogin è acquirente e venditore non null");
-//                        setProseguiLogin("venditore");
-//                    }
-//                }else {
-//                    Log.d("trovaVenditore" , "isProseguiLogin non è acquirente");
-//                    if (repository.getVenditoreModel() == null) {
-//                        setMessaggioUtenteNonTrovato("utente non trovato");
-//                    } else {
-//                        setProseguiLogin("venditore");
-//                    }
-//                }
+            }
+        });
+    }
+    private void trovaCategorieVenditore(String email) {
+        loginRepository.recuperaCategorieVenditoreBackend(email, new LoginRepository.OnRecuperaCategorieVenditoreListener() {
+            @Override
+            public void onRecuperaCategorieVenditore(ArrayList<String> list) {
+                repository.setListaCategorieVenditore(list);
+                Log.d("categorie venditore", "" + list);
+                if(repository.getAcquirenteModel()!=null){
+                    setProseguiLogin("entrambi");
+                }else{
+                    setProseguiLogin("venditore");
+                }
             }
         });
     }

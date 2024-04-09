@@ -15,4 +15,9 @@ public interface Asta_allingleseService {
     @GET("/asta_allingleseController/getAste_allingleseScadenzaRecente")
     Call<ArrayList<Asta_allinglese_DTO>> getAste_allingleseScadenzaRecente();
 
+    @GET("/asta_allingleseController/getAste_allingleseNuove")
+    Call<ArrayList<Asta_allinglese_DTO>> getAste_allingleseNuove();
+
+    @GET("/asta_allingleseController/getAste_allingleseNomeCategoria/{nomeCategoria}")
+    Call<ArrayList<Asta_allinglese_DTO>> getAste_allingleseCategoriaNome(@Path("nomeCategoria") String nomeCategoria);
 }

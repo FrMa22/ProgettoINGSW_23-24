@@ -11,6 +11,7 @@ import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -74,6 +75,7 @@ public class FragmentHome extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         osservaAcquirenteModelPresente();
+        osservaVenditoreModelPresente();
         homeViewModel.checkTipoUtente();
 
         relative_layout_home_acquirente = view.findViewById(R.id.relative_layout_home_acquirente);
@@ -90,57 +92,57 @@ public class FragmentHome extends Fragment {
 //        // Inizializza il DAO e l'adapter
 //        astaDAOAcquirente = new AstaDAOAcquirente(this, email,tipoUtente);
 //
-//        astaAdapterConsigliate = new AstaAdapter(getContext(), null);
+          astaAdapterConsigliate = new AstaAdapter(getContext(), null);
 //        categorie = new ArrayList<>();
 //
-//        // Inizializza il RecyclerView e imposta l'adapter
-//        RecyclerView recyclerViewAsteConsigliate = view.findViewById(R.id.recycler_view_aste_consigliate);
+          // Inizializza il RecyclerView e imposta l'adapter
+          RecyclerView recyclerViewAsteConsigliate = view.findViewById(R.id.recycler_view_aste_consigliate);
 //        // Utilizza LinearLayoutManager con orientamento orizzontale per far si che il recycler sia orizzontale, di default è verticale
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
-//        recyclerViewAsteConsigliate.setLayoutManager(linearLayoutManager);
+          LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+          recyclerViewAsteConsigliate.setLayoutManager(linearLayoutManager);
 //
 //
 //        // Aggiungi un decorator predefinito per ridurre lo spazio tra le aste, superfluo
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(getContext(), linearLayoutManager.getOrientation());
-//        recyclerViewAsteConsigliate.addItemDecoration(dividerItemDecoration);
+          DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(getContext(), linearLayoutManager.getOrientation());
+          recyclerViewAsteConsigliate.addItemDecoration(dividerItemDecoration);
 //
 //        //bisogna aggiungere il setOnItemClickListener per ogni setAdapter di ogni recycler view specificando cosa fare per ogni tipo di asta clickato
-//        astaAdapterConsigliate.setOnItemClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                // Ottieni la posizione dell'elemento cliccato
-//                int position = recyclerViewAsteConsigliate.getChildAdapterPosition(v);
-//
-//                // Ottieni l'oggetto Asta corrispondente alla posizione cliccata
-//                Object asta = astaAdapterConsigliate.getItem(position);
-//
-//                // Esegui le azioni desiderate con l'oggetto Asta
-//                if (asta instanceof AstaIngleseItem) {
-//                    int id = ((AstaIngleseItem) asta).getId();
-//                    Log.d("Asta inglese", "id è " + id);
-//                    Intent intent = new Intent(getContext(), SchermataAstaInglese.class);//test del login
-//                    intent.putExtra("email", email);
-//                    intent.putExtra("tipoUtente", tipoUtente);
-//                    intent.putExtra("id", id);
-//                    startActivity(intent);
-//                } else if (asta instanceof AstaRibassoItem) {
-//                    int id = ((AstaRibassoItem) asta).getId();
-//                    Intent intent = new Intent(getContext(), SchermataAstaRibasso.class);//test del login
-//                    intent.putExtra("email", email);
-//                    intent.putExtra("tipoUtente", tipoUtente);
-//                    intent.putExtra("id", id);
-//                    startActivity(intent);
-//                } else if (asta instanceof AstaInversaItem) {
-//                    int id = ((AstaInversaItem) asta).getId();
-//                    Intent intent = new Intent(getContext(), SchermataAstaInversa.class);//test del login
-//                    intent.putExtra("email", email);
-//                    intent.putExtra("tipoUtente", tipoUtente);
-//                    intent.putExtra("id", id);
-//                    startActivity(intent);
-//                }
-//            }
-//        });
-//        recyclerViewAsteConsigliate.setAdapter(astaAdapterConsigliate);
+          astaAdapterConsigliate.setOnItemClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Ottieni la posizione dell'elemento cliccato
+                int position = recyclerViewAsteConsigliate.getChildAdapterPosition(v);
+
+                // Ottieni l'oggetto Asta corrispondente alla posizione cliccata
+                Object asta = astaAdapterConsigliate.getItem(position);
+
+                // Esegui le azioni desiderate con l'oggetto Asta
+                if (asta instanceof AstaIngleseItem) {
+                    int id = ((AstaIngleseItem) asta).getId();
+                    Log.d("Asta inglese", "id è " + id);
+                    Intent intent = new Intent(getContext(), SchermataAstaInglese.class);//test del login
+                    intent.putExtra("email", email);
+                    intent.putExtra("tipoUtente", tipoUtente);
+                    intent.putExtra("id", id);
+                    startActivity(intent);
+                } else if (asta instanceof AstaRibassoItem) {
+                    int id = ((AstaRibassoItem) asta).getId();
+                    Intent intent = new Intent(getContext(), SchermataAstaRibasso.class);//test del login
+                    intent.putExtra("email", email);
+                    intent.putExtra("tipoUtente", tipoUtente);
+                    intent.putExtra("id", id);
+                    startActivity(intent);
+                } else if (asta instanceof AstaInversaItem) {
+                    int id = ((AstaInversaItem) asta).getId();
+                    Intent intent = new Intent(getContext(), SchermataAstaInversa.class);//test del login
+                    intent.putExtra("email", email);
+                    intent.putExtra("tipoUtente", tipoUtente);
+                    intent.putExtra("id", id);
+                    startActivity(intent);
+                }
+            }
+        });
+        recyclerViewAsteConsigliate.setAdapter(astaAdapterConsigliate);
 //
 //
 //        // Apri la connessione al database e ottieni i prodotti
@@ -450,14 +452,43 @@ public class FragmentHome extends Fragment {
 ////        }
 //    }
 
-    //lo osserva solo se si è in home acquirente
+    public void osservaaste_allingleseCategoriaNomePresenti() {
+        homeViewModel.aste_allingleseCategoriaNomePresenti.observe(getViewLifecycleOwner(), (messaggio) -> {
+            if (homeViewModel.getAste_allingleseCategoriaNomePresenti()) {
+                ArrayList<Object> listaOggetti = new ArrayList<>(homeViewModel.getListaAsta_allingleseCategoriaNome());
+                Log.d("FragmentHome" , "osserva asta all inglese categoria, prima,count: " + listaOggetti.size());
+                astaAdapterConsigliate.setAste(listaOggetti);
+                Log.d("FragmentHome" , "osserva asta all inglese categoria, dopo");
+            }
+        });
+    }
     public void osservaaste_allingleseInScadenzaPresenti() {
         homeViewModel.aste_allingleseInScadenzaPresenti.observe(getViewLifecycleOwner(), (messaggio) -> {
             if (homeViewModel.getAste_allingleseInScadenzaPresenti()) {
                 ArrayList<Object> listaOggetti = new ArrayList<>(homeViewModel.getListaAsta_allingleseScadenzaRecente());
-                Log.d("FragmentHome" , "osserva asta all inglese, prima,count: " + listaOggetti.size());
+                Log.d("FragmentHome" , "osserva asta all inglese in scadenza, prima,count: " + listaOggetti.size());
                 astaAdapterInScadenza.setAste(listaOggetti);
-                Log.d("FragmentHome" , "osserva asta all inglese, dopo");
+                Log.d("FragmentHome" , "osserva asta all inglese in scadenza, dopo");
+            }
+        });
+    }
+    public void osservaaste_allingleseNuovePresenti() {
+        homeViewModel.aste_allingleseNuovePresenti.observe(getViewLifecycleOwner(), (messaggio) -> {
+            if (homeViewModel.getAste_allingleseNuovePresenti()) {
+                ArrayList<Object> listaOggetti = new ArrayList<>(homeViewModel.getListaAsta_allingleseNuove());
+                Log.d("FragmentHome" , "osserva asta all inglese nuove, prima,count: " + listaOggetti.size());
+                astaAdapterNuove.setAste(listaOggetti);
+                Log.d("FragmentHome" , "osserva asta all inglese nuove, dopo");
+            }
+        });
+    }
+    public void osservaaste_alribassoCategoriaNomePresenti() {
+        homeViewModel.aste_alribassoCategoriaNomePresenti.observe(getViewLifecycleOwner(), (messaggio) -> {
+            if (homeViewModel.getAste_alribassoCategoriaNomePresenti()) {
+                ArrayList<Object> listaOggetti = new ArrayList<>(homeViewModel.getListaAsta_alribassoCategoriaNome());
+                Log.d("FragmentHome" , "osserva asta all inglese categoria, prima,count: " + listaOggetti.size());
+                astaAdapterConsigliate.setAste(listaOggetti);
+                Log.d("FragmentHome" , "osserva asta all inglese categoria, dopo");
             }
         });
     }
@@ -465,20 +496,63 @@ public class FragmentHome extends Fragment {
         homeViewModel.aste_alribassoNuovePresenti.observe(getViewLifecycleOwner(), (messaggio) -> {
             if (homeViewModel.getAste_alribassoNuovePresenti()) {
                 ArrayList<Object> listaOggetti = new ArrayList<>(homeViewModel.getListaAsta_alribassoNuove());
-                Log.d("FragmentHome" , "osserva asta al ribasso, prima,count: " + listaOggetti.size());
+                Log.d("FragmentHome" , "osserva asta al ribasso nuove, prima,count: " + listaOggetti.size());
                 astaAdapterNuove.setAste(listaOggetti);
-                Log.d("FragmentHome" , "osserva asta al ribasso, dopo");
+                Log.d("FragmentHome" , "osserva asta al ribasso nuove, dopo");
             }
         });
     }
     public void osservaAcquirenteModelPresente(){
         homeViewModel.acquirenteModelPresente.observe(getViewLifecycleOwner(), (messaggio) -> {
             if (homeViewModel.getAcquirenteModelPresente()) {
+                Toast.makeText(getContext(), "Entrato come acquirente in home.", Toast.LENGTH_SHORT).show();
                 osservaaste_allingleseInScadenzaPresenti();
+                osservaaste_allingleseNuovePresenti();
                 osservaAste_alribassoNuovePresenti();
+                osservaaste_allingleseCategoriaNomePresenti();
+                osservaaste_alribassoCategoriaNomePresenti();
                 homeViewModel.trovaEImpostaAste();
-                //homeViewModel.getAsteScadenzaRecente();
-
+            }
+        });
+    }
+    public void osservaaste_inversaInScadenzaPresenti() {
+        homeViewModel.aste_inversaInScadenzaPresenti.observe(getViewLifecycleOwner(), (messaggio) -> {
+            if (homeViewModel.getAste_inversaInScadenzaPresenti()) {
+                ArrayList<Object> listaOggetti = new ArrayList<>(homeViewModel.getListaAsta_inversaScadenzaRecente());
+                Log.d("FragmentHome" , "osserva asta inverse, prima,count: " + listaOggetti.size());
+                astaAdapterInScadenza.setAste(listaOggetti);
+                Log.d("FragmentHome" , "osserva asta inverse, dopo");
+            }
+        });
+    }
+    public void osservaaste_inversaNuovePresenti() {
+        homeViewModel.aste_inversaNuovePresenti.observe(getViewLifecycleOwner(), (messaggio) -> {
+            if (homeViewModel.getAste_inversaNuovePresenti()) {
+                ArrayList<Object> listaOggetti = new ArrayList<>(homeViewModel.getListaAsta_inversaNuove());
+                Log.d("FragmentHome" , "osserva asta al ribasso, prima,count: " + listaOggetti.size());
+                astaAdapterNuove.setAste(listaOggetti);
+                Log.d("FragmentHome" , "osserva asta al ribasso, dopo");
+            }
+        });
+    }
+    public void osservaaste_inversaCategoriaNomePresenti() {
+        homeViewModel.aste_inversaCategoriaNomePresenti.observe(getViewLifecycleOwner(), (messaggio) -> {
+            if (homeViewModel.getAste_inversaCategoriaNomePresenti()) {
+                ArrayList<Object> listaOggetti = new ArrayList<>(homeViewModel.getListaAsta_inversaCategoriaNome());
+                Log.d("FragmentHome" , "osserva asta all inglese, prima,count: " + listaOggetti.size());
+                astaAdapterConsigliate.setAste(listaOggetti);
+                Log.d("FragmentHome" , "osserva asta all inglese, dopo");
+            }
+        });
+    }
+    public void osservaVenditoreModelPresente(){
+        homeViewModel.venditoreModelPresente.observe(getViewLifecycleOwner(), (messaggio) -> {
+            if (homeViewModel.getVenditoreModelPresente()) {
+                Toast.makeText(getContext(), "Entrato come acquirente in home.", Toast.LENGTH_SHORT).show();
+                osservaaste_inversaInScadenzaPresenti();
+                osservaaste_inversaNuovePresenti();
+                osservaaste_inversaCategoriaNomePresenti();
+                homeViewModel.trovaEImpostaAste();
             }
         });
     }

@@ -14,6 +14,7 @@ import okhttp3.OkHttpClient;
 
 import java.io.EOFException;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import retrofit2.Call;
 import retrofit2.Response;
@@ -26,9 +27,17 @@ import retrofit2.converter.gson.GsonConverterFactory;public class LoginRepositor
         System.out.println("entrato in loginAcquirente backend");
         new LoginAcquirenteTask(listener).execute(email, password);
     }
+    public void recuperaCategorieAcquirenteBackend(String email, OnRecuperaCategorieAcquirenteListener listener) {
+        System.out.println("entrato in loginAcquirente backend");
+        new RecuperaCategorieAcquirenteTask(listener).execute(email);
+    }
     public void loginVenditoreBackend(String email, String password, OnLoginVenditoreListener listener) {
         System.out.println("entrato in loginVenditore backend");
         new LoginVenditoreTask(listener).execute(email, password);
+    }
+    public void recuperaCategorieVenditoreBackend(String email, OnRecuperaCategorieVenditoreListener listener) {
+        System.out.println("entrato in loginAcquirente backend");
+        new RecuperaCategorieVenditoreTask(listener).execute(email);
     }
 
     private static class LoginAcquirenteTask extends AsyncTask<String, Void, AcquirenteModel> {
@@ -89,6 +98,61 @@ import retrofit2.converter.gson.GsonConverterFactory;public class LoginRepositor
                 listener.onLogin(result);
             }
         }
+    }
+    private static class RecuperaCategorieAcquirenteTask extends AsyncTask<String, Void, ArrayList<String>> {
+        private OnRecuperaCategorieAcquirenteListener listener;
+
+        public RecuperaCategorieAcquirenteTask(OnRecuperaCategorieAcquirenteListener listener) {
+            this.listener = listener;
+        }
+
+        @Override
+        protected ArrayList<String> doInBackground(String... params) {
+            String email = params[0];
+            // Effettua l'operazione di rete qui...
+            // Restituisci il risultato
+
+            OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+            // Configura il client OkHttpClient...
+
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl(Repository.backendUrl)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .client(httpClient.build())
+                    .build();
+
+            AcquirenteService service = retrofit.create(AcquirenteService.class);
+            Call<ArrayList<String>> call = service.findCategorieByIndirizzoEmailAcquirente(email);
+
+            try {
+                Response<ArrayList<String>> response = call.execute();
+                if (response.body() != null && response.isSuccessful()) {
+                    System.out.println("valore di response " + response.body());
+                    System.out.println("response successful");
+                    ArrayList<String> listaCategorie = response.body();
+                    return listaCategorie;
+                }
+                System.out.println("response non successful");
+            } catch(EOFException e){
+                Log.d("LoginAcquirenteTask" ,"catch di EOFException");
+                //e.printStackTrace();
+            }catch (IOException e) {
+                //e.printStackTrace();
+                Log.d("LoginAcquirenteTask" ,"catch di IOException");
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(ArrayList<String> result) {
+            System.out.println("on post execute RecuperaCategorieAcquirenteTask" + result);
+            if (listener != null) {
+                listener.onRecuperaCategorieAcquirente(result);
+            }
+        }
+    }
+    public interface OnRecuperaCategorieAcquirenteListener {
+        void onRecuperaCategorieAcquirente(ArrayList<String> listaCategorie);
     }
     private static class LoginVenditoreTask extends AsyncTask<String, Void, VenditoreModel> {
         private OnLoginVenditoreListener listener;
@@ -154,6 +218,62 @@ import retrofit2.converter.gson.GsonConverterFactory;public class LoginRepositor
     }
     public interface OnLoginVenditoreListener {
         void onLogin(VenditoreModel venditoreModel);
+    }
+
+    private static class RecuperaCategorieVenditoreTask extends AsyncTask<String, Void, ArrayList<String>> {
+        private OnRecuperaCategorieVenditoreListener listener;
+
+        public RecuperaCategorieVenditoreTask(OnRecuperaCategorieVenditoreListener listener) {
+            this.listener = listener;
+        }
+
+        @Override
+        protected ArrayList<String> doInBackground(String... params) {
+            String email = params[0];
+            // Effettua l'operazione di rete qui...
+            // Restituisci il risultato
+
+            OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+            // Configura il client OkHttpClient...
+
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl(Repository.backendUrl)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .client(httpClient.build())
+                    .build();
+
+            VenditoreService service = retrofit.create(VenditoreService.class);
+            Call<ArrayList<String>> call = service.findCategorieByIndirizzoEmailVenditore(email);
+
+            try {
+                Response<ArrayList<String>> response = call.execute();
+                if (response.body() != null && response.isSuccessful()) {
+                    System.out.println("valore di response " + response.body());
+                    System.out.println("response successful");
+                    ArrayList<String> listaCategorie = response.body();
+                    return listaCategorie;
+                }
+                System.out.println("response non successful");
+            } catch(EOFException e){
+                Log.d("LoginAcquirenteTask" ,"catch di EOFException");
+                //e.printStackTrace();
+            }catch (IOException e) {
+                //e.printStackTrace();
+                Log.d("LoginAcquirenteTask" ,"catch di IOException");
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(ArrayList<String> result) {
+            System.out.println("on post execute RecuperaCategorieVenditoreTask" + result);
+            if (listener != null) {
+                listener.onRecuperaCategorieVenditore(result);
+            }
+        }
+    }
+    public interface OnRecuperaCategorieVenditoreListener {
+        void onRecuperaCategorieVenditore(ArrayList<String> listaCategorie);
     }
 }
 
