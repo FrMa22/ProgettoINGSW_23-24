@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.core.content.ContextCompat;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.progettoingsw.DAO.AstaInversaDAO;
 import com.example.progettoingsw.DAO.AstaPreferitaInversaDAO;
@@ -21,9 +22,14 @@ import com.example.progettoingsw.R;
 import com.example.progettoingsw.classe_da_estendere.GestoreComuniImplementazioni;
 import com.example.progettoingsw.controllers_package.Controller;
 import com.example.progettoingsw.item.AstaInversaItem;
+import com.example.progettoingsw.model.Asta_allingleseModel;
+import com.example.progettoingsw.model.Asta_inversaModel;
+import com.example.progettoingsw.viewmodel.SchermataAstaIngleseViewModel;
+import com.example.progettoingsw.viewmodel.SchermataAstaInversaViewModel;
 import com.google.android.material.button.MaterialButton;
 
 public class SchermataAstaInversa extends GestoreComuniImplementazioni {
+    private SchermataAstaInversaViewModel schermataAstaInversaViewModel;
     Controller controller;
     ImageButton bottoneBack;
     private TextView text_view_tua_offerta_attuale_asta_inversa;
@@ -51,13 +57,19 @@ public class SchermataAstaInversa extends GestoreComuniImplementazioni {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.schermata_asta_inversa);
-        astaInversaDAO = new AstaInversaDAO(this);
-        astaPreferitaInversaDAO = new AstaPreferitaInversaDAO(this);
 
-        progress_bar_schermata_asta_inversa = findViewById(R.id.progress_bar_schermata_asta_inversa);
-        relativeLayoutSchermataAstaInversa = findViewById(R.id.relativeLayoutSchermataAstaInversa);
-        progress_bar_schermata_asta_inversa.setVisibility(View.VISIBLE);
-        setAllClickable(relativeLayoutSchermataAstaInversa,false);
+        schermataAstaInversaViewModel = new ViewModelProvider(this).get(SchermataAstaInversaViewModel.class);
+        osservaIsAstaRecuperata();
+        osservaErroreRecuperoAsta();
+        schermataAstaInversaViewModel.getAstaData();
+
+//        astaInversaDAO = new AstaInversaDAO(this);
+//        astaPreferitaInversaDAO = new AstaPreferitaInversaDAO(this);
+//
+//        progress_bar_schermata_asta_inversa = findViewById(R.id.progress_bar_schermata_asta_inversa);
+//        relativeLayoutSchermataAstaInversa = findViewById(R.id.relativeLayoutSchermataAstaInversa);
+//        progress_bar_schermata_asta_inversa.setVisibility(View.VISIBLE);
+//        setAllClickable(relativeLayoutSchermataAstaInversa,false);
 
         textViewNomeProdottoSchermataAstaInversa = findViewById(R.id.textViewNomeProdottoSchermataAstaInversa);
         ImageViewSchermataAstaInversa = findViewById(R.id.ImageViewSchermataAstaInversa);
@@ -75,24 +87,24 @@ public class SchermataAstaInversa extends GestoreComuniImplementazioni {
 
 
 
-        id = getIntent().getIntExtra("id",0);
-        email = getIntent().getStringExtra("email");
-        tipoUtente = getIntent().getStringExtra("tipoUtente");
-
-        if(tipoUtente.equals("acquirente")){
-            bottoneOffertaSchermataAstaInversa.setVisibility(View.INVISIBLE);
-        }
-
-        countDownTimer = new CountDownTimer(10000, 1000) {
-            public void onTick(long millisUntilFinished) {
-                // Il timer sta andando avanti, non è necessario fare nulla qui
-                Log.d("Timer", "Tempo rimanente: " + millisUntilFinished / 1000 + " secondi");
-            }
-            public void onFinish() {
-                Log.d("Timer", "Timer scaduto");
-                astaInversaDAO.getPrezzoECondizioneAstaByID(id);
-            }
-        };
+//        id = getIntent().getIntExtra("id",0);
+//        email = getIntent().getStringExtra("email");
+//        tipoUtente = getIntent().getStringExtra("tipoUtente");
+//
+//        if(tipoUtente.equals("acquirente")){
+//            bottoneOffertaSchermataAstaInversa.setVisibility(View.INVISIBLE);
+//        }
+//
+//        countDownTimer = new CountDownTimer(10000, 1000) {
+//            public void onTick(long millisUntilFinished) {
+//                // Il timer sta andando avanti, non è necessario fare nulla qui
+//                Log.d("Timer", "Tempo rimanente: " + millisUntilFinished / 1000 + " secondi");
+//            }
+//            public void onFinish() {
+//                Log.d("Timer", "Timer scaduto");
+//                astaInversaDAO.getPrezzoECondizioneAstaByID(id);
+//            }
+//        };
 
         bottoneBack =  findViewById(R.id.bottoneBackSchermataAstaInversa);
 
@@ -108,117 +120,116 @@ public class SchermataAstaInversa extends GestoreComuniImplementazioni {
 
 
 
-        textViewAcquirenteSchermataAstaInversa.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String emailAcquirente = textViewAcquirenteSchermataAstaInversa.getText().toString();
-                Intent intent=new Intent(SchermataAstaInversa.this, ProfiloAcquirente.class);
-                intent.putExtra("email",emailAcquirente);
-                startActivity(intent);
-            }
-        });
-
-
-        bottoneOffertaSchermataAstaInversa.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                astaInversaDAO.getAstaInversaByID(id);
-                PopUpNuovaOfferta popUpNuovaOfferta = new PopUpNuovaOfferta(SchermataAstaInversa.this,email,id, textViewPrezzoAttualeSchermataAstaInversa.getText().toString(), SchermataAstaInversa.this);
-                popUpNuovaOfferta.show();
-            }
-        });
-        //controllo per far si che un acquirente non possa inserire un asta inversa nei preferiti
-        if(tipoUtente.equals("acquirente")){
-            imageButtonPreferiti.setVisibility(View.INVISIBLE);
-        }else{
-            astaPreferitaInversaDAO.openConnection();
-            astaPreferitaInversaDAO.verificaByID(id,email);
-            imageButtonPreferiti.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Log.d("Preferiti asta inversa", "drawable preferiti");
-                    if (imageButtonPreferiti.getDrawable().getConstantState().equals(drawableCuoreVuoto.getConstantState())){
-                        Log.d("Preferiti asta inversa", "non è in preferito");
-                        setAllClickable(relativeLayoutSchermataAstaInversa,false);
-                        astaPreferitaInversaDAO.inserisciByID(id,email);
-
-                    } else if (imageButtonPreferiti.getDrawable().getConstantState().equals(drawableCuorePieno.getConstantState())){
-                        Log.d("Preferiti asta inversa", "è in preferito");
-                        setAllClickable(relativeLayoutSchermataAstaInversa,false);
-                        astaPreferitaInversaDAO.eliminaByID(id,email);
-                    }
-                }
-            });
-        }
-
-        astaInversaDAO.openConnection();
-        astaInversaDAO.getAstaInversaByID(id);
-        astaInversaDAO.verificaAttualeVincitore(email,id);
+//        textViewAcquirenteSchermataAstaInversa.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                String emailAcquirente = textViewAcquirenteSchermataAstaInversa.getText().toString();
+//                Intent intent=new Intent(SchermataAstaInversa.this, ProfiloAcquirente.class);
+//                intent.putExtra("email",emailAcquirente);
+//                startActivity(intent);
+//            }
+//        });
+//
+//
+//        bottoneOffertaSchermataAstaInversa.setOnClickListener(new View.OnClickListener() {
+//            public void onClick(View v) {
+//                astaInversaDAO.getAstaInversaByID(id);
+//                PopUpNuovaOfferta popUpNuovaOfferta = new PopUpNuovaOfferta(SchermataAstaInversa.this,email,id, textViewPrezzoAttualeSchermataAstaInversa.getText().toString(), SchermataAstaInversa.this);
+//                popUpNuovaOfferta.show();
+//            }
+//        });
+//        //controllo per far si che un acquirente non possa inserire un asta inversa nei preferiti
+//        if(tipoUtente.equals("acquirente")){
+//            imageButtonPreferiti.setVisibility(View.INVISIBLE);
+//        }else{
+//            astaPreferitaInversaDAO.openConnection();
+//            astaPreferitaInversaDAO.verificaByID(id,email);
+//            imageButtonPreferiti.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    Log.d("Preferiti asta inversa", "drawable preferiti");
+//                    if (imageButtonPreferiti.getDrawable().getConstantState().equals(drawableCuoreVuoto.getConstantState())){
+//                        Log.d("Preferiti asta inversa", "non è in preferito");
+//                        setAllClickable(relativeLayoutSchermataAstaInversa,false);
+//                        astaPreferitaInversaDAO.inserisciByID(id,email);
+//
+//                    } else if (imageButtonPreferiti.getDrawable().getConstantState().equals(drawableCuorePieno.getConstantState())){
+//                        Log.d("Preferiti asta inversa", "è in preferito");
+//                        setAllClickable(relativeLayoutSchermataAstaInversa,false);
+//                        astaPreferitaInversaDAO.eliminaByID(id,email);
+//                    }
+//                }
+//            });
+//        }
+//
+//        astaInversaDAO.openConnection();
+//        astaInversaDAO.getAstaInversaByID(id);
+//        astaInversaDAO.verificaAttualeVincitore(email,id);
     }
     // questi metodi onPause, onStop, onDestroy e onResume servono a stoppare il timer quando non si è piu su questa schermata e a farlo ricominciare quando si torna
     @Override
     protected void onPause() {
         super.onPause();
         // Ferma il countDownTimer se è attivo
-        if (countDownTimer != null) {
-            countDownTimer.cancel();
-        }
+//        if (countDownTimer != null) {
+//            countDownTimer.cancel();
+//        }
     }
 
     @Override
     protected void onStop() {
         super.onStop();
         // Ferma il countDownTimer se è attivo
-        if (countDownTimer != null) {
-            countDownTimer.cancel();
-        }
+//        if (countDownTimer != null) {
+//            countDownTimer.cancel();
+//        }
     }
     @Override
     protected void onDestroy() {
         super.onDestroy();
         // Ferma il countDownTimer se è attivo
-        if (countDownTimer != null) {
-            countDownTimer.cancel();
-        }
+//        if (countDownTimer != null) {
+//            countDownTimer.cancel();
+//        }
     }
     @Override
     public void onResume() {
         super.onResume();
         // Avvia nuovamente il countDownTimer
-        if (countDownTimer != null ) {
-            Log.d("timer ", "inizia on Resume");
-            countDownTimer.cancel();
-            countDownTimer.start();
-        }
+//        if (countDownTimer != null ) {
+//            Log.d("timer ", "inizia on Resume");
+//            countDownTimer.cancel();
+//            countDownTimer.start();
+//        }
     }
 
 
-    public void setAstaData(AstaInversaItem astaInversaItem) {
-        if (astaInversaItem != null) {
+    public void setAstaData(Asta_inversaModel astaInversaRecuperata) {
+        if (astaInversaRecuperata != null) {
             // Imposta i dati recuperati sui TextView e ImageView della tua activity
-            textViewNomeProdottoSchermataAstaInversa.setText(astaInversaItem.getNome());
-            textViewDescrizioneSchermataAstaInversa.setText(astaInversaItem.getDescrizione());
-            textViewPrezzoAttualeSchermataAstaInversa.setText(String.valueOf(astaInversaItem.getPrezzoAttuale()));
-            textViewDataScadenzaSchermataAstaInversa.setText(String.valueOf(astaInversaItem.getDataDiScadenza()));
-            textViewAcquirenteSchermataAstaInversa.setText(astaInversaItem.getEmailAcquirente());
-            // Imposta l'immagine solo se non è nulla
-            if (astaInversaItem.getImmagine() != null) {
-                ImageViewSchermataAstaInversa.setImageBitmap(astaInversaItem.getImmagine());
-            }
-            if (astaInversaItem.getCondizione().equals("chiusa")) {
-                bottoneOffertaSchermataAstaInversa.setVisibility(View.INVISIBLE);
-                imageButtonPreferiti.setVisibility(View.INVISIBLE);
-                if(countDownTimer != null){
-                    countDownTimer.cancel();
-                }
-            }else{
-                if(countDownTimer!=null) {
-                    countDownTimer.cancel();
-                    countDownTimer.start();
-                }
-            }
+            textViewNomeProdottoSchermataAstaInversa.setText(astaInversaRecuperata.getNome());
+            textViewDescrizioneSchermataAstaInversa.setText(astaInversaRecuperata.getDescrizione());
+            textViewPrezzoAttualeSchermataAstaInversa.setText(String.valueOf(astaInversaRecuperata.getPrezzoAttuale()));
+            textViewDataScadenzaSchermataAstaInversa.setText(String.valueOf(astaInversaRecuperata.getDataDiScadenza()));
+            textViewAcquirenteSchermataAstaInversa.setText(astaInversaRecuperata.getId_acquirente());
 
-            progress_bar_schermata_asta_inversa.setVisibility(View.GONE);
-            setAllClickable(relativeLayoutSchermataAstaInversa, true);
+            ImageViewSchermataAstaInversa.setImageBitmap(schermataAstaInversaViewModel.convertiImmagine(astaInversaRecuperata.getImmagine()));
+
+//            if (astaInversaItem.getCondizione().equals("chiusa")) {
+//                bottoneOffertaSchermataAstaInversa.setVisibility(View.INVISIBLE);
+//                imageButtonPreferiti.setVisibility(View.INVISIBLE);
+//                if(countDownTimer != null){
+//                    countDownTimer.cancel();
+//                }
+//            }else{
+//                if(countDownTimer!=null) {
+//                    countDownTimer.cancel();
+//                    countDownTimer.start();
+//                }
+//            }
+//
+//            progress_bar_schermata_asta_inversa.setVisibility(View.GONE);
+//            setAllClickable(relativeLayoutSchermataAstaInversa, true);
         } else {
             // Gestisci il caso in cui non ci siano dati recuperati
             Log.d("Errore", "Impossibile recuperare i dati dell'asta");
@@ -279,7 +290,25 @@ public class SchermataAstaInversa extends GestoreComuniImplementazioni {
         }
         setAllClickable(relativeLayoutSchermataAstaInversa,true);
     }
-
+    public void osservaIsAstaRecuperata(){
+        schermataAstaInversaViewModel.isAstaRecuperata.observe(this, (messaggio) -> {
+            if (schermataAstaInversaViewModel.getIsAstaRecuperata()) {
+                Log.d("osservaIsAstaRecuperata", "sto recuperando l'asta");
+                Asta_inversaModel astaRecuperata = schermataAstaInversaViewModel.getAstaRecuperata();
+                setAstaData(astaRecuperata);
+            }
+        });
+    }
+    public void osservaErroreRecuperoAsta(){
+        schermataAstaInversaViewModel.erroreRecuperoAsta.observe(this, (messaggio) -> {
+            if (schermataAstaInversaViewModel.isErroreRecuperoAsta()) {
+                Toast.makeText(this, schermataAstaInversaViewModel.getErroreRecuperoAsta(), Toast.LENGTH_SHORT).show();
+                Log.d("osservaIsAstaRecuperata", "sto recuperando l'asta");
+                Asta_inversaModel astaRecuperata = schermataAstaInversaViewModel.getAstaRecuperata();
+                setAstaData(astaRecuperata);
+            }
+        });
+    }
 }
 
 

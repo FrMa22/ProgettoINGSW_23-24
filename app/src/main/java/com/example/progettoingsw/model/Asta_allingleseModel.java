@@ -54,11 +54,11 @@ public class Asta_allingleseModel {
         this.descrizione = descrizione;
     }
 
-    public byte[] getPath_immagine() {
+    public byte[] getImmagine() {
         return path_immagine;
     }
 
-    public void setPath_immagine(byte[] path_immagine) {
+    public void setImmagine(byte[] path_immagine) {
         this.path_immagine = path_immagine;
     }
 

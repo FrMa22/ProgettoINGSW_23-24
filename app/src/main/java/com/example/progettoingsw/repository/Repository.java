@@ -15,7 +15,7 @@ public class Repository {
     private ArrayList<String> listaCategorieAcquirente;
     private VenditoreModel venditoreModel;
     private ArrayList<String> listaCategorieVenditore;
-    public static final String backendUrl = "http:/13.38.47.64:8080/";
+    public static final String backendUrl = "http:/13.38.11.24:8080/";
     public static Repository questaRepository = null;
     //liste per le aste all'inglese nel caso di accesso come acquirente (aste in home)
     private ArrayList<Asta_allingleseModel> listaAsteAllIngleseInScadenza;
@@ -28,6 +28,17 @@ public class Repository {
     private ArrayList<Asta_inversaModel> listaAsteInversaInScadenza;
     private ArrayList<Asta_inversaModel> listaAsteInversaNuove;
     private ArrayList<Asta_inversaModel> listaAsteInversaCategoriaNome;
+
+    //questi servono per accedere a un asta cliccandoci sopra, i commentati sono per testare senza db
+    private Asta_allingleseModel asta_allingleseSelezionata;
+//    private Asta_allingleseModel asta_allingleseSelezionata = new Asta_allingleseModel(1L,"nome", "descriizone", null, 1f, "00:05:00"
+//            , "00:05:00", 5f,1f,"aperta","d");
+    private Asta_alribassoModel asta_alribassoSelezionata;
+//    private Asta_alribassoModel asta_alribassoSelezionata = new Asta_alribassoModel(1L,"nome", "descrizione",
+//            null, 20f,"00:05:00", "00:05:00", 1f,1f,20f,"aperta","d");
+    private Asta_inversaModel asta_inversaSelezionata;
+//    private Asta_inversaModel asta_inversaSelezionata = new Asta_inversaModel(1L,"nome","descrizione",
+//            null,100f,100f,"2024-05-01 00:00:00", "aperta","o");
 
 
     private Repository(){
@@ -56,7 +67,7 @@ public class Repository {
     }
 
 
-    //metodi getter e setter per le liste di aste inglesi
+    //metodi getter e setter per le aste inglesi
     public ArrayList<Asta_allingleseModel> getListaAsteAllIngleseInScadenza() {
         return listaAsteAllIngleseInScadenza;
     }
@@ -75,8 +86,15 @@ public class Repository {
     public void setListaAsteAllIngleseCategoriaNome(ArrayList<Asta_allingleseModel> listaAsteAllIngleseCategoriaNome) {
         this.listaAsteAllIngleseCategoriaNome = listaAsteAllIngleseCategoriaNome;
     }
+    public Asta_allingleseModel getAsta_allingleseSelezionata() {
+        return asta_allingleseSelezionata;
+    }
+    public void setAsta_allingleseSelezionata(Asta_allingleseModel asta_allingleseSelezionata) {
+        Log.d("Repository" , "imposto asta all inglese selezionata " + asta_allingleseSelezionata);
+        this.asta_allingleseSelezionata = asta_allingleseSelezionata;
+    }
 
-    //metodi getter e setter per le liste di aste al ribasso
+    //metodi getter e setter per le aste al ribasso
     public void setListaAsteAlRibassoNuove(ArrayList<Asta_alribassoModel> listaAsteAlRibassoNuove){
         this.listaAsteAlRibassoNuove = listaAsteAlRibassoNuove;
     }
@@ -89,9 +107,15 @@ public class Repository {
     public void setListaAsteAlRibassoCategoriaNome(ArrayList<Asta_alribassoModel> listaAsteAlRibassoCategoriaNome) {
         this.listaAsteAlRibassoCategoriaNome = listaAsteAlRibassoCategoriaNome;
     }
+    public Asta_alribassoModel getAsta_alribassoSelezionata() {
+        return asta_alribassoSelezionata;
+    }
 
+    public void setAsta_alribassoSelezionata(Asta_alribassoModel asta_alribassoSelezionata) {
+        this.asta_alribassoSelezionata = asta_alribassoSelezionata;
+    }
 
-    //metodi getter e setter per le liste di aste inverse
+    //metodi getter e setter per le aste inverse
     public ArrayList<Asta_inversaModel> getListaAsteInversaInScadenza() {
         return listaAsteInversaInScadenza;
     }
@@ -109,6 +133,12 @@ public class Repository {
     }
     public void setListaAsteInversaCategoriaNome(ArrayList<Asta_inversaModel> listaAsteInversaCategoriaNome) {
         this.listaAsteInversaCategoriaNome = listaAsteInversaCategoriaNome;
+    }
+    public Asta_inversaModel getAsta_inversaSelezionata() {
+        return asta_inversaSelezionata;
+    }
+    public void setAsta_inversaSelezionata(Asta_inversaModel asta_inversaSelezionata) {
+        this.asta_inversaSelezionata = asta_inversaSelezionata;
     }
 
 

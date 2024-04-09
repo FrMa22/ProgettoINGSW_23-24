@@ -1,7 +1,5 @@
 package com.example.progettoingsw.model;
 
-import java.sql.Timestamp;
-
 public class Asta_inversaModel {
     private Long id;
     private String nome;
@@ -57,11 +55,11 @@ public class Asta_inversaModel {
     }
 
     // Getter e setter per path_immagine
-    public byte[] getPath_immagine() {
+    public byte[] getImmagine() {
         return path_immagine;
     }
 
-    public void setPath_immagine(byte[] path_immagine) {
+    public void setImmagine(byte[] path_immagine) {
         this.path_immagine = path_immagine;
     }
 

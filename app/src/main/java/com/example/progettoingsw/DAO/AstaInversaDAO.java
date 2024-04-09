@@ -205,7 +205,7 @@ public class AstaInversaDAO {
             if (astaInversaItem != null) {
                 // Operazione completata con successo, puoi fare qualcosa con l'oggetto AstaIngleseItem
                 Log.d("Asta recuperata", astaInversaItem.toString());
-                schermataAstaInversa.setAstaData(astaInversaItem);
+                //schermataAstaInversa.setAstaData(astaInversaItem);
             } else {
                 // Operazione fallita o nessun risultato trovato
                 Log.d("Errore", "Impossibile recuperare l'asta");

@@ -81,8 +81,8 @@ public class AstaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         } else if(item instanceof Asta_allingleseModel){
             Asta_allingleseModel astaModel = (Asta_allingleseModel) item;
             Bitmap bitmap = null;
-            if(astaModel.getPath_immagine() != null && astaModel.getPath_immagine().length > 0){
-                bitmap = BitmapFactory.decodeByteArray(astaModel.getPath_immagine(), 0, astaModel.getPath_immagine().length);
+            if(astaModel.getImmagine() != null && astaModel.getImmagine().length > 0){
+                bitmap = BitmapFactory.decodeByteArray(astaModel.getImmagine(), 0, astaModel.getImmagine().length);
             }
             AstaIngleseItem astaItem = new AstaIngleseItem(Math.toIntExact(astaModel.getId()),astaModel.getNome(),astaModel.getDescrizione(), bitmap, Float.toString(astaModel.getBaseAsta()),astaModel.getIntervalloTempoOfferte()
             ,Float.toString(astaModel.getRialzoMin()),Float.toString(astaModel.getPrezzoAttuale()),astaModel.getCondizione(), astaModel.getId_venditore());
@@ -90,8 +90,8 @@ public class AstaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         } else if(item instanceof Asta_alribassoModel){
             Asta_alribassoModel astaModel = (Asta_alribassoModel) item;
             Bitmap bitmap = null;
-            if(astaModel.getPath_immagine() != null && astaModel.getPath_immagine().length > 0){
-                bitmap = BitmapFactory.decodeByteArray(astaModel.getPath_immagine(), 0, astaModel.getPath_immagine().length);
+            if(astaModel.getImmagine() != null && astaModel.getImmagine().length > 0){
+                bitmap = BitmapFactory.decodeByteArray(astaModel.getImmagine(), 0, astaModel.getImmagine().length);
             }
             AstaRibassoItem astaItem = new AstaRibassoItem(Math.toIntExact(astaModel.getId()), astaModel.getNome(), astaModel.getDescrizione(), bitmap, Float.toString(astaModel.getPrezzoBase()), astaModel.getIntervalloDecrementale(),Float.toString(astaModel.getDecrementoAutomaticoCifra()),
                     Float.toString(astaModel.getPrezzoMin()),Float.toString(astaModel.getPrezzoAttuale()), astaModel.getCondizione(), astaModel.getId_venditore());
@@ -99,8 +99,8 @@ public class AstaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         } else if(item instanceof Asta_inversaModel){
             Asta_inversaModel astaModel = (Asta_inversaModel) item;
             Bitmap bitmap = null;
-            if(astaModel.getPath_immagine() != null && astaModel.getPath_immagine().length > 0){
-                bitmap = BitmapFactory.decodeByteArray(astaModel.getPath_immagine(), 0, astaModel.getPath_immagine().length);
+            if(astaModel.getImmagine() != null && astaModel.getImmagine().length > 0){
+                bitmap = BitmapFactory.decodeByteArray(astaModel.getImmagine(), 0, astaModel.getImmagine().length);
             }
             AstaInversaItem astaItem = new AstaInversaItem(Math.toIntExact(astaModel.getId()),astaModel.getNome(),astaModel.getDescrizione(), bitmap, Float.toString(astaModel.getPrezzoMax()),astaModel.getDataDiScadenza()
                     ,astaModel.getCondizione(),Float.toString(astaModel.getPrezzoAttuale()), astaModel.getId_acquirente());

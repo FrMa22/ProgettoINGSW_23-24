@@ -1,10 +1,15 @@
 package com.example.progettoingsw.viewmodel;
 
+import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.progettoingsw.item.AstaIngleseItem;
+import com.example.progettoingsw.item.AstaInversaItem;
+import com.example.progettoingsw.item.AstaRibassoItem;
 import com.example.progettoingsw.model.Asta_allingleseModel;
 import com.example.progettoingsw.model.Asta_alribassoModel;
 import com.example.progettoingsw.model.Asta_inversaModel;
@@ -12,6 +17,9 @@ import com.example.progettoingsw.repository.Asta_allingleseRepository;
 import com.example.progettoingsw.repository.Asta_alribassoRepository;
 import com.example.progettoingsw.repository.Asta_inversaRepository;
 import com.example.progettoingsw.repository.Repository;
+import com.example.progettoingsw.view.SchermataAstaInglese;
+import com.example.progettoingsw.view.SchermataAstaInversa;
+import com.example.progettoingsw.view.SchermataAstaRibasso;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -32,6 +40,10 @@ public class HomeViewModel extends ViewModel {
     public MutableLiveData<Boolean> aste_alribassoNuovePresenti = new MutableLiveData<>(false);
     public MutableLiveData<Boolean> acquirenteModelPresente = new MutableLiveData<>(false);
     public MutableLiveData<Boolean> venditoreModelPresente = new MutableLiveData<>(false);
+    public MutableLiveData<Boolean> entraInSchermataAstaInglese = new MutableLiveData<>(false);
+    public MutableLiveData<Boolean> entraInSchermataAstaRibasso = new MutableLiveData<>(false);
+    public MutableLiveData<Boolean> entraInSchermataAstaInversa = new MutableLiveData<>(false);
+
     private ArrayList<Asta_allingleseModel> listAsta_allingleseScadenzaRecente = new ArrayList<>();
     private ArrayList<Asta_allingleseModel> listAsta_allingleseNuove = new ArrayList<>();
     private ArrayList<Asta_inversaModel> listAsta_inversaScadenzaRecente = new ArrayList<>();
@@ -89,8 +101,6 @@ public class HomeViewModel extends ViewModel {
             }
         }
     }
-
-
     //metodi per trovare le aste all'inglese
     private void trovaAste_allingleseScadenzaRecente() {
         astaAllingleseRepository.getAste_allingleseScadenzaRecenteBackend(new Asta_allingleseRepository.OnGetAsteScadenzaRecenteListener() {
@@ -199,7 +209,10 @@ public class HomeViewModel extends ViewModel {
     public Boolean containsVenditore(){
         return repository.getVenditoreModel()!=null;
     }
-    public ArrayList<String> getListaCategorieVenditore(){
+
+    public ArrayList<String> getListaCategorieVenditore() {
+
+
         return repository.getListaCategorieVenditore();
     }
 
@@ -246,6 +259,12 @@ public class HomeViewModel extends ViewModel {
     public ArrayList<Asta_allingleseModel> getListaAsta_allingleseNuove(){
         return repository.getListaAsteAllIngleseNuove();
     }
+    public void setEntraInSchermataAstaInglese(Boolean b){
+        entraInSchermataAstaInglese.setValue(b);
+    }
+    public Boolean getEntraInSchermataAstaInglese(){
+        return entraInSchermataAstaInglese.getValue();
+    }
 
     //metodi per le aste al ribasso
     public void setAste_alribassoNuovePresenti(Boolean b){
@@ -266,6 +285,13 @@ public class HomeViewModel extends ViewModel {
     public ArrayList<Asta_alribassoModel> getListaAsta_alribassoCategoriaNome(){
         return repository.getListaAsteAlRibassoCategoriaNome();
     }
+    public void setEntraInSchermataAstaRibasso(Boolean b){
+        entraInSchermataAstaRibasso.setValue(b);
+    }
+    public Boolean getEntraInSchermataAstaRibasso(){
+        return entraInSchermataAstaRibasso.getValue();
+    }
+
     //metodi per le aste inverse
     private void setAste_inversaInScadenzaPresenti(boolean b) {
         aste_inversaInScadenzaPresenti.setValue(true);
@@ -285,7 +311,6 @@ public class HomeViewModel extends ViewModel {
     public List<Asta_inversaModel> getListaAsta_inversaNuove(){
         return repository.getListaAsteInversaNuove();
     }
-
     public void setAste_inversaCategoriaNomePresenti(Boolean b){
         aste_inversaCategoriaNomePresenti.setValue(b);
     }
@@ -295,6 +320,49 @@ public class HomeViewModel extends ViewModel {
     public List<Asta_inversaModel> getListaAsta_inversaCategoriaNome(){
         return repository.getListaAsteInversaCategoriaNome();
     }
+    public void setEntraInSchermataAstaInversa(Boolean b){
+        entraInSchermataAstaInversa.setValue(b);
+    }
+    public Boolean getEntraInSchermataAstaInversa(){
+        return entraInSchermataAstaInversa.getValue();
+    }
 
+    public void gestisciClickRecyclerView( Object asta){
+        // Esegui le azioni desiderate con l'oggetto Asta
+        if(asta instanceof Asta_allingleseModel){
+            repository.setAsta_allingleseSelezionata((Asta_allingleseModel) asta);
+            setEntraInSchermataAstaInglese(true);
+
+//            int id = Math.toIntExact(((Asta_allingleseModel) asta).getId());
+//            Log.d("Asta inglese", "id è " + id);
+//            Intent intent = new Intent(getContext(), SchermataAstaInglese.class);//test del login
+//            intent.putExtra("email", email);
+//            intent.putExtra("tipoUtente", tipoUtente);
+//            intent.putExtra("id", id);
+//            startActivity(intent);
+        }else if(asta instanceof Asta_alribassoModel){
+            repository.setAsta_alribassoSelezionata((Asta_alribassoModel) asta);
+            setEntraInSchermataAstaRibasso(true);
+
+//            int id = Math.toIntExact(((Asta_alribassoModel) asta).getId());
+//            Log.d("Asta inglese", "id è " + id);
+//            Intent intent = new Intent(getContext(), SchermataAstaInglese.class);//test del login
+//            intent.putExtra("email", email);
+//            intent.putExtra("tipoUtente", tipoUtente);
+//            intent.putExtra("id", id);
+//            startActivity(intent);
+        }else if(asta instanceof Asta_inversaModel){
+            repository.setAsta_inversaSelezionata((Asta_inversaModel) asta);
+            setEntraInSchermataAstaInversa(true);
+
+//            int id = Math.toIntExact(((Asta_inversaModel) asta).getId());
+//            Log.d("Asta inglese", "id è " + id);
+//            Intent intent = new Intent(getContext(), SchermataAstaInglese.class);//test del login
+//            intent.putExtra("email", email);
+//            intent.putExtra("tipoUtente", tipoUtente);
+//            intent.putExtra("id", id);
+//            startActivity(intent);
+        }
+    }
 
 }
