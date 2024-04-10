@@ -37,6 +37,8 @@ public class PopUpAggiungiSocialProfilo extends DialogPersonalizzato implements 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.pop_up_aggiungi_social_profilo);
 
+        System.out.println("popupAggiungiSocial ha email:"+email);
+
 
 
         // Riferimenti ai widget all'interno del pop-up
@@ -70,7 +72,7 @@ public class PopUpAggiungiSocialProfilo extends DialogPersonalizzato implements 
         String nomeSocial = editTextNomeSocial.getText().toString().trim();
         String nomeUtenteSocial = editTextNomeUtenteSocial.getText().toString().trim();
 
-        RegistrazioneSocialDAO registrazioneSocialDAO = new RegistrazioneSocialDAO(PopUpAggiungiSocialProfilo.this, email, tipoUtente);
+     //   RegistrazioneSocialDAO registrazioneSocialDAO = new RegistrazioneSocialDAO(PopUpAggiungiSocialProfilo.this, email, tipoUtente);
         Log.d("pop", "conferma");
         if (nomeSocial.length() > 50) {
             editTextNomeSocial.setError("Nome social oltre i 50 caratteri");
@@ -86,10 +88,11 @@ public class PopUpAggiungiSocialProfilo extends DialogPersonalizzato implements 
         }
         if (!nomeSocial.isEmpty() && nomeSocial.length() <= 50 &&
                 !nomeUtenteSocial.isEmpty() && nomeUtenteSocial.length() <= 50) {
-                progressBarPopUpAggiungiSocialProfilo.setVisibility(View.VISIBLE);
-                registrazioneSocialDAO.openConnection();
-                registrazioneSocialDAO.inserimentoSingoloSocial(nomeSocial, nomeUtenteSocial);
-                registrazioneSocialDAO.closeConnection();
+              //  progressBarPopUpAggiungiSocialProfilo.setVisibility(View.VISIBLE);
+            fragmentProfilo.fragmentProfiloViewModel.aggiungiSocialAcquirenteViewModel(nomeSocial,nomeUtenteSocial,email);
+                //         registrazioneSocialDAO.openConnection();
+         //       registrazioneSocialDAO.inserimentoSingoloSocial(nomeSocial, nomeUtenteSocial);
+           //     registrazioneSocialDAO.closeConnection();
             }
 
         }

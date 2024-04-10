@@ -14,6 +14,8 @@ import androidx.appcompat.widget.AppCompatButton;
 import com.example.progettoingsw.DAO.PopUpControlloPasswordDAO;
 import com.example.progettoingsw.R;
 import com.example.progettoingsw.classe_da_estendere.DialogPersonalizzato;
+import com.example.progettoingsw.repository.Repository;
+import com.example.progettoingsw.view.acquirente.FragmentProfilo;
 
 public class PopUpControlloPassword extends DialogPersonalizzato implements View.OnClickListener {
     private AppCompatButton bottoneAnnullaControlloPassword;
@@ -25,12 +27,14 @@ public class PopUpControlloPassword extends DialogPersonalizzato implements View
     private String tipoUtente;
     private ProgressBar progress_bar_pop_up_controllo_password;
 
+    private FragmentProfilo fragmentProfilo;
 
-    public  PopUpControlloPassword(Context context, String email, String tipoUtente) {
+    public  PopUpControlloPassword(Context context, FragmentProfilo fragmentProfilo,String email, String tipoUtente) {
         super(context);
         this.email = email;
         this.tipoUtente = tipoUtente;
-        this.popUpControlloPasswordDAO = new PopUpControlloPasswordDAO(this,email,tipoUtente);
+        this.fragmentProfilo=fragmentProfilo;
+        //this.popUpControlloPasswordDAO = new PopUpControlloPasswordDAO(this,email,tipoUtente);
     }
 
     @Override
@@ -74,9 +78,17 @@ private void confermaPassword(){
     }
     if (!password_nuova.isEmpty() && password_nuova.length() <= 100 &&
             !password_vecchia.isEmpty() && password_vecchia.length() <= 100){
-        progress_bar_pop_up_controllo_password.setVisibility(View.VISIBLE);
-        popUpControlloPasswordDAO.openConnection();
-        popUpControlloPasswordDAO.checkPassword(password_vecchia);
+//        progress_bar_pop_up_controllo_password.setVisibility(View.VISIBLE);
+//        popUpControlloPasswordDAO.openConnection();
+//        popUpControlloPasswordDAO.checkPassword(password_vecchia);
+        //controllo password vecchia=quella del repository + chiamata al backend
+        Repository repository=Repository.getInstance();
+                if(repository.getAcquirenteModel().getPassword().equals(password_vecchia)){
+                    //chiamata al backend
+                    fragmentProfilo.fragmentProfiloViewModel.aggiornaPasswordAcquirenteViewModel(password_nuova,email);
+                    dismiss();
+                }else{Toast.makeText(getContext(), "Password non corretta, riprovare.", Toast.LENGTH_SHORT).show();}
+
     }
 
 }

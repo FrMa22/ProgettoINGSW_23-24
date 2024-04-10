@@ -117,7 +117,7 @@ public class FragmentProfiloDAO {
                 Object[] socialData = (Object[]) result;
                 List<String> socialNames = (List<String>) socialData[0];
                 List<String> socialLinks = (List<String>) socialData[1];
-                fragmentProfilo.updateSocialNames(socialNames, socialLinks);
+                //fragmentProfilo.updateSocialNames(socialNames, socialLinks);
             } else {
                 // Nessun risultato o errore
             }
