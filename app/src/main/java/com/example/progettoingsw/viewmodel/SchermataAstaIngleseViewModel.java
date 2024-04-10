@@ -2,13 +2,17 @@ package com.example.progettoingsw.viewmodel;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.util.Log;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.progettoingsw.model.Asta_allingleseModel;
+import com.example.progettoingsw.repository.Asta_allingleseRepository;
+import com.example.progettoingsw.repository.Asta_alribassoRepository;
 import com.example.progettoingsw.repository.Repository;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -16,20 +20,34 @@ public class SchermataAstaIngleseViewModel extends ViewModel {
     private Repository repository;
     public MutableLiveData<Boolean> isAstaRecuperata = new MutableLiveData<>(false);
     public MutableLiveData<String> erroreRecuperoAsta = new MutableLiveData<>("");
+    public MutableLiveData<Boolean> tipoUtenteChecked = new MutableLiveData<>(false);
+    public MutableLiveData<Boolean> isPartecipazioneAvvenuta = new MutableLiveData<>(false);
+    private String messaggioPartecipazioneAstaInglese;
+    private String tipoUtente;
     private Asta_allingleseModel astaRecuperata;
+    private Asta_allingleseRepository astaAllingleseRepository;
 
     public SchermataAstaIngleseViewModel(){
         repository = Repository.getInstance();
+        astaAllingleseRepository = new Asta_allingleseRepository();
     }
 
     public void getAstaData(){
-        Asta_allingleseModel asta = repository.getAsta_allingleseSelezionata();
-        if(asta!=null){
-            setAstaRecuperata(asta);
-            setIsAstaRecuperata(true);
-        }else{
-            setErroreRecuperoAsta("Errore nel recupero asta!");
-        }
+        Long idAsta = repository.getAsta_allingleseSelezionata().getId();
+        astaAllingleseRepository.trovaAsta_allinglese(idAsta, new Asta_allingleseRepository.OnTrovaAstaIngleseListener() {
+            @Override
+            public void OnTrovaAstaInglese(Asta_allingleseModel astaRecuperata) {
+                Log.d("asta ricercata" , "qui");
+                if(astaRecuperata!=null){
+                    repository.setAsta_allingleseSelezionata(astaRecuperata);
+                    setAstaRecuperata(astaRecuperata);
+                    setIsAstaRecuperata(true);
+                }else{
+                    setErroreRecuperoAsta("errore nel recupero asta");
+                    setIsAstaRecuperata(true);
+                }
+            }
+        });
     }
     public void setIsAstaRecuperata(Boolean b){
         isAstaRecuperata.setValue(b);
@@ -83,6 +101,29 @@ public class SchermataAstaIngleseViewModel extends ViewModel {
 
     }
 
+    public String getTipoUtente() {
+        return tipoUtente;
+    }
+    public void setTipoUtente(String tipoUtente) {
+        this.tipoUtente = tipoUtente;
+    }
+    public void setTipoUtenteChecked(Boolean b){
+        tipoUtenteChecked.setValue(b);
+    }
+    public Boolean isTipoUtenteChecked(){
+        return tipoUtenteChecked.getValue();
+    }
+    public Boolean isAcquirente(){
+        return getTipoUtente().equals("acquirente");
+    }
+    public void checkTipoUtente(){
+        if(repository.getAcquirenteModel()!=null){
+            setTipoUtente("acquirente");
+        }else{
+            setTipoUtente("venditore");
+        }
+        setTipoUtenteChecked(true);
+    }
 
 
 

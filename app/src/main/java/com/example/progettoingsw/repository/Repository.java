@@ -15,7 +15,7 @@ public class Repository {
     private ArrayList<String> listaCategorieAcquirente;
     private VenditoreModel venditoreModel;
     private ArrayList<String> listaCategorieVenditore;
-    public static final String backendUrl = "http:/35.181.6.125:8080/";
+    public static final String backendUrl = "http:/15.236.41.72:8080/";
     public static Repository questaRepository = null;
     //liste per le aste all'inglese nel caso di accesso come acquirente (aste in home)
     private ArrayList<Asta_allingleseModel> listaAsteAllIngleseInScadenza;

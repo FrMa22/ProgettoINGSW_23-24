@@ -24,13 +24,14 @@ import com.example.progettoingsw.R;
 import com.example.progettoingsw.classe_da_estendere.GestoreComuniImplementazioni;
 import com.example.progettoingsw.controllers_package.Controller;
 import com.example.progettoingsw.model.Asta_allingleseModel;
+import com.example.progettoingsw.viewmodel.PopUpNuovaOffertaViewModel;
 import com.example.progettoingsw.viewmodel.SchermataAstaIngleseViewModel;
 import com.google.android.material.button.MaterialButton;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-public class SchermataAstaInglese extends GestoreComuniImplementazioni {
+public class SchermataAstaInglese extends GestoreComuniImplementazioni implements PopUpNuovaOfferta.PopupDismissListener{
     private SchermataAstaIngleseViewModel schermataAstaIngleseViewModel;
     private ProgressBar progress_bar_schermata_asta_inglese;
     private RelativeLayout relativeLayoutSchermataAstaInglese;
@@ -68,6 +69,8 @@ public class SchermataAstaInglese extends GestoreComuniImplementazioni {
         schermataAstaIngleseViewModel = new ViewModelProvider(this).get(SchermataAstaIngleseViewModel.class);
         osservaIsAstaRecuperata();
         osservaErroreRecuperoAsta();
+        osservaTipoUtenteChecked();
+        schermataAstaIngleseViewModel.checkTipoUtente();
         schermataAstaIngleseViewModel.getAstaData();
 
 //        astaIngleseDAO = new AstaIngleseDAO(this);
@@ -132,17 +135,16 @@ public class SchermataAstaInglese extends GestoreComuniImplementazioni {
 
 
 
-//        bottoneNuovaOfferta =  findViewById(R.id.bottoneOffertaSchermataAstaInglese);
+        bottoneNuovaOfferta =  findViewById(R.id.bottoneOffertaSchermataAstaInglese);
 //        if(tipoUtente.equals("venditore")){
 //            bottoneNuovaOfferta.setVisibility(View.INVISIBLE);
 //        }
-//        bottoneNuovaOfferta.setOnClickListener(new View.OnClickListener() {
-//            public void onClick(View v) {
-//                astaIngleseDAO.getAstaIngleseByID(id);
-//                PopUpNuovaOfferta popUpNuovaOfferta = new PopUpNuovaOfferta(SchermataAstaInglese.this,email,id, textViewPrezzo.getText().toString(),textViewSogliaRialzoSchermataAstaInglese.getText().toString(), SchermataAstaInglese.this);
-//                popUpNuovaOfferta.show();
-//            }
-//        });
+        bottoneNuovaOfferta.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                PopUpNuovaOfferta popUpNuovaOfferta = new PopUpNuovaOfferta(SchermataAstaInglese.this, SchermataAstaInglese.this);
+                popUpNuovaOfferta.show();
+            }
+        });
 //        String valoreDaModificare = getIntent().getStringExtra("editTextPrezzo");
 //        if (valoreDaModificare != null) {
 //            textViewPrezzo.setText(valoreDaModificare);
@@ -191,6 +193,12 @@ public class SchermataAstaInglese extends GestoreComuniImplementazioni {
 
 
 
+    }
+    @Override
+    public void onPopupDismissed() {
+        // Metodo chiamato quando il pop-up viene chiuso
+        Log.d("OnPopUpDismissed", "entrato");
+        schermataAstaIngleseViewModel.getAstaData();
     }
     // questi metodi onPause, onStop, onDestroy e onResume servono a stoppare il timer quando non si è piu su questa schermata e a farlo ricominciare quando si torna
     @Override
@@ -334,6 +342,28 @@ public class SchermataAstaInglese extends GestoreComuniImplementazioni {
                 Log.d("osservaIsAstaRecuperata", "sto recuperando l'asta");
                 Asta_allingleseModel astaRecuperata = schermataAstaIngleseViewModel.getAstaRecuperata();
                 setAstaData(astaRecuperata);
+            }
+        });
+    }
+    public void setImpostazioniAstaAcquirente(){
+
+    }
+    public void setImpostazioniAstaVenditore(){
+        imageButtonPreferiti.setVisibility(View.INVISIBLE);
+        bottoneNuovaOfferta.setVisibility(View.INVISIBLE);
+    }
+
+    public void osservaTipoUtenteChecked(){
+        schermataAstaIngleseViewModel.tipoUtenteChecked.observe(this, (messaggio) -> {
+            if (schermataAstaIngleseViewModel.isTipoUtenteChecked()) {
+                if(schermataAstaIngleseViewModel.isAcquirente()){
+                    //mi è permesso acquistare l'asta o metterla nei preferiti
+                    setImpostazioniAstaAcquirente();
+                }else{
+                    //non mi è permesso acquistare l'asta o metterla nei preferiti
+                    setImpostazioniAstaVenditore();
+                }
+
             }
         });
     }
