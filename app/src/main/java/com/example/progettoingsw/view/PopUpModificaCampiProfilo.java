@@ -48,9 +48,9 @@ public class PopUpModificaCampiProfilo extends DialogPersonalizzato implements V
         edit_text_modifica_bio = findViewById(R.id.edit_text_modifica_bio);
         edit_text_modifica_paese = findViewById(R.id.edit_text_modifica_paese);
 
-        popUpModificaCampiProfiloDAO = new PopUpModificaCampiProfiloDAO(this, email, tipoUtente);
-        popUpModificaCampiProfiloDAO.openConnection();
-        popUpModificaCampiProfiloDAO.getFields();
+//        popUpModificaCampiProfiloDAO = new PopUpModificaCampiProfiloDAO(this, email, tipoUtente);
+//        popUpModificaCampiProfiloDAO.openConnection();
+//        popUpModificaCampiProfiloDAO.getFields();
 
         bottoneAnnullaModifica = findViewById(R.id.bottoneAnnullaModifica);
         bottoneAnnullaModifica.setOnClickListener(this);
@@ -73,7 +73,9 @@ public class PopUpModificaCampiProfilo extends DialogPersonalizzato implements V
 
             if (!nome.isEmpty() && !cognome.isEmpty() && nome.length()<=50 && cognome.length()<=50 && sitoweb.length()<=50 && paese.length()<=25 && bio.length()<=100) {
                 Log.d("bottone", " i valori di nome e cognome sono: " + nome + cognome);
-                popUpModificaCampiProfiloDAO.updateFields(nome, cognome, sitoweb, paese, bio);
+//                popUpModificaCampiProfiloDAO.updateFields(nome, cognome, sitoweb, paese, bio);
+                //chiamata al backend
+                fragmentProfilo.fragmentProfiloViewModel.aggiornaAcquirenteViewModel(nome,cognome,bio,sitoweb,paese,email);
                 fragmentProfilo.onResume();
                 dismiss();
             }else{

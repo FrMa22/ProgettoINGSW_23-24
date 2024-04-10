@@ -1,6 +1,8 @@
 package com.example.progettoingsw.view.acquirente;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -19,9 +21,14 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.progettoingsw.DAO.Acquirente;
 import com.example.progettoingsw.DAO.FragmentProfiloDAO;
+import com.example.progettoingsw.model.AcquirenteModel;
+import com.example.progettoingsw.model.SocialAcquirenteModel;
+import com.example.progettoingsw.model.VenditoreModel;
+import com.example.progettoingsw.repository.Repository;
 import com.example.progettoingsw.view.PopUpAggiungiSocialProfilo;
 import com.example.progettoingsw.view.PopUpControlloPassword;
 import com.example.progettoingsw.view.PopUpModificaCampiProfilo;
@@ -32,10 +39,14 @@ import com.example.progettoingsw.view.LeMieAste;
 import com.example.progettoingsw.view.LoginActivity;
 import com.example.progettoingsw.view.PopUpModificaSocial;
 import com.example.progettoingsw.view.SchermataPartecipazioneAste;
+import com.example.progettoingsw.viewmodel.FragmentProfiloViewModel;
+import com.example.progettoingsw.viewmodel.LoginViewModel;
 import com.google.android.material.button.MaterialButton;
 
 import java.util.List;
 public class FragmentProfilo extends Fragment{
+
+
     private TextView text_view_nessun_social;
     private MaterialButton button_partecipazione_aste;
     ImageButton button_log_out;
@@ -60,6 +71,7 @@ public class FragmentProfilo extends Fragment{
     private String email;
     String tipoUtente;
     private RelativeLayout relative_layout_fragment_profilo;
+    public FragmentProfiloViewModel fragmentProfiloViewModel;
 
     public FragmentProfilo() {
     }
@@ -75,7 +87,121 @@ public class FragmentProfilo extends Fragment{
         super.onViewCreated(view, savedInstanceState);
 
 
+        fragmentProfiloViewModel = new ViewModelProvider(this).get(FragmentProfiloViewModel.class);
+
         relative_layout_fragment_profilo = view.findViewById(R.id.relative_layout_fragment_profilo);
+
+
+
+
+
+        text_view_nessun_social = view.findViewById(R.id.text_view_nessun_social);
+        textview_nome = view.findViewById(R.id.textview_nome);
+        textview_cognome = view.findViewById(R.id.textview_cognome);
+        textview_email = view.findViewById(R.id.textview_email);
+        textview_sitoweb = view.findViewById(R.id.textview_sitoweb);
+        textview_paese = view.findViewById(R.id.textview_paese);
+        text_view_bio_profilo = view.findViewById(R.id.text_view_bio_profilo);
+
+        //osserva cose
+
+
+
+
+
+
+
+        //gestione gridview
+        Repository repository = Repository.getInstance();
+        AcquirenteModel acquirenteModel=repository.getAcquirenteModel();
+
+         //Inizializza la GridView
+        GridView gridView = view.findViewById(R.id.gridview_social_activity_profilo);
+
+// Imposta un'altezza minima per la GridView
+        gridView.setMinimumHeight((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 50, getResources().getDisplayMetrics()));
+
+// Chiama il metodo per impostare l'altezza in base agli elementi
+        setGridViewHeightBasedOnChildren(gridView);
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                CustomAdapter_gridview_profilo_social adapter = (CustomAdapter_gridview_profilo_social) gridView.getAdapter();
+                List<String> socialNames = adapter.getSocialNames();
+                List<String> socialLinks = adapter.getSocialLinks();
+
+                String nome = socialNames.get(position);
+                String link = socialLinks.get(position);
+                email=acquirenteModel.getIndirizzoEmail();
+                PopUpModificaSocial popUpModificaSocial = new PopUpModificaSocial(getContext(), FragmentProfilo.this, email, "acquirente", nome, link);
+                popUpModificaSocial.show();
+            }
+        });
+
+
+
+
+        //recupero dati+separato per tipo di utente
+       // VenditoreModel venditoreModel=repository.getVenditoreModel();
+        if(acquirenteModel!=null){
+            List<SocialAcquirenteModel> socialAcquirenteModelList=repository.getSocialAcquirenteModelList();
+            String email=acquirenteModel.getIndirizzoEmail();
+            fragmentProfiloViewModel.fragmentProfiloAcquirente(email);
+            textview_nome.setText(acquirenteModel.getNome());
+            textview_cognome.setText(acquirenteModel.getCognome());
+            textview_email.setText(acquirenteModel.getIndirizzoEmail());
+            textview_sitoweb.setText(acquirenteModel.getLink());
+            textview_paese.setText(acquirenteModel.getAreaGeografica());
+            text_view_bio_profilo.setText(acquirenteModel.getBio());
+            //gestione recupero dei social
+//            List<String> nomiSocial=repository.getNomiSocialAcquirenteModelList(socialAcquirenteModelList);
+//            List<String> linkSocial=repository.getLinksSocialAcquirenteModelList(socialAcquirenteModelList);
+//            // Stampa i nomi social
+//            System.out.println("Nomi Social:");
+//            for (String nome : nomiSocial) {
+//                System.out.println(nome);
+//            }
+//
+//// Stampa i link social
+//            System.out.println("Link Social:");
+//            for (String link : linkSocial) {
+//                System.out.println(link);
+//            }
+
+            new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    List<String> nomiSocial=repository.getNomiSocialAcquirenteModelList(socialAcquirenteModelList);
+                    List<String> linkSocial=repository.getLinksSocialAcquirenteModelList(socialAcquirenteModelList);
+                    // Stampa i nomi social
+                    System.out.println("Nomi Social:");
+                    for (String nome : nomiSocial) {
+                        System.out.println(nome);
+                    }
+
+// Stampa i link social
+                    System.out.println("Link Social:");
+                    for (String link : linkSocial) {
+                        System.out.println(link);
+                    }
+                    updateSocialNames(repository.getNomiSocialAcquirenteModelList(socialAcquirenteModelList),repository.getLinksSocialAcquirenteModelList(socialAcquirenteModelList));
+                }
+            }, 8000); // 5000 millisecondi = 5 secondi
+
+            //se si lascia eseguire il metodo sotto non si recuperano dal db i social,lasciandolo commentato non esce a schermo l'elenco ma sono effettivamente presenti
+           // updateSocialNames(repository.getNomiSocialAcquirenteModelList(socialAcquirenteModelList),repository.getLinksSocialAcquirenteModelList(socialAcquirenteModelList));
+
+        }
+
+
+
+
+
+
+//        if(venditoreModel!=null){
+//            fragmentProfiloViewModel.fragmentProfiloVenditore(email);
+//        }
+
 
         //icona del caricamento
         progressBarAcquirenteFragmentProfilo = view.findViewById(R.id.progressBarAcquirenteFragmentProfilo);
@@ -134,32 +260,36 @@ public class FragmentProfilo extends Fragment{
 //            }
 //        });
 
-//        button_modifica = view.findViewById(R.id.button_modifica);
-//        button_modifica.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                PopUpModificaCampiProfilo popUpModificaCampiProfilo = new PopUpModificaCampiProfilo(getContext(), FragmentProfilo.this, email, tipoUtente);
-//                popUpModificaCampiProfilo.show();
-//            }
-//        });
+        button_modifica = view.findViewById(R.id.button_modifica);
+        button_modifica.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                email=acquirenteModel.getIndirizzoEmail();
+                PopUpModificaCampiProfilo popUpModificaCampiProfilo = new PopUpModificaCampiProfilo(getContext(), FragmentProfilo.this, email, "acquirente");
+                popUpModificaCampiProfilo.show();
+            }
+        });
 
-//        button_cambia_password_profilo = view.findViewById(R.id.button_cambia_password_profilo);
-//        button_cambia_password_profilo.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                PopUpControlloPassword popUpControlloPassword = new PopUpControlloPassword(getContext(), email, tipoUtente);
-//                popUpControlloPassword.show();
-//            }
-//        });
-//
-//        button_aggiungi_social = view.findViewById(R.id.button_aggiungi_social);
-//        button_aggiungi_social.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                PopUpAggiungiSocialProfilo popUpAggiungiSocialProfilo = new PopUpAggiungiSocialProfilo(FragmentProfilo.this, email,tipoUtente);
-//                popUpAggiungiSocialProfilo.show();
-//            }
-//        });
+        button_cambia_password_profilo = view.findViewById(R.id.button_cambia_password_profilo);
+        button_cambia_password_profilo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                email=acquirenteModel.getIndirizzoEmail();
+                PopUpControlloPassword popUpControlloPassword = new PopUpControlloPassword(getContext(),FragmentProfilo.this ,email, "acquirente");
+                popUpControlloPassword.show();
+            }
+        });
+
+        button_aggiungi_social = view.findViewById(R.id.button_aggiungi_social);
+        button_aggiungi_social.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                email=Repository.getInstance().getAcquirenteModel().getIndirizzoEmail();
+                PopUpAggiungiSocialProfilo popUpAggiungiSocialProfilo = new PopUpAggiungiSocialProfilo(FragmentProfilo.this, email,tipoUtente);
+                System.out.println("popupAggiungiSocial  nel fragment ha email:"+email);
+                popUpAggiungiSocialProfilo.show();
+            }
+        });
 //
 //        text_view_nessun_social = view.findViewById(R.id.text_view_nessun_social);
 //        textview_nome = view.findViewById(R.id.textview_nome);
@@ -273,18 +403,19 @@ public class FragmentProfilo extends Fragment{
                 text_view_nessun_social.setVisibility(View.VISIBLE);
                 gridView.setVisibility(View.GONE);
                 // Rimuovi tutti i dati dall'adattatore e aggiorna la GridView
-//                gridView = view.findViewById(R.id.gridview_social_activity_profilo);
-//                adapterSocial = new CustomAdapter_gridview_profilo_social(getContext());
-//                gridView.setAdapter(adapterSocial);
-//
-//                // Aggiungi stampe nel log per verificare che i dati siano correttamente passati
-//                Log.d("FragmentProfilo", "Nessun social disponibile");
-//
-//                // Imposta l'altezza della GridView a 50dp
-//                gridView.setMinimumHeight((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 50, getResources().getDisplayMetrics()));
+                gridView = view.findViewById(R.id.gridview_social_activity_profilo);
+                adapterSocial = new CustomAdapter_gridview_profilo_social(getContext());
+                gridView.setAdapter(adapterSocial);
+
+                // Aggiungi stampe nel log per verificare che i dati siano correttamente passati
+                Log.d("FragmentProfilo", "Nessun social disponibile");
+
+                // Imposta l'altezza della GridView a 50dp
+                gridView.setMinimumHeight((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 50, getResources().getDisplayMetrics()));
+
             }
             setAllClickable(relative_layout_fragment_profilo, true);
-            progressBarAcquirenteFragmentProfilo.setVisibility(View.INVISIBLE);
+            //progressBarAcquirenteFragmentProfilo.setVisibility(View.INVISIBLE);
             Log.d("update social names", "sblocco navigation bar");
             setNavigationView(true);
         }catch (IllegalStateException e) {
@@ -316,6 +447,15 @@ public class FragmentProfilo extends Fragment{
             }
 
     }
+
+//    public void osservaMessaggioErroreEmail() {
+//        fragmentProfiloViewModel.messaggioSocialUtenteNonTrovato.observe(this, (messaggio) -> {
+//            if (fragmentProfiloViewModel.isNuovoMessaggioErroreEmail()) {
+//                messaggioErroreMail(messaggio);
+//                //loginViewModel.cancellaMessaggioLogin();
+//            }
+//        });
+//    }
 
 }
 

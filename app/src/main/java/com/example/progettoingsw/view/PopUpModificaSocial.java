@@ -43,13 +43,14 @@ public class PopUpModificaSocial extends DialogPersonalizzato implements View.On
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.pop_up_modifica_social);
+        System.out.println("interno al popUpModificaSocial");
 
         edit_text_nome_social = findViewById(R.id.edit_text_nome_social);
         edit_text_nome_social.setText(nome_vecchio);
         edit_text_link_social = findViewById(R.id.edit_text_link_social);
         edit_text_link_social.setText(link_vecchio);
 
-        popUpModificaSocialDAO = new PopUpModificaSocialDAO(this,email,tipoUtente);
+        //popUpModificaSocialDAO = new PopUpModificaSocialDAO(this,email,tipoUtente);
 
         bottoneAnnullaModifica = findViewById(R.id.bottoneAnnullaModifica);
         bottoneAnnullaModifica.setOnClickListener(this);
@@ -68,11 +69,15 @@ public class PopUpModificaSocial extends DialogPersonalizzato implements View.On
             Toast.makeText(getContext(), "Conferma", Toast.LENGTH_SHORT).show();
             String nome = edit_text_nome_social.getText().toString();
             String link = edit_text_link_social.getText().toString();
+            System.out.println("dopo aver premuto conferma e prima dei controlli con nome:"+ nome + " e link: "+link);
 
             if (!nome.isEmpty() && !link.isEmpty()) {
                 Log.d("bottone", " i valori di nome e link sono: " + nome + link);
-                popUpModificaSocialDAO.openConnection();
-                popUpModificaSocialDAO.updateSocial(nome_vecchio, link_vecchio, nome, link);
+//                popUpModificaSocialDAO.openConnection();
+  //              popUpModificaSocialDAO.updateSocial(nome_vecchio, link_vecchio, nome, link);
+                System.out.println("controllo è  non vuoto passato");
+                System.out.println("prima della chiamata al backend");
+                fragmentProfilo.fragmentProfiloViewModel.aggiornaSocialAcquirenteViewModel(nome_vecchio,link_vecchio,nome,link);
                 fragmentProfilo.onResume();
                 dismiss();
             }else{
@@ -94,8 +99,12 @@ public class PopUpModificaSocial extends DialogPersonalizzato implements View.On
 
             }
         }else if(v.getId() == R.id.bottoneEliminaSocial){
-            popUpModificaSocialDAO.openConnection();
-            popUpModificaSocialDAO.deleteSocial(nome_vecchio,link_vecchio);
+          //  popUpModificaSocialDAO.openConnection();
+           // popUpModificaSocialDAO.deleteSocial(nome_vecchio,link_vecchio);
+            //chiamata al backend per cancellare
+            System.out.println("valori del pop up elimina , nome:"+ nome_vecchio +"link:"+ link_vecchio + "email:"+email );
+            fragmentProfilo.fragmentProfiloViewModel.eliminaSocialAcquirenteViewModel(nome_vecchio,link_vecchio,email);
+
             fragmentProfilo.onResume();
             dismiss();
         }
