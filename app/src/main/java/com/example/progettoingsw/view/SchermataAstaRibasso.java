@@ -68,6 +68,8 @@ public class SchermataAstaRibasso extends GestoreComuniImplementazioni {
         schermataAstaRibassoViewModel =new ViewModelProvider(this).get(SchermataAstaRibassoViewModel.class);
         osservaIsAstaRecuperata();
         osservaErroreRecuperoAsta();
+        osservaTipoUtenteChecked();
+        schermataAstaRibassoViewModel.checkTipoUtente();
         schermataAstaRibassoViewModel.getAstaData();
 
         relativeLayoutSchermataAstaRibasso = findViewById(R.id.relativeLayoutSchermataAstaRibasso);
@@ -120,40 +122,41 @@ public class SchermataAstaRibasso extends GestoreComuniImplementazioni {
         });
 
 
-//        bottoneNuovaOfferta =  findViewById(R.id.bottoneOffertaSchermataAstaRibasso);
+          bottoneNuovaOfferta =  findViewById(R.id.bottoneOffertaSchermataAstaRibasso);
+
 //        if(tipoUtente.equals("venditore")){
 //            bottoneNuovaOfferta.setVisibility(View.INVISIBLE);
 //        }
-//        bottoneNuovaOfferta.setOnClickListener(new View.OnClickListener() {
-//            public void onClick(View v) {
-//                popUpConfermaOffertaDialog = new Dialog(SchermataAstaRibasso.this);
-//                popUpConfermaOffertaDialog.setContentView(R.layout.pop_up_conferma_offerta);
-//                popUpConfermaOffertaDialog.show();
-//                MaterialButton bottoneAnnullaPopuP=(MaterialButton) popUpConfermaOffertaDialog.findViewById(R.id.bottoneAnnullaPopUpAsta);;
-//                MaterialButton bottoneConfermaPopUP=(MaterialButton) popUpConfermaOffertaDialog.findViewById(R.id.bottoneConfermaPopUpAsta);;
-//                TextView offertaAttuale= (TextView) popUpConfermaOffertaDialog.findViewById(R.id.TextViewOffertaAsta);
-//                offertaAttuale.setText(textViewOffertaAttuale.getText().toString());
-//
-//                bottoneAnnullaPopuP.setOnClickListener(new View.OnClickListener(){
-//                    @Override
-//                    public void onClick(View v) {
-//                        popUpConfermaOffertaDialog.dismiss();
+
+        bottoneNuovaOfferta.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                popUpConfermaOffertaDialog = new Dialog(SchermataAstaRibasso.this);
+                popUpConfermaOffertaDialog.setContentView(R.layout.pop_up_conferma_offerta);
+                popUpConfermaOffertaDialog.show();
+                MaterialButton bottoneAnnullaPopuP=(MaterialButton) popUpConfermaOffertaDialog.findViewById(R.id.bottoneAnnullaPopUpAsta);;
+                MaterialButton bottoneConfermaPopUP=(MaterialButton) popUpConfermaOffertaDialog.findViewById(R.id.bottoneConfermaPopUpAsta);;
+                TextView offertaAttuale= (TextView) popUpConfermaOffertaDialog.findViewById(R.id.TextViewOffertaAsta);
+                offertaAttuale.setText(textViewOffertaAttuale.getText().toString());
+                bottoneAnnullaPopuP.setOnClickListener(new View.OnClickListener(){
+                    @Override
+                    public void onClick(View v) {
+                        popUpConfermaOffertaDialog.dismiss();
 //                        Intent intent = new Intent(SchermataAstaRibasso.this, AcquirenteMainActivity.class);//test del login
 //                        intent.putExtra("email", email);
 //                        intent.putExtra("tipoUtente", tipoUtente);
 //                        startActivity(intent);
-//                    }
-//                });
-//                bottoneConfermaPopUP.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View view) {
-//                        float offertaAttuale = Float.parseFloat(textViewOffertaAttuale.getText().toString());
-//                        eseguiAcquistoAsta(id, email, offertaAttuale);
-//                    }
-//                });
-//
-//            }
-//        });
+                    }
+                });
+                bottoneConfermaPopUP.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        osservaIsAcquistoAvvenuto();
+                        schermataAstaRibassoViewModel.eseguiAcquistoAsta();
+                    }
+                });
+
+            }
+        });
 //        if(tipoUtente.equals("venditore")){
 //            imageButtonPreferiti.setVisibility(View.INVISIBLE);
 //        }else{
@@ -364,6 +367,40 @@ public class SchermataAstaRibasso extends GestoreComuniImplementazioni {
                 Log.d("osservaIsAstaRecuperata", "sto recuperando l'asta");
                 Asta_alribassoModel astaRecuperata = schermataAstaRibassoViewModel.getAstaRecuperata();
                 setAstaData(astaRecuperata);
+            }
+        });
+    }
+    public void setImpostazioniAstaAcquirente(){
+
+    }
+    public void setImpostazioniAstaVenditore(){
+        imageButtonPreferiti.setVisibility(View.INVISIBLE);
+        bottoneNuovaOfferta.setVisibility(View.INVISIBLE);
+    }
+    public void osservaIsAcquistoAvvenuto(){
+        schermataAstaRibassoViewModel.isAcquistoAvvenuto.observe(this, (messaggio) -> {
+            if(schermataAstaRibassoViewModel.getIsAcquistoAvvenuto()){
+                String messaggioAcquisto = schermataAstaRibassoViewModel.getMessaggioAcquistaAstaRibasso();
+                if(messaggioAcquisto!=null && !messaggioAcquisto.isEmpty()){
+                    Toast.makeText(this,messaggioAcquisto , Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(this,"result null" , Toast.LENGTH_SHORT).show();
+                }
+                popUpConfermaOffertaDialog.dismiss();
+            }
+        });
+    }
+    public void osservaTipoUtenteChecked(){
+        schermataAstaRibassoViewModel.tipoUtenteChecked.observe(this, (messaggio) -> {
+            if (schermataAstaRibassoViewModel.isTipoUtenteChecked()) {
+                if(schermataAstaRibassoViewModel.isAcquirente()){
+                    //mi è permesso acquistare l'asta o metterla nei preferiti
+                    setImpostazioniAstaAcquirente();
+                }else{
+                    //non mi è permesso acquistare l'asta o metterla nei preferiti
+                    setImpostazioniAstaVenditore();
+                }
+
             }
         });
     }

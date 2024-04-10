@@ -26,6 +26,10 @@ public class Asta_alribassoRepository {
         System.out.println("entrato in getAste_alribassoCategoriaNomeBackend");
         new Asta_alribassoRepository.getAste_alribassoCategoriaNomeTask(listener).execute(nomeCategoria);
     }
+    public void acquistaAsta_alribasso(Long idAsta, String emailAcquirente,String prezzoAttuale, Asta_alribassoRepository.OnAcquistaAstaRibassoListener listener) {
+        System.out.println("entrato in getAste_alribassoNuoveBackend");
+        new Asta_alribassoRepository.acquistaAsta_aliribassoTask(listener).execute(String.valueOf(idAsta),emailAcquirente,prezzoAttuale);
+    }
     private static class getAste_alribassoNuoveTask extends AsyncTask<Void, Void, ArrayList<Asta_alribassoModel>> {
         private Asta_alribassoRepository.OnGetAsteRibassoNuoveListener listener;
 
@@ -173,5 +177,64 @@ public class Asta_alribassoRepository {
     }
     public interface OnGetAsteRibassoCategoriaNomeListener {
         void OnGetAsteRibassoCategoriaNome(ArrayList<Asta_alribassoModel> list);
+    }
+
+
+    private static class acquistaAsta_aliribassoTask extends AsyncTask<String, Void, Integer> {
+        private Asta_alribassoRepository.OnAcquistaAstaRibassoListener listener;
+
+        public acquistaAsta_aliribassoTask(Asta_alribassoRepository.OnAcquistaAstaRibassoListener listener) {
+            this.listener = listener;
+        }
+
+        @Override
+        protected Integer doInBackground(String... params) {
+
+            // Effettua l'operazione di rete qui...
+            // Restituisci il risultato
+            Long idAsta = Long.valueOf(params[0]);
+            String emailAcquirente = params[1];
+            String offerta = params[2];
+
+            OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+            // Configura il client OkHttpClient...
+
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl(Repository.backendUrl)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .client(httpClient.build())
+                    .build();
+
+            Asta_alribassoService service = retrofit.create(Asta_alribassoService.class);
+            Call<Integer> call = service.acquistaAstaAlRibasso(idAsta,emailAcquirente,offerta);
+
+            try {
+                Response<Integer> response = call.execute();
+                if (response.isSuccessful()) {
+                    System.out.println("response successful");
+                    Integer risposta = response.body();
+                    if (risposta != null && risposta==1) {
+                        return risposta;
+                    }
+                    System.out.println("lista di aste al ribasso dto null");
+                }
+                System.out.println("response non successful");
+            } catch (IOException e) {
+                System.out.println("exception IOEXC");
+                e.printStackTrace();
+                return null;
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Integer result) {
+            if (listener != null) {
+                listener.OnAcquistaAstaRibasso(result);
+            }
+        }
+    }
+    public interface OnAcquistaAstaRibassoListener {
+        void OnAcquistaAstaRibasso(Integer risposta);
     }
 }

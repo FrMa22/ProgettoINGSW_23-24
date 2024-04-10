@@ -111,7 +111,6 @@ public class FragmentHome extends Fragment {
             @Override
             public void onClick(View v) {
                 // Ottieni la posizione dell'elemento cliccato
-                Toast.makeText(getContext(), "click", Toast.LENGTH_SHORT).show();
                 int position = recyclerViewAsteConsigliate.getChildAdapterPosition(v);
                 // Ottieni l'oggetto Asta corrispondente alla posizione cliccata
                 Object asta = astaAdapterConsigliate.getItem(position);
@@ -133,7 +132,6 @@ public class FragmentHome extends Fragment {
         astaAdapterInScadenza.setOnItemClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(), "click", Toast.LENGTH_SHORT).show();
                 // Ottieni la posizione dell'elemento cliccato
                 int position = recyclerViewAsteInScadenza.getChildAdapterPosition(v);
 
@@ -156,7 +154,6 @@ public class FragmentHome extends Fragment {
             @Override
             public void onClick(View v) {
                 // Ottieni la posizione dell'elemento cliccato
-                Toast.makeText(getContext(), "click", Toast.LENGTH_SHORT).show();
                 int position = recyclerViewAsteNuove.getChildAdapterPosition(v);
 
                 // Ottieni l'oggetto Asta corrispondente alla posizione cliccata
