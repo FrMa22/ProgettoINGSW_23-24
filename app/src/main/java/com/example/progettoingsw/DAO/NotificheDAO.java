@@ -4,7 +4,7 @@ import android.util.Log;
 
 import com.example.progettoingsw.controllers_package.DatabaseHelper;
 import com.example.progettoingsw.view.SchermataNotifiche;
-import com.example.progettoingsw.view.acquirente.AcquirenteFragmentHome;
+import com.example.progettoingsw.view.acquirente.FragmentHome;
 import com.example.progettoingsw.view.acquirente.AcquirenteMainActivity;
 import com.example.progettoingsw.item.NotificaItem;
 
@@ -21,7 +21,7 @@ public class NotificheDAO {
     private String indirizzo_email;
     private String tipoUtente;
     private AcquirenteMainActivity acquirenteMainActivity;
-    private AcquirenteFragmentHome acquirenteFragmentHome;
+    private FragmentHome fragmentHome;
 
     public NotificheDAO(SchermataNotifiche schermataNotifiche) {
         this.schermataNotifiche = schermataNotifiche;
@@ -31,8 +31,8 @@ public class NotificheDAO {
         this.indirizzo_email = indirizzo_email;
         this.tipoUtente = tipoUtente;
     }
-    public NotificheDAO(AcquirenteFragmentHome acquirenteFragmentHome, String indirizzo_email, String tipoUtente){
-        this.acquirenteFragmentHome = acquirenteFragmentHome;
+    public NotificheDAO(FragmentHome fragmentHome, String indirizzo_email, String tipoUtente){
+        this.fragmentHome = fragmentHome;
         this.indirizzo_email = indirizzo_email;
         this.tipoUtente = tipoUtente;
     }
@@ -165,9 +165,9 @@ public class NotificheDAO {
                 if(acquirenteMainActivity!=null){
                     Log.d("onPostExecute", "passo result a main");
                     acquirenteMainActivity.handleGetNumeroNotifiche(result.intValue());
-                }else if(acquirenteFragmentHome!=null){
+                }else if(fragmentHome !=null){
                     Log.d("onPostExecute", "passo resylt a home");
-                    acquirenteFragmentHome.handleGetNumeroNotifiche(result.intValue());
+                    fragmentHome.handleGetNumeroNotifiche(result.intValue());
                 }
             } else {
                 // Gestisci il caso in cui non è stato possibile recuperare il numero di notifiche

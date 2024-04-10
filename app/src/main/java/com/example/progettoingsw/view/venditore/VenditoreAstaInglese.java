@@ -122,7 +122,7 @@ public class VenditoreAstaInglese extends GestoreComuniImplementazioni {
                 intent.putExtra("tipoUtente", "venditore");
                 startActivity(intent);
 //        AppCompatActivity activity = (AppCompatActivity) VenditoreAstaInglese.this;
-//        Fragment fragment = new AcquirenteFragmentHome(email, "venditore");
+//        Fragment fragment = new FragmentHome(email, "venditore");
 //        ((AcquirenteMainActivity) activity).navigateToFragmentAndSelectIcon(fragment);
             }
         });

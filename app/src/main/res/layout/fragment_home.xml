@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:backgroundTint="@color/colore_base"
-    tools:context=".view.acquirente.AcquirenteFragmentHome">
+    tools:context=".view.acquirente.FragmentHome">
 
 
     <ProgressBar
@@ -120,6 +120,7 @@
                 android:id="@+id/recycler_view_aste_consigliate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
                 android:layout_marginTop="5dp" />
 
 

@@ -200,7 +200,7 @@ public class AstaIngleseDAO {
             if (astaIngleseItem != null) {
                 // Operazione completata con successo, puoi fare qualcosa con l'oggetto AstaIngleseItem
                 Log.d("Asta recuperata", astaIngleseItem.toString());
-                schermataAstaInglese.setAstaData(astaIngleseItem);
+                //schermataAstaInglese.setAstaData(astaIngleseItem);
             } else {
                 // Operazione fallita o nessun risultato trovato
                 Log.d("Errore", "Impossibile recuperare l'asta");

@@ -1,0 +1,368 @@
+package com.example.progettoingsw.viewmodel;
+
+import android.content.Context;
+import android.content.Intent;
+import android.util.Log;
+
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.ViewModel;
+
+import com.example.progettoingsw.item.AstaIngleseItem;
+import com.example.progettoingsw.item.AstaInversaItem;
+import com.example.progettoingsw.item.AstaRibassoItem;
+import com.example.progettoingsw.model.Asta_allingleseModel;
+import com.example.progettoingsw.model.Asta_alribassoModel;
+import com.example.progettoingsw.model.Asta_inversaModel;
+import com.example.progettoingsw.repository.Asta_allingleseRepository;
+import com.example.progettoingsw.repository.Asta_alribassoRepository;
+import com.example.progettoingsw.repository.Asta_inversaRepository;
+import com.example.progettoingsw.repository.Repository;
+import com.example.progettoingsw.view.SchermataAstaInglese;
+import com.example.progettoingsw.view.SchermataAstaInversa;
+import com.example.progettoingsw.view.SchermataAstaRibasso;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.List;
+
+public class HomeViewModel extends ViewModel {
+    private Asta_allingleseRepository astaAllingleseRepository;
+    private Asta_alribassoRepository astaAlribassoRepository;
+    private Asta_inversaRepository astaInversaRepository;
+    private Repository repository;
+    public MutableLiveData<Boolean> aste_allingleseInScadenzaPresenti = new MutableLiveData<>(false);
+    public MutableLiveData<Boolean> aste_allingleseNuovePresenti = new MutableLiveData<>(false);
+    public MutableLiveData<Boolean> aste_allingleseCategoriaNomePresenti = new MutableLiveData<>(false);
+    public MutableLiveData<Boolean> aste_alribassoCategoriaNomePresenti = new MutableLiveData<>(false);
+    public MutableLiveData<Boolean> aste_inversaNuovePresenti = new MutableLiveData<>(false);
+    public MutableLiveData<Boolean> aste_inversaCategoriaNomePresenti = new MutableLiveData<>(false);
+    public MutableLiveData<Boolean> aste_inversaInScadenzaPresenti = new MutableLiveData<>(false);
+    public MutableLiveData<Boolean> aste_alribassoNuovePresenti = new MutableLiveData<>(false);
+    public MutableLiveData<Boolean> acquirenteModelPresente = new MutableLiveData<>(false);
+    public MutableLiveData<Boolean> venditoreModelPresente = new MutableLiveData<>(false);
+    public MutableLiveData<Boolean> entraInSchermataAstaInglese = new MutableLiveData<>(false);
+    public MutableLiveData<Boolean> entraInSchermataAstaRibasso = new MutableLiveData<>(false);
+    public MutableLiveData<Boolean> entraInSchermataAstaInversa = new MutableLiveData<>(false);
+
+    private ArrayList<Asta_allingleseModel> listAsta_allingleseScadenzaRecente = new ArrayList<>();
+    private ArrayList<Asta_allingleseModel> listAsta_allingleseNuove = new ArrayList<>();
+    private ArrayList<Asta_inversaModel> listAsta_inversaScadenzaRecente = new ArrayList<>();
+    private ArrayList<Asta_alribassoModel> listAsta_alribassoNuove = new ArrayList<>();
+    public HomeViewModel(){
+        repository = Repository.getInstance();
+        astaAllingleseRepository = new Asta_allingleseRepository();
+        astaAlribassoRepository = new Asta_alribassoRepository();
+        astaInversaRepository = new Asta_inversaRepository();
+    }
+
+    public void checkTipoUtente(){
+        if(containsAcquirente()){
+            setAcquirenteModelPresente();
+        }else if(containsVenditore()) {
+            setVenditoreModelPresente();
+        }
+
+    }
+    public void trovaEImpostaAste(){
+        if(repository.getAcquirenteModel()!=null){
+            Log.d("HomeViewModel ", "entrato come acquirente");
+            try {
+                trovaAste_allingleseScadenzaRecente();
+                trovaAste_allingleseNuove();
+                //trovaAste_alribassoNuove();
+                ArrayList<String> listaCategorieAcquirente = getListaCategorieAcquirente();
+                Log.d("trova e imposta aste", "lista categorie acquirente: " + listaCategorieAcquirente);
+                if (listaCategorieAcquirente != null && !listaCategorieAcquirente.isEmpty()) {
+                    for (String categoria : listaCategorieAcquirente) {
+                        Log.d("trova e imposta aste", "cercando aste per categoria " + categoria);
+                        trovaAste_allingleseCategoriaNome(categoria);
+                        //trovaAste_alribassoCategoriaNome(categoria);
+                    }
+                }
+            } catch (Exception e){
+                e.printStackTrace();
+            }
+        }else if(repository.getVenditoreModel()!=null){
+            Log.d("HomeViewModel ", "entrato come venditore");
+            try {
+                trovaAste_inversaScadenzaRecente();
+                trovaAste_inverseNuove();
+                ArrayList<String> listaCategorieVenditore = getListaCategorieVenditore();
+                Log.d("trova e imposta aste", "lista categorie venditore: " + listaCategorieVenditore);
+                if (listaCategorieVenditore != null && !listaCategorieVenditore.isEmpty()) {
+                    for (String categoria : listaCategorieVenditore) {
+                        Log.d("trova e imposta aste", "cercando aste per categoria " + categoria);
+                        trovaAste_inversaCategoriaNome(categoria);
+                    }
+                }
+
+            } catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+    }
+    //metodi per trovare le aste all'inglese
+    private void trovaAste_allingleseScadenzaRecente() {
+        astaAllingleseRepository.getAste_allingleseScadenzaRecenteBackend(new Asta_allingleseRepository.OnGetAsteScadenzaRecenteListener() {
+            @Override
+            public void OnGetAsteScadenzaRecente(ArrayList<Asta_allingleseModel> list) {
+                repository.setListaAsteAllIngleseInScadenza(list);
+                if(list != null && !list.isEmpty()){
+                    setAste_allingleseInScadenzaPresenti(true);
+                }
+            }
+        });
+    }
+    private void trovaAste_allingleseNuove() {
+        astaAllingleseRepository.getAste_allingleseNuoveBackend(new Asta_allingleseRepository.OnGetAsteNuoveListener() {
+            @Override
+            public void OnGetAsteNuove(ArrayList<Asta_allingleseModel> list) {
+                repository.setListaAsteAllIngleseNuove(list);
+                if(list != null && !list.isEmpty()){
+                    setAste_allingleseNuovePresenti(true);
+                }
+                trovaAste_alribassoNuove();
+            }
+        });
+    }
+    private void trovaAste_allingleseCategoriaNome(String nomeCategoria) {
+        astaAllingleseRepository.getAste_allingleseCategoriaNomeBackend(nomeCategoria, new Asta_allingleseRepository.OnGetAsteCategoriaNomeListener() {
+            @Override
+            public void OnGetAsteCategoriaNome(ArrayList<Asta_allingleseModel> list) {
+                repository.setListaAsteAllIngleseCategoriaNome(list);
+                if(list != null && !list.isEmpty()){
+                    setAste_allingleseCategoriaNomePresenti(true);
+                }
+                trovaAste_alribassoCategoriaNome(nomeCategoria);
+            }
+        });
+    }
+
+    //metodi per trovare le aste al ribasso
+    private void trovaAste_alribassoCategoriaNome(String nomeCategoria) {
+        astaAlribassoRepository.getAste_alribassoCategoriaNomeBackend(nomeCategoria, new Asta_alribassoRepository.OnGetAsteRibassoCategoriaNomeListener() {
+            @Override
+            public void OnGetAsteRibassoCategoriaNome(ArrayList<Asta_alribassoModel> list) {
+                repository.setListaAsteAlRibassoCategoriaNome(list);
+                if(list != null && !list.isEmpty()){
+                    setAste_alribassoCategoriaNomePresenti(true);
+                }
+            }
+        });
+    }
+    private void trovaAste_alribassoNuove() {
+        astaAlribassoRepository.getAste_alribassoNuoveBackend(new Asta_alribassoRepository.OnGetAsteRibassoNuoveListener() {
+            @Override
+            public void OnGetAsteRibassoNuove(ArrayList<Asta_alribassoModel> list) {
+                repository.setListaAsteAlRibassoNuove(list);
+                if(list != null && !list.isEmpty()){
+                    setAste_alribassoNuovePresenti(true);
+                }
+            }
+        });
+    }
+
+    //metodi per trovare le aste inverse
+    private void trovaAste_inversaScadenzaRecente() {
+        astaInversaRepository.getAste_inversaScadenzaRecenteBackend(new Asta_inversaRepository.OnGetAsteScadenzaRecenteListener() {
+            @Override
+            public void OnGetAsteScadenzaRecente(ArrayList<Asta_inversaModel> list) {
+                listAsta_inversaScadenzaRecente = list;
+                repository.setListaAsteInversaInScadenza(list);
+                if(listAsta_inversaScadenzaRecente != null && !listAsta_inversaScadenzaRecente.isEmpty()){
+                    setAste_inversaInScadenzaPresenti(true);
+                }
+            }
+        });
+    }
+    private void trovaAste_inverseNuove() {
+        astaInversaRepository.getAste_inversaNuoveBackend(new Asta_inversaRepository.OnGetAsteInversaNuoveListener() {
+            @Override
+            public void OnGetAsteInversaNuove(ArrayList<Asta_inversaModel> list) {
+                repository.setListaAsteInversaNuove(list);
+                if(list != null && !list.isEmpty()){
+                    setAste_inversaNuovePresenti(true);
+                }
+            }
+        });
+    }
+    private void trovaAste_inversaCategoriaNome(String nomeCategoria) {
+        astaInversaRepository.getAste_inversaCategoriaNomeBackend(nomeCategoria, new Asta_inversaRepository.OnGetAsteInversaCategoriaNomeListener() {
+            @Override
+            public void OnGetAsteInversaCategoriaNome(ArrayList<Asta_inversaModel> list) {
+                repository.setListaAsteInversaCategoriaNome(list);
+                if(list != null && !list.isEmpty()){
+                    setAste_inversaCategoriaNomePresenti(true);
+                }
+            }
+        });
+    }
+
+
+    public boolean containsAcquirente() {
+        return repository.getAcquirenteModel()!=null;
+    }
+    public ArrayList<String> getListaCategorieAcquirente(){
+        Log.d("In home view model", "getListaCategoriaAcquirente con lista " + repository.getListaCategorieAcquirente());
+        return repository.getListaCategorieAcquirente();
+    }
+    public Boolean containsVenditore(){
+        return repository.getVenditoreModel()!=null;
+    }
+
+    public ArrayList<String> getListaCategorieVenditore() {
+
+
+        return repository.getListaCategorieVenditore();
+    }
+
+    private void setAcquirenteModelPresente() {
+        acquirenteModelPresente.setValue(true);
+    }
+    public Boolean getAcquirenteModelPresente(){
+        return acquirenteModelPresente.getValue();
+    }
+    private void setVenditoreModelPresente() {
+        venditoreModelPresente.setValue(true);
+    }
+    public Boolean getVenditoreModelPresente(){
+        return venditoreModelPresente.getValue();
+    }
+
+
+    //metodi per aste all'inglese
+    private void setAste_allingleseInScadenzaPresenti(boolean b) {
+        aste_allingleseInScadenzaPresenti.setValue(true);
+    }
+    public Boolean getAste_allingleseInScadenzaPresenti() {
+        return aste_allingleseInScadenzaPresenti.getValue();
+    }
+    public void setAste_allingleseNuovePresenti(Boolean b){
+        aste_allingleseNuovePresenti.setValue(b);
+    }
+    public Boolean getAste_allingleseNuovePresenti(){
+        return aste_allingleseNuovePresenti.getValue();
+    }
+    public void setAste_allingleseCategoriaNomePresenti(Boolean b){
+        aste_allingleseCategoriaNomePresenti.setValue(b);
+    }
+    public Boolean getAste_allingleseCategoriaNomePresenti(){
+        return aste_allingleseCategoriaNomePresenti.getValue();
+    }
+    public List<Asta_allingleseModel> getListaAsta_allingleseScadenzaRecente(){
+        Log.d("getListaAsta_allingleseScadenzaRecente", "asta: "  + repository.getListaAsteAllIngleseInScadenza().size());
+        return repository.getListaAsteAllIngleseInScadenza();
+    }
+    public ArrayList<Asta_allingleseModel> getListaAsta_allingleseCategoriaNome(){
+        return repository.getListaAsteAllIngleseCategoriaNome();
+    }
+    public ArrayList<Asta_allingleseModel> getListaAsta_allingleseNuove(){
+        return repository.getListaAsteAllIngleseNuove();
+    }
+    public void setEntraInSchermataAstaInglese(Boolean b){
+        entraInSchermataAstaInglese.setValue(b);
+    }
+    public Boolean getEntraInSchermataAstaInglese(){
+        return entraInSchermataAstaInglese.getValue();
+    }
+
+    //metodi per le aste al ribasso
+    public void setAste_alribassoNuovePresenti(Boolean b){
+        aste_alribassoNuovePresenti.setValue(true);
+    }
+    public Boolean getAste_alribassoNuovePresenti(){
+        return aste_alribassoNuovePresenti.getValue();
+    }
+    public List<Asta_alribassoModel> getListaAsta_alribassoNuove(){
+        return repository.getListaAsteAlRibassoNuove();
+    }
+    public Boolean getAste_alribassoCategoriaNomePresenti(){
+        return aste_alribassoCategoriaNomePresenti.getValue();
+    }
+    public void setAste_alribassoCategoriaNomePresenti(Boolean b){
+        aste_alribassoCategoriaNomePresenti.setValue(b);
+    }
+    public ArrayList<Asta_alribassoModel> getListaAsta_alribassoCategoriaNome(){
+        return repository.getListaAsteAlRibassoCategoriaNome();
+    }
+    public void setEntraInSchermataAstaRibasso(Boolean b){
+        entraInSchermataAstaRibasso.setValue(b);
+    }
+    public Boolean getEntraInSchermataAstaRibasso(){
+        return entraInSchermataAstaRibasso.getValue();
+    }
+
+    //metodi per le aste inverse
+    private void setAste_inversaInScadenzaPresenti(boolean b) {
+        aste_inversaInScadenzaPresenti.setValue(true);
+    }
+    public Boolean getAste_inversaInScadenzaPresenti() {
+        return aste_inversaInScadenzaPresenti.getValue();
+    }
+    public List<Asta_inversaModel> getListaAsta_inversaScadenzaRecente(){
+        return repository.getListaAsteInversaInScadenza();
+    }
+    public void setAste_inversaNuovePresenti(Boolean b){
+        aste_inversaNuovePresenti.setValue(b);
+    }
+    public Boolean getAste_inversaNuovePresenti(){
+        return aste_inversaNuovePresenti.getValue();
+    }
+    public List<Asta_inversaModel> getListaAsta_inversaNuove(){
+        return repository.getListaAsteInversaNuove();
+    }
+    public void setAste_inversaCategoriaNomePresenti(Boolean b){
+        aste_inversaCategoriaNomePresenti.setValue(b);
+    }
+    public Boolean getAste_inversaCategoriaNomePresenti(){
+        return aste_inversaCategoriaNomePresenti.getValue();
+    }
+    public List<Asta_inversaModel> getListaAsta_inversaCategoriaNome(){
+        return repository.getListaAsteInversaCategoriaNome();
+    }
+    public void setEntraInSchermataAstaInversa(Boolean b){
+        entraInSchermataAstaInversa.setValue(b);
+    }
+    public Boolean getEntraInSchermataAstaInversa(){
+        return entraInSchermataAstaInversa.getValue();
+    }
+
+    public void gestisciClickRecyclerView( Object asta){
+        // Esegui le azioni desiderate con l'oggetto Asta
+        if(asta instanceof Asta_allingleseModel){
+            repository.setAsta_allingleseSelezionata((Asta_allingleseModel) asta);
+            setEntraInSchermataAstaInglese(true);
+
+//            int id = Math.toIntExact(((Asta_allingleseModel) asta).getId());
+//            Log.d("Asta inglese", "id è " + id);
+//            Intent intent = new Intent(getContext(), SchermataAstaInglese.class);//test del login
+//            intent.putExtra("email", email);
+//            intent.putExtra("tipoUtente", tipoUtente);
+//            intent.putExtra("id", id);
+//            startActivity(intent);
+        }else if(asta instanceof Asta_alribassoModel){
+            repository.setAsta_alribassoSelezionata((Asta_alribassoModel) asta);
+            setEntraInSchermataAstaRibasso(true);
+
+//            int id = Math.toIntExact(((Asta_alribassoModel) asta).getId());
+//            Log.d("Asta inglese", "id è " + id);
+//            Intent intent = new Intent(getContext(), SchermataAstaInglese.class);//test del login
+//            intent.putExtra("email", email);
+//            intent.putExtra("tipoUtente", tipoUtente);
+//            intent.putExtra("id", id);
+//            startActivity(intent);
+        }else if(asta instanceof Asta_inversaModel){
+            repository.setAsta_inversaSelezionata((Asta_inversaModel) asta);
+            setEntraInSchermataAstaInversa(true);
+
+//            int id = Math.toIntExact(((Asta_inversaModel) asta).getId());
+//            Log.d("Asta inglese", "id è " + id);
+//            Intent intent = new Intent(getContext(), SchermataAstaInglese.class);//test del login
+//            intent.putExtra("email", email);
+//            intent.putExtra("tipoUtente", tipoUtente);
+//            intent.putExtra("id", id);
+//            startActivity(intent);
+        }
+    }
+
+}

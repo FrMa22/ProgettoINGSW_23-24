@@ -1,6 +1,8 @@
 package com.example.progettoingsw.controllers_package;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,14 +18,18 @@ import com.example.progettoingsw.R;
 import com.example.progettoingsw.item.AstaIngleseItem;
 import com.example.progettoingsw.item.AstaRibassoItem;
 import com.example.progettoingsw.item.AstaInversaItem;
+import com.example.progettoingsw.model.Asta_allingleseModel;
+import com.example.progettoingsw.model.Asta_alribassoModel;
+import com.example.progettoingsw.model.Asta_inversaModel;
 
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
 public class AstaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    private static final int TIPO_ASTA_INGESE = 1;
+    private static final int TIPO_ASTA_INGLESE = 1;
     private static final int TIPO_ASTA_RIBASSO = 2;
     private static final int TIPO_ASTA_INVERSA = 3;
+    private ArrayList<CountDownTimer> countDownTimers = new ArrayList<>();
 
     private Context context;
     private ArrayList<Object> astaItemList;
@@ -47,7 +53,7 @@ public class AstaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
 
         switch (viewType) {
-            case TIPO_ASTA_INGESE:
+            case TIPO_ASTA_INGLESE:
                 view = inflater.inflate(R.layout.item_asta_inglese, parent, false);
                 return new AstaIngleseViewHolder(view);
             case TIPO_ASTA_RIBASSO:
@@ -72,6 +78,33 @@ public class AstaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             ((AstaRibassoViewHolder) holder).bind((AstaRibassoItem) item);
         } else if (item instanceof AstaInversaItem) {
             ((AstaInversaViewHolder) holder).bind((AstaInversaItem) item);
+        } else if(item instanceof Asta_allingleseModel){
+            Asta_allingleseModel astaModel = (Asta_allingleseModel) item;
+            Bitmap bitmap = null;
+            if(astaModel.getImmagine() != null && astaModel.getImmagine().length > 0){
+                bitmap = BitmapFactory.decodeByteArray(astaModel.getImmagine(), 0, astaModel.getImmagine().length);
+            }
+            AstaIngleseItem astaItem = new AstaIngleseItem(Math.toIntExact(astaModel.getId()),astaModel.getNome(),astaModel.getDescrizione(), bitmap, Float.toString(astaModel.getBaseAsta()),astaModel.getIntervalloTempoOfferte()
+            ,Float.toString(astaModel.getRialzoMin()),Float.toString(astaModel.getPrezzoAttuale()),astaModel.getCondizione(), astaModel.getId_venditore());
+            ((AstaIngleseViewHolder) holder).bind((AstaIngleseItem) astaItem);
+        } else if(item instanceof Asta_alribassoModel){
+            Asta_alribassoModel astaModel = (Asta_alribassoModel) item;
+            Bitmap bitmap = null;
+            if(astaModel.getImmagine() != null && astaModel.getImmagine().length > 0){
+                bitmap = BitmapFactory.decodeByteArray(astaModel.getImmagine(), 0, astaModel.getImmagine().length);
+            }
+            AstaRibassoItem astaItem = new AstaRibassoItem(Math.toIntExact(astaModel.getId()), astaModel.getNome(), astaModel.getDescrizione(), bitmap, Float.toString(astaModel.getPrezzoBase()), astaModel.getIntervalloDecrementale(),Float.toString(astaModel.getDecrementoAutomaticoCifra()),
+                    Float.toString(astaModel.getPrezzoMin()),Float.toString(astaModel.getPrezzoAttuale()), astaModel.getCondizione(), astaModel.getId_venditore());
+            ((AstaRibassoViewHolder) holder).bind((AstaRibassoItem) astaItem);
+        } else if(item instanceof Asta_inversaModel){
+            Asta_inversaModel astaModel = (Asta_inversaModel) item;
+            Bitmap bitmap = null;
+            if(astaModel.getImmagine() != null && astaModel.getImmagine().length > 0){
+                bitmap = BitmapFactory.decodeByteArray(astaModel.getImmagine(), 0, astaModel.getImmagine().length);
+            }
+            AstaInversaItem astaItem = new AstaInversaItem(Math.toIntExact(astaModel.getId()),astaModel.getNome(),astaModel.getDescrizione(), bitmap, Float.toString(astaModel.getPrezzoMax()),astaModel.getDataDiScadenza()
+                    ,astaModel.getCondizione(),Float.toString(astaModel.getPrezzoAttuale()), astaModel.getId_acquirente());
+            ((AstaInversaViewHolder) holder).bind((AstaInversaItem) astaItem);
         }
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -105,10 +138,16 @@ public class AstaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public int getItemViewType(int position) {
         Object item = astaItemList.get(position);
         if (item instanceof AstaIngleseItem) {
-            return TIPO_ASTA_INGESE;
+            return TIPO_ASTA_INGLESE;
         } else if (item instanceof AstaRibassoItem) {
             return TIPO_ASTA_RIBASSO;
         } else if (item instanceof AstaInversaItem) {
+            return TIPO_ASTA_INVERSA;
+        } else if(item instanceof Asta_allingleseModel){
+            return TIPO_ASTA_INGLESE;
+        } else if(item instanceof Asta_alribassoModel){
+            return TIPO_ASTA_RIBASSO;
+        } else if(item instanceof Asta_inversaModel){
             return TIPO_ASTA_INVERSA;
         }
         return -1;
@@ -127,6 +166,7 @@ public class AstaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
         public AstaIngleseViewHolder(@NonNull View itemView) {
             super(itemView);
+            Log.d("bind di asta inglese view holder" , "entrato " );
             textViewNome = itemView.findViewById(R.id.textView_nome_item_asta_inglese);
             textViewDescrizione = itemView.findViewById(R.id.textView_descrizione_item_asta_inglese);
             imageView = itemView.findViewById(R.id.image_view_item_asta_inglese);
@@ -136,6 +176,7 @@ public class AstaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         }
 
         public void bind(AstaIngleseItem item) {
+            Log.d("bind di asta inglese view holder" , "nome: " + item.getNome());
             textViewNome.setText(item.getNome());
             textViewDescrizione.setText(item.getDescrizione());
             if(item.getImmagine() != null){
@@ -164,7 +205,9 @@ public class AstaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     intervalloOfferte.setText("Asta Scaduta");
                 }
             }.start();
+            countDownTimers.add(countDownTimer);
         }
+
 
         private String calcolaTempoRimanente(long secondsUntilFinished) {
             long hours = secondsUntilFinished / 3600;
@@ -261,7 +304,18 @@ public class AstaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
     public void setAste(ArrayList<Object> astaList) {
-        this.astaItemList = astaList;
-        notifyDataSetChanged(); // Notifica all'adapter che i dati sono stati modificati
+        if (astaItemList == null) {
+            astaItemList = new ArrayList<>();
+        }
+        int startPosition = getItemCount();
+        astaItemList.addAll(astaList);
+        notifyItemRangeInserted(startPosition, astaList.size());
     }
+    public void stopAllTimers() {
+        for (CountDownTimer timer : countDownTimers) {
+            timer.cancel();
+        }
+        countDownTimers.clear();
+    }
+
 }

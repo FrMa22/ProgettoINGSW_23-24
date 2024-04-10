@@ -44,7 +44,7 @@
             android:name=".view.acquirente.AcquirenteFragmentSelezioneCategorie"
             android:exported="false" />
         <activity
-            android:name=".view.acquirente.AcquirenteFragmentHome"
+            android:name=".view.acquirente.FragmentHome"
             android:exported="true" />
         <activity
             android:name=".view.acquirente.FragmentProfilo"

@@ -212,7 +212,7 @@ public class AstaRibassoDAO {
             if (astaRibassoItem != null) {
                 // Operazione completata con successo, puoi fare qualcosa con l'oggetto AstaIngleseItem
                 Log.d("Asta recuperata", astaRibassoItem.toString());
-                schermataAstaRibasso.setAstaData(astaRibassoItem);
+                //schermataAstaRibasso.setAstaData(astaRibassoItem);
             } else {
                 // Operazione fallita o nessun risultato trovato
                 Log.d("Errore", "Impossibile recuperare l'asta");
