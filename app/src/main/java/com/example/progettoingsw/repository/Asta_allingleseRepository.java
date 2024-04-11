@@ -40,8 +40,18 @@ public class Asta_allingleseRepository {
         System.out.println("entrato in trovaAsta_allinglese");
         new Asta_allingleseRepository.trovaAsta_allingleseTask(listener).execute(String.valueOf(idAsta));
     }
-
-
+    public void verificaAstaIngleseInPreferiti(String indirizzo_email, Long idAsta, Asta_allingleseRepository.OnVerificaAstaIngleseInPreferitiListener listener) {
+        System.out.println("entrato in verificaAstaIngleseInPreferiti");
+        new Asta_allingleseRepository.verificaAsta_allingleseInPreferitiTask(listener).execute(indirizzo_email, String.valueOf(idAsta));
+    }
+    public void inserimentoAstaInPreferiti( Long idAsta,String indirizzo_email, Asta_allingleseRepository.OnInserimentoAstaIngleseInPreferitiListener listener) {
+        System.out.println("entrato in inserimentoAstaInPreferiti");
+        new Asta_allingleseRepository.inserimentoAsta_allingleseInPreferitiTask(listener).execute(String.valueOf(idAsta), indirizzo_email);
+    }
+    public void eliminazioneAstaInPreferiti( Long idAsta,String indirizzo_email, Asta_allingleseRepository.OnEliminazioneAstaIngleseInPreferitiListener listener) {
+        System.out.println("entrato in eliminazioneAstaInPreferiti");
+        new Asta_allingleseRepository.eliminazioneAsta_allingleseInPreferitiTask(listener).execute(String.valueOf(idAsta), indirizzo_email);
+    }
     private static class GetAsteScadenzaRecenteTask extends AsyncTask<Void, Void, ArrayList<Asta_allingleseModel>> {
         private Asta_allingleseRepository.OnGetAsteScadenzaRecenteListener listener;
 
@@ -188,7 +198,6 @@ public class Asta_allingleseRepository {
     public interface OnGetAsteNuoveListener {
         void OnGetAsteNuove(ArrayList<Asta_allingleseModel> list);
     }
-
     private static class GetAsteCategoriaNomeTask extends AsyncTask<String, Void, ArrayList<Asta_allingleseModel>> {
         private Asta_allingleseRepository.OnGetAsteCategoriaNomeListener listener;
 
@@ -392,5 +401,176 @@ public class Asta_allingleseRepository {
     }
     public interface OnTrovaAstaIngleseListener {
         void OnTrovaAstaInglese(Asta_allingleseModel list);
+    }
+    private static class verificaAsta_allingleseInPreferitiTask extends AsyncTask<String, Void, Integer> {
+        private Asta_allingleseRepository.OnVerificaAstaIngleseInPreferitiListener listener;
+
+        public verificaAsta_allingleseInPreferitiTask(Asta_allingleseRepository.OnVerificaAstaIngleseInPreferitiListener listener) {
+            this.listener = listener;
+        }
+
+        @Override
+        protected Integer doInBackground(String... params) {
+            String indirizzo_email = params[0];
+            Long idAsta = Long.valueOf(params[1]);
+            // Effettua l'operazione di rete qui...
+            // Restituisci il risultato
+
+            OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+            // Configura il client OkHttpClient...
+
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl(Repository.backendUrl)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .client(httpClient.build())
+                    .build();
+
+            Asta_allingleseService service = retrofit.create(Asta_allingleseService.class);
+            Call<Integer> call = service.verificaAstaIngleseInPreferiti(indirizzo_email,idAsta);
+
+            try {
+                Response<Integer> response = call.execute();
+                if (response.isSuccessful()) {
+                    System.out.println("response successful");
+                    Integer numeroRecuperato = response.body();
+                    if(numeroRecuperato != null){
+                        return numeroRecuperato;
+                    }else{
+                        System.out.println("asta dto null");
+                        return null;
+                    }
+                }
+                System.out.println("response non successful");
+            } catch (IOException e) {
+                System.out.println("exception IOEXC");
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Integer result) {
+            System.out.println("on post execute GetAsteScadenzaRecenteTask" + result);
+            if (listener != null) {
+                listener.OnVerificaAstaIngleseInPreferiti(result);
+            }
+        }
+    }
+    public interface OnVerificaAstaIngleseInPreferitiListener {
+        void OnVerificaAstaIngleseInPreferiti(Integer numeroRecuperato);
+    }
+    private static class inserimentoAsta_allingleseInPreferitiTask extends AsyncTask<String, Void, Integer> {
+        private Asta_allingleseRepository.OnInserimentoAstaIngleseInPreferitiListener listener;
+
+        public inserimentoAsta_allingleseInPreferitiTask(Asta_allingleseRepository.OnInserimentoAstaIngleseInPreferitiListener listener) {
+            this.listener = listener;
+        }
+
+        @Override
+        protected Integer doInBackground(String... params) {
+            Long idAsta = Long.valueOf(params[0]);
+            String indirizzo_email = params[1];
+            // Effettua l'operazione di rete qui...
+            // Restituisci il risultato
+
+            OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+            // Configura il client OkHttpClient...
+
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl(Repository.backendUrl)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .client(httpClient.build())
+                    .build();
+
+            Asta_allingleseService service = retrofit.create(Asta_allingleseService.class);
+            Call<Integer> call = service.inserimentoAstaInPreferiti(idAsta,indirizzo_email);
+
+            try {
+                Response<Integer> response = call.execute();
+                if (response.isSuccessful()) {
+                    System.out.println("response successful");
+                    Integer numeroRecuperato = response.body();
+                    if(numeroRecuperato != null){
+                        return numeroRecuperato;
+                    }else{
+                        System.out.println("asta dto null");
+                        return null;
+                    }
+                }
+                System.out.println("response non successful");
+            } catch (IOException e) {
+                System.out.println("exception IOEXC");
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Integer result) {
+            System.out.println("on post execute GetAsteScadenzaRecenteTask" + result);
+            if (listener != null) {
+                listener.OnInserimentoAstaIngleseInPreferiti(result);
+            }
+        }
+    }
+    public interface OnInserimentoAstaIngleseInPreferitiListener {
+        void OnInserimentoAstaIngleseInPreferiti(Integer numeroRecuperato);
+    }
+    private static class eliminazioneAsta_allingleseInPreferitiTask extends AsyncTask<String, Void, Integer> {
+        private Asta_allingleseRepository.OnEliminazioneAstaIngleseInPreferitiListener listener;
+
+        public eliminazioneAsta_allingleseInPreferitiTask(Asta_allingleseRepository.OnEliminazioneAstaIngleseInPreferitiListener listener) {
+            this.listener = listener;
+        }
+
+        @Override
+        protected Integer doInBackground(String... params) {
+            Long idAsta = Long.valueOf(params[0]);
+            String indirizzo_email = params[1];
+            // Effettua l'operazione di rete qui...
+            // Restituisci il risultato
+
+            OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+            // Configura il client OkHttpClient...
+
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl(Repository.backendUrl)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .client(httpClient.build())
+                    .build();
+
+            Asta_allingleseService service = retrofit.create(Asta_allingleseService.class);
+            Call<Integer> call = service.eliminazioneAstaInPreferiti(idAsta,indirizzo_email);
+
+            try {
+                Response<Integer> response = call.execute();
+                if (response.isSuccessful()) {
+                    System.out.println("response successful");
+                    Integer numeroRecuperato = response.body();
+                    if(numeroRecuperato != null){
+                        return numeroRecuperato;
+                    }else{
+                        System.out.println("asta dto null");
+                        return null;
+                    }
+                }
+                System.out.println("response non successful");
+            } catch (IOException e) {
+                System.out.println("exception IOEXC");
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Integer result) {
+            System.out.println("on post execute GetAsteScadenzaRecenteTask" + result);
+            if (listener != null) {
+                listener.OnEliminazioneAstaIngleseInPreferiti(result);
+            }
+        }
+    }
+    public interface OnEliminazioneAstaIngleseInPreferitiListener {
+        void OnEliminazioneAstaIngleseInPreferiti(Integer numeroRecuperato);
     }
 }

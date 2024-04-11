@@ -66,16 +66,6 @@ public class SchermataAstaInglese extends GestoreComuniImplementazioni implement
         super.onCreate(savedInstanceState);
         setContentView(R.layout.schermata_asta_inglese);
 
-        schermataAstaIngleseViewModel = new ViewModelProvider(this).get(SchermataAstaIngleseViewModel.class);
-        osservaIsAstaRecuperata();
-        osservaErroreRecuperoAsta();
-        osservaTipoUtenteChecked();
-        osservaIsPartecipazioneAvvenuta();
-        schermataAstaIngleseViewModel.checkTipoUtente();
-        schermataAstaIngleseViewModel.getAstaData();
-
-//        astaIngleseDAO = new AstaIngleseDAO(this);
-//        astaPreferitaIngleseDAO = new AstaPreferitaIngleseDAO(this);
         relativeLayoutSchermataAstaInglese = findViewById(R.id.relativeLayoutSchermataAstaInglese);
         progress_bar_schermata_asta_inglese = findViewById(R.id.progress_bar_schermata_asta_inglese);
         //progress_bar_schermata_asta_inglese.setVisibility(View.VISIBLE);
@@ -96,7 +86,15 @@ public class SchermataAstaInglese extends GestoreComuniImplementazioni implement
         drawableCuorePieno = ContextCompat.getDrawable(this, R.drawable.ic_cuore_pieno);
         text_view_tua_offerta_attuale = findViewById(R.id.text_view_tua_offerta_attuale);
 
-
+        schermataAstaIngleseViewModel = new ViewModelProvider(this).get(SchermataAstaIngleseViewModel.class);
+        osservaIsAstaRecuperata();
+        osservaErroreRecuperoAsta();
+        osservaTipoUtenteChecked();
+        osservaIsPartecipazioneAvvenuta();
+        osservaVerificaAstaInPreferitiChecked();
+        schermataAstaIngleseViewModel.verificaAstaInPreferiti();
+        schermataAstaIngleseViewModel.checkTipoUtente();
+        schermataAstaIngleseViewModel.getAstaData();
 
 //        id = getIntent().getIntExtra("id",0);
 //        email = getIntent().getStringExtra("email");
@@ -377,5 +375,30 @@ public class SchermataAstaInglese extends GestoreComuniImplementazioni implement
             }
         });
     }
+    public void inserimentoInPreferiti(){
+        schermataAstaIngleseViewModel.inserimentoAstaInPreferiti();
+    }
+    public void eliminazioneInPreferiti(){
+        schermataAstaIngleseViewModel.eliminazioneAstaInPreferiti();
+    }
+    public void osservaVerificaAstaInPreferitiChecked(){
+        schermataAstaIngleseViewModel.verificaAstaInPreferitiChecked.observe(this, (messaggio) -> {
+            Log.d("osservaIsAstaRecuperata", "sto recuper");
+            if (schermataAstaIngleseViewModel.getVerificaAstaInPreferitiChecked()) {
+                if(schermataAstaIngleseViewModel.getAstaInPreferiti()){
+                    //asta in preferiti
+                    imageButtonPreferiti.setImageDrawable(drawableCuorePieno);
+                    imageButtonPreferiti.setOnClickListener(v -> eliminazioneInPreferiti());
+                }else{
+                    //asta non in preferiti
+                    imageButtonPreferiti.setImageDrawable(drawableCuoreVuoto);
+                    imageButtonPreferiti.setOnClickListener(v -> inserimentoInPreferiti());
+                }
+            }else{
+                Toast.makeText(this, "errore in verifica asta in preferiti", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
 
 }

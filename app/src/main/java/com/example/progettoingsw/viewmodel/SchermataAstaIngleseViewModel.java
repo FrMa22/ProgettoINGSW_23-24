@@ -22,6 +22,8 @@ public class SchermataAstaIngleseViewModel extends ViewModel {
     public MutableLiveData<String> erroreRecuperoAsta = new MutableLiveData<>("");
     public MutableLiveData<Boolean> tipoUtenteChecked = new MutableLiveData<>(false);
     public MutableLiveData<Boolean> isPartecipazioneAvvenuta = new MutableLiveData<>(false);
+    public MutableLiveData<Boolean> astaInPreferiti = new MutableLiveData<>(false);
+    public MutableLiveData<Boolean> verificaAstaInPreferitiChecked = new MutableLiveData<>(false);
     private String messaggioPartecipazioneAstaInglese;
     private String tipoUtente;
     private Asta_allingleseModel astaRecuperata;
@@ -139,6 +141,75 @@ public class SchermataAstaIngleseViewModel extends ViewModel {
     }
     public Boolean isAstaChiusa(){
         return !repository.getAsta_allingleseSelezionata().getCondizione().equals("aperta");
+    }
+    public void setAstaInPreferiti(Boolean b){
+        astaInPreferiti.setValue(b);
+    }
+    public Boolean getAstaInPreferiti(){
+        return astaInPreferiti.getValue();
+    }
+    public Boolean isAstaInPreferiti(){
+        return astaInPreferiti.getValue();
+    }
+    public void setVerificaAstaInPreferitiChecked(Boolean b){
+        verificaAstaInPreferitiChecked.setValue(b);
+    }
+    public Boolean getVerificaAstaInPreferitiChecked(){
+        return verificaAstaInPreferitiChecked.getValue();
+    }
+    public void verificaAstaInPreferiti(){
+        String indirizzoEmail = repository.getAcquirenteModel().getIndirizzoEmail();
+        Long idAsta = repository.getAsta_allingleseSelezionata().getId();
+        astaAllingleseRepository.verificaAstaIngleseInPreferiti(indirizzoEmail,idAsta, new Asta_allingleseRepository.OnVerificaAstaIngleseInPreferitiListener() {
+            @Override
+            public void OnVerificaAstaIngleseInPreferiti(Integer numeroRecuperato) {
+                Log.d("asta ricercata" , "qui");
+                if(numeroRecuperato!=null && numeroRecuperato!=0){
+                    Log.d("asta ricercata" , "è nei preferiti");
+                    setAstaInPreferiti(true);
+                    setVerificaAstaInPreferitiChecked(true);
+                }else{
+                    Log.d("asta ricercata" , "non è nei preferiti");
+                    setErroreRecuperoAsta("errore nella verifica asta in preferiti");
+                    setAstaInPreferiti(false);
+                    setVerificaAstaInPreferitiChecked(true);
+                }
+            }
+        });
+    }
+    public void inserimentoAstaInPreferiti(){
+        String indirizzoEmail = repository.getAcquirenteModel().getIndirizzoEmail();
+        Long idAsta = repository.getAsta_allingleseSelezionata().getId();
+        astaAllingleseRepository.inserimentoAstaInPreferiti(idAsta, indirizzoEmail, new Asta_allingleseRepository.OnInserimentoAstaIngleseInPreferitiListener() {
+            @Override
+            public void OnInserimentoAstaIngleseInPreferiti(Integer numeroRecuperato) {
+                Log.d("asta inserita in preferiti" , "qui");
+                if(numeroRecuperato!=null && numeroRecuperato==1){
+                    setAstaInPreferiti(true);
+                    setVerificaAstaInPreferitiChecked(true);
+                }else{
+                    setErroreRecuperoAsta("errore nella verifica asta in preferiti");
+                    setVerificaAstaInPreferitiChecked(true);
+                }
+            }
+        });
+    }
+    public void eliminazioneAstaInPreferiti(){
+        String indirizzoEmail = repository.getAcquirenteModel().getIndirizzoEmail();
+        Long idAsta = repository.getAsta_allingleseSelezionata().getId();
+        astaAllingleseRepository.eliminazioneAstaInPreferiti(idAsta, indirizzoEmail, new Asta_allingleseRepository.OnEliminazioneAstaIngleseInPreferitiListener() {
+            @Override
+            public void OnEliminazioneAstaIngleseInPreferiti(Integer numeroRecuperato) {
+                Log.d("asta eliminata in preferiti" , "qui");
+                if(numeroRecuperato!=null && numeroRecuperato==1){
+                    setAstaInPreferiti(false);
+                    setVerificaAstaInPreferitiChecked(true);
+                }else{
+                    setErroreRecuperoAsta("errore nella verifica asta in preferiti");
+                    setVerificaAstaInPreferitiChecked(true);
+                }
+            }
+        });
     }
 
 }
