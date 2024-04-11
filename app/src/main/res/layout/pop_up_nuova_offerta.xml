@@ -143,7 +143,7 @@
         android:orientation="horizontal"
         android:layout_gravity="center"
         >
-        <com.google.android.material.button.MaterialButton
+        <Button
             android:id="@+id/bottoneAnnullaPopUpAsta"
             android:layout_width="150dp"
             android:layout_height="60dp"
@@ -157,7 +157,7 @@
             android:textSize="20dp"
             android:textStyle="bold" />
 
-        <com.google.android.material.button.MaterialButton
+        <Button
             android:id="@+id/bottoneConfermaPopUpAsta"
             android:layout_width="150dp"
             android:layout_height="60dp"

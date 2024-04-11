@@ -1,6 +1,5 @@
 package com.example.progettoingsw.backendAPI;
 
-import com.example.progettoingsw.DTO.Asta_allinglese_DTO;
 import com.example.progettoingsw.DTO.Asta_alribasso_DTO;
 
 import java.util.ArrayList;
@@ -20,4 +19,12 @@ public interface Asta_alribassoService {
     @GET("/asta_alribassoController/acquistaAstaAlRibasso/{idAstaAlRibasso}/{indirizzo_email}/{prezzoAcquisto}")
     Call<Integer> acquistaAstaAlRibasso(@Path("idAstaAlRibasso") Long idAstaAlRibasso, @Path("indirizzo_email") String indirizzo_email, @Path("prezzoAcquisto") String prezzoAcquisto);
 
+    @GET("/asta_alribassoController/trovaAstaRibasso/{idAstaRibasso}")
+    Call<Asta_alribasso_DTO> trovaAstaRibasso(@Path("idAstaRibasso") Long idAstaRibasso);
+    @GET("/asta_alribassoController/verificaAstaAlRibassoInPreferiti/{indirizzo_email}/{idAstaRibasso}")
+    Call<Integer> verificaAstaAlRibassoInPreferiti(@Path("indirizzo_email") String indirizzo_email, @Path("idAstaRibasso") Long idAstaRibasso);
+    @GET("/asta_alribassoController/inserimentoAstaInPreferiti/{idAstaRibasso}/{indirizzo_email}")
+    Call<Integer> inserimentoAstaInPreferiti(@Path("idAstaRibasso") Long idAstaRibasso, @Path("indirizzo_email") String indirizzo_email);
+    @GET("/asta_alribassoController/eliminazioneAstaInPreferiti/{idAstaRibasso}/{indirizzo_email}")
+    Call<Integer> eliminazioneAstaInPreferiti(@Path("idAstaRibasso") Long idAstaRibasso, @Path("indirizzo_email") String indirizzo_email);
 }

@@ -7,6 +7,7 @@ import android.util.Log;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.bumptech.glide.signature.ObjectKey;
 import com.example.progettoingsw.item.AstaIngleseItem;
 import com.example.progettoingsw.item.AstaInversaItem;
 import com.example.progettoingsw.item.AstaRibassoItem;
@@ -31,13 +32,25 @@ public class HomeViewModel extends ViewModel {
     private Asta_inversaRepository astaInversaRepository;
     private Repository repository;
     public MutableLiveData<Boolean> aste_allingleseInScadenzaPresenti = new MutableLiveData<>(false);
-    public MutableLiveData<Boolean> aste_allingleseNuovePresenti = new MutableLiveData<>(false);
+    public MutableLiveData<ArrayList<Object>> aste_allingleseInScadenzaRecuperate = new MutableLiveData<>(null);
     public MutableLiveData<Boolean> aste_allingleseCategoriaNomePresenti = new MutableLiveData<>(false);
+    public MutableLiveData<ArrayList<Object>> aste_allingleseCategoriaNomeRecuperate = new MutableLiveData<>(null);
+    public MutableLiveData<Boolean> aste_allingleseNuovePresenti = new MutableLiveData<>(false);
+    public MutableLiveData<ArrayList<Object>> aste_allingleseNuoveRecuperate = new MutableLiveData<>(null);
+
+
     public MutableLiveData<Boolean> aste_alribassoCategoriaNomePresenti = new MutableLiveData<>(false);
-    public MutableLiveData<Boolean> aste_inversaNuovePresenti = new MutableLiveData<>(false);
-    public MutableLiveData<Boolean> aste_inversaCategoriaNomePresenti = new MutableLiveData<>(false);
-    public MutableLiveData<Boolean> aste_inversaInScadenzaPresenti = new MutableLiveData<>(false);
+    public MutableLiveData<ArrayList<Object>> aste_alribassoCategoriaNomeRecuperate = new MutableLiveData<>(null);
     public MutableLiveData<Boolean> aste_alribassoNuovePresenti = new MutableLiveData<>(false);
+    public MutableLiveData<ArrayList<Object>> aste_alribassoNuoveRecuperate = new MutableLiveData<>(null);
+
+
+    public MutableLiveData<Boolean> aste_inversaNuovePresenti = new MutableLiveData<>(false);
+    public MutableLiveData<ArrayList<Object>> aste_inversaNuoveRecuperate = new MutableLiveData<>(null);
+    public MutableLiveData<Boolean> aste_inversaCategoriaNomePresenti = new MutableLiveData<>(false);
+    public MutableLiveData<ArrayList<Object>> aste_inversaCategoriaNomeRecuperate = new MutableLiveData<>(null);
+    public MutableLiveData<Boolean> aste_inversaInScadenzaPresenti = new MutableLiveData<>(false);
+    public MutableLiveData<ArrayList<Object>> aste_inversaInScadenzaRecuperate = new MutableLiveData<>(null);
     public MutableLiveData<Boolean> acquirenteModelPresente = new MutableLiveData<>(false);
     public MutableLiveData<Boolean> venditoreModelPresente = new MutableLiveData<>(false);
     public MutableLiveData<Boolean> entraInSchermataAstaInglese = new MutableLiveData<>(false);
@@ -249,7 +262,7 @@ public class HomeViewModel extends ViewModel {
     public Boolean getAste_allingleseCategoriaNomePresenti(){
         return aste_allingleseCategoriaNomePresenti.getValue();
     }
-    public List<Asta_allingleseModel> getListaAsta_allingleseScadenzaRecente(){
+    public ArrayList<Asta_allingleseModel> getListaAsta_allingleseScadenzaRecente(){
         Log.d("getListaAsta_allingleseScadenzaRecente", "asta: "  + repository.getListaAsteAllIngleseInScadenza().size());
         return repository.getListaAsteAllIngleseInScadenza();
     }
@@ -273,7 +286,7 @@ public class HomeViewModel extends ViewModel {
     public Boolean getAste_alribassoNuovePresenti(){
         return aste_alribassoNuovePresenti.getValue();
     }
-    public List<Asta_alribassoModel> getListaAsta_alribassoNuove(){
+    public ArrayList<Asta_alribassoModel> getListaAsta_alribassoNuove(){
         return repository.getListaAsteAlRibassoNuove();
     }
     public Boolean getAste_alribassoCategoriaNomePresenti(){
@@ -299,7 +312,7 @@ public class HomeViewModel extends ViewModel {
     public Boolean getAste_inversaInScadenzaPresenti() {
         return aste_inversaInScadenzaPresenti.getValue();
     }
-    public List<Asta_inversaModel> getListaAsta_inversaScadenzaRecente(){
+    public ArrayList<Asta_inversaModel> getListaAsta_inversaScadenzaRecente(){
         return repository.getListaAsteInversaInScadenza();
     }
     public void setAste_inversaNuovePresenti(Boolean b){
@@ -308,7 +321,7 @@ public class HomeViewModel extends ViewModel {
     public Boolean getAste_inversaNuovePresenti(){
         return aste_inversaNuovePresenti.getValue();
     }
-    public List<Asta_inversaModel> getListaAsta_inversaNuove(){
+    public ArrayList<Asta_inversaModel> getListaAsta_inversaNuove(){
         return repository.getListaAsteInversaNuove();
     }
     public void setAste_inversaCategoriaNomePresenti(Boolean b){
@@ -317,7 +330,7 @@ public class HomeViewModel extends ViewModel {
     public Boolean getAste_inversaCategoriaNomePresenti(){
         return aste_inversaCategoriaNomePresenti.getValue();
     }
-    public List<Asta_inversaModel> getListaAsta_inversaCategoriaNome(){
+    public ArrayList<Asta_inversaModel> getListaAsta_inversaCategoriaNome(){
         return repository.getListaAsteInversaCategoriaNome();
     }
     public void setEntraInSchermataAstaInversa(Boolean b){
@@ -364,5 +377,72 @@ public class HomeViewModel extends ViewModel {
 //            startActivity(intent);
         }
     }
+    public void setAste_allingleseCategoriaNomeRecuperate(ArrayList<Object> lista){
+        aste_allingleseCategoriaNomeRecuperate.setValue(lista);
+    }
+    public void recuperaAste_allingleseCategorieNome(){
+        ArrayList<Asta_allingleseModel> listaAsteCategoriaNome = getListaAsta_allingleseCategoriaNome();
+        ArrayList<Object> listaOggetti = new ArrayList<>(listaAsteCategoriaNome);
+        setAste_allingleseCategoriaNomeRecuperate(listaOggetti);
+    }
+    public void setAste_allingleseInScadenzaRecuperate(ArrayList<Object> lista){
+        aste_allingleseInScadenzaRecuperate.setValue(lista);
+    }
+    public void recuperaAste_allingleseInScadenza(){
+        ArrayList<Asta_allingleseModel> listaAsteInScadenza = getListaAsta_allingleseScadenzaRecente();
+        ArrayList<Object> listaOggetti = new ArrayList<>(listaAsteInScadenza);
+        setAste_allingleseInScadenzaRecuperate(listaOggetti);
+    }
+    public void setAste_allingleseNuoveRecuperate(ArrayList<Object> lista){
+        aste_allingleseNuoveRecuperate.setValue(lista);
+    }
+    public void recuperaAste_allingleseNuove(){
+        ArrayList<Asta_allingleseModel> listaAsteNuove = getListaAsta_allingleseNuove();
+        ArrayList<Object> listaOggetti = new ArrayList<>(listaAsteNuove);
+        setAste_allingleseNuoveRecuperate(listaOggetti);
+    }
 
+
+    public void setAste_alribassoCategoriaNomeRecuperate(ArrayList<Object> lista){
+        aste_alribassoCategoriaNomeRecuperate.setValue(lista);
+    }
+    public void recuperaAste_alribassoCategorieNome(){
+        ArrayList<Asta_alribassoModel> listaAsteCategoriaNome = getListaAsta_alribassoCategoriaNome();
+        ArrayList<Object> listaOggetti = new ArrayList<>(listaAsteCategoriaNome);
+        setAste_alribassoCategoriaNomeRecuperate(listaOggetti);
+    }
+    public void setAste_alribassoNuoveRecuperate(ArrayList<Object> lista){
+        aste_alribassoNuoveRecuperate.setValue(lista);
+    }
+    public void recuperaAste_alribassoNuove(){
+        ArrayList<Asta_alribassoModel> listaAsteNuove = getListaAsta_alribassoNuove();
+        ArrayList<Object> listaOggetti = new ArrayList<>(listaAsteNuove);
+        setAste_alribassoNuoveRecuperate(listaOggetti);
+    }
+
+
+    public void setAste_inversaInScadenzaRecuperate(ArrayList<Object> lista){
+        aste_inversaInScadenzaRecuperate.setValue(lista);
+    }
+    public void recuperaAste_inversaInScadenza(){
+        ArrayList<Asta_inversaModel> listaAsteInScadenza = getListaAsta_inversaScadenzaRecente();
+        ArrayList<Object> listaOggetti = new ArrayList<>(listaAsteInScadenza);
+        setAste_inversaInScadenzaRecuperate(listaOggetti);
+    }
+    public void setAste_inversaNuoveRecuperate(ArrayList<Object> lista){
+        aste_inversaNuoveRecuperate.setValue(lista);
+    }
+    public void recuperaAste_inversaNuove(){
+        ArrayList<Asta_inversaModel> listaAsteNuove = getListaAsta_inversaNuove();
+        ArrayList<Object> listaOggetti = new ArrayList<>(listaAsteNuove);
+        setAste_inversaNuoveRecuperate(listaOggetti);
+    }
+    public void setAste_inversaCategoriaNomeRecuperate(ArrayList<Object> lista){
+        aste_inversaCategoriaNomeRecuperate.setValue(lista);
+    }
+    public void recuperaAste_inversaCategorieNome(){
+        ArrayList<Asta_inversaModel> listaAsteCategoriaNome = getListaAsta_inversaCategoriaNome();
+        ArrayList<Object> listaOggetti = new ArrayList<>(listaAsteCategoriaNome);
+        setAste_inversaCategoriaNomeRecuperate(listaOggetti);
+    }
 }
