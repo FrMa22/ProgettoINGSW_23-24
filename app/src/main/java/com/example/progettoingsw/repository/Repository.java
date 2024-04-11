@@ -21,9 +21,11 @@ public class Repository {
     private VenditoreModel venditoreModel;
     private List<SocialAcquirenteModel> socialAcquirenteModelList;
     private List<SocialVenditoreModel> socialVenditoreModelList;
-    public static final String backendUrl = "http://13.60.50.25:8080";
+
+    private ArrayList<SocialAcquirenteModel> listaSocialAcquirenteRecuperati;//usata per avere social acquirente nel profilo utente
+
     private ArrayList<String> listaCategorieVenditore;
-    public static final String backendUrl = "http:/35.181.6.125:8080/";
+    public static final String backendUrl = "http:/16.171.148.88:8080/";
     public static Repository questaRepository = null;
     //liste per le aste all'inglese nel caso di accesso come acquirente (aste in home)
     private ArrayList<Asta_allingleseModel> listaAsteAllIngleseInScadenza;
@@ -36,6 +38,9 @@ public class Repository {
     private ArrayList<Asta_inversaModel> listaAsteInversaInScadenza;
     private ArrayList<Asta_inversaModel> listaAsteInversaNuove;
     private ArrayList<Asta_inversaModel> listaAsteInversaCategoriaNome;
+
+    private String nome_socialAcquirenteSelezionato;
+    private String link_socialAcquirenteSelezionato;
 
     //questi servono per accedere a un asta cliccandoci sopra, i commentati sono per testare senza db
     private Asta_allingleseModel asta_allingleseSelezionata;
@@ -52,6 +57,7 @@ public class Repository {
     private Repository(){
         socialAcquirenteModelList=new ArrayList<>();
         socialVenditoreModelList=new ArrayList<>();
+        listaSocialAcquirenteRecuperati=new ArrayList<>();
 
     }
     public static Repository getInstance() {
@@ -125,7 +131,7 @@ public class Repository {
 
 
 
-    public List<String> getNomiSocialAcquirenteModelList(List<SocialAcquirenteModel> socialAcquirenteModelList){
+    public List<String> getNomiSocialAcquirenteModelList(){
         List<String> nomi = new ArrayList<>();
         for (SocialAcquirenteModel social : socialAcquirenteModelList) {
             nomi.add(social.getNome());
@@ -133,7 +139,7 @@ public class Repository {
         return nomi;
     }
 
-    public List<String> getLinksSocialAcquirenteModelList(List<SocialAcquirenteModel> socialAcquirenteModelList){
+    public List<String> getLinksSocialAcquirenteModelList(){
         List<String> links = new ArrayList<>();
         for (SocialAcquirenteModel social : socialAcquirenteModelList) {
             links.add(social.getLink());
@@ -237,5 +243,21 @@ public class Repository {
         Log.d("In repository", "setListaCategoriaVenditore con lista " + listaCategorieAcquirente);
         this.listaCategorieVenditore = listaCategorieVenditore;
     }
+
+
+    public void setSocialAcquirenteSelezionato(String nome,String link) {
+        Log.d("Repository" , "imposto social acquirente selezionato " + nome + " "+ link);
+        this.nome_socialAcquirenteSelezionato=nome;
+        this.link_socialAcquirenteSelezionato=link;
+    }
+
+
+    public ArrayList<SocialAcquirenteModel> getListaSocialAcquirenteRecuperati() {
+        return (ArrayList<SocialAcquirenteModel>) socialAcquirenteModelList;
+    }
+    public void setListaSocialAcquirenteRecuperati(ArrayList<SocialAcquirenteModel> listaSocialAcquirenteRecuperati) {
+        this.listaSocialAcquirenteRecuperati = listaSocialAcquirenteRecuperati;
+    }
+
 
 }
