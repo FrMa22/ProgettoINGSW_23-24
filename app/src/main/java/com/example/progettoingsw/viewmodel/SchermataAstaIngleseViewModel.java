@@ -18,15 +18,18 @@ import java.time.format.DateTimeFormatter;
 
 public class SchermataAstaIngleseViewModel extends ViewModel {
     private Repository repository;
-    public MutableLiveData<Boolean> isAstaRecuperata = new MutableLiveData<>(false);
+    public MutableLiveData<Asta_allingleseModel> astaRecuperata = new MutableLiveData<>(null);
     public MutableLiveData<String> erroreRecuperoAsta = new MutableLiveData<>("");
     public MutableLiveData<Boolean> tipoUtenteChecked = new MutableLiveData<>(false);
     public MutableLiveData<Boolean> isPartecipazioneAvvenuta = new MutableLiveData<>(false);
     public MutableLiveData<Boolean> astaInPreferiti = new MutableLiveData<>(false);
     public MutableLiveData<Boolean> verificaAstaInPreferitiChecked = new MutableLiveData<>(false);
+    public MutableLiveData<Bitmap> immagineAstaConvertita = new MutableLiveData<>(null);
+    public MutableLiveData<Boolean> isAstaChiusa = new MutableLiveData<>(false);
+    public MutableLiveData<String> intervalloOfferteConvertito = new MutableLiveData("");
     private String messaggioPartecipazioneAstaInglese;
     private String tipoUtente;
-    private Asta_allingleseModel astaRecuperata;
+    //private Asta_allingleseModel astaRecuperata;
     private Asta_allingleseRepository astaAllingleseRepository;
 
     public SchermataAstaIngleseViewModel(){
@@ -43,25 +46,18 @@ public class SchermataAstaIngleseViewModel extends ViewModel {
                 if(astaRecuperata!=null){
                     repository.setAsta_allingleseSelezionata(astaRecuperata);
                     setAstaRecuperata(astaRecuperata);
-                    setIsAstaRecuperata(true);
                 }else{
                     setErroreRecuperoAsta("errore nel recupero asta");
-                    setIsAstaRecuperata(true);
                 }
             }
         });
     }
-    public void setIsAstaRecuperata(Boolean b){
-        isAstaRecuperata.setValue(b);
-    }
-    public Boolean getIsAstaRecuperata(){
-        return isAstaRecuperata.getValue();
-    }
+
     public void setAstaRecuperata(Asta_allingleseModel asta){
-        this.astaRecuperata = asta;
+        astaRecuperata.setValue(asta);
     }
     public Asta_allingleseModel getAstaRecuperata(){
-        return astaRecuperata;
+        return astaRecuperata.getValue();
     }
     public void setErroreRecuperoAsta(String messaggio){
         erroreRecuperoAsta.setValue(messaggio);
@@ -72,12 +68,16 @@ public class SchermataAstaIngleseViewModel extends ViewModel {
     public Boolean isErroreRecuperoAsta(){
         return !erroreRecuperoAsta.getValue().equals("");
     }
+    public void setIntervalloOfferteConvertito(String scadenza){
+        intervalloOfferteConvertito.setValue(scadenza);
+    }
 
-    public String convertiIntervalloOfferte(String intervallo){
+    public void convertiIntervalloOfferte(Asta_allingleseModel asta){
         // Ottieni la data e l'ora attuali con il giorno incluso
         LocalDateTime now = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
 
+        String intervallo = asta.getIntervalloTempoOfferte();
         // Analizza l'intervallo in ore e minuti
         String[] parts = intervallo.split(":");
         int hours = Integer.parseInt(parts[0]);
@@ -91,16 +91,19 @@ public class SchermataAstaIngleseViewModel extends ViewModel {
 
         // Formatta il risultato nel formato desiderato
         String scadenzaFormattata = scadenza.format(formatter);
-        return scadenzaFormattata;
+
+        setIntervalloOfferteConvertito(scadenzaFormattata);
     }
-    public Bitmap convertiImmagine(byte[] immagine){
+    public void setImmagineAstaConvertita(Bitmap img){
+        immagineAstaConvertita.setValue(img);
+    }
+    public void convertiImmagine(byte[] immagine){
         if(immagine != null){
         Bitmap bitmap = BitmapFactory.decodeByteArray(immagine, 0, immagine.length);
-        return bitmap;
+            setImmagineAstaConvertita(bitmap);
         }else{
-            return null;
+            setImmagineAstaConvertita(null);
         }
-
     }
 
     public String getTipoUtente() {
@@ -139,8 +142,11 @@ public class SchermataAstaIngleseViewModel extends ViewModel {
     public String getMessaggioPartecipazioneAstaInglese(){
         return messaggioPartecipazioneAstaInglese;
     }
-    public Boolean isAstaChiusa(){
-        return !repository.getAsta_allingleseSelezionata().getCondizione().equals("aperta");
+    public void setIsAstaChiusa(Boolean b){
+        isAstaChiusa.setValue(b);
+    }
+    public void isAstaChiusa(){
+        setIsAstaChiusa(!repository.getAsta_allingleseSelezionata().getCondizione().equals("aperta"));
     }
     public void setAstaInPreferiti(Boolean b){
         astaInPreferiti.setValue(b);
@@ -166,12 +172,10 @@ public class SchermataAstaIngleseViewModel extends ViewModel {
                 Log.d("asta ricercata" , "qui");
                 if(numeroRecuperato!=null && numeroRecuperato!=0){
                     Log.d("asta ricercata" , "è nei preferiti");
-                    setAstaInPreferiti(true);
                     setVerificaAstaInPreferitiChecked(true);
                 }else{
                     Log.d("asta ricercata" , "non è nei preferiti");
                     setErroreRecuperoAsta("errore nella verifica asta in preferiti");
-                    setAstaInPreferiti(false);
                     setVerificaAstaInPreferitiChecked(true);
                 }
             }
@@ -185,11 +189,11 @@ public class SchermataAstaIngleseViewModel extends ViewModel {
             public void OnInserimentoAstaIngleseInPreferiti(Integer numeroRecuperato) {
                 Log.d("asta inserita in preferiti" , "qui");
                 if(numeroRecuperato!=null && numeroRecuperato==1){
-                    setAstaInPreferiti(true);
+                    //setAstaInPreferiti(true);
                     setVerificaAstaInPreferitiChecked(true);
                 }else{
                     setErroreRecuperoAsta("errore nella verifica asta in preferiti");
-                    setVerificaAstaInPreferitiChecked(true);
+                    //setVerificaAstaInPreferitiChecked(true);
                 }
             }
         });
@@ -202,11 +206,11 @@ public class SchermataAstaIngleseViewModel extends ViewModel {
             public void OnEliminazioneAstaIngleseInPreferiti(Integer numeroRecuperato) {
                 Log.d("asta eliminata in preferiti" , "qui");
                 if(numeroRecuperato!=null && numeroRecuperato==1){
-                    setAstaInPreferiti(false);
-                    setVerificaAstaInPreferitiChecked(true);
+                    //setAstaInPreferiti(false);
+                    setVerificaAstaInPreferitiChecked(false);
                 }else{
                     setErroreRecuperoAsta("errore nella verifica asta in preferiti");
-                    setVerificaAstaInPreferitiChecked(true);
+                    //setVerificaAstaInPreferitiChecked(true);
                 }
             }
         });

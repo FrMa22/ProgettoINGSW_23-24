@@ -24,5 +24,11 @@ public interface Asta_inversaService {
 
     @GET("/asta_inversaController/trovaAstaInversa/{idAstaInversa}")
     Call<Asta_inversa_DTO> trovaAstaInversa(@Path("idAstaInversa") Long idAstaInversa);
+    @GET("/asta_inversaController/verificaAstaInversaInPreferiti/{indirizzo_email}/{idAstaInversa}")
+    Call<Integer> verificaAstaInversaInPreferiti(@Path("indirizzo_email") String indirizzo_email, @Path("idAstaInversa") Long idAstaInversa);
+    @GET("/asta_inversaController/inserimentoAstaInPreferiti/{idAstaInversa}/{indirizzo_email}")
+    Call<Integer> inserimentoAstaInPreferiti(@Path("idAstaInversa") Long idAstaInversa, @Path("indirizzo_email") String indirizzo_email);
+    @GET("/asta_inversaController/eliminazioneAstaInPreferiti/{idAstaInversa}/{indirizzo_email}")
+    Call<Integer> eliminazioneAstaInPreferiti(@Path("idAstaInversa") Long idAstaInversa, @Path("indirizzo_email") String indirizzo_email);
 }
 

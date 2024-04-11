@@ -359,51 +359,77 @@ public class FragmentHome extends Fragment {
 
     public void osservaaste_allingleseCategoriaNomePresenti() {
         homeViewModel.aste_allingleseCategoriaNomePresenti.observe(getViewLifecycleOwner(), (messaggio) -> {
-            if (homeViewModel.getAste_allingleseCategoriaNomePresenti()) {
-                ArrayList<Object> listaOggetti = new ArrayList<>(homeViewModel.getListaAsta_allingleseCategoriaNome());
-                Log.d("FragmentHome" , "osserva asta all inglese categoria, prima,count: " + listaOggetti.size());
-                astaAdapterConsigliate.setAste(listaOggetti);
-                Log.d("FragmentHome" , "osserva asta all inglese categoria, dopo");
+            if (messaggio){
+                osservaaste_allingleseCategoriaNomeRecuperate();
+                homeViewModel.recuperaAste_allingleseCategorieNome();
+            }
+        });
+    }
+    public void osservaaste_allingleseCategoriaNomeRecuperate() {
+        homeViewModel.aste_allingleseCategoriaNomeRecuperate.observe(getViewLifecycleOwner(), (listaAste) -> {
+            if (listaAste!=null) {
+                astaAdapterConsigliate.setAste(listaAste);
             }
         });
     }
     public void osservaaste_allingleseInScadenzaPresenti() {
         homeViewModel.aste_allingleseInScadenzaPresenti.observe(getViewLifecycleOwner(), (messaggio) -> {
-            if (homeViewModel.getAste_allingleseInScadenzaPresenti()) {
-                ArrayList<Object> listaOggetti = new ArrayList<>(homeViewModel.getListaAsta_allingleseScadenzaRecente());
-                Log.d("FragmentHome" , "osserva asta all inglese in scadenza, prima,count: " + listaOggetti.size());
-                astaAdapterInScadenza.setAste(listaOggetti);
-                Log.d("FragmentHome" , "osserva asta all inglese in scadenza, dopo");
+            if (messaggio) {
+                osservaaste_allingleseInScadenzaRecuperate();
+                homeViewModel.recuperaAste_allingleseInScadenza();
             }
         });
     }
+    public void osservaaste_allingleseInScadenzaRecuperate() {
+        homeViewModel.aste_allingleseInScadenzaRecuperate.observe(getViewLifecycleOwner(), (lista) -> {
+            if (lista != null) {
+                astaAdapterInScadenza.setAste(lista);
+            }
+        });
+    }
+
     public void osservaaste_allingleseNuovePresenti() {
         homeViewModel.aste_allingleseNuovePresenti.observe(getViewLifecycleOwner(), (messaggio) -> {
-            if (homeViewModel.getAste_allingleseNuovePresenti()) {
-                ArrayList<Object> listaOggetti = new ArrayList<>(homeViewModel.getListaAsta_allingleseNuove());
-                Log.d("FragmentHome" , "osserva asta all inglese nuove, prima,count: " + listaOggetti.size());
-                astaAdapterNuove.setAste(listaOggetti);
-                Log.d("FragmentHome" , "osserva asta all inglese nuove, dopo");
+            if (messaggio) {
+                osservaaste_allingleseNuoveRecuperate();
+                homeViewModel.recuperaAste_allingleseNuove();
+            }
+        });
+    }
+    public void osservaaste_allingleseNuoveRecuperate() {
+        homeViewModel.aste_allingleseNuoveRecuperate.observe(getViewLifecycleOwner(), (lista) -> {
+            if (lista != null) {
+                astaAdapterNuove.setAste(lista);
             }
         });
     }
     public void osservaaste_alribassoCategoriaNomePresenti() {
         homeViewModel.aste_alribassoCategoriaNomePresenti.observe(getViewLifecycleOwner(), (messaggio) -> {
-            if (homeViewModel.getAste_alribassoCategoriaNomePresenti()) {
-                ArrayList<Object> listaOggetti = new ArrayList<>(homeViewModel.getListaAsta_alribassoCategoriaNome());
-                Log.d("FragmentHome" , "osserva asta all inglese categoria, prima,count: " + listaOggetti.size());
-                astaAdapterConsigliate.setAste(listaOggetti);
-                Log.d("FragmentHome" , "osserva asta all inglese categoria, dopo");
+            if (messaggio) {
+                osservaaste_alribassoCategoriaNomeRecuperate();
+                homeViewModel.recuperaAste_alribassoCategorieNome();
+            }
+        });
+    }
+    public void osservaaste_alribassoCategoriaNomeRecuperate() {
+        homeViewModel.aste_alribassoCategoriaNomeRecuperate.observe(getViewLifecycleOwner(), (liste) -> {
+            if (liste != null) {
+                astaAdapterConsigliate.setAste(liste);
             }
         });
     }
     public void osservaAste_alribassoNuovePresenti() {
         homeViewModel.aste_alribassoNuovePresenti.observe(getViewLifecycleOwner(), (messaggio) -> {
-            if (homeViewModel.getAste_alribassoNuovePresenti()) {
-                ArrayList<Object> listaOggetti = new ArrayList<>(homeViewModel.getListaAsta_alribassoNuove());
-                Log.d("FragmentHome" , "osserva asta al ribasso nuove, prima,count: " + listaOggetti.size());
-                astaAdapterNuove.setAste(listaOggetti);
-                Log.d("FragmentHome" , "osserva asta al ribasso nuove, dopo");
+            if (messaggio) {
+                osservaAste_alribassoNuoveRecuperate();
+                homeViewModel.recuperaAste_alribassoNuove();
+            }
+        });
+    }
+    public void osservaAste_alribassoNuoveRecuperate() {
+        homeViewModel.aste_alribassoNuoveRecuperate.observe(getViewLifecycleOwner(), (lista) -> {
+            if (lista != null) {
+                astaAdapterNuove.setAste(lista);
             }
         });
     }
@@ -440,31 +466,46 @@ public class FragmentHome extends Fragment {
     }
     public void osservaaste_inversaInScadenzaPresenti() {
         homeViewModel.aste_inversaInScadenzaPresenti.observe(getViewLifecycleOwner(), (messaggio) -> {
-            if (homeViewModel.getAste_inversaInScadenzaPresenti()) {
-                ArrayList<Object> listaOggetti = new ArrayList<>(homeViewModel.getListaAsta_inversaScadenzaRecente());
-                Log.d("FragmentHome" , "osserva asta inverse, prima,count: " + listaOggetti.size());
-                astaAdapterInScadenza.setAste(listaOggetti);
-                Log.d("FragmentHome" , "osserva asta inverse, dopo");
+            if(messaggio){
+                osservaaste_inversaInScadenzaRecuperate();
+                homeViewModel.recuperaAste_inversaInScadenza();
+            }
+        });
+    }
+    public void osservaaste_inversaInScadenzaRecuperate() {
+        homeViewModel.aste_inversaInScadenzaRecuperate.observe(getViewLifecycleOwner(), (lista) -> {
+            if (lista != null) {
+                astaAdapterInScadenza.setAste(lista);
             }
         });
     }
     public void osservaaste_inversaNuovePresenti() {
         homeViewModel.aste_inversaNuovePresenti.observe(getViewLifecycleOwner(), (messaggio) -> {
-            if (homeViewModel.getAste_inversaNuovePresenti()) {
-                ArrayList<Object> listaOggetti = new ArrayList<>(homeViewModel.getListaAsta_inversaNuove());
-                Log.d("FragmentHome" , "osserva asta al ribasso, prima,count: " + listaOggetti.size());
-                astaAdapterNuove.setAste(listaOggetti);
-                Log.d("FragmentHome" , "osserva asta al ribasso, dopo");
+            if (messaggio) {
+                osservaaste_inversaNuoveRecuperate();
+                homeViewModel.recuperaAste_inversaNuove();
+            }
+        });
+    }
+    public void osservaaste_inversaNuoveRecuperate() {
+        homeViewModel.aste_inversaNuoveRecuperate.observe(getViewLifecycleOwner(), (lista) -> {
+            if (lista != null) {
+                astaAdapterNuove.setAste(lista);
             }
         });
     }
     public void osservaaste_inversaCategoriaNomePresenti() {
         homeViewModel.aste_inversaCategoriaNomePresenti.observe(getViewLifecycleOwner(), (messaggio) -> {
-            if (homeViewModel.getAste_inversaCategoriaNomePresenti()) {
-                ArrayList<Object> listaOggetti = new ArrayList<>(homeViewModel.getListaAsta_inversaCategoriaNome());
-                Log.d("FragmentHome" , "osserva asta all inglese, prima,count: " + listaOggetti.size());
-                astaAdapterConsigliate.setAste(listaOggetti);
-                Log.d("FragmentHome" , "osserva asta all inglese, dopo");
+            if (messaggio) {
+                osservaaste_inversaCategoriaNomeRecuperate();
+                homeViewModel.recuperaAste_inversaCategorieNome();
+            }
+        });
+    }
+    public void osservaaste_inversaCategoriaNomeRecuperate() {
+        homeViewModel.aste_inversaCategoriaNomeRecuperate.observe(getViewLifecycleOwner(), (lista) -> {
+            if (lista != null) {
+                astaAdapterConsigliate.setAste(lista);
             }
         });
     }

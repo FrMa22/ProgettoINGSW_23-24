@@ -61,6 +61,9 @@ public class SchermataAstaInglese extends GestoreComuniImplementazioni implement
     private AstaPreferitaIngleseDAO astaPreferitaIngleseDAO;
     boolean isPreferito;
     private TextView textViewSogliaRialzoSchermataAstaInglese;
+    private Bitmap immagineConvertita;
+    private Boolean isAstaChiusa;
+    private String intervalloConvertito;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,7 +90,7 @@ public class SchermataAstaInglese extends GestoreComuniImplementazioni implement
         text_view_tua_offerta_attuale = findViewById(R.id.text_view_tua_offerta_attuale);
 
         schermataAstaIngleseViewModel = new ViewModelProvider(this).get(SchermataAstaIngleseViewModel.class);
-        osservaIsAstaRecuperata();
+        osservaAstaRecuperata();
         osservaErroreRecuperoAsta();
         osservaTipoUtenteChecked();
         osservaIsPartecipazioneAvvenuta();
@@ -247,17 +250,20 @@ public class SchermataAstaInglese extends GestoreComuniImplementazioni implement
             textViewSogliaRialzoSchermataAstaInglese.setText(String.valueOf(astaIngleseRecuperata.getRialzoMin()));
 
 
+            //errore modello MVVM
+            if(immagineConvertita != null){
+                imageViewProdotto.setImageBitmap(immagineConvertita);
+            }else{
+                //immagine di default
+            }
 
-            imageViewProdotto.setImageBitmap(schermataAstaIngleseViewModel.convertiImmagine(astaIngleseRecuperata.getImmagine()));
 
-            if(schermataAstaIngleseViewModel.isAstaChiusa()){
+            if(isAstaChiusa){
                 bottoneNuovaOfferta.setVisibility(View.INVISIBLE);
                 imageButtonPreferiti.setVisibility(View.INVISIBLE);
                 textViewIntervalloOfferte.setText("Asta chiusa.");
             }else{
-                String intervalloOfferte = astaIngleseRecuperata.getIntervalloTempoOfferte();
-                String scadenzaFormattata = schermataAstaIngleseViewModel.convertiIntervalloOfferte(intervalloOfferte);
-                textViewIntervalloOfferte.setText(scadenzaFormattata);
+                textViewIntervalloOfferte.setText(intervalloConvertito);
             }
 //            if (astaIngleseRecuperata.getCondizione().equals("chiusa")) {
 //                bottoneNuovaOfferta.setVisibility(View.INVISIBLE);
@@ -324,22 +330,42 @@ public class SchermataAstaInglese extends GestoreComuniImplementazioni implement
         setAllClickable(relativeLayoutSchermataAstaInglese,true);
     }
 
-    public void osservaIsAstaRecuperata(){
-        schermataAstaIngleseViewModel.isAstaRecuperata.observe(this, (messaggio) -> {
-            if (schermataAstaIngleseViewModel.getIsAstaRecuperata()) {
-                Log.d("osservaIsAstaRecuperata", "sto recuperando l'asta");
-                Asta_allingleseModel astaRecuperata = schermataAstaIngleseViewModel.getAstaRecuperata();
-                setAstaData(astaRecuperata);
+    public void osservaAstaRecuperata(){
+        schermataAstaIngleseViewModel.astaRecuperata.observe(this, (asta) -> {
+            if (asta != null) {
+                osservaImmagineAstaConvertita(asta);
+                schermataAstaIngleseViewModel.convertiImmagine(asta.getImmagine());
             }
         });
     }
+    public void osservaImmagineAstaConvertita(Asta_allingleseModel asta){
+        schermataAstaIngleseViewModel.immagineAstaConvertita.observe(this, (immagine) -> {
+            if (immagine != null) {
+                this.immagineConvertita = immagine;
+                osservaIsAstaChiusa(asta);
+                schermataAstaIngleseViewModel.isAstaChiusa();
+            }
+        });
+    }
+    public void osservaIsAstaChiusa(Asta_allingleseModel asta){
+        schermataAstaIngleseViewModel.isAstaChiusa.observe(this, (valore) -> {
+                this.isAstaChiusa = valore;
+                osservaConvertiIntervalloOfferte(asta);
+                schermataAstaIngleseViewModel.convertiIntervalloOfferte(asta);
+        });
+    }
+    public void osservaConvertiIntervalloOfferte(Asta_allingleseModel asta){
+        schermataAstaIngleseViewModel.intervalloOfferteConvertito.observe(this, (intervallo) ->{
+            this.intervalloConvertito = intervallo;
+            setAstaData(asta);
+        });
+    }
+
+
     public void osservaErroreRecuperoAsta(){
         schermataAstaIngleseViewModel.erroreRecuperoAsta.observe(this, (messaggio) -> {
             if (schermataAstaIngleseViewModel.isErroreRecuperoAsta()) {
-                Toast.makeText(this, schermataAstaIngleseViewModel.getErroreRecuperoAsta(), Toast.LENGTH_SHORT).show();
-                Log.d("osservaIsAstaRecuperata", "sto recuperando l'asta");
-                Asta_allingleseModel astaRecuperata = schermataAstaIngleseViewModel.getAstaRecuperata();
-                setAstaData(astaRecuperata);
+                Toast.makeText(this, messaggio, Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -384,21 +410,32 @@ public class SchermataAstaInglese extends GestoreComuniImplementazioni implement
     public void osservaVerificaAstaInPreferitiChecked(){
         schermataAstaIngleseViewModel.verificaAstaInPreferitiChecked.observe(this, (messaggio) -> {
             Log.d("osservaIsAstaRecuperata", "sto recuper");
-            if (schermataAstaIngleseViewModel.getVerificaAstaInPreferitiChecked()) {
-                if(schermataAstaIngleseViewModel.getAstaInPreferiti()){
-                    //asta in preferiti
-                    imageButtonPreferiti.setImageDrawable(drawableCuorePieno);
-                    imageButtonPreferiti.setOnClickListener(v -> eliminazioneInPreferiti());
-                }else{
-                    //asta non in preferiti
-                    imageButtonPreferiti.setImageDrawable(drawableCuoreVuoto);
-                    imageButtonPreferiti.setOnClickListener(v -> inserimentoInPreferiti());
-                }
+            if (messaggio) {
+                imageButtonPreferiti.setImageDrawable(drawableCuorePieno);
+                imageButtonPreferiti.setOnClickListener(v -> eliminazioneInPreferiti());
             }else{
-                Toast.makeText(this, "errore in verifica asta in preferiti", Toast.LENGTH_SHORT).show();
+                imageButtonPreferiti.setImageDrawable(drawableCuoreVuoto);
+                imageButtonPreferiti.setOnClickListener(v -> inserimentoInPreferiti());
             }
+//                osservaIsAstaInPreferiti();
+//                schermataAstaIngleseViewModel.getIsAstaInPreferiti();
+
         });
     }
+//    public void osservaIsAstaInPreferiti(){
+//        schermataAstaIngleseViewModel.isAstaInPreferiti.observe(this, (messaggio) -> {
+//            Log.d("osservaIsAstaRecuperata", "sto recuper");
+//            if (messaggio) {
+//                    //asta in preferiti
+//
+//                }else{
+//                    //asta non in preferiti
+//                    imageButtonPreferiti.setImageDrawable(drawableCuoreVuoto);
+//                    imageButtonPreferiti.setOnClickListener(v -> inserimentoInPreferiti());
+//                }
+//            }
+//        });
+//    }
 
 
 }

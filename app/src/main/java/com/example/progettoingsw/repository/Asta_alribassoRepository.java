@@ -3,11 +3,8 @@ package com.example.progettoingsw.repository;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.example.progettoingsw.DTO.Asta_allinglese_DTO;
 import com.example.progettoingsw.DTO.Asta_alribasso_DTO;
-import com.example.progettoingsw.backendAPI.Asta_allingleseService;
 import com.example.progettoingsw.backendAPI.Asta_alribassoService;
-import com.example.progettoingsw.model.Asta_allingleseModel;
 import com.example.progettoingsw.model.Asta_alribassoModel;
 
 import java.io.IOException;
@@ -36,6 +33,18 @@ public class Asta_alribassoRepository {
     public void trovaAsta_alribasso(Long idAsta, Asta_alribassoRepository.OnTrovaAstaRibassoListener listener) {
         System.out.println("entrato in trovaAsta_alribasso");
         new Asta_alribassoRepository.trovaAsta_alribassoTask(listener).execute(String.valueOf(idAsta));
+    }
+    public void verificaAstaRibassoInPreferiti(String indirizzo_email, Long idAsta, Asta_alribassoRepository.OnVerificaAstaRibassoInPreferitiListener listener) {
+        System.out.println("entrato in verificaAstaRibassoInPreferiti");
+        new Asta_alribassoRepository.verificaAsta_alribassoInPreferitiTask(listener).execute(indirizzo_email, String.valueOf(idAsta));
+    }
+    public void inserimentoAstaInPreferiti( Long idAsta,String indirizzo_email, Asta_alribassoRepository.OnInserimentoAstaRibassoInPreferitiListener listener) {
+        System.out.println("entrato in inserimentoAstaInPreferiti");
+        new Asta_alribassoRepository.inserimentoAsta_alribassoInPreferitiTask(listener).execute(String.valueOf(idAsta), indirizzo_email);
+    }
+    public void eliminazioneAstaInPreferiti( Long idAsta,String indirizzo_email, Asta_alribassoRepository.OnEliminazioneAstaRibassoInPreferitiListener listener) {
+        System.out.println("entrato in eliminazioneAstaInPreferiti");
+        new Asta_alribassoRepository.eliminazioneAsta_alribassoInPreferitiTask(listener).execute(String.valueOf(idAsta), indirizzo_email);
     }
     private static class getAste_alribassoNuoveTask extends AsyncTask<Void, Void, ArrayList<Asta_alribassoModel>> {
         private Asta_alribassoRepository.OnGetAsteRibassoNuoveListener listener;
@@ -311,5 +320,173 @@ public class Asta_alribassoRepository {
     }
     public interface OnTrovaAstaRibassoListener {
         void OnTrovaAstaRibasso(Asta_alribassoModel list);
+    }
+    private static class verificaAsta_alribassoInPreferitiTask extends AsyncTask<String, Void, Integer> {
+        private Asta_alribassoRepository.OnVerificaAstaRibassoInPreferitiListener listener;
+
+        public verificaAsta_alribassoInPreferitiTask(Asta_alribassoRepository.OnVerificaAstaRibassoInPreferitiListener listener) {
+            this.listener = listener;
+        }
+
+        @Override
+        protected Integer doInBackground(String... params) {
+            String indirizzo_email = params[0];
+            Long idAsta = Long.valueOf(params[1]);
+
+            OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl(Repository.backendUrl)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .client(httpClient.build())
+                    .build();
+
+            Asta_alribassoService service = retrofit.create(Asta_alribassoService.class);
+            Call<Integer> call = service.verificaAstaAlRibassoInPreferiti(indirizzo_email,idAsta);
+
+            try {
+                Response<Integer> response = call.execute();
+                if (response.isSuccessful()) {
+                    System.out.println("response successful");
+                    Integer numeroRecuperato = response.body();
+                    if(numeroRecuperato != null){
+                        return numeroRecuperato;
+                    }else{
+                        System.out.println("asta dto null");
+                        return null;
+                    }
+                }
+                System.out.println("response non successful");
+            } catch (IOException e) {
+                System.out.println("exception IOEXC");
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Integer result) {
+            System.out.println("on post execute GetAsteScadenzaRecenteTask" + result);
+            if (listener != null) {
+                listener.OnVerificaAstaRibassoInPreferiti(result);
+            }
+        }
+    }
+    public interface OnVerificaAstaRibassoInPreferitiListener {
+        void OnVerificaAstaRibassoInPreferiti(Integer numeroRecuperato);
+    }
+    private static class inserimentoAsta_alribassoInPreferitiTask extends AsyncTask<String, Void, Integer> {
+        private Asta_alribassoRepository.OnInserimentoAstaRibassoInPreferitiListener listener;
+
+        public inserimentoAsta_alribassoInPreferitiTask(Asta_alribassoRepository.OnInserimentoAstaRibassoInPreferitiListener listener) {
+            this.listener = listener;
+        }
+
+        @Override
+        protected Integer doInBackground(String... params) {
+            Long idAsta = Long.valueOf(params[0]);
+            String indirizzo_email = params[1];
+            // Effettua l'operazione di rete qui...
+            // Restituisci il risultato
+
+            OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+            // Configura il client OkHttpClient...
+
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl(Repository.backendUrl)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .client(httpClient.build())
+                    .build();
+
+            Asta_alribassoService service = retrofit.create(Asta_alribassoService.class);
+            Call<Integer> call = service.inserimentoAstaInPreferiti(idAsta,indirizzo_email);
+
+            try {
+                Response<Integer> response = call.execute();
+                if (response.isSuccessful()) {
+                    System.out.println("response successful");
+                    Integer numeroRecuperato = response.body();
+                    if(numeroRecuperato != null){
+                        return numeroRecuperato;
+                    }else{
+                        System.out.println("asta dto null");
+                        return null;
+                    }
+                }
+                System.out.println("response non successful");
+            } catch (IOException e) {
+                System.out.println("exception IOEXC");
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Integer result) {
+            System.out.println("on post execute GetAsteScadenzaRecenteTask" + result);
+            if (listener != null) {
+                listener.OnInserimentoAstaRibassoInPreferiti(result);
+            }
+        }
+    }
+    public interface OnInserimentoAstaRibassoInPreferitiListener {
+        void OnInserimentoAstaRibassoInPreferiti(Integer numeroRecuperato);
+    }
+    private static class eliminazioneAsta_alribassoInPreferitiTask extends AsyncTask<String, Void, Integer> {
+        private Asta_alribassoRepository.OnEliminazioneAstaRibassoInPreferitiListener listener;
+
+        public eliminazioneAsta_alribassoInPreferitiTask(Asta_alribassoRepository.OnEliminazioneAstaRibassoInPreferitiListener listener) {
+            this.listener = listener;
+        }
+
+        @Override
+        protected Integer doInBackground(String... params) {
+            Long idAsta = Long.valueOf(params[0]);
+            String indirizzo_email = params[1];
+            // Effettua l'operazione di rete qui...
+            // Restituisci il risultato
+
+            OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+            // Configura il client OkHttpClient...
+
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl(Repository.backendUrl)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .client(httpClient.build())
+                    .build();
+
+            Asta_alribassoService service = retrofit.create(Asta_alribassoService.class);
+            Call<Integer> call = service.eliminazioneAstaInPreferiti(idAsta,indirizzo_email);
+
+            try {
+                Response<Integer> response = call.execute();
+                if (response.isSuccessful()) {
+                    System.out.println("response successful");
+                    Integer numeroRecuperato = response.body();
+                    if(numeroRecuperato != null){
+                        return numeroRecuperato;
+                    }else{
+                        System.out.println("asta dto null");
+                        return null;
+                    }
+                }
+                System.out.println("response non successful");
+            } catch (IOException e) {
+                System.out.println("exception IOEXC");
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Integer result) {
+            System.out.println("on post execute GetAsteScadenzaRecenteTask" + result);
+            if (listener != null) {
+                listener.OnEliminazioneAstaRibassoInPreferiti(result);
+            }
+        }
+    }
+    public interface OnEliminazioneAstaRibassoInPreferitiListener {
+        void OnEliminazioneAstaRibassoInPreferiti(Integer numeroRecuperato);
     }
 }
