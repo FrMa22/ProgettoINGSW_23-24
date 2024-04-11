@@ -210,20 +210,14 @@ public class SchermataAstaRibasso extends GestoreComuniImplementazioni {
             textViewVenditore.setText(astaRibassoRecuperata.getId_venditore());
             // Imposta l'immagine solo se non è nulla
             imageViewProdotto.setImageBitmap(schermataAstaRibassoViewModel.convertiImmagine(astaRibassoRecuperata.getImmagine()));
-
-
-//            if (astaRibassoItem.getCondizione().equals("chiusa")) {
-//                bottoneNuovaOfferta.setVisibility(View.INVISIBLE);
-//                textViewProssimoDecremento.setText("Asta chiusa.");
-//                imageButtonPreferiti.setVisibility(View.INVISIBLE);
-//                countDownTimerControlloOgni10sec.cancel();
-//            }else{
+            if(schermataAstaRibassoViewModel.isAstaChiusa()){
+                bottoneNuovaOfferta.setVisibility(View.INVISIBLE);
+                textViewProssimoDecremento.setText("Asta chiusa.");
+                imageButtonPreferiti.setVisibility(View.INVISIBLE);
+            }else{
                 textViewProssimoDecremento.setText(schermataAstaRibassoViewModel.convertiIntervalloOfferte(astaRibassoRecuperata.getIntervalloDecrementale()));
-//                if (countDownTimerControlloOgni10sec != null) {
-//                    countDownTimerControlloOgni10sec.cancel();
-//                    countDownTimerControlloOgni10sec.start();
-//                }
-//            }
+            }
+
 
         } else {
             // Gestisci il caso in cui non ci siano dati recuperati
@@ -338,18 +332,6 @@ public class SchermataAstaRibasso extends GestoreComuniImplementazioni {
     }
 
 
-    private void eseguiAcquistoAsta(int id, String email, float offertaAttuale) {
-        astaRibassoDAO.openConnection();
-        astaRibassoDAO.acquistaAsta(id, email, offertaAttuale);
-        astaRibassoDAO.closeConnection();
-
-        popUpConfermaOffertaDialog.dismiss();
-
-        Intent intent = new Intent(SchermataAstaRibasso.this, AcquirenteMainActivity.class);
-        intent.putExtra("email", email);
-        intent.putExtra("tipoUtente", tipoUtente);
-        startActivity(intent);
-    }
 
     public void osservaIsAstaRecuperata(){
         schermataAstaRibassoViewModel.isAstaRecuperata.observe(this, (messaggio) -> {
@@ -386,6 +368,8 @@ public class SchermataAstaRibasso extends GestoreComuniImplementazioni {
                 }else{
                     Toast.makeText(this,"result null" , Toast.LENGTH_SHORT).show();
                 }
+                schermataAstaRibassoViewModel.getAstaData();
+                Log.d("osservaIsAcquistoAvvenuto", "recupero le informazioni.");
                 popUpConfermaOffertaDialog.dismiss();
             }
         });

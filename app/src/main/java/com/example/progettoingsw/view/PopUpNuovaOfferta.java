@@ -1,7 +1,5 @@
 package com.example.progettoingsw.view;
 
-import android.app.Activity;
-import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -12,11 +10,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
-import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelStoreOwner;
 
 import com.example.progettoingsw.DAO.AstaIngleseDAO;
 import com.example.progettoingsw.DAO.AstaInversaDAO;
@@ -24,7 +19,6 @@ import com.example.progettoingsw.R;
 import com.example.progettoingsw.classe_da_estendere.DialogPersonalizzato;
 import com.example.progettoingsw.controllers_package.Controller;
 import com.example.progettoingsw.viewmodel.PopUpNuovaOffertaViewModel;
-import com.google.android.material.button.MaterialButton;
 
 public class PopUpNuovaOfferta extends DialogPersonalizzato implements View.OnClickListener {
     private PopUpNuovaOffertaViewModel popUpNuovaOffertaViewModel;
@@ -76,14 +70,14 @@ public class PopUpNuovaOfferta extends DialogPersonalizzato implements View.OnCl
         view_popup_nuova_offerta = findViewById(R.id.view_popup_nuova_offerta);
         TextViewPrezzoRialzoMinimo = findViewById(R.id.TextViewPrezzoRialzoMinimo);
 
-        textviewPrezzoAttuale.setText(String.valueOf(popUpNuovaOffertaViewModel.getPrezzoVecchio()));
+
 
         osservaTipoAstaChecked();
         osservamessaggioErroreOfferta();
         osservaOffertaValida();
         osservaIsPartecipazioneAvvenuta();
         popUpNuovaOffertaViewModel.checkTipoAsta();
-
+        textviewPrezzoAttuale.setText(String.valueOf(popUpNuovaOffertaViewModel.getPrezzoVecchio()));
 
 
 
@@ -180,7 +174,7 @@ public class PopUpNuovaOfferta extends DialogPersonalizzato implements View.OnCl
     public void osservaIsPartecipazioneAvvenuta(){
         popUpNuovaOffertaViewModel.isPartecipazioneAvvenuta.observe(fragmentActivity, (messaggio) -> {
             if(popUpNuovaOffertaViewModel.getIsPartecipazioneAvvenuta()){
-                String messaggioAcquisto = popUpNuovaOffertaViewModel.getMessaggioPartecipazioneAstaInglese();
+                String messaggioAcquisto = popUpNuovaOffertaViewModel.getMessaggioPartecipazioneAsta();
                 if(messaggioAcquisto!=null && !messaggioAcquisto.isEmpty()){
                     Toast.makeText(getContext(),messaggioAcquisto , Toast.LENGTH_SHORT).show();
                 }else{
@@ -189,6 +183,8 @@ public class PopUpNuovaOfferta extends DialogPersonalizzato implements View.OnCl
                 Log.d("osservaIsPartecipazioneAvvenuta","prima di dismiss");
                 //dismiss();
                 dismissPopup();
+            }else{
+                Toast.makeText(getContext(), "Errore nell'offerta!", Toast.LENGTH_SHORT).show();
             }
         });
     }

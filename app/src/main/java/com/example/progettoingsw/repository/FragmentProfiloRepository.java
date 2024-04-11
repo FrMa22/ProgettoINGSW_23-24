@@ -4,7 +4,6 @@ import android.os.AsyncTask;
 
 import com.example.progettoingsw.DTO.AcquirenteDTO;
 import com.example.progettoingsw.DTO.SocialAcquirenteDTO;
-import com.example.progettoingsw.DTO.SocialAcquirenteRequestBody;
 import com.example.progettoingsw.backendAPI.AcquirenteService;
 import com.example.progettoingsw.backendAPI.SocialAcquirenteService;
 import com.example.progettoingsw.model.AcquirenteModel;

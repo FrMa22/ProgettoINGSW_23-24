@@ -125,6 +125,20 @@ public class SchermataAstaIngleseViewModel extends ViewModel {
         setTipoUtenteChecked(true);
     }
 
-
+    public void setIsPartecipazioneAvvenuta(Boolean b){
+        isPartecipazioneAvvenuta.setValue(b);
+    }
+    public Boolean getIsPartecipazioneAvvenuta(){
+        return isPartecipazioneAvvenuta.getValue();
+    }
+    public void setMessaggioPartecipazioneAstaInglese(String messaggio){
+        this.messaggioPartecipazioneAstaInglese = messaggio;
+    }
+    public String getMessaggioPartecipazioneAstaInglese(){
+        return messaggioPartecipazioneAstaInglese;
+    }
+    public Boolean isAstaChiusa(){
+        return !repository.getAsta_allingleseSelezionata().getCondizione().equals("aperta");
+    }
 
 }

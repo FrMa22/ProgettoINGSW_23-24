@@ -31,7 +31,7 @@ import com.google.android.material.button.MaterialButton;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-public class SchermataAstaInglese extends GestoreComuniImplementazioni implements PopUpNuovaOfferta.PopupDismissListener{
+public class SchermataAstaInglese extends GestoreComuniImplementazioni implements PopUpNuovaOfferta.PopupDismissListener {
     private SchermataAstaIngleseViewModel schermataAstaIngleseViewModel;
     private ProgressBar progress_bar_schermata_asta_inglese;
     private RelativeLayout relativeLayoutSchermataAstaInglese;
@@ -70,6 +70,7 @@ public class SchermataAstaInglese extends GestoreComuniImplementazioni implement
         osservaIsAstaRecuperata();
         osservaErroreRecuperoAsta();
         osservaTipoUtenteChecked();
+        osservaIsPartecipazioneAvvenuta();
         schermataAstaIngleseViewModel.checkTipoUtente();
         schermataAstaIngleseViewModel.getAstaData();
 
@@ -247,17 +248,24 @@ public class SchermataAstaInglese extends GestoreComuniImplementazioni implement
             textViewVenditore.setText(astaIngleseRecuperata.getId_venditore());
             textViewSogliaRialzoSchermataAstaInglese.setText(String.valueOf(astaIngleseRecuperata.getRialzoMin()));
 
-            String intervalloOfferte = astaIngleseRecuperata.getIntervalloTempoOfferte();
-            String scadenzaFormattata = schermataAstaIngleseViewModel.convertiIntervalloOfferte(intervalloOfferte);
-            textViewIntervalloOfferte.setText(scadenzaFormattata);
+
 
             imageViewProdotto.setImageBitmap(schermataAstaIngleseViewModel.convertiImmagine(astaIngleseRecuperata.getImmagine()));
 
+            if(schermataAstaIngleseViewModel.isAstaChiusa()){
+                bottoneNuovaOfferta.setVisibility(View.INVISIBLE);
+                imageButtonPreferiti.setVisibility(View.INVISIBLE);
+                textViewIntervalloOfferte.setText("Asta chiusa.");
+            }else{
+                String intervalloOfferte = astaIngleseRecuperata.getIntervalloTempoOfferte();
+                String scadenzaFormattata = schermataAstaIngleseViewModel.convertiIntervalloOfferte(intervalloOfferte);
+                textViewIntervalloOfferte.setText(scadenzaFormattata);
+            }
 //            if (astaIngleseRecuperata.getCondizione().equals("chiusa")) {
 //                bottoneNuovaOfferta.setVisibility(View.INVISIBLE);
 //                countDownTimer.cancel();
 //                textViewIntervalloOfferte.setText("Asta chiusa.");
-//                imageButtonPreferiti.setVisibility(View.INVISIBLE);
+//
 //            }
 
         } else {
@@ -300,15 +308,7 @@ public class SchermataAstaInglese extends GestoreComuniImplementazioni implement
             text_view_tua_offerta_attuale.setVisibility(View.INVISIBLE);
         }
     }
-    public void handlePopUp(){
-        progress_bar_schermata_asta_inglese.setVisibility(View.VISIBLE);
-        setAllClickable(relativeLayoutSchermataAstaInglese,false);
-        astaIngleseDAO.openConnection();
-        astaIngleseDAO.getAstaIngleseByID(id);
-        astaIngleseDAO.verificaAttualeVincitore(email,id);
-        astaIngleseDAO.closeConnection();
 
-    }
     public void handleInserimento(Boolean result){
         if(result){
             imageButtonPreferiti.setImageDrawable(drawableCuorePieno);
@@ -364,6 +364,16 @@ public class SchermataAstaInglese extends GestoreComuniImplementazioni implement
                     setImpostazioniAstaVenditore();
                 }
 
+            }
+        });
+    }
+    public void osservaIsPartecipazioneAvvenuta(){
+        schermataAstaIngleseViewModel.isPartecipazioneAvvenuta.observe(this, (messaggio) -> {
+            Log.d("osservaIsAstaRecuperata", "sto recuper");
+            if (schermataAstaIngleseViewModel.getIsPartecipazioneAvvenuta()) {
+                Toast.makeText(this, schermataAstaIngleseViewModel.getMessaggioPartecipazioneAstaInglese(), Toast.LENGTH_SHORT).show();
+                Log.d("osservaIsAstaRecuperata", "sto recuperando l'asta");
+                schermataAstaIngleseViewModel.getAstaData();
             }
         });
     }

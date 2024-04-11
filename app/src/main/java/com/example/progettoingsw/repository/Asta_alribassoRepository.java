@@ -3,8 +3,11 @@ package com.example.progettoingsw.repository;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.example.progettoingsw.DTO.Asta_allinglese_DTO;
 import com.example.progettoingsw.DTO.Asta_alribasso_DTO;
+import com.example.progettoingsw.backendAPI.Asta_allingleseService;
 import com.example.progettoingsw.backendAPI.Asta_alribassoService;
+import com.example.progettoingsw.model.Asta_allingleseModel;
 import com.example.progettoingsw.model.Asta_alribassoModel;
 
 import java.io.IOException;
@@ -29,6 +32,10 @@ public class Asta_alribassoRepository {
     public void acquistaAsta_alribasso(Long idAsta, String emailAcquirente,String prezzoAttuale, Asta_alribassoRepository.OnAcquistaAstaRibassoListener listener) {
         System.out.println("entrato in getAste_alribassoNuoveBackend");
         new Asta_alribassoRepository.acquistaAsta_aliribassoTask(listener).execute(String.valueOf(idAsta),emailAcquirente,prezzoAttuale);
+    }
+    public void trovaAsta_alribasso(Long idAsta, Asta_alribassoRepository.OnTrovaAstaRibassoListener listener) {
+        System.out.println("entrato in trovaAsta_alribasso");
+        new Asta_alribassoRepository.trovaAsta_alribassoTask(listener).execute(String.valueOf(idAsta));
     }
     private static class getAste_alribassoNuoveTask extends AsyncTask<Void, Void, ArrayList<Asta_alribassoModel>> {
         private Asta_alribassoRepository.OnGetAsteRibassoNuoveListener listener;
@@ -178,8 +185,6 @@ public class Asta_alribassoRepository {
     public interface OnGetAsteRibassoCategoriaNomeListener {
         void OnGetAsteRibassoCategoriaNome(ArrayList<Asta_alribassoModel> list);
     }
-
-
     private static class acquistaAsta_aliribassoTask extends AsyncTask<String, Void, Integer> {
         private Asta_alribassoRepository.OnAcquistaAstaRibassoListener listener;
 
@@ -236,5 +241,75 @@ public class Asta_alribassoRepository {
     }
     public interface OnAcquistaAstaRibassoListener {
         void OnAcquistaAstaRibasso(Integer risposta);
+    }
+    private static class trovaAsta_alribassoTask extends AsyncTask<String, Void, Asta_alribassoModel> {
+        private Asta_alribassoRepository.OnTrovaAstaRibassoListener listener;
+
+        public trovaAsta_alribassoTask(Asta_alribassoRepository.OnTrovaAstaRibassoListener listener) {
+            this.listener = listener;
+        }
+
+        @Override
+        protected Asta_alribassoModel doInBackground(String... params) {
+            Long idAsta = Long.valueOf(params[0]);
+            // Effettua l'operazione di rete qui...
+            // Restituisci il risultato
+
+            OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+            // Configura il client OkHttpClient...
+
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl(Repository.backendUrl)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .client(httpClient.build())
+                    .build();
+
+            Asta_alribassoService service = retrofit.create(Asta_alribassoService.class);
+            Call<Asta_alribasso_DTO> call = service.trovaAstaRibasso(idAsta);
+
+            try {
+                Response<Asta_alribasso_DTO> response = call.execute();
+                if (response.isSuccessful()) {
+                    System.out.println("response successful");
+                    Asta_alribasso_DTO astaRecuperata = response.body();
+                    if (astaRecuperata != null) {
+                        Asta_alribassoModel astaAlribassoModel = new Asta_alribassoModel(
+                                astaRecuperata.getId(),
+                                astaRecuperata.getNome(),
+                                astaRecuperata.getDescrizione(),
+                                astaRecuperata.getPath_immagine(),
+                                astaRecuperata.getPrezzoBase(),
+                                astaRecuperata.getIntervalloDecrementale(),
+                                astaRecuperata.getIntervalloBase(),
+                                astaRecuperata.getDecrementoAutomaticoCifra(),
+                                astaRecuperata.getPrezzoMin(),
+                                astaRecuperata.getPrezzoAttuale(),
+                                astaRecuperata.getCondizione(),
+                                astaRecuperata.getId_venditore());
+                        //stampa dei valori dell asta
+                        return astaAlribassoModel;
+                    }else{
+                        System.out.println("asta dto null");
+                        return null;
+                    }
+                }
+                System.out.println("response non successful");
+            } catch (IOException e) {
+                System.out.println("exception IOEXC");
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Asta_alribassoModel result) {
+            System.out.println("on post execute GetAsteScadenzaRecenteTask" + result);
+            if (listener != null) {
+                listener.OnTrovaAstaRibasso(result);
+            }
+        }
+    }
+    public interface OnTrovaAstaRibassoListener {
+        void OnTrovaAstaRibasso(Asta_alribassoModel list);
     }
 }

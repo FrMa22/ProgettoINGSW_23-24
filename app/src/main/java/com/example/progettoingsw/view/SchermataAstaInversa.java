@@ -28,7 +28,7 @@ import com.example.progettoingsw.viewmodel.SchermataAstaIngleseViewModel;
 import com.example.progettoingsw.viewmodel.SchermataAstaInversaViewModel;
 import com.google.android.material.button.MaterialButton;
 
-public class SchermataAstaInversa extends GestoreComuniImplementazioni {
+public class SchermataAstaInversa extends GestoreComuniImplementazioni implements PopUpNuovaOfferta.PopupDismissListener{
     private SchermataAstaInversaViewModel schermataAstaInversaViewModel;
     Controller controller;
     ImageButton bottoneBack;
@@ -58,19 +58,6 @@ public class SchermataAstaInversa extends GestoreComuniImplementazioni {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.schermata_asta_inversa);
 
-        schermataAstaInversaViewModel = new ViewModelProvider(this).get(SchermataAstaInversaViewModel.class);
-        osservaIsAstaRecuperata();
-        osservaErroreRecuperoAsta();
-        schermataAstaInversaViewModel.getAstaData();
-
-//        astaInversaDAO = new AstaInversaDAO(this);
-//        astaPreferitaInversaDAO = new AstaPreferitaInversaDAO(this);
-//
-//        progress_bar_schermata_asta_inversa = findViewById(R.id.progress_bar_schermata_asta_inversa);
-//        relativeLayoutSchermataAstaInversa = findViewById(R.id.relativeLayoutSchermataAstaInversa);
-//        progress_bar_schermata_asta_inversa.setVisibility(View.VISIBLE);
-//        setAllClickable(relativeLayoutSchermataAstaInversa,false);
-
         textViewNomeProdottoSchermataAstaInversa = findViewById(R.id.textViewNomeProdottoSchermataAstaInversa);
         ImageViewSchermataAstaInversa = findViewById(R.id.ImageViewSchermataAstaInversa);
         textViewDescrizioneSchermataAstaInversa = findViewById(R.id.textViewDescrizioneSchermataAstaInversa);
@@ -83,6 +70,23 @@ public class SchermataAstaInversa extends GestoreComuniImplementazioni {
         drawableCuoreVuoto = ContextCompat.getDrawable(this, R.drawable.ic_cuore_vuoto);
         drawableCuorePieno = ContextCompat.getDrawable(this, R.drawable.ic_cuore_pieno);
         text_view_tua_offerta_attuale_asta_inversa = findViewById(R.id.text_view_tua_offerta_attuale_asta_inversa);
+
+        schermataAstaInversaViewModel = new ViewModelProvider(this).get(SchermataAstaInversaViewModel.class);
+        osservaIsAstaRecuperata();
+        osservaErroreRecuperoAsta();
+        osservaTipoUtenteChecked();
+        schermataAstaInversaViewModel.checkTipoUtente();
+        schermataAstaInversaViewModel.getAstaData();
+
+//        astaInversaDAO = new AstaInversaDAO(this);
+//        astaPreferitaInversaDAO = new AstaPreferitaInversaDAO(this);
+//
+//        progress_bar_schermata_asta_inversa = findViewById(R.id.progress_bar_schermata_asta_inversa);
+//        relativeLayoutSchermataAstaInversa = findViewById(R.id.relativeLayoutSchermataAstaInversa);
+//        progress_bar_schermata_asta_inversa.setVisibility(View.VISIBLE);
+//        setAllClickable(relativeLayoutSchermataAstaInversa,false);
+
+
 
 
 
@@ -131,13 +135,12 @@ public class SchermataAstaInversa extends GestoreComuniImplementazioni {
 //        });
 //
 //
-//        bottoneOffertaSchermataAstaInversa.setOnClickListener(new View.OnClickListener() {
-//            public void onClick(View v) {
-//                astaInversaDAO.getAstaInversaByID(id);
-//                PopUpNuovaOfferta popUpNuovaOfferta = new PopUpNuovaOfferta(SchermataAstaInversa.this,email,id, textViewPrezzoAttualeSchermataAstaInversa.getText().toString(), SchermataAstaInversa.this);
-//                popUpNuovaOfferta.show();
-//            }
-//        });
+        bottoneOffertaSchermataAstaInversa.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                PopUpNuovaOfferta popUpNuovaOfferta = new PopUpNuovaOfferta(SchermataAstaInversa.this, SchermataAstaInversa.this);
+                popUpNuovaOfferta.show();
+            }
+        });
 //        //controllo per far si che un acquirente non possa inserire un asta inversa nei preferiti
 //        if(tipoUtente.equals("acquirente")){
 //            imageButtonPreferiti.setVisibility(View.INVISIBLE);
@@ -165,6 +168,12 @@ public class SchermataAstaInversa extends GestoreComuniImplementazioni {
 //        astaInversaDAO.openConnection();
 //        astaInversaDAO.getAstaInversaByID(id);
 //        astaInversaDAO.verificaAttualeVincitore(email,id);
+    }
+    @Override
+    public void onPopupDismissed() {
+        // Metodo chiamato quando il pop-up viene chiuso
+        Log.d("OnPopUpDismissed", "entrato");
+        schermataAstaInversaViewModel.getAstaData();
     }
     // questi metodi onPause, onStop, onDestroy e onResume servono a stoppare il timer quando non si è piu su questa schermata e a farlo ricominciare quando si torna
     @Override
@@ -210,14 +219,21 @@ public class SchermataAstaInversa extends GestoreComuniImplementazioni {
             textViewNomeProdottoSchermataAstaInversa.setText(astaInversaRecuperata.getNome());
             textViewDescrizioneSchermataAstaInversa.setText(astaInversaRecuperata.getDescrizione());
             textViewPrezzoAttualeSchermataAstaInversa.setText(String.valueOf(astaInversaRecuperata.getPrezzoAttuale()));
-            textViewDataScadenzaSchermataAstaInversa.setText(String.valueOf(astaInversaRecuperata.getDataDiScadenza()));
+
             textViewAcquirenteSchermataAstaInversa.setText(astaInversaRecuperata.getId_acquirente());
 
             ImageViewSchermataAstaInversa.setImageBitmap(schermataAstaInversaViewModel.convertiImmagine(astaInversaRecuperata.getImmagine()));
 
+            if(schermataAstaInversaViewModel.isAstaChiusa()){
+                bottoneOffertaSchermataAstaInversa.setVisibility(View.INVISIBLE);
+                imageButtonPreferiti.setVisibility(View.INVISIBLE);
+                textViewDataScadenzaSchermataAstaInversa.setText("Asta chiusa");
+            }else{
+                textViewDataScadenzaSchermataAstaInversa.setText(String.valueOf(astaInversaRecuperata.getDataDiScadenza()));
+            }
 //            if (astaInversaItem.getCondizione().equals("chiusa")) {
-//                bottoneOffertaSchermataAstaInversa.setVisibility(View.INVISIBLE);
-//                imageButtonPreferiti.setVisibility(View.INVISIBLE);
+//
+//
 //                if(countDownTimer != null){
 //                    countDownTimer.cancel();
 //                }
@@ -306,6 +322,35 @@ public class SchermataAstaInversa extends GestoreComuniImplementazioni {
                 Log.d("osservaIsAstaRecuperata", "sto recuperando l'asta");
                 Asta_inversaModel astaRecuperata = schermataAstaInversaViewModel.getAstaRecuperata();
                 setAstaData(astaRecuperata);
+            }
+        });
+    }
+    public void setImpostazioniAstaAcquirente(){
+        imageButtonPreferiti.setVisibility(View.INVISIBLE);
+        bottoneOffertaSchermataAstaInversa.setVisibility(View.INVISIBLE);
+    }
+    public void setImpostazioniAstaVenditore(){
+    }
+    public void osservaTipoUtenteChecked(){
+        schermataAstaInversaViewModel.tipoUtenteChecked.observe(this, (messaggio) -> {
+            if (schermataAstaInversaViewModel.isTipoUtenteChecked()) {
+                if(schermataAstaInversaViewModel.isAcquirente()){
+                    //mi è permesso acquistare l'asta o metterla nei preferiti
+                    setImpostazioniAstaAcquirente();
+                }else{
+                    //non mi è permesso acquistare l'asta o metterla nei preferiti
+                    setImpostazioniAstaVenditore();
+                }
+
+            }
+        });
+    }
+    public void osservaIsPartecipazioneAvvenuta(){
+        schermataAstaInversaViewModel.isPartecipazioneAvvenuta.observe(this, (messaggio) -> {
+            if (schermataAstaInversaViewModel.getIsPartecipazioneAvvenuta()) {
+                Toast.makeText(this, schermataAstaInversaViewModel.getMessaggioPartecipazioneAstaInglese(), Toast.LENGTH_SHORT).show();
+                Log.d("osservaIsAstaRecuperata", "sto recuperando l'asta");
+                schermataAstaInversaViewModel.getAstaData();
             }
         });
     }

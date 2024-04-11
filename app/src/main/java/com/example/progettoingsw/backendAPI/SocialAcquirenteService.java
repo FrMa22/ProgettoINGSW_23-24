@@ -1,8 +1,6 @@
 package com.example.progettoingsw.backendAPI;
 
-import com.example.progettoingsw.DTO.AcquirenteDTO;
 import com.example.progettoingsw.DTO.SocialAcquirenteDTO;
-import com.example.progettoingsw.DTO.SocialAcquirenteRequestBody;
 
 import java.util.List;
 

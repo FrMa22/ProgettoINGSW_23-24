@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.progettoingsw.repository.Asta_allingleseRepository;
+import com.example.progettoingsw.repository.Asta_inversaRepository;
 import com.example.progettoingsw.repository.Repository;
 
 import java.sql.Timestamp;
@@ -13,20 +14,23 @@ import java.sql.Timestamp;
 public class PopUpNuovaOffertaViewModel extends ViewModel {
     private Repository repository;
     private Asta_allingleseRepository astaAllingleseRepository;
+    private Asta_inversaRepository astaInversaRepository;
     private SchermataAstaIngleseViewModel schermataAstaIngleseViewModel;
+    private SchermataAstaInversaViewModel schermataAstaInversaViewModel;
     public MutableLiveData<Boolean> tipoAstaChecked = new MutableLiveData<>(false);
     public MutableLiveData<Boolean> isPartecipazioneAvvenuta = new MutableLiveData<>(false);
-    private String messaggioPartecipazioneAstaInglese;
+    private String messaggioPartecipazioneAsta;
     public MutableLiveData<Boolean> offertaValida = new MutableLiveData<>(false);
     public MutableLiveData<Boolean> messaggioErroreOfferta = new MutableLiveData<>(false);
-
     private String messaggioErrore;
     private String tipoAsta;
 
     public PopUpNuovaOffertaViewModel(){
         repository = Repository.getInstance();
         astaAllingleseRepository = new Asta_allingleseRepository();
+        astaInversaRepository = new Asta_inversaRepository();
         schermataAstaIngleseViewModel = new SchermataAstaIngleseViewModel();
+        schermataAstaInversaViewModel = new SchermataAstaInversaViewModel();
     }
 
     public void checkTipoAsta(){
@@ -87,51 +91,87 @@ public class PopUpNuovaOffertaViewModel extends ViewModel {
             if(isAstaInglese()){
                 float minimaOffeta = (getRialzoMin()) + (getPrezzoVecchio());
                 float offertaAttuale = Float.parseFloat(offerta);
-                if(offertaAttuale<= minimaOffeta){
-                    Log.d("checkOfferta", "caso in cui offerta è minore o uguale a minima offerta");
-                    setMessaggioErrore("L'offerta deve superare il valore dell'offerta attuale + il valore del rialzo minimo!");
+                if(offertaAttuale< minimaOffeta){
+                    Log.d("checkOfferta", "caso in cui offerta è minore della minima offerta");
+                    setMessaggioErrore("L'offerta deve almeno eguagliare il valore dell'offerta attuale + il valore del rialzo minimo!");
                     setMessaggioErroreOfferta(true);
                 }else{
                     setOffertaValida(true);
                 }
 
+            }else{
+                float offertaAttuale = Float.parseFloat(offerta);
+                float offertaVecchia = repository.getAsta_inversaSelezionata().getPrezzoAttuale();
+                if(offertaAttuale >= (offertaVecchia-0.10)){
+                    Log.d("checkOfferta", "caso in cui offerta è piu lungo di 20");
+                    setMessaggioErrore("l'offerta deve essere inferiore rispetto all'offerta attuale di almeno 0.10€. ");
+                    setMessaggioErroreOfferta(true);
+                }else{
+                    setOffertaValida(true);
+                }
             }
         }
     }
+
 
     public float getRialzoMin(){
         return repository.getAsta_allingleseSelezionata().getRialzoMin();
     }
     public float getPrezzoVecchio(){
-        return repository.getAsta_allingleseSelezionata().getPrezzoAttuale();
+        if(isAstaInglese()){
+            return repository.getAsta_allingleseSelezionata().getPrezzoAttuale();
+        }else{
+            return repository.getAsta_inversaSelezionata().getPrezzoAttuale();
+        }
+
     }
-    public void eseguiPartecipazioneAsta(String offerta){
+    public void eseguiPartecipazioneAstaInglese(String offerta){
         astaAllingleseRepository.partecipaAsta_allinglese(recuperaIdAstaInglese(), recuperaEmailAcquirente(), offerta, getTempoOfferta(),getStatoAsta(), new Asta_allingleseRepository.OnPartecipazioneAstaIngleseListener() {
             @Override
             public void OnPartecipazioneAstaInglese(Integer risposta) {
                 Log.d("partecipazione fatta" , "valore : " + risposta);
                 if(risposta!=null && risposta==1){
-                    setMessaggioPartecipazioneAstaInglese("ok");
+                    setMessaggioPartecipazioneAsta("ok");
+                    setMessaggioPartecipazioneAsta("Offerta effettuata con successo!");
+                    setIsPartecipazioneAvvenuta(true);
                 }else{
-                    setMessaggioPartecipazioneAstaInglese("errore nel recupero del valore di ritorno ");
+                    setMessaggioPartecipazioneAsta("errore nel recupero del valore di ritorno ");
+                    setIsPartecipazioneAvvenuta(false);
                 }
-                setIsPartecipazioneAvvenuta(true);
+
+            }
+        });
+    }
+    public void eseguiPartecipazioneAstaInversa(String offerta){
+        astaInversaRepository.partecipaAsta_inversa(recuperaIdAstaInversa(), recuperaEmailVenditore(), offerta, getTempoOfferta(),getStatoAsta(), new Asta_inversaRepository.OnPartecipazioneAstaInversaListener() {
+            @Override
+            public void OnPartecipazioneAstaInversa(Integer risposta) {
+                Log.d("partecipazione fatta" , "valore : " + risposta);
+                if(risposta!=null && risposta==1){
+                    setMessaggioPartecipazioneAsta("ok");
+                    setMessaggioPartecipazioneAsta("Offerta effettuata con successo!");
+                    setIsPartecipazioneAvvenuta(true);
+                }else{
+                    setMessaggioPartecipazioneAsta("errore nel recupero del valore di ritorno ");
+                    setIsPartecipazioneAvvenuta(false);
+                }
+
             }
         });
     }
     public void proseguiPartecipazione(String offerta){
         //arrivati a questo metodo abbiamo gia controllato se l'offerta è valida
         if(isAstaInglese()){
-            eseguiPartecipazioneAsta(offerta);
+            eseguiPartecipazioneAstaInglese(offerta);
         }else{
-            //partecipa asta inversa
+            eseguiPartecipazioneAstaInversa(offerta);
         }
     }
-    public void setMessaggioPartecipazioneAstaInglese(String risposta){
-        this.messaggioPartecipazioneAstaInglese = risposta;
+    public void setMessaggioPartecipazioneAsta(String risposta){
+        this.messaggioPartecipazioneAsta = risposta;
     }
-    public String getMessaggioPartecipazioneAstaInglese(){
-        return messaggioPartecipazioneAstaInglese;
+    public String getMessaggioPartecipazioneAsta(){
+        return messaggioPartecipazioneAsta;
     }
     public void setIsPartecipazioneAvvenuta(Boolean b){
         isPartecipazioneAvvenuta.setValue(b);
@@ -142,8 +182,15 @@ public class PopUpNuovaOffertaViewModel extends ViewModel {
     public Long recuperaIdAstaInglese(){
         return repository.getAsta_allingleseSelezionata().getId();
     }
+    public Long recuperaIdAstaInversa()
+    {
+        return repository.getAsta_inversaSelezionata().getId();
+    }
     public String recuperaEmailAcquirente(){
         return repository.getAcquirenteModel().getIndirizzoEmail();
+    }
+    public String recuperaEmailVenditore(){
+        return repository.getVenditoreModel().getIndirizzoEmail();
     }
     public String getTempoOfferta(){
         Timestamp tempo = new java.sql.Timestamp(System.currentTimeMillis());

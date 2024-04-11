@@ -37,7 +37,7 @@ public class Asta_allingleseRepository {
         new Asta_allingleseRepository.partecipaAsta_allingleseTask(listener).execute(String.valueOf(idAsta),emailAcquirente,offerta, tempoOfferta, stato);
     }
     public void trovaAsta_allinglese(Long idAsta, Asta_allingleseRepository.OnTrovaAstaIngleseListener listener) {
-        System.out.println("entrato in partecipaAsta_allinglese");
+        System.out.println("entrato in trovaAsta_allinglese");
         new Asta_allingleseRepository.trovaAsta_allingleseTask(listener).execute(String.valueOf(idAsta));
     }
 

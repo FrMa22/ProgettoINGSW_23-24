@@ -7,8 +7,10 @@ import android.util.Log;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.progettoingsw.R;
 import com.example.progettoingsw.model.Asta_allingleseModel;
 import com.example.progettoingsw.model.Asta_alribassoModel;
+import com.example.progettoingsw.repository.Asta_allingleseRepository;
 import com.example.progettoingsw.repository.Asta_alribassoRepository;
 import com.example.progettoingsw.repository.LoginRepository;
 import com.example.progettoingsw.repository.Repository;
@@ -35,13 +37,32 @@ public class SchermataAstaRibassoViewModel extends ViewModel {
     }
 
     public void getAstaData(){
-        Asta_alribassoModel asta = repository.getAsta_alribassoSelezionata();
-        if(asta!=null){
-            setAstaRecuperata(asta);
-            setIsAstaRecuperata(true);
-        }else{
-            setErroreRecuperoAsta("Errore nel recupero asta!");
-        }
+        Long idAsta = repository.getAsta_alribassoSelezionata().getId();
+        astaAlribassoRepository.trovaAsta_alribasso(idAsta, new Asta_alribassoRepository.OnTrovaAstaRibassoListener() {
+            @Override
+            public void OnTrovaAstaRibasso(Asta_alribassoModel astaRecuperata) {
+                Log.d("asta ricercata" , "qui");
+                if(astaRecuperata!=null){
+                    if(astaRecuperata.getImmagine()==null){
+                        Log.d("immagine null", "null");
+                        //astaRecuperata.setImmagine(R.drawable.image_default_low_quality);
+                    }
+                    repository.setAsta_alribassoSelezionata(astaRecuperata);
+                    setAstaRecuperata(astaRecuperata);
+                    setIsAstaRecuperata(true);
+                }else{
+                    setErroreRecuperoAsta("errore nel recupero asta");
+                    setIsAstaRecuperata(true);
+                }
+            }
+        });
+//        Asta_alribassoModel asta = repository.getAsta_alribassoSelezionata();
+//        if(asta!=null){
+//            setAstaRecuperata(asta);
+//            setIsAstaRecuperata(true);
+//        }else{
+//            setErroreRecuperoAsta("Errore nel recupero asta!");
+//        }
     }
     public void setIsAstaRecuperata(Boolean b){
         isAstaRecuperata.setValue(b);
@@ -159,6 +180,9 @@ public class SchermataAstaRibassoViewModel extends ViewModel {
     }
     public String recuperaPrezzoAttualeAstaRibasso(){
         return String.valueOf(repository.getAsta_alribassoSelezionata().getPrezzoAttuale());
+    }
+    public Boolean isAstaChiusa(){
+        return !repository.getAsta_alribassoSelezionata().getCondizione().equals("aperta");
     }
 
 
