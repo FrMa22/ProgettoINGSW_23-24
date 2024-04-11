@@ -1,19 +1,33 @@
 package com.example.progettoingsw.viewmodel;
 
+import android.util.Log;
+
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.progettoingsw.model.AcquirenteModel;
+import com.example.progettoingsw.model.Asta_allingleseModel;
 import com.example.progettoingsw.model.SocialAcquirenteModel;
 import com.example.progettoingsw.repository.FragmentProfiloRepository;
-import com.example.progettoingsw.repository.LoginRepository;
 import com.example.progettoingsw.repository.Repository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class FragmentProfiloViewModel extends ViewModel {
 
     public MutableLiveData<String> messaggioSocialUtenteNonTrovato = new MutableLiveData<>("");
+
+    public MutableLiveData<Boolean> acquirenteModelPresente = new MutableLiveData<>(false);
+    public MutableLiveData<Boolean> venditoreModelPresente = new MutableLiveData<>(false);
+    public MutableLiveData<Boolean> socialAcquirentePresenti = new MutableLiveData<>(false);
+
+    public MutableLiveData<Boolean> entraInPopUpModificaSocial = new MutableLiveData<>(false);
+
+    public MutableLiveData<ArrayList<SocialAcquirenteModel>> socialAcquirenteRecuperati = new MutableLiveData<>(null);
+
+    public MutableLiveData<AcquirenteModel> acquirenteRecuperato =new MutableLiveData<>(null);
+
     private FragmentProfiloRepository fragmentProfiloRepository;
     private Repository repository;
 
@@ -24,7 +38,8 @@ public class FragmentProfiloViewModel extends ViewModel {
 
 
 
-    public void fragmentProfiloAcquirente(String email){
+    public void trovaSocialAcquirenteViewModel(){
+        String email=getAcquirenteEmail();
         System.out.println("entrato in fragmentProfilo di viewmodel con email:"+email);
             System.out.println("in fragmentProfiloAcquirente di viewmodel prima del try con email:"+email);
             if(repository.getSocialAcquirenteModelList()==null){System.out.println("lista social acquirente null");return ;}
@@ -125,6 +140,11 @@ public class FragmentProfiloViewModel extends ViewModel {
             @Override
             public void onFragmentProfilo(List<SocialAcquirenteModel> socialAcquirenteModelList) {
                 repository.setSocialAcquirenteModelList(socialAcquirenteModelList);
+
+                //se c'è la lista dei social allora setta il valore per l'observer della view
+                if(socialAcquirenteModelList!=null  && !socialAcquirenteModelList.isEmpty()){
+                    setSocialAcquirentePresenti(true);
+                }
             }
         });
     }
@@ -190,6 +210,111 @@ public class FragmentProfiloViewModel extends ViewModel {
     }
     private String getMessaggioUtenteNonTrovato() {
         return messaggioSocialUtenteNonTrovato.getValue();
+    }
+
+
+    private void setAcquirenteModelPresente() {
+        acquirenteModelPresente.setValue(true);
+    }
+    public Boolean getAcquirenteModelPresente(){
+        return acquirenteModelPresente.getValue();
+    }
+
+
+    public boolean containsAcquirente() {
+        return repository.getAcquirenteModel()!=null;
+    }
+
+    public Boolean containsVenditore(){
+        return repository.getVenditoreModel()!=null;
+    }
+
+    private void setVenditoreModelPresente() {
+        venditoreModelPresente.setValue(true);
+    }
+    public Boolean getVenditoreModelPresente(){
+        return venditoreModelPresente.getValue();
+    }
+
+
+    private void setSocialAcquirentePresenti(boolean b) {
+        socialAcquirentePresenti.setValue(true);
+    }
+    public Boolean getSocialAcquirentePresenti() {
+        return socialAcquirentePresenti.getValue();
+    }
+
+
+    public List<String> getNomiSocialAcquirente(){
+        Log.d("getNomiSocialAcquirente", "numero nomi: "  + repository.getNomiSocialAcquirenteModelList().size());
+        return repository.getNomiSocialAcquirenteModelList();
+    }
+
+    public List<String> getLinksSocialAcquirente(){
+        Log.d("getLinksAcquirente", "numero link: "  + repository.getLinksSocialAcquirenteModelList().size());
+        return repository.getLinksSocialAcquirenteModelList();
+    }
+
+
+    public void setEntraInPopUpModificaSocial(Boolean b){
+        entraInPopUpModificaSocial.setValue(b);
+    }
+    public Boolean getEntraInPopUpModificaSocial(){
+        return entraInPopUpModificaSocial.getValue();
+    }
+
+
+    public void checkTipoUtente(){
+        if(containsAcquirente()){
+            setAcquirenteModelPresente();
+            setAcquirenteRecuperato(getAcquirente());
+        }else if(containsVenditore()) {
+            setVenditoreModelPresente();
+        }
+
+
+
+    }
+
+
+    public void gestisciModificaSocial(String nome,String link){
+        // Esegui le azioni desiderate con l'oggetto Asta
+            repository.setSocialAcquirenteSelezionato(nome,link);
+            setEntraInPopUpModificaSocial(true);
+//            int id = Math.toIntExact(((Asta_allingleseModel) asta).getId());
+//            Log.d("Asta inglese", "id è " + id);
+//            Intent intent = new Intent(getContext(), SchermataAstaInglese.class);//test del login
+//            intent.putExtra("email", email);
+//            intent.putExtra("tipoUtente", tipoUtente);
+//            intent.putExtra("id", id);
+//            startActivity(intent);
+
+    }
+
+    public String getAcquirenteEmail(){
+        return repository.getAcquirenteModel().getIndirizzoEmail();
+    }
+
+    public AcquirenteModel getAcquirente(){
+        return repository.getAcquirenteModel();
+    }
+
+    public ArrayList<SocialAcquirenteModel> getListaSocialAcquirenteRecuperati(){
+        return repository.getListaSocialAcquirenteRecuperati();
+    }
+
+    public void setSocialAcquirenteRecuperati(ArrayList<SocialAcquirenteModel> lista){
+        socialAcquirenteRecuperati.setValue(lista);
+    }
+
+    public void setAcquirenteRecuperato(AcquirenteModel acquirenteModel){
+        acquirenteRecuperato.setValue(acquirenteModel);
+    }
+
+    public void recuperaSocialAcquirente(){
+        System.out.println("in recupera social acquirente del viewmodel");
+        ArrayList<SocialAcquirenteModel> listaSocialAcquirenteRecuperati = getListaSocialAcquirenteRecuperati();
+        setSocialAcquirenteRecuperati(listaSocialAcquirenteRecuperati);
     }
 
 

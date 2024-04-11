@@ -112,7 +112,7 @@ public class FragmentProfiloDAO {
             // Puoi mostrare il risultato all'utente o gestirlo in modo appropriato
             if (result instanceof Acquirente) {
                 // Esempio: restituisci l'acquirente al Fragment
-                fragmentProfilo.updateEditTexts((Acquirente) result);
+               // fragmentProfilo.updateEditTexts((Acquirente) result);
             } else if (result instanceof Object[]) {
                 Object[] socialData = (Object[]) result;
                 List<String> socialNames = (List<String>) socialData[0];
