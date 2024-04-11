@@ -50,6 +50,10 @@ public class Asta_inversaRepository {
         System.out.println("entrato in eliminazioneAstaInPreferiti");
         new Asta_inversaRepository.eliminazioneAsta_inversaInPreferitiTask(listener).execute(String.valueOf(idAsta), indirizzo_email);
     }
+    public void getAsteInversaPreferite(String indirizzo_email, Asta_inversaRepository.OnGetAsteInversaPreferiteListener listener) {
+        System.out.println("entrato in getAsteInversaPreferite");
+        new Asta_inversaRepository.getAste_inversaPreferiteTask(listener).execute(indirizzo_email);
+    }
     private static class GetAsteScadenzaRecenteTask extends AsyncTask<Void, Void, ArrayList<Asta_inversaModel>> {
         private Asta_inversaRepository.OnGetAsteScadenzaRecenteListener listener;
 
@@ -560,5 +564,76 @@ public class Asta_inversaRepository {
     }
     public interface OnEliminazioneAstaInversaInPreferitiListener {
         void OnEliminazioneAstaInversaInPreferiti(Integer numeroRecuperato);
+    }
+    private static class getAste_inversaPreferiteTask extends AsyncTask<String, Void, ArrayList<Asta_inversaModel>> {
+        private Asta_inversaRepository.OnGetAsteInversaPreferiteListener listener;
+
+        public getAste_inversaPreferiteTask(Asta_inversaRepository.OnGetAsteInversaPreferiteListener listener) {
+            this.listener = listener;
+        }
+
+        @Override
+        protected ArrayList<Asta_inversaModel> doInBackground(String... params) {
+            String indirizzo_email = params[0];
+            // Effettua l'operazione di rete qui...
+            // Restituisci il risultato
+
+            OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+            // Configura il client OkHttpClient...
+
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl(Repository.backendUrl)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .client(httpClient.build())
+                    .build();
+
+            Asta_inversaService service = retrofit.create(Asta_inversaService.class);
+            Call<ArrayList<Asta_inversa_DTO>> call = service.getAsteInversaPreferite(indirizzo_email);
+
+            try {
+                Response<ArrayList<Asta_inversa_DTO>> response = call.execute();
+                if (response.isSuccessful()) {
+                    System.out.println("response successful");
+                    ArrayList<Asta_inversa_DTO> list = response.body();
+                    if (list != null && !list.isEmpty()) {
+                        System.out.println("lista di aste inversa dto non null");
+                        ArrayList<Asta_inversaModel> listAsta_inversaModel = new ArrayList<>();
+                        for (Asta_inversa_DTO astaInversaDto : list){
+                            Asta_inversaModel astaInversaModel = new Asta_inversaModel(
+                                    astaInversaDto.getId(),
+                                    astaInversaDto.getNome(),
+                                    astaInversaDto.getDescrizione(),
+                                    astaInversaDto.getPath_immagine(),
+                                    astaInversaDto.getPrezzoMax(),
+                                    astaInversaDto.getPrezzoAttuale(),
+                                    astaInversaDto.getDataDiScadenza(),
+                                    astaInversaDto.getCondizione(),
+                                    astaInversaDto.getId_acquirente());
+                            //stampa dei valori dell asta
+                            Log.d("Asta inversa" ," valori " + astaInversaModel.getNome() + astaInversaModel.getDescrizione() + astaInversaModel.getId() + astaInversaModel.getDataDiScadenza() + astaInversaModel.getPrezzoAttuale());
+                            listAsta_inversaModel.add(astaInversaModel);
+                        }
+                        return listAsta_inversaModel;
+                    }
+                    System.out.println("lista di aste inverse dto null");
+                }
+                System.out.println("response non successful");
+            } catch (IOException e) {
+                System.out.println("exception IOEXC");
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(ArrayList<Asta_inversaModel> result) {
+            System.out.println("on post execute aste inverse per categoria nome" + result);
+            if (listener != null) {
+                listener.OnGetAsteInversaPreferite(result);
+            }
+        }
+    }
+    public interface OnGetAsteInversaPreferiteListener {
+        void OnGetAsteInversaPreferite(ArrayList<Asta_inversaModel> list);
     }
 }

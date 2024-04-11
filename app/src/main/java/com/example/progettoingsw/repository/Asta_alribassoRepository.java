@@ -46,6 +46,10 @@ public class Asta_alribassoRepository {
         System.out.println("entrato in eliminazioneAstaInPreferiti");
         new Asta_alribassoRepository.eliminazioneAsta_alribassoInPreferitiTask(listener).execute(String.valueOf(idAsta), indirizzo_email);
     }
+    public void getAsteRibassoPreferite(String indirizzo_email, Asta_alribassoRepository.OnGetAsteRibassoPreferiteListener listener) {
+        System.out.println("entrato in getAsteRibassoPreferite");
+        new Asta_alribassoRepository.getAste_alribassoPreferiteTask(listener).execute(indirizzo_email);
+    }
     private static class getAste_alribassoNuoveTask extends AsyncTask<Void, Void, ArrayList<Asta_alribassoModel>> {
         private Asta_alribassoRepository.OnGetAsteRibassoNuoveListener listener;
 
@@ -488,5 +492,79 @@ public class Asta_alribassoRepository {
     }
     public interface OnEliminazioneAstaRibassoInPreferitiListener {
         void OnEliminazioneAstaRibassoInPreferiti(Integer numeroRecuperato);
+    }
+    private static class getAste_alribassoPreferiteTask extends AsyncTask<String, Void, ArrayList<Asta_alribassoModel>> {
+        private Asta_alribassoRepository.OnGetAsteRibassoPreferiteListener listener;
+
+        public getAste_alribassoPreferiteTask(Asta_alribassoRepository.OnGetAsteRibassoPreferiteListener listener) {
+            this.listener = listener;
+        }
+
+        @Override
+        protected ArrayList<Asta_alribassoModel> doInBackground(String... params) {
+            String indirizzo_email = params[0];
+            // Effettua l'operazione di rete qui...
+            // Restituisci il risultato
+
+            OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+            // Configura il client OkHttpClient...
+
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl(Repository.backendUrl)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .client(httpClient.build())
+                    .build();
+
+            Asta_alribassoService service = retrofit.create(Asta_alribassoService.class);
+            Call<ArrayList<Asta_alribasso_DTO>> call = service.getAsteRibassoPreferite(indirizzo_email);
+
+            try {
+                Response<ArrayList<Asta_alribasso_DTO>> response = call.execute();
+                if (response.isSuccessful()) {
+                    System.out.println("response successful");
+                    ArrayList<Asta_alribasso_DTO> list = response.body();
+                    if (list != null && !list.isEmpty()) {
+                        System.out.println("lista di aste ribasso dto non null");
+                        ArrayList<Asta_alribassoModel> listAsta_alribassoModel = new ArrayList<>();
+                        for (Asta_alribasso_DTO astaAlribassoDto : list){
+                            Asta_alribassoModel astaAlribassoModel = new Asta_alribassoModel(
+                                    astaAlribassoDto.getId(),
+                                    astaAlribassoDto.getNome(),
+                                    astaAlribassoDto.getDescrizione(),
+                                    astaAlribassoDto.getPath_immagine(),
+                                    astaAlribassoDto.getPrezzoBase(),
+                                    astaAlribassoDto.getIntervalloDecrementale(),
+                                    astaAlribassoDto.getIntervalloBase(),
+                                    astaAlribassoDto.getDecrementoAutomaticoCifra(),
+                                    astaAlribassoDto.getPrezzoMin(),
+                                    astaAlribassoDto.getPrezzoAttuale(),
+                                    astaAlribassoDto.getCondizione(),
+                                    astaAlribassoDto.getId_venditore());
+                            //stampa dei valori dell asta
+                            Log.d("Asta ribasso" ," valori " + astaAlribassoModel.getNome() + astaAlribassoModel.getDescrizione() + astaAlribassoModel.getId() + astaAlribassoModel.getIntervalloBase() + astaAlribassoModel.getPrezzoMin());
+                            listAsta_alribassoModel.add(astaAlribassoModel);
+                        }
+                        return listAsta_alribassoModel;
+                    }
+                    System.out.println("lista di aste al ribasso dto null");
+                }
+                System.out.println("response non successful");
+            } catch (IOException e) {
+                System.out.println("exception IOEXC");
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(ArrayList<Asta_alribassoModel> result) {
+            System.out.println("on post execute aste al ribasso per categoria nome" + result);
+            if (listener != null) {
+                listener.OnGetAsteRibassoPreferite(result);
+            }
+        }
+    }
+    public interface OnGetAsteRibassoPreferiteListener {
+        void OnGetAsteRibassoPreferite(ArrayList<Asta_alribassoModel> list);
     }
 }

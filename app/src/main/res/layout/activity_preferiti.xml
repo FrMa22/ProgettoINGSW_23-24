@@ -39,7 +39,7 @@
         android:id="@+id/text_view_nessuna_asta_preferita_trovata"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Nessun'asta trovata."
+        android:text="Nessun' asta trovata."
         android:textColor="@color/colore_secondario"
         android:layout_gravity="center"
         android:layout_below="@id/toolbar_schermata_preferiti"
@@ -47,7 +47,7 @@
         android:layout_marginTop="30dp"
         android:textSize="35dp"
         android:textStyle="bold"
-        android:visibility="invisible"
+        android:visibility="visible"
         />
 
     <ProgressBar

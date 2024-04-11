@@ -256,12 +256,12 @@ public class AstePreferiteDAO {
             // Puoi mostrare il risultato all'utente o gestirlo in modo appropriato
             if (result instanceof ArrayList) {
                 ArrayList<Object> aste = (ArrayList<Object>) result;
-                if (aste != null) {
-                    preferitiActivity.astePreferite(aste);
-                } else {
-                    // Nessun risultato trovato per l'utente
-                    preferitiActivity.astePreferite(new ArrayList<>());
-                }
+//                if (aste != null) {
+//                    preferitiActivity.astePreferite(aste);
+//                } else {
+//                    // Nessun risultato trovato per l'utente
+//                    preferitiActivity.astePreferite(new ArrayList<>());
+//                }
             } else {
                 // Nessun risultato o errore
             }

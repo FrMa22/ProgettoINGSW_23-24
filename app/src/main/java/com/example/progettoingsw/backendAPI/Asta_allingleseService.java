@@ -7,7 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Path;
 
 public interface Asta_allingleseService {
@@ -18,15 +20,18 @@ public interface Asta_allingleseService {
     @GET("/asta_allingleseController/getAste_allingleseNomeCategoria/{nomeCategoria}")
     Call<ArrayList<Asta_allinglese_DTO>> getAste_allingleseCategoriaNome(@Path("nomeCategoria") String nomeCategoria);
 
-    @GET("/asta_allingleseController/partecipaAstaInglese/{idAstaInglese}/{indirizzo_email}/{offerta}/{tempo_offerta}/{stato}")
+    @POST("/asta_allingleseController/partecipaAstaInglese/{idAstaInglese}/{indirizzo_email}/{offerta}/{tempo_offerta}/{stato}")
     Call<Integer> partecipaAsta_allinglese(@Path("idAstaInglese") Long idAstaInglese, @Path("indirizzo_email") String indirizzo_email, @Path("offerta") String offerta,
                                            @Path("tempo_offerta") String tempo_offerta,@Path("stato") String stato);
     @GET("/asta_allingleseController/trovaAstaInglese/{idAstaInglese}")
     Call<Asta_allinglese_DTO> trovaAstaInglese(@Path("idAstaInglese") Long idAstaInglese);
     @GET("/asta_allingleseController/verificaAstaIngleseInPreferiti/{indirizzo_email}/{idAstaInglese}")
     Call<Integer> verificaAstaIngleseInPreferiti(@Path("indirizzo_email") String indirizzo_email, @Path("idAstaInglese") Long idAstaInglese);
-    @GET("/asta_allingleseController/inserimentoAstaInPreferiti/{idAstaInglese}/{indirizzo_email}")
+    @POST("/asta_allingleseController/inserimentoAstaInPreferiti/{idAstaInglese}/{indirizzo_email}")
     Call<Integer> inserimentoAstaInPreferiti(@Path("idAstaInglese") Long idAstaInglese, @Path("indirizzo_email") String indirizzo_email);
-    @GET("/asta_allingleseController/eliminazioneAstaInPreferiti/{idAstaInglese}/{indirizzo_email}")
+    @DELETE("/asta_allingleseController/eliminazioneAstaInPreferiti/{idAstaInglese}/{indirizzo_email}")
     Call<Integer> eliminazioneAstaInPreferiti(@Path("idAstaInglese") Long idAstaInglese, @Path("indirizzo_email") String indirizzo_email);
+
+    @GET("/asta_allingleseController/getAsteInglesePreferite/{indirizzo_email}")
+    Call<ArrayList<Asta_allinglese_DTO>> getAsteInglesePreferite(@Path("indirizzo_email") String indirizzo_email);
 }
