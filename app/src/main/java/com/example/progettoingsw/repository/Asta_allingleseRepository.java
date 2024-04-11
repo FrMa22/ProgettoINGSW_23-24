@@ -385,7 +385,7 @@ public class Asta_allingleseRepository {
                 }
                 System.out.println("response non successful");
             } catch (IOException e) {
-                System.out.println("exception IOEXC");
+                System.out.println("exception IOEXC trova asta inglese nei preferiti");
                 e.printStackTrace();
             }
             return null;

@@ -65,10 +65,23 @@ public class SchermataAstaRibasso extends GestoreComuniImplementazioni {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.schermata_asta_ribasso);
 
+        textViewNomeProdotto = findViewById(R.id.textViewNomeProdottoSchermataAstaRibasso);
+        imageViewProdotto = findViewById(R.id.ImageViewSchermataAstaRibasso);
+        textViewDescrizione = findViewById(R.id.textViewDescrizioneSchermataAstaRibasso);
+        textViewProssimoDecremento = findViewById(R.id.textViewProssimoDecrementoAstaRibasso);
+        textViewOffertaAttuale = findViewById(R.id.textViewOffertaAttualeSchermataAstaRibasso);
+        textViewVenditore = findViewById(R.id.textViewVenditoreSchermataAstaRibasso);
+        imageButtonPreferiti= findViewById(R.id.aggiuntiPreferitiButtonAstaRibasso);
+        drawablePreferiti = imageButtonPreferiti.getDrawable();
+        drawableCuoreVuoto = ContextCompat.getDrawable(this, R.drawable.ic_cuore_vuoto);
+        drawableCuorePieno = ContextCompat.getDrawable(this, R.drawable.ic_cuore_pieno);
+
         schermataAstaRibassoViewModel =new ViewModelProvider(this).get(SchermataAstaRibassoViewModel.class);
-        osservaIsAstaRecuperata();
+        osservaAstaRecuperata();
         osservaErroreRecuperoAsta();
         osservaTipoUtenteChecked();
+        osservaIsAstaInPreferiti();
+        schermataAstaRibassoViewModel.verificaAstaInPreferiti();
         schermataAstaRibassoViewModel.checkTipoUtente();
         schermataAstaRibassoViewModel.getAstaData();
 
@@ -86,16 +99,7 @@ public class SchermataAstaRibasso extends GestoreComuniImplementazioni {
 //        Toast.makeText(this, "l'id è " + id + ", la mail è " + email + ", il tipoutente è " + tipoUtente, Toast.LENGTH_SHORT).show();
 
 
-        textViewNomeProdotto = findViewById(R.id.textViewNomeProdottoSchermataAstaRibasso);
-        imageViewProdotto = findViewById(R.id.ImageViewSchermataAstaRibasso);
-        textViewDescrizione = findViewById(R.id.textViewDescrizioneSchermataAstaRibasso);
-        textViewProssimoDecremento = findViewById(R.id.textViewProssimoDecrementoAstaRibasso);
-        textViewOffertaAttuale = findViewById(R.id.textViewOffertaAttualeSchermataAstaRibasso);
-        textViewVenditore = findViewById(R.id.textViewVenditoreSchermataAstaRibasso);
-        imageButtonPreferiti= findViewById(R.id.aggiuntiPreferitiButtonAstaRibasso);
-        drawablePreferiti = imageButtonPreferiti.getDrawable();
-        drawableCuoreVuoto = ContextCompat.getDrawable(this, R.drawable.ic_cuore_vuoto);
-        drawableCuorePieno = ContextCompat.getDrawable(this, R.drawable.ic_cuore_pieno);
+
 
 
 //        countDownTimerControlloOgni10sec = new CountDownTimer(10000, 1000) {
@@ -209,14 +213,14 @@ public class SchermataAstaRibasso extends GestoreComuniImplementazioni {
 
             textViewVenditore.setText(astaRibassoRecuperata.getId_venditore());
             // Imposta l'immagine solo se non è nulla
-            imageViewProdotto.setImageBitmap(schermataAstaRibassoViewModel.convertiImmagine(astaRibassoRecuperata.getImmagine()));
-            if(schermataAstaRibassoViewModel.isAstaChiusa()){
-                bottoneNuovaOfferta.setVisibility(View.INVISIBLE);
-                textViewProssimoDecremento.setText("Asta chiusa.");
-                imageButtonPreferiti.setVisibility(View.INVISIBLE);
-            }else{
-                textViewProssimoDecremento.setText(schermataAstaRibassoViewModel.convertiIntervalloOfferte(astaRibassoRecuperata.getIntervalloDecrementale()));
-            }
+            //imageViewProdotto.setImageBitmap(schermataAstaRibassoViewModel.convertiImmagine(astaRibassoRecuperata.getImmagine()));
+//            if(schermataAstaRibassoViewModel.isAstaChiusa()){
+//                bottoneNuovaOfferta.setVisibility(View.INVISIBLE);
+//                textViewProssimoDecremento.setText("Asta chiusa.");
+//                imageButtonPreferiti.setVisibility(View.INVISIBLE);
+//            }else{
+//                textViewProssimoDecremento.setText(schermataAstaRibassoViewModel.convertiIntervalloOfferte(astaRibassoRecuperata.getIntervalloDecrementale()));
+//            }
 
 
         } else {
@@ -333,22 +337,48 @@ public class SchermataAstaRibasso extends GestoreComuniImplementazioni {
 
 
 
-    public void osservaIsAstaRecuperata(){
-        schermataAstaRibassoViewModel.isAstaRecuperata.observe(this, (messaggio) -> {
-            if (schermataAstaRibassoViewModel.getIsAstaRecuperata()) {
-                Log.d("osservaIsAstaRecuperata", "sto recuperando l'asta");
-                Asta_alribassoModel astaRecuperata = schermataAstaRibassoViewModel.getAstaRecuperata();
-                setAstaData(astaRecuperata);
+    public void osservaAstaRecuperata(){
+        schermataAstaRibassoViewModel.astaRecuperata.observe(this, (asta) -> {
+            if (asta != null) {
+                osservaImmagineAstaConvertita(asta);
+                schermataAstaRibassoViewModel.convertiImmagine(asta.getImmagine());
             }
+        });
+    }
+    public void osservaImmagineAstaConvertita(Asta_alribassoModel asta){
+        schermataAstaRibassoViewModel.immagineAstaConvertita.observe(this, (immagine) -> {
+            if (immagine != null) {
+                imageViewProdotto.setImageBitmap(immagine);
+            }else{
+                imageViewProdotto.setImageResource(R.drawable.no_image_available);
+            }
+            osservaIsAstaChiusa(asta);
+            schermataAstaRibassoViewModel.isAstaChiusa();
+        });
+    }
+    public void osservaIsAstaChiusa(Asta_alribassoModel asta){
+        schermataAstaRibassoViewModel.isAstaChiusa.observe(this, (valore) -> {
+            if(valore){
+                bottoneNuovaOfferta.setVisibility(View.INVISIBLE);
+                imageButtonPreferiti.setVisibility(View.INVISIBLE);
+                textViewProssimoDecremento.setText("Asta chiusa.");
+            }else {
+                osservaConvertiIntervalloOfferte(asta);
+                schermataAstaRibassoViewModel.convertiIntervalloOfferte(asta);
+            }
+        });
+    }
+    public void osservaConvertiIntervalloOfferte(Asta_alribassoModel asta){
+        schermataAstaRibassoViewModel.intervalloOfferteConvertito.observe(this, (intervallo) ->{
+            Log.d("osservaConvertiIntervalloOfferte", intervallo);
+            textViewProssimoDecremento.setText(intervallo);
+            setAstaData(asta);
         });
     }
     public void osservaErroreRecuperoAsta(){
         schermataAstaRibassoViewModel.erroreRecuperoAsta.observe(this, (messaggio) -> {
             if (schermataAstaRibassoViewModel.isErroreRecuperoAsta()) {
-                Toast.makeText(this, schermataAstaRibassoViewModel.getErroreRecuperoAsta(), Toast.LENGTH_SHORT).show();
-                Log.d("osservaIsAstaRecuperata", "sto recuperando l'asta");
-                Asta_alribassoModel astaRecuperata = schermataAstaRibassoViewModel.getAstaRecuperata();
-                setAstaData(astaRecuperata);
+                Toast.makeText(this, messaggio, Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -360,17 +390,14 @@ public class SchermataAstaRibasso extends GestoreComuniImplementazioni {
         bottoneNuovaOfferta.setVisibility(View.INVISIBLE);
     }
     public void osservaIsAcquistoAvvenuto(){
-        schermataAstaRibassoViewModel.isAcquistoAvvenuto.observe(this, (messaggio) -> {
-            if(schermataAstaRibassoViewModel.getIsAcquistoAvvenuto()){
-                String messaggioAcquisto = schermataAstaRibassoViewModel.getMessaggioAcquistaAstaRibasso();
-                if(messaggioAcquisto!=null && !messaggioAcquisto.isEmpty()){
-                    Toast.makeText(this,messaggioAcquisto , Toast.LENGTH_SHORT).show();
-                }else{
-                    Toast.makeText(this,"result null" , Toast.LENGTH_SHORT).show();
+        schermataAstaRibassoViewModel.messaggioAcquistaAstaRibasso.observe(this, (messaggio) -> {
+            if(schermataAstaRibassoViewModel.isMessaggioAcquistaAstaRibasso()) {
+                Log.d("osservaIsAcquistoAvvenuto", "qui");
+                if (schermataAstaRibassoViewModel.getIsAcquistoAvvenuto()) {
+                    Toast.makeText(this, messaggio, Toast.LENGTH_SHORT).show();
+                    schermataAstaRibassoViewModel.getAstaData();
+                    popUpConfermaOffertaDialog.dismiss();
                 }
-                schermataAstaRibassoViewModel.getAstaData();
-                Log.d("osservaIsAcquistoAvvenuto", "recupero le informazioni.");
-                popUpConfermaOffertaDialog.dismiss();
             }
         });
     }
@@ -386,6 +413,27 @@ public class SchermataAstaRibasso extends GestoreComuniImplementazioni {
                 }
 
             }
+        });
+    }
+    public void inserimentoInPreferiti(){
+        schermataAstaRibassoViewModel.inserimentoAstaInPreferiti();
+    }
+    public void eliminazioneInPreferiti(){
+        schermataAstaRibassoViewModel.eliminazioneAstaInPreferiti();
+    }
+    public void osservaIsAstaInPreferiti(){
+        schermataAstaRibassoViewModel.isAstaInPreferiti.observe(this, (messaggio) -> {
+            Log.d("osservaIsAstaRecuperata", "sto recuper");
+            if (messaggio) {
+                imageButtonPreferiti.setImageDrawable(drawableCuorePieno);
+                imageButtonPreferiti.setOnClickListener(v -> eliminazioneInPreferiti());
+            }else{
+                imageButtonPreferiti.setImageDrawable(drawableCuoreVuoto);
+                imageButtonPreferiti.setOnClickListener(v -> inserimentoInPreferiti());
+            }
+//                osservaIsAstaInPreferiti();
+//                schermataAstaIngleseViewModel.getIsAstaInPreferiti();
+
         });
     }
 }

@@ -23,7 +23,7 @@ public class SchermataAstaIngleseViewModel extends ViewModel {
     public MutableLiveData<Boolean> tipoUtenteChecked = new MutableLiveData<>(false);
     public MutableLiveData<Boolean> isPartecipazioneAvvenuta = new MutableLiveData<>(false);
     public MutableLiveData<Boolean> astaInPreferiti = new MutableLiveData<>(false);
-    public MutableLiveData<Boolean> verificaAstaInPreferitiChecked = new MutableLiveData<>(false);
+    public MutableLiveData<Boolean> isAstaInPreferiti = new MutableLiveData<>(false);
     public MutableLiveData<Bitmap> immagineAstaConvertita = new MutableLiveData<>(null);
     public MutableLiveData<Boolean> isAstaChiusa = new MutableLiveData<>(false);
     public MutableLiveData<String> intervalloOfferteConvertito = new MutableLiveData("");
@@ -44,9 +44,11 @@ public class SchermataAstaIngleseViewModel extends ViewModel {
             public void OnTrovaAstaInglese(Asta_allingleseModel astaRecuperata) {
                 Log.d("asta ricercata" , "qui");
                 if(astaRecuperata!=null){
+                    Log.d("asta ricercata" , "non null");
                     repository.setAsta_allingleseSelezionata(astaRecuperata);
                     setAstaRecuperata(astaRecuperata);
                 }else{
+                    Log.d("asta ricercata" , "null");
                     setErroreRecuperoAsta("errore nel recupero asta");
                 }
             }
@@ -157,11 +159,11 @@ public class SchermataAstaIngleseViewModel extends ViewModel {
     public Boolean isAstaInPreferiti(){
         return astaInPreferiti.getValue();
     }
-    public void setVerificaAstaInPreferitiChecked(Boolean b){
-        verificaAstaInPreferitiChecked.setValue(b);
+    public void setIsAstaInPreferiti(Boolean b){
+        isAstaInPreferiti.setValue(b);
     }
-    public Boolean getVerificaAstaInPreferitiChecked(){
-        return verificaAstaInPreferitiChecked.getValue();
+    public Boolean getIsAstaInPreferiti(){
+        return isAstaInPreferiti.getValue();
     }
     public void verificaAstaInPreferiti(){
         String indirizzoEmail = repository.getAcquirenteModel().getIndirizzoEmail();
@@ -172,11 +174,11 @@ public class SchermataAstaIngleseViewModel extends ViewModel {
                 Log.d("asta ricercata" , "qui");
                 if(numeroRecuperato!=null && numeroRecuperato!=0){
                     Log.d("asta ricercata" , "è nei preferiti");
-                    setVerificaAstaInPreferitiChecked(true);
+                    setIsAstaInPreferiti(true);
                 }else{
                     Log.d("asta ricercata" , "non è nei preferiti");
                     setErroreRecuperoAsta("errore nella verifica asta in preferiti");
-                    setVerificaAstaInPreferitiChecked(true);
+                    setIsAstaInPreferiti(false);
                 }
             }
         });
@@ -190,7 +192,7 @@ public class SchermataAstaIngleseViewModel extends ViewModel {
                 Log.d("asta inserita in preferiti" , "qui");
                 if(numeroRecuperato!=null && numeroRecuperato==1){
                     //setAstaInPreferiti(true);
-                    setVerificaAstaInPreferitiChecked(true);
+                    setIsAstaInPreferiti(true);
                 }else{
                     setErroreRecuperoAsta("errore nella verifica asta in preferiti");
                     //setVerificaAstaInPreferitiChecked(true);
@@ -207,7 +209,7 @@ public class SchermataAstaIngleseViewModel extends ViewModel {
                 Log.d("asta eliminata in preferiti" , "qui");
                 if(numeroRecuperato!=null && numeroRecuperato==1){
                     //setAstaInPreferiti(false);
-                    setVerificaAstaInPreferitiChecked(false);
+                    setIsAstaInPreferiti(false);
                 }else{
                     setErroreRecuperoAsta("errore nella verifica asta in preferiti");
                     //setVerificaAstaInPreferitiChecked(true);

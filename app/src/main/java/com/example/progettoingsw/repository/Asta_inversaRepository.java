@@ -3,11 +3,8 @@ package com.example.progettoingsw.repository;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.example.progettoingsw.DTO.Asta_allinglese_DTO;
 import com.example.progettoingsw.DTO.Asta_inversa_DTO;
-import com.example.progettoingsw.backendAPI.Asta_allingleseService;
 import com.example.progettoingsw.backendAPI.Asta_inversaService;
-import com.example.progettoingsw.model.Asta_allingleseModel;
 import com.example.progettoingsw.model.Asta_inversaModel;
 
 import java.io.IOException;
@@ -304,7 +301,7 @@ public class Asta_inversaRepository {
                     if (risposta != null && risposta==1) {
                         return risposta;
                     }
-                    System.out.println("lista di aste al ribasso dto null");
+                    System.out.println("errore in partecipazione");
                 }
                 System.out.println("response non successful");
             } catch (IOException e) {
@@ -433,7 +430,7 @@ public class Asta_inversaRepository {
                 }
                 System.out.println("response non successful");
             } catch (IOException e) {
-                System.out.println("exception IOEXC");
+                System.out.println("exception IOEXC verifica asta inverse nei preferiti");
                 e.printStackTrace();
             }
             return null;

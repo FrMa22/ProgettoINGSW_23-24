@@ -18,13 +18,14 @@ import java.time.format.DateTimeFormatter;
 
 public class SchermataAstaInversaViewModel extends ViewModel {
     private Repository repository;
-    public MutableLiveData<Boolean> isAstaRecuperata = new MutableLiveData<>(false);
+    public MutableLiveData<Asta_inversaModel> astaRecuperata = new MutableLiveData<>(null);
     public MutableLiveData<String> erroreRecuperoAsta = new MutableLiveData<>("");
-    public MutableLiveData<Boolean> tipoUtenteChecked = new MutableLiveData<>(false);
+    public MutableLiveData<Boolean> tipoUtenteAcquirente = new MutableLiveData<>(false);
     public MutableLiveData<Boolean> isPartecipazioneAvvenuta = new MutableLiveData<>(false);
+    public MutableLiveData<Boolean> isAstaInPreferiti = new MutableLiveData<>(false);
+    public MutableLiveData<Bitmap> immagineAstaConvertita = new MutableLiveData<>(null);
+    public MutableLiveData<Boolean> isAstaChiusa = new MutableLiveData<>(false);
     private String messaggioPartecipazioneAstaInglese;
-    private String tipoUtente;
-    private Asta_inversaModel astaRecuperata;
     private Asta_inversaRepository astaInversaRepository;
 
     public SchermataAstaInversaViewModel(){
@@ -41,26 +42,18 @@ public class SchermataAstaInversaViewModel extends ViewModel {
                 if(astaRecuperata!=null){
                     repository.setAsta_inversaSelezionata(astaRecuperata);
                     setAstaRecuperata(astaRecuperata);
-                    setIsAstaRecuperata(true);
                 }else{
                     setErroreRecuperoAsta("errore nel recupero asta");
-                    setIsAstaRecuperata(true);
                 }
             }
         });
 
     }
-    public void setIsAstaRecuperata(Boolean b){
-        isAstaRecuperata.setValue(b);
-    }
-    public Boolean getIsAstaRecuperata(){
-        return isAstaRecuperata.getValue();
-    }
     public void setAstaRecuperata(Asta_inversaModel asta){
-        this.astaRecuperata = asta;
+        astaRecuperata.setValue(asta);
     }
     public Asta_inversaModel getAstaRecuperata(){
-        return astaRecuperata;
+        return astaRecuperata.getValue();
     }
     public void setErroreRecuperoAsta(String messaggio){
         erroreRecuperoAsta.setValue(messaggio);
@@ -72,58 +65,26 @@ public class SchermataAstaInversaViewModel extends ViewModel {
         return !erroreRecuperoAsta.getValue().equals("");
     }
 
-    public String convertiIntervalloOfferte(String intervallo){
-        // Ottieni la data e l'ora attuali con il giorno incluso
-        LocalDateTime now = LocalDateTime.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
-
-        // Analizza l'intervallo in ore e minuti
-        String[] parts = intervallo.split(":");
-        int hours = Integer.parseInt(parts[0]);
-        int minutes = Integer.parseInt(parts[1]);
-
-        // Calcola l'intervallo totale in minuti
-        int intervalloMinuti = hours * 60 + minutes;
-
-        // Aggiungi l'intervallo alla data e all'ora attuali
-        LocalDateTime scadenza = now.plusMinutes(intervalloMinuti);
-
-        // Formatta il risultato nel formato desiderato
-        String scadenzaFormattata = scadenza.format(formatter);
-        return scadenzaFormattata;
+    public void setImmagineAstaConvertita(Bitmap img){
+        immagineAstaConvertita.setValue(img);
     }
-    public Bitmap convertiImmagine(byte[] immagine){
+    public void convertiImmagine(byte[] immagine){
         if(immagine != null){
             Bitmap bitmap = BitmapFactory.decodeByteArray(immagine, 0, immagine.length);
-            return bitmap;
+            setImmagineAstaConvertita(bitmap);
         }else{
-            return null;
+            setImmagineAstaConvertita(null);
         }
-
     }
 
-    public String getTipoUtente() {
-        return tipoUtente;
+
+
+    public void setTipoUtenteAcquirente(Boolean b){
+        tipoUtenteAcquirente.setValue(b);
     }
-    public void setTipoUtente(String tipoUtente) {
-        this.tipoUtente = tipoUtente;
-    }
-    public void setTipoUtenteChecked(Boolean b){
-        tipoUtenteChecked.setValue(b);
-    }
-    public Boolean isTipoUtenteChecked(){
-        return tipoUtenteChecked.getValue();
-    }
-    public Boolean isAcquirente(){
-        return getTipoUtente().equals("acquirente");
-    }
+
     public void checkTipoUtente(){
-        if(repository.getAcquirenteModel()!=null){
-            setTipoUtente("acquirente");
-        }else{
-            setTipoUtente("venditore");
-        }
-        setTipoUtenteChecked(true);
+        setTipoUtenteAcquirente(repository.getAcquirenteModel() != null);
     }
     public void setIsPartecipazioneAvvenuta(Boolean b){
         isPartecipazioneAvvenuta.setValue(b);
@@ -139,5 +100,63 @@ public class SchermataAstaInversaViewModel extends ViewModel {
     }
     public Boolean isAstaChiusa(){
         return !repository.getAsta_inversaSelezionata().getCondizione().equals("aperta");
+    }
+    public void setIsAstaInPreferiti(Boolean b){
+        isAstaInPreferiti.setValue(b);
+    }
+    public Boolean getIsAstaInPreferiti(){
+        return isAstaInPreferiti.getValue();
+    }
+    public void verificaAstaInPreferiti(){
+        String indirizzoEmail = repository.getVenditoreModel().getIndirizzoEmail();
+        Long idAsta = repository.getAsta_inversaSelezionata().getId();
+        astaInversaRepository.verificaAstaInversaInPreferiti(indirizzoEmail,idAsta, new Asta_inversaRepository.OnVerificaAstaInversaInPreferitiListener() {
+            @Override
+            public void OnVerificaAstaInversaInPreferiti(Integer numeroRecuperato) {
+                Log.d("asta ricercata" , "qui");
+                if(numeroRecuperato!=null && numeroRecuperato!=0){
+                    Log.d("asta ricercata" , "è nei preferiti");
+                    setIsAstaInPreferiti(true);
+                }else{
+                    Log.d("asta ricercata" , "non è nei preferiti");
+                    setErroreRecuperoAsta("errore nella verifica asta in preferiti");
+                    setIsAstaInPreferiti(false);
+                }
+            }
+        });
+    }
+    public void inserimentoAstaInPreferiti(){
+        String indirizzoEmail = repository.getVenditoreModel().getIndirizzoEmail();
+        Long idAsta = repository.getAsta_inversaSelezionata().getId();
+        astaInversaRepository.inserimentoAstaInPreferiti(idAsta, indirizzoEmail, new Asta_inversaRepository.OnInserimentoAstaInversaInPreferitiListener() {
+            @Override
+            public void OnInserimentoAstaInversaInPreferiti(Integer numeroRecuperato) {
+                Log.d("asta inserita in preferiti" , "qui");
+                if(numeroRecuperato!=null && numeroRecuperato==1){
+                    //setAstaInPreferiti(true);
+                    setIsAstaInPreferiti(true);
+                }else{
+                    setErroreRecuperoAsta("errore nella verifica asta in preferiti");
+                    //setVerificaAstaInPreferitiChecked(true);
+                }
+            }
+        });
+    }
+    public void eliminazioneAstaInPreferiti(){
+        String indirizzoEmail = repository.getVenditoreModel().getIndirizzoEmail();
+        Long idAsta = repository.getAsta_inversaSelezionata().getId();
+        astaInversaRepository.eliminazioneAstaInPreferiti(idAsta, indirizzoEmail, new Asta_inversaRepository.OnEliminazioneAstaInversaInPreferitiListener() {
+            @Override
+            public void OnEliminazioneAstaInversaInPreferiti(Integer numeroRecuperato) {
+                Log.d("asta eliminata in preferiti" , "qui");
+                if(numeroRecuperato!=null && numeroRecuperato==1){
+                    //setAstaInPreferiti(false);
+                    setIsAstaInPreferiti(false);
+                }else{
+                    setErroreRecuperoAsta("errore nella verifica asta in preferiti");
+                    //setVerificaAstaInPreferitiChecked(true);
+                }
+            }
+        });
     }
 }
