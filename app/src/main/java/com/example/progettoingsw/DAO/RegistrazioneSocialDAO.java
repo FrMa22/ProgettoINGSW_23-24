@@ -160,7 +160,7 @@ public class RegistrazioneSocialDAO {
         protected void onPostExecute(Integer result) {
             if(popUpAggiungiSocialProfilo != null){
                 Log.d("RegistrazioneSocialDAO" , "onPostExecute");
-                popUpAggiungiSocialProfilo.handleRegistrazioneSocial(result);
+             //   popUpAggiungiSocialProfilo.handleRegistrazioneSocial(result);
             }
         }
     }

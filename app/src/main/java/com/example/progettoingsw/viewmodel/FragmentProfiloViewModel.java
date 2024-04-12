@@ -24,6 +24,8 @@ public class FragmentProfiloViewModel extends ViewModel {
 
     public MutableLiveData<Boolean> entraInPopUpModificaSocial = new MutableLiveData<>(false);
 
+    public MutableLiveData<Boolean> apriPopUpAggiungiSocial = new MutableLiveData<>(false);
+
     public MutableLiveData<ArrayList<SocialAcquirenteModel>> socialAcquirenteRecuperati = new MutableLiveData<>(null);
 
     public MutableLiveData<AcquirenteModel> acquirenteRecuperato =new MutableLiveData<>(null);
@@ -54,7 +56,8 @@ public class FragmentProfiloViewModel extends ViewModel {
 
     }
 
-    public void aggiungiSocialAcquirenteViewModel(String nome,String link,String email){
+    public void aggiungiSocialAcquirenteViewModel(String nome,String link){
+        String email=getAcquirenteEmail();
         System.out.println("entrato in fragmentProfilo aggiungi social di viewmodel con email:"+email + "nome:"+ nome + "link:"+ link);
         //if(repository.getSocialAcquirenteModelList()==null){System.out.println("lista social acquirente null");return ;}
         try{
@@ -66,7 +69,8 @@ public class FragmentProfiloViewModel extends ViewModel {
     }
 
 
-    public void eliminaSocialAcquirenteViewModel(String nome,String link,String email){
+    public void eliminaSocialAcquirenteViewModel(String nome,String link){
+        String email=getAcquirenteEmail();
         System.out.println("entrato in fragmentProfilo elimina social di viewmodel con email:"+email + "nome:"+ nome + "link:"+ link);
         //if(repository.getSocialAcquirenteModelList()==null){System.out.println("lista social acquirente null");return ;}
         try{
@@ -95,7 +99,8 @@ public class FragmentProfiloViewModel extends ViewModel {
 
 
 
-    public void aggiornaAcquirenteViewModel(String nome,String cognome,String bio,String link,String areageografica,String email){
+    public void aggiornaAcquirenteViewModel(String nome,String cognome,String bio,String link,String areageografica){
+        String email=getAcquirenteEmail();
         System.out.println("Parametri del metodo aggiornaAcquirenteViewModel:");
         System.out.println("nome: " + nome);
         System.out.println("cognome: " + cognome);
@@ -113,7 +118,8 @@ public class FragmentProfiloViewModel extends ViewModel {
 
     }
 
-    public void aggiornaPasswordAcquirenteViewModel(String password,String email){
+    public void aggiornaPasswordAcquirenteViewModel(String password){
+        String email=getAcquirenteEmail();
         System.out.println("Parametri del metodo aggiornaPasswordAcquirenteViewModel:");
         System.out.println("password: " + password);
         System.out.println("email: " + email);
@@ -318,5 +324,11 @@ public class FragmentProfiloViewModel extends ViewModel {
     }
 
 
+    public void setApriPopUpAggiungiSocial(Boolean b){
+        apriPopUpAggiungiSocial.setValue(b);
+    }
+    public Boolean getApriPopUpAggiungiSocial(){
+        return apriPopUpAggiungiSocial.getValue();
+    }
 
 }

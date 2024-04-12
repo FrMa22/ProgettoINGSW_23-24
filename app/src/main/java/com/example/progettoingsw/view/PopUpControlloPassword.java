@@ -16,23 +16,24 @@ import com.example.progettoingsw.R;
 import com.example.progettoingsw.classe_da_estendere.DialogPersonalizzato;
 import com.example.progettoingsw.repository.Repository;
 import com.example.progettoingsw.view.acquirente.FragmentProfilo;
+import com.example.progettoingsw.viewmodel.FragmentProfiloViewModel;
 
 public class PopUpControlloPassword extends DialogPersonalizzato implements View.OnClickListener {
     private AppCompatButton bottoneAnnullaControlloPassword;
     private AppCompatButton bottoneConfermaControlloPassword;
     private EditText edit_text_vecchia_password;
     private EditText edit_text_password_nuova;
-    private String email;
+
     private PopUpControlloPasswordDAO popUpControlloPasswordDAO;
-    private String tipoUtente;
+
     private ProgressBar progress_bar_pop_up_controllo_password;
 
     private FragmentProfilo fragmentProfilo;
+    private FragmentProfiloViewModel fragmentProfiloViewModel;
 
-    public  PopUpControlloPassword(Context context, FragmentProfilo fragmentProfilo,String email, String tipoUtente) {
+    public  PopUpControlloPassword(Context context, FragmentProfilo fragmentProfilo, FragmentProfiloViewModel fragmentProfiloViewModel) {
         super(context);
-        this.email = email;
-        this.tipoUtente = tipoUtente;
+       this.fragmentProfiloViewModel=fragmentProfiloViewModel;
         this.fragmentProfilo=fragmentProfilo;
         //this.popUpControlloPasswordDAO = new PopUpControlloPasswordDAO(this,email,tipoUtente);
     }
@@ -85,7 +86,7 @@ private void confermaPassword(){
         Repository repository=Repository.getInstance();
                 if(repository.getAcquirenteModel().getPassword().equals(password_vecchia)){
                     //chiamata al backend
-                    fragmentProfilo.fragmentProfiloViewModel.aggiornaPasswordAcquirenteViewModel(password_nuova,email);
+                    fragmentProfilo.fragmentProfiloViewModel.aggiornaPasswordAcquirenteViewModel(password_nuova);
                     dismiss();
                 }else{Toast.makeText(getContext(), "Password non corretta, riprovare.", Toast.LENGTH_SHORT).show();}
 
