@@ -117,12 +117,12 @@ public class NotificheDAO {
             // Puoi mostrare il risultato all'utente o gestirlo in modo appropriato
             if (result instanceof ArrayList) {
                 ArrayList<Object> notifiche = (ArrayList<Object>) result;
-                if (notifiche != null) {
-                    schermataNotifiche.updateNotifiche(notifiche);
-                } else {
-                    // Nessun risultato trovato per l'utente
-                    schermataNotifiche.updateNotifiche(new ArrayList<>());
-                }
+//                if (notifiche != null) {
+//                    schermataNotifiche.updateNotifiche(notifiche);
+//                } else {
+//                    // Nessun risultato trovato per l'utente
+//                    schermataNotifiche.updateNotifiche(new ArrayList<>());
+//                }
             } else {
                 // Nessun risultato o errore
             }

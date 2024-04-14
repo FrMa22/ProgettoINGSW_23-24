@@ -19,9 +19,9 @@ import java.util.ArrayList;
 import retrofit2.Call;
 import retrofit2.Response;
 import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;public class LoginRepository {
+import retrofit2.converter.gson.GsonConverterFactory;
+public class LoginRepository {
 
-    Repository repository = Repository.getInstance();
 
     public void loginAcquirenteBackend(String email, String password, OnLoginAcquirenteListener listener) {
         System.out.println("entrato in loginAcquirente backend");

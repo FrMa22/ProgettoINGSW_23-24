@@ -35,30 +35,7 @@ private Fragment selectedFragment;
             setContentView(R.layout.acquirente_activity_main);
             bottomNavigationView = findViewById(R.id.acquirente_nav_view);
 
-            repository = Repository.getInstance();
-            acquirenteModel = repository.getAcquirenteModel();
-            venditoreModel = repository.getVenditoreModel();
-            if (acquirenteModel != null) {
-                Log.d("Main acitivity", "entrato come acquirente");
-                Log.d("Main activiy", "Valori di acquirente: " +
-                        "Indirizzo email: " + acquirenteModel.getIndirizzoEmail() +
-                        ", Nome: " + acquirenteModel.getNome() +
-                        ", Cognome: " + acquirenteModel.getCognome() +
-                        ", Password: " + acquirenteModel.getPassword() +
-                        ", Bio: " + acquirenteModel.getBio() +
-                        ", Link: " + acquirenteModel.getLink() +
-                        ", Area geografica: " + acquirenteModel.getAreaGeografica());
-            } else if (venditoreModel != null) {
-                Log.d("Main acitivity", "entrato come venditore");
-                Log.d("Main activiy", "Valori di venditore: " +
-                        "Indirizzo email: " + venditoreModel.getIndirizzoEmail() +
-                        ", Nome: " + venditoreModel.getNome() +
-                        ", Cognome: " + venditoreModel.getCognome() +
-                        ", Password: " + venditoreModel.getPassword() +
-                        ", Bio: " + venditoreModel.getBio() +
-                        ", Link: " + venditoreModel.getLink() +
-                        ", Area geografica: " + venditoreModel.getAreaGeografica());
-            }
+
 
 //            email = getIntent().getStringExtra("email").trim();
 //            tipoUtente = getIntent().getStringExtra("tipoUtente");
