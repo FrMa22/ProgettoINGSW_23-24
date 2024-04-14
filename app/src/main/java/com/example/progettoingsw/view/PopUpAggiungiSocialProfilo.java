@@ -12,6 +12,7 @@ import com.example.progettoingsw.DAO.RegistrazioneSocialDAO;
 import com.example.progettoingsw.R;
 import com.example.progettoingsw.classe_da_estendere.DialogPersonalizzato;
 import com.example.progettoingsw.view.acquirente.FragmentProfilo;
+import com.example.progettoingsw.viewmodel.FragmentProfiloViewModel;
 import com.google.android.material.button.MaterialButton;
 
 public class PopUpAggiungiSocialProfilo extends DialogPersonalizzato implements View.OnClickListener {
@@ -23,12 +24,13 @@ public class PopUpAggiungiSocialProfilo extends DialogPersonalizzato implements 
     EditText editTextNomeUtenteSocial;
     EditText editTextNomeSocial;
     private ProgressBar progressBarPopUpAggiungiSocialProfilo;
+    private FragmentProfiloViewModel fragmentProfiloViewModel;
 
-    public PopUpAggiungiSocialProfilo(FragmentProfilo fragmentProfilo, String email, String tipoUtente) {
+
+    public PopUpAggiungiSocialProfilo(FragmentProfilo fragmentProfilo, FragmentProfiloViewModel fragmentProfiloViewModel) {
         super(fragmentProfilo.getContext()); // Chiama il costruttore della superclasse Dialog
-        this.email=email;
-        this.tipoUtente=tipoUtente;
         this.fragmentProfilo = fragmentProfilo;
+        this.fragmentProfiloViewModel=fragmentProfiloViewModel;
     }
 
     @Override
@@ -37,7 +39,9 @@ public class PopUpAggiungiSocialProfilo extends DialogPersonalizzato implements 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.pop_up_aggiungi_social_profilo);
 
-        System.out.println("popupAggiungiSocial ha email:"+email);
+
+
+
 
 
 
@@ -61,6 +65,7 @@ public class PopUpAggiungiSocialProfilo extends DialogPersonalizzato implements 
         int viewId = v.getId();
 
         if (viewId == R.id.bottoneChiudiRegistrazioneSocial) {
+            fragmentProfiloViewModel.setApriPopUpAggiungiSocial(false);
             dismiss(); // Chiude il dialog
         } else if (viewId == R.id.bottoneConfermaRegistrazioneSocial) {
             confermaRegistrazioneSocialProfilo();
@@ -89,7 +94,7 @@ public class PopUpAggiungiSocialProfilo extends DialogPersonalizzato implements 
         if (!nomeSocial.isEmpty() && nomeSocial.length() <= 50 &&
                 !nomeUtenteSocial.isEmpty() && nomeUtenteSocial.length() <= 50) {
               //  progressBarPopUpAggiungiSocialProfilo.setVisibility(View.VISIBLE);
-            fragmentProfilo.fragmentProfiloViewModel.aggiungiSocialAcquirenteViewModel(nomeSocial,nomeUtenteSocial,email);
+            fragmentProfiloViewModel.aggiungiSocialAcquirenteViewModel(nomeSocial,nomeUtenteSocial);
                 //         registrazioneSocialDAO.openConnection();
          //       registrazioneSocialDAO.inserimentoSingoloSocial(nomeSocial, nomeUtenteSocial);
            //     registrazioneSocialDAO.closeConnection();
@@ -97,19 +102,23 @@ public class PopUpAggiungiSocialProfilo extends DialogPersonalizzato implements 
 
         }
 
-    public void handleRegistrazioneSocial(Integer result){
-        Log.d("handleRegistrazioneSocial", "valore di result: " + result);
-        progressBarPopUpAggiungiSocialProfilo.setVisibility(View.INVISIBLE);
-        if(result == 0 ){
-            Toast.makeText(getContext(), "Problema con la connessione rilevato", Toast.LENGTH_SHORT).show();
-        }else if(result == -1){
-            Toast.makeText(getContext(), "Valori già presenti in social", Toast.LENGTH_SHORT).show();
-        }else{
-            Log.d("handleRegistrazioneSocial", "entrato nell'else");
-            // Chiudi il dialog dopo la conferma
-            fragmentProfilo.onResume();
-            dismiss();
-        }
+//    public void handleRegistrazioneSocial(Integer result){
+//        Log.d("handleRegistrazioneSocial", "valore di result: " + result);
+//        progressBarPopUpAggiungiSocialProfilo.setVisibility(View.INVISIBLE);
+//        if(result == 0 ){
+//            Toast.makeText(getContext(), "Problema con la connessione rilevato", Toast.LENGTH_SHORT).show();
+//        }else if(result == -1){
+//            Toast.makeText(getContext(), "Valori già presenti in social", Toast.LENGTH_SHORT).show();
+//        }else{
+//            Log.d("handleRegistrazioneSocial", "entrato nell'else");
+//            // Chiudi il dialog dopo la conferma
+//            fragmentProfilo.onResume();
+//            dismiss();
+//        }
+//
+//    }
 
-    }
+
+
+
 }

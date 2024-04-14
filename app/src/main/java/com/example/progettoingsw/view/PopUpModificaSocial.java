@@ -14,12 +14,13 @@ import com.example.progettoingsw.DAO.PopUpModificaSocialDAO;
 import com.example.progettoingsw.R;
 import com.example.progettoingsw.classe_da_estendere.DialogPersonalizzato;
 import com.example.progettoingsw.view.acquirente.FragmentProfilo;
+import com.example.progettoingsw.viewmodel.FragmentProfiloViewModel;
 
 public class PopUpModificaSocial extends DialogPersonalizzato implements View.OnClickListener {
     private AppCompatButton bottoneAnnullaModifica;
     private AppCompatButton bottoneConfermaModifica;
     private AppCompatButton bottoneEliminaSocial;
-    private String email;
+
     private String nome_vecchio;
     private String link_vecchio;
     private EditText edit_text_nome_social;
@@ -27,15 +28,15 @@ public class PopUpModificaSocial extends DialogPersonalizzato implements View.On
     private PopUpModificaSocialDAO popUpModificaSocialDAO;
     private FragmentProfilo fragmentProfilo;
     private String tipoUtente;
+    private FragmentProfiloViewModel fragmentProfiloViewModel;
 
 
-    public PopUpModificaSocial(Context context, FragmentProfilo fragmentProfilo, String email, String tipoUtente, String nome, String link) {
+    public PopUpModificaSocial(Context context, FragmentProfilo fragmentProfilo, FragmentProfiloViewModel fragmentProfiloViewModel, String nome, String link) {
         super(context);
         this.fragmentProfilo = fragmentProfilo;
-        this.email = email;
-        this.tipoUtente = tipoUtente;
         this.nome_vecchio = nome;
         this.link_vecchio = link;
+        this.fragmentProfiloViewModel=fragmentProfiloViewModel;
     }
 
     @Override
@@ -77,7 +78,7 @@ public class PopUpModificaSocial extends DialogPersonalizzato implements View.On
   //              popUpModificaSocialDAO.updateSocial(nome_vecchio, link_vecchio, nome, link);
                 System.out.println("controllo è  non vuoto passato");
                 System.out.println("prima della chiamata al backend");
-                fragmentProfilo.fragmentProfiloViewModel.aggiornaSocialAcquirenteViewModel(nome_vecchio,link_vecchio,nome,link);
+                 fragmentProfiloViewModel.aggiornaSocialAcquirenteViewModel(nome_vecchio,link_vecchio,nome,link);
                 fragmentProfilo.onResume();
                 dismiss();
             }else{
@@ -102,8 +103,7 @@ public class PopUpModificaSocial extends DialogPersonalizzato implements View.On
           //  popUpModificaSocialDAO.openConnection();
            // popUpModificaSocialDAO.deleteSocial(nome_vecchio,link_vecchio);
             //chiamata al backend per cancellare
-            System.out.println("valori del pop up elimina , nome:"+ nome_vecchio +"link:"+ link_vecchio + "email:"+email );
-            fragmentProfilo.fragmentProfiloViewModel.eliminaSocialAcquirenteViewModel(nome_vecchio,link_vecchio,email);
+            fragmentProfilo.fragmentProfiloViewModel.eliminaSocialAcquirenteViewModel(nome_vecchio,link_vecchio);
 
             fragmentProfilo.onResume();
             dismiss();

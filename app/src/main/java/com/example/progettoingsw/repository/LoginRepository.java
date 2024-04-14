@@ -75,7 +75,7 @@ public class LoginRepository {
                     AcquirenteDTO acquirenteDTO = response.body();
                     if (acquirenteDTO != null) {
                         System.out.println("acquirente dto non null");
-                        System.out.println("valori del acquirente: " + acquirenteDTO.getNome() + acquirenteDTO.getCognome());
+                        System.out.println("valori del acquirente: " + " nome:" + acquirenteDTO.getNome() + " cognome:" + acquirenteDTO.getCognome() + " link:" + acquirenteDTO.getLink() + " paese: "+ acquirenteDTO.getAreaGeografica());
                         return new AcquirenteModel(acquirenteDTO.getNome(), acquirenteDTO.getCognome(), acquirenteDTO.getIndirizzoEmail(), acquirenteDTO.getPassword(), acquirenteDTO.getBio(), acquirenteDTO.getAreaGeografica(), acquirenteDTO.getLink());
                     }
                     System.out.println("acquirente dto null");

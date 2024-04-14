@@ -14,11 +14,12 @@ import com.example.progettoingsw.DAO.PopUpModificaCampiProfiloDAO;
 import com.example.progettoingsw.R;
 import com.example.progettoingsw.classe_da_estendere.DialogPersonalizzato;
 import com.example.progettoingsw.view.acquirente.FragmentProfilo;
+import com.example.progettoingsw.viewmodel.FragmentProfiloViewModel;
 
 public class PopUpModificaCampiProfilo extends DialogPersonalizzato implements View.OnClickListener {
     private AppCompatButton bottoneAnnullaModifica;
     private AppCompatButton bottoneConfermaModifica;
-    private String email;
+
     private EditText edit_text_modifica_nome;
     private EditText edit_text_modifica_cognome;
     private EditText edit_text_modifica_sitoweb;
@@ -26,14 +27,14 @@ public class PopUpModificaCampiProfilo extends DialogPersonalizzato implements V
     private EditText edit_text_modifica_paese;
     private PopUpModificaCampiProfiloDAO popUpModificaCampiProfiloDAO;
     private FragmentProfilo fragmentProfilo;
-    private String tipoUtente;
+
+    private FragmentProfiloViewModel fragmentProfiloViewModel;
 
 
-    public PopUpModificaCampiProfilo(Context context, FragmentProfilo fragmentProfilo, String email, String tipoUtente) {
+    public PopUpModificaCampiProfilo(Context context, FragmentProfilo fragmentProfilo, FragmentProfiloViewModel fragmentProfiloViewModel) {
         super(context);
         this.fragmentProfilo = fragmentProfilo;
-        this.email = email;
-        this.tipoUtente = tipoUtente;
+        this.fragmentProfiloViewModel=fragmentProfiloViewModel;
     }
 
     @Override
@@ -75,7 +76,7 @@ public class PopUpModificaCampiProfilo extends DialogPersonalizzato implements V
                 Log.d("bottone", " i valori di nome e cognome sono: " + nome + cognome);
 //                popUpModificaCampiProfiloDAO.updateFields(nome, cognome, sitoweb, paese, bio);
                 //chiamata al backend
-                fragmentProfilo.fragmentProfiloViewModel.aggiornaAcquirenteViewModel(nome,cognome,bio,sitoweb,paese,email);
+                fragmentProfilo.fragmentProfiloViewModel.aggiornaAcquirenteViewModel(nome,cognome,bio,sitoweb,paese);
                 fragmentProfilo.onResume();
                 dismiss();
             }else{

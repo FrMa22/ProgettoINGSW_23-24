@@ -1,4 +1,5 @@
 package com.example.progettoingsw.view.acquirente;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -33,6 +34,8 @@ import com.example.progettoingsw.R;
 import com.example.progettoingsw.controllers_package.Controller;
 import com.example.progettoingsw.gestori_gui.CustomAdapter_gridview_profilo_social;
 import com.example.progettoingsw.view.LoginActivity;
+import com.example.progettoingsw.view.PopUpModificaSocial;
+import com.example.progettoingsw.view.SchermataAstaInglese;
 import com.example.progettoingsw.viewmodel.FragmentProfiloViewModel;
 import com.google.android.material.button.MaterialButton;
 
@@ -131,10 +134,9 @@ public class FragmentProfilo extends Fragment{
 
                 String nome = socialNames.get(position);
                 String link = socialLinks.get(position);
-                email=acquirenteModel.getIndirizzoEmail();
-                fragmentProfiloViewModel.gestisciModificaSocial(nome,link);
-                //PopUpModificaSocial popUpModificaSocial = new PopUpModificaSocial(getContext(), FragmentProfilo.this, email, "acquirente", nome, link);
-                //popUpModificaSocial.show();
+                //fragmentProfiloViewModel.gestisciModificaSocial(nome,link);
+                PopUpModificaSocial popUpModificaSocial = new PopUpModificaSocial(getContext(), FragmentProfilo.this, fragmentProfiloViewModel, nome, link);
+                popUpModificaSocial.show();
             }
         });
 
@@ -267,8 +269,7 @@ public class FragmentProfilo extends Fragment{
         button_modifica.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                email=acquirenteModel.getIndirizzoEmail();
-                PopUpModificaCampiProfilo popUpModificaCampiProfilo = new PopUpModificaCampiProfilo(getContext(), FragmentProfilo.this, email, "acquirente");
+                PopUpModificaCampiProfilo popUpModificaCampiProfilo = new PopUpModificaCampiProfilo(getContext(), FragmentProfilo.this,fragmentProfiloViewModel);
                 popUpModificaCampiProfilo.show();
             }
         });
@@ -277,8 +278,7 @@ public class FragmentProfilo extends Fragment{
         button_cambia_password_profilo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                email=acquirenteModel.getIndirizzoEmail();
-                PopUpControlloPassword popUpControlloPassword = new PopUpControlloPassword(getContext(),FragmentProfilo.this ,email, "acquirente");
+                PopUpControlloPassword popUpControlloPassword = new PopUpControlloPassword(getContext(),FragmentProfilo.this ,fragmentProfiloViewModel);
                 popUpControlloPassword.show();
             }
         });
@@ -287,10 +287,13 @@ public class FragmentProfilo extends Fragment{
         button_aggiungi_social.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                email=Repository.getInstance().getAcquirenteModel().getIndirizzoEmail();
-                PopUpAggiungiSocialProfilo popUpAggiungiSocialProfilo = new PopUpAggiungiSocialProfilo(FragmentProfilo.this, email,tipoUtente);
-                System.out.println("popupAggiungiSocial  nel fragment ha email:"+email);
-                popUpAggiungiSocialProfilo.show();
+                //email=Repository.getInstance().getAcquirenteModel().getIndirizzoEmail();
+                //PopUpAggiungiSocialProfilo popUpAggiungiSocialProfilo = new PopUpAggiungiSocialProfilo(FragmentProfilo.this, email,tipoUtente);
+                //System.out.println("popupAggiungiSocial  nel fragment ha email:"+email);
+               // popUpAggiungiSocialProfilo.show();
+                //chiamata di un metodo del viewmodel
+                fragmentProfiloViewModel.setApriPopUpAggiungiSocial(true);//cliccando si dice al sistema che si vuole aprire il popup
+
             }
         });
 //
@@ -477,9 +480,21 @@ public class FragmentProfilo extends Fragment{
                 //chiamate ai vari observer, tra cui quelli di cambiare schermata quindi pure per la gestione dei popup
                 osservaSocialAcquirentePresenti();
                 osservaAcquirenteRecuperato();//nel suo corpo ha un observer di un oggetto Acquirente Model che poi si usa per fare i vari get per un metodo che setta nella gui i valori
+                osservaApriPopUpAggiungiSocial();
                 //in teoria deve fare qui la chiamata per trovare i social dal backend
                 fragmentProfiloViewModel.trovaSocialAcquirenteViewModel();//questa chiamata trova i social dal backend
 
+            }
+        });
+    }
+
+
+    public void osservaApriPopUpAggiungiSocial(){
+        fragmentProfiloViewModel.apriPopUpAggiungiSocial.observe(getViewLifecycleOwner(), (messaggio) -> {
+            if (fragmentProfiloViewModel.getApriPopUpAggiungiSocial()){
+                 //fa le cose che si farebbero premendo il pulsante aggiungi social
+                PopUpAggiungiSocialProfilo popUpAggiungiSocialProfilo = new PopUpAggiungiSocialProfilo(FragmentProfilo.this,fragmentProfiloViewModel);
+                popUpAggiungiSocialProfilo.show();
             }
         });
     }
