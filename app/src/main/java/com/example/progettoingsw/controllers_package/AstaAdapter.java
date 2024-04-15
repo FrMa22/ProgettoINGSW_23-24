@@ -303,6 +303,24 @@ public class AstaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         }
     }
 
+    public void setAstecopia(ArrayList<Object> astaList) {
+        System.out.println("in set  Aste");
+        if (astaItemList == null) {
+            astaItemList = new ArrayList<>();
+        }
+        int startPosition = getItemCount();
+        if(astaList!=null) {
+            astaItemList.addAll(astaList);
+            notifyItemRangeInserted(startPosition, astaList.size());
+        }
+//        else {
+//            ArrayList<Object> list=new ArrayList<>();
+//            astaItemList.addAll(list);
+//            notifyItemRangeInserted(startPosition,list.size());
+//        }
+    }
+
+
     public void setAste(ArrayList<Object> astaList) {
         if (astaItemList == null) {
             astaItemList = new ArrayList<>();
@@ -311,6 +329,12 @@ public class AstaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         astaItemList.addAll(astaList);
         notifyItemRangeInserted(startPosition, astaList.size());
     }
+
+
+
+
+
+
     public void stopAllTimers() {
         for (CountDownTimer timer : countDownTimers) {
             timer.cancel();

@@ -1,8 +1,10 @@
 package com.example.progettoingsw.backendAPI;
 
+import com.example.progettoingsw.DTO.Asta_allinglese_DTO;
 import com.example.progettoingsw.DTO.Asta_inversa_DTO;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.DELETE;
@@ -19,6 +21,13 @@ public interface Asta_inversaService {
 
     @GET("/asta_inversaController/getAste_inversaNomeCategoria/{nomeCategoria}")
     Call<ArrayList<Asta_inversa_DTO>> getAste_inversaCategoriaNome(@Path("nomeCategoria") String nomeCategoria);
+
+    @GET("/asta_inversaController/getAste_inversaApertaByEmail/{indirizzo_email}")
+    Call<List<Asta_inversa_DTO>> getAste_inversaApertaByEmail(@Path("indirizzo_email") String indirizzo_email);
+
+    @GET("/asta_inversaController/getAste_inversaChiusaByEmail/{indirizzo_email}")
+    Call<List<Asta_inversa_DTO>> getAste_inversaChiusaByEmail(@Path("indirizzo_email") String indirizzo_email);
+
 
     @POST("/asta_inversaController/partecipaAstaInversa/{idAstaInversa}/{indirizzo_email}/{offerta}/{tempo_offerta}/{stato}")
     Call<Integer> partecipaAsta_inversa(@Path("idAstaInversa") Long idAstaInversa, @Path("indirizzo_email") String indirizzo_email, @Path("offerta") String offerta,

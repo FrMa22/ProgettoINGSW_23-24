@@ -20,6 +20,13 @@ public interface Asta_allingleseService {
     @GET("/asta_allingleseController/getAste_allingleseNomeCategoria/{nomeCategoria}")
     Call<ArrayList<Asta_allinglese_DTO>> getAste_allingleseCategoriaNome(@Path("nomeCategoria") String nomeCategoria);
 
+    @GET("/asta_allingleseController/getAste_allingleseApertaByEmail/{indirizzo_email}")
+    Call<List<Asta_allinglese_DTO>> getAste_allingleseApertaByEmail(@Path("indirizzo_email") String indirizzo_email);
+
+    @GET("/asta_allingleseController/getAste_allingleseChiusaByEmail/{indirizzo_email}")
+    Call<List<Asta_allinglese_DTO>> getAste_allingleseChiusaByEmail(@Path("indirizzo_email") String indirizzo_email);
+
+
     @POST("/asta_allingleseController/partecipaAstaInglese/{idAstaInglese}/{indirizzo_email}/{offerta}/{tempo_offerta}/{stato}")
     Call<Integer> partecipaAsta_allinglese(@Path("idAstaInglese") Long idAstaInglese, @Path("indirizzo_email") String indirizzo_email, @Path("offerta") String offerta,
                                            @Path("tempo_offerta") String tempo_offerta,@Path("stato") String stato);
