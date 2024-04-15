@@ -34,6 +34,7 @@ import com.example.progettoingsw.view.SchermataAstaRibasso;
 import com.example.progettoingsw.item.AstaIngleseItem;
 import com.example.progettoingsw.item.AstaInversaItem;
 import com.example.progettoingsw.item.AstaRibassoItem;
+import com.example.progettoingsw.view.SchermataNotifiche;
 import com.example.progettoingsw.viewmodel.HomeViewModel;
 
 import java.util.ArrayList;
@@ -163,17 +164,16 @@ public class FragmentHome extends Fragment {
 
             }
         });
-//        button_notifiche= view.findViewById(R.id.openNotifiche);
-//        button_notifiche.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent(getContext(), SchermataNotifiche.class);
-//                intent.putExtra("email", email);
-//                intent.putExtra("tipoUtente",tipoUtente);
-//                startActivity(intent);
-//
-//            }
-//        });
+        button_notifiche= view.findViewById(R.id.openNotifiche);
+        button_notifiche.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), SchermataNotifiche.class);
+
+                startActivity(intent);
+
+            }
+        });
 //        iconaNotifiche = view.findViewById(R.id.iconaNotifiche);
 //        NotificheDAO notificheDAO = new NotificheDAO(FragmentHome.this, email,tipoUtente);
 //        notificheDAO.openConnection();

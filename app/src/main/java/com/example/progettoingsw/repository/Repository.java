@@ -6,6 +6,8 @@ import com.example.progettoingsw.model.AcquirenteModel;
 import com.example.progettoingsw.model.Asta_allingleseModel;
 import com.example.progettoingsw.model.Asta_alribassoModel;
 import com.example.progettoingsw.model.Asta_inversaModel;
+import com.example.progettoingsw.model.NotificheAcquirenteModel;
+import com.example.progettoingsw.model.NotificheVenditoreModel;
 import com.example.progettoingsw.model.SocialAcquirenteModel;
 import com.example.progettoingsw.model.SocialVenditoreModel;
 import com.example.progettoingsw.model.VenditoreModel;
@@ -27,7 +29,7 @@ public class Repository {
     private ArrayList<SocialVenditoreModel> listaSocialVenditoreRecuperati;//usata per avere social acquirente nel profilo utente
 
     private ArrayList<String> listaCategorieVenditore;
-    public static final String backendUrl = "http:/13.60.15.144:8080/";
+    public static final String backendUrl = "http:/13.38.78.148:8080/";
     public static Repository questaRepository = null;
     //liste per le aste all'inglese nel caso di accesso come acquirente (aste in home)
     private ArrayList<Asta_allingleseModel> listaAsteAllIngleseInScadenza;
@@ -40,6 +42,8 @@ public class Repository {
     private ArrayList<Asta_inversaModel> listaAsteInversaInScadenza;
     private ArrayList<Asta_inversaModel> listaAsteInversaNuove;
     private ArrayList<Asta_inversaModel> listaAsteInversaCategoriaNome;
+    private NotificheAcquirenteModel notificaAcquirenteScelta;
+    private NotificheVenditoreModel notificaVenditoreScelta;
 
     private String nome_socialAcquirenteSelezionato;
     private String link_socialAcquirenteSelezionato;
@@ -290,6 +294,19 @@ public class Repository {
     }
     public void setListaSocialAcquirenteRecuperati(ArrayList<SocialAcquirenteModel> listaSocialAcquirenteRecuperati) {
         this.listaSocialAcquirenteRecuperati = listaSocialAcquirenteRecuperati;
+    }
+    public NotificheAcquirenteModel getNotificaAcquirenteScelta() {
+        return notificaAcquirenteScelta;
+    }
+    public void setNotificaAcquirenteScelta(NotificheAcquirenteModel notificaAcquirenteScelta) {
+        this.notificaAcquirenteScelta = notificaAcquirenteScelta;
+    }
+    public NotificheVenditoreModel getNotificaVenditoreScelta() {
+        return notificaVenditoreScelta;
+    }
+
+    public void setNotificaVenditoreScelta(NotificheVenditoreModel notificaVenditoreScelta) {
+        this.notificaVenditoreScelta = notificaVenditoreScelta;
     }
 
 
