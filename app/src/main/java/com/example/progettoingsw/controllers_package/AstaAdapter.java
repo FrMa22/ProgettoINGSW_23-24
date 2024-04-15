@@ -331,7 +331,12 @@ public class AstaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
 
-
+    public void clearItems() {
+        if (astaItemList != null) {
+            astaItemList.clear(); // Svuota la lista degli elementi
+            notifyDataSetChanged(); // Notifica che i dati sono cambiati
+        }
+    }
 
 
 

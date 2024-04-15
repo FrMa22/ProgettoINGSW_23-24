@@ -246,6 +246,7 @@ public class LeMieAste extends GestoreComuniImplementazioni {
         boolean asteVuote = aste == null || aste.isEmpty();
 
         if(cond.equals("aperta")) {
+            astaAdapterAttive.clearItems();
             if (!asteVuote) {
                 // Se l'ArrayList di aste non è vuoto, mostro le aste nell'adapter
                 astaAdapterAttive.setAstecopia(aste);
@@ -259,6 +260,7 @@ public class LeMieAste extends GestoreComuniImplementazioni {
                 Toast.makeText(this, "Nessuna asta trovata", Toast.LENGTH_SHORT).show();
             }
         } else if(cond.equals("chiusa")) {
+            astaAdapterNonAttive.clearItems();
             if (!asteVuote) {
                 // Se l'ArrayList di aste non è vuoto, mostro le aste nell'adapter
                 astaAdapterNonAttive.setAstecopia(aste);
