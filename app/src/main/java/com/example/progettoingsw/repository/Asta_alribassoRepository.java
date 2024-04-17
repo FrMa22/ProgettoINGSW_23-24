@@ -26,9 +26,9 @@ public class Asta_alribassoRepository {
         System.out.println("entrato in getAste_alribassoNuoveBackend");
         new Asta_alribassoRepository.getAste_alribassoNuoveTask(listener).execute();
     }
-    public void getAste_alribassoCategoriaNomeBackend(String nomeCategoria, Asta_alribassoRepository.OnGetAsteRibassoCategoriaNomeListener listener) {
+    public void getAste_alribassoCategoriaNomeBackend(ArrayList<String> nomiCategorie, Asta_alribassoRepository.OnGetAsteRibassoCategoriaNomeListener listener) {
         System.out.println("entrato in getAste_alribassoCategoriaNomeBackend");
-        new Asta_alribassoRepository.getAste_alribassoCategoriaNomeTask(listener).execute(nomeCategoria);
+        new Asta_alribassoRepository.getAste_alribassoCategoriaNomeTask(listener).execute(nomiCategorie);
     }
     public void acquistaAsta_alribasso(Long idAsta, String emailAcquirente,String prezzoAttuale, Asta_alribassoRepository.OnAcquistaAstaRibassoListener listener) {
         System.out.println("entrato in getAste_alribassoNuoveBackend");
@@ -134,7 +134,7 @@ public class Asta_alribassoRepository {
     public interface OnGetAsteRibassoNuoveListener {
         void OnGetAsteRibassoNuove(ArrayList<Asta_alribassoModel> list);
     }
-    private static class getAste_alribassoCategoriaNomeTask extends AsyncTask<String, Void, ArrayList<Asta_alribassoModel>> {
+    private static class getAste_alribassoCategoriaNomeTask extends AsyncTask<ArrayList<String>, Void, ArrayList<Asta_alribassoModel>> {
         private Asta_alribassoRepository.OnGetAsteRibassoCategoriaNomeListener listener;
 
         public getAste_alribassoCategoriaNomeTask(Asta_alribassoRepository.OnGetAsteRibassoCategoriaNomeListener listener) {
@@ -142,8 +142,8 @@ public class Asta_alribassoRepository {
         }
 
         @Override
-        protected ArrayList<Asta_alribassoModel> doInBackground(String... params) {
-            String nomeCategoria = params[0];
+        protected ArrayList<Asta_alribassoModel> doInBackground(ArrayList<String>... params) {
+            ArrayList<String> nomiCategorie = params[0];
             // Effettua l'operazione di rete qui...
             // Restituisci il risultato
 
@@ -157,7 +157,7 @@ public class Asta_alribassoRepository {
                     .build();
 
             Asta_alribassoService service = retrofit.create(Asta_alribassoService.class);
-            Call<ArrayList<Asta_alribasso_DTO>> call = service.getAste_alribassoCategoriaNome(nomeCategoria);
+            Call<ArrayList<Asta_alribasso_DTO>> call = service.getAste_alribassoCategoriaNome(nomiCategorie);
 
             try {
                 Response<ArrayList<Asta_alribasso_DTO>> response = call.execute();

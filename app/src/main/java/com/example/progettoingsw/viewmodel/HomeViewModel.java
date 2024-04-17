@@ -89,9 +89,10 @@ public class HomeViewModel extends ViewModel {
                 if (listaCategorieAcquirente != null && !listaCategorieAcquirente.isEmpty()) {
                     for (String categoria : listaCategorieAcquirente) {
                         Log.d("trova e imposta aste", "cercando aste per categoria " + categoria);
-                        trovaAste_allingleseCategoriaNome(categoria);
-                        //trovaAste_alribassoCategoriaNome(categoria);
                     }
+                        trovaAste_allingleseCategoriaNome(listaCategorieAcquirente);
+                        //trovaAste_alribassoCategoriaNome(categoria);
+
                 }
             } catch (Exception e){
                 e.printStackTrace();
@@ -139,8 +140,9 @@ public class HomeViewModel extends ViewModel {
             }
         });
     }
-    private void trovaAste_allingleseCategoriaNome(String nomeCategoria) {
-        astaAllingleseRepository.getAste_allingleseCategoriaNomeBackend(nomeCategoria, new Asta_allingleseRepository.OnGetAsteCategoriaNomeListener() {
+    private void trovaAste_allingleseCategoriaNome(ArrayList<String> nomiCategorie) {
+        Log.d("Cerco aste inglesi per categorie", ""+nomiCategorie.get(0) + nomiCategorie.get(1));
+        astaAllingleseRepository.getAste_allingleseCategoriaNomeBackend(nomiCategorie, new Asta_allingleseRepository.OnGetAsteCategoriaNomeListener() {
             @Override
             public void OnGetAsteCategoriaNome(ArrayList<Asta_allingleseModel> list) {
                 Log.d("aste recuperate inglesi categoria" ,""+list);
@@ -148,14 +150,14 @@ public class HomeViewModel extends ViewModel {
                 if(list != null && !list.isEmpty()){
                     setAste_allingleseCategoriaNomePresenti(true);
                 }
-                trovaAste_alribassoCategoriaNome(nomeCategoria);
+                trovaAste_alribassoCategoriaNome(nomiCategorie);
             }
         });
     }
 
     //metodi per trovare le aste al ribasso
-    private void trovaAste_alribassoCategoriaNome(String nomeCategoria) {
-        astaAlribassoRepository.getAste_alribassoCategoriaNomeBackend(nomeCategoria, new Asta_alribassoRepository.OnGetAsteRibassoCategoriaNomeListener() {
+    private void trovaAste_alribassoCategoriaNome(ArrayList<String> nomiCategorie) {
+        astaAlribassoRepository.getAste_alribassoCategoriaNomeBackend(nomiCategorie, new Asta_alribassoRepository.OnGetAsteRibassoCategoriaNomeListener() {
             @Override
             public void OnGetAsteRibassoCategoriaNome(ArrayList<Asta_alribassoModel> list) {
                 Log.d("aste recuperate ribasso categoria" ,""+list);

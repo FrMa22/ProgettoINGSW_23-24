@@ -167,7 +167,7 @@ public class NotificheDAO {
                     acquirenteMainActivity.handleGetNumeroNotifiche(result.intValue());
                 }else if(fragmentHome !=null){
                     Log.d("onPostExecute", "passo resylt a home");
-                    fragmentHome.handleGetNumeroNotifiche(result.intValue());
+                    //fragmentHome.handleGetNumeroNotifiche(result.intValue());
                 }
             } else {
                 // Gestisci il caso in cui non è stato possibile recuperare il numero di notifiche

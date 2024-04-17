@@ -156,7 +156,9 @@ public class FragmentProfilo extends Fragment{
         button_log_out.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Controller.redirectActivity(getContext(), LoginActivity.class);
+                osservaEsci();
+                fragmentProfiloViewModel.logout();
+                //Controller.redirectActivity(getContext(), LoginActivity.class);
             }
         });
 
@@ -377,7 +379,13 @@ public class FragmentProfilo extends Fragment{
 
     }
 
-
+    public void osservaEsci(){
+        fragmentProfiloViewModel.esci.observe(getViewLifecycleOwner(), (valore)->{
+            if(valore){
+                Controller.redirectActivity(getContext(), LoginActivity.class);
+            }
+        });
+    }
     public void osservaAcquirenteModelPresente(){
         fragmentProfiloViewModel.acquirenteModelPresente.observe(getViewLifecycleOwner(), (messaggio) -> {
             if (fragmentProfiloViewModel.getAcquirenteModelPresente()) {

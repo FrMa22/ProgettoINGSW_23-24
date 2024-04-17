@@ -26,6 +26,8 @@ public class SchermataAstaIngleseViewModel extends ViewModel {
     public MutableLiveData<Boolean> isAstaInPreferiti = new MutableLiveData<>(false);
     public MutableLiveData<Bitmap> immagineAstaConvertita = new MutableLiveData<>(null);
     public MutableLiveData<Boolean> isAstaChiusa = new MutableLiveData<>(false);
+
+    public MutableLiveData<Boolean> isUltimaOffertaTua = new MutableLiveData<>(false);
     public MutableLiveData<String> intervalloOfferteConvertito = new MutableLiveData("");
     private String messaggioPartecipazioneAstaInglese;
     private String tipoUtente;
@@ -55,6 +57,27 @@ public class SchermataAstaIngleseViewModel extends ViewModel {
         });
     }
 
+    public Boolean getIsUltimaOffertaTua() {
+        return isUltimaOffertaTua.getValue();
+    }
+
+    public void setIsUltimaOffertaTua(Boolean isUltimaOffertaTua) {
+        this.isUltimaOffertaTua.setValue(isUltimaOffertaTua);
+    }
+    public void checkUltimaOfferta(){
+        Long id_asta = repository.getAsta_allingleseSelezionata().getId();
+        String indirizzo_email = repository.getAcquirenteModel().getIndirizzoEmail();
+        astaAllingleseRepository.getEmailVincente(indirizzo_email, id_asta, new Asta_allingleseRepository.OnGetEmailVincenteListener() {
+            @Override
+            public void OnGetEmailVincente(Boolean numeroRecuperato) {
+                if(numeroRecuperato){
+                    setIsUltimaOffertaTua(true);
+                }else{
+                    setIsUltimaOffertaTua(false);
+                }
+            }
+        });
+    }
     public void setAstaRecuperata(Asta_allingleseModel asta){
         astaRecuperata.setValue(asta);
     }

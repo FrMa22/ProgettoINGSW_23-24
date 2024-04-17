@@ -25,6 +25,7 @@ public class SchermataAstaInversaViewModel extends ViewModel {
     public MutableLiveData<Boolean> isAstaInPreferiti = new MutableLiveData<>(false);
     public MutableLiveData<Bitmap> immagineAstaConvertita = new MutableLiveData<>(null);
     public MutableLiveData<Boolean> isAstaChiusa = new MutableLiveData<>(false);
+    public MutableLiveData<Boolean> isUltimaOffertaTua = new MutableLiveData<>(false);
     private String messaggioPartecipazioneAstaInglese;
     private Asta_inversaRepository astaInversaRepository;
 
@@ -47,7 +48,27 @@ public class SchermataAstaInversaViewModel extends ViewModel {
                 }
             }
         });
+    }
+    public Boolean getIsUltimaOffertaTua() {
+        return isUltimaOffertaTua.getValue();
+    }
 
+    public void setIsUltimaOffertaTua(Boolean isUltimaOffertaTua) {
+        this.isUltimaOffertaTua.setValue(isUltimaOffertaTua);
+    }
+    public void checkUltimaOfferta(){
+        Long id_asta = repository.getAsta_inversaSelezionata().getId();
+        String indirizzo_email = repository.getVenditoreModel().getIndirizzoEmail();
+        astaInversaRepository.getEmailVincente(indirizzo_email, id_asta, new Asta_inversaRepository.OnGetEmailVincenteListener() {
+            @Override
+            public void OnGetEmailVincente(Boolean numeroRecuperato) {
+                if(numeroRecuperato){
+                    setIsUltimaOffertaTua(true);
+                }else{
+                    setIsUltimaOffertaTua(false);
+                }
+            }
+        });
     }
     public void setAstaRecuperata(Asta_inversaModel asta){
         astaRecuperata.setValue(asta);

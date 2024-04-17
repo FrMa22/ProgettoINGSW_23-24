@@ -215,68 +215,68 @@ public class FragmentHome extends Fragment {
     //questo metodo lo deve chiamare la classe DAO quando termina di recuperare le aste dal DB e gli passa tutto ciò che ha trovato, in questo caso un arraylist di object
     //l'arraylist deve essere di object per passare oggetti di diverse classi (in questo caso AstaInversa, AstaRibasso e AstaInglese
     //se si recupera dal DB solo un tipo di asta basta usare l'arraylist del tipo corrispondente ma questo con object funziona sia con 1 solo tipo che con più
-    public void handleAsteConsigliateResult(ArrayList<Object> prodotti) {
-        Log.d("FragmentHome" , "handleAsteConsigliateResult");
-        boolean prodottiVuoto = prodotti == null || prodotti.isEmpty();
-        if(categorie.size()==0){
-            text_view_nessuna_asta_in_categorie.setVisibility(View.GONE);
-            astaAdapterConsigliate.setAste(null);
-            text_view_aste_consigliate_home.setVisibility(View.GONE);
-        }else {
-
-            if (!prodottiVuoto) {
-                astaAdapterConsigliate.setAste(prodotti);
-            } else {
-                astaAdapterConsigliate.setAste(null);
-            }
-            if (prodottiVuoto) {
-                text_view_nessuna_asta_in_categorie.setVisibility(View.VISIBLE);
-            } else {
-                text_view_nessuna_asta_in_categorie.setVisibility(View.GONE);
-            }
-        }
-    }
-    public void handleAsteInScadenzaResult(ArrayList<Object> prodotti) {
-        boolean prodottiVuoto = prodotti == null || prodotti.isEmpty();
-        Log.d("FragmentHome" , "handleAsteInScadenzaResult");
-        if (!prodottiVuoto) {
-            astaAdapterInScadenza.setAste(prodotti);
-        }else{
-            astaAdapterInScadenza.setAste(null);
-        }
-        if(prodottiVuoto){
-            text_view_nessuna_asta_in_scadenza.setVisibility(View.VISIBLE);
-        }else {
-            text_view_nessuna_asta_in_scadenza.setVisibility(View.GONE);
-        }
-
-    }
-    public void handleAsteNuoveResult(ArrayList<Object> prodotti) {
-        // Aggiorna l'adapter con i nuovi prodotti
-        Log.d("FragmentHome" , "handleAsteNuoveResult");
-        if(prodotti != null){
-            astaAdapterNuove.setAste(prodotti);
-        }else{
-            Log.d("handleConsigliateResult", "null");
-        }
-        //        //rendo l'icona di caricamento non piu visibile e il menu clickabile
-        progressBarAcquirenteFragmentHome.setVisibility(View.INVISIBLE);
-        setNavigationView(true);
-        setAllClickable(relative_layout_home_acquirente, true);
-    }
-
-
-    public void setCategorie(ArrayList<String> categorieRecuperate){
-        if(categorieRecuperate.size() == 0){
-            text_view_aste_consigliate_home.setVisibility(View.GONE);
-            text_view_nessuna_asta_in_categorie.setVisibility(View.GONE);
-        }else{
-            text_view_aste_consigliate_home.setVisibility(View.VISIBLE);
-            text_view_nessuna_asta_in_categorie.setVisibility(View.VISIBLE);
-        }
-        this.categorie = categorieRecuperate;
-        Log.d("setCategorie", "numero di categorie: " + categorieRecuperate.size() );
-    }
+//    public void handleAsteConsigliateResult(ArrayList<Object> prodotti) {
+//        Log.d("FragmentHome" , "handleAsteConsigliateResult");
+//        boolean prodottiVuoto = prodotti == null || prodotti.isEmpty();
+//        if(categorie.size()==0){
+//            text_view_nessuna_asta_in_categorie.setVisibility(View.GONE);
+//            astaAdapterConsigliate.setAste(null);
+//            text_view_aste_consigliate_home.setVisibility(View.GONE);
+//        }else {
+//
+//            if (!prodottiVuoto) {
+//                astaAdapterConsigliate.setAste(prodotti);
+//            } else {
+//                astaAdapterConsigliate.setAste(null);
+//            }
+//            if (prodottiVuoto) {
+//                text_view_nessuna_asta_in_categorie.setVisibility(View.VISIBLE);
+//            } else {
+//                text_view_nessuna_asta_in_categorie.setVisibility(View.GONE);
+//            }
+//        }
+//    }
+//    public void handleAsteInScadenzaResult(ArrayList<Object> prodotti) {
+//        boolean prodottiVuoto = prodotti == null || prodotti.isEmpty();
+//        Log.d("FragmentHome" , "handleAsteInScadenzaResult");
+//        if (!prodottiVuoto) {
+//            astaAdapterInScadenza.setAste(prodotti);
+//        }else{
+//            astaAdapterInScadenza.setAste(null);
+//        }
+//        if(prodottiVuoto){
+//            text_view_nessuna_asta_in_scadenza.setVisibility(View.VISIBLE);
+//        }else {
+//            text_view_nessuna_asta_in_scadenza.setVisibility(View.GONE);
+//        }
+//
+//    }
+//    public void handleAsteNuoveResult(ArrayList<Object> prodotti) {
+//        // Aggiorna l'adapter con i nuovi prodotti
+//        Log.d("FragmentHome" , "handleAsteNuoveResult");
+//        if(prodotti != null){
+//            astaAdapterNuove.setAste(prodotti);
+//        }else{
+//            Log.d("handleConsigliateResult", "null");
+//        }
+//        //        //rendo l'icona di caricamento non piu visibile e il menu clickabile
+//        progressBarAcquirenteFragmentHome.setVisibility(View.INVISIBLE);
+//        setNavigationView(true);
+//        setAllClickable(relative_layout_home_acquirente, true);
+//    }
+//
+//
+//    public void setCategorie(ArrayList<String> categorieRecuperate){
+//        if(categorieRecuperate.size() == 0){
+//            text_view_aste_consigliate_home.setVisibility(View.GONE);
+//            text_view_nessuna_asta_in_categorie.setVisibility(View.GONE);
+//        }else{
+//            text_view_aste_consigliate_home.setVisibility(View.VISIBLE);
+//            text_view_nessuna_asta_in_categorie.setVisibility(View.VISIBLE);
+//        }
+//        this.categorie = categorieRecuperate;
+//        Log.d("setCategorie", "numero di categorie: " + categorieRecuperate.size() );
+//    }
 
     private void setNavigationView(Boolean valore) {
         AcquirenteMainActivity activity = (AcquirenteMainActivity) getActivity();
@@ -296,15 +296,15 @@ public class FragmentHome extends Fragment {
             }
         }
     }
-    public void handleGetNumeroNotifiche(int numero){
-        Log.d("handleGetNumeroNotifiche" , "il numero di notifiche è :" + numero);
-        if(numero>0){
-            iconaNotifiche.setVisibility(View.VISIBLE);
-            iconaNotifiche.setText(String.valueOf(numero));
-        }else{
-            iconaNotifiche.setVisibility(View.GONE);
-        }
-    }
+//    public void handleGetNumeroNotifiche(int numero){
+//        Log.d("handleGetNumeroNotifiche" , "il numero di notifiche è :" + numero);
+//        if(numero>0){
+//            iconaNotifiche.setVisibility(View.VISIBLE);
+//            iconaNotifiche.setText(String.valueOf(numero));
+//        }else{
+//            iconaNotifiche.setVisibility(View.GONE);
+//        }
+//    }
     // questi metodi onPause, onStop, onDestroy e onResume servono a stoppare il timer quando non si è piu su questa schermata e a farlo ricominciare quando si torna
     @Override
     public void onPause() {
@@ -455,7 +455,7 @@ public class FragmentHome extends Fragment {
     public void osservaAcquirenteModelPresente(){
         homeViewModel.acquirenteModelPresente.observe(getViewLifecycleOwner(), (messaggio) -> {
             if (homeViewModel.getAcquirenteModelPresente()) {
-                Toast.makeText(getContext(), "Entrato come acquirente in home.", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getContext(), "Entrato come acquirente in home.", Toast.LENGTH_SHORT).show();
                 osservaaste_allingleseInScadenzaPresenti();
                 osservaaste_allingleseNuovePresenti();
                 osservaAste_alribassoNuovePresenti();
@@ -523,7 +523,7 @@ public class FragmentHome extends Fragment {
     public void osservaVenditoreModelPresente(){
         homeViewModel.venditoreModelPresente.observe(getViewLifecycleOwner(), (messaggio) -> {
             if (homeViewModel.getVenditoreModelPresente()) {
-                Toast.makeText(getContext(), "Entrato come acquirente in home.", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getContext(), "Entrato come acquirente in home.", Toast.LENGTH_SHORT).show();
                 osservaaste_inversaInScadenzaPresenti();
                 osservaaste_inversaNuovePresenti();
                 osservaaste_inversaCategoriaNomePresenti();

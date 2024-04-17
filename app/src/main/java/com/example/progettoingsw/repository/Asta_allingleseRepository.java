@@ -27,9 +27,9 @@ public class Asta_allingleseRepository {
         System.out.println("entrato in getAste_allingleseNuoveBackend");
         new Asta_allingleseRepository.GetAsteNuoveTask(listener).execute();
     }
-    public void getAste_allingleseCategoriaNomeBackend(String nomeCategoria, Asta_allingleseRepository.OnGetAsteCategoriaNomeListener listener) {
+    public void getAste_allingleseCategoriaNomeBackend(ArrayList<String> nomiCategorie, Asta_allingleseRepository.OnGetAsteCategoriaNomeListener listener) {
         System.out.println("entrato in getAste_allingleseCategoriaNomeBackend");
-        new Asta_allingleseRepository.GetAsteCategoriaNomeTask(listener).execute(nomeCategoria);
+        new Asta_allingleseRepository.GetAsteCategoriaNomeTask(listener).execute(nomiCategorie);
     }
     public void partecipaAsta_allinglese(Long idAsta, String emailAcquirente,String offerta,String tempoOfferta, String stato, Asta_allingleseRepository.OnPartecipazioneAstaIngleseListener listener) {
         System.out.println("entrato in partecipaAsta_allinglese");
@@ -58,6 +58,10 @@ public class Asta_allingleseRepository {
     public void saveAsta_inglese(Asta_allingleseModel astaIngleseModel, ArrayList<String> listaCategorie, Asta_allingleseRepository.OnInserimentoAstaIngleseListener listener) {
         System.out.println("entrato in saveAsta_inglese");
         new Asta_allingleseRepository.inserimentoAsta_ingleseTask(listener).execute(astaIngleseModel,listaCategorie);
+    }
+    public void getEmailVincente(String indirizzo_email, Long idAsta, Asta_allingleseRepository.OnGetEmailVincenteListener listener) {
+        System.out.println("entrato in getEmailVincente");
+        new Asta_allingleseRepository.GetEmailVincenteTask(listener).execute(indirizzo_email, String.valueOf(idAsta));
     }
     private static class GetAsteScadenzaRecenteTask extends AsyncTask<Void, Void, ArrayList<Asta_allingleseModel>> {
         private Asta_allingleseRepository.OnGetAsteScadenzaRecenteListener listener;
@@ -211,7 +215,7 @@ public class Asta_allingleseRepository {
     public interface OnGetAsteNuoveListener {
         void OnGetAsteNuove(ArrayList<Asta_allingleseModel> list);
     }
-    private static class GetAsteCategoriaNomeTask extends AsyncTask<String, Void, ArrayList<Asta_allingleseModel>> {
+    private static class GetAsteCategoriaNomeTask extends AsyncTask<ArrayList<String>, Void, ArrayList<Asta_allingleseModel>> {
         private Asta_allingleseRepository.OnGetAsteCategoriaNomeListener listener;
 
         public GetAsteCategoriaNomeTask(Asta_allingleseRepository.OnGetAsteCategoriaNomeListener listener) {
@@ -219,10 +223,10 @@ public class Asta_allingleseRepository {
         }
 
         @Override
-        protected ArrayList<Asta_allingleseModel> doInBackground(String... params) {
+        protected ArrayList<Asta_allingleseModel> doInBackground(ArrayList<String>... params) {
 
-            String nomeCategoria = params[0];
-
+            ArrayList<String> nomiCategorie = params[0];
+            Log.d("entrato in asycn", "listacategorie: " + nomiCategorie);
             // Effettua l'operazione di rete qui...
             // Restituisci il risultato
 
@@ -236,7 +240,7 @@ public class Asta_allingleseRepository {
                     .build();
 
             Asta_allingleseService service = retrofit.create(Asta_allingleseService.class);
-            Call<ArrayList<Asta_allinglese_DTO>> call = service.getAste_allingleseCategoriaNome(nomeCategoria);
+            Call<ArrayList<Asta_allinglese_DTO>> call = service.getAste_allingleseCategoriaNome(nomiCategorie);
 
             try {
                 Response<ArrayList<Asta_allinglese_DTO>> response = call.execute();
@@ -739,6 +743,65 @@ public class Asta_allingleseRepository {
         void OnInserimentoAstaInglese(Long numeroRecuperato);
     }
 
+    private static class GetEmailVincenteTask extends AsyncTask<String, Void, Boolean> {
+        private Asta_allingleseRepository.OnGetEmailVincenteListener listener;
+
+        public GetEmailVincenteTask(Asta_allingleseRepository.OnGetEmailVincenteListener listener) {
+            this.listener = listener;
+        }
+
+        @Override
+        protected Boolean doInBackground(String... params) {
+            String indirizzo_email = params[0];
+            Long idAsta = Long.valueOf(params[1]);
+            // Effettua l'operazione di rete qui...
+            // Restituisci il risultato
+
+            OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+            // Configura il client OkHttpClient...
+
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl(Repository.backendUrl)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .client(httpClient.build())
+                    .build();
+
+            Asta_allingleseService service = retrofit.create(Asta_allingleseService.class);
+            System.out.println("entrato in getemail vincente con id e email: "+ idAsta + ", " + indirizzo_email);
+            Call<Boolean> call = service.getEmailVincente(indirizzo_email,idAsta);
+
+            try {
+                Response<Boolean> response = call.execute();
+                if (response.isSuccessful()) {
+                    System.out.println("response successful");
+                    Boolean numeroRecuperato = response.body();
+                    if(numeroRecuperato != null){
+                        System.out.println("valore recuperato: " + numeroRecuperato);
+                        return numeroRecuperato;
+                    }else{
+                        System.out.println("asta dto null");
+                        return false;
+                    }
+                }
+                System.out.println("response non successful");
+            } catch (IOException e) {
+                System.out.println("exception IOEXC");
+                e.printStackTrace();
+            }
+            return false;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+            System.out.println("on post execute GetAsteScadenzaRecenteTask" + result);
+            if (listener != null) {
+                listener.OnGetEmailVincente(result);
+            }
+        }
+    }
+    public interface OnGetEmailVincenteListener {
+        void OnGetEmailVincente(Boolean numeroRecuperato);
+    }
 
     public static byte[] base64ToByteArray(String base64String) {
         // Rimuovi il prefisso "data:image/jpeg;base64," se presente

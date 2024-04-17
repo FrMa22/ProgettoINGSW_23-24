@@ -59,6 +59,10 @@ public class Asta_inversaRepository {
         System.out.println("entrato in saveAsta_inversa");
         new Asta_inversaRepository.inserimentoAsta_inversaTask(listener).execute(astaInversaModel,listaCategorie);
     }
+    public void getEmailVincente(String indirizzo_email, Long idAsta, Asta_inversaRepository.OnGetEmailVincenteListener listener) {
+        System.out.println("entrato in getEmailVincente");
+        new Asta_inversaRepository.GetEmailVincenteTask(listener).execute(indirizzo_email, String.valueOf(idAsta));
+    }
     private static class GetAsteScadenzaRecenteTask extends AsyncTask<Void, Void, ArrayList<Asta_inversaModel>> {
         private Asta_inversaRepository.OnGetAsteScadenzaRecenteListener listener;
 
@@ -728,7 +732,65 @@ public class Asta_inversaRepository {
     public interface OnInserimentoAstaInversaListener {
         void OnInserimentoAstaInversa(Long numeroRecuperato);
     }
+    private static class GetEmailVincenteTask extends AsyncTask<String, Void, Boolean> {
+        private Asta_inversaRepository.OnGetEmailVincenteListener listener;
 
+        public GetEmailVincenteTask(Asta_inversaRepository.OnGetEmailVincenteListener listener) {
+            this.listener = listener;
+        }
+
+        @Override
+        protected Boolean doInBackground(String... params) {
+            String indirizzo_email = params[0];
+            Long idAsta = Long.valueOf(params[1]);
+            // Effettua l'operazione di rete qui...
+            // Restituisci il risultato
+
+            OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+            // Configura il client OkHttpClient...
+
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl(Repository.backendUrl)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .client(httpClient.build())
+                    .build();
+
+            Asta_inversaService service = retrofit.create(Asta_inversaService.class);
+            System.out.println("entrato in getemail vincente con id e email: "+ idAsta + ", " + indirizzo_email);
+            Call<Boolean> call = service.getEmailVincente(indirizzo_email,idAsta);
+
+            try {
+                Response<Boolean> response = call.execute();
+                if (response.isSuccessful()) {
+                    System.out.println("response successful");
+                    Boolean numeroRecuperato = response.body();
+                    if(numeroRecuperato != null){
+                        System.out.println("valore recuperato: " + numeroRecuperato);
+                        return numeroRecuperato;
+                    }else{
+                        System.out.println("asta dto null");
+                        return false;
+                    }
+                }
+                System.out.println("response non successful");
+            } catch (IOException e) {
+                System.out.println("exception IOEXC");
+                e.printStackTrace();
+            }
+            return false;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+            System.out.println("on post execute GetAsteScadenzaRecenteTask" + result);
+            if (listener != null) {
+                listener.OnGetEmailVincente(result);
+            }
+        }
+    }
+    public interface OnGetEmailVincenteListener {
+        void OnGetEmailVincente(Boolean numeroRecuperato);
+    }
 
 
     // Funzione per convertire una stringa Base64 in un array di byte

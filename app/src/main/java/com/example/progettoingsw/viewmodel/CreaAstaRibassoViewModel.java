@@ -32,6 +32,7 @@ public class CreaAstaRibassoViewModel extends ViewModel{
     private Asta_alribassoRepository astaAlribassoRepository;
     private Uri uriImmagine;
     private ArrayList<String> categorieScelte = new ArrayList<>();
+    private ArrayList<String> categorieScelteProvvisorie = new ArrayList<>();
     public MutableLiveData<Boolean> apriPopUpCategoria = new MutableLiveData<>(false);
     public MutableLiveData<String> erroreNome = new MutableLiveData<>("");
     public MutableLiveData<String> erroreDescrizione = new MutableLiveData<>("");
@@ -325,10 +326,10 @@ public class CreaAstaRibassoViewModel extends ViewModel{
         astaAlribassoRepository.saveAsta_ribasso(asta,categorieScelte , new Asta_alribassoRepository.OnInserimentoAstaRibassoListener() {
             @Override
             public void OnInserimentoAstaRibasso(Long numeroRecuperato) {
-                if(numeroRecuperato==1){
+                if(numeroRecuperato==0){
                     setAstaCreata(true);
                 }else{
-                    setErroreGenerico("Errore nella creazione dell'asta, riprovare più tardi.");
+                    setErroreGenerico("Errore nella creazione dell'asta, riprovare più tardi."+ numeroRecuperato);
                 }
             }
         });
@@ -438,16 +439,23 @@ public class CreaAstaRibassoViewModel extends ViewModel{
 
     }
 
-    public void addCategoria(String nomeCategoria){
+    public void addCategoriaProvvisoria(String nomeCategoria){
         Log.d("addcategoria", "entrato");
-        categorieScelte.add(nomeCategoria);
+        categorieScelteProvvisorie.add(nomeCategoria);
     }
-    public void removeCategoria(String nomeCategoria){
+    public void removeCategoriaProvvisoria(String nomeCategoria){
         Log.d("removecategoria", "entrato");
-        categorieScelte.remove(nomeCategoria);
+        categorieScelteProvvisorie.remove(nomeCategoria);
+    }
+    public void saveCategorieScelte(){
+        this.categorieScelte = categorieScelteProvvisorie;
+    }
+    public void setCategoriaProvvisoria(ArrayList<String> lista){
+        this.categorieScelteProvvisorie = lista;
     }
     public void checkCategorieInserite(){
         if(categorieScelte != null && !categorieScelte.isEmpty()){
+            setCategoriaProvvisoria(categorieScelte);
             setCategorieInserite(categorieScelte);
         }
     }

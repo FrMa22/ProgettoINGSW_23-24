@@ -180,7 +180,7 @@ public class AstaDAOAcquirente {
             super.onPostExecute(astaItems);
             if (fragmentHome != null) {
                 Log.d("AstaDAOAcquirente", "onPostExecute:");
-                fragmentHome.handleAsteConsigliateResult(astaItems);
+                //fragmentHome.handleAsteConsigliateResult(astaItems);
             }
         }
     }
@@ -284,7 +284,7 @@ public class AstaDAOAcquirente {
             super.onPostExecute(astaItems);
             if (fragmentHome != null) {
                 Log.d("AstaDAOAcquirente", "onPostExecute: GetAsteCategorie");
-                fragmentHome.handleAsteConsigliateResult(astaItems);
+                //fragmentHome.handleAsteConsigliateResult(astaItems);
             }
         }
     }
@@ -352,7 +352,7 @@ public class AstaDAOAcquirente {
             super.onPostExecute(astaItems);
             if (fragmentHome != null) {
                 Log.d("AstaDAOAcquirente", "onPostExecute: GetAsteCategorie venditore");
-                fragmentHome.handleAsteConsigliateResult(astaItems);
+               //fragmentHome.handleAsteConsigliateResult(astaItems);
             }
         }
     }
@@ -381,7 +381,7 @@ public class AstaDAOAcquirente {
             super.onPostExecute(categorie);
             if (fragmentHome != null) {
                 Log.d("numero di categorie" , "numero : " + categorie.size());
-                fragmentHome.setCategorie(categorie);
+                //fragmentHome.setCategorie(categorie);
             }
         }
     }
@@ -433,7 +433,7 @@ public class AstaDAOAcquirente {
             if (fragmentHome != null) {
                 // Gestisci il risultato come desiderato
                 Log.d("AstaDAOAcquirente", "onPostExecute: GetAsteProssimaScadenza");
-                fragmentHome.handleAsteInScadenzaResult(astaItems);
+                //fragmentHome.handleAsteInScadenzaResult(astaItems);
             }
         }
     }
@@ -484,7 +484,7 @@ public class AstaDAOAcquirente {
             if (fragmentHome != null) {
                 // Gestisci il risultato come desiderato
                 Log.d("AstaDAOAcquirente", "onPostExecute: GetAsteProssimaScadenza");
-                fragmentHome.handleAsteInScadenzaResult(astaItems);
+                //fragmentHome.handleAsteInScadenzaResult(astaItems);
             }
         }
     }
@@ -585,7 +585,7 @@ public class AstaDAOAcquirente {
             super.onPostExecute(astaItems);
             if (fragmentHome != null) {
                 Log.d("GetAsteNuoveIngleseTask", "onPostExecute:");
-                fragmentHome.handleAsteNuoveResult(astaItems);
+                //fragmentHome.handleAsteNuoveResult(astaItems);
             }
         }
     }
@@ -640,7 +640,7 @@ public class AstaDAOAcquirente {
             super.onPostExecute(astaItems);
             if (fragmentHome != null) {
                 Log.d("GetAsteNuoveIngleseTask", "onPostExecute:");
-                fragmentHome.handleAsteNuoveResult(astaItems);
+                //fragmentHome.handleAsteNuoveResult(astaItems);
             }
         }
     }

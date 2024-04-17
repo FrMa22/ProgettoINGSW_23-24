@@ -29,6 +29,7 @@ import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.appcompat.view.menu.MenuBuilder;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -53,6 +54,7 @@ public class CreaAstaInversaViewModel extends ViewModel {
     private Asta_inversaRepository astaInversaRepository;
     private Uri uriImmagine;
     private ArrayList<String> categorieScelte = new ArrayList<>();
+    private ArrayList<String> categorieScelteProvvisorie = new ArrayList<>();
     public MutableLiveData<Boolean> apriPopUpCategoria = new MutableLiveData<>(false);
     public MutableLiveData<String> erroreNome = new MutableLiveData<>("");
     public MutableLiveData<String> erroreDescrizione = new MutableLiveData<>("");
@@ -321,10 +323,10 @@ public class CreaAstaInversaViewModel extends ViewModel {
         astaInversaRepository.saveAsta_inversa(asta,categorieScelte , new Asta_inversaRepository.OnInserimentoAstaInversaListener() {
             @Override
             public void OnInserimentoAstaInversa(Long numeroRecuperato) {
-                if(numeroRecuperato==1){
+                if(numeroRecuperato==0){
                     setAstaCreata(true);
                 }else{
-                    setErroreDataOra("Errore nella creazione dell'asta, riprovare più tardi.");
+                    setErroreDataOra("Errore nella creazione dell'asta, riprovare più tardi."+ numeroRecuperato);
                 }
             }
         });
@@ -435,16 +437,23 @@ public class CreaAstaInversaViewModel extends ViewModel {
 
     }
 
-    public void addCategoria(String nomeCategoria){
+    public void addCategoriaProvvisoria(String nomeCategoria){
         Log.d("addcategoria", "entrato");
-        categorieScelte.add(nomeCategoria);
+        categorieScelteProvvisorie.add(nomeCategoria);
     }
-    public void removeCategoria(String nomeCategoria){
+    public void removeCategoriaProvvisoria(String nomeCategoria){
         Log.d("removecategoria", "entrato");
-        categorieScelte.remove(nomeCategoria);
+        categorieScelteProvvisorie.remove(nomeCategoria);
+    }
+    public void saveCategorieScelte(){
+        this.categorieScelte = categorieScelteProvvisorie;
+    }
+    public void setCategoriaProvvisoria(ArrayList<String> lista){
+        this.categorieScelteProvvisorie = lista;
     }
     public void checkCategorieInserite(){
         if(categorieScelte != null && !categorieScelte.isEmpty()){
+            setCategoriaProvvisoria(categorieScelte);
             setCategorieInserite(categorieScelte);
         }
     }

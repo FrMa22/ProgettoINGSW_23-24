@@ -19,8 +19,8 @@ public interface Asta_alribassoService {
     @GET("/asta_alribassoController/getAste_alRibassoNuove")
     Call<ArrayList<Asta_alribasso_DTO>> getAste_alribassoNuove();
 
-    @GET("/asta_alribassoController/getAste_alribassoNomeCategoria/{nomeCategoria}")
-    Call<ArrayList<Asta_alribasso_DTO>> getAste_alribassoCategoriaNome(@Path("nomeCategoria") String nomeCategoria);
+    @GET("/asta_alribassoController/getAste_alribassoNomeCategoria/{nomiCategorie}")
+    Call<ArrayList<Asta_alribasso_DTO>> getAste_alribassoCategoriaNome(@Query("nomiCategorie") ArrayList<String> nomiCategorie);
 
     @GET("/asta_alribassoController/getAste_alribassoApertaByEmail/{indirizzo_email}")
     Call<List<Asta_alribasso_DTO>> getAste_alribassoApertaByEmail(@Path("indirizzo_email") String indirizzo_email);

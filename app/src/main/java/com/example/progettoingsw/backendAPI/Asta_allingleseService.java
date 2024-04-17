@@ -20,8 +20,8 @@ public interface Asta_allingleseService {
     Call<ArrayList<Asta_allinglese_DTO>> getAste_allingleseScadenzaRecente();
     @GET("/asta_allingleseController/getAste_allingleseNuove")
     Call<ArrayList<Asta_allinglese_DTO>> getAste_allingleseNuove();
-    @GET("/asta_allingleseController/getAste_allingleseNomeCategoria/{nomeCategoria}")
-    Call<ArrayList<Asta_allinglese_DTO>> getAste_allingleseCategoriaNome(@Path("nomeCategoria") String nomeCategoria);
+    @GET("/asta_allingleseController/getAste_allingleseNomeCategoria/{nomiCategorie}")
+    Call<ArrayList<Asta_allinglese_DTO>> getAste_allingleseCategoriaNome(@Query("nomiCategorie") ArrayList<String> nomiCategorie);
 
     @GET("/asta_allingleseController/getAste_allingleseApertaByEmail/{indirizzo_email}")
     Call<List<Asta_allinglese_DTO>> getAste_allingleseApertaByEmail(@Path("indirizzo_email") String indirizzo_email);
@@ -47,4 +47,7 @@ public interface Asta_allingleseService {
 
     @POST("/asta_allingleseController/insertAstaInglese/{asta_inglese}/{lista_categorie}")
     Call<Long> saveAsta_inglese(@Body Asta_allinglese_DTO asta_allinglese_dto, @Query("lista_categorie") ArrayList<String> lista_categorie);
+
+    @GET("/asta_allingleseController/getEmailVincente/{indirizzo_email}/{idAstaInglese}")
+    Call<Boolean> getEmailVincente(@Path("indirizzo_email") String indirizzo_email, @Path("idAstaInglese") Long idAstaInglese);
 }

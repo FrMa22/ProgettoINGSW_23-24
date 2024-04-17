@@ -1,6 +1,7 @@
 package com.example.progettoingsw.view;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Color;
@@ -47,6 +48,15 @@ public class PopUpAggiungiCategorieAsta extends DialogPersonalizzato implements 
         mContext = context;
         this.fragmentCreaAstaInversa = fragmentCreaAstaInversa;
         this.creaAstaInversaViewModel = creaAstaInversaViewModel;
+        setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                // Esegui le azioni desiderate quando il popup viene chiuso
+                // Ad esempio, esegui un'azione o mostra un messaggio
+                Log.d("PopUp", "Popup chiuso premendo all'esterno");
+                // Aggiungi qui le azioni desiderate
+            }
+        });
     }
     public PopUpAggiungiCategorieAsta(Context context, VenditoreAstaInglese venditoreAstaInglese, CreaAstaIngleseViewModel creaAstaIngleseViewModel){
         super(context);
@@ -100,12 +110,15 @@ public class PopUpAggiungiCategorieAsta extends DialogPersonalizzato implements 
             Log.d("Bottoni in popup" , "annulla");
             dismiss();
         } else if (view.getId() == R.id.buttonSalvaCategorieCreaAsta) {
-            if (fragmentCreaAstaInversa != null) {
+            if (creaAstaIngleseViewModel != null) {
+                creaAstaIngleseViewModel.saveCategorieScelte();
                 //fragmentCreaAstaInversa.handlePopUp(switchTexts);
-            } else if (venditoreAstaInglese != null) {
+            } else if (creaAstaRibassoViewModel != null) {
+                creaAstaRibassoViewModel.saveCategorieScelte();
                 //venditoreAstaInglese.handlePopUp(switchTexts);
             }
-            else if (venditoreAstaRibasso != null) {
+            else if (creaAstaInversaViewModel != null) {
+                creaAstaInversaViewModel.saveCategorieScelte();
 //                venditoreAstaRibasso.handlePopUp(switchTexts);
             }
             dismiss();
@@ -172,21 +185,21 @@ public class PopUpAggiungiCategorieAsta extends DialogPersonalizzato implements 
                     if (isChecked) {
                         switchButton.setTextColor(resources.getColor(R.color.colore_secondario));
                         if(creaAstaInversaViewModel!=null){
-                            creaAstaInversaViewModel.addCategoria(switchButton.getText().toString());
+                            creaAstaInversaViewModel.addCategoriaProvvisoria(switchButton.getText().toString());
                         }else if(creaAstaIngleseViewModel!=null){
-                            creaAstaIngleseViewModel.addCategoria(switchButton.getText().toString());
+                            creaAstaIngleseViewModel.addCategoriaProvvisoria(switchButton.getText().toString());
                         }else if(creaAstaRibassoViewModel != null){
-                            creaAstaRibassoViewModel.addCategoria(switchButton.getText().toString());
+                            creaAstaRibassoViewModel.addCategoriaProvvisoria(switchButton.getText().toString());
                         }
                         //switchTexts.add(switchButton.getText().toString());
                     } else { // Se lo switch è stato deselezionato, rimuovi il testo dall'array
                         switchButton.setTextColor(resources.getColor(R.color.colore_hint));
                         if(creaAstaInversaViewModel!=null) {
-                            creaAstaInversaViewModel.removeCategoria(switchButton.getText().toString());
+                            creaAstaInversaViewModel.removeCategoriaProvvisoria(switchButton.getText().toString());
                         }else if(creaAstaIngleseViewModel!=null){
-                            creaAstaIngleseViewModel.removeCategoria(switchButton.getText().toString());
+                            creaAstaIngleseViewModel.removeCategoriaProvvisoria(switchButton.getText().toString());
                         }else if(creaAstaRibassoViewModel != null){
-                            creaAstaRibassoViewModel.removeCategoria(switchButton.getText().toString());
+                            creaAstaRibassoViewModel.removeCategoriaProvvisoria(switchButton.getText().toString());
                         }
                         //switchTexts.remove(switchButton.getText().toString());
                     }

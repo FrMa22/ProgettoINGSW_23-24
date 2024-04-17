@@ -40,6 +40,9 @@ public class FragmentProfiloViewModel extends ViewModel {
 
     public MutableLiveData<VenditoreModel> venditoreRecuperato =new MutableLiveData<>(null);
 
+
+    public MutableLiveData<Boolean> esci =new MutableLiveData<>(false);
+
     private FragmentProfiloRepository fragmentProfiloRepository;
     private Repository repository;
 
@@ -47,8 +50,18 @@ public class FragmentProfiloViewModel extends ViewModel {
         repository = Repository.getInstance();
         fragmentProfiloRepository = new FragmentProfiloRepository();
     }
+    public void logout(){
+        repository.deleteRepository();
+        setEsci(true);
+    }
 
+    public Boolean getEsci() {
+        return esci.getValue();
+    }
 
+    public void setEsci(Boolean esci) {
+        this.esci.setValue(esci);
+    }
 
     public void trovaSocialAcquirenteViewModel(){
         String email=getAcquirenteEmail();

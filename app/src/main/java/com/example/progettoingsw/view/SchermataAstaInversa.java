@@ -73,6 +73,8 @@ public class SchermataAstaInversa extends GestoreComuniImplementazioni implement
         osservaTipoUtenteAcquirente();
         osservaIsAstaInPreferiti();
         osservaIsPartecipazioneAvvenuta();
+        osservaIsUltimaOffertaTua();
+        schermataAstaInversaViewModel.checkUltimaOfferta();
         schermataAstaInversaViewModel.verificaAstaInPreferiti();
         schermataAstaInversaViewModel.checkTipoUtente();
         schermataAstaInversaViewModel.getAstaData();
@@ -172,6 +174,7 @@ public class SchermataAstaInversa extends GestoreComuniImplementazioni implement
     public void onPopupDismissed() {
         // Metodo chiamato quando il pop-up viene chiuso
         Log.d("OnPopUpDismissed", "entrato");
+        schermataAstaInversaViewModel.checkUltimaOfferta();
         schermataAstaInversaViewModel.getAstaData();
     }
     // questi metodi onPause, onStop, onDestroy e onResume servono a stoppare il timer quando non si è piu su questa schermata e a farlo ricominciare quando si torna
@@ -387,6 +390,13 @@ public class SchermataAstaInversa extends GestoreComuniImplementazioni implement
 //                osservaIsAstaInPreferiti();
 //                schermataAstaIngleseViewModel.getIsAstaInPreferiti();
 
+        });
+    }
+    public void osservaIsUltimaOffertaTua(){
+        schermataAstaInversaViewModel.isUltimaOffertaTua.observe(this, (valore) ->{
+            if(valore){
+                text_view_tua_offerta_attuale_asta_inversa.setVisibility(View.VISIBLE);
+            }
         });
     }
 }

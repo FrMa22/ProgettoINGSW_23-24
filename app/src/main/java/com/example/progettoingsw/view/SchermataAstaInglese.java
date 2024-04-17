@@ -89,6 +89,8 @@ public class SchermataAstaInglese extends GestoreComuniImplementazioni implement
         osservaTipoUtenteChecked();
         osservaIsPartecipazioneAvvenuta();
         osservaIsAstaInPreferiti();
+        osservaIsUltimaOffertaTua();
+        schermataAstaIngleseViewModel.checkUltimaOfferta();
         schermataAstaIngleseViewModel.verificaAstaInPreferiti();
         schermataAstaIngleseViewModel.checkTipoUtente();
         schermataAstaIngleseViewModel.getAstaData();
@@ -192,6 +194,7 @@ public class SchermataAstaInglese extends GestoreComuniImplementazioni implement
     }
     @Override
     public void onPopupDismissed() {
+        schermataAstaIngleseViewModel.checkUltimaOfferta();
         schermataAstaIngleseViewModel.getAstaData();
     }
     // questi metodi onPause, onStop, onDestroy e onResume servono a stoppare il timer quando non si è piu su questa schermata e a farlo ricominciare quando si torna
@@ -396,7 +399,13 @@ public class SchermataAstaInglese extends GestoreComuniImplementazioni implement
             }
         });
     }
-
+    public void osservaIsUltimaOffertaTua(){
+        schermataAstaIngleseViewModel.isUltimaOffertaTua.observe(this, (valore) ->{
+            if(valore){
+                text_view_tua_offerta_attuale.setVisibility(View.VISIBLE);
+            }
+        });
+    }
 
 
 }
