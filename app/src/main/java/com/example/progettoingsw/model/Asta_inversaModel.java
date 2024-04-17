@@ -25,6 +25,16 @@ public class Asta_inversaModel {
         this.condizione = condizione;
         this.id_acquirente = id_acquirente;
     }
+    public Asta_inversaModel( String nome, String descrizione, byte[] path_immagine, float prezzoMax, float prezzoAttuale, String dataDiScadenza, String condizione, String id_acquirente) {
+        this.nome = nome;
+        this.descrizione = descrizione;
+        this.path_immagine = path_immagine;
+        this.prezzoMax = prezzoMax;
+        this.prezzoAttuale = prezzoAttuale;
+        this.dataDiScadenza = dataDiScadenza;
+        this.condizione = condizione;
+        this.id_acquirente = id_acquirente;
+    }
 
     // Metodi getter e setter per id
     public Long getId() {
@@ -55,11 +65,11 @@ public class Asta_inversaModel {
     }
 
     // Getter e setter per path_immagine
-    public byte[] getImmagine() {
+    public byte[] getPath_immagine() {
         return path_immagine;
     }
 
-    public void setImmagine(byte[] path_immagine) {
+    public void setPath_immagine(byte[] path_immagine) {
         this.path_immagine = path_immagine;
     }
 

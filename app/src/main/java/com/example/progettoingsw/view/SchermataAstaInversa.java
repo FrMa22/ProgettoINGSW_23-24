@@ -309,7 +309,7 @@ public class SchermataAstaInversa extends GestoreComuniImplementazioni implement
         schermataAstaInversaViewModel.astaRecuperata.observe(this, (asta) -> {
             if (asta != null) {
                 osservaImmagineAstaConvertita(asta);
-                schermataAstaInversaViewModel.convertiImmagine(asta.getImmagine());
+                schermataAstaInversaViewModel.convertiImmagine(asta.getPath_immagine());
             }
         });
     }

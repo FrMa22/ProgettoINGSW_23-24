@@ -1,16 +1,15 @@
 package com.example.progettoingsw.repository;
 
 import android.os.AsyncTask;
+import android.util.Base64;
 import android.util.Log;
 
 import com.example.progettoingsw.DTO.Asta_allinglese_DTO;
 import com.example.progettoingsw.backendAPI.Asta_allingleseService;
-import com.example.progettoingsw.backendAPI.Asta_alribassoService;
 import com.example.progettoingsw.model.Asta_allingleseModel;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
 import okhttp3.OkHttpClient;
 import retrofit2.Call;
@@ -56,6 +55,10 @@ public class Asta_allingleseRepository {
         System.out.println("entrato in getAsteInglesePreferite");
         new Asta_allingleseRepository.GetAsteInglesePreferiteTask(listener).execute(indirizzo_email);
     }
+    public void saveAsta_inglese(Asta_allingleseModel astaIngleseModel, ArrayList<String> listaCategorie, Asta_allingleseRepository.OnInserimentoAstaIngleseListener listener) {
+        System.out.println("entrato in saveAsta_inglese");
+        new Asta_allingleseRepository.inserimentoAsta_ingleseTask(listener).execute(astaIngleseModel,listaCategorie);
+    }
     private static class GetAsteScadenzaRecenteTask extends AsyncTask<Void, Void, ArrayList<Asta_allingleseModel>> {
         private Asta_allingleseRepository.OnGetAsteScadenzaRecenteListener listener;
 
@@ -90,11 +93,14 @@ public class Asta_allingleseRepository {
                         System.out.println("lista di aste inglesi dto non null");
                         ArrayList<Asta_allingleseModel> listAsta_allingleseModel = new ArrayList<>();
                         for (Asta_allinglese_DTO astaAllingleseDto : list){
+                            byte[] pathImmagineByteArray = null;
+                            if(astaAllingleseDto.getPath_immagine()!=null){
+                                pathImmagineByteArray = base64ToByteArray(astaAllingleseDto.getPath_immagine());}
                             Asta_allingleseModel astaAllingleseModel = new Asta_allingleseModel(
                                     astaAllingleseDto.getId(),
                                     astaAllingleseDto.getNome(),
                                     astaAllingleseDto.getDescrizione(),
-                                    astaAllingleseDto.getPath_immagine(),
+                                    pathImmagineByteArray,
                                     astaAllingleseDto.getBaseAsta(),
                                     astaAllingleseDto.getIntervalloTempoOfferte(),
                                     astaAllingleseDto.getIntervalloOfferteBase(),
@@ -163,11 +169,14 @@ public class Asta_allingleseRepository {
                         System.out.println("lista di aste inglesi dto non null");
                         ArrayList<Asta_allingleseModel> listAsta_allingleseModel = new ArrayList<>();
                         for (Asta_allinglese_DTO astaAllingleseDto : list){
+                            byte[] pathImmagineByteArray = null;
+                            if(astaAllingleseDto.getPath_immagine()!=null){
+                                pathImmagineByteArray = base64ToByteArray(astaAllingleseDto.getPath_immagine());}
                             Asta_allingleseModel astaAllingleseModel = new Asta_allingleseModel(
                                     astaAllingleseDto.getId(),
                                     astaAllingleseDto.getNome(),
                                     astaAllingleseDto.getDescrizione(),
-                                    astaAllingleseDto.getPath_immagine(),
+                                    pathImmagineByteArray,
                                     astaAllingleseDto.getBaseAsta(),
                                     astaAllingleseDto.getIntervalloTempoOfferte(),
                                     astaAllingleseDto.getIntervalloOfferteBase(),
@@ -238,11 +247,14 @@ public class Asta_allingleseRepository {
                         System.out.println("lista di aste inglesi dto non null");
                         ArrayList<Asta_allingleseModel> listAsta_allingleseModel = new ArrayList<>();
                         for (Asta_allinglese_DTO astaAllingleseDto : list){
+                            byte[] pathImmagineByteArray = null;
+                            if(astaAllingleseDto.getPath_immagine()!=null){
+                                pathImmagineByteArray = base64ToByteArray(astaAllingleseDto.getPath_immagine());}
                             Asta_allingleseModel astaAllingleseModel = new Asta_allingleseModel(
                                     astaAllingleseDto.getId(),
                                     astaAllingleseDto.getNome(),
                                     astaAllingleseDto.getDescrizione(),
-                                    astaAllingleseDto.getPath_immagine(),
+                                    pathImmagineByteArray,
                                     astaAllingleseDto.getBaseAsta(),
                                     astaAllingleseDto.getIntervalloTempoOfferte(),
                                     astaAllingleseDto.getIntervalloOfferteBase(),
@@ -367,11 +379,14 @@ public class Asta_allingleseRepository {
                     System.out.println("response successful");
                     Asta_allinglese_DTO astaRecuperata = response.body();
                     if (astaRecuperata != null) {
+                        byte[] pathImmagineByteArray = null;
+                        if(astaRecuperata.getPath_immagine()!=null){
+                            pathImmagineByteArray = base64ToByteArray(astaRecuperata.getPath_immagine());}
                         Asta_allingleseModel astaAllingleseModel = new Asta_allingleseModel(
                                 astaRecuperata.getId(),
                                 astaRecuperata.getNome(),
                                 astaRecuperata.getDescrizione(),
-                                astaRecuperata.getPath_immagine(),
+                                pathImmagineByteArray,
                                 astaRecuperata.getBaseAsta(),
                                 astaRecuperata.getIntervalloTempoOfferte(),
                                 astaRecuperata.getIntervalloOfferteBase(),
@@ -613,11 +628,14 @@ public class Asta_allingleseRepository {
                         System.out.println("lista di aste inglesi dto non null");
                         ArrayList<Asta_allingleseModel> listAsta_allingleseModel = new ArrayList<>();
                         for (Asta_allinglese_DTO astaAllingleseDto : list){
+                            byte[] pathImmagineByteArray = null;
+                            if(astaAllingleseDto.getPath_immagine()!=null){
+                                pathImmagineByteArray = base64ToByteArray(astaAllingleseDto.getPath_immagine());}
                             Asta_allingleseModel astaAllingleseModel = new Asta_allingleseModel(
                                     astaAllingleseDto.getId(),
                                     astaAllingleseDto.getNome(),
                                     astaAllingleseDto.getDescrizione(),
-                                    astaAllingleseDto.getPath_immagine(),
+                                    pathImmagineByteArray,
                                     astaAllingleseDto.getBaseAsta(),
                                     astaAllingleseDto.getIntervalloTempoOfferte(),
                                     astaAllingleseDto.getIntervalloOfferteBase(),
@@ -651,5 +669,88 @@ public class Asta_allingleseRepository {
     }
     public interface OnGetAstePreferiteListener {
         void OnGetAstePreferite(ArrayList<Asta_allingleseModel> list);
+    }
+
+
+    private static class inserimentoAsta_ingleseTask extends AsyncTask<Object, Void, Long> {
+        private Asta_allingleseRepository.OnInserimentoAstaIngleseListener listener;
+
+        public inserimentoAsta_ingleseTask(Asta_allingleseRepository.OnInserimentoAstaIngleseListener listener) {
+            this.listener = listener;
+        }
+
+        @Override
+        protected Long doInBackground(Object... params) {
+            Asta_allingleseModel astaIngleseModel = (Asta_allingleseModel) params[0];
+            ArrayList<String> lista_categorie = (ArrayList<String>) params[1];
+            // Effettua l'operazione di rete qui...
+            // Restituisci il risultato
+
+            OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+            // Configura il client OkHttpClient...
+
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl(Repository.backendUrl)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .client(httpClient.build())
+                    .build();
+
+            Asta_allingleseService service = retrofit.create(Asta_allingleseService.class);
+            String immagine = null;
+            if(astaIngleseModel.getPath_immagine()!=null){
+                immagine = byteArrayToBase64(astaIngleseModel.getPath_immagine());
+                Log.d("immagine" , "" + immagine);
+            }
+
+            Asta_allinglese_DTO asta_allinglese_dto = new Asta_allinglese_DTO(astaIngleseModel.getNome(),astaIngleseModel.getDescrizione(),immagine,astaIngleseModel.getBaseAsta()
+                    ,astaIngleseModel.getIntervalloTempoOfferte(),astaIngleseModel.getIntervalloOfferteBase(),astaIngleseModel.getRialzoMin(),astaIngleseModel.getPrezzoAttuale(),
+                    astaIngleseModel.getCondizione(),astaIngleseModel.getId_venditore());
+
+            Call<Long> call = service.saveAsta_inglese(asta_allinglese_dto, lista_categorie);
+
+            try {
+                Response<Long> response = call.execute();
+                if (response.isSuccessful()) {
+                    System.out.println("response successful");
+                    Long numeroRecuperato = response.body();
+                    if(numeroRecuperato != null){
+                        return 0L;
+                    }else{
+                        System.out.println("asta dto null");
+                        return 0L;
+                    }
+                }
+                System.out.println("response non successful");
+            } catch (IOException e) {
+                System.out.println("exception IOEXC");
+                e.printStackTrace();
+            }
+            return 0L;
+        }
+
+        @Override
+        protected void onPostExecute(Long result) {
+            System.out.println("on post execute inserimento asta inglese" + result);
+            if (listener != null) {
+                listener.OnInserimentoAstaInglese(result);
+            }
+        }
+    }
+    public interface OnInserimentoAstaIngleseListener {
+        void OnInserimentoAstaInglese(Long numeroRecuperato);
+    }
+
+
+    public static byte[] base64ToByteArray(String base64String) {
+        // Rimuovi il prefisso "data:image/jpeg;base64," se presente
+        String base64WithoutPrefix = base64String.replaceFirst("^data:image/[a-zA-Z]*;base64,", "");
+
+        // Decodifica la stringa Base64 in un array di byte
+        return Base64.decode(base64WithoutPrefix, Base64.DEFAULT);
+    }
+    // Funzione per convertire un array di byte in una stringa Base64
+    public static String byteArrayToBase64(byte[] byteArray) {
+        // Codifica l'array di byte in una stringa Base64
+        return Base64.encodeToString(byteArray, Base64.DEFAULT);
     }
 }

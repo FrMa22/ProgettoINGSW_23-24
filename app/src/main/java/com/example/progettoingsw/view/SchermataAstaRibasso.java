@@ -2,7 +2,6 @@ package com.example.progettoingsw.view;
 
 
 import android.app.Dialog;
-import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -23,11 +22,7 @@ import com.example.progettoingsw.DAO.AstaRibassoDAO;
 import com.example.progettoingsw.R;
 import com.example.progettoingsw.classe_da_estendere.GestoreComuniImplementazioni;
 import com.example.progettoingsw.controllers_package.Controller;
-import com.example.progettoingsw.model.Asta_allingleseModel;
 import com.example.progettoingsw.model.Asta_alribassoModel;
-import com.example.progettoingsw.view.acquirente.AcquirenteMainActivity;
-import com.example.progettoingsw.item.AstaRibassoItem;
-import com.example.progettoingsw.viewmodel.SchermataAstaIngleseViewModel;
 import com.example.progettoingsw.viewmodel.SchermataAstaRibassoViewModel;
 import com.google.android.material.button.MaterialButton;
 
@@ -341,7 +336,7 @@ public class SchermataAstaRibasso extends GestoreComuniImplementazioni {
         schermataAstaRibassoViewModel.astaRecuperata.observe(this, (asta) -> {
             if (asta != null) {
                 osservaImmagineAstaConvertita(asta);
-                schermataAstaRibassoViewModel.convertiImmagine(asta.getImmagine());
+                schermataAstaRibassoViewModel.convertiImmagine(asta.getPath_immagine());
             }
         });
     }

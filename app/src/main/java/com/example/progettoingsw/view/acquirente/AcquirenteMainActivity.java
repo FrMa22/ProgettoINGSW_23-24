@@ -35,7 +35,30 @@ private Fragment selectedFragment;
             setContentView(R.layout.acquirente_activity_main);
             bottomNavigationView = findViewById(R.id.acquirente_nav_view);
 
-
+            repository = Repository.getInstance();
+            acquirenteModel = repository.getAcquirenteModel();
+            venditoreModel = repository.getVenditoreModel();
+//            if (acquirenteModel != null) {
+//                Log.d("Main acitivity", "entrato come acquirente");
+//                Log.d("Main activiy", "Valori di acquirente: " +
+//                        "Indirizzo email: " + acquirenteModel.getIndirizzoEmail() +
+//                        ", Nome: " + acquirenteModel.getNome() +
+//                        ", Cognome: " + acquirenteModel.getCognome() +
+//                        ", Password: " + acquirenteModel.getPassword() +
+//                        ", Bio: " + acquirenteModel.getBio() +
+//                        ", Link: " + acquirenteModel.getLink() +
+//                        ", Area geografica: " + acquirenteModel.getAreaGeografica());
+//            } else if (venditoreModel != null) {
+//                Log.d("Main acitivity", "entrato come venditore");
+//                Log.d("Main activiy", "Valori di venditore: " +
+//                        "Indirizzo email: " + venditoreModel.getIndirizzoEmail() +
+//                        ", Nome: " + venditoreModel.getNome() +
+//                        ", Cognome: " + venditoreModel.getCognome() +
+//                        ", Password: " + venditoreModel.getPassword() +
+//                        ", Bio: " + venditoreModel.getBio() +
+//                        ", Link: " + venditoreModel.getLink() +
+//                        ", Area geografica: " + venditoreModel.getAreaGeografica());
+//            }
 
 //            email = getIntent().getStringExtra("email").trim();
 //            tipoUtente = getIntent().getStringExtra("tipoUtente");
@@ -88,7 +111,7 @@ private Fragment selectedFragment;
                     //if(tipoUtente.equals("acquirente")){
                     if(acquirenteModel!=null){
                         resetOtherIcons(bottomNavigationView, item);
-                        selectedFragment = new AcquirenteFragmentAstaInversa();
+                        selectedFragment = new FragmentCreaAstaInversa();
                     }else{
                         VenditorePopUpCreaAsta popAsta  = new VenditorePopUpCreaAsta(AcquirenteMainActivity.this,email,tipoUtente);
                         popAsta.show();
@@ -177,7 +200,7 @@ private Fragment selectedFragment;
                 menuItem = bottomNavigationView.getMenu().findItem(R.id.action_home);
             } else if (fragment instanceof AcquirenteFragmentSelezioneCategorie) {
                 menuItem = bottomNavigationView.getMenu().findItem(R.id.action_categories);
-            } else if (fragment instanceof AcquirenteFragmentAstaInversa) {
+            } else if (fragment instanceof FragmentCreaAstaInversa) {
                 menuItem = bottomNavigationView.getMenu().findItem(R.id.action_crea_asta);
             } else if (fragment instanceof AcquirenteFragmentRicercaAsta) {
                 menuItem = bottomNavigationView.getMenu().findItem(R.id.action_search);

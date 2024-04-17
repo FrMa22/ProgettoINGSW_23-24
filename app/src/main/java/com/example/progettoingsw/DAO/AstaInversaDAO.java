@@ -9,7 +9,7 @@ import com.example.progettoingsw.R;
 import com.example.progettoingsw.controllers_package.DatabaseHelper;
 import com.example.progettoingsw.controllers_package.InsertAsta;
 import com.example.progettoingsw.view.SchermataAstaInversa;
-import com.example.progettoingsw.view.acquirente.AcquirenteFragmentAstaInversa;
+import com.example.progettoingsw.view.acquirente.FragmentCreaAstaInversa;
 import com.example.progettoingsw.item.AstaInversaItem;
 
 import java.sql.Connection;
@@ -27,12 +27,12 @@ public class AstaInversaDAO {
     private Connection connection;
     private byte[] foto;
     private SchermataAstaInversa schermataAstaInversa;
-    private AcquirenteFragmentAstaInversa acquirenteFragmentAstaInversa;
+    private FragmentCreaAstaInversa fragmentCreaAstaInversa;
     public AstaInversaDAO(){
 
     }
-    public AstaInversaDAO(AcquirenteFragmentAstaInversa acquirenteFragmentAstaInversa){
-        this.acquirenteFragmentAstaInversa = acquirenteFragmentAstaInversa;
+    public AstaInversaDAO(FragmentCreaAstaInversa fragmentCreaAstaInversa){
+        this.fragmentCreaAstaInversa = fragmentCreaAstaInversa;
     }
     public AstaInversaDAO(SchermataAstaInversa schermataAstaInversa){
         this.schermataAstaInversa = schermataAstaInversa;
@@ -141,7 +141,7 @@ public class AstaInversaDAO {
         protected void onPostExecute(Integer generatedId) {
             if (generatedId != -1) {
                 Log.d("ID", "L id è : " + generatedId);
-                acquirenteFragmentAstaInversa.handleID(generatedId);
+                //fragmentCreaAstaInversa.handleID(generatedId);
             } else {
             }
         }

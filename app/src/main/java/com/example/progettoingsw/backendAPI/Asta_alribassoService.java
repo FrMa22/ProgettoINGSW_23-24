@@ -1,14 +1,17 @@
 package com.example.progettoingsw.backendAPI;
 
+import com.example.progettoingsw.DTO.Asta_allinglese_DTO;
 import com.example.progettoingsw.DTO.Asta_alribasso_DTO;
 
 import java.util.ArrayList;
 
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface Asta_alribassoService {
 
@@ -32,4 +35,7 @@ public interface Asta_alribassoService {
 
     @GET("/asta_alribassoController/getAsteRibassoPreferite/{indirizzo_email}")
     Call<ArrayList<Asta_alribasso_DTO>> getAsteRibassoPreferite(@Path("indirizzo_email") String indirizzo_email);
+
+    @POST("/asta_alribassoController/insertAstaRibasso/{asta_ribasso}/{lista_categorie}")
+    Call<Long> saveAsta_ribasso(@Body Asta_alribasso_DTO asta_ribasso_dto, @Query("lista_categorie") ArrayList<String> lista_categorie);
 }

@@ -138,7 +138,7 @@ public class AstaIngleseDAO {
         protected void onPostExecute(Integer generatedId) {
             if (generatedId != -1) {
                 Log.d("ID", "L id è : " + generatedId);
-                venditoreAstaInglese.handleID(generatedId);
+                //venditoreAstaInglese.handleID(generatedId);
             } else {
                 Log.d("ID", "Errore");
             }

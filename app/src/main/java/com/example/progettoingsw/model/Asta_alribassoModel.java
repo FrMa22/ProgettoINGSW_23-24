@@ -31,6 +31,19 @@ public class Asta_alribassoModel {
         this.condizione = condizione;
         this.id_venditore = id_venditore;
     }
+    public Asta_alribassoModel(String nome, String descrizione, byte[] path_immagine, float prezzoBase, String intervalloDecrementale, String intervalloBase, float decrementoAutomaticoCifra, float prezzoMin, float prezzoAttuale, String condizione, String id_venditore) {
+        this.nome = nome;
+        this.descrizione = descrizione;
+        this.path_immagine = path_immagine;
+        this.prezzoBase = prezzoBase;
+        this.intervalloDecrementale = intervalloDecrementale;
+        this.intervalloBase = intervalloBase;
+        this.decrementoAutomaticoCifra = decrementoAutomaticoCifra;
+        this.prezzoMin = prezzoMin;
+        this.prezzoAttuale = prezzoAttuale;
+        this.condizione = condizione;
+        this.id_venditore = id_venditore;
+    }
 
     // Metodi getter e setter per id
     public Long getId() {
@@ -61,11 +74,11 @@ public class Asta_alribassoModel {
     }
 
     // Getter e setter per path_immagine
-    public byte[] getImmagine() {
+    public byte[] getPath_immagine() {
         return path_immagine;
     }
 
-    public void setImmagine(byte[] path_immagine) {
+    public void setPath_immagine(byte[] path_immagine) {
         this.path_immagine = path_immagine;
     }
 

@@ -1,10 +1,14 @@
 package com.example.progettoingsw.repository;
 
 import android.os.AsyncTask;
+import android.util.Base64;
 import android.util.Log;
 
+import com.example.progettoingsw.DTO.Asta_allinglese_DTO;
 import com.example.progettoingsw.DTO.Asta_alribasso_DTO;
+import com.example.progettoingsw.backendAPI.Asta_allingleseService;
 import com.example.progettoingsw.backendAPI.Asta_alribassoService;
+import com.example.progettoingsw.model.Asta_allingleseModel;
 import com.example.progettoingsw.model.Asta_alribassoModel;
 
 import java.io.IOException;
@@ -50,6 +54,10 @@ public class Asta_alribassoRepository {
         System.out.println("entrato in getAsteRibassoPreferite");
         new Asta_alribassoRepository.getAste_alribassoPreferiteTask(listener).execute(indirizzo_email);
     }
+    public void saveAsta_ribasso(Asta_alribassoModel astaRibassoModel, ArrayList<String> listaCategorie, Asta_alribassoRepository.OnInserimentoAstaRibassoListener listener) {
+        System.out.println("entrato in saveAsta_ribasso");
+        new Asta_alribassoRepository.inserimentoAsta_ribassoTask(listener).execute(astaRibassoModel,listaCategorie);
+    }
     private static class getAste_alribassoNuoveTask extends AsyncTask<Void, Void, ArrayList<Asta_alribassoModel>> {
         private Asta_alribassoRepository.OnGetAsteRibassoNuoveListener listener;
 
@@ -84,11 +92,13 @@ public class Asta_alribassoRepository {
                         System.out.println("lista di aste ribasso dto non null");
                         ArrayList<Asta_alribassoModel> listAsta_alribassoModel = new ArrayList<>();
                         for (Asta_alribasso_DTO astaAlribassoDto : list){
+                            byte[] immagine = null;
+                            if(astaAlribassoDto.getPath_immagine()!=null){immagine = base64ToByteArray(astaAlribassoDto.getPath_immagine());}
                             Asta_alribassoModel astaAlribassoModel = new Asta_alribassoModel(
                                     astaAlribassoDto.getId(),
                                     astaAlribassoDto.getNome(),
                                     astaAlribassoDto.getDescrizione(),
-                                    astaAlribassoDto.getPath_immagine(),
+                                    immagine,
                                     astaAlribassoDto.getPrezzoBase(),
                                     astaAlribassoDto.getIntervalloDecrementale(),
                                     astaAlribassoDto.getIntervalloBase(),
@@ -158,11 +168,13 @@ public class Asta_alribassoRepository {
                         System.out.println("lista di aste ribasso dto non null");
                         ArrayList<Asta_alribassoModel> listAsta_alribassoModel = new ArrayList<>();
                         for (Asta_alribasso_DTO astaAlribassoDto : list){
+                            byte[] immagine = null;
+                            if(astaAlribassoDto.getPath_immagine()!=null){immagine = base64ToByteArray(astaAlribassoDto.getPath_immagine());}
                             Asta_alribassoModel astaAlribassoModel = new Asta_alribassoModel(
                                     astaAlribassoDto.getId(),
                                     astaAlribassoDto.getNome(),
                                     astaAlribassoDto.getDescrizione(),
-                                    astaAlribassoDto.getPath_immagine(),
+                                    immagine,
                                     astaAlribassoDto.getPrezzoBase(),
                                     astaAlribassoDto.getIntervalloDecrementale(),
                                     astaAlribassoDto.getIntervalloBase(),
@@ -286,11 +298,13 @@ public class Asta_alribassoRepository {
                     System.out.println("response successful");
                     Asta_alribasso_DTO astaRecuperata = response.body();
                     if (astaRecuperata != null) {
+                        byte[] immagine = null;
+                        if(astaRecuperata.getPath_immagine()!=null){immagine = base64ToByteArray(astaRecuperata.getPath_immagine());}
                         Asta_alribassoModel astaAlribassoModel = new Asta_alribassoModel(
                                 astaRecuperata.getId(),
                                 astaRecuperata.getNome(),
                                 astaRecuperata.getDescrizione(),
-                                astaRecuperata.getPath_immagine(),
+                                immagine,
                                 astaRecuperata.getPrezzoBase(),
                                 astaRecuperata.getIntervalloDecrementale(),
                                 astaRecuperata.getIntervalloBase(),
@@ -527,11 +541,13 @@ public class Asta_alribassoRepository {
                         System.out.println("lista di aste ribasso dto non null");
                         ArrayList<Asta_alribassoModel> listAsta_alribassoModel = new ArrayList<>();
                         for (Asta_alribasso_DTO astaAlribassoDto : list){
+                            byte[] immagine = null;
+                            if(astaAlribassoDto.getPath_immagine()!=null){immagine = base64ToByteArray(astaAlribassoDto.getPath_immagine());}
                             Asta_alribassoModel astaAlribassoModel = new Asta_alribassoModel(
                                     astaAlribassoDto.getId(),
                                     astaAlribassoDto.getNome(),
                                     astaAlribassoDto.getDescrizione(),
-                                    astaAlribassoDto.getPath_immagine(),
+                                    immagine,
                                     astaAlribassoDto.getPrezzoBase(),
                                     astaAlribassoDto.getIntervalloDecrementale(),
                                     astaAlribassoDto.getIntervalloBase(),
@@ -566,5 +582,87 @@ public class Asta_alribassoRepository {
     }
     public interface OnGetAsteRibassoPreferiteListener {
         void OnGetAsteRibassoPreferite(ArrayList<Asta_alribassoModel> list);
+    }
+    private static class inserimentoAsta_ribassoTask extends AsyncTask<Object, Void, Long> {
+        private Asta_alribassoRepository.OnInserimentoAstaRibassoListener listener;
+
+        public inserimentoAsta_ribassoTask(Asta_alribassoRepository.OnInserimentoAstaRibassoListener listener) {
+            this.listener = listener;
+        }
+
+        @Override
+        protected Long doInBackground(Object... params) {
+            Asta_alribassoModel astaRibassoModel = (Asta_alribassoModel) params[0];
+            ArrayList<String> lista_categorie = (ArrayList<String>) params[1];
+            // Effettua l'operazione di rete qui...
+            // Restituisci il risultato
+
+            OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+            // Configura il client OkHttpClient...
+
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl(Repository.backendUrl)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .client(httpClient.build())
+                    .build();
+
+            Asta_alribassoService service = retrofit.create(Asta_alribassoService.class);
+            String immagine = null;
+            if(astaRibassoModel.getPath_immagine()!=null){
+                immagine = byteArrayToBase64(astaRibassoModel.getPath_immagine());
+                Log.d("immagine" , "" + immagine);
+            }
+
+            Asta_alribasso_DTO asta_alribasso_dto = new Asta_alribasso_DTO(astaRibassoModel.getNome(),astaRibassoModel.getDescrizione(),immagine,astaRibassoModel.getPrezzoBase()
+                    ,astaRibassoModel.getIntervalloDecrementale(),astaRibassoModel.getIntervalloBase(),astaRibassoModel.getDecrementoAutomaticoCifra(),
+                    astaRibassoModel.getPrezzoMin(),astaRibassoModel.getPrezzoBase(),
+                    astaRibassoModel.getCondizione(),astaRibassoModel.getId_venditore());
+
+            Call<Long> call = service.saveAsta_ribasso(asta_alribasso_dto, lista_categorie);
+
+            try {
+                Response<Long> response = call.execute();
+                if (response.isSuccessful()) {
+                    System.out.println("response successful");
+                    Long numeroRecuperato = response.body();
+                    if(numeroRecuperato != null){
+                        return 0L;
+                    }else{
+                        System.out.println("asta dto null");
+                        return 0L;
+                    }
+                }
+                System.out.println("response non successful");
+            } catch (IOException e) {
+                System.out.println("exception IOEXC");
+                e.printStackTrace();
+            }
+            return 0L;
+        }
+
+        @Override
+        protected void onPostExecute(Long result) {
+            System.out.println("on post execute inserimento asta ribasso" + result);
+            if (listener != null) {
+                listener.OnInserimentoAstaRibasso(result);
+            }
+        }
+    }
+    public interface OnInserimentoAstaRibassoListener {
+        void OnInserimentoAstaRibasso(Long numeroRecuperato);
+    }
+
+
+    public static byte[] base64ToByteArray(String base64String) {
+        // Rimuovi il prefisso "data:image/jpeg;base64," se presente
+        String base64WithoutPrefix = base64String.replaceFirst("^data:image/[a-zA-Z]*;base64,", "");
+
+        // Decodifica la stringa Base64 in un array di byte
+        return Base64.decode(base64WithoutPrefix, Base64.DEFAULT);
+    }
+    // Funzione per convertire un array di byte in una stringa Base64
+    public static String byteArrayToBase64(byte[] byteArray) {
+        // Codifica l'array di byte in una stringa Base64
+        return Base64.encodeToString(byteArray, Base64.DEFAULT);
     }
 }

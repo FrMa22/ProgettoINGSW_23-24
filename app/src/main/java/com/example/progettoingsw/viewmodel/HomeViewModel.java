@@ -25,6 +25,7 @@ import com.example.progettoingsw.view.SchermataAstaRibasso;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public class HomeViewModel extends ViewModel {
     private Asta_allingleseRepository astaAllingleseRepository;
@@ -142,6 +143,7 @@ public class HomeViewModel extends ViewModel {
         astaAllingleseRepository.getAste_allingleseCategoriaNomeBackend(nomeCategoria, new Asta_allingleseRepository.OnGetAsteCategoriaNomeListener() {
             @Override
             public void OnGetAsteCategoriaNome(ArrayList<Asta_allingleseModel> list) {
+                Log.d("aste recuperate inglesi categoria" ,""+list);
                 repository.setListaAsteAllIngleseCategoriaNome(list);
                 if(list != null && !list.isEmpty()){
                     setAste_allingleseCategoriaNomePresenti(true);
@@ -156,6 +158,7 @@ public class HomeViewModel extends ViewModel {
         astaAlribassoRepository.getAste_alribassoCategoriaNomeBackend(nomeCategoria, new Asta_alribassoRepository.OnGetAsteRibassoCategoriaNomeListener() {
             @Override
             public void OnGetAsteRibassoCategoriaNome(ArrayList<Asta_alribassoModel> list) {
+                Log.d("aste recuperate ribasso categoria" ,""+list);
                 repository.setListaAsteAlRibassoCategoriaNome(list);
                 if(list != null && !list.isEmpty()){
                     setAste_alribassoCategoriaNomePresenti(true);
@@ -266,7 +269,7 @@ public class HomeViewModel extends ViewModel {
         Log.d("getListaAsta_allingleseScadenzaRecente", "asta: "  + repository.getListaAsteAllIngleseInScadenza().size());
         return repository.getListaAsteAllIngleseInScadenza();
     }
-    public ArrayList<Asta_allingleseModel> getListaAsta_allingleseCategoriaNome(){
+    public Set<Asta_allingleseModel> getListaAsta_allingleseCategoriaNome(){
         return repository.getListaAsteAllIngleseCategoriaNome();
     }
     public ArrayList<Asta_allingleseModel> getListaAsta_allingleseNuove(){
@@ -295,7 +298,7 @@ public class HomeViewModel extends ViewModel {
     public void setAste_alribassoCategoriaNomePresenti(Boolean b){
         aste_alribassoCategoriaNomePresenti.setValue(b);
     }
-    public ArrayList<Asta_alribassoModel> getListaAsta_alribassoCategoriaNome(){
+    public Set<Asta_alribassoModel> getListaAsta_alribassoCategoriaNome(){
         return repository.getListaAsteAlRibassoCategoriaNome();
     }
     public void setEntraInSchermataAstaRibasso(Boolean b){
@@ -330,7 +333,7 @@ public class HomeViewModel extends ViewModel {
     public Boolean getAste_inversaCategoriaNomePresenti(){
         return aste_inversaCategoriaNomePresenti.getValue();
     }
-    public ArrayList<Asta_inversaModel> getListaAsta_inversaCategoriaNome(){
+    public Set<Asta_inversaModel> getListaAsta_inversaCategoriaNome(){
         return repository.getListaAsteInversaCategoriaNome();
     }
     public void setEntraInSchermataAstaInversa(Boolean b){
@@ -381,7 +384,7 @@ public class HomeViewModel extends ViewModel {
         aste_allingleseCategoriaNomeRecuperate.setValue(lista);
     }
     public void recuperaAste_allingleseCategorieNome(){
-        ArrayList<Asta_allingleseModel> listaAsteCategoriaNome = getListaAsta_allingleseCategoriaNome();
+        Set<Asta_allingleseModel> listaAsteCategoriaNome = getListaAsta_allingleseCategoriaNome();
         ArrayList<Object> listaOggetti = new ArrayList<>(listaAsteCategoriaNome);
         setAste_allingleseCategoriaNomeRecuperate(listaOggetti);
     }
@@ -407,7 +410,7 @@ public class HomeViewModel extends ViewModel {
         aste_alribassoCategoriaNomeRecuperate.setValue(lista);
     }
     public void recuperaAste_alribassoCategorieNome(){
-        ArrayList<Asta_alribassoModel> listaAsteCategoriaNome = getListaAsta_alribassoCategoriaNome();
+        Set<Asta_alribassoModel> listaAsteCategoriaNome = getListaAsta_alribassoCategoriaNome();
         ArrayList<Object> listaOggetti = new ArrayList<>(listaAsteCategoriaNome);
         setAste_alribassoCategoriaNomeRecuperate(listaOggetti);
     }
@@ -441,7 +444,7 @@ public class HomeViewModel extends ViewModel {
         aste_inversaCategoriaNomeRecuperate.setValue(lista);
     }
     public void recuperaAste_inversaCategorieNome(){
-        ArrayList<Asta_inversaModel> listaAsteCategoriaNome = getListaAsta_inversaCategoriaNome();
+        Set<Asta_inversaModel> listaAsteCategoriaNome = getListaAsta_inversaCategoriaNome();
         ArrayList<Object> listaOggetti = new ArrayList<>(listaAsteCategoriaNome);
         setAste_inversaCategoriaNomeRecuperate(listaOggetti);
     }

@@ -70,7 +70,7 @@ public class AcquirenteFragmentCreaLaTuaAstaAcquirente extends Fragment {
 //        bottoneProseguiCreaAstaAcquirente = view_fragment.findViewById(R.id.bottoneProseguiCreaAstaAcquirente);
 //        bottoneProseguiCreaAstaAcquirente.setOnClickListener(new View.OnClickListener() {
 //            public void onClick(View view) {
-//                //Controller.redirectActivity(getActivity(), AcquirenteFragmentAstaInversa.class);
+//                //Controller.redirectActivity(getActivity(), FragmentCreaAstaInversa.class);
 //                descProd=descrizioneProdotto.getText().toString();
 //                //qui sopra era giusto
 //
@@ -79,7 +79,7 @@ public class AcquirenteFragmentCreaLaTuaAstaAcquirente extends Fragment {
 //                //immaginiDAO.closeConnection();
 //
 //                //qui era giusto
-//                Intent intent = new Intent(getActivity(), AcquirenteFragmentAstaInversa.class);
+//                Intent intent = new Intent(getActivity(), FragmentCreaAstaInversa.class);
 //                intent.putExtra("descProd", descProd);
 //                intent.putExtra("email",email);
 //                intent.putExtra("img",imageBytes);

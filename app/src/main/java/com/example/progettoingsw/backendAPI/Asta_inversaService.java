@@ -5,10 +5,12 @@ import com.example.progettoingsw.DTO.Asta_inversa_DTO;
 import java.util.ArrayList;
 
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface Asta_inversaService {
     @GET("/asta_inversaController/getAste_inversaScadenzaRecente")
@@ -32,8 +34,11 @@ public interface Asta_inversaService {
     Call<Integer> inserimentoAstaInPreferiti(@Path("idAstaInversa") Long idAstaInversa, @Path("indirizzo_email") String indirizzo_email);
     @DELETE("/asta_inversaController/eliminazioneAstaInPreferiti/{idAstaInversa}/{indirizzo_email}")
     Call<Integer> eliminazioneAstaInPreferiti(@Path("idAstaInversa") Long idAstaInversa, @Path("indirizzo_email") String indirizzo_email);
-
     @GET("/asta_inversaController/getAsteInversaPreferite/{indirizzo_email}")
     Call<ArrayList<Asta_inversa_DTO>> getAsteInversaPreferite(@Path("indirizzo_email") String indirizzo_email);
+
+    @POST("/asta_inversaController/insertAstaInversa/{asta_inversa}/{lista_categorie}")
+    Call<Long> saveAsta_inversa(@Body Asta_inversa_DTO asta_inversa_dto, @Query("lista_categorie") ArrayList<String> lista_categorie);
+
 }
 

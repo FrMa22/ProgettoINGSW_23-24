@@ -90,7 +90,7 @@
             android:name=".view.venditore.VenditoreAstaRibasso"
             android:exported="true" />
         <activity
-            android:name=".view.acquirente.AcquirenteFragmentAstaInversa"
+            android:name=".view.acquirente.FragmentCreaAstaInversa"
             android:exported="true" />
         <activity
             android:name=".view.ProfiloAcquirente"

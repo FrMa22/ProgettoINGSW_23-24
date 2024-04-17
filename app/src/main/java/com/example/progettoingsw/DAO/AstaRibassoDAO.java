@@ -145,7 +145,7 @@ public class AstaRibassoDAO {
         protected void onPostExecute(Integer generatedId) {
             if (generatedId != -1 && generatedId != 0) {
                 Log.d("ID", "L id è : " + generatedId);
-                venditoreAstaRibasso.handleID(generatedId);
+                //venditoreAstaRibasso.handleID(generatedId);
             } else if(generatedId == 0){
                 Log.d("ID", "tutto ok");
             }else{

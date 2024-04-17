@@ -23,6 +23,7 @@ import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.widget.AppCompatButton;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.progettoingsw.DAO.AstaIngleseDAO;
 import com.example.progettoingsw.view.PopUpAggiungiCategorieAsta;
@@ -31,6 +32,8 @@ import com.example.progettoingsw.classe_da_estendere.GestoreComuniImplementazion
 import com.example.progettoingsw.controllers_package.Controller;
 import com.example.progettoingsw.controllers_package.InsertAsta;
 import com.example.progettoingsw.view.acquirente.AcquirenteMainActivity;
+import com.example.progettoingsw.view.acquirente.FragmentCreaAstaInversa;
+import com.example.progettoingsw.viewmodel.CreaAstaIngleseViewModel;
 import com.google.android.material.button.MaterialButton;
 
 import java.io.ByteArrayOutputStream;
@@ -39,6 +42,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 
 public class VenditoreAstaInglese extends GestoreComuniImplementazioni {
+    private CreaAstaIngleseViewModel creaAstaIngleseViewModel;
     AppCompatButton bottoneConferma;
     ImageButton bottoneBack;
     ImageButton bottone_info;
@@ -50,7 +54,7 @@ public class VenditoreAstaInglese extends GestoreComuniImplementazioni {
     EditText intervalloAsta;
     EditText rialzoAsta;
     Uri uriImmagine;
-
+    private Bitmap bitmap;
     Controller controller;
     private byte [] img;
     ImageView immagineProdotto;
@@ -67,6 +71,21 @@ public class VenditoreAstaInglese extends GestoreComuniImplementazioni {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.venditore_asta_inglese);
+
+        creaAstaIngleseViewModel = new ViewModelProvider(this).get(CreaAstaIngleseViewModel.class);
+        osservaErroreNome();
+        osservaErroreDescrizione();
+        osservaErroreBaseAsta();
+        osservaErroreIntervallo();
+        osservaErroreSogliaRialzoMinimo();
+        osservaErroreGenerico();
+        osservaApriPopUpCategorie();
+        osservaApriGalleria();
+        osservaAstaCreata();
+        osservaApriPopUpInformazioni();
+        osservaCreaPopUpInformazioni();
+        osservaImmagineConvertita();
+
          controller = new Controller();
         progressBarVenditoreAstaInglese = findViewById(R.id.progressBarVenditoreAstaInglese);
         relativeLayoutAstaInglese = findViewById(R.id.relativeLayoutAstaInglese);
@@ -78,8 +97,6 @@ public class VenditoreAstaInglese extends GestoreComuniImplementazioni {
 
         nome = findViewById(R.id.editTextNomeBeneCreaAstaInglese);
         descrizione=findViewById(R.id.editTextDescrizioneCreaAstaInglese);
-        email = getIntent().getStringExtra("email");
-        img=null;
 
         bottoneConferma =  findViewById(R.id.bottoneConfermaAstaInglese);
         bottoneBack =  findViewById(R.id.bottoneBackAstaInglese);
@@ -88,42 +105,42 @@ public class VenditoreAstaInglese extends GestoreComuniImplementazioni {
 
         immagineProdotto= findViewById(R.id.imageViewCreaAstaInglese);
         bottoneInserisciImmagine = findViewById(R.id.imageButtonInserisciImmagineCreaAstaInglese);
-        bottoneInserisciImmagine.setOnClickListener(view ->prelevaImmagine());//significa che chiama il metodo prelevaImmagine
+        bottoneInserisciImmagine.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                resultLauncher.launch(new Intent(Intent.ACTION_PICK).setType("image/*"));
+            }
+        });
+        registraRisultati();
 
         bottoneCategorieAstaInglese = findViewById(R.id.bottoneCategorieAstaInglese);
         bottoneCategorieAstaInglese.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                PopUpAggiungiCategorieAsta popUpAggiungiCategorieAsta = new PopUpAggiungiCategorieAsta(VenditoreAstaInglese.this, VenditoreAstaInglese.this,listaCategorieScelte);
-                popUpAggiungiCategorieAsta.show();
+                creaAstaIngleseViewModel.apriPopUp();
             }
         });
         imageButtonRimuoviImmagineCreaAstaInglese.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 immagineProdotto.setImageResource(android.R.color.transparent); // Rimuove l'immagine
-                img = null; // Reimposta il byte array a null
-                uriImmagine = null;
+                bitmap = null;
+//                imageBytes = null; // Reimposta il byte array a null
+//                uriImmagine = null;
             }
         });
 
         bottone_info.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                showPopup();
+                creaAstaIngleseViewModel.apriPopUpInformazioni();
             }
         });
 
-        registraRisultati();
 
         bottoneBack.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                Intent intent = new Intent(VenditoreAstaInglese.this, AcquirenteMainActivity.class);//test del login
-                intent.putExtra("email", email);
-                intent.putExtra("tipoUtente", "venditore");
+                Intent intent = new Intent(VenditoreAstaInglese.this, AcquirenteMainActivity.class);
                 startActivity(intent);
-//        AppCompatActivity activity = (AppCompatActivity) VenditoreAstaInglese.this;
-//        Fragment fragment = new FragmentHome(email, "venditore");
-//        ((AcquirenteMainActivity) activity).navigateToFragmentAndSelectIcon(fragment);
             }
         });
 
@@ -133,66 +150,122 @@ public class VenditoreAstaInglese extends GestoreComuniImplementazioni {
             String base = baseAsta.getText().toString().trim();
             String intervallo = intervalloAsta.getText().toString().trim();
             String rialzo = rialzoAsta.getText().toString().trim();
-
-            if (nomeProdotto.isEmpty()) {
-                nome.setError("Si prega di inserire un nome.");
-            } else if (nomeProdotto.length() > 100) {
-                nome.setError("Il nome non può essere più lungo di 100 caratteri.");
-            } else if (descrizioneProdotto.length() > 250) {
-                descrizione.setError("La descrizione non può essere più lunga di 250 caratteri.");
-            } else if (base.isEmpty()) {
-                baseAsta.setError("Si prega di inserire un prezzo base.");
-            } else if (!base.matches("^\\d*\\.?\\d+$")) {
-                baseAsta.setError("Si prega di inserire solo numeri per il prezzo base.");
-            }else if(Float.parseFloat(base) <=0){
-                baseAsta.setError("Inserire un prezzo maggiore di 0");
-            }else if (intervallo.isEmpty()) {
-                intervalloAsta.setError("Si prega di inserire un intervallo per le offerte.");
-            } else if (!intervallo.matches("^\\d{1,5}$")) {
-                intervalloAsta.setError("L'intervallo deve contenere solo numeri e non può superare i 5 caratteri.");
-            }else if(Float.parseFloat(intervallo)<=0){
-                intervalloAsta.setError("L'intervallo deve essere di almeno 1 minuto.");
-            }else if (rialzo.isEmpty()) {
-                rialzoAsta.setError("Si prega di inserire un valore minimo di rialzo.");
-            } else if (!rialzo.matches("^\\d*\\.?\\d+$")) {
-                rialzoAsta.setError("Si prega di inserire solo numeri per il valore minimo di rialzo.");
-            }else if(Float.parseFloat(rialzo)<=0){
-                rialzoAsta.setError("Inserire un prezzo maggiore di 0");
-            }else {
-                // Chiamata al metodo per creare l'asta nel database
-                progressBarVenditoreAstaInglese.setVisibility(View.VISIBLE);
-                setAllClickable(relativeLayoutAstaInglese, false);
-                astaIngleseDao.openConnection();
-                astaIngleseDao.creaAstaInglese(base, intervallo, rialzo, nomeProdotto, descrizioneProdotto, email, img);
-            }
+            creaAstaIngleseViewModel.creaAsta(nomeProdotto, descrizioneProdotto,base,intervallo,rialzo,bitmap);
         });
 
 
     }
 
-
-
-    private void showPopup() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Cos'è un asta all'inglese?"); // Puoi impostare un titolo per il popup
-        builder.setMessage(" Un’asta all’inglese è caratterizzata da una base d’asta iniziale pubblica, specificata dal venditore al momento della " +
-                "creazione dell’asta, da un intervallo di tempo fisso per presentare nuove offerte (di default 1 " +
-                "ora), e da una soglia di rialzo (di default 10€).\n Gli acquirenti possono presentare un’offerta per " +
-                "il prezzo corrente.\n Quando viene presentata un’offerta, il timer per la presentazione di nuove " +
-                "offerte viene resettato. Quando il timer raggiunge lo zero senza che siano presentate nuove " +
-                "offerte, l’ultima offerta si aggiudica il bene/servizio in vendita, e il venditore e gli acquirenti che " +
-                "hanno partecipato all’asta visualizzano una notifica. "); // Il testo da mostrare nel popup
-
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                // Azione da eseguire quando si preme il pulsante OK
-                dialog.dismiss(); // Chiudi il popup
+    public void osservaApriPopUpInformazioni(){
+        creaAstaIngleseViewModel.apriPopUpInformazioni.observe(this, (valore) ->{
+            if(valore){
+                creaAstaIngleseViewModel.creaPopUpInformazioni(this);
             }
         });
-
-        AlertDialog dialog = builder.create();
-        dialog.show();
     }
+    public void osservaCreaPopUpInformazioni(){
+        creaAstaIngleseViewModel.popUpInformazioni.observe(this, (valore) ->{
+            if(creaAstaIngleseViewModel.isPopUpInformazioni()){
+                valore.show();
+            }
+        });
+    }
+    public void osservaApriPopUpCategorie(){
+        creaAstaIngleseViewModel.apriPopUpCategoria.observe(this, (valore) ->{
+            if(valore){
+                PopUpAggiungiCategorieAsta popUpAggiungiCategorieAsta = new PopUpAggiungiCategorieAsta(this, VenditoreAstaInglese.this,creaAstaIngleseViewModel);
+                popUpAggiungiCategorieAsta.show();
+            }
+        });
+    }
+    public void osservaAstaCreata(){
+        creaAstaIngleseViewModel.astaCreata.observe(this, (result) -> {
+            if(result){
+                bottoneBack.performClick();
+            }
+        });
+    }
+    public void osservaErroreNome(){
+        creaAstaIngleseViewModel.erroreNome.observe(this, (errore) ->{
+            if(creaAstaIngleseViewModel.isErroreNome()){
+                nome.setError(errore);
+            }
+        });
+    }
+    public void osservaErroreDescrizione(){
+        creaAstaIngleseViewModel.erroreDescrizione.observe(this, (errore) ->{
+            if(creaAstaIngleseViewModel.isErroreDescrizione()){
+                descrizione.setError(errore);
+            }
+        });
+    }
+    public void osservaErroreBaseAsta(){
+        creaAstaIngleseViewModel.erroreBaseAsta.observe(this, (errore) ->{
+            if(creaAstaIngleseViewModel.isErroreBaseAsta()){
+                baseAsta.setError(errore);
+            }
+        });
+    }
+    public void osservaErroreIntervallo(){
+        creaAstaIngleseViewModel.erroreIntervallo.observe(this, (errore) ->{
+            if(creaAstaIngleseViewModel.isErroreIntervallo()){
+                intervalloAsta.setError(errore);
+            }
+        });
+    }
+    public void osservaErroreSogliaRialzoMinimo(){
+        creaAstaIngleseViewModel.erroreSogliaRialzoMinimo.observe(this, (errore) ->{
+            if(creaAstaIngleseViewModel.isErroreSogliaRialzoMinimo()){
+                rialzoAsta.setError(errore);
+            }
+        });
+    }
+    public void osservaErroreGenerico(){
+        creaAstaIngleseViewModel.erroreGenerico.observe(this, (errore) ->{
+            if(creaAstaIngleseViewModel.isErroreGenerico()){
+                Toast.makeText(this, errore, Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    public void osservaApriGalleria(){
+        creaAstaIngleseViewModel.apriGalleria.observe(this, (intent) -> {
+            if(creaAstaIngleseViewModel.isApriGalleria()){
+                resultLauncher.launch(intent);
+                registraRisultati();
+            }
+        });
+    }
+    public void osservaImmagineConvertita(){
+        creaAstaIngleseViewModel.immagineConvertita.observe(this, (immagine) -> {
+            if(creaAstaIngleseViewModel.isImmagineConverita()){
+                bitmap = immagine;
+                immagineProdotto.setImageBitmap(immagine);
+            }
+        });
+    }
+
+//    private void showPopup() {
+//        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+//        builder.setTitle("Cos'è un asta all'inglese?"); // Puoi impostare un titolo per il popup
+//        builder.setMessage(" Un’asta all’inglese è caratterizzata da una base d’asta iniziale pubblica, specificata dal venditore al momento della " +
+//                "creazione dell’asta, da un intervallo di tempo fisso per presentare nuove offerte (di default 1 " +
+//                "ora), e da una soglia di rialzo (di default 10€).\n Gli acquirenti possono presentare un’offerta per " +
+//                "il prezzo corrente.\n Quando viene presentata un’offerta, il timer per la presentazione di nuove " +
+//                "offerte viene resettato. Quando il timer raggiunge lo zero senza che siano presentate nuove " +
+//                "offerte, l’ultima offerta si aggiudica il bene/servizio in vendita, e il venditore e gli acquirenti che " +
+//                "hanno partecipato all’asta visualizzano una notifica. "); // Il testo da mostrare nel popup
+//
+//        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+//            public void onClick(DialogInterface dialog, int which) {
+//                // Azione da eseguire quando si preme il pulsante OK
+//                dialog.dismiss(); // Chiudi il popup
+//            }
+//        });
+//
+//        AlertDialog dialog = builder.create();
+//        dialog.show();
+//    }
 
 
     private void prelevaImmagine(){
@@ -210,8 +283,9 @@ public class VenditoreAstaInglese extends GestoreComuniImplementazioni {
                     @Override
                     public void onActivityResult(ActivityResult result) {
                         try {
-                            uriImmagine = result.getData().getData();
-                            displayImage(uriImmagine);
+                            creaAstaIngleseViewModel.setImmagine(result,VenditoreAstaInglese.this);
+//                            uriImmagine = result.getData().getData();
+//                            displayImage(uriImmagine);
                         } catch (Exception e) {
                             Toast.makeText(getApplicationContext(), "Nessuna Immagine selezionata", Toast.LENGTH_SHORT).show();
 
@@ -222,98 +296,98 @@ public class VenditoreAstaInglese extends GestoreComuniImplementazioni {
     }
 
 
-    // Metodo per comprimere un'immagine Bitmap e convertirla in un array di byte
-    private byte[] compressAndConvertToByteArray(Bitmap bitmap) {
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 50, outputStream); // Compressione JPEG con qualità del 50%
-        return outputStream.toByteArray();
-    }
-
-    private void displayImage(Uri uri) {
-        try {
-            InputStream inputStream = this.getContentResolver().openInputStream(uri);
-            Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
-
-            // Controllo dell'orientamento dell'immagine e rotazione se necessario
-            int orientation = getImageOrientation(uri);
-            if (orientation != 0) {
-                Matrix matrix = new Matrix();
-                matrix.postRotate(orientation);
-                bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
-            }
-
-            // Ridimensiona l'immagine per adattarla alla dimensione desiderata
-            int targetWidth = 500; // Imposta la larghezza desiderata
-            int targetHeight = (int) (bitmap.getHeight() * (targetWidth / (double) bitmap.getWidth())); // Calcola l'altezza in base al rapporto
-            Bitmap resizedBitmap = Bitmap.createScaledBitmap(bitmap, targetWidth, targetHeight, false);
-
-            // Comprimi l'immagine
-            byte[] compressedImageBytes = compressAndConvertToByteArray(resizedBitmap);
-
-            // Imposta l'immagine ridimensionata nella ImageView
-            immagineProdotto.setImageBitmap(resizedBitmap);
-
-            // Salva i byte compressi per l'invio
-            img = compressedImageBytes;
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    // Metodo per ottenere l'orientamento dell'immagine dalla Uri
-    private int getImageOrientation(Uri uri) {
-        int orientation = ExifInterface.ORIENTATION_UNDEFINED;
-        try {
-            InputStream inputStream = this.getContentResolver().openInputStream(uri);
-            ExifInterface exifInterface = new ExifInterface(inputStream);
-            orientation = exifInterface.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_UNDEFINED);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return getImageRotation(orientation);
-    }
-
-    // Metodo per ottenere la rotazione in gradi in base all'orientamento
-    private int getImageRotation(int orientation) {
-        switch (orientation) {
-            case ExifInterface.ORIENTATION_ROTATE_90:
-                return 90;
-            case ExifInterface.ORIENTATION_ROTATE_180:
-                return 180;
-            case ExifInterface.ORIENTATION_ROTATE_270:
-                return 270;
-            default:
-                return 0;
-        }
-    }
-    public void handlePopUp(ArrayList<String> switchTexts){
-        this.listaCategorieScelte = switchTexts;
-        // Iterare attraverso gli elementi di switchTexts e stamparli nel log
-        for (String categoria : switchTexts) {
-            Log.d("PopUpHandler", "Categoria: " + categoria);
-        }
-    }
-    public void handleID(int id){
-        this.idAsta = id;
-        AstaIngleseDAO astaIngleseDAO = new AstaIngleseDAO(VenditoreAstaInglese.this);
-        if(!listaCategorieScelte.isEmpty()){
-            astaIngleseDAO.openConnection();
-            Log.d("id recuperato è Venditore inglese : " , " id: " + idAsta);
-            InsertAsta asta = new InsertAsta(idAsta,listaCategorieScelte);
-            astaIngleseDAO.inserisciCategorieAstaInglese(asta);
-            astaIngleseDAO.closeConnection();
-
-        }else{
-            astaIngleseDAO.closeConnection();
-        }
-        Intent intent = new Intent(VenditoreAstaInglese.this, AcquirenteMainActivity.class);//test del login
-        intent.putExtra("email", email);
-        intent.putExtra("tipoUtente", "venditore");
-        startActivity(intent);
-        progressBarVenditoreAstaInglese.setVisibility(View.INVISIBLE);
-        setAllClickable(relativeLayoutAstaInglese,true);
-        Toast.makeText(this, "Asta creata con successo!", Toast.LENGTH_SHORT).show();
-    }
+//    // Metodo per comprimere un'immagine Bitmap e convertirla in un array di byte
+//    private byte[] compressAndConvertToByteArray(Bitmap bitmap) {
+//        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+//        bitmap.compress(Bitmap.CompressFormat.JPEG, 50, outputStream); // Compressione JPEG con qualità del 50%
+//        return outputStream.toByteArray();
+//    }
+//
+//    private void displayImage(Uri uri) {
+//        try {
+//            InputStream inputStream = this.getContentResolver().openInputStream(uri);
+//            Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+//
+//            // Controllo dell'orientamento dell'immagine e rotazione se necessario
+//            int orientation = getImageOrientation(uri);
+//            if (orientation != 0) {
+//                Matrix matrix = new Matrix();
+//                matrix.postRotate(orientation);
+//                bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+//            }
+//
+//            // Ridimensiona l'immagine per adattarla alla dimensione desiderata
+//            int targetWidth = 500; // Imposta la larghezza desiderata
+//            int targetHeight = (int) (bitmap.getHeight() * (targetWidth / (double) bitmap.getWidth())); // Calcola l'altezza in base al rapporto
+//            Bitmap resizedBitmap = Bitmap.createScaledBitmap(bitmap, targetWidth, targetHeight, false);
+//
+//            // Comprimi l'immagine
+//            byte[] compressedImageBytes = compressAndConvertToByteArray(resizedBitmap);
+//
+//            // Imposta l'immagine ridimensionata nella ImageView
+//            immagineProdotto.setImageBitmap(resizedBitmap);
+//
+//            // Salva i byte compressi per l'invio
+//            img = compressedImageBytes;
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
+//
+//    // Metodo per ottenere l'orientamento dell'immagine dalla Uri
+//    private int getImageOrientation(Uri uri) {
+//        int orientation = ExifInterface.ORIENTATION_UNDEFINED;
+//        try {
+//            InputStream inputStream = this.getContentResolver().openInputStream(uri);
+//            ExifInterface exifInterface = new ExifInterface(inputStream);
+//            orientation = exifInterface.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_UNDEFINED);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        return getImageRotation(orientation);
+//    }
+//
+//    // Metodo per ottenere la rotazione in gradi in base all'orientamento
+//    private int getImageRotation(int orientation) {
+//        switch (orientation) {
+//            case ExifInterface.ORIENTATION_ROTATE_90:
+//                return 90;
+//            case ExifInterface.ORIENTATION_ROTATE_180:
+//                return 180;
+//            case ExifInterface.ORIENTATION_ROTATE_270:
+//                return 270;
+//            default:
+//                return 0;
+//        }
+//    }
+//    public void handlePopUp(ArrayList<String> switchTexts){
+//        this.listaCategorieScelte = switchTexts;
+//        // Iterare attraverso gli elementi di switchTexts e stamparli nel log
+//        for (String categoria : switchTexts) {
+//            Log.d("PopUpHandler", "Categoria: " + categoria);
+//        }
+//    }
+//    public void handleID(int id){
+//        this.idAsta = id;
+//        AstaIngleseDAO astaIngleseDAO = new AstaIngleseDAO(VenditoreAstaInglese.this);
+//        if(!listaCategorieScelte.isEmpty()){
+//            astaIngleseDAO.openConnection();
+//            Log.d("id recuperato è Venditore inglese : " , " id: " + idAsta);
+//            InsertAsta asta = new InsertAsta(idAsta,listaCategorieScelte);
+//            astaIngleseDAO.inserisciCategorieAstaInglese(asta);
+//            astaIngleseDAO.closeConnection();
+//
+//        }else{
+//            astaIngleseDAO.closeConnection();
+//        }
+//        Intent intent = new Intent(VenditoreAstaInglese.this, AcquirenteMainActivity.class);//test del login
+//        intent.putExtra("email", email);
+//        intent.putExtra("tipoUtente", "venditore");
+//        startActivity(intent);
+//        progressBarVenditoreAstaInglese.setVisibility(View.INVISIBLE);
+//        setAllClickable(relativeLayoutAstaInglese,true);
+//        Toast.makeText(this, "Asta creata con successo!", Toast.LENGTH_SHORT).show();
+//    }
 
 
 }

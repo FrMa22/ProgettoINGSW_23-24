@@ -4,7 +4,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import com.example.progettoingsw.controllers_package.DatabaseHelper;
-import com.example.progettoingsw.view.acquirente.AcquirenteFragmentAstaInversa;
+import com.example.progettoingsw.view.acquirente.FragmentCreaAstaInversa;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -17,9 +17,9 @@ public class ImmaginiDAO {
 
     private byte[] immagine;
 
-    private AcquirenteFragmentAstaInversa astaInv;
+    private FragmentCreaAstaInversa astaInv;
 
-    public ImmaginiDAO(AcquirenteFragmentAstaInversa astaInversa) {
+    public ImmaginiDAO(FragmentCreaAstaInversa astaInversa) {
         this.astaInv = astaInversa;
     }
 
@@ -117,7 +117,7 @@ public class ImmaginiDAO {
             if (result instanceof Object[]) {
                 Object[] socialData = (Object[]) result;
                 immagine = (byte[]) socialData[0];
-                astaInv.updateFoto(immagine);
+                //astaInv.updateFoto(immagine);
             } else {
                 // Nessun risultato o errore
             }

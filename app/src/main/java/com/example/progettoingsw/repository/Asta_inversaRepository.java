@@ -1,6 +1,7 @@
 package com.example.progettoingsw.repository;
 
 import android.os.AsyncTask;
+import android.util.Base64;
 import android.util.Log;
 
 import com.example.progettoingsw.DTO.Asta_inversa_DTO;
@@ -54,6 +55,10 @@ public class Asta_inversaRepository {
         System.out.println("entrato in getAsteInversaPreferite");
         new Asta_inversaRepository.getAste_inversaPreferiteTask(listener).execute(indirizzo_email);
     }
+    public void saveAsta_inversa(Asta_inversaModel astaInversaModel, ArrayList<String> listaCategorie, Asta_inversaRepository.OnInserimentoAstaInversaListener listener) {
+        System.out.println("entrato in saveAsta_inversa");
+        new Asta_inversaRepository.inserimentoAsta_inversaTask(listener).execute(astaInversaModel,listaCategorie);
+    }
     private static class GetAsteScadenzaRecenteTask extends AsyncTask<Void, Void, ArrayList<Asta_inversaModel>> {
         private Asta_inversaRepository.OnGetAsteScadenzaRecenteListener listener;
 
@@ -79,8 +84,10 @@ public class Asta_inversaRepository {
             Asta_inversaService service = retrofit.create(Asta_inversaService.class);
             Call<ArrayList<Asta_inversa_DTO>> call = service.getAste_inversaScadenzaRecente();
 
+            Log.d("astescadenzarecente" , "prima del try)");
             try {
                 Response<ArrayList<Asta_inversa_DTO>> response = call.execute();
+                Log.d("astescadenzarecente" , "nel try");
                 if (response.isSuccessful()) {
                     System.out.println("response successful");
                     ArrayList<Asta_inversa_DTO> list = response.body();
@@ -88,11 +95,14 @@ public class Asta_inversaRepository {
                         System.out.println("lista di aste inverse dto non null");
                         ArrayList<Asta_inversaModel> listAsta_inversaModel = new ArrayList<>();
                         for (Asta_inversa_DTO astaInversaDto : list){
+                            byte[] pathImmagineByteArray = null;
+                            if(astaInversaDto.getPath_immagine()!=null){
+                            pathImmagineByteArray = base64ToByteArray(astaInversaDto.getPath_immagine());}
                             Asta_inversaModel astaInversaModel = new Asta_inversaModel(
                                     astaInversaDto.getId(),
                                     astaInversaDto.getNome(),
                                     astaInversaDto.getDescrizione(),
-                                    astaInversaDto.getPath_immagine(),
+                                    pathImmagineByteArray,
                                     astaInversaDto.getPrezzoMax(),
                                     astaInversaDto.getPrezzoAttuale(),
                                     astaInversaDto.getDataDiScadenza(),
@@ -109,6 +119,9 @@ public class Asta_inversaRepository {
                 System.out.println("response non successful");
             } catch (IOException e) {
                 System.out.println("exception IOEXC");
+                e.printStackTrace();
+            } catch(RuntimeException e) {
+                System.out.println("exception runtime");
                 e.printStackTrace();
             }
             return null;
@@ -159,11 +172,14 @@ public class Asta_inversaRepository {
                         System.out.println("lista di aste inversa dto non null");
                         ArrayList<Asta_inversaModel> listAsta_inversaModel = new ArrayList<>();
                         for (Asta_inversa_DTO astaInversaDto : list){
+                            byte[] pathImmagineByteArray = null;
+                            if(astaInversaDto.getPath_immagine()!=null){
+                                pathImmagineByteArray = base64ToByteArray(astaInversaDto.getPath_immagine());}
                             Asta_inversaModel astaInversaModel = new Asta_inversaModel(
                                     astaInversaDto.getId(),
                                     astaInversaDto.getNome(),
                                     astaInversaDto.getDescrizione(),
-                                    astaInversaDto.getPath_immagine(),
+                                    pathImmagineByteArray,
                                     astaInversaDto.getPrezzoMax(),
                                     astaInversaDto.getPrezzoAttuale(),
                                     astaInversaDto.getDataDiScadenza(),
@@ -230,11 +246,14 @@ public class Asta_inversaRepository {
                         System.out.println("lista di aste inversa dto non null");
                         ArrayList<Asta_inversaModel> listAsta_inversaModel = new ArrayList<>();
                         for (Asta_inversa_DTO astaInversaDto : list){
+                            byte[] pathImmagineByteArray = null;
+                            if(astaInversaDto.getPath_immagine()!=null){
+                                pathImmagineByteArray = base64ToByteArray(astaInversaDto.getPath_immagine());}
                             Asta_inversaModel astaInversaModel = new Asta_inversaModel(
                                     astaInversaDto.getId(),
                                     astaInversaDto.getNome(),
                                     astaInversaDto.getDescrizione(),
-                                    astaInversaDto.getPath_immagine(),
+                                    pathImmagineByteArray,
                                     astaInversaDto.getPrezzoMax(),
                                     astaInversaDto.getPrezzoAttuale(),
                                     astaInversaDto.getDataDiScadenza(),
@@ -267,6 +286,8 @@ public class Asta_inversaRepository {
     public interface OnGetAsteInversaCategoriaNomeListener {
         void OnGetAsteInversaCategoriaNome(ArrayList<Asta_inversaModel> list);
     }
+
+
     private static class partecipaAsta_inversaTask extends AsyncTask<String, Void, Integer> {
         private Asta_inversaRepository.OnPartecipazioneAstaInversaListener listener;
 
@@ -357,11 +378,14 @@ public class Asta_inversaRepository {
                     System.out.println("response successful");
                     Asta_inversa_DTO astaRecuperata = response.body();
                     if (astaRecuperata != null) {
+                        byte[] pathImmagineByteArray = null;
+                        if(astaRecuperata.getPath_immagine()!=null){
+                            pathImmagineByteArray = base64ToByteArray(astaRecuperata.getPath_immagine());}
                         Asta_inversaModel astainversaModel = new Asta_inversaModel(
                                 astaRecuperata.getId(),
                                 astaRecuperata.getNome(),
                                 astaRecuperata.getDescrizione(),
-                                astaRecuperata.getPath_immagine(),
+                                pathImmagineByteArray,
                                 astaRecuperata.getPrezzoMax(),
                                 astaRecuperata.getPrezzoAttuale(),
                                 astaRecuperata.getDataDiScadenza(),
@@ -599,11 +623,14 @@ public class Asta_inversaRepository {
                         System.out.println("lista di aste inversa dto non null");
                         ArrayList<Asta_inversaModel> listAsta_inversaModel = new ArrayList<>();
                         for (Asta_inversa_DTO astaInversaDto : list){
+                            byte[] pathImmagineByteArray = null;
+                            if(astaInversaDto.getPath_immagine()!=null){
+                                pathImmagineByteArray = base64ToByteArray(astaInversaDto.getPath_immagine());}
                             Asta_inversaModel astaInversaModel = new Asta_inversaModel(
                                     astaInversaDto.getId(),
                                     astaInversaDto.getNome(),
                                     astaInversaDto.getDescrizione(),
-                                    astaInversaDto.getPath_immagine(),
+                                    pathImmagineByteArray,
                                     astaInversaDto.getPrezzoMax(),
                                     astaInversaDto.getPrezzoAttuale(),
                                     astaInversaDto.getDataDiScadenza(),
@@ -635,5 +662,86 @@ public class Asta_inversaRepository {
     }
     public interface OnGetAsteInversaPreferiteListener {
         void OnGetAsteInversaPreferite(ArrayList<Asta_inversaModel> list);
+    }
+    private static class inserimentoAsta_inversaTask extends AsyncTask<Object, Void, Long> {
+        private Asta_inversaRepository.OnInserimentoAstaInversaListener listener;
+
+        public inserimentoAsta_inversaTask(Asta_inversaRepository.OnInserimentoAstaInversaListener listener) {
+            this.listener = listener;
+        }
+
+        @Override
+        protected Long doInBackground(Object... params) {
+            Asta_inversaModel astaInversaModel = (Asta_inversaModel) params[0];
+            ArrayList<String> lista_categorie = (ArrayList<String>) params[1];
+            // Effettua l'operazione di rete qui...
+            // Restituisci il risultato
+
+            OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+            // Configura il client OkHttpClient...
+
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl(Repository.backendUrl)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .client(httpClient.build())
+                    .build();
+
+            Asta_inversaService service = retrofit.create(Asta_inversaService.class);
+            String immagine = null;
+            if(astaInversaModel.getPath_immagine()!=null){
+                immagine = byteArrayToBase64(astaInversaModel.getPath_immagine());
+            }
+
+            Asta_inversa_DTO asta_inversa_dto = new Asta_inversa_DTO(astaInversaModel.getNome(),astaInversaModel.getDescrizione(),immagine,astaInversaModel.getPrezzoMax()
+            ,astaInversaModel.getPrezzoAttuale(),astaInversaModel.getDataDiScadenza(),astaInversaModel.getCondizione(),astaInversaModel.getId_acquirente());
+
+            Call<Long> call = service.saveAsta_inversa(asta_inversa_dto, lista_categorie);
+
+            try {
+                Response<Long> response = call.execute();
+                if (response.isSuccessful()) {
+                    System.out.println("response successful");
+                    Long numeroRecuperato = response.body();
+                    if(numeroRecuperato != null){
+                        return 0L;
+                    }else{
+                        System.out.println("asta dto null");
+                        return 0L;
+                    }
+                }
+                System.out.println("response non successful");
+            } catch (IOException e) {
+                System.out.println("exception IOEXC");
+                e.printStackTrace();
+            }
+            return 0L;
+        }
+
+        @Override
+        protected void onPostExecute(Long result) {
+            System.out.println("on post execute inserimento asta inversa" + result);
+            if (listener != null) {
+                listener.OnInserimentoAstaInversa(result);
+            }
+        }
+    }
+    public interface OnInserimentoAstaInversaListener {
+        void OnInserimentoAstaInversa(Long numeroRecuperato);
+    }
+
+
+
+    // Funzione per convertire una stringa Base64 in un array di byte
+    public static byte[] base64ToByteArray(String base64String) {
+        // Rimuovi il prefisso "data:image/jpeg;base64," se presente
+        String base64WithoutPrefix = base64String.replaceFirst("^data:image/[a-zA-Z]*;base64,", "");
+
+        // Decodifica la stringa Base64 in un array di byte
+        return Base64.decode(base64WithoutPrefix, Base64.DEFAULT);
+    }
+    // Funzione per convertire un array di byte in una stringa Base64
+    public static String byteArrayToBase64(byte[] byteArray) {
+        // Codifica l'array di byte in una stringa Base64
+        return Base64.encodeToString(byteArray, Base64.DEFAULT);
     }
 }

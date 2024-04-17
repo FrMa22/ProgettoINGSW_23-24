@@ -18,9 +18,12 @@ import android.widget.Switch;
 
 import com.example.progettoingsw.R;
 import com.example.progettoingsw.classe_da_estendere.DialogPersonalizzato;
-import com.example.progettoingsw.view.acquirente.AcquirenteFragmentAstaInversa;
+import com.example.progettoingsw.view.acquirente.FragmentCreaAstaInversa;
 import com.example.progettoingsw.view.venditore.VenditoreAstaInglese;
 import com.example.progettoingsw.view.venditore.VenditoreAstaRibasso;
+import com.example.progettoingsw.viewmodel.CreaAstaIngleseViewModel;
+import com.example.progettoingsw.viewmodel.CreaAstaInversaViewModel;
+import com.example.progettoingsw.viewmodel.CreaAstaRibassoViewModel;
 
 import java.util.ArrayList;
 
@@ -30,29 +33,32 @@ public class PopUpAggiungiCategorieAsta extends DialogPersonalizzato implements 
     private Resources resources;
     private ArrayList<String> categorieScelte;
     private ArrayList<String> switchTexts;
-    private AcquirenteFragmentAstaInversa acquirenteFragmentAstaInversa;
+    private FragmentCreaAstaInversa fragmentCreaAstaInversa;
     private VenditoreAstaInglese venditoreAstaInglese;
     private VenditoreAstaRibasso venditoreAstaRibasso;
     private Button buttonSalvaCategorieCreaAsta;
     private Button buttonAnnullaCategorieCreaAsta;
+    private CreaAstaInversaViewModel creaAstaInversaViewModel;
+    private CreaAstaIngleseViewModel creaAstaIngleseViewModel;
+    private CreaAstaRibassoViewModel creaAstaRibassoViewModel;
 
-    public PopUpAggiungiCategorieAsta(Context context, AcquirenteFragmentAstaInversa acquirenteFragmentAstaInversa, ArrayList<String> categorieScelte){
+    public PopUpAggiungiCategorieAsta(Context context, FragmentCreaAstaInversa fragmentCreaAstaInversa, CreaAstaInversaViewModel creaAstaInversaViewModel){
         super(context);
         mContext = context;
-        this.acquirenteFragmentAstaInversa = acquirenteFragmentAstaInversa;
-        this.categorieScelte = categorieScelte;
+        this.fragmentCreaAstaInversa = fragmentCreaAstaInversa;
+        this.creaAstaInversaViewModel = creaAstaInversaViewModel;
     }
-    public PopUpAggiungiCategorieAsta(Context context, VenditoreAstaInglese venditoreAstaInglese, ArrayList<String> categorieScelte){
+    public PopUpAggiungiCategorieAsta(Context context, VenditoreAstaInglese venditoreAstaInglese, CreaAstaIngleseViewModel creaAstaIngleseViewModel){
         super(context);
         mContext = context;
         this.venditoreAstaInglese = venditoreAstaInglese;
-        this.categorieScelte = categorieScelte;
+        this.creaAstaIngleseViewModel = creaAstaIngleseViewModel;
     }
-    public PopUpAggiungiCategorieAsta(Context context, VenditoreAstaRibasso venditoreAstaRibasso, ArrayList<String> categorieScelte){
+    public PopUpAggiungiCategorieAsta(Context context, VenditoreAstaRibasso venditoreAstaRibasso, CreaAstaRibassoViewModel creaAstaRibassoViewModel){
         super(context);
         mContext = context;
         this.venditoreAstaRibasso = venditoreAstaRibasso;
-        this.categorieScelte = categorieScelte;
+        this.creaAstaRibassoViewModel = creaAstaRibassoViewModel;
     }
 
     @Override
@@ -65,17 +71,28 @@ public class PopUpAggiungiCategorieAsta extends DialogPersonalizzato implements 
         buttonAnnullaCategorieCreaAsta.setOnClickListener(this);
         buttonSalvaCategorieCreaAsta = findViewById(R.id.buttonSalvaCategorieCreaAsta);
         buttonSalvaCategorieCreaAsta.setOnClickListener(this);
+
         linear_layout_categorie_crea_asta = findViewById(R.id.linear_layout_categorie_crea_asta);
+
         resources = mContext.getResources();
-        switchTexts = new ArrayList<>();
-        if(!categorieScelte.isEmpty()){
-            switchTexts = categorieScelte;
-            for (String categoria : switchTexts) {
-                Log.d("PopUp switch texts", "Categoria: " + categoria);
-            }
-        }
+
+//        switchTexts = new ArrayList<>();
+//        if(!categorieScelte.isEmpty()){
+//            switchTexts = categorieScelte;
+//            for (String categoria : switchTexts) {
+//                Log.d("PopUp switch texts", "Categoria: " + categoria);
+//            }
+//        }
 
         populateLinearLayout();
+        osservaCategorieInserite();
+        if(creaAstaInversaViewModel != null) {
+            creaAstaInversaViewModel.checkCategorieInserite();
+        }else if(creaAstaIngleseViewModel != null){
+            creaAstaIngleseViewModel.checkCategorieInserite();
+        }else if(creaAstaRibassoViewModel != null){
+            creaAstaRibassoViewModel.checkCategorieInserite();
+        }
     }
     @Override
     public void onClick(View view) {
@@ -83,13 +100,13 @@ public class PopUpAggiungiCategorieAsta extends DialogPersonalizzato implements 
             Log.d("Bottoni in popup" , "annulla");
             dismiss();
         } else if (view.getId() == R.id.buttonSalvaCategorieCreaAsta) {
-            if (acquirenteFragmentAstaInversa != null) {
-                acquirenteFragmentAstaInversa.handlePopUp(switchTexts);
+            if (fragmentCreaAstaInversa != null) {
+                //fragmentCreaAstaInversa.handlePopUp(switchTexts);
             } else if (venditoreAstaInglese != null) {
-                venditoreAstaInglese.handlePopUp(switchTexts);
+                //venditoreAstaInglese.handlePopUp(switchTexts);
             }
             else if (venditoreAstaRibasso != null) {
-                venditoreAstaRibasso.handlePopUp(switchTexts);
+//                venditoreAstaRibasso.handlePopUp(switchTexts);
             }
             dismiss();
         }
@@ -120,9 +137,9 @@ public class PopUpAggiungiCategorieAsta extends DialogPersonalizzato implements 
             switchButton.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20);
             switchButton.setTextColor(resources.getColor(R.color.colore_hint));
             // Controllo se la categoria corrente è già stata selezionata
-            if (categorieScelte.contains(categorieArray[i])) {
-                switchButton.setChecked(true);
-            }
+//            if (categorieScelte.contains(categorieArray[i])) {
+//                switchButton.setChecked(true);
+//            }
 
             try {
                 // Imposta l'immagine a sinistra del testo
@@ -154,10 +171,24 @@ public class PopUpAggiungiCategorieAsta extends DialogPersonalizzato implements 
                     // Se lo switch è stato selezionato, aggiungi il testo all'array
                     if (isChecked) {
                         switchButton.setTextColor(resources.getColor(R.color.colore_secondario));
-                        switchTexts.add(switchButton.getText().toString());
+                        if(creaAstaInversaViewModel!=null){
+                            creaAstaInversaViewModel.addCategoria(switchButton.getText().toString());
+                        }else if(creaAstaIngleseViewModel!=null){
+                            creaAstaIngleseViewModel.addCategoria(switchButton.getText().toString());
+                        }else if(creaAstaRibassoViewModel != null){
+                            creaAstaRibassoViewModel.addCategoria(switchButton.getText().toString());
+                        }
+                        //switchTexts.add(switchButton.getText().toString());
                     } else { // Se lo switch è stato deselezionato, rimuovi il testo dall'array
                         switchButton.setTextColor(resources.getColor(R.color.colore_hint));
-                        switchTexts.remove(switchButton.getText().toString());
+                        if(creaAstaInversaViewModel!=null) {
+                            creaAstaInversaViewModel.removeCategoria(switchButton.getText().toString());
+                        }else if(creaAstaIngleseViewModel!=null){
+                            creaAstaIngleseViewModel.removeCategoria(switchButton.getText().toString());
+                        }else if(creaAstaRibassoViewModel != null){
+                            creaAstaRibassoViewModel.removeCategoria(switchButton.getText().toString());
+                        }
+                        //switchTexts.remove(switchButton.getText().toString());
                     }
                 }
             });
@@ -179,5 +210,39 @@ public class PopUpAggiungiCategorieAsta extends DialogPersonalizzato implements 
         }
 
         immaginiArray.recycle();
+    }
+    private void selectCategories(ArrayList<String> categorieInserite) {
+        for (int i = 0; i < linear_layout_categorie_crea_asta.getChildCount(); i++) {
+            View view = linear_layout_categorie_crea_asta.getChildAt(i);
+            if (view instanceof Switch) {
+                Switch switchButton = (Switch) view;
+                String categoria = switchButton.getText().toString();
+                if (categorieInserite.contains(categoria)) {
+                    switchButton.setChecked(true);
+                }
+            }
+        }
+    }
+
+    public void osservaCategorieInserite() {
+        if (creaAstaInversaViewModel != null) {
+            creaAstaInversaViewModel.categorieInserite.observe(fragmentCreaAstaInversa, (listaCategorie) -> {
+                if (creaAstaInversaViewModel.listaCategorieNotEmpty()) {
+                    selectCategories(listaCategorie);
+                }
+            });
+        }else if(creaAstaIngleseViewModel!=null){
+            creaAstaIngleseViewModel.categorieInserite.observe(venditoreAstaInglese, (listaCategorie) -> {
+                if (creaAstaIngleseViewModel.listaCategorieNotEmpty()) {
+                    selectCategories(listaCategorie);
+                }
+            });
+        }else if(creaAstaRibassoViewModel!=null){
+            creaAstaRibassoViewModel.categorieInserite.observe(venditoreAstaRibasso, (listaCategorie) -> {
+                if (creaAstaRibassoViewModel.listaCategorieNotEmpty()) {
+                    selectCategories(listaCategorie);
+                }
+            });
+        }
     }
 }

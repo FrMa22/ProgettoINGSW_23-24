@@ -2,15 +2,18 @@ package com.example.progettoingsw.backendAPI;
 
 import com.example.progettoingsw.DTO.AcquirenteDTO;
 import com.example.progettoingsw.DTO.Asta_allinglese_DTO;
+import com.example.progettoingsw.DTO.Asta_inversa_DTO;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface Asta_allingleseService {
     @GET("/asta_allingleseController/getAste_allingleseScadenzaRecente")
@@ -34,4 +37,7 @@ public interface Asta_allingleseService {
 
     @GET("/asta_allingleseController/getAsteInglesePreferite/{indirizzo_email}")
     Call<ArrayList<Asta_allinglese_DTO>> getAsteInglesePreferite(@Path("indirizzo_email") String indirizzo_email);
+
+    @POST("/asta_allingleseController/insertAstaInglese/{asta_inglese}/{lista_categorie}")
+    Call<Long> saveAsta_inglese(@Body Asta_allinglese_DTO asta_allinglese_dto, @Query("lista_categorie") ArrayList<String> lista_categorie);
 }

@@ -29,6 +29,18 @@ public class Asta_allingleseModel {
         this.condizione = condizione;
         this.id_venditore = id_venditore;
     }
+    public Asta_allingleseModel( String nome, String descrizione, byte[] path_immagine, float baseAsta, String intervalloTempoOfferte, String intervalloOfferteBase, float rialzoMin, float prezzoAttuale, String condizione, String id_venditore) {
+        this.nome = nome;
+        this.descrizione = descrizione;
+        this.path_immagine = path_immagine;
+        this.baseAsta = baseAsta;
+        this.intervalloTempoOfferte = intervalloTempoOfferte;
+        this.intervalloOfferteBase = intervalloOfferteBase;
+        this.rialzoMin = rialzoMin;
+        this.prezzoAttuale = prezzoAttuale;
+        this.condizione = condizione;
+        this.id_venditore = id_venditore;
+    }
 
     public Long getId() {
         return id;
@@ -54,11 +66,11 @@ public class Asta_allingleseModel {
         this.descrizione = descrizione;
     }
 
-    public byte[] getImmagine() {
+    public byte[] getPath_immagine() {
         return path_immagine;
     }
 
-    public void setImmagine(byte[] path_immagine) {
+    public void setPath_immagine(byte[] path_immagine) {
         this.path_immagine = path_immagine;
     }
 

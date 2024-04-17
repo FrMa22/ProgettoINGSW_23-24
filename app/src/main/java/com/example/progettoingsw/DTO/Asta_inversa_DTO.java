@@ -6,7 +6,7 @@ public class Asta_inversa_DTO {
     private Long id;
     private String nome;
     private String descrizione;
-    private byte[] path_immagine;
+    private String path_immagine;
     private float prezzoMax;
     private float prezzoAttuale;
     private String dataDiScadenza;
@@ -16,8 +16,18 @@ public class Asta_inversa_DTO {
     public Asta_inversa_DTO(){
 
     }
-    public Asta_inversa_DTO(Long id, String nome, String descrizione, byte[] path_immagine, float prezzoMax, float prezzoAttuale, String dataDiScadenza, String condizione, String id_acquirente) {
+    public Asta_inversa_DTO(Long id, String nome, String descrizione,String  path_immagine, float prezzoMax, float prezzoAttuale, String dataDiScadenza, String condizione, String id_acquirente) {
         this.id = id;
+        this.nome = nome;
+        this.descrizione = descrizione;
+        this.path_immagine = path_immagine;
+        this.prezzoMax = prezzoMax;
+        this.prezzoAttuale = prezzoAttuale;
+        this.dataDiScadenza = dataDiScadenza;
+        this.condizione = condizione;
+        this.id_acquirente = id_acquirente;
+    }
+    public Asta_inversa_DTO(String nome, String descrizione, String path_immagine, float prezzoMax, float prezzoAttuale, String dataDiScadenza, String condizione, String id_acquirente) {
         this.nome = nome;
         this.descrizione = descrizione;
         this.path_immagine = path_immagine;
@@ -57,11 +67,11 @@ public class Asta_inversa_DTO {
     }
 
     // Getter e setter per path_immagine
-    public byte[] getPath_immagine() {
+    public String getPath_immagine() {
         return path_immagine;
     }
 
-    public void setPath_immagine(byte[] path_immagine) {
+    public void setPath_immagine(String path_immagine) {
         this.path_immagine = path_immagine;
     }
 

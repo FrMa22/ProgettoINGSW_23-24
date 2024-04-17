@@ -7,20 +7,13 @@ import android.util.Log;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.progettoingsw.R;
-import com.example.progettoingsw.model.Asta_allingleseModel;
 import com.example.progettoingsw.model.Asta_alribassoModel;
-import com.example.progettoingsw.model.Asta_inversaModel;
-import com.example.progettoingsw.repository.Asta_allingleseRepository;
 import com.example.progettoingsw.repository.Asta_alribassoRepository;
-import com.example.progettoingsw.repository.Asta_inversaRepository;
-import com.example.progettoingsw.repository.LoginRepository;
 import com.example.progettoingsw.repository.Repository;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 
 public class SchermataAstaRibassoViewModel extends ViewModel {
     private Repository repository;
@@ -49,7 +42,7 @@ public class SchermataAstaRibassoViewModel extends ViewModel {
             public void OnTrovaAstaRibasso(Asta_alribassoModel astaRecuperata) {
                 Log.d("asta ricercata" , "qui");
                 if(astaRecuperata!=null){
-                    if(astaRecuperata.getImmagine()==null){
+                    if(astaRecuperata.getPath_immagine()==null){
                         Log.d("immagine null", "null");
                         //astaRecuperata.setImmagine(R.drawable.image_default_low_quality);
                     }

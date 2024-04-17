@@ -302,7 +302,7 @@ public class SchermataAstaInglese extends GestoreComuniImplementazioni implement
             if (asta != null) {
                 Log.d("asta recuperata" , "qui");
                 osservaImmagineAstaConvertita(asta);
-                schermataAstaIngleseViewModel.convertiImmagine(asta.getImmagine());
+                schermataAstaIngleseViewModel.convertiImmagine(asta.getPath_immagine());
             }
         });
     }

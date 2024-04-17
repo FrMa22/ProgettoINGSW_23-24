@@ -4,7 +4,7 @@ public class Asta_allinglese_DTO {
     private Long id;
     private String nome;
     private String descrizione;
-    private byte[] path_immagine;
+    private String path_immagine;
     private float baseAsta;
     private String intervalloTempoOfferte;
     private String intervalloOfferteBase;
@@ -16,7 +16,7 @@ public class Asta_allinglese_DTO {
     public Asta_allinglese_DTO(){
 
     }
-    public Asta_allinglese_DTO(Long id, String nome, String descrizione, byte[] path_immagine, float baseAsta, String intervalloTempoOfferte, String intervalloOfferteBase, float rialzoMin, float prezzoAttuale, String condizione, String id_venditore) {
+    public Asta_allinglese_DTO(Long id, String nome, String descrizione, String path_immagine, float baseAsta, String intervalloTempoOfferte, String intervalloOfferteBase, float rialzoMin, float prezzoAttuale, String condizione, String id_venditore) {
         this.id = id;
         this.nome = nome;
         this.descrizione = descrizione;
@@ -29,6 +29,19 @@ public class Asta_allinglese_DTO {
         this.condizione = condizione;
         this.id_venditore = id_venditore;
     }
+    public Asta_allinglese_DTO( String nome, String descrizione, String path_immagine, float baseAsta, String intervalloTempoOfferte, String intervalloOfferteBase, float rialzoMin, float prezzoAttuale, String condizione, String id_venditore) {
+        this.nome = nome;
+        this.descrizione = descrizione;
+        this.path_immagine = path_immagine;
+        this.baseAsta = baseAsta;
+        this.intervalloTempoOfferte = intervalloTempoOfferte;
+        this.intervalloOfferteBase = intervalloOfferteBase;
+        this.rialzoMin = rialzoMin;
+        this.prezzoAttuale = prezzoAttuale;
+        this.condizione = condizione;
+        this.id_venditore = id_venditore;
+    }
+
 
     public Long getId() {
         return id;
@@ -54,11 +67,11 @@ public class Asta_allinglese_DTO {
         this.descrizione = descrizione;
     }
 
-    public byte[] getPath_immagine() {
+    public String getPath_immagine() {
         return path_immagine;
     }
 
-    public void setPath_immagine(byte[] path_immagine) {
+    public void setPath_immagine(String path_immagine) {
         this.path_immagine = path_immagine;
     }
 
