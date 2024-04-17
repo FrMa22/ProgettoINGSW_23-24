@@ -1,8 +1,6 @@
 package com.example.progettoingsw.view.acquirente;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -23,10 +21,11 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.progettoingsw.DAO.Acquirente;
 import com.example.progettoingsw.model.AcquirenteModel;
 import com.example.progettoingsw.model.SocialAcquirenteModel;
+import com.example.progettoingsw.model.SocialVenditoreModel;
 import com.example.progettoingsw.repository.Repository;
+import com.example.progettoingsw.view.LeMieAste;
 import com.example.progettoingsw.view.PopUpAggiungiSocialProfilo;
 import com.example.progettoingsw.view.PopUpControlloPassword;
 import com.example.progettoingsw.view.PopUpModificaCampiProfilo;
@@ -35,7 +34,6 @@ import com.example.progettoingsw.controllers_package.Controller;
 import com.example.progettoingsw.gestori_gui.CustomAdapter_gridview_profilo_social;
 import com.example.progettoingsw.view.LoginActivity;
 import com.example.progettoingsw.view.PopUpModificaSocial;
-import com.example.progettoingsw.view.SchermataAstaInglese;
 import com.example.progettoingsw.viewmodel.FragmentProfiloViewModel;
 import com.google.android.material.button.MaterialButton;
 
@@ -113,9 +111,7 @@ public class FragmentProfilo extends Fragment{
 
 
 
-        //gestione gridview
-        Repository repository = Repository.getInstance();
-        AcquirenteModel acquirenteModel=repository.getAcquirenteModel();
+
 
          //Inizializza la GridView
         GridView gridView = view.findViewById(R.id.gridview_social_activity_profilo);
@@ -143,96 +139,7 @@ public class FragmentProfilo extends Fragment{
 
 
 
-        //recupero dati+separato per tipo di utente
-       // VenditoreModel venditoreModel=repository.getVenditoreModel();
 
-
-
-//        if(acquirenteModel!=null){
-//            List<SocialAcquirenteModel> socialAcquirenteModelList=repository.getSocialAcquirenteModelList();
-//            String email=acquirenteModel.getIndirizzoEmail();
-//         //   fragmentProfiloViewModel.trovaSocialAcquirenteViewModel(email);
-//            textview_nome.setText(acquirenteModel.getNome());
-//            textview_cognome.setText(acquirenteModel.getCognome());
-//            textview_email.setText(acquirenteModel.getIndirizzoEmail());
-//            textview_sitoweb.setText(acquirenteModel.getLink());
-//            textview_paese.setText(acquirenteModel.getAreaGeografica());
-//            text_view_bio_profilo.setText(acquirenteModel.getBio());
-//            //gestione recupero dei social
-////            List<String> nomiSocial=repository.getNomiSocialAcquirenteModelList(socialAcquirenteModelList);
-////            List<String> linkSocial=repository.getLinksSocialAcquirenteModelList(socialAcquirenteModelList);
-////            // Stampa i nomi social
-////            System.out.println("Nomi Social:");
-////            for (String nome : nomiSocial) {
-////                System.out.println(nome);
-////            }
-////
-////// Stampa i link social
-////            System.out.println("Link Social:");
-////            for (String link : linkSocial) {
-////                System.out.println(link);
-////            }
-//
-//            new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
-//                @Override
-//                public void run() {
-//                    List<String> nomiSocial=repository.getNomiSocialAcquirenteModelList(socialAcquirenteModelList);
-//                    List<String> linkSocial=repository.getLinksSocialAcquirenteModelList(socialAcquirenteModelList);
-//                    // Stampa i nomi social
-//                    System.out.println("Nomi Social:");
-//                    for (String nome : nomiSocial) {
-//                        System.out.println(nome);
-//                    }
-//
-//// Stampa i link social
-//                    System.out.println("Link Social:");
-//                    for (String link : linkSocial) {
-//                        System.out.println(link);
-//                    }
-//                    updateSocialNames(repository.getNomiSocialAcquirenteModelList(socialAcquirenteModelList),repository.getLinksSocialAcquirenteModelList(socialAcquirenteModelList));
-//                }
-//            }, 8000); // 5000 millisecondi = 5 secondi
-//
-//            //se si lascia eseguire il metodo sotto non si recuperano dal db i social,lasciandolo commentato non esce a schermo l'elenco ma sono effettivamente presenti
-//           // updateSocialNames(repository.getNomiSocialAcquirenteModelList(socialAcquirenteModelList),repository.getLinksSocialAcquirenteModelList(socialAcquirenteModelList));
-//
-//        }
-
-
-
-
-
-
-//        if(venditoreModel!=null){
-//            fragmentProfiloViewModel.fragmentProfiloVenditore(email);
-//        }
-
-
-        //icona del caricamento
-       // progressBarAcquirenteFragmentProfilo = view.findViewById(R.id.progressBarAcquirenteFragmentProfilo);
-        //progressBarAcquirenteFragmentProfilo.setVisibility(View.VISIBLE);
-
-        // Inizializza la GridView
-//        GridView gridView = view.findViewById(R.id.gridview_social_activity_profilo);
-//
-//// Imposta un'altezza minima per la GridView
-//        gridView.setMinimumHeight((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 50, getResources().getDisplayMetrics()));
-//
-//// Chiama il metodo per impostare l'altezza in base agli elementi
-//        setGridViewHeightBasedOnChildren(gridView);
-//        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                CustomAdapter_gridview_profilo_social adapter = (CustomAdapter_gridview_profilo_social) gridView.getAdapter();
-//                List<String> socialNames = adapter.getSocialNames();
-//                List<String> socialLinks = adapter.getSocialLinks();
-//
-//                String nome = socialNames.get(position);
-//                String link = socialLinks.get(position);
-//                PopUpModificaSocial popUpModificaSocial = new PopUpModificaSocial(getContext(), FragmentProfilo.this, email, tipoUtente, nome, link);
-//                popUpModificaSocial.show();
-//            }
-//        });
 
 
 
@@ -253,17 +160,15 @@ public class FragmentProfilo extends Fragment{
             }
         });
 
-//        button_le_mie_aste = view.findViewById(R.id.button_le_mie_aste);
-//        button_le_mie_aste.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                System.out.println("le aste oooh");
-//                Intent intent = new Intent(getContext(), LeMieAste.class);
-//                intent.putExtra("email", email);
-//                intent.putExtra("tipoUtente",tipoUtente);
-//                startActivity(intent);
-//            }
-//        });
+        button_le_mie_aste = view.findViewById(R.id.button_le_mie_aste);
+        button_le_mie_aste.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                System.out.println("le aste oooh");
+                //passaggio alle mie aste
+                fragmentProfiloViewModel.setApriLeMieAste(true);
+            }
+        });
 
         button_modifica = view.findViewById(R.id.button_modifica);
         button_modifica.setOnClickListener(new View.OnClickListener() {
@@ -442,7 +347,7 @@ public class FragmentProfilo extends Fragment{
     }
 
 
-    public void updateDatiacquirente(String nome,String cognome,String email,String link,String paese,String bio){
+    public void updateDatiUtente(String nome, String cognome, String email, String link, String paese, String bio){
         textview_nome.setText(nome);
         textview_cognome.setText(cognome);
         textview_email.setText(email);
@@ -481,6 +386,7 @@ public class FragmentProfilo extends Fragment{
                 osservaSocialAcquirentePresenti();
                 osservaAcquirenteRecuperato();//nel suo corpo ha un observer di un oggetto Acquirente Model che poi si usa per fare i vari get per un metodo che setta nella gui i valori
                 osservaApriPopUpAggiungiSocial();
+                osservaApriLeMieAste();
                 //in teoria deve fare qui la chiamata per trovare i social dal backend
                 fragmentProfiloViewModel.trovaSocialAcquirenteViewModel();//questa chiamata trova i social dal backend
 
@@ -495,6 +401,16 @@ public class FragmentProfilo extends Fragment{
                  //fa le cose che si farebbero premendo il pulsante aggiungi social
                 PopUpAggiungiSocialProfilo popUpAggiungiSocialProfilo = new PopUpAggiungiSocialProfilo(FragmentProfilo.this,fragmentProfiloViewModel);
                 popUpAggiungiSocialProfilo.show();
+            }
+        });
+    }
+
+    public void osservaApriLeMieAste(){
+        fragmentProfiloViewModel.apriLeMieAste.observe(getViewLifecycleOwner(), (messaggio) -> {
+            if (fragmentProfiloViewModel.getApriLeMieAste()){
+                //fa le cose che si farebbero premendo il pulsante apri le mie aste
+                Intent intent = new Intent(getContext(), LeMieAste.class);
+                startActivity(intent);
             }
         });
     }
@@ -530,6 +446,23 @@ public class FragmentProfilo extends Fragment{
     }
 
 
+    public void osservaSocialVenditoreRecuperati() {
+        fragmentProfiloViewModel.socialVenditoreRecuperati.observe(getViewLifecycleOwner(), (lista) -> {
+            if (lista != null  && !lista.isEmpty()) {
+                System.out.println("in osserva social venditore recuperati");
+                //lista social quindi estrarre nomi e link poi fare chiamata a update social names per mostrarli graficamente
+                List<String> links = new ArrayList<>();
+                List<String> nomi=new ArrayList<>();
+                for (SocialVenditoreModel social : lista) {
+                    links.add(social.getLink());
+                    nomi.add(social.getNome());
+                }
+                updateSocialNames(nomi,links);
+            }
+        });
+    }
+
+
     public void osservaAcquirenteRecuperato() {
         fragmentProfiloViewModel.acquirenteRecuperato.observe(getViewLifecycleOwner(), (acquirente) -> {
             if (acquirente != null) {
@@ -540,24 +473,57 @@ public class FragmentProfilo extends Fragment{
                 String sitoweb=acquirente.getLink();
                 String paese=acquirente.getAreaGeografica();
                 String bio=acquirente.getBio();
-                updateDatiacquirente(nome,cognome,email,sitoweb,paese,bio);
+                updateDatiUtente(nome,cognome,email,sitoweb,paese,bio);
             }
         });
     }
 
 
+    public void osservaSocialVenditorePresenti() {
+        fragmentProfiloViewModel.socialVenditorePresenti.observe(getViewLifecycleOwner(), (messaggio) -> {
+            if (messaggio) {//vede se sono presenti,li recupera,e poi deve aggiornare la gui
+                System.out.println("in osserva social venditore presenti");
+                osservaSocialVenditoreRecuperati();
+                fragmentProfiloViewModel.recuperaSocialVenditore();
+
+            }
+
+
+        });
+    }
+
+
+
+    public void osservaVenditoreRecuperato() {
+        fragmentProfiloViewModel.venditoreRecuperato.observe(getViewLifecycleOwner(), (venditore) -> {
+            if (venditore != null) {
+                //lista social quindi estrarre nomi e link poi fare chiamata a update social names per mostrarli graficamente
+                String nome=venditore.getNome();
+                String cognome=venditore.getCognome();
+                String email=venditore.getIndirizzoEmail();
+                String sitoweb=venditore.getLink();
+                String paese=venditore.getAreaGeografica();
+                String bio=venditore.getBio();
+                updateDatiUtente(nome,cognome,email,sitoweb,paese,bio);
+            }
+        });
+    }
 
 
     public void osservaVenditoreModelPresente(){
         fragmentProfiloViewModel.venditoreModelPresente.observe(getViewLifecycleOwner(), (messaggio) -> {
             if (fragmentProfiloViewModel.getVenditoreModelPresente()) {
+                System.out.println("venditore esiste");
                 Toast.makeText(getContext(), "Entrato come venditore in fragment profilo.", Toast.LENGTH_SHORT).show();
-                //chiamate ai vari observer
+                //chiamate ai vari observer, tra cui quelli di cambiare schermata quindi pure per la gestione dei popup
+                osservaSocialVenditorePresenti();
+                osservaVenditoreRecuperato();//nel suo corpo ha un observer di un oggetto Acquirente Model che poi si usa per fare i vari get per un metodo che setta nella gui i valori
+                osservaApriPopUpAggiungiSocial();
+                osservaApriLeMieAste();
+                //in teoria deve fare qui la chiamata per trovare i social dal backend
+                fragmentProfiloViewModel.trovaSocialVenditoreViewModel();//questa chiamata trova i social dal backend
 
-
-
-
-            }
+            } else{System.out.println("venditore NON ESISTE");}
         });
     }
 

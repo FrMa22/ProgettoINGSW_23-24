@@ -8,6 +8,8 @@ import androidx.lifecycle.ViewModel;
 import com.example.progettoingsw.model.AcquirenteModel;
 import com.example.progettoingsw.model.Asta_allingleseModel;
 import com.example.progettoingsw.model.SocialAcquirenteModel;
+import com.example.progettoingsw.model.SocialVenditoreModel;
+import com.example.progettoingsw.model.VenditoreModel;
 import com.example.progettoingsw.repository.FragmentProfiloRepository;
 import com.example.progettoingsw.repository.Repository;
 
@@ -22,13 +24,21 @@ public class FragmentProfiloViewModel extends ViewModel {
     public MutableLiveData<Boolean> venditoreModelPresente = new MutableLiveData<>(false);
     public MutableLiveData<Boolean> socialAcquirentePresenti = new MutableLiveData<>(false);
 
+    public MutableLiveData<Boolean> socialVenditorePresenti = new MutableLiveData<>(false);
+
     public MutableLiveData<Boolean> entraInPopUpModificaSocial = new MutableLiveData<>(false);
 
     public MutableLiveData<Boolean> apriPopUpAggiungiSocial = new MutableLiveData<>(false);
 
+    public MutableLiveData<Boolean> apriLeMieAste = new MutableLiveData<>(false);
+
     public MutableLiveData<ArrayList<SocialAcquirenteModel>> socialAcquirenteRecuperati = new MutableLiveData<>(null);
 
+    public MutableLiveData<ArrayList<SocialVenditoreModel>> socialVenditoreRecuperati = new MutableLiveData<>(null);
+
     public MutableLiveData<AcquirenteModel> acquirenteRecuperato =new MutableLiveData<>(null);
+
+    public MutableLiveData<VenditoreModel> venditoreRecuperato =new MutableLiveData<>(null);
 
     private FragmentProfiloRepository fragmentProfiloRepository;
     private Repository repository;
@@ -211,6 +221,180 @@ public class FragmentProfiloViewModel extends ViewModel {
     }
 
 
+    //versione venditore
+
+    public void trovaSocialVenditoreViewModel(){
+        String email=getVenditoreEmail();
+        System.out.println("entrato in fragmentProfilo di viewmodel con email:"+email);
+        System.out.println("in fragmentProfiloVenditore di viewmodel prima del try con email:"+email);
+        if(repository.getSocialVenditoreModelList()==null){System.out.println("lista social Venditore null");return ;}
+        try{
+            trovaSocialVenditore(email);
+            if(repository.getSocialVenditoreModelList().isEmpty()){
+                setMessaggioUtenteNonTrovato("acquirente non ha social");
+            } //altrimenti trova i social e non fa nulla perchè verranno semplicemente messi
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
+    }
+
+    public void aggiungiSocialVenditoreViewModel(String nome,String link){
+        String email=getVenditoreEmail();
+        System.out.println("entrato in fragmentProfilo aggiungi social di viewmodel con email:"+email + "nome:"+ nome + "link:"+ link);
+        //if(repository.getSocialAcquirenteModelList()==null){System.out.println("lista social acquirente null");return ;}
+        try{
+            aggiungiSocialVenditore(nome,link,email);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
+    }
+
+
+    public void eliminaSocialVenditoreViewModel(String nome,String link){
+        String email=getVenditoreEmail();
+        System.out.println("entrato in fragmentProfilo elimina social di viewmodel con email:"+email + "nome:"+ nome + "link:"+ link);
+        //if(repository.getSocialAcquirenteModelList()==null){System.out.println("lista social acquirente null");return ;}
+        try{
+            eliminaSocialVenditore(nome,link,email);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
+    }
+
+    public void aggiornaSocialVenditoreViewModel(String oldNome,String oldLink,String newNome,String newLink){
+        System.out.println("Parametri del metodo aggiornaSocialVenditoreViewModel:");
+        System.out.println("oldNome: " + oldNome);
+        System.out.println("oldLink: " + oldLink);
+        System.out.println("newNome: " + newNome);
+        System.out.println("newLink: " + newLink);
+
+        //if(repository.getSocialAcquirenteModelList()==null){System.out.println("lista social acquirente null");return ;}
+        try{
+            aggiornaSocialVenditore(oldNome,oldLink,newNome,newLink);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
+    }
+
+
+
+    public void aggiornaVenditoreViewModel(String nome,String cognome,String bio,String link,String areageografica){
+        String email=getVenditoreEmail();
+        System.out.println("Parametri del metodo aggiornaVenditoreViewModel:");
+        System.out.println("nome: " + nome);
+        System.out.println("cognome: " + cognome);
+        System.out.println("bio: " + bio);
+        System.out.println("link: " + link);
+        System.out.println("areageografica: " + areageografica);
+        System.out.println("email: " + email);
+
+        //if(repository.getSocialAcquirenteModelList()==null){System.out.println("lista social acquirente null");return ;}
+        try{
+            aggiornaVenditore(nome,cognome,bio,link,areageografica,email);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
+    }
+
+    public void aggiornaPasswordVenditoreViewModel(String password){
+        String email=getVenditoreEmail();
+        System.out.println("Parametri del metodo aggiornaPasswordVenditoreViewModel:");
+        System.out.println("password: " + password);
+        System.out.println("email: " + email);
+
+        //if(repository.getSocialAcquirenteModelList()==null){System.out.println("lista social acquirente null");return ;}
+        try{
+            aggiornaPasswordVenditore(password,email);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
+    }
+
+
+
+
+
+
+//chiamate al backend versione venditore
+
+    private void trovaSocialVenditore(String email) {
+        System.out.println("entrato in trova Social Venditore di view model");
+        fragmentProfiloRepository.trovaSocialVenditoreBackend(email, new FragmentProfiloRepository.OnFragmentProfiloVenditoreListener() {
+            @Override
+            public void onFragmentProfiloVenditore(List<SocialVenditoreModel> socialVenditoreModelList) {
+                repository.setSocialVenditoreModelList(socialVenditoreModelList);
+
+                //se c'è la lista dei social allora setta il valore per l'observer della view
+                if(socialVenditoreModelList!=null  && !socialVenditoreModelList.isEmpty()){
+                    setSocialVenditorePresenti(true);
+                }
+            }
+        });
+    }
+
+    private void aggiungiSocialVenditore(String nome,String link,String email) {
+        System.out.println("entrato in aggiungi Social Venditore di view model");
+        fragmentProfiloRepository.aggiungiSocialVenditoreBackend(nome,link,email ,new FragmentProfiloRepository.OnAggiungiSocialVenditoreListener() {
+            @Override
+            public void onAggiungiSocialVenditore(SocialVenditoreModel socialVenditoreModel) {
+                repository.addSocialVenditore(socialVenditoreModel);
+            }
+        });
+    }
+
+
+
+    private void eliminaSocialVenditore(String nome,String link,String email) {
+        System.out.println("entrato in elimina Social Venditore di view model");
+        fragmentProfiloRepository.eliminaSocialVenditoreBackend(nome,link,email ,new FragmentProfiloRepository.OnEliminaSocialVenditoreListener() {
+            @Override
+            public void onEliminaSocialVenditore(SocialVenditoreModel socialVenditoreModel) {
+                repository.deleteSocialVenditore(socialVenditoreModel);
+            }
+        });
+    }
+
+
+    private void aggiornaSocialVenditore(String oldNome,String oldLink,String newNome,String newLink) {
+        System.out.println("entrato in aggiorna Social Venditore di view model");
+        fragmentProfiloRepository.aggiornaSocialVenditoreBackend(oldNome,oldLink,newNome,newLink ,new FragmentProfiloRepository.OnAggiornaSocialVenditoreListener() {
+            @Override
+            public void onAggiornaSocialVenditore(String nomeVecchio,String linkVecchio,String nomeNuovo,String linkNuovo) {
+                repository.updateSocialVenditore(nomeVecchio,linkVecchio,nomeNuovo,linkNuovo);
+            }
+        });
+    }
+
+
+    private void aggiornaVenditore(String nome,String cognome,String bio,String link,String areageografica,String email) {
+        System.out.println("entrato in aggiorna  Venditore di view model");
+        fragmentProfiloRepository.aggiornaVenditoreBackend(nome,cognome,bio,link,areageografica,email ,new FragmentProfiloRepository.OnAggiornaVenditoreListener() {
+            @Override
+            public void onAggiornaVenditore(String nomeNuovo,String cognomeNuovo,String bioNuovo,String linkNuovo,String areageograficaNuovo) {
+                repository.updateVenditore(nomeNuovo,cognomeNuovo,bioNuovo,linkNuovo,areageograficaNuovo);
+            }
+        });
+    }
+
+
+    private void aggiornaPasswordVenditore(String password,String email) {
+        System.out.println("entrato in aggiorna password  Venditore di view model");
+        fragmentProfiloRepository.aggiornaPasswordVenditoreBackend(password,email ,new FragmentProfiloRepository.OnAggiornaPasswordVenditoreListener() {
+            @Override
+            public void onAggiornaPasswordVenditore(String passwordNuovo) {
+                repository.updatePasswordVenditore(passwordNuovo);
+            }
+        });
+    }
+
+
+
     public void setMessaggioUtenteNonTrovato(String messaggio){
         messaggioSocialUtenteNonTrovato.setValue(messaggio);
     }
@@ -251,6 +435,14 @@ public class FragmentProfiloViewModel extends ViewModel {
     }
 
 
+    private void setSocialVenditorePresenti(boolean b) {
+        socialVenditorePresenti.setValue(true);
+    }
+    public Boolean getSocialVenditorePresenti() {
+        return socialVenditorePresenti.getValue();
+    }
+
+
     public List<String> getNomiSocialAcquirente(){
         Log.d("getNomiSocialAcquirente", "numero nomi: "  + repository.getNomiSocialAcquirenteModelList().size());
         return repository.getNomiSocialAcquirenteModelList();
@@ -272,10 +464,13 @@ public class FragmentProfiloViewModel extends ViewModel {
 
     public void checkTipoUtente(){
         if(containsAcquirente()){
+            System.out.println("contains di acquirente");
             setAcquirenteModelPresente();
             setAcquirenteRecuperato(getAcquirente());
         }else if(containsVenditore()) {
+            System.out.println("contains di venditore");
             setVenditoreModelPresente();
+            setVenditoreRecuperato(getVenditore());
         }
 
 
@@ -301,8 +496,16 @@ public class FragmentProfiloViewModel extends ViewModel {
         return repository.getAcquirenteModel().getIndirizzoEmail();
     }
 
+    public String getVenditoreEmail(){
+        return repository.getVenditoreModel().getIndirizzoEmail();
+    }
+
     public AcquirenteModel getAcquirente(){
         return repository.getAcquirenteModel();
+    }
+
+    public VenditoreModel getVenditore(){
+        return repository.getVenditoreModel();
     }
 
     public ArrayList<SocialAcquirenteModel> getListaSocialAcquirenteRecuperati(){
@@ -313,8 +516,21 @@ public class FragmentProfiloViewModel extends ViewModel {
         socialAcquirenteRecuperati.setValue(lista);
     }
 
+
+    public ArrayList<SocialVenditoreModel> getListaSocialVenditoreRecuperati(){
+        return repository.getListaSocialVenditoreRecuperati();
+    }
+
+    public void setSocialVenditoreRecuperati(ArrayList<SocialVenditoreModel> lista){
+        socialVenditoreRecuperati.setValue(lista);
+    }
+
     public void setAcquirenteRecuperato(AcquirenteModel acquirenteModel){
         acquirenteRecuperato.setValue(acquirenteModel);
+    }
+
+    public void setVenditoreRecuperato(VenditoreModel venditoreModel){
+        venditoreRecuperato.setValue(venditoreModel);
     }
 
     public void recuperaSocialAcquirente(){
@@ -324,11 +540,26 @@ public class FragmentProfiloViewModel extends ViewModel {
     }
 
 
+    public void recuperaSocialVenditore(){
+        System.out.println("in recupera social venditore del viewmodel");
+        ArrayList<SocialVenditoreModel> listaSocialVenditoreRecuperati = getListaSocialVenditoreRecuperati();
+        setSocialVenditoreRecuperati(listaSocialVenditoreRecuperati);
+    }
+
+
     public void setApriPopUpAggiungiSocial(Boolean b){
         apriPopUpAggiungiSocial.setValue(b);
     }
     public Boolean getApriPopUpAggiungiSocial(){
         return apriPopUpAggiungiSocial.getValue();
+    }
+
+
+    public void setApriLeMieAste(Boolean b){
+        apriLeMieAste.setValue(b);
+    }
+    public Boolean getApriLeMieAste(){
+        return apriLeMieAste.getValue();
     }
 
 }

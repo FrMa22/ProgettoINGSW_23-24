@@ -4,8 +4,11 @@ import android.os.AsyncTask;
 
 import com.example.progettoingsw.DTO.AcquirenteDTO;
 import com.example.progettoingsw.DTO.SocialAcquirenteDTO;
+import com.example.progettoingsw.DTO.SocialVenditoreDTO;
 import com.example.progettoingsw.backendAPI.AcquirenteService;
 import com.example.progettoingsw.backendAPI.SocialAcquirenteService;
+import com.example.progettoingsw.backendAPI.SocialVenditoreService;
+import com.example.progettoingsw.backendAPI.VenditoreService;
 import com.example.progettoingsw.model.AcquirenteModel;
 import com.example.progettoingsw.model.SocialAcquirenteModel;
 import com.example.progettoingsw.model.SocialVenditoreModel;
@@ -57,6 +60,45 @@ public class FragmentProfiloRepository {
         System.out.println("entrato in aggiorna password Acquirente Backend");
         new AggiornaPasswordAcquirenteTask(listener).execute(password,email);
     }
+
+    //versione venditore
+
+
+    public void trovaSocialVenditoreBackend(String email,FragmentProfiloRepository.OnFragmentProfiloVenditoreListener listener) {
+        System.out.println("entrato in  trova Social Venditore Backend");
+        new TrovaSocialVenditoreTask(listener).execute(email);
+    }
+
+
+    public void aggiungiSocialVenditoreBackend(String nome,String link,String email,FragmentProfiloRepository.OnAggiungiSocialVenditoreListener listener){
+        System.out.println("entrato in aggiungi Social Venditore Backend");
+        new AggiungiSocialVenditoreTask(listener).execute(nome,link,email);
+    }
+
+    public void eliminaSocialVenditoreBackend(String nome,String link,String email,FragmentProfiloRepository.OnEliminaSocialVenditoreListener listener){
+        System.out.println("entrato in elimina Social Venditore Backend");
+        new EliminaSocialVenditoreTask(listener).execute(nome,link,email);
+    }
+
+    public void aggiornaSocialVenditoreBackend(String oldNome,String oldLink,String newNome,String newLink,FragmentProfiloRepository.OnAggiornaSocialVenditoreListener listener){
+        System.out.println("entrato in aggiorna Social Venditore Backend");
+        new AggiornaSocialVenditoreTask(listener).execute(oldNome,oldLink,newNome,newLink);
+    }
+
+    public void aggiornaVenditoreBackend(String nome,String cognome,String bio,String link,String areageografica,String email,FragmentProfiloRepository.OnAggiornaVenditoreListener listener){
+        System.out.println("entrato in aggiorna  Venditore Backend");
+        new AggiornaVenditoreTask(listener).execute(nome,cognome,bio,link,areageografica,email);
+    }
+
+
+    public void aggiornaPasswordVenditoreBackend(String password,String email,FragmentProfiloRepository.OnAggiornaPasswordVenditoreListener listener){
+        System.out.println("entrato in aggiorna password Venditore Backend");
+        new AggiornaPasswordVenditoreTask(listener).execute(password,email);
+    }
+
+
+
+//tasks
 
 
     private static class TrovaSocialAcquirenteTask extends AsyncTask<String, Void, List<SocialAcquirenteModel>  > {
@@ -488,9 +530,438 @@ public class FragmentProfiloRepository {
         }
     }
 
+//versione venditore task
+
+    private static class AggiornaSocialVenditoreTask extends AsyncTask<String, Void, String[] > {
+        private OnAggiornaSocialVenditoreListener listener;
+
+        public AggiornaSocialVenditoreTask(OnAggiornaSocialVenditoreListener listener) {
+            this.listener = listener;
+        }
+
+        @Override
+        protected String[] doInBackground(String... params) {
+            String oldNome = params[0];
+            String oldLink=params[1];
+            String newNome=params[2];
+            String newLink=params[3];
+            System.out.println("in async aggiorna social Venditore, oldNome: " + oldNome + "oldlink:"+ oldLink + "newNome:"+ newNome +" newLink:"+newLink);
+            // Effettua l'operazione di rete qui...
+            // Restituisci il risultato
+
+            OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+            // Configura il client OkHttpClient...
+
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl(Repository.backendUrl)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .client(httpClient.build())
+                    .build();
+
+            SocialVenditoreService service = retrofit.create(SocialVenditoreService.class);
+            Call<Void> call=service.updateSocialVenditore(oldNome,oldLink,newNome,newLink);
+
+
+            System.out.println("entrato nel collegamento al backend,prima del try");
+            try {
+                Response<Void> response = call.execute();
+                if (response.isSuccessful()) {
+                    System.out.println("response successful");
+                    //SocialAcquirenteDTO socialAcquirenteDTO=response.body();
+                    // if (socialAcquirenteDTO!= null) {
+                    //System.out.println("Social acquirente dto non null");
+                    // SocialAcquirenteModel socialAcquirenteModel=new SocialAcquirenteModel(socialAcquirenteDTO.getNome(),socialAcquirenteDTO.getLink(),socialAcquirenteDTO.getIndirizzo_email());
+                    //SocialAcquirenteModel socialAcquirenteModel=new SocialAcquirenteModel(nome,link,email);
+                    //System.out.println("Valori del socialacquirente MODEL: " + "nome: " + socialAcquirenteModel.getNome() + ", link: " + socialAcquirenteModel.getLink() + ", email: " + socialAcquirenteModel.getIndirizzo_email());
+                    System.out.println("ritornato qualcosa nel asynctask");
+                    //return socialAcquirenteModel;
+                    return new String[] { oldNome, oldLink, newNome, newLink };
+                    //   }
+                    // System.out.println("Social acquirente dto null");
+                }
+                System.out.println("response non successful");
+            } catch (IOException e) {
+                System.out.println("exception IOEXC");
+                e.printStackTrace();
+            }
+            System.out.println("ritornato null nel asynctask");
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String[] result) {
+            System.out.println("on post execute aggiorna socialVenditore");
+            if (listener != null && result != null && result.length == 4) {
+                String oldNome = result[0];
+                String oldLink = result[1];
+                String newNome = result[2];
+                String newLink = result[3];
+
+                listener.onAggiornaSocialVenditore(oldNome,oldLink,newNome,newLink);
+            }
+        }
+    }
 
 
 
+
+    private static class AggiornaVenditoreTask extends AsyncTask<String, Void, String[] > {
+        private OnAggiornaVenditoreListener listener;
+
+        public AggiornaVenditoreTask(OnAggiornaVenditoreListener listener) {
+            this.listener = listener;
+        }
+
+        @Override
+        protected String[] doInBackground(String... params) {
+            String nome = params[0];
+            String cognome=params[1];
+            String bio=params[2];
+            String link=params[3];
+            String areageografica=params[4];
+            String email=params[5];
+            System.out.println("in async aggiorna  Venditore , nome:"+nome + " cognome:"+cognome + " bio:"+bio + " link:"+link +" area:"+areageografica+ " email:"+email );
+            // Effettua l'operazione di rete qui...
+            // Restituisci il risultato
+
+            OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+            // Configura il client OkHttpClient...
+
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl(Repository.backendUrl)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .client(httpClient.build())
+                    .build();
+
+            VenditoreService service = retrofit.create(VenditoreService.class);
+            Call<Void> call=service.updateVenditore(nome,cognome,bio,link,areageografica,email);
+
+
+            System.out.println("entrato nel collegamento al backend,prima del try");
+            try {
+                Response<Void> response = call.execute();
+                if (response.isSuccessful()) {
+                    System.out.println("response successful");
+                    //SocialAcquirenteDTO socialAcquirenteDTO=response.body();
+                    // if (socialAcquirenteDTO!= null) {
+                    //System.out.println("Social acquirente dto non null");
+                    // SocialAcquirenteModel socialAcquirenteModel=new SocialAcquirenteModel(socialAcquirenteDTO.getNome(),socialAcquirenteDTO.getLink(),socialAcquirenteDTO.getIndirizzo_email());
+                    //SocialAcquirenteModel socialAcquirenteModel=new SocialAcquirenteModel(nome,link,email);
+                    //System.out.println("Valori del socialacquirente MODEL: " + "nome: " + socialAcquirenteModel.getNome() + ", link: " + socialAcquirenteModel.getLink() + ", email: " + socialAcquirenteModel.getIndirizzo_email());
+                    System.out.println("ritornato qualcosa nel asynctask");
+                    //return socialAcquirenteModel;
+                    return new String[] { nome, cognome, bio, link,areageografica };
+                    //   }
+                    // System.out.println("Social acquirente dto null");
+                }
+                System.out.println("response non successful");
+            } catch (IOException e) {
+                System.out.println("exception IOEXC");
+                e.printStackTrace();
+            }
+            System.out.println("ritornato null nel asynctask");
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String[] result) {
+            System.out.println("on post execute aggiorna Venditore");
+            if (listener != null && result != null && result.length == 5) {
+                String nome = result[0];
+                String cognome=result[1];
+                String bio=result[2];
+                String link=result[3];
+                String areageografica=result[4];
+
+                listener.onAggiornaVenditore(nome,cognome,bio,link,areageografica);
+            }
+        }
+    }
+
+
+
+
+
+
+    private static class AggiornaPasswordVenditoreTask extends AsyncTask<String, Void, String[] > {
+        private OnAggiornaPasswordVenditoreListener listener;
+
+        public AggiornaPasswordVenditoreTask(OnAggiornaPasswordVenditoreListener listener) {
+            this.listener = listener;
+        }
+
+        @Override
+        protected String[] doInBackground(String... params) {
+            String password = params[0];
+            String email=params[1];
+            System.out.println("in async aggiorna  password Venditore , password:"+password + " email:"+email );
+            // Effettua l'operazione di rete qui...
+            // Restituisci il risultato
+
+            OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+            // Configura il client OkHttpClient...
+
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl(Repository.backendUrl)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .client(httpClient.build())
+                    .build();
+
+            VenditoreService service = retrofit.create(VenditoreService.class);
+            Call<Void> call=service.updatePasswordVenditore(password,email);
+
+
+            System.out.println("entrato nel collegamento al backend,prima del try");
+            try {
+                Response<Void> response = call.execute();
+                if (response.isSuccessful()) {
+                    System.out.println("response successful");
+                    //SocialAcquirenteDTO socialAcquirenteDTO=response.body();
+                    // if (socialAcquirenteDTO!= null) {
+                    //System.out.println("Social acquirente dto non null");
+                    // SocialAcquirenteModel socialAcquirenteModel=new SocialAcquirenteModel(socialAcquirenteDTO.getNome(),socialAcquirenteDTO.getLink(),socialAcquirenteDTO.getIndirizzo_email());
+                    //SocialAcquirenteModel socialAcquirenteModel=new SocialAcquirenteModel(nome,link,email);
+                    //System.out.println("Valori del socialacquirente MODEL: " + "nome: " + socialAcquirenteModel.getNome() + ", link: " + socialAcquirenteModel.getLink() + ", email: " + socialAcquirenteModel.getIndirizzo_email());
+                    System.out.println("ritornato qualcosa nel asynctask");
+                    //return socialAcquirenteModel;
+                    return new String[] { password };
+                    //   }
+                    // System.out.println("Social acquirente dto null");
+                }
+                System.out.println("response non successful");
+            } catch (IOException e) {
+                System.out.println("exception IOEXC");
+                e.printStackTrace();
+            }
+            System.out.println("ritornato null nel asynctask");
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String[] result) {
+            System.out.println("on post execute aggiorna password Venditore");
+            if (listener != null && result != null && result.length == 1) {
+                String password = result[0];
+
+                listener.onAggiornaPasswordVenditore(password);
+            }
+        }
+    }
+
+
+
+    private static class TrovaSocialVenditoreTask extends AsyncTask<String, Void, List<SocialVenditoreModel>  > {
+        private OnFragmentProfiloVenditoreListener listener;
+
+        public TrovaSocialVenditoreTask(OnFragmentProfiloVenditoreListener listener) {
+            this.listener = listener;
+        }
+
+        @Override
+        protected List<SocialVenditoreModel> doInBackground(String... params) {
+            String email = params[0];
+            System.out.println("in async trova social Venditore, email: " + email);
+            // Effettua l'operazione di rete qui...
+            // Restituisci il risultato
+
+            OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+            // Configura il client OkHttpClient...
+
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl(Repository.backendUrl)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .client(httpClient.build())
+                    .build();
+
+            SocialVenditoreService service = retrofit.create(SocialVenditoreService.class);
+            Call<List<SocialVenditoreDTO>> call=service.findSocialVenditore(email);
+
+
+            System.out.println("entrato nel collegamento al backend,prima del try");
+            try {
+                Response<List<SocialVenditoreDTO>> response = call.execute();
+                if (response.isSuccessful()) {
+                    System.out.println("response successful");
+                    List<SocialVenditoreDTO> socialVenditoreDTOList=response.body();
+                    if (socialVenditoreDTOList!= null) {
+                        System.out.println("Social Venditore dto non null");
+
+                        List<SocialVenditoreModel> socialVenditoreModelList=new ArrayList<>();
+                        for (SocialVenditoreDTO socialVenditoreDTO : socialVenditoreDTOList) {
+                            System.out.println("Valori del socialVenditore DTO: " + "nome: " + socialVenditoreDTO.getNome() + ", link: " + socialVenditoreDTO.getLink() + ", email: " + socialVenditoreDTO.getIndirizzo_email());
+                            // Fai qualcosa con i dati di socialAcquirenteDTO, ad esempio creando un nuovo oggetto AcquirenteModel
+                            SocialVenditoreModel socialVenditoreModel=new SocialVenditoreModel(socialVenditoreDTO.getNome(),socialVenditoreDTO.getLink(),socialVenditoreDTO.getIndirizzo_email());
+                            socialVenditoreModelList.add(socialVenditoreModel);
+                            System.out.println("Valori del socialVenditore MODEL: " + "nome: " + socialVenditoreModel.getNome() + ", link: " + socialVenditoreModel.getLink() + ", email: " + socialVenditoreModel.getIndirizzo_email());
+                        }
+                        System.out.println("ritornato qualcosa nel asynctask");
+                        return socialVenditoreModelList;
+                    }
+                    System.out.println("Social Venditore dto null");
+                }
+                System.out.println("response non successful");
+            } catch (IOException e) {
+                System.out.println("exception IOEXC");
+                e.printStackTrace();
+            }
+            System.out.println("ritornato null nel asynctask");
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(List<SocialVenditoreModel> result) {
+            System.out.println("on post execute trova socialVenditore");
+            if (listener != null) {
+                listener.onFragmentProfiloVenditore(result);
+            }
+        }
+    }
+
+
+
+
+
+
+
+
+
+    private static class AggiungiSocialVenditoreTask extends AsyncTask<String, Void, SocialVenditoreModel > {
+        private OnAggiungiSocialVenditoreListener listener;
+
+        public AggiungiSocialVenditoreTask(OnAggiungiSocialVenditoreListener listener) {
+            this.listener = listener;
+        }
+
+        @Override
+        protected SocialVenditoreModel doInBackground(String... params) {
+            String nome = params[0];
+            String link=params[1];
+            String email=params[2];
+            System.out.println("in async aggiungi social Venditore, nome: " + nome + "link:"+ link + "email:"+ email);
+            // Effettua l'operazione di rete qui...
+            // Restituisci il risultato
+
+            OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+            // Configura il client OkHttpClient...
+
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl(Repository.backendUrl)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .client(httpClient.build())
+                    .build();
+
+            SocialVenditoreService service = retrofit.create(SocialVenditoreService.class);
+            Call<SocialVenditoreDTO> call=service.insertSocialVenditore(nome,link,email);
+
+
+            System.out.println("entrato nel collegamento al backend,prima del try");
+            try {
+                Response<SocialVenditoreDTO> response = call.execute();
+                if (response.isSuccessful()) {
+                    System.out.println("response successful");
+                    SocialVenditoreDTO socialVenditoreDTO=response.body();
+                    if (socialVenditoreDTO!= null) {
+                        System.out.println("Social Venditore dto non null");
+                        SocialVenditoreModel socialVenditoreModel=new SocialVenditoreModel(socialVenditoreDTO.getNome(),socialVenditoreDTO.getLink(),socialVenditoreDTO.getIndirizzo_email());
+                        System.out.println("Valori del socialVenditore MODEL: " + "nome: " + socialVenditoreModel.getNome() + ", link: " + socialVenditoreModel.getLink() + ", email: " + socialVenditoreModel.getIndirizzo_email());
+                        System.out.println("ritornato qualcosa nel asynctask");
+                        return socialVenditoreModel;
+                    }
+                    System.out.println("Social Venditore dto null");
+                }
+                System.out.println("response non successful");
+            } catch (IOException e) {
+                System.out.println("exception IOEXC");
+                e.printStackTrace();
+            }
+            System.out.println("ritornato null nel asynctask");
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(SocialVenditoreModel result) {
+            System.out.println("on post execute aggiungi socialVenditore");
+            if (listener != null) {
+                listener.onAggiungiSocialVenditore(result);
+            }
+        }
+    }
+
+
+
+
+
+
+
+
+
+    private static class EliminaSocialVenditoreTask extends AsyncTask<String, Void, SocialVenditoreModel > {
+        private OnEliminaSocialVenditoreListener listener;
+
+        public EliminaSocialVenditoreTask(OnEliminaSocialVenditoreListener listener) {
+            this.listener = listener;
+        }
+
+        @Override
+        protected SocialVenditoreModel doInBackground(String... params) {
+            String nome = params[0];
+            String link=params[1];
+            String email=params[2];
+            System.out.println("in async elimina social Venditore, nome: " + nome + "link:"+ link + "email:"+ email);
+            // Effettua l'operazione di rete qui...
+            // Restituisci il risultato
+
+            OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+            // Configura il client OkHttpClient...
+
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl(Repository.backendUrl)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .client(httpClient.build())
+                    .build();
+
+            SocialVenditoreService service = retrofit.create(SocialVenditoreService.class);
+            Call<Void> call=service.deleteSocialVenditore(nome,link,email);
+
+
+            System.out.println("entrato nel collegamento al backend,prima del try");
+            try {
+                Response<Void> response = call.execute();
+                if (response.isSuccessful()) {
+                    System.out.println("response successful");
+                    //SocialAcquirenteDTO socialAcquirenteDTO=response.body();
+                    // if (socialAcquirenteDTO!= null) {
+                    System.out.println("Social Venditore dto non null");
+                    // SocialAcquirenteModel socialAcquirenteModel=new SocialAcquirenteModel(socialAcquirenteDTO.getNome(),socialAcquirenteDTO.getLink(),socialAcquirenteDTO.getIndirizzo_email());
+                    SocialVenditoreModel socialVenditoreModel=new SocialVenditoreModel(nome,link,email);
+                    System.out.println("Valori del socialVenditore MODEL: " + "nome: " + socialVenditoreModel.getNome() + ", link: " + socialVenditoreModel.getLink() + ", email: " + socialVenditoreModel.getIndirizzo_email());
+                    System.out.println("ritornato qualcosa nel asynctask");
+                    return socialVenditoreModel;
+                    //   }
+                    // System.out.println("Social acquirente dto null");
+                }
+                System.out.println("response non successful");
+            } catch (IOException e) {
+                System.out.println("exception IOEXC");
+                e.printStackTrace();
+            }
+            System.out.println("ritornato null nel asynctask");
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(SocialVenditoreModel result) {
+            System.out.println("on post execute elimina socialVenditore");
+            if (listener != null) {
+                listener.onEliminaSocialVenditore(result);
+            }
+        }
+    }
+
+
+
+
+    //
 
     public interface OnFragmentProfiloAcquirenteListener {
         void onFragmentProfilo(List<SocialAcquirenteModel> socialAcquirenteModelList);
@@ -517,9 +988,36 @@ public class FragmentProfiloRepository {
         void onAggiornaPasswordAcquirente(String password);
     }
 
+
+
+
+    //versione venditore
+
     public interface OnFragmentProfiloVenditoreListener {
-        void onFragmentProfilo(List<SocialVenditoreModel> socialVenditoreModelList);
+        void onFragmentProfiloVenditore(List<SocialVenditoreModel> socialVenditoreModelList);
     }
+
+    public interface OnAggiungiSocialVenditoreListener {
+        void onAggiungiSocialVenditore(SocialVenditoreModel socialVenditoreModel);
+    }
+
+
+    public interface OnEliminaSocialVenditoreListener {
+        void onEliminaSocialVenditore(SocialVenditoreModel socialVenditoreModel);
+    }
+    public interface OnAggiornaSocialVenditoreListener {
+        void onAggiornaSocialVenditore(String oldNome,String oldLink,String newNome,String newLink);
+    }
+
+
+    public interface OnAggiornaVenditoreListener {
+        void onAggiornaVenditore(String nomeNuovo,String cognomeNuovo,String bioNuovo,String linkNuovo,String areageograficaNuovo);
+    }
+
+    public interface OnAggiornaPasswordVenditoreListener {
+        void onAggiornaPasswordVenditore(String password);
+    }
+
 
 
 }

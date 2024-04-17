@@ -28,6 +28,8 @@ public class Repository {
 
     private ArrayList<SocialAcquirenteModel> listaSocialAcquirenteRecuperati;//usata per avere social acquirente nel profilo utente
 
+    private ArrayList<SocialVenditoreModel> listaSocialVenditoreRecuperati;//usata per avere social acquirente nel profilo utente
+
     private ArrayList<String> listaCategorieVenditore;
     public static final String backendUrl = "http:/15.237.202.146:8080/";
     public static Repository questaRepository = null;
@@ -135,7 +137,38 @@ public class Repository {
         this.acquirenteModel.setPassword(passwordNuovo);
     }
 
+//versione venditore
 
+    public void addSocialVenditore(SocialVenditoreModel socialVenditoreModel){
+        this.socialVenditoreModelList.add(socialVenditoreModel);
+    }
+
+    public void deleteSocialVenditore(SocialVenditoreModel socialVenditoreModel){
+        this.socialVenditoreModelList.remove(socialVenditoreModel);
+    }
+
+    public void updateSocialVenditore(String oldNome,String oldLink,String newNome,String newLink){
+        for(SocialVenditoreModel s:socialVenditoreModelList){
+            if (s.getNome().equals(oldNome) && s.getLink().equals(oldLink)) {
+                s.setNome(newNome);
+                s.setLink(newLink);
+                break;
+            }
+        }
+
+    }
+
+    public void updateVenditore(String nomeNuovo,String cognomeNuovo,String bioNuovo,String linkNuovo,String areageograficaNuovo){
+        this.venditoreModel.setNome(nomeNuovo);
+        this.venditoreModel.setCognome(cognomeNuovo);
+        this.venditoreModel.setBio(bioNuovo);
+        this.venditoreModel.setAreaGeografica(areageograficaNuovo);
+        this.venditoreModel.setLink(linkNuovo);
+    }
+
+    public void updatePasswordVenditore(String passwordNuovo){
+        this.venditoreModel.setPassword(passwordNuovo);
+    }
 
     public List<String> getNomiSocialAcquirenteModelList(){
         List<String> nomi = new ArrayList<>();
@@ -294,6 +327,14 @@ public class Repository {
 
     public void setNotificaVenditoreScelta(NotificheVenditoreModel notificaVenditoreScelta) {
         this.notificaVenditoreScelta = notificaVenditoreScelta;
+    }
+
+
+    public ArrayList<SocialVenditoreModel> getListaSocialVenditoreRecuperati() {
+        return (ArrayList<SocialVenditoreModel>) socialVenditoreModelList;
+    }
+    public void setListaSocialVenditoreRecuperati(ArrayList<SocialVenditoreModel> listaSocialVenditoreRecuperati) {
+        this.listaSocialVenditoreRecuperati = listaSocialVenditoreRecuperati;
     }
 
 
