@@ -267,7 +267,10 @@ public class CreaAstaIngleseViewModel extends ViewModel {
             String id_venditore = repository.getVenditoreModel().getIndirizzoEmail();
 
             Asta_allingleseModel asta = new Asta_allingleseModel(nome,descrizione,image_byte, baseAsta_float,intervallo,intervallo, rialzo_float,baseAsta_float,"aperta",id_venditore);
-            Log.d("creo asta", "nome: " + nome + "categorie: " + categorieScelte.get(0));
+            if(categorieScelte!=null && !categorieScelte.isEmpty()) {
+                Log.d("creo asta", "nome: " + nome + "categorie: " + categorieScelte.get(0));
+            }
+
             creaAstaBackend(asta);
 
         }

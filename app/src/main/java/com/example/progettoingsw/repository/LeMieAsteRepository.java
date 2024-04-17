@@ -1,6 +1,7 @@
 package com.example.progettoingsw.repository;
 
 import android.os.AsyncTask;
+import android.util.Base64;
 
 import com.example.progettoingsw.DTO.Asta_allinglese_DTO;
 import com.example.progettoingsw.DTO.Asta_alribasso_DTO;
@@ -98,14 +99,17 @@ public class LeMieAsteRepository {
                 if (response.isSuccessful()) {
                     System.out.println("response successful");
                     List<Asta_allinglese_DTO> astaIngleseDTOList=response.body();
-                    if (astaIngleseDTOList!= null) {
+                    if (astaIngleseDTOList!= null && !astaIngleseDTOList.isEmpty()) {
                         System.out.println("Asta inglese dto non null");
 
                         List<Asta_allingleseModel> astaIngleseModelList=new ArrayList<>();
                         for (Asta_allinglese_DTO astaIngleseDTO : astaIngleseDTOList) {
+                            byte[] pathImmagineByteArray = null;
+                            if(astaIngleseDTO.getPath_immagine()!=null){
+                                pathImmagineByteArray = base64ToByteArray(astaIngleseDTO.getPath_immagine());}
                             System.out.println("Valori del asta inglese DTO: " + "id: " + astaIngleseDTO.getId() + ", nome: " + astaIngleseDTO.getNome() + ", email: " + astaIngleseDTO.getId_venditore());
                             // Fai qualcosa con i dati di socialAcquirenteDTO, ad esempio creando un nuovo oggetto AcquirenteModel
-                            Asta_allingleseModel astaIngleseModel=new Asta_allingleseModel(astaIngleseDTO.getId(),astaIngleseDTO.getNome(),astaIngleseDTO.getDescrizione(),astaIngleseDTO.getPath_immagine(),astaIngleseDTO.getBaseAsta(),astaIngleseDTO.getIntervalloTempoOfferte(),astaIngleseDTO.getIntervalloOfferteBase(),astaIngleseDTO.getRialzoMin(),astaIngleseDTO.getPrezzoAttuale(),astaIngleseDTO.getCondizione(),astaIngleseDTO.getId_venditore());
+                            Asta_allingleseModel astaIngleseModel=new Asta_allingleseModel(astaIngleseDTO.getId(),astaIngleseDTO.getNome(),astaIngleseDTO.getDescrizione(),pathImmagineByteArray,astaIngleseDTO.getBaseAsta(),astaIngleseDTO.getIntervalloTempoOfferte(),astaIngleseDTO.getIntervalloOfferteBase(),astaIngleseDTO.getRialzoMin(),astaIngleseDTO.getPrezzoAttuale(),astaIngleseDTO.getCondizione(),astaIngleseDTO.getId_venditore());
                             astaIngleseModelList.add(astaIngleseModel);
                             System.out.println("Valori del asta inglese MODEL: " + "id: " + astaIngleseModel.getId() + ", nome: " + astaIngleseModel.getNome() + ", email: " + astaIngleseModel.getId_venditore());
                         }
@@ -172,14 +176,17 @@ public class LeMieAsteRepository {
                 if (response.isSuccessful()) {
                     System.out.println("response successful");
                     List<Asta_allinglese_DTO> astaIngleseDTOList=response.body();
-                    if (astaIngleseDTOList!= null) {
+                    if (astaIngleseDTOList!= null && !astaIngleseDTOList.isEmpty()) {
                         System.out.println("Asta inglese dto non null");
 
                         List<Asta_allingleseModel> astaIngleseModelList=new ArrayList<>();
                         for (Asta_allinglese_DTO astaIngleseDTO : astaIngleseDTOList) {
+                            byte[] pathImmagineByteArray = null;
+                            if(astaIngleseDTO.getPath_immagine()!=null){
+                                pathImmagineByteArray = base64ToByteArray(astaIngleseDTO.getPath_immagine());}
                             System.out.println("Valori del asta inglese DTO: " + "id: " + astaIngleseDTO.getId() + ", nome: " + astaIngleseDTO.getNome() + ", email: " + astaIngleseDTO.getId_venditore());
                             // Fai qualcosa con i dati di socialAcquirenteDTO, ad esempio creando un nuovo oggetto AcquirenteModel
-                            Asta_allingleseModel astaIngleseModel=new Asta_allingleseModel(astaIngleseDTO.getId(),astaIngleseDTO.getNome(),astaIngleseDTO.getDescrizione(),astaIngleseDTO.getPath_immagine(),astaIngleseDTO.getBaseAsta(),astaIngleseDTO.getIntervalloTempoOfferte(),astaIngleseDTO.getIntervalloOfferteBase(),astaIngleseDTO.getRialzoMin(),astaIngleseDTO.getPrezzoAttuale(),astaIngleseDTO.getCondizione(),astaIngleseDTO.getId_venditore());
+                            Asta_allingleseModel astaIngleseModel=new Asta_allingleseModel(astaIngleseDTO.getId(),astaIngleseDTO.getNome(),astaIngleseDTO.getDescrizione(),pathImmagineByteArray,astaIngleseDTO.getBaseAsta(),astaIngleseDTO.getIntervalloTempoOfferte(),astaIngleseDTO.getIntervalloOfferteBase(),astaIngleseDTO.getRialzoMin(),astaIngleseDTO.getPrezzoAttuale(),astaIngleseDTO.getCondizione(),astaIngleseDTO.getId_venditore());
                             astaIngleseModelList.add(astaIngleseModel);
                             System.out.println("Valori del asta inglese MODEL: " + "id: " + astaIngleseModel.getId() + ", nome: " + astaIngleseModel.getNome() + ", email: " + astaIngleseModel.getId_venditore());
                         }
@@ -246,14 +253,17 @@ public class LeMieAsteRepository {
                 if (response.isSuccessful()) {
                     System.out.println("response successful");
                     List<Asta_alribasso_DTO> astaRibassoDTOList=response.body();
-                    if (astaRibassoDTOList!= null) {
+                    if (astaRibassoDTOList!= null && !astaRibassoDTOList.isEmpty()) {
                         System.out.println("Asta ribasso dto non null");
 
                         List<Asta_alribassoModel> astaRibassoModelList=new ArrayList<>();
                         for (Asta_alribasso_DTO astaRibassoDTO : astaRibassoDTOList) {
+                            byte[] pathImmagineByteArray = null;
+                            if(astaRibassoDTO.getPath_immagine()!=null){
+                                pathImmagineByteArray = base64ToByteArray(astaRibassoDTO.getPath_immagine());}
                             System.out.println("Valori del asta ribasso DTO: " + "id: " + astaRibassoDTO.getId() + ", nome: " + astaRibassoDTO.getNome() + ", email: " + astaRibassoDTO.getId_venditore());
                             // Fai qualcosa con i dati di socialAcquirenteDTO, ad esempio creando un nuovo oggetto AcquirenteModel
-                            Asta_alribassoModel astaRibassoModel=new Asta_alribassoModel(astaRibassoDTO.getId(),astaRibassoDTO.getNome(),astaRibassoDTO.getDescrizione(),astaRibassoDTO.getPath_immagine(),astaRibassoDTO.getPrezzoBase(),astaRibassoDTO.getIntervalloDecrementale(),astaRibassoDTO.getIntervalloBase(),astaRibassoDTO.getDecrementoAutomaticoCifra(),astaRibassoDTO.getPrezzoMin(),astaRibassoDTO.getPrezzoAttuale(),astaRibassoDTO.getCondizione(),astaRibassoDTO.getId_venditore());
+                            Asta_alribassoModel astaRibassoModel=new Asta_alribassoModel(astaRibassoDTO.getId(),astaRibassoDTO.getNome(),astaRibassoDTO.getDescrizione(),pathImmagineByteArray,astaRibassoDTO.getPrezzoBase(),astaRibassoDTO.getIntervalloDecrementale(),astaRibassoDTO.getIntervalloBase(),astaRibassoDTO.getDecrementoAutomaticoCifra(),astaRibassoDTO.getPrezzoMin(),astaRibassoDTO.getPrezzoAttuale(),astaRibassoDTO.getCondizione(),astaRibassoDTO.getId_venditore());
                             astaRibassoModelList.add(astaRibassoModel);
                             System.out.println("Valori del asta ribasso MODEL: " + "id: " + astaRibassoModel.getId() + ", nome: " + astaRibassoModel.getNome() + ", email: " + astaRibassoModel.getId_venditore());
                         }
@@ -319,14 +329,17 @@ public class LeMieAsteRepository {
                 if (response.isSuccessful()) {
                     System.out.println("response successful");
                     List<Asta_alribasso_DTO> astaRibassoDTOList=response.body();
-                    if (astaRibassoDTOList!= null) {
+                    if (astaRibassoDTOList!= null && !astaRibassoDTOList.isEmpty()) {
                         System.out.println("Asta ribasso dto non null");
 
                         List<Asta_alribassoModel> astaRibassoModelList=new ArrayList<>();
                         for (Asta_alribasso_DTO astaRibassoDTO : astaRibassoDTOList) {
+                            byte[] pathImmagineByteArray = null;
+                            if(astaRibassoDTO.getPath_immagine()!=null){
+                                pathImmagineByteArray = base64ToByteArray(astaRibassoDTO.getPath_immagine());}
                             System.out.println("Valori del asta ribasso DTO: " + "id: " + astaRibassoDTO.getId() + ", nome: " + astaRibassoDTO.getNome() + ", email: " + astaRibassoDTO.getId_venditore());
                             // Fai qualcosa con i dati di socialAcquirenteDTO, ad esempio creando un nuovo oggetto AcquirenteModel
-                            Asta_alribassoModel astaRibassoModel=new Asta_alribassoModel(astaRibassoDTO.getId(),astaRibassoDTO.getNome(),astaRibassoDTO.getDescrizione(),astaRibassoDTO.getPath_immagine(),astaRibassoDTO.getPrezzoBase(),astaRibassoDTO.getIntervalloDecrementale(),astaRibassoDTO.getIntervalloBase(),astaRibassoDTO.getDecrementoAutomaticoCifra(),astaRibassoDTO.getPrezzoMin(),astaRibassoDTO.getPrezzoAttuale(),astaRibassoDTO.getCondizione(),astaRibassoDTO.getId_venditore());
+                            Asta_alribassoModel astaRibassoModel=new Asta_alribassoModel(astaRibassoDTO.getId(),astaRibassoDTO.getNome(),astaRibassoDTO.getDescrizione(),pathImmagineByteArray,astaRibassoDTO.getPrezzoBase(),astaRibassoDTO.getIntervalloDecrementale(),astaRibassoDTO.getIntervalloBase(),astaRibassoDTO.getDecrementoAutomaticoCifra(),astaRibassoDTO.getPrezzoMin(),astaRibassoDTO.getPrezzoAttuale(),astaRibassoDTO.getCondizione(),astaRibassoDTO.getId_venditore());
                             astaRibassoModelList.add(astaRibassoModel);
                             System.out.println("Valori del asta ribasso MODEL: " + "id: " + astaRibassoModel.getId() + ", nome: " + astaRibassoModel.getNome() + ", email: " + astaRibassoModel.getId_venditore());
                         }
@@ -393,14 +406,17 @@ public class LeMieAsteRepository {
                 if (response.isSuccessful()) {
                     System.out.println("response successful");
                     List<Asta_inversa_DTO> astaInversaDTOList=response.body();
-                    if (astaInversaDTOList!= null) {
+                    if (astaInversaDTOList!= null && !astaInversaDTOList.isEmpty()) {
                         System.out.println("Asta inversa dto non null");
 
                         List<Asta_inversaModel> astaInversaModelList=new ArrayList<>();
                         for (Asta_inversa_DTO astaInversaDTO : astaInversaDTOList) {
+                            byte[] pathImmagineByteArray = null;
+                            if(astaInversaDTO.getPath_immagine()!=null){
+                                pathImmagineByteArray = base64ToByteArray(astaInversaDTO.getPath_immagine());}
                             System.out.println("Valori del asta inversa DTO: " + "id: " + astaInversaDTO.getId() + ", nome: " + astaInversaDTO.getNome() + ", email: " + astaInversaDTO.getId_acquirente());
                             // Fai qualcosa con i dati di socialAcquirenteDTO, ad esempio creando un nuovo oggetto AcquirenteModel
-                            Asta_inversaModel astaInversaModel=new Asta_inversaModel(astaInversaDTO.getId(),astaInversaDTO.getNome(),astaInversaDTO.getDescrizione(),astaInversaDTO.getPath_immagine(),astaInversaDTO.getPrezzoMax(),astaInversaDTO.getPrezzoAttuale(),astaInversaDTO.getDataDiScadenza(),astaInversaDTO.getCondizione(),astaInversaDTO.getId_acquirente());
+                            Asta_inversaModel astaInversaModel=new Asta_inversaModel(astaInversaDTO.getId(),astaInversaDTO.getNome(),astaInversaDTO.getDescrizione(),pathImmagineByteArray,astaInversaDTO.getPrezzoMax(),astaInversaDTO.getPrezzoAttuale(),astaInversaDTO.getDataDiScadenza(),astaInversaDTO.getCondizione(),astaInversaDTO.getId_acquirente());
                             astaInversaModelList.add(astaInversaModel);
                             System.out.println("Valori del asta inversa MODEL: " + "id: " + astaInversaModel.getId() + ", nome: " + astaInversaModel.getNome() + ", email: " + astaInversaModel.getId_acquirente());
                         }
@@ -466,14 +482,17 @@ private static class TrovaAsteInverseChiuseTask extends AsyncTask<String, Void, 
             if (response.isSuccessful()) {
                 System.out.println("response successful");
                 List<Asta_inversa_DTO> astaInversaDTOList=response.body();
-                if (astaInversaDTOList!= null) {
+                if (astaInversaDTOList!= null && !astaInversaDTOList.isEmpty()) {
                     System.out.println("Asta inversa dto non null");
 
                     List<Asta_inversaModel> astaInversaModelList=new ArrayList<>();
                     for (Asta_inversa_DTO astaInversaDTO : astaInversaDTOList) {
+                        byte[] pathImmagineByteArray = null;
+                        if(astaInversaDTO.getPath_immagine()!=null){
+                            pathImmagineByteArray = base64ToByteArray(astaInversaDTO.getPath_immagine());}
                         System.out.println("Valori del asta inversa DTO: " + "id: " + astaInversaDTO.getId() + ", nome: " + astaInversaDTO.getNome() + ", email: " + astaInversaDTO.getId_acquirente());
                         // Fai qualcosa con i dati di socialAcquirenteDTO, ad esempio creando un nuovo oggetto AcquirenteModel
-                        Asta_inversaModel astaInversaModel=new Asta_inversaModel(astaInversaDTO.getId(),astaInversaDTO.getNome(),astaInversaDTO.getDescrizione(),astaInversaDTO.getPath_immagine(),astaInversaDTO.getPrezzoMax(),astaInversaDTO.getPrezzoAttuale(),astaInversaDTO.getDataDiScadenza(),astaInversaDTO.getCondizione(),astaInversaDTO.getId_acquirente());
+                        Asta_inversaModel astaInversaModel=new Asta_inversaModel(astaInversaDTO.getId(),astaInversaDTO.getNome(),astaInversaDTO.getDescrizione(),pathImmagineByteArray,astaInversaDTO.getPrezzoMax(),astaInversaDTO.getPrezzoAttuale(),astaInversaDTO.getDataDiScadenza(),astaInversaDTO.getCondizione(),astaInversaDTO.getId_acquirente());
                         astaInversaModelList.add(astaInversaModel);
                         System.out.println("Valori del asta inversa MODEL: " + "id: " + astaInversaModel.getId() + ", nome: " + astaInversaModel.getNome() + ", email: " + astaInversaModel.getId_acquirente());
                     }
@@ -505,7 +524,18 @@ private static class TrovaAsteInverseChiuseTask extends AsyncTask<String, Void, 
         void onTrovaAsteInverseChiuse(List<Asta_inversaModel> astaInversaModelList);
     }
 
+    public static byte[] base64ToByteArray(String base64String) {
+        // Rimuovi il prefisso "data:image/jpeg;base64," se presente
+        String base64WithoutPrefix = base64String.replaceFirst("^data:image/[a-zA-Z]*;base64,", "");
 
+        // Decodifica la stringa Base64 in un array di byte
+        return Base64.decode(base64WithoutPrefix, Base64.DEFAULT);
+    }
+    // Funzione per convertire un array di byte in una stringa Base64
+    public static String byteArrayToBase64(byte[] byteArray) {
+        // Codifica l'array di byte in una stringa Base64
+        return Base64.encodeToString(byteArray, Base64.DEFAULT);
+    }
 
 
 

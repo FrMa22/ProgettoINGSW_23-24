@@ -309,7 +309,9 @@ public class CreaAstaRibassoViewModel extends ViewModel{
             Asta_alribassoModel asta = new Asta_alribassoModel(nome,  descrizione, img_byte, prezzoBase_float,  intervalloDecrementale,  intervalloDecrementale,
                     decrementoAutomaticoCifra_float,  prezzoMin_float, prezzoBase_float, "aperta", id_venditore);
 
-            Log.d("creo asta", "nome: " + nome + "categorie: " + categorieScelte.get(0));
+            if(categorieScelte!=null && !categorieScelte.isEmpty()) {
+                Log.d("creo asta", "nome: " + nome + "categorie: " + categorieScelte.get(0));
+            }
             creaAstaBackend(asta);
 
         }

@@ -309,7 +309,9 @@ public class CreaAstaInversaViewModel extends ViewModel {
                 String id_acquirente = repository.getAcquirenteModel().getIndirizzoEmail();
 
                 Asta_inversaModel asta = new Asta_inversaModel(nome,descrizione,image_byte, prezzo_float, prezzo_float,data_e_ora,"aperta",id_acquirente);
-                Log.d("creo asta", "nome: " + nome + "categorie: " + categorieScelte.get(0));
+                if(categorieScelte!=null && !categorieScelte.isEmpty()) {
+                    Log.d("creo asta", "nome: " + nome + "categorie: " + categorieScelte.get(0));
+                }
                 creaAstaBackend(asta);
             }
 

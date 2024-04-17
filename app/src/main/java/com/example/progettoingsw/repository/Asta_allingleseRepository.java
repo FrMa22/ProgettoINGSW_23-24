@@ -699,7 +699,6 @@ public class Asta_allingleseRepository {
             String immagine = null;
             if(astaIngleseModel.getPath_immagine()!=null){
                 immagine = byteArrayToBase64(astaIngleseModel.getPath_immagine());
-                Log.d("immagine" , "" + immagine);
             }
 
             Asta_allinglese_DTO asta_allinglese_dto = new Asta_allinglese_DTO(astaIngleseModel.getNome(),astaIngleseModel.getDescrizione(),immagine,astaIngleseModel.getBaseAsta()

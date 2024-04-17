@@ -610,7 +610,6 @@ public class Asta_alribassoRepository {
             String immagine = null;
             if(astaRibassoModel.getPath_immagine()!=null){
                 immagine = byteArrayToBase64(astaRibassoModel.getPath_immagine());
-                Log.d("immagine" , "" + immagine);
             }
 
             Asta_alribasso_DTO asta_alribasso_dto = new Asta_alribasso_DTO(astaRibassoModel.getNome(),astaRibassoModel.getDescrizione(),immagine,astaRibassoModel.getPrezzoBase()
