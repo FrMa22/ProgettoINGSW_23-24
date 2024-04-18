@@ -21,10 +21,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.progettoingsw.model.AcquirenteModel;
 import com.example.progettoingsw.model.SocialAcquirenteModel;
 import com.example.progettoingsw.model.SocialVenditoreModel;
-import com.example.progettoingsw.repository.Repository;
 import com.example.progettoingsw.view.LeMieAste;
 import com.example.progettoingsw.view.PopUpAggiungiSocialProfilo;
 import com.example.progettoingsw.view.PopUpControlloPassword;
@@ -477,9 +475,9 @@ public class FragmentProfilo extends Fragment{
                 //lista social quindi estrarre nomi e link poi fare chiamata a update social names per mostrarli graficamente
                 String nome=acquirente.getNome();
                 String cognome=acquirente.getCognome();
-                String email=acquirente.getIndirizzoEmail();
+                String email=acquirente.getIndirizzo_email();
                 String sitoweb=acquirente.getLink();
-                String paese=acquirente.getAreaGeografica();
+                String paese=acquirente.getAreageografica();
                 String bio=acquirente.getBio();
                 updateDatiUtente(nome,cognome,email,sitoweb,paese,bio);
             }
@@ -508,9 +506,9 @@ public class FragmentProfilo extends Fragment{
                 //lista social quindi estrarre nomi e link poi fare chiamata a update social names per mostrarli graficamente
                 String nome=venditore.getNome();
                 String cognome=venditore.getCognome();
-                String email=venditore.getIndirizzoEmail();
+                String email=venditore.getIndirizzo_email();
                 String sitoweb=venditore.getLink();
-                String paese=venditore.getAreaGeografica();
+                String paese=venditore.getAreageografica();
                 String bio=venditore.getBio();
                 updateDatiUtente(nome,cognome,email,sitoweb,paese,bio);
             }

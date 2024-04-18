@@ -322,11 +322,11 @@ public class LeMieAsteViewModel extends ViewModel {
 
 
     public String getAcquirenteEmail(){
-        return repository.getAcquirenteModel().getIndirizzoEmail();
+        return repository.getAcquirenteModel().getIndirizzo_email();
     }
 
     public String getVenditoreEmail(){
-        return repository.getVenditoreModel().getIndirizzoEmail();
+        return repository.getVenditoreModel().getIndirizzo_email();
     }
 
     public AcquirenteModel getAcquirente(){

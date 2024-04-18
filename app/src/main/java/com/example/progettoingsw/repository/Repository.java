@@ -136,7 +136,7 @@ public class Repository {
          this.acquirenteModel.setNome(nomeNuovo);
         this.acquirenteModel.setCognome(cognomeNuovo);
         this.acquirenteModel.setBio(bioNuovo);
-        this.acquirenteModel.setAreaGeografica(areageograficaNuovo);
+        this.acquirenteModel.setAreageografica(areageograficaNuovo);
         this.acquirenteModel.setLink(linkNuovo);
     }
 
@@ -169,7 +169,7 @@ public class Repository {
         this.venditoreModel.setNome(nomeNuovo);
         this.venditoreModel.setCognome(cognomeNuovo);
         this.venditoreModel.setBio(bioNuovo);
-        this.venditoreModel.setAreaGeografica(areageograficaNuovo);
+        this.venditoreModel.setAreageografica(areageograficaNuovo);
         this.venditoreModel.setLink(linkNuovo);
     }
 

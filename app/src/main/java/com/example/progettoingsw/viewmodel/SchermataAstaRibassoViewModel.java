@@ -176,7 +176,7 @@ public class SchermataAstaRibassoViewModel extends ViewModel {
         return repository.getAsta_alribassoSelezionata().getId();
     }
     public String recuperaEmailAcquirente(){
-        return repository.getAcquirenteModel().getIndirizzoEmail();
+        return repository.getAcquirenteModel().getIndirizzo_email();
     }
     public String recuperaPrezzoAttualeAstaRibasso(){
         return String.valueOf(repository.getAsta_alribassoSelezionata().getPrezzoAttuale());
@@ -194,7 +194,7 @@ public class SchermataAstaRibassoViewModel extends ViewModel {
         return isAstaInPreferiti.getValue();
     }
     public void verificaAstaInPreferiti(){
-        String indirizzoEmail = repository.getAcquirenteModel().getIndirizzoEmail();
+        String indirizzoEmail = repository.getAcquirenteModel().getIndirizzo_email();
         Long idAsta = repository.getAsta_alribassoSelezionata().getId();
         astaAlribassoRepository.verificaAstaRibassoInPreferiti(indirizzoEmail,idAsta, new Asta_alribassoRepository.OnVerificaAstaRibassoInPreferitiListener() {
             @Override
@@ -212,7 +212,7 @@ public class SchermataAstaRibassoViewModel extends ViewModel {
         });
     }
     public void inserimentoAstaInPreferiti(){
-        String indirizzoEmail = repository.getAcquirenteModel().getIndirizzoEmail();
+        String indirizzoEmail = repository.getAcquirenteModel().getIndirizzo_email();
         Long idAsta = repository.getAsta_alribassoSelezionata().getId();
         astaAlribassoRepository.inserimentoAstaInPreferiti(idAsta, indirizzoEmail, new Asta_alribassoRepository.OnInserimentoAstaRibassoInPreferitiListener() {
             @Override
@@ -229,7 +229,7 @@ public class SchermataAstaRibassoViewModel extends ViewModel {
         });
     }
     public void eliminazioneAstaInPreferiti(){
-        String indirizzoEmail = repository.getAcquirenteModel().getIndirizzoEmail();
+        String indirizzoEmail = repository.getAcquirenteModel().getIndirizzo_email();
         Long idAsta = repository.getAsta_alribassoSelezionata().getId();
         astaAlribassoRepository.eliminazioneAstaInPreferiti(idAsta, indirizzoEmail, new Asta_alribassoRepository.OnEliminazioneAstaRibassoInPreferitiListener() {
             @Override

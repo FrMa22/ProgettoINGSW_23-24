@@ -506,11 +506,11 @@ public class FragmentProfiloViewModel extends ViewModel {
     }
 
     public String getAcquirenteEmail(){
-        return repository.getAcquirenteModel().getIndirizzoEmail();
+        return repository.getAcquirenteModel().getIndirizzo_email();
     }
 
     public String getVenditoreEmail(){
-        return repository.getVenditoreModel().getIndirizzoEmail();
+        return repository.getVenditoreModel().getIndirizzo_email();
     }
 
     public AcquirenteModel getAcquirente(){
@@ -540,10 +540,12 @@ public class FragmentProfiloViewModel extends ViewModel {
 
     public void setAcquirenteRecuperato(AcquirenteModel acquirenteModel){
         acquirenteRecuperato.setValue(acquirenteModel);
+        System.out.println("in set acquirente recuperato con dati seguenti:"+ " nome:"+acquirenteModel.getNome() + " email:"+ acquirenteModel.getIndirizzo_email() + " cognome:"+ acquirenteModel.getCognome());
     }
 
     public void setVenditoreRecuperato(VenditoreModel venditoreModel){
         venditoreRecuperato.setValue(venditoreModel);
+        System.out.println("in set venditore recuperato con dati seguenti:"+ " nome:"+venditoreModel.getNome() + " email:"+ venditoreModel.getIndirizzo_email() + " cognome:"+ venditoreModel.getCognome());
     }
 
     public void recuperaSocialAcquirente(){

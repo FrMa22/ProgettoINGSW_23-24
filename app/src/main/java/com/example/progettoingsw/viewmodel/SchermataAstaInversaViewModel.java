@@ -7,14 +7,9 @@ import android.util.Log;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.progettoingsw.model.Asta_allingleseModel;
 import com.example.progettoingsw.model.Asta_inversaModel;
-import com.example.progettoingsw.repository.Asta_allingleseRepository;
 import com.example.progettoingsw.repository.Asta_inversaRepository;
 import com.example.progettoingsw.repository.Repository;
-
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 public class SchermataAstaInversaViewModel extends ViewModel {
     private Repository repository;
@@ -58,7 +53,7 @@ public class SchermataAstaInversaViewModel extends ViewModel {
     }
     public void checkUltimaOfferta(){
         Long id_asta = repository.getAsta_inversaSelezionata().getId();
-        String indirizzo_email = repository.getVenditoreModel().getIndirizzoEmail();
+        String indirizzo_email = repository.getVenditoreModel().getIndirizzo_email();
         astaInversaRepository.getEmailVincente(indirizzo_email, id_asta, new Asta_inversaRepository.OnGetEmailVincenteListener() {
             @Override
             public void OnGetEmailVincente(Boolean numeroRecuperato) {
@@ -129,7 +124,7 @@ public class SchermataAstaInversaViewModel extends ViewModel {
         return isAstaInPreferiti.getValue();
     }
     public void verificaAstaInPreferiti(){
-        String indirizzoEmail = repository.getVenditoreModel().getIndirizzoEmail();
+        String indirizzoEmail = repository.getVenditoreModel().getIndirizzo_email();
         Long idAsta = repository.getAsta_inversaSelezionata().getId();
         astaInversaRepository.verificaAstaInversaInPreferiti(indirizzoEmail,idAsta, new Asta_inversaRepository.OnVerificaAstaInversaInPreferitiListener() {
             @Override
@@ -147,7 +142,7 @@ public class SchermataAstaInversaViewModel extends ViewModel {
         });
     }
     public void inserimentoAstaInPreferiti(){
-        String indirizzoEmail = repository.getVenditoreModel().getIndirizzoEmail();
+        String indirizzoEmail = repository.getVenditoreModel().getIndirizzo_email();
         Long idAsta = repository.getAsta_inversaSelezionata().getId();
         astaInversaRepository.inserimentoAstaInPreferiti(idAsta, indirizzoEmail, new Asta_inversaRepository.OnInserimentoAstaInversaInPreferitiListener() {
             @Override
@@ -164,7 +159,7 @@ public class SchermataAstaInversaViewModel extends ViewModel {
         });
     }
     public void eliminazioneAstaInPreferiti(){
-        String indirizzoEmail = repository.getVenditoreModel().getIndirizzoEmail();
+        String indirizzoEmail = repository.getVenditoreModel().getIndirizzo_email();
         Long idAsta = repository.getAsta_inversaSelezionata().getId();
         astaInversaRepository.eliminazioneAstaInPreferiti(idAsta, indirizzoEmail, new Asta_inversaRepository.OnEliminazioneAstaInversaInPreferitiListener() {
             @Override

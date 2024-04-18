@@ -13,12 +13,9 @@ import android.util.Log;
 
 import androidx.activity.result.ActivityResult;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ReportFragment;
 import androidx.lifecycle.ViewModel;
 
-import com.example.progettoingsw.model.Asta_allingleseModel;
 import com.example.progettoingsw.model.Asta_alribassoModel;
-import com.example.progettoingsw.repository.Asta_allingleseRepository;
 import com.example.progettoingsw.repository.Asta_alribassoRepository;
 import com.example.progettoingsw.repository.Repository;
 
@@ -305,7 +302,7 @@ public class CreaAstaRibassoViewModel extends ViewModel{
             if(immagine!=null) {
                 img_byte = bitmapToByteArray(immagine);
             }
-            String id_venditore = repository.getVenditoreModel().getIndirizzoEmail();
+            String id_venditore = repository.getVenditoreModel().getIndirizzo_email();
 
             Asta_alribassoModel asta = new Asta_alribassoModel(nome,  descrizione, img_byte, prezzoBase_float,  intervalloDecrementale,  intervalloDecrementale,
                     decrementoAutomaticoCifra_float,  prezzoMin_float, prezzoBase_float, "aperta", id_venditore);

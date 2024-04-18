@@ -187,10 +187,10 @@ public class PopUpNuovaOffertaViewModel extends ViewModel {
         return repository.getAsta_inversaSelezionata().getId();
     }
     public String recuperaEmailAcquirente(){
-        return repository.getAcquirenteModel().getIndirizzoEmail();
+        return repository.getAcquirenteModel().getIndirizzo_email();
     }
     public String recuperaEmailVenditore(){
-        return repository.getVenditoreModel().getIndirizzoEmail();
+        return repository.getVenditoreModel().getIndirizzo_email();
     }
     public String getTempoOfferta(){
         Timestamp tempo = new java.sql.Timestamp(System.currentTimeMillis());
