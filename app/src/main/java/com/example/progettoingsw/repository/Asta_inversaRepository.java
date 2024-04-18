@@ -27,9 +27,9 @@ public class Asta_inversaRepository {
         System.out.println("entrato in getAste_inversaNuoveBackend");
         new Asta_inversaRepository.getAste_inversaNuoveTask(listener).execute();
     }
-    public void getAste_inversaCategoriaNomeBackend(String nomeCategoria, Asta_inversaRepository.OnGetAsteInversaCategoriaNomeListener listener) {
+    public void getAste_inversaCategoriaNomeBackend(ArrayList<String> nomiCategorie, Asta_inversaRepository.OnGetAsteInversaCategoriaNomeListener listener) {
         System.out.println("entrato in getAste_inversaCategoriaNomeBackend");
-        new Asta_inversaRepository.getAste_inversaCategoriaNomeTask(listener).execute(nomeCategoria);
+        new Asta_inversaRepository.getAste_inversaCategoriaNomeTask(listener).execute(nomiCategorie);
     }
     public void partecipaAsta_inversa(Long idAsta, String emailVenditore,String offerta,String tempoOfferta, String stato, Asta_inversaRepository.OnPartecipazioneAstaInversaListener listener) {
         System.out.println("entrato in partecipaAsta_inversa");
@@ -216,7 +216,7 @@ public class Asta_inversaRepository {
     public interface OnGetAsteInversaNuoveListener {
         void OnGetAsteInversaNuove(ArrayList<Asta_inversaModel> list);
     }
-    private static class getAste_inversaCategoriaNomeTask extends AsyncTask<String, Void, ArrayList<Asta_inversaModel>> {
+    private static class getAste_inversaCategoriaNomeTask extends AsyncTask<ArrayList<String>, Void, ArrayList<Asta_inversaModel>> {
         private Asta_inversaRepository.OnGetAsteInversaCategoriaNomeListener listener;
 
         public getAste_inversaCategoriaNomeTask(Asta_inversaRepository.OnGetAsteInversaCategoriaNomeListener listener) {
@@ -224,8 +224,8 @@ public class Asta_inversaRepository {
         }
 
         @Override
-        protected ArrayList<Asta_inversaModel> doInBackground(String... params) {
-            String nomeCategoria = params[0];
+        protected ArrayList<Asta_inversaModel> doInBackground(ArrayList<String>... params) {
+            ArrayList<String> nomiCategorie = params[0];
             // Effettua l'operazione di rete qui...
             // Restituisci il risultato
 
@@ -239,7 +239,7 @@ public class Asta_inversaRepository {
                     .build();
 
             Asta_inversaService service = retrofit.create(Asta_inversaService.class);
-            Call<ArrayList<Asta_inversa_DTO>> call = service.getAste_inversaCategoriaNome(nomeCategoria);
+            Call<ArrayList<Asta_inversa_DTO>> call = service.getAste_inversaCategoriaNome(nomiCategorie);
 
             try {
                 Response<ArrayList<Asta_inversa_DTO>> response = call.execute();

@@ -35,15 +35,16 @@ public class Repository {
     public static Repository questaRepository = null;
     //liste per le aste all'inglese nel caso di accesso come acquirente (aste in home)
     private ArrayList<Asta_allingleseModel> listaAsteAllIngleseInScadenza;
-    private Set<Asta_allingleseModel> listaAsteAllIngleseCategoriaNome;
+    private ArrayList<Asta_allingleseModel> listaAsteAllIngleseCategoriaNome;
     private ArrayList<Asta_allingleseModel> listaAsteAllIngleseNuove;
     //liste per le aste al ribasso nel caso di accesso come acquirente (aste in home)
-    private Set<Asta_alribassoModel> listaAsteAlRibassoCategoriaNome;
+    private ArrayList<Asta_alribassoModel> listaAsteAlRibassoCategoriaNome;
     private ArrayList<Asta_alribassoModel> listaAsteAlRibassoNuove;
     //liste per le aste inverse nel caso di accesso come venditore (aste in home)
     private ArrayList<Asta_inversaModel> listaAsteInversaInScadenza;
     private ArrayList<Asta_inversaModel> listaAsteInversaNuove;
-    private Set<Asta_inversaModel> listaAsteInversaCategoriaNome;
+    //private Set<Asta_inversaModel> listaAsteInversaCategoriaNome;
+    private ArrayList<Asta_inversaModel> listaAsteInversaCategoriaNome;
     private NotificheAcquirenteModel notificaAcquirenteScelta;
     private NotificheVenditoreModel notificaVenditoreScelta;
 
@@ -204,18 +205,18 @@ public class Repository {
     public void setListaAsteAllIngleseNuove(ArrayList<Asta_allingleseModel> listaAsteAllIngleseNuove) {
         this.listaAsteAllIngleseNuove = listaAsteAllIngleseNuove;
     }
-    public Set<Asta_allingleseModel> getListaAsteAllIngleseCategoriaNome() {
+    public ArrayList<Asta_allingleseModel> getListaAsteAllIngleseCategoriaNome() {
         return listaAsteAllIngleseCategoriaNome;
     }
     public void setListaAsteAllIngleseCategoriaNome(ArrayList<Asta_allingleseModel> listaAsteAllIngleseCategoriaNome) {
-        if(listaAsteAllIngleseCategoriaNome!=null && !listaAsteAllIngleseCategoriaNome.isEmpty()){
-            if(this.listaAsteAllIngleseCategoriaNome==null){
-                this.listaAsteAllIngleseCategoriaNome=new HashSet<>();
-            }
-            this.listaAsteAllIngleseCategoriaNome.addAll(listaAsteAllIngleseCategoriaNome);
-            Log.d("stampo listaAsteAllIngleseCategoriaNome ","" +this.listaAsteAllIngleseCategoriaNome);
-        }
-        //this.listaAsteAllIngleseCategoriaNome.add(listaAsteAllIngleseCategoriaNome);
+//        if(listaAsteAllIngleseCategoriaNome!=null && !listaAsteAllIngleseCategoriaNome.isEmpty()){
+//            if(this.listaAsteAllIngleseCategoriaNome==null){
+//                this.listaAsteAllIngleseCategoriaNome=new HashSet<>();
+//            }
+//            this.listaAsteAllIngleseCategoriaNome.addAll(listaAsteAllIngleseCategoriaNome);
+//            Log.d("stampo listaAsteAllIngleseCategoriaNome ","" +this.listaAsteAllIngleseCategoriaNome);
+//        }
+        this.listaAsteAllIngleseCategoriaNome = listaAsteAllIngleseCategoriaNome;
     }
     public Asta_allingleseModel getAsta_allingleseSelezionata() {
         return asta_allingleseSelezionata;
@@ -232,17 +233,18 @@ public class Repository {
     public ArrayList<Asta_alribassoModel> getListaAsteAlRibassoNuove(){
         return listaAsteAlRibassoNuove;
     }
-    public Set<Asta_alribassoModel> getListaAsteAlRibassoCategoriaNome() {
+    public ArrayList<Asta_alribassoModel> getListaAsteAlRibassoCategoriaNome() {
         return listaAsteAlRibassoCategoriaNome;
     }
     public void setListaAsteAlRibassoCategoriaNome(ArrayList<Asta_alribassoModel> listaAsteAlRibassoCategoriaNome) {
-        if(listaAsteAlRibassoCategoriaNome != null && !listaAsteAlRibassoCategoriaNome.isEmpty()) {
-            if(this.listaAsteAlRibassoCategoriaNome==null){
-                this.listaAsteAlRibassoCategoriaNome=new HashSet<>();
-            }
-            this.listaAsteAlRibassoCategoriaNome.addAll(listaAsteAlRibassoCategoriaNome);
-            Log.d("stampo listaAsteAlRibassoCategoriaNome ","" +this.listaAsteAlRibassoCategoriaNome);
-        }
+        this.listaAsteAlRibassoCategoriaNome = listaAsteAlRibassoCategoriaNome;
+//        if(listaAsteAlRibassoCategoriaNome != null && !listaAsteAlRibassoCategoriaNome.isEmpty()) {
+//            if(this.listaAsteAlRibassoCategoriaNome==null){
+//                this.listaAsteAlRibassoCategoriaNome=new HashSet<>();
+//            }
+//            this.listaAsteAlRibassoCategoriaNome.addAll(listaAsteAlRibassoCategoriaNome);
+//            Log.d("stampo listaAsteAlRibassoCategoriaNome ","" +this.listaAsteAlRibassoCategoriaNome);
+//        }
     }
     public Asta_alribassoModel getAsta_alribassoSelezionata() {
         return asta_alribassoSelezionata;
@@ -265,16 +267,17 @@ public class Repository {
     public void setListaAsteInversaNuove(ArrayList<Asta_inversaModel> listaAsteInversaNuove) {
         this.listaAsteInversaNuove = listaAsteInversaNuove;
     }
-    public Set<Asta_inversaModel> getListaAsteInversaCategoriaNome() {
+    public ArrayList<Asta_inversaModel> getListaAsteInversaCategoriaNome() {
         return listaAsteInversaCategoriaNome;
     }
     public void setListaAsteInversaCategoriaNome(ArrayList<Asta_inversaModel> listaAsteInversaCategoriaNome) {
-        if(listaAsteInversaCategoriaNome != null && !listaAsteInversaCategoriaNome.isEmpty()) {
-            if(this.listaAsteInversaCategoriaNome==null){
-                this.listaAsteInversaCategoriaNome=new HashSet<>();
-            }
-            this.listaAsteInversaCategoriaNome.addAll(listaAsteInversaCategoriaNome);
-        }
+        this.listaAsteInversaCategoriaNome = listaAsteInversaCategoriaNome;
+//        if(listaAsteInversaCategoriaNome != null && !listaAsteInversaCategoriaNome.isEmpty()) {
+//            if(this.listaAsteInversaCategoriaNome==null){
+//                this.listaAsteInversaCategoriaNome=new HashSet<>();
+//            }
+//            this.listaAsteInversaCategoriaNome.addAll(listaAsteInversaCategoriaNome);
+//        }
     }
     public Asta_inversaModel getAsta_inversaSelezionata() {
         return asta_inversaSelezionata;
