@@ -31,7 +31,7 @@ public class Repository {
     private ArrayList<SocialVenditoreModel> listaSocialVenditoreRecuperati;//usata per avere social acquirente nel profilo utente
 
     private ArrayList<String> listaCategorieVenditore;
-    public static final String backendUrl = "http:/13.36.177.91:8080/";
+    public static final String backendUrl = "http:/16.171.150.194:8080/";
     public static Repository questaRepository = null;
     //liste per le aste all'inglese nel caso di accesso come acquirente (aste in home)
     private ArrayList<Asta_allingleseModel> listaAsteAllIngleseInScadenza;
@@ -132,7 +132,7 @@ public class Repository {
          this.acquirenteModel.setNome(nomeNuovo);
         this.acquirenteModel.setCognome(cognomeNuovo);
         this.acquirenteModel.setBio(bioNuovo);
-        this.acquirenteModel.setAreaGeografica(areageograficaNuovo);
+        this.acquirenteModel.setAreageografica(areageograficaNuovo);
         this.acquirenteModel.setLink(linkNuovo);
     }
 
@@ -165,7 +165,7 @@ public class Repository {
         this.venditoreModel.setNome(nomeNuovo);
         this.venditoreModel.setCognome(cognomeNuovo);
         this.venditoreModel.setBio(bioNuovo);
-        this.venditoreModel.setAreaGeografica(areageograficaNuovo);
+        this.venditoreModel.setAreageografica(areageograficaNuovo);
         this.venditoreModel.setLink(linkNuovo);
     }
 

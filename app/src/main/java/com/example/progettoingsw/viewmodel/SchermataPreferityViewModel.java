@@ -78,7 +78,7 @@ public class SchermataPreferityViewModel extends ViewModel {
         }
     }
     public void getAsteInglesePreferite(){
-        String indirizzo_email = repository.getAcquirenteModel().getIndirizzoEmail();
+        String indirizzo_email = repository.getAcquirenteModel().getIndirizzo_email();
         astaAllingleseRepository.getAsteInglesePreferite(indirizzo_email, new Asta_allingleseRepository.OnGetAstePreferiteListener() {
             @Override
             public void OnGetAstePreferite(ArrayList<Asta_allingleseModel> list) {
@@ -91,7 +91,7 @@ public class SchermataPreferityViewModel extends ViewModel {
         setListaAstaInglesePreferiteConvertite(lista);
     }
     public void getAsteRibassoPreferite(){
-        String indirizzo_email = repository.getAcquirenteModel().getIndirizzoEmail();
+        String indirizzo_email = repository.getAcquirenteModel().getIndirizzo_email();
         astaAlribassoRepository.getAsteRibassoPreferite(indirizzo_email, new Asta_alribassoRepository.OnGetAsteRibassoPreferiteListener() {
             @Override
             public void OnGetAsteRibassoPreferite(ArrayList<Asta_alribassoModel> list) {
@@ -104,7 +104,7 @@ public class SchermataPreferityViewModel extends ViewModel {
         setListaAstaRibassoPreferiteConvertite(lista);
     }
     public void getAsteInversaPreferite(){
-        String indirizzo_email = repository.getVenditoreModel().getIndirizzoEmail();
+        String indirizzo_email = repository.getVenditoreModel().getIndirizzo_email();
         astaInversaRepository.getAsteInversaPreferite(indirizzo_email, new Asta_inversaRepository.OnGetAsteInversaPreferiteListener() {
             @Override
             public void OnGetAsteInversaPreferite(ArrayList<Asta_inversaModel> list) {

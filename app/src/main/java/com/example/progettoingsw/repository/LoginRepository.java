@@ -75,8 +75,8 @@ public class LoginRepository {
                     AcquirenteDTO acquirenteDTO = response.body();
                     if (acquirenteDTO != null) {
                         System.out.println("acquirente dto non null");
-                        System.out.println("valori del acquirente: " + " nome:" + acquirenteDTO.getNome() + " cognome:" + acquirenteDTO.getCognome() + " link:" + acquirenteDTO.getLink() + " paese: "+ acquirenteDTO.getAreaGeografica());
-                        return new AcquirenteModel(acquirenteDTO.getNome(), acquirenteDTO.getCognome(), acquirenteDTO.getIndirizzoEmail(), acquirenteDTO.getPassword(), acquirenteDTO.getBio(), acquirenteDTO.getAreaGeografica(), acquirenteDTO.getLink());
+                        System.out.println("valori del acquirente: " +" nome:" + acquirenteDTO.getNome() + " cognome:"+acquirenteDTO.getCognome() + " link:"+acquirenteDTO.getLink() +" areageografica:" +acquirenteDTO.getAreageografica() + " email:"+ acquirenteDTO.getIndirizzo_email() + " password:" +acquirenteDTO.getPassword());
+                        return new AcquirenteModel(acquirenteDTO.getNome(), acquirenteDTO.getCognome(),email, password, acquirenteDTO.getBio(), acquirenteDTO.getAreageografica(), acquirenteDTO.getLink());
                     }
                     System.out.println("acquirente dto null");
                 }
@@ -95,6 +95,7 @@ public class LoginRepository {
         protected void onPostExecute(AcquirenteModel result) {
             System.out.println("on post execute loginAcquirente" + result);
             if (listener != null) {
+               System.out.println("valori del acquirente: " +" nome:" + result.getNome() + " cognome:"+result.getCognome() + " link:"+result.getLink() +" areageografica:" +result.getAreageografica() + " email:" + result.getIndirizzo_email() + result.getPassword());
                 listener.onLogin(result);
             }
         }
@@ -189,8 +190,8 @@ public class LoginRepository {
                     VenditoreDTO venditoreDTO = response.body();
                     if (venditoreDTO != null) {
                         System.out.println("venditore dto non null");
-                        System.out.println("valori del venditore: " + venditoreDTO.getNome() + venditoreDTO.getCognome());
-                        return new VenditoreModel(venditoreDTO.getNome(), venditoreDTO.getCognome(), venditoreDTO.getIndirizzoEmail(), venditoreDTO.getPassword(), venditoreDTO.getBio(), venditoreDTO.getAreaGeografica(), venditoreDTO.getLink());
+                        System.out.println("valori del venditore: " +" nome:" + venditoreDTO.getNome() + " cognome:"+venditoreDTO.getCognome() + " link:"+venditoreDTO.getLink() +" areageografica:" +venditoreDTO.getAreageografica() + " email:"+ venditoreDTO.getIndirizzo_email() + " password:" +venditoreDTO.getPassword());
+                        return new VenditoreModel(venditoreDTO.getNome(), venditoreDTO.getCognome(),email, password, venditoreDTO.getBio(), venditoreDTO.getAreageografica(), venditoreDTO.getLink());
                     }
                     System.out.println("venditore dto null");
                 }
@@ -209,6 +210,7 @@ public class LoginRepository {
         protected void onPostExecute(VenditoreModel result) {
             System.out.println("on post execute loginVenditore" + result);
             if (listener != null) {
+//                System.out.println("valori del venditore: " +" nome:" + result.getNome() + " cognome:"+result.getCognome() + " link:"+result.getLink() +" areageografica:" +result.getAreageografica() + " email:" + result.getIndirizzo_email() + result.getPassword());
                 listener.onLogin(result);
             }
         }

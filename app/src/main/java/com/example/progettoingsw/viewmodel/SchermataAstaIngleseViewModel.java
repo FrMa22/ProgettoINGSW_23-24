@@ -66,7 +66,7 @@ public class SchermataAstaIngleseViewModel extends ViewModel {
     }
     public void checkUltimaOfferta(){
         Long id_asta = repository.getAsta_allingleseSelezionata().getId();
-        String indirizzo_email = repository.getAcquirenteModel().getIndirizzoEmail();
+        String indirizzo_email = repository.getAcquirenteModel().getIndirizzo_email();
         astaAllingleseRepository.getEmailVincente(indirizzo_email, id_asta, new Asta_allingleseRepository.OnGetEmailVincenteListener() {
             @Override
             public void OnGetEmailVincente(Boolean numeroRecuperato) {
@@ -189,7 +189,7 @@ public class SchermataAstaIngleseViewModel extends ViewModel {
         return isAstaInPreferiti.getValue();
     }
     public void verificaAstaInPreferiti(){
-        String indirizzoEmail = repository.getAcquirenteModel().getIndirizzoEmail();
+        String indirizzoEmail = repository.getAcquirenteModel().getIndirizzo_email();
         Long idAsta = repository.getAsta_allingleseSelezionata().getId();
         astaAllingleseRepository.verificaAstaIngleseInPreferiti(indirizzoEmail,idAsta, new Asta_allingleseRepository.OnVerificaAstaIngleseInPreferitiListener() {
             @Override
@@ -207,7 +207,7 @@ public class SchermataAstaIngleseViewModel extends ViewModel {
         });
     }
     public void inserimentoAstaInPreferiti(){
-        String indirizzoEmail = repository.getAcquirenteModel().getIndirizzoEmail();
+        String indirizzoEmail = repository.getAcquirenteModel().getIndirizzo_email();
         Long idAsta = repository.getAsta_allingleseSelezionata().getId();
         astaAllingleseRepository.inserimentoAstaInPreferiti(idAsta, indirizzoEmail, new Asta_allingleseRepository.OnInserimentoAstaIngleseInPreferitiListener() {
             @Override
@@ -224,7 +224,7 @@ public class SchermataAstaIngleseViewModel extends ViewModel {
         });
     }
     public void eliminazioneAstaInPreferiti(){
-        String indirizzoEmail = repository.getAcquirenteModel().getIndirizzoEmail();
+        String indirizzoEmail = repository.getAcquirenteModel().getIndirizzo_email();
         Long idAsta = repository.getAsta_allingleseSelezionata().getId();
         astaAllingleseRepository.eliminazioneAstaInPreferiti(idAsta, indirizzoEmail, new Asta_allingleseRepository.OnEliminazioneAstaIngleseInPreferitiListener() {
             @Override

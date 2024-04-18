@@ -16,9 +16,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.progettoingsw.model.Asta_allingleseModel;
-import com.example.progettoingsw.model.Asta_inversaModel;
 import com.example.progettoingsw.repository.Asta_allingleseRepository;
-import com.example.progettoingsw.repository.Asta_inversaRepository;
 import com.example.progettoingsw.repository.Repository;
 
 import java.io.ByteArrayOutputStream;
@@ -265,7 +263,7 @@ public class CreaAstaIngleseViewModel extends ViewModel {
             }
             float baseAsta_float = Float.parseFloat(baseAsta);
             float rialzo_float = Float.parseFloat(rialzo);
-            String id_venditore = repository.getVenditoreModel().getIndirizzoEmail();
+            String id_venditore = repository.getVenditoreModel().getIndirizzo_email();
 
             Asta_allingleseModel asta = new Asta_allingleseModel(nome,descrizione,image_byte, baseAsta_float,intervallo,intervallo, rialzo_float,baseAsta_float,"aperta",id_venditore);
             if(categorieScelte!=null && !categorieScelte.isEmpty()) {

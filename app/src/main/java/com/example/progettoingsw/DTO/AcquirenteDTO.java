@@ -1,33 +1,33 @@
 package com.example.progettoingsw.DTO;
 
 public class AcquirenteDTO {
-    private String indirizzoEmail;
+    private String indirizzo_email;
     private String nome;
     private String cognome;
     private String password;
     private String bio;
     private String link;
-    private String areaGeografica;
+    private String areageografica;
 
     public AcquirenteDTO() {
     }
 
-    public AcquirenteDTO(String indirizzoEmail, String nome, String cognome, String password, String bio, String link, String areaGeografica) {
-        this.indirizzoEmail = indirizzoEmail;
+    public AcquirenteDTO(String nome , String cognome, String indirizzo_email, String password , String bio, String areageografica, String link) {
+        this.indirizzo_email = indirizzo_email;
         this.nome = nome;
         this.cognome = cognome;
         this.password = password;
         this.bio = bio;
         this.link = link;
-        this.areaGeografica = areaGeografica;
+        this.areageografica = this.areageografica;
     }
 
-    public String getIndirizzoEmail() {
-        return indirizzoEmail;
+    public String getIndirizzo_email() {
+        return indirizzo_email;
     }
 
-    public void setIndirizzoEmail(String indirizzoEmail) {
-        this.indirizzoEmail = indirizzoEmail;
+    public void setIndirizzo_email(String indirizzo_email) {
+        this.indirizzo_email = indirizzo_email;
     }
 
     public String getNome() {
@@ -70,11 +70,11 @@ public class AcquirenteDTO {
         this.link = link;
     }
 
-    public String getAreaGeografica() {
-        return areaGeografica;
+    public String getAreageografica() {
+        return areageografica;
     }
 
-    public void setAreaGeografica(String areaGeografica) {
-        this.areaGeografica = areaGeografica;
+    public void setAreageografica(String areageografica) {
+        this.areageografica = areageografica;
     }
 }

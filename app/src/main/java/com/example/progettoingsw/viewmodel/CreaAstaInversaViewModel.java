@@ -2,49 +2,27 @@ package com.example.progettoingsw.viewmodel;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.DatePickerDialog;
-import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.Resources;
-import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.graphics.Matrix;
-import android.graphics.drawable.Drawable;
 import android.media.ExifInterface;
 import android.net.Uri;
 import android.util.Log;
-import android.util.TypedValue;
-import android.view.Gravity;
-import android.view.View;
-import android.widget.CompoundButton;
-import android.widget.DatePicker;
-import android.widget.LinearLayout;
-import android.widget.Switch;
-import android.widget.Toast;
 
 import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.appcompat.view.menu.MenuBuilder;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.progettoingsw.R;
 import com.example.progettoingsw.model.Asta_inversaModel;
 import com.example.progettoingsw.repository.Asta_inversaRepository;
 import com.example.progettoingsw.repository.Repository;
-import com.example.progettoingsw.view.acquirente.AcquirenteMainActivity;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
@@ -308,7 +286,7 @@ public class CreaAstaInversaViewModel extends ViewModel {
                     image_byte=null;
                 }
                 float prezzo_float = Float.parseFloat(prezzo);
-                String id_acquirente = repository.getAcquirenteModel().getIndirizzoEmail();
+                String id_acquirente = repository.getAcquirenteModel().getIndirizzo_email();
 
                 Asta_inversaModel asta = new Asta_inversaModel(nome,descrizione,image_byte, prezzo_float, prezzo_float,data_e_ora,"aperta",id_acquirente);
                 if(categorieScelte!=null && !categorieScelte.isEmpty()) {

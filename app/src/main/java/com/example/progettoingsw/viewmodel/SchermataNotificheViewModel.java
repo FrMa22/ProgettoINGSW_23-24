@@ -8,10 +8,8 @@ import androidx.lifecycle.ViewModel;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.progettoingsw.controllers_package.NotificheAdapter;
-import com.example.progettoingsw.model.Asta_allingleseModel;
 import com.example.progettoingsw.model.NotificheAcquirenteModel;
 import com.example.progettoingsw.model.NotificheVenditoreModel;
-import com.example.progettoingsw.repository.Asta_allingleseRepository;
 import com.example.progettoingsw.repository.NotificheRepository;
 import com.example.progettoingsw.repository.Repository;
 
@@ -42,7 +40,7 @@ public class SchermataNotificheViewModel extends ViewModel {
         }
     }
     public void getNotificheAcquirente(){
-        String indirizzo_email = repository.getAcquirenteModel().getIndirizzoEmail();
+        String indirizzo_email = repository.getAcquirenteModel().getIndirizzo_email();
         notificheRepository.getNotificheAcquirente(indirizzo_email, new NotificheRepository.OnGetNotificheAcquirenteListener() {
             @Override
             public void OnGetNotificheAcquirente(ArrayList<NotificheAcquirenteModel> list) {
@@ -55,7 +53,7 @@ public class SchermataNotificheViewModel extends ViewModel {
         });
     }
     public void getNotificheVenditore(){
-        String indirizzo_email = repository.getVenditoreModel().getIndirizzoEmail();
+        String indirizzo_email = repository.getVenditoreModel().getIndirizzo_email();
         notificheRepository.getNotificheVenditore(indirizzo_email, new NotificheRepository.OnGetNotificheVenditoreListener() {
             @Override
             public void OnGetNotificheVenditore(ArrayList<NotificheVenditoreModel> list) {
