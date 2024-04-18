@@ -20,8 +20,8 @@ public interface Asta_inversaService {
     @GET("/asta_inversaController/getAste_inversaNuove")
     Call<ArrayList<Asta_inversa_DTO>> getAste_inversaNuove();
 
-    @GET("/asta_inversaController/getAste_inversaNomeCategoria/{nomeCategoria}")
-    Call<ArrayList<Asta_inversa_DTO>> getAste_inversaCategoriaNome(@Path("nomeCategoria") String nomeCategoria);
+    @GET("/asta_inversaController/getAste_inversaNomeCategoria/{nomiCategorie}")
+    Call<ArrayList<Asta_inversa_DTO>> getAste_inversaCategoriaNome(@Query("nomiCategorie") ArrayList<String> nomiCategorie);
 
     @GET("/asta_inversaController/getAste_inversaApertaByEmail/{indirizzo_email}")
     Call<List<Asta_inversa_DTO>> getAste_inversaApertaByEmail(@Path("indirizzo_email") String indirizzo_email);
