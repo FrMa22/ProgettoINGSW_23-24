@@ -41,7 +41,7 @@
             android:name=".view.acquirente.AcquirenteFragmentRicercaAsta"
             android:exported="false" />
         <activity
-            android:name=".view.acquirente.AcquirenteFragmentSelezioneCategorie"
+            android:name=".view.acquirente.FragmentSelezioneCategorie"
             android:exported="false" />
         <activity
             android:name=".view.acquirente.FragmentHome"

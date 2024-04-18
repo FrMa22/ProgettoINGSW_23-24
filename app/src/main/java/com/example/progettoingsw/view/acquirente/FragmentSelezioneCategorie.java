@@ -21,32 +21,38 @@ import android.widget.LinearLayout;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
+import com.example.progettoingsw.view.SchermataAstaInglese;
+import com.example.progettoingsw.view.SchermataAstaInversa;
+import com.example.progettoingsw.view.SchermataAstaRibasso;
 import com.example.progettoingsw.view.SchermataAstePerCategoria;
+import com.example.progettoingsw.viewmodel.SelezioneCategorieViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class AcquirenteFragmentSelezioneCategorie extends Fragment {
+public class FragmentSelezioneCategorie extends Fragment {
     private List<String> selectedRadioButtonItems = new ArrayList<>();
     private LinearLayout linearLayoutCategorie;
     private ArrayAdapter<String> categorieAdapter;
-    String email ;
-    String tipoUtente;
-    public AcquirenteFragmentSelezioneCategorie() {
+    private SelezioneCategorieViewModel selezioneCategorieViewModel;
+    public FragmentSelezioneCategorie() {
     }
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.acquirente_fragment_selezione_categorie, container, false);
+        View view = inflater.inflate(R.layout.fragment_selezione_categorie, container, false);
         linearLayoutCategorie = view.findViewById(R.id.linear_layout_categorie);
         populateLinearLayout();
         return view;
     }
 
 
-    // Nella tua classe AcquirenteFragmentSelezioneCategorie
+    // Nella tua classe FragmentSelezioneCategorie
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        selezioneCategorieViewModel = new ViewModelProvider(this).get(SelezioneCategorieViewModel.class);
+        osservaCategoriaSelezionata();
 
 
     }
@@ -69,28 +75,14 @@ public class AcquirenteFragmentSelezioneCategorie extends Fragment {
             } catch (Resources.NotFoundException e) {
                 Log.e("Errore", "Impossibile trovare l'immagine per la categoria " + categorieArray[i]);
             }
-
-            // Imposta il testo al centro
             button.setGravity(Gravity.CENTER);
-
-            // Imposta il colore di sfondo del bottone a trasparente
             button.setBackgroundColor(Color.TRANSPARENT);
-
-            // Imposta il layout personalizzato come sfondo del bottone
             button.setBackgroundResource(R.drawable.bordo_sotto_grigio);
-
-            // Imposta un ascoltatore di clic per gestire l'evento di clic su ogni bottone
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
                     String categoriaSelezionata = ((Button) v).getText().toString();
-
-                    Intent intent = new Intent(requireContext(), SchermataAstePerCategoria.class);
-                    intent.putExtra("categoria_selezionata", categoriaSelezionata);
-                    intent.putExtra("email",email);
-                    intent.putExtra("tipoUtente",tipoUtente);
-                    startActivity(intent);
+                    selezioneCategorieViewModel.categoriaCliccata(categoriaSelezionata);
                 }
             });
 
@@ -100,9 +92,14 @@ public class AcquirenteFragmentSelezioneCategorie extends Fragment {
         immaginiArray.recycle();
     }
 
-
-
-
+    public void osservaCategoriaSelezionata(){
+        selezioneCategorieViewModel.categoriaSelezionata.observe(getViewLifecycleOwner(), (valore) ->{
+            if(valore){
+                Intent intent = new Intent(requireContext(), SchermataAstePerCategoria.class);
+                startActivity(intent);
+            }
+        });
+    }
 
 
 }
