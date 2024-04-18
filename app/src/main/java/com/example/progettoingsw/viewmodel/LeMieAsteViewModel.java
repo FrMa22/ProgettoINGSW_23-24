@@ -67,28 +67,80 @@ public class LeMieAsteViewModel extends ViewModel {
 //conviene fare che questo tipo di metodo sia fatto 3 volte per tipo di asta da trovare
 
 
-    public void trovaAsteAperteAcquirenteViewModel(){
+
+    public void trovaAsteAperteViewModel(){
         try{
-            //trova le singole aste dal db poi deve fa la ""fusione dei risultati"
-            trovaAsteInglesiAperteAcquirente();
-            trovaAsteRibassoAperteAcquirente();
-            trovaAsteInverseAperteAcquirente();
+
+            if(containsAcquirente()){
+                String email=getAcquirenteEmail();
+                trovaAsteInglesiAperte(email);
+                trovaAsteRibassoAperte(email);
+                trovaAsteInverseAperte(email);
+
+            }
+            else if(containsVenditore()){
+                String email=getVenditoreEmail();
+                trovaAsteInglesiAperte(email);
+                trovaAsteRibassoAperte(email);
+                trovaAsteInverseAperte(email);
+
+            }
+
+
         }catch(Exception e){
             e.printStackTrace();
         }
+
     }
 
 
-    public void trovaAsteChiuseAcquirenteViewModel(){
+//    public void trovaAsteAperteAcquirenteViewModel(){
+//        try{
+//            //trova le singole aste dal db poi deve fa la ""fusione dei risultati"
+//            trovaAsteInglesiAperte();
+//            trovaAsteRibassoAperte();
+//            trovaAsteInverseAperte();
+//        }catch(Exception e){
+//            e.printStackTrace();
+//        }
+//    }
+
+
+    public void trovaAsteChiuseViewModel(){
         try{
-            //trova le singole aste dal db poi deve fa la ""fusione dei risultati"
-            trovaAsteInglesiChiuseAcquirente();
-            trovaAsteRibassoChiuseAcquirente();
-            trovaAsteInverseChiuseAcquirente();
+
+            if(containsAcquirente()){
+                String email=getAcquirenteEmail();
+                trovaAsteInglesiChiuse(email);
+                trovaAsteRibassoChiuse(email);
+                trovaAsteInverseChiuse(email);
+
+            }
+            else if(containsVenditore()){
+                String email=getVenditoreEmail();
+                trovaAsteInglesiChiuse(email);
+                trovaAsteRibassoChiuse(email);
+                trovaAsteInverseChiuse(email);
+
+            }
+
+
         }catch(Exception e){
             e.printStackTrace();
         }
+
     }
+
+//    public void trovaAsteChiuseAcquirenteViewModel(){
+//        try{
+//            //trova le singole aste dal db poi deve fa la ""fusione dei risultati"
+//            trovaAsteInglesiChiuse();
+//            trovaAsteRibassoChiuse();
+//            trovaAsteInverseChiuse();
+//        }catch(Exception e){
+//            e.printStackTrace();
+//        }
+//    }
 
 
     private void checkAndMergeAsteAperte() {
@@ -108,9 +160,9 @@ public class LeMieAsteViewModel extends ViewModel {
     }
 
 
-    private void trovaAsteInglesiAperteAcquirente() {
-        String email=getAcquirenteEmail();
-        System.out.println("entrato in trova aste inglesi aperte acquirente di view model");
+    private void trovaAsteInglesiAperte(String email) {
+
+        System.out.println("entrato in trova aste inglesi aperte  di view model");
         leMieAsteRepository.trovaAsteInglesiAperteBackend(email, new LeMieAsteRepository.OnTrovaAsteInglesiAperteListener() {
             @Override
             public void onTrovaAsteInglesiAperte(List<Asta_allingleseModel> asteInglesiAperteRecuperateList) {
@@ -126,9 +178,8 @@ public class LeMieAsteViewModel extends ViewModel {
 
 
 
-    private void trovaAsteRibassoAperteAcquirente() {
-        String email=getAcquirenteEmail();
-        System.out.println("entrato in trova aste ribasso aperte acquirente di view model");
+    private void trovaAsteRibassoAperte(String email) {
+        System.out.println("entrato in trova aste ribasso aperte di view model");
         leMieAsteRepository.trovaAsteRibassoAperteBackend(email, new LeMieAsteRepository.OnTrovaAsteRibassoAperteListener() {
             @Override
             public void onTrovaAsteRibassoAperte(List<Asta_alribassoModel> asteRibassoAperteRecuperateList) {
@@ -142,9 +193,8 @@ public class LeMieAsteViewModel extends ViewModel {
     }
 
 
-    private void trovaAsteInverseAperteAcquirente() {
-        String email=getAcquirenteEmail();
-        System.out.println("entrato in trova aste inverse aperte acquirente di view model");
+    private void trovaAsteInverseAperte(String email) {
+        System.out.println("entrato in trova aste inverse aperte  di view model");
         leMieAsteRepository.trovaAsteInverseAperteBackend(email, new LeMieAsteRepository.OnTrovaAsteInverseAperteListener() {
             @Override
             public void onTrovaAsteInverseAperte(List<Asta_inversaModel> asteInverseAperteRecuperateList) {
@@ -159,9 +209,8 @@ public class LeMieAsteViewModel extends ViewModel {
 
 //
 
-    private void trovaAsteInglesiChiuseAcquirente() {
-        String email=getAcquirenteEmail();
-        System.out.println("entrato in trova aste inglesi chiuse acquirente di view model");
+    private void trovaAsteInglesiChiuse(String email) {
+        System.out.println("entrato in trova aste inglesi chiuse  di view model");
         leMieAsteRepository.trovaAsteInglesiChiuseBackend(email, new LeMieAsteRepository.OnTrovaAsteInglesiChiuseListener() {
             @Override
             public void onTrovaAsteInglesiChiuse(List<Asta_allingleseModel> asteInglesiChiuseRecuperateList) {
@@ -176,9 +225,8 @@ public class LeMieAsteViewModel extends ViewModel {
 
 
 
-    private void trovaAsteRibassoChiuseAcquirente() {
-        String email=getAcquirenteEmail();
-        System.out.println("entrato in trova aste ribasso chiuse acquirente di view model");
+    private void trovaAsteRibassoChiuse(String email) {
+        System.out.println("entrato in trova aste ribasso chiuse  di view model");
         leMieAsteRepository.trovaAsteRibassoChiuseBackend(email, new LeMieAsteRepository.OnTrovaAsteRibassoChiuseListener() {
             @Override
             public void onTrovaAsteRibassoChiuse(List<Asta_alribassoModel> asteRibassoChiuseRecuperateList) {
@@ -192,9 +240,8 @@ public class LeMieAsteViewModel extends ViewModel {
     }
 
 
-    private void trovaAsteInverseChiuseAcquirente() {
-        String email=getAcquirenteEmail();
-        System.out.println("entrato in trova aste inverse chiuse acquirente di view model");
+    private void trovaAsteInverseChiuse(String email) {
+        System.out.println("entrato in trova aste inverse chiuse  di view model");
         leMieAsteRepository.trovaAsteInverseChiuseBackend(email, new LeMieAsteRepository.OnTrovaAsteInverseChiuseListener() {
             @Override
             public void onTrovaAsteInverseChiuse(List<Asta_inversaModel> asteInverseChiuseRecuperateList) {

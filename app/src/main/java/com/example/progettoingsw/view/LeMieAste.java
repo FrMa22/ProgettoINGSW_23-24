@@ -1,7 +1,5 @@
 package com.example.progettoingsw.view;
 
-import static java.security.AccessController.getContext;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -18,23 +16,12 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.progettoingsw.DAO.LeMieAsteDAO;
 import com.example.progettoingsw.R;
 import com.example.progettoingsw.classe_da_estendere.GestoreComuniImplementazioni;
 import com.example.progettoingsw.controllers_package.AstaAdapter;
-import com.example.progettoingsw.controllers_package.Controller;
-import com.example.progettoingsw.item.AstaIngleseItem;
-import com.example.progettoingsw.item.AstaInversaItem;
-import com.example.progettoingsw.item.AstaRibassoItem;
-import com.example.progettoingsw.model.Asta_allingleseModel;
-import com.example.progettoingsw.model.Asta_alribassoModel;
-import com.example.progettoingsw.model.Asta_inversaModel;
-import com.example.progettoingsw.model.SocialAcquirenteModel;
 import com.example.progettoingsw.viewmodel.LeMieAsteViewModel;
-import com.example.progettoingsw.viewmodel.LoginViewModel;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class LeMieAste extends GestoreComuniImplementazioni {
     private SwitchCompat switch_compat_aste_attive_nonattive;
@@ -60,8 +47,12 @@ public class LeMieAste extends GestoreComuniImplementazioni {
 
         leMieAsteViewModel = new ViewModelProvider(this).get(LeMieAsteViewModel.class);
 
-        osservaAcquirenteModelPresente();
-        leMieAsteViewModel.checkTipoUtente();
+        //osservaAcquirenteModelPresente();
+        //osservaVenditoreModelPresente();
+        //leMieAsteViewModel.checkTipoUtente();
+        osservaCondizioneAperta();
+        osservaCondizioneChiusa();
+
 
         RecyclerView recyclerViewAsteAttive = findViewById(R.id.recyclerViewAsteAttive);
         GridLayoutManager gridLayoutManagerAttive = new GridLayoutManager(this, 2, RecyclerView.VERTICAL, false);
@@ -283,17 +274,33 @@ public class LeMieAste extends GestoreComuniImplementazioni {
 
 
 
-    public void osservaAcquirenteModelPresente(){
-        leMieAsteViewModel.acquirenteModelPresente.observe(this, (messaggio) -> {
-            if (leMieAsteViewModel.getAcquirenteModelPresente()) {
-                Toast.makeText(this, "Entrato come acquirente in le mie aste.", Toast.LENGTH_SHORT).show();
-                //chiamate ai vari observer, tra cui quelli di cambiare schermata
-                osservaCondizioneAperta();//appena si entra in le mie aste viene fatto un set aperte/quando viene premuto lo switch su aperte
-                osservaCondizioneChiusa();//osserva il caso in qui si debbano cercare aste chiuse
 
-            }
-        });
-    }
+    //levare gli observer per tipo utente e fare solo per chiusa e aperta
+
+//    public void osservaAcquirenteModelPresente(){
+//        leMieAsteViewModel.acquirenteModelPresente.observe(this, (messaggio) -> {
+//            if (leMieAsteViewModel.getAcquirenteModelPresente()) {
+//                Toast.makeText(this, "Entrato come acquirente in le mie aste.", Toast.LENGTH_SHORT).show();
+//                //chiamate ai vari observer, tra cui quelli di cambiare schermata
+//                osservaCondizioneApertaAcquirente();//appena si entra in le mie aste viene fatto un set aperte/quando viene premuto lo switch su aperte
+//                osservaCondizioneChiusaAcquirente();//osserva il caso in qui si debbano cercare aste chiuse
+//
+//            }
+//        });
+//    }
+//
+//    public void osservaVenditoreModelPresente(){
+//        leMieAsteViewModel.venditoreModelPresente.observe(this, (messaggio) -> {
+//            if (leMieAsteViewModel.getVenditoreModelPresente()) {
+//                Toast.makeText(this, "Entrato come venditore in le mie aste.", Toast.LENGTH_SHORT).show();
+//                //chiamate ai vari observer, tra cui quelli di cambiare schermata
+//                osservaCondizioneApertaVenditore();//appena si entra in le mie aste viene fatto un set aperte/quando viene premuto lo switch su aperte
+//                osservaCondizioneChiusaVenditore();//osserva il caso in qui si debbano cercare aste chiuse
+//
+//            }
+//        });
+//    }
+
 
 //fa le ricerche-pre merge
     public void osservaCondizioneAperta(){
@@ -305,10 +312,25 @@ public class LeMieAste extends GestoreComuniImplementazioni {
                 osservaEntraInSchermataAstaInglese();
                 osservaEntraInSchermataAstaRibasso();
                 osservaEntraInSchermataAstaInversa();
-                leMieAsteViewModel.trovaAsteAperteAcquirenteViewModel();//prima trova queste aste poi
+                leMieAsteViewModel.trovaAsteAperteViewModel();//prima trova queste aste poi
             }
         });
     }
+
+//    public void osservaCondizioneApertaVenditore(){
+//        leMieAsteViewModel.visualizzaAsteAperte.observe(this, (messaggio) -> {
+//            if (leMieAsteViewModel.getVisualizzaAsteAperte()){
+//                System.out.println("condizione aperta");
+//                //fa le cose che si farebbero quando la condizione è settata su aperta:recuperare le aste con condizione aperta
+//                osservaAsteAperteRecuperate();
+//                osservaEntraInSchermataAstaInglese();
+//                osservaEntraInSchermataAstaRibasso();
+//                osservaEntraInSchermataAstaInversa();
+//                leMieAsteViewModel.trovaAsteAperteVenditoreViewModel();//prima trova queste aste poi
+//            }
+//        });
+//    }
+
 
 //fare che in ogni trova asta si setta a finale un boleano a true e fare un controllo sui 3 valori e se tutti e 3 true ha fatto le 3 ricerche e poi fa il merge
 
@@ -347,10 +369,25 @@ public class LeMieAste extends GestoreComuniImplementazioni {
                 osservaEntraInSchermataAstaInglese();
                 osservaEntraInSchermataAstaRibasso();
                 osservaEntraInSchermataAstaInversa();
-                leMieAsteViewModel.trovaAsteChiuseAcquirenteViewModel();//prima trova queste aste poi
+                leMieAsteViewModel.trovaAsteChiuseViewModel();//prima trova queste aste poi
             }
         });
     }
+
+
+//    public void osservaCondizioneChiusaVenditore(){
+//        leMieAsteViewModel.visualizzaAsteChiuse.observe(this, (messaggio) -> {
+//            if (leMieAsteViewModel.getVisualizzaAsteChiuse()){
+//                System.out.println("condizione chiusa");
+//                //fa le cose che si farebbero quando la condizione è settata su aperta:recuperare le aste con condizione aperta
+//                osservaAsteChiuseRecuperate();
+//                osservaEntraInSchermataAstaInglese();
+//                osservaEntraInSchermataAstaRibasso();
+//                osservaEntraInSchermataAstaInversa();
+//                leMieAsteViewModel.trovaAsteChiuseVenditoreViewModel();//prima trova queste aste poi
+//            }
+//        });
+//    }
 
 
     public void osservaEntraInSchermataAstaInglese(){
