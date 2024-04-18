@@ -13,7 +13,7 @@ import android.widget.Button;
 
 import com.example.progettoingsw.R;
 import com.example.progettoingsw.controllers_package.Controller;
-import com.example.progettoingsw.view.acquirente.AcquirenteFragmentSelezioneCategorie;
+import com.example.progettoingsw.view.acquirente.FragmentSelezioneCategorie;
 
 import java.util.ArrayList;
 
@@ -43,7 +43,7 @@ public class PopUpRicercaCategorie extends AppCompatActivity {
         button_annulla.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                controller.redirectActivity(PopUpRicercaCategorie.this, AcquirenteFragmentSelezioneCategorie.class);
+                controller.redirectActivity(PopUpRicercaCategorie.this, FragmentSelezioneCategorie.class);
             }
         });
 

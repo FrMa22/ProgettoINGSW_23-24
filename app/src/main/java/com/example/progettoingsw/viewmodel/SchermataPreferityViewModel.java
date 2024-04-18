@@ -43,7 +43,6 @@ public class SchermataPreferityViewModel extends ViewModel {
     public ArrayList<Asta_allingleseModel> getListaAstaInglesePreferite() {
         return listaAstaInglesePreferite.getValue();
     }
-
     public void setListaAstaInglesePreferite(ArrayList<Asta_allingleseModel> lista) {
         listaAstaInglesePreferite.setValue(lista);
     }

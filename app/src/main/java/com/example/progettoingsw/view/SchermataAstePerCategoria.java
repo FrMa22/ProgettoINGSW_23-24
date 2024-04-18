@@ -1,5 +1,6 @@
 package com.example.progettoingsw.view;
 
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,6 +21,7 @@ import com.example.progettoingsw.controllers_package.Controller;
 import com.example.progettoingsw.item.AstaIngleseItem;
 import com.example.progettoingsw.item.AstaInversaItem;
 import com.example.progettoingsw.item.AstaRibassoItem;
+import com.example.progettoingsw.viewmodel.SchermataAstePerCategoriaViewModel;
 
 import java.util.ArrayList;
 
@@ -34,23 +36,26 @@ public class SchermataAstePerCategoria extends GestoreComuniImplementazioni {
      private ProgressBar progress_bar_schermata_aste_per_categoria;
      private TextView text_view_nessuna_asta_ricercata_per_categoria;
     AstePerCategorieDAO astePerCategorieDAO;
+    private SchermataAstePerCategoriaViewModel schermataAstePerCategoriaViewModel;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_schermata_aste_per_categoria);
-        intent= getIntent();
-        String categoriaSelezionata = intent.getStringExtra("categoria_selezionata");
         textViewTtitoloCategorie = findViewById(R.id.titoloRicercaCategoria);
-        textViewTtitoloCategorie.setText(categoriaSelezionata);
         progress_bar_schermata_aste_per_categoria = findViewById(R.id.progress_bar_schermata_aste_per_categoria);
-        progress_bar_schermata_aste_per_categoria.setVisibility(View.VISIBLE);
+        //progress_bar_schermata_aste_per_categoria.setVisibility(View.VISIBLE);
         text_view_nessuna_asta_ricercata_per_categoria = findViewById(R.id.text_view_nessuna_asta_ricercata_per_categoria);
 
-        controller = new Controller();
-        email =intent.getStringExtra("email");
-        tipoUtente =intent.getStringExtra("tipoUtente");
         backBottone = findViewById(R.id.backButtonCategorieRicerca);
         astaAdapter = new AstaAdapter(this, null);
+
+        schermataAstePerCategoriaViewModel = new ViewModelProvider(this).get(SchermataAstePerCategoriaViewModel.class);
+        osservaIsAcquirente();
+        osservaNomeCategoriaPerTextview();
+        schermataAstePerCategoriaViewModel.checkNomeCategoriaPerTextview();
+        schermataAstePerCategoriaViewModel.checkTipoUtente();
+
+
 
         //
         // Inizializza il RecyclerView e imposta l'adapter
@@ -64,70 +69,142 @@ public class SchermataAstePerCategoria extends GestoreComuniImplementazioni {
         astaAdapter.setOnItemClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Ottieni la posizione dell'elemento cliccato
+                Log.d("aste per categoria" , "click");
                 int position = recyclerViewAstePerCategoria.getChildAdapterPosition(v);
-
-                // Ottieni l'oggetto Asta corrispondente alla posizione cliccata
                 Object asta = astaAdapter.getItem(position);
+                schermataAstePerCategoriaViewModel.gestisciClickRecyclerView(asta);
 
-                // Esegui le azioni desiderate con l'oggetto Asta
-                if (asta instanceof AstaIngleseItem) {
-                    int id = ((AstaIngleseItem) asta).getId();
-                    Log.d("Asta inglese", "id è " + id);
-                    Intent intent = new Intent(SchermataAstePerCategoria.this, SchermataAstaInglese.class);//test del login
-                    intent.putExtra("email", email);
-                    intent.putExtra("tipoUtente", tipoUtente);
-                    intent.putExtra("id", id);
-                    startActivity(intent);
-                } else if (asta instanceof AstaRibassoItem) {
-                    int id = ((AstaRibassoItem) asta).getId();
-                    Intent intent = new Intent(SchermataAstePerCategoria.this, SchermataAstaRibasso.class);//test del login
-                    intent.putExtra("email", email);
-                    intent.putExtra("tipoUtente", tipoUtente);
-                    intent.putExtra("id", id);
-                    startActivity(intent);
-                } else if (asta instanceof AstaInversaItem) {
-                    int id = ((AstaInversaItem) asta).getId();
-                    Intent intent = new Intent(SchermataAstePerCategoria.this, SchermataAstaInversa.class);//test del login
-                    intent.putExtra("email", email);
-                    intent.putExtra("tipoUtente", tipoUtente);
-                    intent.putExtra("id", id);
-                    startActivity(intent);
-                }
             }
         });
-
-        astePerCategorieDAO = new AstePerCategorieDAO(this);
-        //di default appena si apre la schermata si è già su aste aperte quindi escono già
-        astePerCategorieDAO.openConnection();
-        astePerCategorieDAO.getAsteForCategoriaUtente(categoriaSelezionata,tipoUtente);
-        recyclerViewAstePerCategoria.setVisibility(View.VISIBLE);
 
 
         backBottone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 onBackPressed();
-
             }
         });
 
     }
 
-    public void asteCategorie(ArrayList<Object> aste) {
-        boolean asteVuote = aste == null || aste.isEmpty();
-        if (!asteVuote)  {
-            astaAdapter.setAste(aste);
-        } else {
-            astaAdapter.setAste(null);
-            // Nessun nome asta trovato per l'email specificata
-        }
-        if(asteVuote){
-            text_view_nessuna_asta_ricercata_per_categoria.setVisibility(View.VISIBLE);
-        }else{
-            text_view_nessuna_asta_ricercata_per_categoria.setVisibility(View.INVISIBLE);
-        }
-        progress_bar_schermata_aste_per_categoria.setVisibility(View.INVISIBLE);
-    }
+//    public void asteCategorie(ArrayList<Object> aste) {
+//        boolean asteVuote = aste == null || aste.isEmpty();
+//        if (!asteVuote)  {
+//            astaAdapter.setAste(aste);
+//        } else {
+//            astaAdapter.setAste(null);
+//            // Nessun nome asta trovato per l'email specificata
+//        }
+//        if(asteVuote){
+//            text_view_nessuna_asta_ricercata_per_categoria.setVisibility(View.VISIBLE);
+//        }else{
+//            text_view_nessuna_asta_ricercata_per_categoria.setVisibility(View.INVISIBLE);
+//        }
+//        progress_bar_schermata_aste_per_categoria.setVisibility(View.INVISIBLE);
+//    }
 
+    public void osservaIsAcquirente(){
+        schermataAstePerCategoriaViewModel.isAcquirente.observe(this, (valore) -> {
+            if(valore){
+                Log.d("acquirente", "" );
+                osservaEntraInSchermataAstaInglese();
+                osservaEntraInSchermataAstaRibasso();
+                osservaListaAstaIngleseCategoria();
+                osservaListaAstaRibassoCategoria();
+            }else{
+                Log.d("venditore", "" );
+                osservaEntraInSchermataAstaInversa();
+                osservaListaAstaInversaCategoria();
+            }
+            schermataAstePerCategoriaViewModel.getAstePerCategoria();
+        });
+    }
+    public void osservaListaAstaIngleseCategoria(){
+        schermataAstePerCategoriaViewModel.listaAstaIngleseCategoria.observe(this, (listaAste) -> {
+            if(listaAste!=null){
+                //fai qualcosa
+                osservaListaAstaIngleseCategoriaConvertite();
+                schermataAstePerCategoriaViewModel.convertiAsteInglese();
+            }
+        });
+    }
+    public void osservaListaAstaIngleseCategoriaConvertite(){
+        schermataAstePerCategoriaViewModel.listaAstaIngleseCategoriaConvertite.observe(this, (listaAste) -> {
+            if(listaAste!=null){
+                //fai qualcosa
+                Log.d("inglesi", "" + listaAste.size());
+                astaAdapter.setAste(listaAste);
+                text_view_nessuna_asta_ricercata_per_categoria.setVisibility(View.INVISIBLE);
+            }
+        });
+    }
+    public void osservaListaAstaRibassoCategoria(){
+        schermataAstePerCategoriaViewModel.listaAstaRibassoCategoria.observe(this, (listaAste) -> {
+            if(listaAste!=null){
+                //fai qualcosa
+                osservaListaAstaRibassoCategoriaConvertite();
+                schermataAstePerCategoriaViewModel.convertiAsteRibasso();
+            }
+        });
+    }
+    public void osservaListaAstaRibassoCategoriaConvertite(){
+        schermataAstePerCategoriaViewModel.listaAstaRibassoCategoriaConvertite.observe(this, (listaAste) -> {
+            if(listaAste!=null){
+                Log.d("ribasso", "" + listaAste.size());
+                //fai qualcosa
+                astaAdapter.setAste(listaAste);
+                text_view_nessuna_asta_ricercata_per_categoria.setVisibility(View.INVISIBLE);
+            }
+        });
+    }
+    public void osservaListaAstaInversaCategoria(){
+        schermataAstePerCategoriaViewModel.listaAstaInversaCategoria.observe(this, (listaAste) -> {
+            if(listaAste!=null){
+                //fai qualcosa
+                osservaListaAstaInversaCategoriaConvertite();
+                schermataAstePerCategoriaViewModel.convertiAsteInversa();
+            }
+        });
+    }
+    public void osservaListaAstaInversaCategoriaConvertite(){
+        schermataAstePerCategoriaViewModel.listaAstaInversaCategoriaConvertite.observe(this, (listaAste) -> {
+            if(listaAste!=null){
+                //fai qualcosa
+                Log.d("inverse", "" + listaAste.size());
+                astaAdapter.setAste(listaAste);
+                text_view_nessuna_asta_ricercata_per_categoria.setVisibility(View.INVISIBLE);
+            }
+        });
+    }
+    public void osservaNomeCategoriaPerTextview(){
+        schermataAstePerCategoriaViewModel.nomeCategoriaPerTextview.observe(this, (valore) ->{
+            if(schermataAstePerCategoriaViewModel.isNomeCategoriaPerTextView()){
+                textViewTtitoloCategorie.setText(valore);
+            }
+        });
+    }
+    public void osservaEntraInSchermataAstaInglese(){
+        schermataAstePerCategoriaViewModel.entraInSchermataAstaInglese.observe(this, (messaggio) -> {
+            if (schermataAstePerCategoriaViewModel.getEntraInSchermataAstaInglese()){
+                Intent intent = new Intent(SchermataAstePerCategoria.this, SchermataAstaInglese.class);
+                startActivity(intent);
+            }
+        });
+    }
+    public void osservaEntraInSchermataAstaRibasso(){
+        schermataAstePerCategoriaViewModel.entraInSchermataAstaRibasso.observe(this, (messaggio) -> {
+            if (schermataAstePerCategoriaViewModel.getEntraInSchermataAstaRibasso()){
+                Intent intent = new Intent(SchermataAstePerCategoria.this, SchermataAstaRibasso.class);
+                startActivity(intent);
+            }
+        });
+    }
+    public void osservaEntraInSchermataAstaInversa(){
+        schermataAstePerCategoriaViewModel.entraInSchermataAstaInversa.observe(this, (messaggio) -> {
+            if (schermataAstePerCategoriaViewModel.getEntraInSchermataAstaInversa()){
+                Intent intent = new Intent(SchermataAstePerCategoria.this, SchermataAstaInversa.class);
+                startActivity(intent);
+            }
+        });
+    }
 }

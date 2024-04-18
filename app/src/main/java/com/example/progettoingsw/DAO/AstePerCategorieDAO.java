@@ -196,11 +196,11 @@ public class AstePerCategorieDAO {
                     }
                 }
                     Log.d("astepercategorieDAO" , "chiamo asteCategorie");
-                    schermataAstePerCategoria.asteCategorie(aste);
+                    //schermataAstePerCategoria.asteCategorie(aste);
                 } else {
                     // Nessun risultato trovato per l'utente
                     Log.d("astepercategorieDAO" , "chiamo asteCategorie vuoto");
-                    schermataAstePerCategoria.asteCategorie(new ArrayList<>());
+                    //schermataAstePerCategoria.asteCategorie(new ArrayList<>());
                 }
             } else {
                 // Nessun risultato o errore

@@ -103,7 +103,7 @@ private Fragment selectedFragment;
                     item.setIcon(R.drawable.ic_categorie);
                     resetOtherIcons(bottomNavigationView, item);
                     Log.d("BottomNav", "Selected Categories");
-                    selectedFragment = new AcquirenteFragmentSelezioneCategorie();
+                    selectedFragment = new FragmentSelezioneCategorie();
                 } else if (item.getItemId() == R.id.action_crea_asta) {
                     Log.d("BottomNav", "Selected Crea Asta");
                     item.setIcon(R.drawable.ic_plus);
@@ -198,7 +198,7 @@ private Fragment selectedFragment;
             MenuItem menuItem = null;
             if (fragment instanceof FragmentHome) {
                 menuItem = bottomNavigationView.getMenu().findItem(R.id.action_home);
-            } else if (fragment instanceof AcquirenteFragmentSelezioneCategorie) {
+            } else if (fragment instanceof FragmentSelezioneCategorie) {
                 menuItem = bottomNavigationView.getMenu().findItem(R.id.action_categories);
             } else if (fragment instanceof FragmentCreaAstaInversa) {
                 menuItem = bottomNavigationView.getMenu().findItem(R.id.action_crea_asta);
