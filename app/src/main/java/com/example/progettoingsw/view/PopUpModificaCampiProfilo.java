@@ -76,7 +76,7 @@ public class PopUpModificaCampiProfilo extends DialogPersonalizzato implements V
                 Log.d("bottone", " i valori di nome e cognome sono: " + nome + cognome);
 //                popUpModificaCampiProfiloDAO.updateFields(nome, cognome, sitoweb, paese, bio);
                 //chiamata al backend
-                fragmentProfilo.fragmentProfiloViewModel.aggiornaAcquirenteViewModel(nome,cognome,bio,sitoweb,paese);
+                fragmentProfiloViewModel.aggiornaViewModel(nome,cognome,bio,sitoweb,paese);
                 fragmentProfilo.onResume();
                 dismiss();
             }else{

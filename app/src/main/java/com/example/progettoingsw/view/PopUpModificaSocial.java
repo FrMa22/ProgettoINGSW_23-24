@@ -78,7 +78,8 @@ public class PopUpModificaSocial extends DialogPersonalizzato implements View.On
   //              popUpModificaSocialDAO.updateSocial(nome_vecchio, link_vecchio, nome, link);
                 System.out.println("controllo è  non vuoto passato");
                 System.out.println("prima della chiamata al backend");
-                 fragmentProfiloViewModel.aggiornaSocialAcquirenteViewModel(nome_vecchio,link_vecchio,nome,link);
+                 //fragmentProfiloViewModel.aggiornaSocialAcquirenteViewModel(nome_vecchio,link_vecchio,nome,link);
+                 fragmentProfiloViewModel.aggiornaSocialViewModel(nome_vecchio,link_vecchio,nome,link);
                 fragmentProfilo.onResume();
                 dismiss();
             }else{
@@ -103,7 +104,8 @@ public class PopUpModificaSocial extends DialogPersonalizzato implements View.On
           //  popUpModificaSocialDAO.openConnection();
            // popUpModificaSocialDAO.deleteSocial(nome_vecchio,link_vecchio);
             //chiamata al backend per cancellare
-            fragmentProfilo.fragmentProfiloViewModel.eliminaSocialAcquirenteViewModel(nome_vecchio,link_vecchio);
+            //fragmentProfiloViewModel.eliminaSocialAcquirenteViewModel(nome_vecchio,link_vecchio);
+            fragmentProfiloViewModel.eliminaSocialViewModel(nome_vecchio,link_vecchio);
 
             fragmentProfilo.onResume();
             dismiss();

@@ -83,12 +83,10 @@ private void confermaPassword(){
 //        popUpControlloPasswordDAO.openConnection();
 //        popUpControlloPasswordDAO.checkPassword(password_vecchia);
         //controllo password vecchia=quella del repository + chiamata al backend
-        Repository repository=Repository.getInstance();
-                if(repository.getAcquirenteModel().getPassword().equals(password_vecchia)){
+
                     //chiamata al backend
-                    fragmentProfilo.fragmentProfiloViewModel.aggiornaPasswordAcquirenteViewModel(password_nuova);
+                    fragmentProfiloViewModel.aggiornaPasswordViewModel(password_vecchia,password_nuova);
                     dismiss();
-                }else{Toast.makeText(getContext(), "Password non corretta, riprovare.", Toast.LENGTH_SHORT).show();}
 
     }
 
