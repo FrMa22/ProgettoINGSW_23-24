@@ -18,7 +18,8 @@ import androidx.appcompat.widget.SwitchCompat;
 
 import com.example.progettoingsw.R;
 import com.example.progettoingsw.classe_da_estendere.DialogPersonalizzato;
-import com.example.progettoingsw.view.acquirente.AcquirenteFragmentRicercaAsta;
+import com.example.progettoingsw.view.acquirente.FragmentRicercaAsta;
+import com.example.progettoingsw.viewmodel.RicercaAstaViewModel;
 
 import java.util.ArrayList;
 
@@ -31,76 +32,79 @@ public class PopUpFiltroRicerca extends DialogPersonalizzato implements View.OnC
     private SwitchCompat switch_ordinamento_popup_ricerca;
     private LinearLayout linear_layout_categorie_popup_ricerca;
     private Resources resources;
-    private AcquirenteFragmentRicercaAsta acquirenteFragmentRicercaAsta;
+    private FragmentRicercaAsta fragmentRicercaAsta;
     private ArrayList<String> categorieScelte;
     private String ordineScelto;
-    public PopUpFiltroRicerca(Context context, AcquirenteFragmentRicercaAsta acquirenteFragmentRicercaAsta, ArrayList<String> categorieScelte, String ordineScelto) {
+    private RicercaAstaViewModel ricercaAstaViewModel;
+    public PopUpFiltroRicerca(Context context, FragmentRicercaAsta fragmentRicercaAsta, RicercaAstaViewModel ricercaAstaViewModel) {
         super(context);
         mContext = context;
-        this.acquirenteFragmentRicercaAsta = acquirenteFragmentRicercaAsta;
-        this.categorieScelte = categorieScelte;
-        this.ordineScelto = ordineScelto;
+        this.fragmentRicercaAsta = fragmentRicercaAsta;
+        this.ricercaAstaViewModel  = ricercaAstaViewModel;
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.pop_up_filtro_ricerca);
+        resources = mContext.getResources();
+
+
+
 
         linear_layout_categorie_popup_ricerca = findViewById(R.id.linear_layout_categorie_popup_ricerca);
-        resources = mContext.getResources();
-        for (String categoria : categorieScelte) {
-            Log.d("PopUp categorie scelte", "Categoria: " + categoria);
-        }
-        switchTexts = new ArrayList<>();
-        if(!categorieScelte.isEmpty()){
-            switchTexts = categorieScelte;
-            for (String categoria : switchTexts) {
-                Log.d("PopUp switch texts", "Categoria: " + categoria);
-            }
-        }
+
+//        for (String categoria : categorieScelte) {
+//            Log.d("PopUp categorie scelte", "Categoria: " + categoria);
+//        }
+//        switchTexts = new ArrayList<>();
+//        if(!categorieScelte.isEmpty()){
+//            switchTexts = categorieScelte;
+//            for (String categoria : switchTexts) {
+//                Log.d("PopUp switch texts", "Categoria: " + categoria);
+//            }
+//        }
         switch_ordinamento_popup_ricerca = findViewById(R.id.switch_ordinamento_popup_ricerca);
-        ordinamentoPrezzo = ordineScelto;
-        if (ordinamentoPrezzo.equals("ASC")) {
-            // Se l'ordinamento è ascendente, impostiamo lo switch come non cliccato
-            switch_ordinamento_popup_ricerca.setChecked(false);
-            switch_ordinamento_popup_ricerca.setText("Crescente");
-        } else if (ordinamentoPrezzo.equals("DESC")) {
-            // Se l'ordinamento è discendente, impostiamo lo switch come cliccato
-            switch_ordinamento_popup_ricerca.setChecked(true);
-            switch_ordinamento_popup_ricerca.setText("Decrescente");
-        }
-        switch_ordinamento_popup_ricerca.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        //ordinamentoPrezzo = ordineScelto;
+//        if (ordinamentoPrezzo.equals("ASC")) {
+//            // Se l'ordinamento è ascendente, impostiamo lo switch come non cliccato
+//            switch_ordinamento_popup_ricerca.setChecked(false);
+//            switch_ordinamento_popup_ricerca.setText("Crescente");
+//        } else if (ordinamentoPrezzo.equals("DESC")) {
+//            // Se l'ordinamento è discendente, impostiamo lo switch come cliccato
+//            switch_ordinamento_popup_ricerca.setChecked(true);
+//            switch_ordinamento_popup_ricerca.setText("Decrescente");
+//        }
+        switch_ordinamento_popup_ricerca.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    // Lo switch è attivato, quindi l'ordinamento è ascendente
-                    ordinamentoPrezzo = "DESC";
-                    switch_ordinamento_popup_ricerca.setText("Decrescente");
-                } else {
-                    // Lo switch è disattivato, quindi l'ordinamento è discendente
-                    ordinamentoPrezzo = "ASC";
-                    switch_ordinamento_popup_ricerca.setText("Crescente");
-                }
+            public void onClick(View view) {
+                ricercaAstaViewModel.gestisciSwitchOrdinamento();
             }
         });
         buttonSalva = findViewById(R.id.buttonSalvaFiltro);
         buttonAnnullaFiltro = findViewById(R.id.buttonAnnullaFiltro);
 
-        populateLinearLayout();
+        //populateLinearLayout();
         buttonAnnullaFiltro.setOnClickListener(this);
         buttonSalva.setOnClickListener(this);
+
+        Log.d("main popup", "prima degli osserva");
+        osservaCategorie();
+        osservaNoCategorie();
+        osservaOrdinamento();
+        osservaChiudiPopUp();
+        ricercaAstaViewModel.setCategoriePopUp();
+        ricercaAstaViewModel.setOrdinamentoPopUp();
     }
 
     @Override
     public void onClick(View view) {
         if (view.getId() == R.id.buttonAnnullaFiltro) {
             Log.d("Bottoni in popup" , "annulla");
-            dismiss();
+            ricercaAstaViewModel.chiudi();
         } else if (view.getId() == R.id.buttonSalvaFiltro) {
             Log.d("Bottoni in popup" , "salva");
-            acquirenteFragmentRicercaAsta.handlePopUp(switchTexts,ordinamentoPrezzo);
-            dismiss();
+            ricercaAstaViewModel.salva();
         }
 
     }
@@ -130,8 +134,11 @@ public class PopUpFiltroRicerca extends DialogPersonalizzato implements View.OnC
             switchButton.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20); // Aumentato il testo per renderlo più alto
             switchButton.setTextColor(resources.getColor(R.color.colore_hint));
             // Controllo se la categoria corrente è già stata selezionata
-            if (categorieScelte.contains(categorieArray[i])) {
-                switchButton.setChecked(true);
+            if(categorieScelte!=null) {
+                Log.d("populate", "categorieScelte non null" + categorieScelte);
+                if (categorieScelte.contains(categorieArray[i])) {
+                    switchButton.setChecked(true);
+                }
             }
 
             try {
@@ -161,14 +168,14 @@ public class PopUpFiltroRicerca extends DialogPersonalizzato implements View.OnC
             switchButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    // Se lo switch è stato selezionato, aggiungi il testo all'array
                     if (isChecked) {
                         switchButton.setTextColor(resources.getColor(R.color.colore_secondario));
-                        switchTexts.add(switchButton.getText().toString());
+                        //switchTexts.add(switchButton.getText().toString());
                     } else { // Se lo switch è stato deselezionato, rimuovi il testo dall'array
                         switchButton.setTextColor(resources.getColor(R.color.colore_hint));
-                        switchTexts.remove(switchButton.getText().toString());
+                        //switchTexts.remove(switchButton.getText().toString());
                     }
+                    ricercaAstaViewModel.gestisciSwitchCategorie(switchButton);
                 }
             });
 
@@ -189,5 +196,55 @@ public class PopUpFiltroRicerca extends DialogPersonalizzato implements View.OnC
         }
 
         immaginiArray.recycle();
+    }
+    private void rimuoviOsservatori() {
+        ricercaAstaViewModel.noCategorie.removeObservers(fragmentRicercaAsta);
+        ricercaAstaViewModel.categorie.removeObservers(fragmentRicercaAsta);
+        ricercaAstaViewModel.ordinamento.removeObservers(fragmentRicercaAsta);
+        ricercaAstaViewModel.chiudiPopUp.removeObservers(fragmentRicercaAsta);
+    }
+
+    public void osservaNoCategorie(){
+        ricercaAstaViewModel.noCategorie.observe(fragmentRicercaAsta, (valore)->{
+            if(valore){
+                Log.d("osservaNoCategorie","entrato");
+                populateLinearLayout();
+            }
+        });
+    }
+    public void osservaCategorie(){
+        ricercaAstaViewModel.categorie.observe(fragmentRicercaAsta, (listaCategorie)->{
+            Log.d("osservaCategorie", "entrato");
+            if(ricercaAstaViewModel.isCategorie()){
+                Log.d("osservaCategorie", "entrato nell if");
+                categorieScelte = listaCategorie;
+                Log.d("osservaCategorie", "chiamo populate");
+                populateLinearLayout();
+        }
+        });
+    }
+    public void osservaOrdinamento(){
+        ricercaAstaViewModel.ordinamento.observe(fragmentRicercaAsta, (ordine)->{
+            if(ricercaAstaViewModel.isOrdinamento()){
+                if (ricercaAstaViewModel.isOrdinamentoAsc()) {
+                    switch_ordinamento_popup_ricerca.setChecked(false);
+                    switch_ordinamento_popup_ricerca.setText("Crescente");
+                } else {
+                    // Se l'ordinamento è discendente, impostiamo lo switch come cliccato
+                    switch_ordinamento_popup_ricerca.setChecked(true);
+                    switch_ordinamento_popup_ricerca.setText("Decrescente");
+                }
+            }
+        });
+    }
+    public void osservaChiudiPopUp(){
+        ricercaAstaViewModel.chiudiPopUp.observe(fragmentRicercaAsta, (valore) -> {
+            if(valore){
+                Log.d("osservaChiudiPopup","entrato");
+                rimuoviOsservatori();
+                ricercaAstaViewModel.resetPerPopUp();
+                dismiss();
+            }
+        });
     }
 }

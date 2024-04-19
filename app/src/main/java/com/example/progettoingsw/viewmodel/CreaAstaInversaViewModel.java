@@ -74,7 +74,11 @@ public class CreaAstaInversaViewModel extends ViewModel {
         return categorieInserite.getValue();
     }
     public void setCategorieInserite(ArrayList<String> categorieInserite) {
-        this.categorieInserite.setValue(categorieInserite);
+        if(categorieInserite!=null && !categorieInserite.isEmpty()) {
+            this.categorieInserite.setValue(new ArrayList<>(categorieInserite));
+        }else{
+            this.categorieInserite.setValue(new ArrayList<>());
+        }
     }
     public Boolean listaCategorieNotEmpty(){
         if(categorieInserite.getValue()!=null) {
@@ -416,18 +420,27 @@ public class CreaAstaInversaViewModel extends ViewModel {
     }
 
     public void addCategoriaProvvisoria(String nomeCategoria){
-        Log.d("addcategoria", "entrato");
+        Log.d("addcategoria", "entrato" + nomeCategoria);
+        Log.d("addcategoria", "entrato e scelte: " + categorieScelte);
+        Log.d("removecategoria", "prima di aver aggiunto " + nomeCategoria + " si ha " + categorieScelteProvvisorie );
         categorieScelteProvvisorie.add(nomeCategoria);
+        Log.d("removecategoria", "dopo aver aggiunto " + nomeCategoria + " si ha " + categorieScelteProvvisorie );
     }
     public void removeCategoriaProvvisoria(String nomeCategoria){
-        Log.d("removecategoria", "entrato");
+        Log.d("removecategoria", "entrato" + nomeCategoria);
+        Log.d("removecategoria", "entrato e scelte: " + categorieScelte);
+        Log.d("removecategoria", "prima di aver rimosso " + nomeCategoria + " si ha " + categorieScelteProvvisorie );
         categorieScelteProvvisorie.remove(nomeCategoria);
+        Log.d("removecategoria", "dopo aver rimosso " + nomeCategoria + " si ha " + categorieScelteProvvisorie );
     }
     public void saveCategorieScelte(){
-        this.categorieScelte = categorieScelteProvvisorie;
+        Log.d("save","in categorie scelte metto categorie provvisorie" + categorieScelteProvvisorie);
+        this.categorieScelte = new ArrayList<>(categorieScelteProvvisorie);
+        setCategorieInserite(categorieScelte);
+        this.categorieScelteProvvisorie.clear();
     }
     public void setCategoriaProvvisoria(ArrayList<String> lista){
-        this.categorieScelteProvvisorie = lista;
+        this.categorieScelteProvvisorie = new ArrayList<>(lista);
     }
     public void checkCategorieInserite(){
         if(categorieScelte != null && !categorieScelte.isEmpty()){

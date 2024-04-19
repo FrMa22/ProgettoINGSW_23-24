@@ -38,7 +38,7 @@
             android:name=".view.PopUpFiltroRicerca"
             android:theme="@style/Base.Theme.ProgettoINGSW.CustomThemeSfocato" />
         <activity
-            android:name=".view.acquirente.AcquirenteFragmentRicercaAsta"
+            android:name=".view.acquirente.FragmentRicercaAsta"
             android:exported="false" />
         <activity
             android:name=".view.acquirente.FragmentSelezioneCategorie"
