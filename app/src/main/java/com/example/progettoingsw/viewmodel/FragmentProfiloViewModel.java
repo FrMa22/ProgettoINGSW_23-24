@@ -79,6 +79,62 @@ public class FragmentProfiloViewModel extends ViewModel {
 
     }
 
+
+    public void aggiungiSocialViewModel(String nome,String link){
+        if(containsAcquirente()){
+            aggiungiSocialAcquirenteViewModel(nome,link);
+        }else if(containsVenditore()){
+            aggiungiSocialVenditoreViewModel(nome,link);
+        }
+
+    }
+
+    public void aggiornaSocialViewModel(String oldnome,String oldlink,String nome,String link){
+        if(containsAcquirente()){
+            aggiornaSocialAcquirenteViewModel(oldnome,oldlink,nome,link);
+        }else if(containsVenditore()){
+            aggiornaSocialVenditoreViewModel(oldnome,oldlink,nome,link);
+        }
+
+    }
+
+    public void eliminaSocialViewModel(String nome,String link){
+        if(containsAcquirente()){
+            eliminaSocialAcquirenteViewModel(nome,link);
+        }
+        else if(containsVenditore()){
+            eliminaSocialVenditoreViewModel(nome,link);
+        }
+
+    }
+
+    public void aggiornaViewModel(String nome,String cognome,String bio,String sitoweb,String paese){
+        if(containsAcquirente()){
+            aggiornaAcquirenteViewModel(nome,cognome,bio,sitoweb,paese);
+        }
+        else if(containsVenditore()){
+           aggiornaVenditoreViewModel(nome,cognome,bio,sitoweb,paese);
+        }
+
+
+    }
+
+
+    public void aggiornaPasswordViewModel(String password,String passwordNuova ){
+        if(containsAcquirente()){
+            if(password.equals(getAcquirentePassword())) {
+                aggiornaPasswordAcquirenteViewModel(passwordNuova);
+            }
+        }
+        else if(containsVenditore()){
+
+            if(password.equals(getVenditorePassword())) {
+                aggiornaPasswordVenditoreViewModel(passwordNuova);
+            }
+        }
+
+    }
+
     public void aggiungiSocialAcquirenteViewModel(String nome,String link){
         String email=getAcquirenteEmail();
         System.out.println("entrato in fragmentProfilo aggiungi social di viewmodel con email:"+email + "nome:"+ nome + "link:"+ link);
@@ -225,12 +281,15 @@ public class FragmentProfiloViewModel extends ViewModel {
 
     private void aggiornaPasswordAcquirente(String password,String email) {
         System.out.println("entrato in aggiorna password  acquirente di view model");
-        fragmentProfiloRepository.aggiornaPasswordAcquirenteBackend(password,email ,new FragmentProfiloRepository.OnAggiornaPasswordAcquirenteListener() {
-            @Override
-            public void onAggiornaPasswordAcquirente(String passwordNuovo) {
-                repository.updatePasswordAcquirente(passwordNuovo);
-            }
-        });
+
+
+            fragmentProfiloRepository.aggiornaPasswordAcquirenteBackend(password, email, new FragmentProfiloRepository.OnAggiornaPasswordAcquirenteListener() {
+                @Override
+                public void onAggiornaPasswordAcquirente(String passwordNuovo) {
+                    repository.updatePasswordAcquirente(passwordNuovo);
+                }
+            });
+
     }
 
 
@@ -398,12 +457,14 @@ public class FragmentProfiloViewModel extends ViewModel {
 
     private void aggiornaPasswordVenditore(String password,String email) {
         System.out.println("entrato in aggiorna password  Venditore di view model");
-        fragmentProfiloRepository.aggiornaPasswordVenditoreBackend(password,email ,new FragmentProfiloRepository.OnAggiornaPasswordVenditoreListener() {
-            @Override
-            public void onAggiornaPasswordVenditore(String passwordNuovo) {
-                repository.updatePasswordVenditore(passwordNuovo);
-            }
-        });
+            fragmentProfiloRepository.aggiornaPasswordVenditoreBackend(password, email, new FragmentProfiloRepository.OnAggiornaPasswordVenditoreListener() {
+                @Override
+                public void onAggiornaPasswordVenditore(String passwordNuovo) {
+                    repository.updatePasswordVenditore(passwordNuovo);
+                }
+            });
+
+
     }
 
 
@@ -512,6 +573,15 @@ public class FragmentProfiloViewModel extends ViewModel {
     public String getVenditoreEmail(){
         return repository.getVenditoreModel().getIndirizzo_email();
     }
+
+    private String getAcquirentePassword(){
+        return repository.getAcquirenteModel().getPassword();
+    }
+
+    private String getVenditorePassword(){
+        return repository.getVenditoreModel().getPassword();
+    }
+
 
     public AcquirenteModel getAcquirente(){
         return repository.getAcquirenteModel();

@@ -141,6 +141,7 @@ public class Repository {
     }
 
     public void updatePasswordAcquirente(String passwordNuovo){
+        System.out.println("password settata per acquirente");
         this.acquirenteModel.setPassword(passwordNuovo);
     }
 

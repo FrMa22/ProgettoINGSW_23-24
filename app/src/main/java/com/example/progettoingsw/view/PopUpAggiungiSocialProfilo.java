@@ -94,7 +94,8 @@ public class PopUpAggiungiSocialProfilo extends DialogPersonalizzato implements 
         if (!nomeSocial.isEmpty() && nomeSocial.length() <= 50 &&
                 !nomeUtenteSocial.isEmpty() && nomeUtenteSocial.length() <= 50) {
               //  progressBarPopUpAggiungiSocialProfilo.setVisibility(View.VISIBLE);
-            fragmentProfiloViewModel.aggiungiSocialAcquirenteViewModel(nomeSocial,nomeUtenteSocial);
+            fragmentProfiloViewModel.aggiungiSocialViewModel(nomeSocial,nomeUtenteSocial);
+            dismiss();
                 //         registrazioneSocialDAO.openConnection();
          //       registrazioneSocialDAO.inserimentoSingoloSocial(nomeSocial, nomeUtenteSocial);
            //     registrazioneSocialDAO.closeConnection();
