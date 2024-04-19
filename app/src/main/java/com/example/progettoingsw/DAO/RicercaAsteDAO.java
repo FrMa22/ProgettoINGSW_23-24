@@ -9,7 +9,7 @@ import android.widget.Toast;
 import com.example.progettoingsw.R;
 import com.example.progettoingsw.controllers_package.DatabaseHelper;
 import com.example.progettoingsw.gestori_gui.ItemRicercaAste;
-import com.example.progettoingsw.view.acquirente.AcquirenteFragmentRicercaAsta;
+import com.example.progettoingsw.view.acquirente.FragmentRicercaAsta;
 import com.example.progettoingsw.item.AstaIngleseItem;
 import com.example.progettoingsw.item.AstaInversaItem;
 import com.example.progettoingsw.item.AstaRibassoItem;
@@ -25,7 +25,7 @@ import java.util.Collections;
 public class RicercaAsteDAO {
 
     private Connection connection;
-    private AcquirenteFragmentRicercaAsta acquirenteFragmentRicercaAsta;
+    private FragmentRicercaAsta fragmentRicercaAsta;
     private String parolaRicercata;
     private String[] listaCategorieScelte;
     private String ordinamentoPrezzo;
@@ -33,8 +33,8 @@ public class RicercaAsteDAO {
     private ItemRicercaAste item;
     private ArrayList<Object> astaItems;
 
-    public RicercaAsteDAO(AcquirenteFragmentRicercaAsta acquirenteFragmentRicercaAsta, String tipoUtente) {
-        this.acquirenteFragmentRicercaAsta = acquirenteFragmentRicercaAsta;
+    public RicercaAsteDAO(FragmentRicercaAsta fragmentRicercaAsta, String tipoUtente) {
+        this.fragmentRicercaAsta = fragmentRicercaAsta;
         this.tipoUtente = tipoUtente;
     }
 
@@ -196,8 +196,8 @@ public class RicercaAsteDAO {
                     } else {
                         // In caso di immagine non disponibile, puoi impostare un'immagine predefinita o lasciare foto come null
                         // Ecco un esempio di impostazione di un'immagine predefinita
-                        if(acquirenteFragmentRicercaAsta!=null)
-                            foto = BitmapFactory.decodeResource(acquirenteFragmentRicercaAsta.getContext().getResources(), R.drawable.no_image_available);
+                        if(fragmentRicercaAsta !=null)
+                            foto = BitmapFactory.decodeResource(fragmentRicercaAsta.getContext().getResources(), R.drawable.no_image_available);
                     }
                     String baseAsta = resultSet.getString("baseAsta");
                     String intervalloTempoOfferte = resultSet.getString("intervalloTempoOfferte");
@@ -288,8 +288,8 @@ public class RicercaAsteDAO {
                         // In caso di immagine non disponibile, puoi impostare un'immagine predefinita o lasciare foto come null
                         // Ecco un esempio di impostazione di un'immagine predefinita
                         Log.d("immagine", "impostata default");
-                        if(acquirenteFragmentRicercaAsta!=null)
-                            foto = BitmapFactory.decodeResource(acquirenteFragmentRicercaAsta.getContext().getResources(), R.drawable.no_image_available);
+                        if(fragmentRicercaAsta !=null)
+                            foto = BitmapFactory.decodeResource(fragmentRicercaAsta.getContext().getResources(), R.drawable.no_image_available);
                     }
                     Log.d("foto ", " foto : " + foto);
                     String prezzoBase = resultSet.getString("prezzoBase");
@@ -329,16 +329,16 @@ public class RicercaAsteDAO {
 
             if (astaItems != null) {
 
-                if (acquirenteFragmentRicercaAsta != null) {
-                    acquirenteFragmentRicercaAsta.handleAsteRecuperate(astaItems);
-                    Toast.makeText(acquirenteFragmentRicercaAsta.getActivity(), "Ricerca effettuata con successo", Toast.LENGTH_SHORT).show();
+                if (fragmentRicercaAsta != null) {
+                    //fragmentRicercaAsta.handleAsteRecuperate(astaItems);
+                    Toast.makeText(fragmentRicercaAsta.getActivity(), "Ricerca effettuata con successo", Toast.LENGTH_SHORT).show();
                 } else {
                     System.out.println("Ricerca effettuata con successo");
                 }
 
             } else {//astaItems vuota quindi errore
-                if (acquirenteFragmentRicercaAsta != null) {
-                    Toast.makeText(acquirenteFragmentRicercaAsta.getActivity(), "Errore nella ricerca", Toast.LENGTH_SHORT).show();
+                if (fragmentRicercaAsta != null) {
+                    Toast.makeText(fragmentRicercaAsta.getActivity(), "Errore nella ricerca", Toast.LENGTH_SHORT).show();
                 }
                 System.out.println("Errore ricerca");
             }
@@ -438,8 +438,8 @@ public class RicercaAsteDAO {
                     } else {
                         // In caso di immagine non disponibile, puoi impostare un'immagine predefinita o lasciare foto come null
                         // Ecco un esempio di impostazione di un'immagine predefinita
-                        if(acquirenteFragmentRicercaAsta != null) {
-                            foto = BitmapFactory.decodeResource(acquirenteFragmentRicercaAsta.getResources(), R.drawable.no_image_available);
+                        if(fragmentRicercaAsta != null) {
+                            foto = BitmapFactory.decodeResource(fragmentRicercaAsta.getResources(), R.drawable.no_image_available);
                         }
                     }
 
@@ -475,16 +475,16 @@ public class RicercaAsteDAO {
 
             if (astaItems != null) {
 
-                if (acquirenteFragmentRicercaAsta != null) {
-                    acquirenteFragmentRicercaAsta.handleAsteRecuperate(astaItems);
-                    Toast.makeText(acquirenteFragmentRicercaAsta.getActivity(), "Ricerca effettuata con successo", Toast.LENGTH_SHORT).show();
+                if (fragmentRicercaAsta != null) {
+                    //fragmentRicercaAsta.handleAsteRecuperate(astaItems);
+                    Toast.makeText(fragmentRicercaAsta.getActivity(), "Ricerca effettuata con successo", Toast.LENGTH_SHORT).show();
                 } else {
                     System.out.println("Ricerca effettuata con successo");
                 }
 
             } else {//astaItems vuota quindi errore
-                if (acquirenteFragmentRicercaAsta != null) {
-                    Toast.makeText(acquirenteFragmentRicercaAsta.getActivity(), "Errore nella ricerca", Toast.LENGTH_SHORT).show();
+                if (fragmentRicercaAsta != null) {
+                    Toast.makeText(fragmentRicercaAsta.getActivity(), "Errore nella ricerca", Toast.LENGTH_SHORT).show();
                 }
                 System.out.println("Errore ricerca");
             }

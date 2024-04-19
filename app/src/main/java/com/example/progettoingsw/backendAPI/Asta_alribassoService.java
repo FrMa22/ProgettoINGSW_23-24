@@ -45,4 +45,7 @@ public interface Asta_alribassoService {
 
     @POST("/asta_alribassoController/insertAstaRibasso/{asta_ribasso}/{lista_categorie}")
     Call<Long> saveAsta_ribasso(@Body Asta_alribasso_DTO asta_ribasso_dto, @Query("lista_categorie") ArrayList<String> lista_categorie);
+
+    @GET("/asta_alribassoController/getAstePerRicerca/{nome}/{ordinamento}/{nomiCategorie}")
+    Call<ArrayList<Asta_alribasso_DTO>> getAstePerRicerca(@Query("nome") String nome,@Query("ordinamento") String ordinamento,@Query("nomiCategorie") ArrayList<String> nomiCategorie );
 }

@@ -95,7 +95,7 @@ public class LoginRepository {
         protected void onPostExecute(AcquirenteModel result) {
             System.out.println("on post execute loginAcquirente" + result);
             if (listener != null) {
-//               System.out.println("valori del acquirente: " +" nome:" + result.getNome() + " cognome:"+result.getCognome() + " link:"+result.getLink() +" areageografica:" +result.getAreageografica() + " email:" + result.getIndirizzo_email() + result.getPassword());
+               //System.out.println("valori del acquirente: " +" nome:" + result.getNome() + " cognome:"+result.getCognome() + " link:"+result.getLink() +" areageografica:" +result.getAreageografica() + " email:" + result.getIndirizzo_email() + result.getPassword());
                 listener.onLogin(result);
             }
         }

@@ -50,4 +50,7 @@ public interface Asta_allingleseService {
 
     @GET("/asta_allingleseController/getEmailVincente/{indirizzo_email}/{idAstaInglese}")
     Call<Boolean> getEmailVincente(@Path("indirizzo_email") String indirizzo_email, @Path("idAstaInglese") Long idAstaInglese);
+
+    @GET("/asta_allingleseController/getAstePerRicerca/{nome}/{ordinamento}/{nomiCategorie}")
+    Call<ArrayList<Asta_allinglese_DTO>> getAstePerRicerca(@Query("nome") String nome,@Query("ordinamento") String ordinamento,@Query("nomiCategorie") ArrayList<String> nomiCategorie );
 }

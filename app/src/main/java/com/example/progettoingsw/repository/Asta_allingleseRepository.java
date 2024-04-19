@@ -33,7 +33,7 @@ public class Asta_allingleseRepository {
     }
     public void partecipaAsta_allinglese(Long idAsta, String emailAcquirente,String offerta,String tempoOfferta, String stato, Asta_allingleseRepository.OnPartecipazioneAstaIngleseListener listener) {
         System.out.println("entrato in partecipaAsta_allinglese");
-        new Asta_allingleseRepository.partecipaAsta_allingleseTask(listener).execute(String.valueOf(idAsta),emailAcquirente,offerta, tempoOfferta, stato);
+        new Asta_allingleseRepository.PartecipaAsta_allingleseTask(listener).execute(String.valueOf(idAsta),emailAcquirente,offerta, tempoOfferta, stato);
     }
     public void trovaAsta_allinglese(Long idAsta, Asta_allingleseRepository.OnTrovaAstaIngleseListener listener) {
         System.out.println("entrato in trovaAsta_allinglese");
@@ -62,6 +62,10 @@ public class Asta_allingleseRepository {
     public void getEmailVincente(String indirizzo_email, Long idAsta, Asta_allingleseRepository.OnGetEmailVincenteListener listener) {
         System.out.println("entrato in getEmailVincente");
         new Asta_allingleseRepository.GetEmailVincenteTask(listener).execute(indirizzo_email, String.valueOf(idAsta));
+    }
+    public void getAstePerRicerca(String nome,ArrayList<String> nomiCategorie,String ordinamento, Asta_allingleseRepository.OnGetAstePerRicercaListener listener) {
+        System.out.println("entrato in getAstePerRicerca");
+        new Asta_allingleseRepository.GetAstePerRicercaTask(listener,nome, nomiCategorie,ordinamento).execute();
     }
     private static class GetAsteScadenzaRecenteTask extends AsyncTask<Void, Void, ArrayList<Asta_allingleseModel>> {
         private Asta_allingleseRepository.OnGetAsteScadenzaRecenteListener listener;
@@ -293,10 +297,10 @@ public class Asta_allingleseRepository {
     public interface OnGetAsteCategoriaNomeListener {
         void OnGetAsteCategoriaNome(ArrayList<Asta_allingleseModel> list);
     }
-    private static class partecipaAsta_allingleseTask extends AsyncTask<String, Void, Integer> {
+    private static class PartecipaAsta_allingleseTask extends AsyncTask<String, Void, Integer> {
         private Asta_allingleseRepository.OnPartecipazioneAstaIngleseListener listener;
 
-        public partecipaAsta_allingleseTask(Asta_allingleseRepository.OnPartecipazioneAstaIngleseListener listener) {
+        public PartecipaAsta_allingleseTask(Asta_allingleseRepository.OnPartecipazioneAstaIngleseListener listener) {
             this.listener = listener;
         }
 
@@ -801,6 +805,96 @@ public class Asta_allingleseRepository {
     }
     public interface OnGetEmailVincenteListener {
         void OnGetEmailVincente(Boolean numeroRecuperato);
+    }
+
+    private static class GetAstePerRicercaTask extends AsyncTask<Void, Void, ArrayList<Asta_allingleseModel>> {
+        private Asta_allingleseRepository.OnGetAstePerRicercaListener listener;
+        private String nome;
+        private ArrayList<String> nomiCategorie;
+        private String ordinamento;
+
+        public GetAstePerRicercaTask(Asta_allingleseRepository.OnGetAstePerRicercaListener listener, String nome, ArrayList<String> nomiCategorie, String ordinamento) {
+            this.listener = listener;
+            this.nome = nome;
+            this.nomiCategorie = nomiCategorie;
+            this.ordinamento = ordinamento;
+        }
+
+        @Override
+        protected ArrayList<Asta_allingleseModel> doInBackground(Void... voids) {
+
+            Log.d("entrato in asycn", "listacategorie: " + nomiCategorie);
+            // Effettua l'operazione di rete qui...
+            // Restituisci il risultato
+
+            OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+            // Configura il client OkHttpClient...
+
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl(Repository.backendUrl)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .client(httpClient.build())
+                    .build();
+
+            ArrayList<String> nomiCategorieParam;
+            if (nomiCategorie == null || nomiCategorie.isEmpty()) {
+                nomiCategorieParam = null; // Imposta a null se vuoto
+            } else {
+                nomiCategorieParam = nomiCategorie;
+            }
+            Asta_allingleseService service = retrofit.create(Asta_allingleseService.class);
+            Call<ArrayList<Asta_allinglese_DTO>> call = service.getAstePerRicerca(nome,ordinamento,nomiCategorieParam);
+
+            try {
+                Response<ArrayList<Asta_allinglese_DTO>> response = call.execute();
+                if (response.isSuccessful()) {
+                    System.out.println("response successful");
+                    ArrayList<Asta_allinglese_DTO> list = response.body();
+                    if (list != null && !list.isEmpty()) {
+                        System.out.println("lista di aste inglesi dto non null");
+                        ArrayList<Asta_allingleseModel> listAsta_allingleseModel = new ArrayList<>();
+                        for (Asta_allinglese_DTO astaAllingleseDto : list){
+                            byte[] pathImmagineByteArray = null;
+                            if(astaAllingleseDto.getPath_immagine()!=null){
+                                pathImmagineByteArray = base64ToByteArray(astaAllingleseDto.getPath_immagine());}
+                            Asta_allingleseModel astaAllingleseModel = new Asta_allingleseModel(
+                                    astaAllingleseDto.getId(),
+                                    astaAllingleseDto.getNome(),
+                                    astaAllingleseDto.getDescrizione(),
+                                    pathImmagineByteArray,
+                                    astaAllingleseDto.getBaseAsta(),
+                                    astaAllingleseDto.getIntervalloTempoOfferte(),
+                                    astaAllingleseDto.getIntervalloOfferteBase(),
+                                    astaAllingleseDto.getRialzoMin(),
+                                    astaAllingleseDto.getPrezzoAttuale(),
+                                    astaAllingleseDto.getCondizione(),
+                                    astaAllingleseDto.getId_venditore());
+                            //stampa dei valori dell asta
+                            Log.d("Asta inglese" ," valori " + astaAllingleseModel.getNome() + astaAllingleseModel.getDescrizione() + astaAllingleseModel.getId() + astaAllingleseModel.getIntervalloOfferteBase() + astaAllingleseModel.getBaseAsta());
+                            listAsta_allingleseModel.add(astaAllingleseModel);
+                        }
+                        return listAsta_allingleseModel;
+                    }
+                    System.out.println("lista di aste inglesi dto null");
+                }
+                System.out.println("response non successful");
+            } catch (IOException e) {
+                System.out.println("exception IOEXC");
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(ArrayList<Asta_allingleseModel> result) {
+            System.out.println("on post execute GetAstePerRicercaTask" + result);
+            if (listener != null) {
+                listener.OnGetAstePerRicerca(result);
+            }
+        }
+    }
+    public interface OnGetAstePerRicercaListener {
+        void OnGetAstePerRicerca(ArrayList<Asta_allingleseModel> list);
     }
 
     public static byte[] base64ToByteArray(String base64String) {

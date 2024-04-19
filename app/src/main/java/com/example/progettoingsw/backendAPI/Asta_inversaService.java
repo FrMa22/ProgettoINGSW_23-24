@@ -1,5 +1,6 @@
 package com.example.progettoingsw.backendAPI;
 
+import com.example.progettoingsw.DTO.Asta_allinglese_DTO;
 import com.example.progettoingsw.DTO.Asta_inversa_DTO;
 
 import java.util.ArrayList;
@@ -50,5 +51,7 @@ public interface Asta_inversaService {
     @GET("/asta_inversaController/getEmailVincente/{indirizzo_email}/{idAstaInversa}")
     Call<Boolean> getEmailVincente(@Path("indirizzo_email") String indirizzo_email, @Path("idAstaInversa") Long idAstaInversa);
 
+    @GET("/asta_inversaController/getAstePerRicerca/{nome}/{ordinamento}/{nomiCategorie}")
+    Call<ArrayList<Asta_inversa_DTO>> getAstePerRicerca(@Query("nome") String nome, @Query("ordinamento") String ordinamento, @Query("nomiCategorie") ArrayList<String> nomiCategorie );
 }
 
