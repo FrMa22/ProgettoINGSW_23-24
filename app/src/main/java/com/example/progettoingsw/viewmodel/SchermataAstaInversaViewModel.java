@@ -21,6 +21,7 @@ public class SchermataAstaInversaViewModel extends ViewModel {
     public MutableLiveData<Bitmap> immagineAstaConvertita = new MutableLiveData<>(null);
     public MutableLiveData<Boolean> isAstaChiusa = new MutableLiveData<>(false);
     public MutableLiveData<Boolean> isUltimaOffertaTua = new MutableLiveData<>(false);
+    public MutableLiveData<Boolean> vaiInAcquirente = new MutableLiveData<>(false);
     private String messaggioPartecipazioneAstaInglese;
     private Asta_inversaRepository astaInversaRepository;
 
@@ -174,5 +175,16 @@ public class SchermataAstaInversaViewModel extends ViewModel {
                 }
             }
         });
+    }
+    public void setVaiInAcquirente(Boolean b){
+        this.vaiInAcquirente.setValue(b);
+    }
+    public Boolean getVaiInvAcquirente(){
+        return vaiInAcquirente.getValue();
+    }
+    public void vaiInAcquirente(String emailAcquirente){
+        repository.setAcquirenteEmailDaAsta(emailAcquirente);
+        repository.setLeMieAsteUtenteAttuale(false);
+        setVaiInAcquirente(true);
     }
 }

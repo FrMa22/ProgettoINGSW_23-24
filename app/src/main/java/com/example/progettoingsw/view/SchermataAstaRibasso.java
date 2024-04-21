@@ -2,6 +2,7 @@ package com.example.progettoingsw.view;
 
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -76,7 +77,9 @@ public class SchermataAstaRibasso extends GestoreComuniImplementazioni {
         osservaErroreRecuperoAsta();
         osservaTipoUtenteChecked();
         osservaIsAstaInPreferiti();
-        schermataAstaRibassoViewModel.verificaAstaInPreferiti();
+        osservaVaiInVenditore();
+
+
         schermataAstaRibassoViewModel.checkTipoUtente();
         schermataAstaRibassoViewModel.getAstaData();
 
@@ -184,15 +187,13 @@ public class SchermataAstaRibasso extends GestoreComuniImplementazioni {
 //        astaRibassoDAO.closeConnection();
 //
 //
-//        textViewVenditore.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                String emailVenditore = textViewVenditore.getText().toString();
-//                Intent intent=new Intent(SchermataAstaRibasso.this, ProfiloVenditore.class);
-//                intent.putExtra("email",emailVenditore);
-//                startActivity(intent);
-//            }
-//        });
+        textViewVenditore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String emailVenditore = textViewVenditore.getText().toString();
+                schermataAstaRibassoViewModel.vaiInVenditore(emailVenditore);
+            }
+        });
         //astaRibassoDAO.recuperaInfoAsta(id);
 
 
@@ -378,7 +379,7 @@ public class SchermataAstaRibasso extends GestoreComuniImplementazioni {
         });
     }
     public void setImpostazioniAstaAcquirente(){
-
+        schermataAstaRibassoViewModel.verificaAstaInPreferiti();
     }
     public void setImpostazioniAstaVenditore(){
         imageButtonPreferiti.setVisibility(View.INVISIBLE);
@@ -429,6 +430,14 @@ public class SchermataAstaRibasso extends GestoreComuniImplementazioni {
 //                osservaIsAstaInPreferiti();
 //                schermataAstaIngleseViewModel.getIsAstaInPreferiti();
 
+        });
+    }
+    public void osservaVaiInVenditore(){
+        schermataAstaRibassoViewModel.vaiInVenditore.observe(this, (valore) ->{
+            if(valore){
+                Intent intent=new Intent(SchermataAstaRibasso.this, ProfiloVenditore.class);
+                startActivity(intent);
+            }
         });
     }
 }

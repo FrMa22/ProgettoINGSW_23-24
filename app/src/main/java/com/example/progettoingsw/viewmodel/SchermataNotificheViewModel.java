@@ -33,6 +33,7 @@ public class SchermataNotificheViewModel extends ViewModel {
         isAcquirente.setValue(b);
     }
     public void getTipoUtente(){
+        Log.d("getTipoUtente","entrato, schermata notifiche");
         if(repository.getAcquirenteModel()!=null){
             setIsAcquirente(true);
         }else{

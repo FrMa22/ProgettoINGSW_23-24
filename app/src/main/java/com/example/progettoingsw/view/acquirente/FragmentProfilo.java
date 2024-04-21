@@ -155,7 +155,7 @@ public class FragmentProfilo extends Fragment{
             @Override
             public void onClick(View view) {
                 osservaEsci();
-                fragmentProfiloViewModel.logout();
+                fragmentProfiloViewModel.logout(requireContext());
                 //Controller.redirectActivity(getContext(), LoginActivity.class);
             }
         });

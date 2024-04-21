@@ -26,6 +26,7 @@ public class SchermataAstaRibassoViewModel extends ViewModel {
     public MutableLiveData<Bitmap> immagineAstaConvertita = new MutableLiveData<>(null);
     public MutableLiveData<Boolean> isAstaChiusa = new MutableLiveData<>(false);
     public MutableLiveData<String> intervalloOfferteConvertito = new MutableLiveData("");
+    public MutableLiveData<Boolean> vaiInVenditore = new MutableLiveData<>(false);
     private Boolean isAcquistoAvvenuto;
     private String tipoUtente;
 
@@ -245,6 +246,16 @@ public class SchermataAstaRibassoViewModel extends ViewModel {
             }
         });
     }
-
+    public void setVaiInVenditore(Boolean b){
+        this.vaiInVenditore.setValue(b);
+    }
+    public Boolean getVaiInvVenditore(){
+        return vaiInVenditore.getValue();
+    }
+    public void vaiInVenditore(String emailVenditore){
+        repository.setVenditoreEmailDaAsta(emailVenditore);
+        repository.setLeMieAsteUtenteAttuale(false);
+        setVaiInVenditore(true);
+    }
 
 }

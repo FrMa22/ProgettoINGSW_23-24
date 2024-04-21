@@ -1,6 +1,7 @@
 package com.example.progettoingsw.repository;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.example.progettoingsw.DTO.AcquirenteDTO;
 import com.example.progettoingsw.DTO.SocialAcquirenteDTO;
@@ -14,6 +15,7 @@ import com.example.progettoingsw.model.SocialAcquirenteModel;
 import com.example.progettoingsw.model.SocialVenditoreModel;
 import com.example.progettoingsw.viewmodel.FragmentProfiloViewModel;
 
+import java.io.EOFException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,64 +35,119 @@ public class FragmentProfiloRepository {
         System.out.println("entrato in  trova Social Acquirente Backend");
         new TrovaSocialAcquirenteTask(listener).execute(email);
     }
-
-
     public void aggiungiSocialAcquirenteBackend(String nome,String link,String email,FragmentProfiloRepository.OnAggiungiSocialAcquirenteListener listener){
         System.out.println("entrato in aggiungi Social Acquirente Backend");
         new AggiungiSocialAcquirenteTask(listener).execute(nome,link,email);
     }
-
     public void eliminaSocialAcquirenteBackend(String nome,String link,String email,FragmentProfiloRepository.OnEliminaSocialAcquirenteListener listener){
         System.out.println("entrato in elimina Social Acquirente Backend");
         new EliminaSocialAcquirenteTask(listener).execute(nome,link,email);
     }
-
     public void aggiornaSocialAcquirenteBackend(String oldNome,String oldLink,String newNome,String newLink,FragmentProfiloRepository.OnAggiornaSocialAcquirenteListener listener){
         System.out.println("entrato in aggiorna Social Acquirente Backend");
         new AggiornaSocialAcquirenteTask(listener).execute(oldNome,oldLink,newNome,newLink);
     }
-
     public void aggiornaAcquirenteBackend(String nome,String cognome,String bio,String link,String areageografica,String email,FragmentProfiloRepository.OnAggiornaAcquirenteListener listener){
         System.out.println("entrato in aggiorna  Acquirente Backend");
         new AggiornaAcquirenteTask(listener).execute(nome,cognome,bio,link,areageografica,email);
     }
-
-
     public void aggiornaPasswordAcquirenteBackend(String password,String email,FragmentProfiloRepository.OnAggiornaPasswordAcquirenteListener listener){
         System.out.println("entrato in aggiorna password Acquirente Backend");
         new AggiornaPasswordAcquirenteTask(listener).execute(password,email);
     }
 
+
+
+
+    public void removeTokenFromAcquirente(String email, FragmentProfiloRepository.RemoveTokenFromAcquirenteListener listener) {
+        System.out.println("entrato in removeTokenFromAcquirente backend");
+        new FragmentProfiloRepository.RemoveTokenFromAcquirenteTask(listener).execute(email);
+    }
+    private static class RemoveTokenFromAcquirenteTask extends AsyncTask<String, Void, Integer> {
+        private FragmentProfiloRepository.RemoveTokenFromAcquirenteListener listener;
+
+        public RemoveTokenFromAcquirenteTask(FragmentProfiloRepository.RemoveTokenFromAcquirenteListener listener) {
+            this.listener = listener;
+        }
+
+        @Override
+        protected Integer doInBackground(String... params) {
+            String email = params[0];
+            System.out.println("in RemoveTokenFromAcquirenteTask , email " + email );
+            // Effettua l'operazione di rete qui...
+            // Restituisci il risultato
+
+            OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+            // Configura il client OkHttpClient...
+
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl(Repository.backendUrl)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .client(httpClient.build())
+                    .build();
+
+            AcquirenteService service = retrofit.create(AcquirenteService.class);
+            Call<Integer> call = service.removeTokenFromAcquirente(email);
+
+            try {
+                Response<Integer> response = call.execute();
+                if (response.body() != null && response.isSuccessful()) {
+                    System.out.println("valore di response " + response.body());
+                    System.out.println("response successful");
+                    Integer valoreDiRitorno = response.body();
+                    if (valoreDiRitorno != null && valoreDiRitorno>0) {
+                        System.out.println("valoreDiRitorno null");
+                        return valoreDiRitorno;
+                    }
+                    System.out.println("valoreDiRitorno null");
+                }
+                System.out.println("response non successful");
+            } catch(EOFException e){
+                Log.d("RemoveTokenFromAcquirenteTask" ,"catch di EOFException");
+                //e.printStackTrace();
+            }catch (IOException e) {
+                //e.printStackTrace();
+                Log.d("RemoveTokenFromAcquirenteTask" ,"catch di IOException");
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Integer result) {
+            System.out.println("on post execute RemoveTokenFromAcquirenteTask" + result);
+            if (listener != null) {
+                listener.onRemoveTokenFromAcquirenteListener(result);
+            }
+        }
+    }
+    public interface RemoveTokenFromAcquirenteListener {
+        void onRemoveTokenFromAcquirenteListener(Integer valore);
+    }
+
+
+
+
     //versione venditore
-
-
     public void trovaSocialVenditoreBackend(String email,FragmentProfiloRepository.OnFragmentProfiloVenditoreListener listener) {
         System.out.println("entrato in  trova Social Venditore Backend");
         new TrovaSocialVenditoreTask(listener).execute(email);
     }
-
-
     public void aggiungiSocialVenditoreBackend(String nome,String link,String email,FragmentProfiloRepository.OnAggiungiSocialVenditoreListener listener){
         System.out.println("entrato in aggiungi Social Venditore Backend");
         new AggiungiSocialVenditoreTask(listener).execute(nome,link,email);
     }
-
     public void eliminaSocialVenditoreBackend(String nome,String link,String email,FragmentProfiloRepository.OnEliminaSocialVenditoreListener listener){
         System.out.println("entrato in elimina Social Venditore Backend");
         new EliminaSocialVenditoreTask(listener).execute(nome,link,email);
     }
-
     public void aggiornaSocialVenditoreBackend(String oldNome,String oldLink,String newNome,String newLink,FragmentProfiloRepository.OnAggiornaSocialVenditoreListener listener){
         System.out.println("entrato in aggiorna Social Venditore Backend");
         new AggiornaSocialVenditoreTask(listener).execute(oldNome,oldLink,newNome,newLink);
     }
-
     public void aggiornaVenditoreBackend(String nome,String cognome,String bio,String link,String areageografica,String email,FragmentProfiloRepository.OnAggiornaVenditoreListener listener){
         System.out.println("entrato in aggiorna  Venditore Backend");
         new AggiornaVenditoreTask(listener).execute(nome,cognome,bio,link,areageografica,email);
     }
-
-
     public void aggiornaPasswordVenditoreBackend(String password,String email,FragmentProfiloRepository.OnAggiornaPasswordVenditoreListener listener){
         System.out.println("entrato in aggiorna password Venditore Backend");
         new AggiornaPasswordVenditoreTask(listener).execute(password,email);
@@ -98,9 +155,76 @@ public class FragmentProfiloRepository {
 
 
 
+    public void removeTokenFromVenditore(String email, FragmentProfiloRepository.RemoveTokenFromVenditoreListener listener) {
+        System.out.println("entrato in removeTokenFromVenditore backend");
+        new FragmentProfiloRepository.RemoveTokenFromVenditoreTask(listener).execute(email);
+    }
+    private static class RemoveTokenFromVenditoreTask extends AsyncTask<String, Void, Integer> {
+        private FragmentProfiloRepository.RemoveTokenFromVenditoreListener listener;
+
+        public RemoveTokenFromVenditoreTask(FragmentProfiloRepository.RemoveTokenFromVenditoreListener listener) {
+            this.listener = listener;
+        }
+
+        @Override
+        protected Integer doInBackground(String... params) {
+            String email = params[0];
+            System.out.println("in RemoveTokenFromVenditoreTask , email " + email );
+            // Effettua l'operazione di rete qui...
+            // Restituisci il risultato
+
+            OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+            // Configura il client OkHttpClient...
+
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl(Repository.backendUrl)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .client(httpClient.build())
+                    .build();
+
+            VenditoreService service = retrofit.create(VenditoreService.class);
+            Call<Integer> call = service.removeTokenFromVenditore(email);
+
+            try {
+                Response<Integer> response = call.execute();
+                if (response.body() != null && response.isSuccessful()) {
+                    System.out.println("valore di response " + response.body());
+                    System.out.println("response successful");
+                    Integer valoreDiRitorno = response.body();
+                    if (valoreDiRitorno != null && valoreDiRitorno>0) {
+                        System.out.println("valoreDiRitorno null");
+                        return valoreDiRitorno;
+                    }
+                    System.out.println("valoreDiRitorno null");
+                }
+                System.out.println("response non successful");
+            } catch(EOFException e){
+                Log.d("RemoveTokenFromVenditoreTask" ,"catch di EOFException");
+                //e.printStackTrace();
+            }catch (IOException e) {
+                //e.printStackTrace();
+                Log.d("RemoveTokenFromVenditoreTask" ,"catch di IOException");
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Integer result) {
+            System.out.println("on post execute RemoveTokenFromVenditoreTask" + result);
+            if (listener != null) {
+                listener.onRemoveTokenFromVenditoreListener(result);
+            }
+        }
+    }
+    public interface RemoveTokenFromVenditoreListener {
+        void onRemoveTokenFromVenditoreListener(Integer valore);
+    }
+
+
+
+
+
 //tasks
-
-
     private static class TrovaSocialAcquirenteTask extends AsyncTask<String, Void, List<SocialAcquirenteModel>  > {
         private OnFragmentProfiloAcquirenteListener listener;
 
@@ -167,15 +291,6 @@ public class FragmentProfiloRepository {
             }
         }
     }
-
-
-
-
-
-
-
-
-
     private static class AggiungiSocialAcquirenteTask extends AsyncTask<String, Void, SocialAcquirenteModel > {
         private OnAggiungiSocialAcquirenteListener listener;
 
@@ -237,15 +352,6 @@ public class FragmentProfiloRepository {
             }
         }
     }
-
-
-
-
-
-
-
-
-
     private static class EliminaSocialAcquirenteTask extends AsyncTask<String, Void, SocialAcquirenteModel > {
         private OnEliminaSocialAcquirenteListener listener;
 
@@ -308,12 +414,7 @@ public class FragmentProfiloRepository {
             }
         }
     }
-
-
-
-
 // Aggiorna task
-
     private static class AggiornaSocialAcquirenteTask extends AsyncTask<String, Void, String[] > {
         private OnAggiornaSocialAcquirenteListener listener;
 
@@ -383,10 +484,6 @@ public class FragmentProfiloRepository {
             }
         }
     }
-
-
-
-
     private static class AggiornaAcquirenteTask extends AsyncTask<String, Void, String[] > {
         private OnAggiornaAcquirenteListener listener;
 
@@ -459,12 +556,6 @@ public class FragmentProfiloRepository {
             }
         }
     }
-
-
-
-
-
-
     private static class AggiornaPasswordAcquirenteTask extends AsyncTask<String, Void, String[] > {
         private OnAggiornaPasswordAcquirenteListener listener;
 
@@ -529,9 +620,7 @@ public class FragmentProfiloRepository {
             }
         }
     }
-
 //versione venditore task
-
     private static class AggiornaSocialVenditoreTask extends AsyncTask<String, Void, String[] > {
         private OnAggiornaSocialVenditoreListener listener;
 
@@ -601,10 +690,6 @@ public class FragmentProfiloRepository {
             }
         }
     }
-
-
-
-
     private static class AggiornaVenditoreTask extends AsyncTask<String, Void, String[] > {
         private OnAggiornaVenditoreListener listener;
 
@@ -677,12 +762,6 @@ public class FragmentProfiloRepository {
             }
         }
     }
-
-
-
-
-
-
     private static class AggiornaPasswordVenditoreTask extends AsyncTask<String, Void, String[] > {
         private OnAggiornaPasswordVenditoreListener listener;
 
@@ -747,9 +826,6 @@ public class FragmentProfiloRepository {
             }
         }
     }
-
-
-
     private static class TrovaSocialVenditoreTask extends AsyncTask<String, Void, List<SocialVenditoreModel>  > {
         private OnFragmentProfiloVenditoreListener listener;
 
@@ -816,15 +892,6 @@ public class FragmentProfiloRepository {
             }
         }
     }
-
-
-
-
-
-
-
-
-
     private static class AggiungiSocialVenditoreTask extends AsyncTask<String, Void, SocialVenditoreModel > {
         private OnAggiungiSocialVenditoreListener listener;
 
@@ -886,15 +953,6 @@ public class FragmentProfiloRepository {
             }
         }
     }
-
-
-
-
-
-
-
-
-
     private static class EliminaSocialVenditoreTask extends AsyncTask<String, Void, SocialVenditoreModel > {
         private OnEliminaSocialVenditoreListener listener;
 
@@ -957,63 +1015,41 @@ public class FragmentProfiloRepository {
             }
         }
     }
-
-
-
-
     //
-
     public interface OnFragmentProfiloAcquirenteListener {
         void onFragmentProfilo(List<SocialAcquirenteModel> socialAcquirenteModelList);
     }
-
     public interface OnAggiungiSocialAcquirenteListener {
         void onAggiungiSocialAcquirente(SocialAcquirenteModel socialAcquirenteModel);
     }
-
-
     public interface OnEliminaSocialAcquirenteListener {
         void onEliminaSocialAcquirente(SocialAcquirenteModel socialAcquirenteModel);
     }
     public interface OnAggiornaSocialAcquirenteListener {
         void onAggiornaSocialAcquirente(String oldNome,String oldLink,String newNome,String newLink);
     }
-
-
     public interface OnAggiornaAcquirenteListener {
         void onAggiornaAcquirente(String nomeNuovo,String cognomeNuovo,String bioNuovo,String linkNuovo,String areageograficaNuovo);
     }
-
     public interface OnAggiornaPasswordAcquirenteListener {
         void onAggiornaPasswordAcquirente(String password);
     }
-
-
-
-
     //versione venditore
-
     public interface OnFragmentProfiloVenditoreListener {
         void onFragmentProfiloVenditore(List<SocialVenditoreModel> socialVenditoreModelList);
     }
-
     public interface OnAggiungiSocialVenditoreListener {
         void onAggiungiSocialVenditore(SocialVenditoreModel socialVenditoreModel);
     }
-
-
     public interface OnEliminaSocialVenditoreListener {
         void onEliminaSocialVenditore(SocialVenditoreModel socialVenditoreModel);
     }
     public interface OnAggiornaSocialVenditoreListener {
         void onAggiornaSocialVenditore(String oldNome,String oldLink,String newNome,String newLink);
     }
-
-
     public interface OnAggiornaVenditoreListener {
         void onAggiornaVenditore(String nomeNuovo,String cognomeNuovo,String bioNuovo,String linkNuovo,String areageograficaNuovo);
     }
-
     public interface OnAggiornaPasswordVenditoreListener {
         void onAggiornaPasswordVenditore(String password);
     }

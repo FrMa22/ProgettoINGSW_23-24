@@ -78,9 +78,7 @@ public class FragmentHome extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        osservaAcquirenteModelPresente();
-        osservaVenditoreModelPresente();
-        homeViewModel.checkTipoUtente();
+
 
         relative_layout_home_acquirente = view.findViewById(R.id.relative_layout_home_acquirente);
         progressBarAcquirenteFragmentHome = view.findViewById(R.id.progressBarAcquirenteFragmentHome);
@@ -174,7 +172,7 @@ public class FragmentHome extends Fragment {
 
             }
         });
-//        iconaNotifiche = view.findViewById(R.id.iconaNotifiche);
+        iconaNotifiche = view.findViewById(R.id.iconaNotifiche);
 //        NotificheDAO notificheDAO = new NotificheDAO(FragmentHome.this, email,tipoUtente);
 //        notificheDAO.openConnection();
 //        notificheDAO.checkNotifiche();
@@ -201,6 +199,12 @@ public class FragmentHome extends Fragment {
                 startActivity(intent);
             }
         });
+
+
+        osservaAcquirenteModelPresente();
+        osservaVenditoreModelPresente();
+        osservaNumeroNotifiche();
+        homeViewModel.checkTipoUtente();
 
     }
 
@@ -533,5 +537,15 @@ public class FragmentHome extends Fragment {
         });
     }
 
+    public void osservaNumeroNotifiche(){
+        homeViewModel.numeroNotifiche.observe(getViewLifecycleOwner(), (numero)->{
+            if(numero>0){
+                iconaNotifiche.setVisibility(View.VISIBLE);
+                iconaNotifiche.setText(String.valueOf(numero));
+            }else{
+                iconaNotifiche.setVisibility(View.GONE);
+            }
+        });
+    }
 
 }

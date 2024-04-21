@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "203529658186",
+    "project_id": "progettoingsw2324",
+    "storage_bucket": "progettoingsw2324.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:203529658186:android:7b3385499689765017ebb3",
+        "android_client_info": {
+          "package_name": "com.example.progettoingsw"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDToQABrybPSIPKvgyH5fpVTzr3K1Bohw4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

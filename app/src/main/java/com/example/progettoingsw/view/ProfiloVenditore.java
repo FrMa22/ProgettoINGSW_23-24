@@ -17,15 +17,18 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
+import androidx.lifecycle.ViewModelProvider;
 
-import com.example.progettoingsw.DAO.Acquirente;
 import com.example.progettoingsw.DAO.ProfiloVenditoreDaAstaDAO;
 import com.example.progettoingsw.R;
 import com.example.progettoingsw.classe_da_estendere.GestoreComuniImplementazioni;
 import com.example.progettoingsw.gestori_gui.CustomAdapter_gridview_profilo_social;
+import com.example.progettoingsw.model.SocialVenditoreModel;
+import com.example.progettoingsw.viewmodel.SchermataUtenteViewModel;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.button.MaterialButton;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ProfiloVenditore extends GestoreComuniImplementazioni {
@@ -55,15 +58,20 @@ public class ProfiloVenditore extends GestoreComuniImplementazioni {
     private String email;
     private RelativeLayout relative_layout_profilo_venditore;
     private BottomNavigationView acquirente_nav_view;
+    private SchermataUtenteViewModel schermataUtenteViewModel;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.profilo_venditore);
 
+        schermataUtenteViewModel = new ViewModelProvider(this).get(SchermataUtenteViewModel.class);
 
-        email = getIntent().getStringExtra("email");
-        System.out.println(email);
+        osservaVenditoreRecuperato();
+        osservaSocialVenditore();
+        osservaApriLeMieAste();
+        schermataUtenteViewModel.getUtenteData();
+
         bottoneBackProfiloVenditore = findViewById(R.id.bottoneBackProfiloVenditore);
         bottoneBackProfiloVenditore.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -91,9 +99,8 @@ public class ProfiloVenditore extends GestoreComuniImplementazioni {
             @Override
             public void onClick(View view) {
                 System.out.println("le aste oooh");
-                Intent intent = new Intent(ProfiloVenditore.this, LeMieAste.class);
-                intent.putExtra("email", email);
-                startActivity(intent);
+                schermataUtenteViewModel.setApriLeMieAste(true);
+
             }
         });
 
@@ -106,9 +113,9 @@ public class ProfiloVenditore extends GestoreComuniImplementazioni {
         text_view_bio_profilo = findViewById(R.id.text_view_bio_profilo);
 
         // Inizializza il DAO e recupera i dati dell'acquirente
-        ProfiloVenditoreDaAstaDAO venditoreAstaDAO = new ProfiloVenditoreDaAstaDAO(this, email, "venditore");
-        venditoreAstaDAO.openConnection();
-        venditoreAstaDAO.findUser();
+//        ProfiloVenditoreDaAstaDAO venditoreAstaDAO = new ProfiloVenditoreDaAstaDAO(this, email, "venditore");
+//        venditoreAstaDAO.openConnection();
+//        venditoreAstaDAO.findUser();
        // venditoreAstaDAO.getSocialNamesForEmail();
 
 
@@ -120,20 +127,28 @@ public class ProfiloVenditore extends GestoreComuniImplementazioni {
 
 
 
-    public void updateEditTexts(Acquirente acquirente) {
-        if (acquirente != null) {
-            // Esempio: aggiorna l'interfaccia utente con i dati dell'acquirente
-            textview_nome.setText(acquirente.getNome());
-            textview_cognome.setText(acquirente.getCognome());
-            textview_email.setText(acquirente.getEmail());
-            textview_sitoweb.setText(acquirente.getSitoWeb());
-            textview_paese.setText(acquirente.getPaese());
-            text_view_bio_profilo.setText(acquirente.getBio());
-        } else {
-            // L'acquirente non è stato trovato
-        }
-        progressBarAcquirenteFragmentProfilo.setVisibility(View.GONE);
-        setAllClickable(relative_layout_profilo_venditore,true);
+//    public void updateEditTexts(Acquirente acquirente) {
+//        if (acquirente != null) {
+//            // Esempio: aggiorna l'interfaccia utente con i dati dell'acquirente
+//            textview_nome.setText(acquirente.getNome());
+//            textview_cognome.setText(acquirente.getCognome());
+//            textview_email.setText(acquirente.getEmail());
+//            textview_sitoweb.setText(acquirente.getSitoWeb());
+//            textview_paese.setText(acquirente.getPaese());
+//            text_view_bio_profilo.setText(acquirente.getBio());
+//        } else {
+//            // L'acquirente non è stato trovato
+//        }
+//        progressBarAcquirenteFragmentProfilo.setVisibility(View.GONE);
+//        setAllClickable(relative_layout_profilo_venditore,true);
+//    }
+    public void updateDatiUtente(String nome, String cognome, String email, String link, String paese, String bio){
+        textview_nome.setText(nome);
+        textview_cognome.setText(cognome);
+        textview_email.setText(email);
+        textview_sitoweb.setText(link);
+        textview_paese.setText(paese);
+        text_view_bio_profilo.setText(bio);
     }
     private void setGridViewHeightBasedOnChildren(GridView gridView) {
         ListAdapter listAdapter = gridView.getAdapter();
@@ -198,5 +213,38 @@ public class ProfiloVenditore extends GestoreComuniImplementazioni {
         progressBarAcquirenteFragmentProfilo.setVisibility(View.GONE);
         setAllClickable(relative_layout_profilo_venditore,true);
 
+    }
+    public void osservaVenditoreRecuperato(){
+        schermataUtenteViewModel.venditoreRecuperato.observe(this, (venditore) ->{
+            if(schermataUtenteViewModel.isVenditoreRecuperato()){
+                updateDatiUtente(venditore.getNome(),venditore.getCognome(),venditore.getIndirizzo_email(),venditore.getLink(),venditore.getAreageografica(),venditore.getBio());
+            }
+        });
+    }
+    public void osservaSocialVenditore(){
+        schermataUtenteViewModel.socialVenditore.observe(this, (lista) ->{
+            if(schermataUtenteViewModel.isSocialVenditore()){
+                if (lista != null  && !lista.isEmpty()) {
+                    System.out.println("in osserva social acquirente recuperati");
+                    //lista social quindi estrarre nomi e link poi fare chiamata a update social names per mostrarli graficamente
+                    List<String> links = new ArrayList<>();
+                    List<String> nomi=new ArrayList<>();
+                    for (SocialVenditoreModel social : lista) {
+                        links.add(social.getLink());
+                        nomi.add(social.getNome());
+                    }
+                    updateSocialNames(nomi,links);
+                }
+            }
+        });
+    }
+    public void osservaApriLeMieAste(){
+        schermataUtenteViewModel.apriLeMieAste.observe(this, (messaggio) -> {
+            if (schermataUtenteViewModel.getApriLeMieAste()){
+                //fa le cose che si farebbero premendo il pulsante apri le mie aste
+                Intent intent = new Intent(ProfiloVenditore.this, LeMieAste.class);
+                startActivity(intent);
+            }
+        });
     }
     }

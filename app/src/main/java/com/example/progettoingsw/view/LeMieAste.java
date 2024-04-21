@@ -53,6 +53,12 @@ public class LeMieAste extends GestoreComuniImplementazioni {
         osservaCondizioneAperta();
         osservaCondizioneChiusa();
 
+        osservaAsteAperteRecuperate();
+        osservaEntraInSchermataAstaInglese();
+        osservaEntraInSchermataAstaRibasso();
+        osservaEntraInSchermataAstaInversa();
+
+        osservaAsteChiuseRecuperate();
 
         RecyclerView recyclerViewAsteAttive = findViewById(R.id.recyclerViewAsteAttive);
         GridLayoutManager gridLayoutManagerAttive = new GridLayoutManager(this, 2, RecyclerView.VERTICAL, false);
@@ -239,6 +245,7 @@ public class LeMieAste extends GestoreComuniImplementazioni {
         if(cond.equals("aperta")) {
             astaAdapterAttive.clearItems();
             if (!asteVuote) {
+                Log.d("updateAste","caso aperte");
                 // Se l'ArrayList di aste non è vuoto, mostro le aste nell'adapter
                 astaAdapterAttive.setAstecopia(aste);
 
@@ -308,10 +315,7 @@ public class LeMieAste extends GestoreComuniImplementazioni {
             if (leMieAsteViewModel.getVisualizzaAsteAperte()){
                 System.out.println("condizione aperta");
                 //fa le cose che si farebbero quando la condizione è settata su aperta:recuperare le aste con condizione aperta
-                osservaAsteAperteRecuperate();
-                osservaEntraInSchermataAstaInglese();
-                osservaEntraInSchermataAstaRibasso();
-                osservaEntraInSchermataAstaInversa();
+
                 leMieAsteViewModel.trovaAsteAperteViewModel();//prima trova queste aste poi
             }
         });
@@ -365,10 +369,7 @@ public class LeMieAste extends GestoreComuniImplementazioni {
             if (leMieAsteViewModel.getVisualizzaAsteChiuse()){
                 System.out.println("condizione chiusa");
                 //fa le cose che si farebbero quando la condizione è settata su aperta:recuperare le aste con condizione aperta
-                osservaAsteChiuseRecuperate();
-                osservaEntraInSchermataAstaInglese();
-                osservaEntraInSchermataAstaRibasso();
-                osservaEntraInSchermataAstaInversa();
+
                 leMieAsteViewModel.trovaAsteChiuseViewModel();//prima trova queste aste poi
             }
         });
