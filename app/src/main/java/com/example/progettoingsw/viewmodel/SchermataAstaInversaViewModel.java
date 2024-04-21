@@ -8,6 +8,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.progettoingsw.model.Asta_inversaModel;
+import com.example.progettoingsw.model.VenditoreModel;
 import com.example.progettoingsw.repository.Asta_inversaRepository;
 import com.example.progettoingsw.repository.Repository;
 
@@ -54,17 +55,21 @@ public class SchermataAstaInversaViewModel extends ViewModel {
     }
     public void checkUltimaOfferta(){
         Long id_asta = repository.getAsta_inversaSelezionata().getId();
-        String indirizzo_email = repository.getVenditoreModel().getIndirizzo_email();
-        astaInversaRepository.getEmailVincente(indirizzo_email, id_asta, new Asta_inversaRepository.OnGetEmailVincenteListener() {
-            @Override
-            public void OnGetEmailVincente(Boolean numeroRecuperato) {
-                if(numeroRecuperato){
-                    setIsUltimaOffertaTua(true);
-                }else{
-                    setIsUltimaOffertaTua(false);
+        VenditoreModel venditoreModel=repository.getVenditoreModel();
+        if(venditoreModel!=null) {
+            String indirizzo_email = repository.getVenditoreModel().getIndirizzo_email();
+
+            astaInversaRepository.getEmailVincente(indirizzo_email, id_asta, new Asta_inversaRepository.OnGetEmailVincenteListener() {
+                @Override
+                public void OnGetEmailVincente(Boolean numeroRecuperato) {
+                    if (numeroRecuperato) {
+                        setIsUltimaOffertaTua(true);
+                    } else {
+                        setIsUltimaOffertaTua(false);
+                    }
                 }
-            }
-        });
+            });
+        }
     }
     public void setAstaRecuperata(Asta_inversaModel asta){
         astaRecuperata.setValue(asta);
@@ -125,22 +130,25 @@ public class SchermataAstaInversaViewModel extends ViewModel {
         return isAstaInPreferiti.getValue();
     }
     public void verificaAstaInPreferiti(){
-        String indirizzoEmail = repository.getVenditoreModel().getIndirizzo_email();
-        Long idAsta = repository.getAsta_inversaSelezionata().getId();
-        astaInversaRepository.verificaAstaInversaInPreferiti(indirizzoEmail,idAsta, new Asta_inversaRepository.OnVerificaAstaInversaInPreferitiListener() {
-            @Override
-            public void OnVerificaAstaInversaInPreferiti(Integer numeroRecuperato) {
-                Log.d("asta ricercata" , "qui");
-                if(numeroRecuperato!=null && numeroRecuperato!=0){
-                    Log.d("asta ricercata" , "è nei preferiti");
-                    setIsAstaInPreferiti(true);
-                }else{
-                    Log.d("asta ricercata" , "non è nei preferiti");
-                    setErroreRecuperoAsta("errore nella verifica asta in preferiti");
-                    setIsAstaInPreferiti(false);
+        VenditoreModel venditoreModel=repository.getVenditoreModel();
+        if(venditoreModel!=null) {
+            String indirizzoEmail = repository.getVenditoreModel().getIndirizzo_email();
+            Long idAsta = repository.getAsta_inversaSelezionata().getId();
+            astaInversaRepository.verificaAstaInversaInPreferiti(indirizzoEmail, idAsta, new Asta_inversaRepository.OnVerificaAstaInversaInPreferitiListener() {
+                @Override
+                public void OnVerificaAstaInversaInPreferiti(Integer numeroRecuperato) {
+                    Log.d("asta ricercata", "qui");
+                    if (numeroRecuperato != null && numeroRecuperato != 0) {
+                        Log.d("asta ricercata", "è nei preferiti");
+                        setIsAstaInPreferiti(true);
+                    } else {
+                        Log.d("asta ricercata", "non è nei preferiti");
+                        setErroreRecuperoAsta("errore nella verifica asta in preferiti");
+                        setIsAstaInPreferiti(false);
+                    }
                 }
-            }
-        });
+            });
+        }
     }
     public void inserimentoAstaInPreferiti(){
         String indirizzoEmail = repository.getVenditoreModel().getIndirizzo_email();

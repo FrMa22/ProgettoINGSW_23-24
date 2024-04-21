@@ -8,6 +8,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.progettoingsw.DAO.Acquirente;
+import com.example.progettoingsw.model.AcquirenteModel;
 import com.example.progettoingsw.model.Asta_allingleseModel;
 import com.example.progettoingsw.repository.Asta_allingleseRepository;
 import com.example.progettoingsw.repository.Asta_alribassoRepository;
