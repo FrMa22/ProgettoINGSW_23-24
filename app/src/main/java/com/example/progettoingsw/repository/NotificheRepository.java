@@ -36,6 +36,14 @@ public class NotificheRepository {
         System.out.println("entrato in deleteNotificheVenditore");
         new NotificheRepository.DeleteNotificheVenditoreTask(listener).execute(String.valueOf(id));
     }
+    public void getNumeroNotificheAcquirente(String indirizzo_email, NotificheRepository.OnGetNumeroNotificheAcquirenteListener listener) {
+        System.out.println("entrato in getNumeroNotificheAcquirente");
+        new NotificheRepository.GetNumeroNotificheAcquirenteTask(listener).execute(indirizzo_email);
+    }
+    public void getNumeroNotificheVenditore(String indirizzo_email, NotificheRepository.OnGetNumeroNotificheVenditoreListener listener) {
+        System.out.println("entrato in getNumeroNotificheVenditore");
+        new NotificheRepository.GetNumeroNotificheVenditoreTask(listener).execute(indirizzo_email);
+    }
     private static class GetNotificheAcquirenteTask extends AsyncTask<String, Void, ArrayList<NotificheAcquirenteModel>> {
         private NotificheRepository.OnGetNotificheAcquirenteListener listener;
 
@@ -267,5 +275,113 @@ public class NotificheRepository {
     }
     public interface OnDeleteNotificheVenditoreListener {
         void OnDeleteNotificheVenditore(Integer result);
+    }
+    private static class GetNumeroNotificheAcquirenteTask extends AsyncTask<String, Void, Integer> {
+        private NotificheRepository.OnGetNumeroNotificheAcquirenteListener listener;
+
+        public GetNumeroNotificheAcquirenteTask(NotificheRepository.OnGetNumeroNotificheAcquirenteListener listener) {
+            this.listener = listener;
+        }
+
+        @Override
+        protected Integer doInBackground(String... params) {
+
+            String indirizzo_email = params[0];
+
+            // Effettua l'operazione di rete qui...
+            // Restituisci il risultato
+
+            OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+            // Configura il client OkHttpClient...
+
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl(Repository.backendUrl)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .client(httpClient.build())
+                    .build();
+
+            NotificheService service = retrofit.create(NotificheService.class);
+            Call<Integer> call = service.getNumeroNotificheAcquirente(indirizzo_email);
+
+            try {
+                Response<Integer> response = call.execute();
+                if (response.isSuccessful()) {
+                    System.out.println("response successful");
+                    Integer conteggio = response.body();
+                    Log.d("GetNumeroNotificheAcquirenteTask","numero notifiche recuperato: " + conteggio);
+                    return conteggio;
+                }
+                System.out.println("response non successful");
+            } catch (IOException e) {
+                System.out.println("exception IOEXC");
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Integer result) {
+            System.out.println("on post execute GetNotificheAcquirenteTask" + result);
+            if (listener != null) {
+                listener.OnGetNumeroNotificheAcquirente(result);
+            }
+        }
+    }
+    public interface OnGetNumeroNotificheAcquirenteListener {
+        void OnGetNumeroNotificheAcquirente(Integer result);
+    }
+    private static class GetNumeroNotificheVenditoreTask extends AsyncTask<String, Void, Integer> {
+        private NotificheRepository.OnGetNumeroNotificheVenditoreListener listener;
+
+        public GetNumeroNotificheVenditoreTask(NotificheRepository.OnGetNumeroNotificheVenditoreListener listener) {
+            this.listener = listener;
+        }
+
+        @Override
+        protected Integer doInBackground(String... params) {
+
+            String indirizzo_email = params[0];
+
+            // Effettua l'operazione di rete qui...
+            // Restituisci il risultato
+
+            OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+            // Configura il client OkHttpClient...
+
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl(Repository.backendUrl)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .client(httpClient.build())
+                    .build();
+
+            NotificheService service = retrofit.create(NotificheService.class);
+            Call<Integer> call = service.getNumeroNotificheVenditore(indirizzo_email);
+
+            try {
+                Response<Integer> response = call.execute();
+                if (response.isSuccessful()) {
+                    System.out.println("response successful");
+                    Integer conteggio = response.body();
+                    Log.d("GetNumeroNotificheVenditoreTask","numero notifiche recuperato: " + conteggio);
+                    return conteggio;
+                }
+                System.out.println("response non successful");
+            } catch (IOException e) {
+                System.out.println("exception IOEXC");
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Integer result) {
+            System.out.println("on post execute GetNotificheVenditoreTask" + result);
+            if (listener != null) {
+                listener.OnGetNumeroNotificheVenditore(result);
+            }
+        }
+    }
+    public interface OnGetNumeroNotificheVenditoreListener {
+        void OnGetNumeroNotificheVenditore(Integer result);
     }
 }

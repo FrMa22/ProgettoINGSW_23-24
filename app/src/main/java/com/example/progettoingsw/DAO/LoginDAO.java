@@ -91,7 +91,7 @@ public class LoginDAO {
         protected void onPostExecute(String result) {
             if (!isCancelled()) {
                 Log.d("LoginDAO on post", "result : " + result);
-                loginActivity.handleLoginResult(result);
+                //loginActivity.handleLoginResult(result);
             }
         }
     }

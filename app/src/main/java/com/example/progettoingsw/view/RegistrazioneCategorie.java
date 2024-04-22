@@ -19,7 +19,7 @@ import android.widget.Toast;
 import com.example.progettoingsw.DAO.RegistrazioneCategorieDAO;
 import com.example.progettoingsw.R;
 import com.example.progettoingsw.classe_da_estendere.GestoreComuniImplementazioni;
-import com.example.progettoingsw.view.acquirente.AcquirenteMainActivity;
+import com.example.progettoingsw.view.acquirente.MainActivity;
 import com.google.android.material.button.MaterialButton;
 
 import java.util.ArrayList;
@@ -59,7 +59,7 @@ public class RegistrazioneCategorie extends GestoreComuniImplementazioni {
                     registrazioneCategorieDAO.insertCategorie(switchTexts);
                     registrazioneCategorieDAO.closeConnection();
                 }
-                    Intent intent = new Intent(RegistrazioneCategorie.this, AcquirenteMainActivity.class);//test del login
+                    Intent intent = new Intent(RegistrazioneCategorie.this, MainActivity.class);//test del login
                     intent.putExtra("email", email);
                     intent.putExtra("tipoUtente", tipoUtente);
                     startActivity(intent);
@@ -69,7 +69,7 @@ public class RegistrazioneCategorie extends GestoreComuniImplementazioni {
         bottoneSaltaRegistrazioneCategorie.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                    Intent intent = new Intent(RegistrazioneCategorie.this, AcquirenteMainActivity.class);//test del login
+                    Intent intent = new Intent(RegistrazioneCategorie.this, MainActivity.class);//test del login
                     intent.putExtra("email", email);
                     intent.putExtra("tipoUtente", tipoUtente);
                     startActivity(intent);
@@ -167,7 +167,7 @@ public class RegistrazioneCategorie extends GestoreComuniImplementazioni {
         progress_bar_registrazione_categorie.setVisibility(View.INVISIBLE);
             if(result){
                 Log.d("handleInsert", "Inseriti");
-                    Intent intent = new Intent(RegistrazioneCategorie.this, AcquirenteMainActivity.class);
+                    Intent intent = new Intent(RegistrazioneCategorie.this, MainActivity.class);
                     intent.putExtra("email", email);
                     intent.putExtra("tipoUtente", tipoUtente);
                     startActivity(intent);

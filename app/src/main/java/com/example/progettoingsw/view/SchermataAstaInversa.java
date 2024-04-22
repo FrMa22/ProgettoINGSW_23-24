@@ -1,5 +1,6 @@
 package com.example.progettoingsw.view;
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -21,6 +22,7 @@ import com.example.progettoingsw.R;
 import com.example.progettoingsw.classe_da_estendere.GestoreComuniImplementazioni;
 import com.example.progettoingsw.controllers_package.Controller;
 import com.example.progettoingsw.model.Asta_inversaModel;
+import com.example.progettoingsw.repository.Repository;
 import com.example.progettoingsw.viewmodel.SchermataAstaInversaViewModel;
 import com.google.android.material.button.MaterialButton;
 
@@ -53,7 +55,6 @@ public class SchermataAstaInversa extends GestoreComuniImplementazioni implement
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.schermata_asta_inversa);
-
         textViewNomeProdottoSchermataAstaInversa = findViewById(R.id.textViewNomeProdottoSchermataAstaInversa);
         imageViewSchermataAstaInversa = findViewById(R.id.ImageViewSchermataAstaInversa);
         textViewDescrizioneSchermataAstaInversa = findViewById(R.id.textViewDescrizioneSchermataAstaInversa);
@@ -68,14 +69,18 @@ public class SchermataAstaInversa extends GestoreComuniImplementazioni implement
         text_view_tua_offerta_attuale_asta_inversa = findViewById(R.id.text_view_tua_offerta_attuale_asta_inversa);
 
         schermataAstaInversaViewModel = new ViewModelProvider(this).get(SchermataAstaInversaViewModel.class);
+
         osservaAstaRecuperata();
         osservaErroreRecuperoAsta();
         osservaTipoUtenteAcquirente();
         osservaIsAstaInPreferiti();
         osservaIsPartecipazioneAvvenuta();
         osservaIsUltimaOffertaTua();
-        schermataAstaInversaViewModel.checkUltimaOfferta();
-        schermataAstaInversaViewModel.verificaAstaInPreferiti();
+        osservaVaiInAcquirente();
+
+
+
+
         schermataAstaInversaViewModel.checkTipoUtente();
         schermataAstaInversaViewModel.getAstaData();
 
@@ -115,7 +120,7 @@ public class SchermataAstaInversa extends GestoreComuniImplementazioni implement
 
         bottoneBack.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-//                Intent intent = new Intent(SchermataAstaInversa.this, AcquirenteMainActivity.class);//test del login
+//                Intent intent = new Intent(SchermataAstaInversa.this, MainActivity.class);//test del login
 //                intent.putExtra("email", email);
 //                intent.putExtra("tipoUtente", tipoUtente);
 //                startActivity(intent);
@@ -125,17 +130,15 @@ public class SchermataAstaInversa extends GestoreComuniImplementazioni implement
 
 
 
-//        textViewAcquirenteSchermataAstaInversa.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                String emailAcquirente = textViewAcquirenteSchermataAstaInversa.getText().toString();
-//                Intent intent=new Intent(SchermataAstaInversa.this, ProfiloAcquirente.class);
-//                intent.putExtra("email",emailAcquirente);
-//                startActivity(intent);
-//            }
-//        });
-//
-//
+        textViewAcquirenteSchermataAstaInversa.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String emailAcquirente = textViewAcquirenteSchermataAstaInversa.getText().toString();
+                schermataAstaInversaViewModel.vaiInAcquirente(emailAcquirente);
+            }
+        });
+
+
         bottoneOffertaSchermataAstaInversa.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 PopUpNuovaOfferta popUpNuovaOfferta = new PopUpNuovaOfferta(SchermataAstaInversa.this, SchermataAstaInversa.this);
@@ -351,6 +354,8 @@ public class SchermataAstaInversa extends GestoreComuniImplementazioni implement
         bottoneOffertaSchermataAstaInversa.setVisibility(View.INVISIBLE);
     }
     public void setImpostazioniAstaVenditore(){
+        schermataAstaInversaViewModel.checkUltimaOfferta();
+        schermataAstaInversaViewModel.verificaAstaInPreferiti();
     }
     public void osservaTipoUtenteAcquirente(){
         schermataAstaInversaViewModel.tipoUtenteAcquirente.observe(this, (isAcquirente) -> {
@@ -396,6 +401,14 @@ public class SchermataAstaInversa extends GestoreComuniImplementazioni implement
         schermataAstaInversaViewModel.isUltimaOffertaTua.observe(this, (valore) ->{
             if(valore){
                 text_view_tua_offerta_attuale_asta_inversa.setVisibility(View.VISIBLE);
+            }
+        });
+    }
+    public void osservaVaiInAcquirente(){
+        schermataAstaInversaViewModel.vaiInAcquirente.observe(this, (valore) ->{
+            if(valore){
+                Intent intent=new Intent(SchermataAstaInversa.this, ProfiloAcquirente.class);
+                startActivity(intent);
             }
         });
     }

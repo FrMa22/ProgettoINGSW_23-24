@@ -1,5 +1,7 @@
 package com.example.progettoingsw.viewmodel;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import androidx.lifecycle.MutableLiveData;
@@ -58,11 +60,50 @@ public class FragmentProfiloViewModel extends ViewModel {
     private FragmentProfiloRepository fragmentProfiloRepository;
     private Repository repository;
 
+    private static final String TOKEN_KEY = "token";
+
     public FragmentProfiloViewModel(){
         repository = Repository.getInstance();
         fragmentProfiloRepository = new FragmentProfiloRepository();
     }
-    public void logout(){
+    private void rimuoviTokenLocale(Context context) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.remove(TOKEN_KEY);
+        editor.apply();
+    }
+    public void removeTokenAcquirente(String email){
+        fragmentProfiloRepository.removeTokenFromAcquirente(email, new FragmentProfiloRepository.RemoveTokenFromAcquirenteListener() {
+            @Override
+            public void onRemoveTokenFromAcquirenteListener(Integer valore) {
+                if(valore>0){
+                    Log.d("removeTokenAcquirente", "rimosso con successo");
+                }else{
+                    Log.d("removeTokenAcquirente", "errore nella rimozione");
+                }
+            }
+        });
+    }
+    public void removeTokenVenditore(String email){
+        fragmentProfiloRepository.removeTokenFromVenditore(email, new FragmentProfiloRepository.RemoveTokenFromVenditoreListener() {
+            @Override
+            public void onRemoveTokenFromVenditoreListener(Integer valore) {
+                if(valore>0){
+                    Log.d("removeTokenVenditore", "rimosso con successo");
+                }else{
+                    Log.d("removeTokenVenditore", "errore nella rimozione");
+                }
+            }
+        });
+    }
+
+    public void logout(Context context){
+        rimuoviTokenLocale(context);
+        if(containsAcquirente()){
+            removeTokenAcquirente(repository.getAcquirenteModel().getIndirizzo_email());
+        }else{
+            removeTokenVenditore(repository.getVenditoreModel().getIndirizzo_email());
+        }
         repository.deleteRepository();
         setEsci(true);
     }
@@ -902,6 +943,7 @@ public class FragmentProfiloViewModel extends ViewModel {
 
 
     public void setApriLeMieAste(Boolean b){
+        repository.setLeMieAsteUtenteAttuale(true);
         apriLeMieAste.setValue(b);
     }
     public Boolean getApriLeMieAste(){

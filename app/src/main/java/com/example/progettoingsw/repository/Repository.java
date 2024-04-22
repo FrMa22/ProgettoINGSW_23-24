@@ -25,6 +25,12 @@ public class Repository {
     private VenditoreModel venditoreModel;
     private List<SocialAcquirenteModel> socialAcquirenteModelList;
     private List<SocialVenditoreModel> socialVenditoreModelList;
+    private String acquirenteEmailDaAsta;
+    private String venditoreEmailDaAsta;
+
+
+
+    private Boolean leMieAsteUtenteAttuale;
 
     private ArrayList<SocialAcquirenteModel> listaSocialAcquirenteRecuperati;//usata per avere social acquirente nel profilo utente
 
@@ -34,7 +40,7 @@ public class Repository {
 
 
     private String categoriaSelezionata;
-    public static final String backendUrl = "http:/15.237.250.6:8080/";
+    public static final String backendUrl = "http:/15.236.133.106:8080/";
     public static Repository questaRepository = null;
     //liste per le aste all'inglese nel caso di accesso come acquirente (aste in home)
     private ArrayList<Asta_allingleseModel> listaAsteAllIngleseInScadenza;
@@ -353,5 +359,22 @@ public class Repository {
     public void setCategoriaSelezionata(String categoriaSelezionata) {
         this.categoriaSelezionata = categoriaSelezionata;
     }
-
+    public String getAcquirenteEmailDaAsta() {
+        return acquirenteEmailDaAsta;
+    }
+    public void setAcquirenteEmailDaAsta(String acquirenteEmailDaAsta) {
+        this.acquirenteEmailDaAsta = acquirenteEmailDaAsta;
+    }
+    public String getVenditoreEmailDaAsta() {
+        return venditoreEmailDaAsta;
+    }
+    public void setVenditoreEmailDaAsta(String venditoreEmailDaAsta) {
+        this.venditoreEmailDaAsta = venditoreEmailDaAsta;
+    }
+    public Boolean getLeMieAsteUtenteAttuale() {
+        return leMieAsteUtenteAttuale;
+    }
+    public void setLeMieAsteUtenteAttuale(Boolean leMieAsteUtenteAttuale) {
+        this.leMieAsteUtenteAttuale = leMieAsteUtenteAttuale;
+    }
 }

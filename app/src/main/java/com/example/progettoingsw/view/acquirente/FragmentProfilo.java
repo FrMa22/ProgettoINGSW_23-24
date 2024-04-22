@@ -156,7 +156,7 @@ public class FragmentProfilo extends Fragment implements PopUpModificaCampiProfi
             @Override
             public void onClick(View view) {
                 osservaEsci();
-                fragmentProfiloViewModel.logout();
+                fragmentProfiloViewModel.logout(requireContext());
                 //Controller.redirectActivity(getContext(), LoginActivity.class);
             }
         });
@@ -378,7 +378,7 @@ public class FragmentProfilo extends Fragment implements PopUpModificaCampiProfi
 
     //metodo per rendere clickabile o non la bottom navigation view, accede alla bottom di main tramite un metodo di main
     private void setNavigationView(Boolean valore) {
-            AcquirenteMainActivity activity = (AcquirenteMainActivity) getActivity();
+            MainActivity activity = (MainActivity) getActivity();
             if (activity != null) {
                 // Abilita la BottomNavigationView
                 // Log.d("acquirente", "disabilito");

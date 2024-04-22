@@ -7,6 +7,7 @@ import android.util.Log;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.progettoingsw.DAO.Acquirente;
 import com.example.progettoingsw.model.AcquirenteModel;
 import com.example.progettoingsw.model.Asta_allingleseModel;
 import com.example.progettoingsw.repository.Asta_allingleseRepository;
@@ -16,6 +17,7 @@ import com.example.progettoingsw.repository.Repository;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 
 public class SchermataAstaIngleseViewModel extends ViewModel {
     private Repository repository;
@@ -27,7 +29,7 @@ public class SchermataAstaIngleseViewModel extends ViewModel {
     public MutableLiveData<Boolean> isAstaInPreferiti = new MutableLiveData<>(false);
     public MutableLiveData<Bitmap> immagineAstaConvertita = new MutableLiveData<>(null);
     public MutableLiveData<Boolean> isAstaChiusa = new MutableLiveData<>(false);
-
+    public MutableLiveData<Boolean> vaiInVenditore = new MutableLiveData<>(false);
     public MutableLiveData<Boolean> isUltimaOffertaTua = new MutableLiveData<>(false);
     public MutableLiveData<String> intervalloOfferteConvertito = new MutableLiveData("");
     private String messaggioPartecipazioneAstaInglese;
@@ -67,20 +69,17 @@ public class SchermataAstaIngleseViewModel extends ViewModel {
     }
     public void checkUltimaOfferta(){
         Long id_asta = repository.getAsta_allingleseSelezionata().getId();
-        AcquirenteModel acquirenteModel=repository.getAcquirenteModel();
-        if(acquirenteModel!=null) {
-            String indirizzo_email = repository.getAcquirenteModel().getIndirizzo_email();
-            astaAllingleseRepository.getEmailVincente(indirizzo_email, id_asta, new Asta_allingleseRepository.OnGetEmailVincenteListener() {
-                @Override
-                public void OnGetEmailVincente(Boolean numeroRecuperato) {
-                    if (numeroRecuperato) {
-                        setIsUltimaOffertaTua(true);
-                    } else {
-                        setIsUltimaOffertaTua(false);
-                    }
+        String indirizzo_email = repository.getAcquirenteModel().getIndirizzo_email();
+        astaAllingleseRepository.getEmailVincente(indirizzo_email, id_asta, new Asta_allingleseRepository.OnGetEmailVincenteListener() {
+            @Override
+            public void OnGetEmailVincente(Boolean numeroRecuperato) {
+                if(numeroRecuperato){
+                    setIsUltimaOffertaTua(true);
+                }else{
+                    setIsUltimaOffertaTua(false);
                 }
-            });
-        }
+            }
+        });
     }
     public void setAstaRecuperata(Asta_allingleseModel asta){
         astaRecuperata.setValue(asta);
@@ -193,25 +192,22 @@ public class SchermataAstaIngleseViewModel extends ViewModel {
         return isAstaInPreferiti.getValue();
     }
     public void verificaAstaInPreferiti(){
-        AcquirenteModel acquirenteModel=repository.getAcquirenteModel();
-        if(acquirenteModel!=null) {
-            String indirizzoEmail = repository.getAcquirenteModel().getIndirizzo_email();
-            Long idAsta = repository.getAsta_allingleseSelezionata().getId();
-            astaAllingleseRepository.verificaAstaIngleseInPreferiti(indirizzoEmail, idAsta, new Asta_allingleseRepository.OnVerificaAstaIngleseInPreferitiListener() {
-                @Override
-                public void OnVerificaAstaIngleseInPreferiti(Integer numeroRecuperato) {
-                    Log.d("asta ricercata", "qui");
-                    if (numeroRecuperato != null && numeroRecuperato != 0) {
-                        Log.d("asta ricercata", "è nei preferiti");
-                        setIsAstaInPreferiti(true);
-                    } else {
-                        Log.d("asta ricercata", "non è nei preferiti");
-                        setErroreRecuperoAsta("errore nella verifica asta in preferiti");
-                        setIsAstaInPreferiti(false);
-                    }
+        String indirizzoEmail = repository.getAcquirenteModel().getIndirizzo_email();
+        Long idAsta = repository.getAsta_allingleseSelezionata().getId();
+        astaAllingleseRepository.verificaAstaIngleseInPreferiti(indirizzoEmail,idAsta, new Asta_allingleseRepository.OnVerificaAstaIngleseInPreferitiListener() {
+            @Override
+            public void OnVerificaAstaIngleseInPreferiti(Integer numeroRecuperato) {
+                Log.d("asta ricercata" , "qui");
+                if(numeroRecuperato!=null && numeroRecuperato!=0){
+                    Log.d("asta ricercata" , "è nei preferiti");
+                    setIsAstaInPreferiti(true);
+                }else{
+                    Log.d("asta ricercata" , "non è nei preferiti");
+                    setErroreRecuperoAsta("errore nella verifica asta in preferiti");
+                    setIsAstaInPreferiti(false);
                 }
-            });
-        }
+            }
+        });
     }
     public void inserimentoAstaInPreferiti(){
         String indirizzoEmail = repository.getAcquirenteModel().getIndirizzo_email();
@@ -246,6 +242,17 @@ public class SchermataAstaIngleseViewModel extends ViewModel {
                 }
             }
         });
+    }
+    public void setVaiInVenditore(Boolean b){
+        this.vaiInVenditore.setValue(b);
+    }
+    public Boolean getVaiInvVenditore(){
+        return vaiInVenditore.getValue();
+    }
+    public void vaiInVenditore(String emailVenditore){
+        repository.setVenditoreEmailDaAsta(emailVenditore);
+        repository.setLeMieAsteUtenteAttuale(false);
+        setVaiInVenditore(true);
     }
 
 }

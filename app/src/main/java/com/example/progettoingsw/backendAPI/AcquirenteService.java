@@ -13,7 +13,8 @@ import retrofit2.http.Path;
 public interface AcquirenteService {
     @GET("/utenteController/loginAcquirente/{indirizzo_email}/{password}")
     Call<AcquirenteDTO> logInAcquirente(@Path("indirizzo_email") String indirizzo_email, @Path("password") String password);
-
+    @GET("/utenteController/loginAcquirenteConToken/{token}")
+    Call<AcquirenteDTO> loginAcquirenteConToken(@Path("token") String token);
     @GET("/utenteController/findCategorieByIndirizzoEmailAcquirente/{indirizzo_email}")
     Call<ArrayList<String>> findCategorieByIndirizzoEmailAcquirente(@Path(("indirizzo_email")) String indirizzo_email);
 
@@ -27,6 +28,12 @@ public interface AcquirenteService {
     @PUT("/utenteController/updatePasswordAcquirente/{password}/{indirizzo_email}")
     Call<Void> updatePasswordAcquirente(@Path("password") String password,@Path("indirizzo_email") String indirizzo_email);
 
+    @PUT("/utenteController/setTokenAcquirente/{indirizzo_email}/{token}")
+    Call<Integer> setTokenAcquirente(@Path("indirizzo_email") String indirizzo_email,@Path(("token")) String token);
 
+    @PUT("/utenteController/removeTokenFromAcquirente/{indirizzo_email}")
+    Call<Integer> removeTokenFromAcquirente(@Path("indirizzo_email") String indirizzo_email);
 
+    @GET("/utenteController/getAcquirenteByIndirizzo_email/{indirizzo_email}")
+    Call<AcquirenteDTO> getAcquirenteByIndirizzo_email(@Path("indirizzo_email") String indirizzo_email);
 }
