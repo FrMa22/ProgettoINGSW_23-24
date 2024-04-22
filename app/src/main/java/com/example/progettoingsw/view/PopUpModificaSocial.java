@@ -20,6 +20,7 @@ public class PopUpModificaSocial extends DialogPersonalizzato implements View.On
     private AppCompatButton bottoneAnnullaModifica;
     private AppCompatButton bottoneConfermaModifica;
     private AppCompatButton bottoneEliminaSocial;
+    private PopupModificaSocialDismissListener popupDismissListener;
 
     private String nome_vecchio;
     private String link_vecchio;
@@ -31,12 +32,13 @@ public class PopUpModificaSocial extends DialogPersonalizzato implements View.On
     private FragmentProfiloViewModel fragmentProfiloViewModel;
 
 
-    public PopUpModificaSocial(Context context, FragmentProfilo fragmentProfilo, FragmentProfiloViewModel fragmentProfiloViewModel, String nome, String link) {
+    public PopUpModificaSocial(Context context, FragmentProfilo fragmentProfilo, FragmentProfiloViewModel fragmentProfiloViewModel, String nome, String link,PopupModificaSocialDismissListener popupDismissListener) {
         super(context);
         this.fragmentProfilo = fragmentProfilo;
         this.nome_vecchio = nome;
         this.link_vecchio = link;
         this.fragmentProfiloViewModel=fragmentProfiloViewModel;
+        this.popupDismissListener=popupDismissListener;
     }
 
     @Override
@@ -45,6 +47,11 @@ public class PopUpModificaSocial extends DialogPersonalizzato implements View.On
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.pop_up_modifica_social);
         System.out.println("interno al popUpModificaSocial");
+
+        osservaMessaggioErroreLinkNuovo();
+        osservaMessaggioErroreNomeNuovo();
+        osservaIsSocialCambiato();
+
 
         edit_text_nome_social = findViewById(R.id.edit_text_nome_social);
         edit_text_nome_social.setText(nome_vecchio);
@@ -72,44 +79,101 @@ public class PopUpModificaSocial extends DialogPersonalizzato implements View.On
             String link = edit_text_link_social.getText().toString();
             System.out.println("dopo aver premuto conferma e prima dei controlli con nome:"+ nome + " e link: "+link);
 
-            if (!nome.isEmpty() && !link.isEmpty()) {
-                Log.d("bottone", " i valori di nome e link sono: " + nome + link);
-//                popUpModificaSocialDAO.openConnection();
-  //              popUpModificaSocialDAO.updateSocial(nome_vecchio, link_vecchio, nome, link);
-                System.out.println("controllo è  non vuoto passato");
+//            if (!nome.isEmpty() && !link.isEmpty()) {
+//                Log.d("bottone", " i valori di nome e link sono: " + nome + link);
+////                popUpModificaSocialDAO.openConnection();
+//  //              popUpModificaSocialDAO.updateSocial(nome_vecchio, link_vecchio, nome, link);
+//                System.out.println("controllo è  non vuoto passato");
                 System.out.println("prima della chiamata al backend");
                  //fragmentProfiloViewModel.aggiornaSocialAcquirenteViewModel(nome_vecchio,link_vecchio,nome,link);
                  fragmentProfiloViewModel.aggiornaSocialViewModel(nome_vecchio,link_vecchio,nome,link);
-                fragmentProfilo.onResume();
-                dismiss();
-            }else{
-                if(nome.isEmpty() && link.isEmpty() && nome.length()<=50 && link.length()<=50){
-                    Toast.makeText(getContext(), "I valori di Nome e link non possono essere vuoti!", Toast.LENGTH_SHORT).show();
-                }else if(nome.isEmpty()){
-                    Toast.makeText(getContext(), "Il valore di Nome non può essere vuoto!", Toast.LENGTH_SHORT).show();
-                }else{
-                    Toast.makeText(getContext(), "Il valore di link non può essere vuoto!", Toast.LENGTH_SHORT).show();
-                }
-                if (nome.length() > 50) {
-                    edit_text_nome_social.setError("Il nome non può superare i 50 caratteri");
-                    return;
-                }
-                if (link.length() > 50) {
-                    edit_text_link_social.setError("Il link non può superare i 50 caratteri");
-                    return;
-                }
-
-            }
+//                fragmentProfilo.onResume();
+//                dismiss();
+//            }else{
+//                if(nome.isEmpty() && link.isEmpty() && nome.length()<=50 && link.length()<=50){
+//                    Toast.makeText(getContext(), "I valori di Nome e link non possono essere vuoti!", Toast.LENGTH_SHORT).show();
+//                }else if(nome.isEmpty()){
+//                    Toast.makeText(getContext(), "Il valore di Nome non può essere vuoto!", Toast.LENGTH_SHORT).show();
+//                }else{
+//                    Toast.makeText(getContext(), "Il valore di link non può essere vuoto!", Toast.LENGTH_SHORT).show();
+//                }
+//                if (nome.length() > 50) {
+//                    edit_text_nome_social.setError("Il nome non può superare i 50 caratteri");
+//                    return;
+//                }
+//                if (link.length() > 50) {
+//                    edit_text_link_social.setError("Il link non può superare i 50 caratteri");
+//                    return;
+//                }
+//
+//            }
         }else if(v.getId() == R.id.bottoneEliminaSocial){
           //  popUpModificaSocialDAO.openConnection();
            // popUpModificaSocialDAO.deleteSocial(nome_vecchio,link_vecchio);
             //chiamata al backend per cancellare
             //fragmentProfiloViewModel.eliminaSocialAcquirenteViewModel(nome_vecchio,link_vecchio);
             fragmentProfiloViewModel.eliminaSocialViewModel(nome_vecchio,link_vecchio);
+            dismissModificaSocialPopup();
+           // fragmentProfilo.onResume();
 
-            fragmentProfilo.onResume();
-            dismiss();
         }
+    }
+
+   // public void dismissPopup() {
+   //     dismiss();
+   // }
+
+
+    public interface PopupModificaSocialDismissListener {
+        void onPopupModificaSocialDismissed();
+    }
+
+    public void dismissModificaSocialPopup() {
+        dismiss();
+        if (popupDismissListener != null) {
+            popupDismissListener.onPopupModificaSocialDismissed();
+        }
+    }
+
+    public void setPopupDismissListener( PopupModificaSocialDismissListener listener) {
+        this.popupDismissListener = listener;
+    }
+
+    public void messaggioErroreNomeNuovo(String messaggio){
+        edit_text_nome_social.setError(messaggio);
+    }
+    public void osservaMessaggioErroreNomeNuovo() {
+        fragmentProfiloViewModel.messaggioErroreNomeNuovo.observe(fragmentProfilo, (messaggio) -> {
+            if (fragmentProfiloViewModel.isNuovoMessaggioErroreNomeNuovo()) {
+                messaggioErroreNomeNuovo(messaggio);
+                //loginViewModel.cancellaMessaggioLogin();
+            }
+        });
+    }
+
+
+    public void messaggioErroreLinkNuovo(String messaggio){
+        edit_text_link_social.setError(messaggio);
+    }
+    public void osservaMessaggioErroreLinkNuovo() {
+        fragmentProfiloViewModel.messaggioErroreLinkNuovo.observe(fragmentProfilo, (messaggio) -> {
+            if (fragmentProfiloViewModel.isNuovoMessaggioErroreLinkNuovo()) {
+                messaggioErroreLinkNuovo(messaggio);
+                //loginViewModel.cancellaMessaggioLogin();
+            }
+        });
+    }
+
+    public void osservaIsSocialCambiato(){
+        fragmentProfiloViewModel.isSocialCambiato.observe(fragmentProfilo, (messaggio) -> {
+            if(fragmentProfiloViewModel.getIsSocialCambiato()){
+                Log.d("osservaIsSocialCambiato","prima di dismiss");
+                //dismiss();
+                dismissModificaSocialPopup();
+            }else{
+                Toast.makeText(getContext(), "Errore nei dati del social", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
 
