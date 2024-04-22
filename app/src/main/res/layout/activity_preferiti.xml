@@ -58,10 +58,15 @@
         android:indeterminate="true"
         android:visibility="invisible" />
 
-    <ScrollView
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_refresh_layout_preferiti"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_below="@id/toolbar_schermata_preferiti">
+    <ScrollView
+        android:id="@+id/scroll_view_preferiti"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerAstePreferiti"
@@ -71,6 +76,6 @@
 
 
     </ScrollView>
-
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 </RelativeLayout>

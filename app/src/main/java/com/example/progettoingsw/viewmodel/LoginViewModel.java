@@ -1,8 +1,13 @@
 package com.example.progettoingsw.viewmodel;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
+import android.view.View;
+import android.view.contentcapture.ContentCaptureCondition;
 
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.SavedStateHandle;
 import androidx.lifecycle.ViewModel;
 
 import com.example.progettoingsw.model.AcquirenteModel;
@@ -21,6 +26,7 @@ public class LoginViewModel extends ViewModel {
     public MutableLiveData<String> messaggioUtenteNonTrovato = new MutableLiveData<>("");
     public MutableLiveData<String> proseguiLogin = new MutableLiveData<>("");
     public MutableLiveData<String> tokenSalvato = new MutableLiveData<>("");
+    private String token;
 
     private String tokenViewModel;
 
@@ -48,19 +54,36 @@ public class LoginViewModel extends ViewModel {
     public Boolean isTokenSalvato(){
         return !tokenSalvato.getValue().equals("");
     }
-//    public void checkSavedToken(Context context){
-//        Log.d("checkSavedToken","controllo il token");
-//        SharedPreferences sharedPreferences = context.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
-//        String token = sharedPreferences.getString(TOKEN_KEY, null);
-//        if(token != null){
-//            Log.d("checkSavedToken","token recuperato : " + token);
-//            setTokenSalvato(token);
-//        }else{
-//            Log.d("checkSavedToken","token non trovato : ");
-//        }
-//
-//        setTokenSalvato("");
-//    }
+    public void checkSavedToken(Context context){
+        Log.d("checkSavedToken","controllo il token");
+        SharedPreferences sharedPreferences = context.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+        token = sharedPreferences.getString(TOKEN_KEY, null);
+        if(token != null){
+            Log.d("checkSavedToken","token recuperato : " + token);
+            //setTokenSalvato(token);
+            loginAcquirenteConToken(token);
+        }else{
+
+
+            Log.d("checkSavedToken","token non trovato : ");
+            Log.d("osservaTokenSalvato","entrato in token non trovato, token : "+ token);
+            FirebaseMessaging.getInstance().getToken()
+                    .addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            token = task.getResult();
+                            Log.d("token creato", "token: " + token);
+                            Log.d("Firebase", "Connessione a Firebase avvenuta con successo. Token: " + token);
+
+                            setTokenSalvato(token);
+
+                        } else {
+                            Log.e("Firebase", "Errore durante la connessione a Firebase", task.getException());
+                        }
+                    });
+
+        }
+
+    }
     public void loginAcquirenteConToken(String token) {
         setTokenViewModel(token);
         if (token != null && !token.isEmpty()) {
@@ -105,6 +128,8 @@ public class LoginViewModel extends ViewModel {
                     repository.setVenditoreModel(venditoreModel);
                     trovaCategorieVenditoreConToken(venditoreModel.getIndirizzo_email());
                 }else{
+                    Log.d("login venditore con token","nessun utente trovato");
+                    setTokenSalvato(token);
                     setMessaggioUtenteNonTrovato("nessun utente trovato");
                 }
             }

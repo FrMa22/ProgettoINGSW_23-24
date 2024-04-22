@@ -55,7 +55,7 @@ public class FragmentProfiloViewModel extends ViewModel {
         fragmentProfiloRepository = new FragmentProfiloRepository();
     }
     private void rimuoviTokenLocale(Context context) {
-        SharedPreferences sharedPreferences = context.getSharedPreferences("MyPrefs", context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = context.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.remove(TOKEN_KEY);
         editor.apply();
@@ -86,13 +86,13 @@ public class FragmentProfiloViewModel extends ViewModel {
     }
 
     public void logout(Context context){
+        rimuoviTokenLocale(context);
         if(containsAcquirente()){
             removeTokenAcquirente(repository.getAcquirenteModel().getIndirizzo_email());
         }else{
             removeTokenVenditore(repository.getVenditoreModel().getIndirizzo_email());
         }
         repository.deleteRepository();
-        rimuoviTokenLocale(context);
         setEsci(true);
     }
 

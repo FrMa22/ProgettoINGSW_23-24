@@ -123,7 +123,7 @@ public class SchermataAstaInglese extends GestoreComuniImplementazioni implement
         bottoneBack =  findViewById(R.id.bottoneBackSchermataAstaInglese);
         bottoneBack.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-//                Intent intent = new Intent(SchermataAstaInglese.this, AcquirenteMainActivity.class);//test del login
+//                Intent intent = new Intent(SchermataAstaInglese.this, MainActivity.class);//test del login
 //                intent.putExtra("email", email);
 //                intent.putExtra("tipoUtente", tipoUtente);
 //                startActivity(intent);

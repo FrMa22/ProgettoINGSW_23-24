@@ -7,9 +7,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,20 +22,16 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.progettoingsw.DAO.AstaDAOAcquirente;
 import com.example.progettoingsw.R;
 import com.example.progettoingsw.controllers_package.AstaAdapter;
 import com.example.progettoingsw.model.Asta_allingleseModel;
-import com.example.progettoingsw.model.Asta_alribassoModel;
-import com.example.progettoingsw.model.Asta_inversaModel;
 import com.example.progettoingsw.view.PreferitiActivity;
 import com.example.progettoingsw.view.SchermataAstaInglese;
 import com.example.progettoingsw.view.SchermataAstaInversa;
 import com.example.progettoingsw.view.SchermataAstaRibasso;
-import com.example.progettoingsw.item.AstaIngleseItem;
-import com.example.progettoingsw.item.AstaInversaItem;
-import com.example.progettoingsw.item.AstaRibassoItem;
 import com.example.progettoingsw.view.SchermataNotifiche;
 import com.example.progettoingsw.viewmodel.HomeViewModel;
 
@@ -41,23 +39,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FragmentHome extends Fragment {
-    private CountDownTimer countDownTimerNumeroNotifiche;
     private RelativeLayout relative_layout_home_acquirente;
-    private AstaDAOAcquirente astaDAOAcquirente;
     private AstaAdapter astaAdapterConsigliate;
     private AstaAdapter astaAdapterInScadenza;
     private AstaAdapter astaAdapterNuove;
     private TextView iconaNotifiche;
     private ProgressBar progressBarAcquirenteFragmentHome;
     ImageButton button_notifiche;
-    private String email;
-    private String tipoUtente;
-    private ArrayList<String> categorie;
     private TextView text_view_nessuna_asta_in_scadenza;
+    private TextView text_view_nessuna_asta_nuova;
     private TextView text_view_aste_consigliate_home;
     private TextView text_view_nessuna_asta_in_categorie;
     private HomeViewModel homeViewModel;
-    private List<Asta_allingleseModel> listaAsta_allingleseScadenzaRecente;
+    private ScrollView scrollView;
+    private SwipeRefreshLayout swipeRefreshLayout;
     public FragmentHome() {
     }
     @Override
@@ -85,15 +80,8 @@ public class FragmentHome extends Fragment {
         text_view_nessuna_asta_in_scadenza = view.findViewById(R.id.text_view_nessuna_asta_in_scadenza);
         text_view_aste_consigliate_home = view.findViewById(R.id.text_view_aste_consigliate_home);
         text_view_nessuna_asta_in_categorie = view.findViewById(R.id.text_view_nessuna_asta_in_categorie);
+        text_view_nessuna_asta_nuova = view.findViewById(R.id.text_view_nessuna_asta_nuova);
 
-//        //rendo l'icona di caricamento visibile ad inizio recuperi dal db e il bottom menu non clickabile
-//        progressBarAcquirenteFragmentHome.setVisibility(View.VISIBLE);
-//        setNavigationView(false);
-//        setAllClickable(relative_layout_home_acquirente,false);
-//
-//        // Inizializza il DAO e l'adapter
-//        astaDAOAcquirente = new AstaDAOAcquirente(this, email,tipoUtente);
-//
           astaAdapterConsigliate = new AstaAdapter(getContext(), null);
 
           // Inizializza il RecyclerView e imposta l'adapter
@@ -101,9 +89,7 @@ public class FragmentHome extends Fragment {
 //        // Utilizza LinearLayoutManager con orientamento orizzontale per far si che il recycler sia orizzontale, di default è verticale
           LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
           recyclerViewAsteConsigliate.setLayoutManager(linearLayoutManager);
-//
-//
-//        // Aggiungi un decorator predefinito per ridurre lo spazio tra le aste, superfluo
+
           DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(getContext(), linearLayoutManager.getOrientation());
           recyclerViewAsteConsigliate.addItemDecoration(dividerItemDecoration);
 
@@ -173,23 +159,7 @@ public class FragmentHome extends Fragment {
             }
         });
         iconaNotifiche = view.findViewById(R.id.iconaNotifiche);
-//        NotificheDAO notificheDAO = new NotificheDAO(FragmentHome.this, email,tipoUtente);
-//        notificheDAO.openConnection();
-//        notificheDAO.checkNotifiche();
-//
-////        countDownTimerNumeroNotifiche = new CountDownTimer(5000, 1000) {
-////            public void onTick(long millisUntilFinished) {
-////                // Stampa il numero di secondi rimanenti
-////                Log.d("Timer home fragment", "Secondi mancanti: " + millisUntilFinished / 1000);
-////            }
-////            public void onFinish() {
-////                Log.d("Timer home fragment", "Timer scaduto");
-////                notificheDAO.checkNotifiche();
-////                start();
-////            }
-////        };
-////        // Avvia il timer
-////        countDownTimerNumeroNotifiche.start();
+
 
         ImageButton preferitiButton = view.findViewById(R.id.openPreferiti);
         preferitiButton.setOnClickListener(new View.OnClickListener() {
@@ -204,86 +174,72 @@ public class FragmentHome extends Fragment {
         osservaAcquirenteModelPresente();
         osservaVenditoreModelPresente();
         osservaNumeroNotifiche();
+
+        osservaaste_allingleseCategoriaNomeRecuperate();
+        osservaaste_allingleseInScadenzaRecuperate();
+        osservaaste_allingleseNuoveRecuperate();
+        osservaaste_allingleseNuovePresenti();
+        osservaaste_allingleseCategoriaNomePresenti();
+        osservaaste_allingleseInScadenzaPresenti();
+
+        osservaaste_alribassoCategoriaNomeRecuperate();
+        osservaAste_alribassoNuoveRecuperate();
+        osservaAste_alribassoNuovePresenti();
+        osservaaste_alribassoCategoriaNomePresenti();
+
+        osservaEntraInSchermataAstaInglese();
+        osservaEntraInSchermataAstaRibasso();
+        osservaEntraInSchermataAstaInversa();
+
+        osservaaste_inversaCategoriaNomeRecuperate();
+        osservaaste_inversaNuoveRecuperate();
+        osservaaste_inversaInScadenzaRecuperate();
+        osservaaste_inversaInScadenzaPresenti();
+        osservaaste_inversaNuovePresenti();
+        osservaaste_inversaCategoriaNomePresenti();
+
         homeViewModel.checkTipoUtente();
 
+        scrollView = view.findViewById(R.id.scroll_view);
+        swipeRefreshLayout = view.findViewById(R.id.swipe_refresh_layout);
+        scrollView.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
+            @Override
+            public void onScrollChanged() {
+                if (scrollView.getScrollY() == 0) {
+                    // La ScrollView è scorsa fino alla parte superiore
+                    swipeRefreshLayout.setEnabled(true); // Abilita lo SwipeRefreshLayout
+                } else {
+                    // La ScrollView non è alla parte superiore
+                    swipeRefreshLayout.setEnabled(false); // Disabilita lo SwipeRefreshLayout
+                }
+            }
+        });
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                // Chiamata al metodo per aggiornare i dati
+                astaAdapterConsigliate.clearItems();
+                astaAdapterNuove.clearItems();
+                astaAdapterInScadenza.clearItems();
+                homeViewModel.checkTipoUtente();
+                homeViewModel.checkNumeroNotifiche();
+                // Termina l'animazione di aggiornamento
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
     }
 
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        // Chiudi la connessione al database quando il fragment viene distrutto
-//        astaInversaItemDAO.closeConnection();
     }
 
-    //questo metodo lo deve chiamare la classe DAO quando termina di recuperare le aste dal DB e gli passa tutto ciò che ha trovato, in questo caso un arraylist di object
-    //l'arraylist deve essere di object per passare oggetti di diverse classi (in questo caso AstaInversa, AstaRibasso e AstaInglese
-    //se si recupera dal DB solo un tipo di asta basta usare l'arraylist del tipo corrispondente ma questo con object funziona sia con 1 solo tipo che con più
-//    public void handleAsteConsigliateResult(ArrayList<Object> prodotti) {
-//        Log.d("FragmentHome" , "handleAsteConsigliateResult");
-//        boolean prodottiVuoto = prodotti == null || prodotti.isEmpty();
-//        if(categorie.size()==0){
-//            text_view_nessuna_asta_in_categorie.setVisibility(View.GONE);
-//            astaAdapterConsigliate.setAste(null);
-//            text_view_aste_consigliate_home.setVisibility(View.GONE);
-//        }else {
-//
-//            if (!prodottiVuoto) {
-//                astaAdapterConsigliate.setAste(prodotti);
-//            } else {
-//                astaAdapterConsigliate.setAste(null);
-//            }
-//            if (prodottiVuoto) {
-//                text_view_nessuna_asta_in_categorie.setVisibility(View.VISIBLE);
-//            } else {
-//                text_view_nessuna_asta_in_categorie.setVisibility(View.GONE);
-//            }
-//        }
-//    }
-//    public void handleAsteInScadenzaResult(ArrayList<Object> prodotti) {
-//        boolean prodottiVuoto = prodotti == null || prodotti.isEmpty();
-//        Log.d("FragmentHome" , "handleAsteInScadenzaResult");
-//        if (!prodottiVuoto) {
-//            astaAdapterInScadenza.setAste(prodotti);
-//        }else{
-//            astaAdapterInScadenza.setAste(null);
-//        }
-//        if(prodottiVuoto){
-//            text_view_nessuna_asta_in_scadenza.setVisibility(View.VISIBLE);
-//        }else {
-//            text_view_nessuna_asta_in_scadenza.setVisibility(View.GONE);
-//        }
-//
-//    }
-//    public void handleAsteNuoveResult(ArrayList<Object> prodotti) {
-//        // Aggiorna l'adapter con i nuovi prodotti
-//        Log.d("FragmentHome" , "handleAsteNuoveResult");
-//        if(prodotti != null){
-//            astaAdapterNuove.setAste(prodotti);
-//        }else{
-//            Log.d("handleConsigliateResult", "null");
-//        }
-//        //        //rendo l'icona di caricamento non piu visibile e il menu clickabile
-//        progressBarAcquirenteFragmentHome.setVisibility(View.INVISIBLE);
-//        setNavigationView(true);
-//        setAllClickable(relative_layout_home_acquirente, true);
-//    }
-//
-//
-//    public void setCategorie(ArrayList<String> categorieRecuperate){
-//        if(categorieRecuperate.size() == 0){
-//            text_view_aste_consigliate_home.setVisibility(View.GONE);
-//            text_view_nessuna_asta_in_categorie.setVisibility(View.GONE);
-//        }else{
-//            text_view_aste_consigliate_home.setVisibility(View.VISIBLE);
-//            text_view_nessuna_asta_in_categorie.setVisibility(View.VISIBLE);
-//        }
-//        this.categorie = categorieRecuperate;
-//        Log.d("setCategorie", "numero di categorie: " + categorieRecuperate.size() );
-//    }
+
 
     private void setNavigationView(Boolean valore) {
-        AcquirenteMainActivity activity = (AcquirenteMainActivity) getActivity();
+        MainActivity activity = (MainActivity) getActivity();
         if (activity != null) {
             // Abilita la BottomNavigationView
             Log.d("setNavigationView" , "preso comando : " + valore);
@@ -300,73 +256,28 @@ public class FragmentHome extends Fragment {
             }
         }
     }
-//    public void handleGetNumeroNotifiche(int numero){
-//        Log.d("handleGetNumeroNotifiche" , "il numero di notifiche è :" + numero);
-//        if(numero>0){
-//            iconaNotifiche.setVisibility(View.VISIBLE);
-//            iconaNotifiche.setText(String.valueOf(numero));
-//        }else{
-//            iconaNotifiche.setVisibility(View.GONE);
-//        }
-//    }
-    // questi metodi onPause, onStop, onDestroy e onResume servono a stoppare il timer quando non si è piu su questa schermata e a farlo ricominciare quando si torna
+
     @Override
     public void onPause() {
         super.onPause();
+        //stop dei timer che fanno avanzare la scadenza delle aste inglesi
         astaAdapterInScadenza.stopAllTimers();
         astaAdapterConsigliate.stopAllTimers();
         astaAdapterNuove.stopAllTimers();
-        // Ferma il countDownTimer se è attivo
-//        if (countDownTimerNumeroNotifiche != null) {
-//            countDownTimerNumeroNotifiche.cancel();
-//        }
     }
-//    @Override
-//    public void onStop() {
-//        super.onStop();
-//        // Ferma il countDownTimer se è attivo
-//        if (countDownTimerNumeroNotifiche != null) {
-//            countDownTimerNumeroNotifiche.cancel();
-//        }
-//    }
-//    @Override
-//    public void onDestroy() {
-//        super.onDestroy();
-//        // Ferma il countDownTimer se è attivo
-//        if (countDownTimerNumeroNotifiche != null) {
-//            countDownTimerNumeroNotifiche.cancel();
-//        }
-//    }
+
     @Override
     public void onResume() {
         Log.d("Home" , "entrato in onResume");
         super.onResume();
-        //homeViewModel.checkTipoUtente();
-//        astaDAOAcquirente = new AstaDAOAcquirente(this, email,tipoUtente);
-//        // Apri la connessione al database e ottieni i prodotti
-//        astaDAOAcquirente.openConnection();
-//        astaDAOAcquirente.getCategorie();
-//        astaDAOAcquirente.getAsteCategorieAcquirente();
-//        astaDAOAcquirente.getAsteScadenzaRecente();
-//        astaDAOAcquirente.getAsteNuove();
-//        astaDAOAcquirente.closeConnection();
-//        NotificheDAO notificheDAO = new NotificheDAO(FragmentHome.this, email,tipoUtente);
-//        notificheDAO.openConnection();
-//        notificheDAO.checkNotifiche();
-//        notificheDAO.closeConnection();
-//        // Ferma il countDownTimer se è attivo
-//        if (countDownTimerNumeroNotifiche != null) {
-//            countDownTimerNumeroNotifiche.cancel();
-//            countDownTimerNumeroNotifiche.start();
-//        }
     }
 
     public void osservaaste_allingleseCategoriaNomePresenti() {
         homeViewModel.aste_allingleseCategoriaNomePresenti.observe(getViewLifecycleOwner(), (messaggio) -> {
             if (messaggio){
-                osservaaste_allingleseCategoriaNomeRecuperate();
                 homeViewModel.recuperaAste_allingleseCategorieNome();
             }
+            checkRecylerVuoti();
         });
     }
     public void osservaaste_allingleseCategoriaNomeRecuperate() {
@@ -380,9 +291,9 @@ public class FragmentHome extends Fragment {
     public void osservaaste_allingleseInScadenzaPresenti() {
         homeViewModel.aste_allingleseInScadenzaPresenti.observe(getViewLifecycleOwner(), (messaggio) -> {
             if (messaggio) {
-                osservaaste_allingleseInScadenzaRecuperate();
                 homeViewModel.recuperaAste_allingleseInScadenza();
             }
+            checkRecylerVuoti();
         });
     }
     public void osservaaste_allingleseInScadenzaRecuperate() {
@@ -397,9 +308,9 @@ public class FragmentHome extends Fragment {
     public void osservaaste_allingleseNuovePresenti() {
         homeViewModel.aste_allingleseNuovePresenti.observe(getViewLifecycleOwner(), (messaggio) -> {
             if (messaggio) {
-                osservaaste_allingleseNuoveRecuperate();
                 homeViewModel.recuperaAste_allingleseNuove();
             }
+            checkRecylerVuoti();
         });
     }
     public void osservaaste_allingleseNuoveRecuperate() {
@@ -413,9 +324,9 @@ public class FragmentHome extends Fragment {
     public void osservaaste_alribassoCategoriaNomePresenti() {
         homeViewModel.aste_alribassoCategoriaNomePresenti.observe(getViewLifecycleOwner(), (messaggio) -> {
             if (messaggio) {
-                osservaaste_alribassoCategoriaNomeRecuperate();
                 homeViewModel.recuperaAste_alribassoCategorieNome();
             }
+            checkRecylerVuoti();
         });
     }
     public void osservaaste_alribassoCategoriaNomeRecuperate() {
@@ -428,9 +339,9 @@ public class FragmentHome extends Fragment {
     public void osservaAste_alribassoNuovePresenti() {
         homeViewModel.aste_alribassoNuovePresenti.observe(getViewLifecycleOwner(), (messaggio) -> {
             if (messaggio) {
-                osservaAste_alribassoNuoveRecuperate();
                 homeViewModel.recuperaAste_alribassoNuove();
             }
+            checkRecylerVuoti();
         });
     }
     public void osservaAste_alribassoNuoveRecuperate() {
@@ -460,13 +371,6 @@ public class FragmentHome extends Fragment {
         homeViewModel.acquirenteModelPresente.observe(getViewLifecycleOwner(), (messaggio) -> {
             if (homeViewModel.getAcquirenteModelPresente()) {
                 //Toast.makeText(getContext(), "Entrato come acquirente in home.", Toast.LENGTH_SHORT).show();
-                osservaaste_allingleseInScadenzaPresenti();
-                osservaaste_allingleseNuovePresenti();
-                osservaAste_alribassoNuovePresenti();
-                osservaaste_allingleseCategoriaNomePresenti();
-                osservaaste_alribassoCategoriaNomePresenti();
-                osservaEntraInSchermataAstaInglese();
-                osservaEntraInSchermataAstaRibasso();
                 homeViewModel.trovaEImpostaAste();
             }
         });
@@ -474,9 +378,9 @@ public class FragmentHome extends Fragment {
     public void osservaaste_inversaInScadenzaPresenti() {
         homeViewModel.aste_inversaInScadenzaPresenti.observe(getViewLifecycleOwner(), (messaggio) -> {
             if(messaggio){
-                osservaaste_inversaInScadenzaRecuperate();
                 homeViewModel.recuperaAste_inversaInScadenza();
             }
+            checkRecylerVuoti();
         });
     }
     public void osservaaste_inversaInScadenzaRecuperate() {
@@ -489,9 +393,9 @@ public class FragmentHome extends Fragment {
     public void osservaaste_inversaNuovePresenti() {
         homeViewModel.aste_inversaNuovePresenti.observe(getViewLifecycleOwner(), (messaggio) -> {
             if (messaggio) {
-                osservaaste_inversaNuoveRecuperate();
                 homeViewModel.recuperaAste_inversaNuove();
             }
+            checkRecylerVuoti();
         });
     }
     public void osservaaste_inversaNuoveRecuperate() {
@@ -504,9 +408,9 @@ public class FragmentHome extends Fragment {
     public void osservaaste_inversaCategoriaNomePresenti() {
         homeViewModel.aste_inversaCategoriaNomePresenti.observe(getViewLifecycleOwner(), (messaggio) -> {
             if (messaggio) {
-                osservaaste_inversaCategoriaNomeRecuperate();
                 homeViewModel.recuperaAste_inversaCategorieNome();
             }
+            checkRecylerVuoti();
         });
     }
     public void osservaaste_inversaCategoriaNomeRecuperate() {
@@ -528,10 +432,6 @@ public class FragmentHome extends Fragment {
         homeViewModel.venditoreModelPresente.observe(getViewLifecycleOwner(), (messaggio) -> {
             if (homeViewModel.getVenditoreModelPresente()) {
                 //Toast.makeText(getContext(), "Entrato come acquirente in home.", Toast.LENGTH_SHORT).show();
-                osservaaste_inversaInScadenzaPresenti();
-                osservaaste_inversaNuovePresenti();
-                osservaaste_inversaCategoriaNomePresenti();
-                osservaEntraInSchermataAstaInversa();
                 homeViewModel.trovaEImpostaAste();
             }
         });
@@ -546,6 +446,23 @@ public class FragmentHome extends Fragment {
                 iconaNotifiche.setVisibility(View.GONE);
             }
         });
+    }
+    public void checkRecylerVuoti(){
+        if(astaAdapterConsigliate.getItemCount()==0){
+            text_view_nessuna_asta_in_categorie.setVisibility(View.VISIBLE);
+        }else{
+            text_view_nessuna_asta_in_categorie.setVisibility(View.GONE);
+        }
+        if(astaAdapterInScadenza.getItemCount()==0){
+            text_view_nessuna_asta_in_scadenza.setVisibility(View.VISIBLE);
+        }else{
+            text_view_nessuna_asta_in_scadenza.setVisibility(View.GONE);
+        }
+        if(astaAdapterNuove.getItemCount()==0){
+            text_view_nessuna_asta_nuova.setVisibility(View.VISIBLE);
+        }else{
+            text_view_nessuna_asta_nuova.setVisibility(View.GONE);
+        }
     }
 
 }

@@ -115,7 +115,7 @@ public class SchermataAstaRibasso extends GestoreComuniImplementazioni {
         bottoneBack =  findViewById(R.id.bottoneBackSchermataAstaRibasso);
         bottoneBack.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-//                Intent intent = new Intent(SchermataAstaRibasso.this, AcquirenteMainActivity.class);//test del login
+//                Intent intent = new Intent(SchermataAstaRibasso.this, MainActivity.class);//test del login
 //                intent.putExtra("email", email);
 //                intent.putExtra("tipoUtente", tipoUtente);
 //                startActivity(intent);
@@ -143,7 +143,7 @@ public class SchermataAstaRibasso extends GestoreComuniImplementazioni {
                     @Override
                     public void onClick(View v) {
                         popUpConfermaOffertaDialog.dismiss();
-//                        Intent intent = new Intent(SchermataAstaRibasso.this, AcquirenteMainActivity.class);//test del login
+//                        Intent intent = new Intent(SchermataAstaRibasso.this, MainActivity.class);//test del login
 //                        intent.putExtra("email", email);
 //                        intent.putExtra("tipoUtente", tipoUtente);
 //                        startActivity(intent);

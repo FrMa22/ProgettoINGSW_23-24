@@ -43,7 +43,7 @@
             android:name=".view.PopUpAggiungiCategorieAsta"
             android:exported="false" />
         <activity
-            android:name=".view.acquirente.AcquirenteMainActivity"
+            android:name=".view.acquirente.MainActivity"
             android:exported="false" />
         <activity
             android:name=".view.ElencoCategorie"
@@ -62,7 +62,7 @@
             android:exported="true" />
         <activity
             android:name=".view.acquirente.FragmentProfilo"
-            android:exported="true" />
+            android:exported="false" />
         <activity
             android:name=".view.PopUpModificaCampiProfilo"
             android:theme="@style/Base.Theme.ProgettoINGSW.CustomThemeSfocato" />
@@ -89,46 +89,46 @@
         <activity android:name=".view.Registrazione" />
         <activity
             android:name=".view.RegistrazioneCampiFacoltativi"
-            android:exported="true" />
+            android:exported="false" />
         <activity
             android:name=".view.RegistrazioneCategorie"
-            android:exported="true" />
+            android:exported="false" />
         <activity
             android:name=".view.acquirente.AcquirenteFragmentCreaLaTuaAstaAcquirente"
-            android:exported="true" />
+            android:exported="false" />
         <activity
             android:name=".view.venditore.VenditoreAstaInglese"
-            android:exported="true" />
+            android:exported="false" />
         <activity
             android:name=".view.venditore.VenditoreAstaRibasso"
-            android:exported="true" />
+            android:exported="false" />
         <activity
             android:name=".view.acquirente.FragmentCreaAstaInversa"
-            android:exported="true" />
+            android:exported="false" />
         <activity
             android:name=".view.ProfiloAcquirente"
-            android:exported="true" />
+            android:exported="false" />
         <activity
             android:name=".view.ProfiloVenditore"
-            android:exported="true" />
+            android:exported="false" />
         <activity
             android:name=".view.SchermataAstaInglese"
-            android:exported="true" />
+            android:exported="false" />
         <activity
             android:name=".view.SchermataAstaInversa"
-            android:exported="true" />
+            android:exported="false" />
         <activity
             android:name=".view.SchermataAstaRibasso"
-            android:exported="true" />
+            android:exported="false" />
         <activity
             android:name=".view.LeMieAste"
-            android:exported="true" />
+            android:exported="false" />
         <activity
             android:name=".view.SchermataNotifiche"
             android:exported="true" />
         <activity
             android:name=".view.PopUpRegistrazioneSocial"
-            android:exported="true"
+            android:exported="false"
             android:theme="@style/Base.Theme.ProgettoINGSW.CustomTheme" />
         <activity
             android:name=".view.venditore.VenditorePopUpCreaAsta"

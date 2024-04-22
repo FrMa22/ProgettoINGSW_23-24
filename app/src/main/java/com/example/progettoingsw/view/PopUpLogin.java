@@ -9,7 +9,7 @@ import android.widget.Toast;
 
 import com.example.progettoingsw.R;
 import com.example.progettoingsw.classe_da_estendere.DialogPersonalizzato;
-import com.example.progettoingsw.view.acquirente.AcquirenteMainActivity;
+import com.example.progettoingsw.view.acquirente.MainActivity;
 
 public class PopUpLogin extends DialogPersonalizzato implements View.OnClickListener {
     private TextView bottoneAcquirente;
@@ -44,13 +44,13 @@ public class PopUpLogin extends DialogPersonalizzato implements View.OnClickList
     public void onClick(View v) {
         if (v.getId() == R.id.textViewAcquirente) {
             Toast.makeText(getContext(), "Accesso eseguito come acquirente: ", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(getContext(), AcquirenteMainActivity.class);//test del login
+            Intent intent = new Intent(getContext(), MainActivity.class);//test del login
             intent.putExtra("email", email);
             intent.putExtra("tipoUtente", "acquirente");
             getContext().startActivity(intent);
         } else if(v.getId() == R.id.textViewVenditore){
             Toast.makeText(getContext(), "Accesso eseguito come venditore: ", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(getContext(), AcquirenteMainActivity.class);//test del login
+            Intent intent = new Intent(getContext(), MainActivity.class);//test del login
             intent.putExtra("email", email);
             intent.putExtra("tipoUtente", "venditore");
             getContext().startActivity(intent);

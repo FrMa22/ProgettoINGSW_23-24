@@ -120,7 +120,7 @@ public class SchermataAstaInversa extends GestoreComuniImplementazioni implement
 
         bottoneBack.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-//                Intent intent = new Intent(SchermataAstaInversa.this, AcquirenteMainActivity.class);//test del login
+//                Intent intent = new Intent(SchermataAstaInversa.this, MainActivity.class);//test del login
 //                intent.putExtra("email", email);
 //                intent.putExtra("tipoUtente", tipoUtente);
 //                startActivity(intent);

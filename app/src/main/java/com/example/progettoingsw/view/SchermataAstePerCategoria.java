@@ -4,11 +4,13 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -35,8 +37,9 @@ public class SchermataAstePerCategoria extends GestoreComuniImplementazioni {
      AstaAdapter astaAdapter;
      private ProgressBar progress_bar_schermata_aste_per_categoria;
      private TextView text_view_nessuna_asta_ricercata_per_categoria;
-    AstePerCategorieDAO astePerCategorieDAO;
     private SchermataAstePerCategoriaViewModel schermataAstePerCategoriaViewModel;
+    private SwipeRefreshLayout swipe_refresh_layout_aste_per_categoria;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +48,7 @@ public class SchermataAstePerCategoria extends GestoreComuniImplementazioni {
         progress_bar_schermata_aste_per_categoria = findViewById(R.id.progress_bar_schermata_aste_per_categoria);
         //progress_bar_schermata_aste_per_categoria.setVisibility(View.VISIBLE);
         text_view_nessuna_asta_ricercata_per_categoria = findViewById(R.id.text_view_nessuna_asta_ricercata_per_categoria);
+        text_view_nessuna_asta_ricercata_per_categoria.setVisibility(View.VISIBLE);
 
         backBottone = findViewById(R.id.backButtonCategorieRicerca);
         astaAdapter = new AstaAdapter(this, null);
@@ -52,6 +56,19 @@ public class SchermataAstePerCategoria extends GestoreComuniImplementazioni {
         schermataAstePerCategoriaViewModel = new ViewModelProvider(this).get(SchermataAstePerCategoriaViewModel.class);
         osservaIsAcquirente();
         osservaNomeCategoriaPerTextview();
+
+        osservaEntraInSchermataAstaInglese();
+        osservaEntraInSchermataAstaRibasso();
+        osservaEntraInSchermataAstaInversa();
+
+        osservaListaAstaIngleseCategoria();
+        osservaListaAstaRibassoCategoria();
+        osservaListaAstaInversaCategoria();
+
+        osservaListaAstaRibassoCategoriaConvertite();
+        osservaListaAstaIngleseCategoriaConvertite();
+        osservaListaAstaInversaCategoriaConvertite();
+
         schermataAstePerCategoriaViewModel.checkNomeCategoriaPerTextview();
         schermataAstePerCategoriaViewModel.checkTipoUtente();
 
@@ -85,6 +102,28 @@ public class SchermataAstePerCategoria extends GestoreComuniImplementazioni {
             }
         });
 
+        swipe_refresh_layout_aste_per_categoria = findViewById(R.id.swipe_refresh_layout_aste_per_categoria);
+        recyclerViewAstePerCategoria.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
+            @Override
+            public void onScrollChanged() {
+                if (recyclerViewAstePerCategoria.getScrollY() == 0) {
+                    // La ScrollView è scorsa fino alla parte superiore
+                    swipe_refresh_layout_aste_per_categoria.setEnabled(true); // Abilita lo SwipeRefreshLayout
+                } else {
+                    // La ScrollView non è alla parte superiore
+                    swipe_refresh_layout_aste_per_categoria.setEnabled(false); // Disabilita lo SwipeRefreshLayout
+                }
+            }
+        });
+        swipe_refresh_layout_aste_per_categoria.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                astaAdapter.clearItems();
+                schermataAstePerCategoriaViewModel.checkTipoUtente();
+                swipe_refresh_layout_aste_per_categoria.setRefreshing(false);
+            }
+        });
+
     }
 
 //    public void asteCategorie(ArrayList<Object> aste) {
@@ -105,17 +144,6 @@ public class SchermataAstePerCategoria extends GestoreComuniImplementazioni {
 
     public void osservaIsAcquirente(){
         schermataAstePerCategoriaViewModel.isAcquirente.observe(this, (valore) -> {
-            if(valore){
-                Log.d("acquirente", "" );
-                osservaEntraInSchermataAstaInglese();
-                osservaEntraInSchermataAstaRibasso();
-                osservaListaAstaIngleseCategoria();
-                osservaListaAstaRibassoCategoria();
-            }else{
-                Log.d("venditore", "" );
-                osservaEntraInSchermataAstaInversa();
-                osservaListaAstaInversaCategoria();
-            }
             schermataAstePerCategoriaViewModel.getAstePerCategoria();
         });
     }
@@ -123,7 +151,6 @@ public class SchermataAstePerCategoria extends GestoreComuniImplementazioni {
         schermataAstePerCategoriaViewModel.listaAstaIngleseCategoria.observe(this, (listaAste) -> {
             if(listaAste!=null){
                 //fai qualcosa
-                osservaListaAstaIngleseCategoriaConvertite();
                 schermataAstePerCategoriaViewModel.convertiAsteInglese();
             }
         });
@@ -142,7 +169,6 @@ public class SchermataAstePerCategoria extends GestoreComuniImplementazioni {
         schermataAstePerCategoriaViewModel.listaAstaRibassoCategoria.observe(this, (listaAste) -> {
             if(listaAste!=null){
                 //fai qualcosa
-                osservaListaAstaRibassoCategoriaConvertite();
                 schermataAstePerCategoriaViewModel.convertiAsteRibasso();
             }
         });
@@ -161,7 +187,6 @@ public class SchermataAstePerCategoria extends GestoreComuniImplementazioni {
         schermataAstePerCategoriaViewModel.listaAstaInversaCategoria.observe(this, (listaAste) -> {
             if(listaAste!=null){
                 //fai qualcosa
-                osservaListaAstaInversaCategoriaConvertite();
                 schermataAstePerCategoriaViewModel.convertiAsteInversa();
             }
         });

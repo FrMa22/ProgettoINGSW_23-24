@@ -368,7 +368,7 @@ public class FragmentProfilo extends Fragment{
 
     //metodo per rendere clickabile o non la bottom navigation view, accede alla bottom di main tramite un metodo di main
     private void setNavigationView(Boolean valore) {
-            AcquirenteMainActivity activity = (AcquirenteMainActivity) getActivity();
+            MainActivity activity = (MainActivity) getActivity();
             if (activity != null) {
                 // Abilita la BottomNavigationView
                 // Log.d("acquirente", "disabilito");

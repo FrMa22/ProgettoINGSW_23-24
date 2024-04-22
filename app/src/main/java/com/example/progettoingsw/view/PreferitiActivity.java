@@ -4,29 +4,26 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.progettoingsw.DAO.AstePreferiteDAO;
 import com.example.progettoingsw.R;
 import com.example.progettoingsw.classe_da_estendere.GestoreComuniImplementazioni;
 import com.example.progettoingsw.controllers_package.AstaAdapter;
 import com.example.progettoingsw.controllers_package.Controller;
-import com.example.progettoingsw.view.acquirente.AcquirenteMainActivity;
-import com.example.progettoingsw.item.AstaIngleseItem;
-import com.example.progettoingsw.item.AstaInversaItem;
-import com.example.progettoingsw.item.AstaRibassoItem;
-import com.example.progettoingsw.viewmodel.LoginViewModel;
 import com.example.progettoingsw.viewmodel.SchermataPreferityViewModel;
-
-import java.util.ArrayList;
 
 public class PreferitiActivity extends GestoreComuniImplementazioni {
     Controller controller;
@@ -40,6 +37,9 @@ public class PreferitiActivity extends GestoreComuniImplementazioni {
     private ProgressBar progress_bar_schermata_preferiti;
     private RelativeLayout relative_layout_schermata_preferiti;
     private SchermataPreferityViewModel schermataPreferityViewModel;
+    private SwipeRefreshLayout swipe_refresh_layout_preferiti;
+    private ScrollView scroll_view_preferiti;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +48,19 @@ public class PreferitiActivity extends GestoreComuniImplementazioni {
 
         schermataPreferityViewModel = new ViewModelProvider(this).get(SchermataPreferityViewModel.class);
         osservaIsAcquirente();
+
+        osservaListaAstaInglesePreferite();
+        osservaListaAstaInglesePreferiteConvertite();
+        osservaListaAstaRibassoPreferite();
+        osservaListaAstaRibassoPreferiteConvertite();
+        osservaListaAstaInversaPreferite();
+        osservaListaAstaInversaPreferiteConvertite();
+
+        osservaEntraInSchermataAstaInglese();
+        osservaEntraInSchermataAstaRibasso();
+        osservaEntraInSchermataAstaInversa();
+
+
         schermataPreferityViewModel.getTipoUtente();
 
 //        controller = new Controller();
@@ -99,7 +112,7 @@ public class PreferitiActivity extends GestoreComuniImplementazioni {
             @Override
             public void onClick(View view) {
                 onBackPressed();
-//                Intent intent = new Intent(PreferitiActivity.this, AcquirenteMainActivity.class);//test del login
+//                Intent intent = new Intent(PreferitiActivity.this, MainActivity.class);//test del login
 //                intent.putExtra("email", email);
 //                intent.putExtra("tipoUtente", tipoUtente);
 //                startActivity(intent);
@@ -107,6 +120,28 @@ public class PreferitiActivity extends GestoreComuniImplementazioni {
             }
         });
 
+        swipe_refresh_layout_preferiti = findViewById(R.id.swipe_refresh_layout_preferiti);
+        scroll_view_preferiti = findViewById(R.id.scroll_view_preferiti);
+        scroll_view_preferiti.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
+            @Override
+            public void onScrollChanged() {
+                if (scroll_view_preferiti.getScrollY() == 0) {
+                    // La ScrollView è scorsa fino alla parte superiore
+                    swipe_refresh_layout_preferiti.setEnabled(true); // Abilita lo SwipeRefreshLayout
+                } else {
+                    // La ScrollView non è alla parte superiore
+                    swipe_refresh_layout_preferiti.setEnabled(false); // Disabilita lo SwipeRefreshLayout
+                }
+            }
+        });
+        swipe_refresh_layout_preferiti.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                astaAdapter.clearItems();
+                schermataPreferityViewModel.getTipoUtente();
+                swipe_refresh_layout_preferiti.setRefreshing(false);
+            }
+        });
 
     }
 
@@ -139,7 +174,6 @@ public class PreferitiActivity extends GestoreComuniImplementazioni {
         schermataPreferityViewModel.listaAstaInglesePreferite.observe(this, (listaAste) -> {
             if(listaAste!=null){
                 //fai qualcosa
-                osservaListaAstaInglesePreferiteConvertite();
                 schermataPreferityViewModel.convertiAsteInglese();
             }
         });
@@ -157,7 +191,6 @@ public class PreferitiActivity extends GestoreComuniImplementazioni {
         schermataPreferityViewModel.listaAstaRibassoPreferite.observe(this, (listaAste) -> {
             if(listaAste!=null){
                 //fai qualcosa
-                osservaListaAstaRibassoPreferiteConvertite();
                 schermataPreferityViewModel.convertiAsteRibasso();
             }
         });
@@ -175,7 +208,6 @@ public class PreferitiActivity extends GestoreComuniImplementazioni {
         schermataPreferityViewModel.listaAstaInversaPreferite.observe(this, (listaAste) -> {
             if(listaAste!=null){
                 //fai qualcosa
-                osservaListaAstaInversaPreferiteConvertite();
                 schermataPreferityViewModel.convertiAsteInversa();
             }
         });
@@ -217,15 +249,9 @@ public class PreferitiActivity extends GestoreComuniImplementazioni {
     public void osservaIsAcquirente(){
         schermataPreferityViewModel.isAcquirente.observe(this, (valore) -> {
             if(valore){
-                osservaEntraInSchermataAstaInglese();
-                osservaEntraInSchermataAstaRibasso();
-                osservaListaAstaInglesePreferite();
-                osservaListaAstaRibassoPreferite();
                 schermataPreferityViewModel.getAsteInglesePreferite();
                 schermataPreferityViewModel.getAsteRibassoPreferite();
             }else{
-                osservaEntraInSchermataAstaInversa();
-                osservaListaAstaInversaPreferite();
                 schermataPreferityViewModel.getAsteInversaPreferite();
             }
         });

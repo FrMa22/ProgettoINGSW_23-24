@@ -5,7 +5,7 @@ import android.util.Log;
 import com.example.progettoingsw.controllers_package.DatabaseHelper;
 import com.example.progettoingsw.view.SchermataNotifiche;
 import com.example.progettoingsw.view.acquirente.FragmentHome;
-import com.example.progettoingsw.view.acquirente.AcquirenteMainActivity;
+import com.example.progettoingsw.view.acquirente.MainActivity;
 import com.example.progettoingsw.item.NotificaItem;
 
 import java.sql.Connection;
@@ -20,14 +20,14 @@ public class NotificheDAO {
     private String tipoUtenteNotifica;
     private String indirizzo_email;
     private String tipoUtente;
-    private AcquirenteMainActivity acquirenteMainActivity;
+    private MainActivity mainActivity;
     private FragmentHome fragmentHome;
 
     public NotificheDAO(SchermataNotifiche schermataNotifiche) {
         this.schermataNotifiche = schermataNotifiche;
     }
-    public NotificheDAO(AcquirenteMainActivity acquirenteMainActivity, String indirizzo_email, String tipoUtente){
-        this.acquirenteMainActivity = acquirenteMainActivity;
+    public NotificheDAO(MainActivity mainActivity, String indirizzo_email, String tipoUtente){
+        this.mainActivity = mainActivity;
         this.indirizzo_email = indirizzo_email;
         this.tipoUtente = tipoUtente;
     }
@@ -162,9 +162,9 @@ public class NotificheDAO {
         @Override
         protected void onPostExecute(Integer result) {
             if (result != null) {
-                if(acquirenteMainActivity!=null){
+                if(mainActivity !=null){
                     Log.d("onPostExecute", "passo result a main");
-                    acquirenteMainActivity.handleGetNumeroNotifiche(result.intValue());
+                    //mainActivity.handleGetNumeroNotifiche(result.intValue());
                 }else if(fragmentHome !=null){
                     Log.d("onPostExecute", "passo resylt a home");
                     //fragmentHome.handleGetNumeroNotifiche(result.intValue());
