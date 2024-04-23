@@ -33,6 +33,14 @@ public class FragmentProfiloViewModel extends ViewModel {
     public MutableLiveData<Boolean> apriPopUpAggiungiSocial = new MutableLiveData<>(false);
 
     public MutableLiveData<Boolean> apriLeMieAste = new MutableLiveData<>(false);
+    public MutableLiveData<String> messaggioErroreNomeNuovo = new MutableLiveData<>("");
+    public MutableLiveData<String> messaggioErroreLinkNuovo = new MutableLiveData<>("");
+    public MutableLiveData<String> messaggioErroreCognomeNuovo = new MutableLiveData<>("");
+    public MutableLiveData<String> messaggioErrorePaeseNuovo = new MutableLiveData<>("");
+    public MutableLiveData<String> messaggioErroreSitoNuovo = new MutableLiveData<>("");
+    public MutableLiveData<String> messaggioErroreBioNuovo = new MutableLiveData<>("");
+    public MutableLiveData<String> messaggioErrorePasswordVecchia = new MutableLiveData<>("");
+    public MutableLiveData<String> messaggioErrorePasswordNuova = new MutableLiveData<>("");
 
     public MutableLiveData<ArrayList<SocialAcquirenteModel>> socialAcquirenteRecuperati = new MutableLiveData<>(null);
 
@@ -41,6 +49,10 @@ public class FragmentProfiloViewModel extends ViewModel {
     public MutableLiveData<AcquirenteModel> acquirenteRecuperato =new MutableLiveData<>(null);
 
     public MutableLiveData<VenditoreModel> venditoreRecuperato =new MutableLiveData<>(null);
+    public MutableLiveData<Boolean> isPasswordCambiata = new MutableLiveData<>(false);
+    public MutableLiveData<Boolean> isSocialCambiato = new MutableLiveData<>(false);
+    public MutableLiveData<Boolean> isSocialAggiunto = new MutableLiveData<>(false);
+    public MutableLiveData<Boolean> isUtenteCambiato = new MutableLiveData<>(false);
 
 
     public MutableLiveData<Boolean> esci =new MutableLiveData<>(false);
@@ -105,38 +117,100 @@ public class FragmentProfiloViewModel extends ViewModel {
     }
 
     public void trovaSocialAcquirenteViewModel(){
-        String email=getAcquirenteEmail();
-        System.out.println("entrato in fragmentProfilo di viewmodel con email:"+email);
-            System.out.println("in fragmentProfiloAcquirente di viewmodel prima del try con email:"+email);
-            if(repository.getSocialAcquirenteModelList()==null){System.out.println("lista social acquirente null");return ;}
-            try{
+        if(containsAcquirente()) {
+            String email = getAcquirenteEmail();
+            System.out.println("entrato in fragmentProfilo di viewmodel con email:" + email);
+            System.out.println("in fragmentProfiloAcquirente di viewmodel prima del try con email:" + email);
+            if (repository.getSocialAcquirenteModelList() == null) {
+                System.out.println("lista social acquirente null");
+                return;
+            }
+            try {
                 trovaSocialAcquirente(email);
-                if(repository.getSocialAcquirenteModelList().isEmpty()){
+                if (repository.getSocialAcquirenteModelList().isEmpty()) {
                     setMessaggioUtenteNonTrovato("acquirente non ha social");
                 } //altrimenti trova i social e non fa nulla perchè verranno semplicemente messi
-            } catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
-
+        }
     }
 
 
-    public void aggiungiSocialViewModel(String nome,String link){
-        if(containsAcquirente()){
-            aggiungiSocialAcquirenteViewModel(nome,link);
-        }else if(containsVenditore()){
-            aggiungiSocialVenditoreViewModel(nome,link);
+    public boolean aggiunteSocialValide(String newnome,String newlink){
+        System.out.println("entrato in modifica social valida");
+        if(newnome == null || newnome.isEmpty() ){
+            setMessaggioErroreNomeNuovo("Il nome nuovo non può essere vuoto");
+            return false;
+        } else  if(newlink == null || newlink.isEmpty() ){
+            setMessaggioErroreLinkNuovo("Il link nuovo non può essere vuoto");
+            return false;
         }
+        else if(newnome.length()>50){
+            setMessaggioErroreNomeNuovo("Il nome nuovo non può essere più lungo di 50 caratteri");
+            return false;
+        } else if(newlink.length()>50) {
+            setMessaggioErroreLinkNuovo("Il link nuovo non può essere più lungo di 50 caratteri");
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
 
+    public void aggiungiSocialViewModel(String nome,String link){
+        if(aggiunteSocialValide(nome,link)) {
+
+            if (containsAcquirente()) {
+                aggiungiSocialAcquirenteViewModel(nome, link);
+            } else if (containsVenditore()) {
+                aggiungiSocialVenditoreViewModel(nome, link);
+            }
+
+        }
+    }
+
+
+
+
+
+
+
+
+
+    public boolean modificheSocialValide(String newnome,String newlink){
+        System.out.println("entrato in modifica social valida");
+          if(newnome == null || newnome.isEmpty() ){
+            setMessaggioErroreNomeNuovo("Il nome nuovo non può essere vuoto");
+            return false;
+        } else  if(newlink == null || newlink.isEmpty() ){
+            setMessaggioErroreLinkNuovo("Il link nuovo non può essere vuoto");
+            return false;
+        }
+        else if(newnome.length()>50){
+            setMessaggioErroreNomeNuovo("Il nome nuovo non può essere più lungo di 50 caratteri");
+            return false;
+        } else if(newlink.length()>50) {
+            setMessaggioErroreLinkNuovo("Il link nuovo non può essere più lungo di 50 caratteri");
+            return false;
+        }
+        else{
+            return true;
+        }
     }
 
     public void aggiornaSocialViewModel(String oldnome,String oldlink,String nome,String link){
-        if(containsAcquirente()){
-            aggiornaSocialAcquirenteViewModel(oldnome,oldlink,nome,link);
-        }else if(containsVenditore()){
-            aggiornaSocialVenditoreViewModel(oldnome,oldlink,nome,link);
-        }
 
+        if(modificheSocialValide(nome,link)) {
+
+
+            if (containsAcquirente()) {
+                aggiornaSocialAcquirenteViewModel(oldnome, oldlink, nome, link);
+            } else if (containsVenditore()) {
+                aggiornaSocialVenditoreViewModel(oldnome, oldlink, nome, link);
+            }
+
+        }
     }
 
     public void eliminaSocialViewModel(String nome,String link){
@@ -149,31 +223,179 @@ public class FragmentProfiloViewModel extends ViewModel {
 
     }
 
+    public boolean modificheProfiloValide(String nome,String cognome,String bio,String sitoweb,String paese){
+        System.out.println("entrato in modifica profilo valida");
+        if(nome == null || nome.isEmpty() ){
+            setMessaggioErroreNomeNuovo("Il nome nuovo non può essere vuoto");
+            return false;
+        } else  if(cognome == null || cognome.isEmpty() ){
+            setMessaggioErroreCognomeNuovo("Il cognome nuovo non può essere vuoto");
+            return false;
+        }
+        else if(nome.length()>50){
+            setMessaggioErroreNomeNuovo("Il nome nuovo non può essere più lungo di 50 caratteri");
+            return false;
+        } else if(cognome.length()>50) {
+            setMessaggioErroreCognomeNuovo("Il cognome nuovo non può essere più lungo di 50 caratteri");
+            return false;
+        } else if(bio.length()>100){
+            setMessaggioErroreBioNuovo("La descrizione nuova non può essere più lunga di 100 caratteri");
+            return false;
+        } else if(sitoweb.length()>50) {
+            setMessaggioErroreSitoNuovo("Il sito web nuovo non può essere più lungo di 50 caratteri");
+            return false;
+        } else if(paese.length()>25){
+            setMessaggioErrorePaeseNuovo("Il paese nuovo non può essere più lungo di 25 caratteri");
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
+
     public void aggiornaViewModel(String nome,String cognome,String bio,String sitoweb,String paese){
-        if(containsAcquirente()){
-            aggiornaAcquirenteViewModel(nome,cognome,bio,sitoweb,paese);
-        }
-        else if(containsVenditore()){
-           aggiornaVenditoreViewModel(nome,cognome,bio,sitoweb,paese);
-        }
+        if(modificheProfiloValide(nome,cognome,bio,sitoweb,paese)) {
 
-
+            if (containsAcquirente()) {
+                aggiornaAcquirenteViewModel(nome, cognome, bio, sitoweb, paese);
+            } else if (containsVenditore()) {
+                aggiornaVenditoreViewModel(nome, cognome, bio, sitoweb, paese);
+            }
+        }
     }
 
 
+    public void setMessaggioErroreNomeNuovo(String messaggio){
+        messaggioErroreNomeNuovo.setValue(messaggio);
+    }
+
+    public String getMessaggioErroreNomeNuovo(){
+        return messaggioErroreNomeNuovo.getValue();
+    }
+    public Boolean isNuovoMessaggioErroreNomeNuovo(){
+        return !getMessaggioErroreNomeNuovo().equals("");
+    }
+
+
+    public void setMessaggioErroreCognomeNuovo(String messaggio){
+        messaggioErroreCognomeNuovo.setValue(messaggio);
+    }
+
+    public String getMessaggioErroreCognomeNuovo(){
+        return messaggioErroreCognomeNuovo.getValue();
+    }
+    public Boolean isNuovoMessaggioErroreCognomeNuovo(){
+        return !getMessaggioErroreCognomeNuovo().equals("");
+    }
+
+    public void setMessaggioErroreBioNuovo(String messaggio){
+        messaggioErroreBioNuovo.setValue(messaggio);
+    }
+
+    public String getMessaggioErroreBioNuovo(){
+        return messaggioErroreBioNuovo.getValue();
+    }
+    public Boolean isNuovoMessaggioErroreBioNuovo(){
+        return !getMessaggioErroreBioNuovo().equals("");
+    }
+
+    public void setMessaggioErrorePaeseNuovo(String messaggio){
+        messaggioErrorePaeseNuovo.setValue(messaggio);
+    }
+
+    public String getMessaggioErrorePaeseNuovo(){
+        return messaggioErrorePaeseNuovo.getValue();
+    }
+    public Boolean isNuovoMessaggioErrorePaeseNuovo(){
+        return !getMessaggioErrorePaeseNuovo().equals("");
+    }
+
+
+    public void setMessaggioErroreSitoNuovo(String messaggio){
+        messaggioErroreSitoNuovo.setValue(messaggio);
+    }
+
+    public String getMessaggioErroreSitoNuovo(){
+        return messaggioErroreSitoNuovo.getValue();
+    }
+    public Boolean isNuovoMessaggioErroreSitoNuovo(){
+        return !getMessaggioErroreSitoNuovo().equals("");
+    }
+
+
+
+    public void setMessaggioErroreLinkNuovo(String messaggio){
+        messaggioErroreLinkNuovo.setValue(messaggio);
+    }
+
+    public String getMessaggioErroreLinkNuovo(){
+        return messaggioErroreLinkNuovo.getValue();
+    }
+    public Boolean isNuovoMessaggioErroreLinkNuovo(){
+        return !getMessaggioErroreLinkNuovo().equals("");
+    }
+
+
+    public void setMessaggioErrorePasswordVecchia(String messaggio){
+        messaggioErrorePasswordVecchia.setValue(messaggio);
+    }
+
+    public String getMessaggioErrorePasswordVecchia(){
+        return messaggioErrorePasswordVecchia.getValue();
+    }
+    public Boolean isNuovoMessaggioErrorePasswordVecchia(){
+        return !getMessaggioErrorePasswordVecchia().equals("");
+    }
+
+    public void setMessaggioErrorePasswordNuova(String messaggio){
+        messaggioErrorePasswordNuova.setValue(messaggio);
+    }
+
+    public String getMessaggioErrorePasswordNuova(){
+        return messaggioErrorePasswordNuova.getValue();
+    }
+    public Boolean isNuovoMessaggioErrorePasswordNuova(){
+        return !getMessaggioErrorePasswordNuova().equals("");
+    }
+
+    public boolean passwordValide(String oldpassword,String newpassword){
+        System.out.println("entrato in login valido");
+        if(oldpassword == null || oldpassword.isEmpty() ){
+            setMessaggioErrorePasswordVecchia("La password vecchia non può essere vuota");
+            return false;
+        } else  if(newpassword == null || newpassword.isEmpty() ){
+            setMessaggioErrorePasswordNuova("La password nuova non può essere vuota");
+            return false;
+        }
+        else if(oldpassword.length()>100){
+            setMessaggioErrorePasswordVecchia("La password vecchia non può essere più lunga di 100 caratteri");
+            return false;
+        } else if(newpassword.length()>100) {
+            setMessaggioErrorePasswordNuova("La password nuova non può essere più lunga di 100 caratteri");
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
+
     public void aggiornaPasswordViewModel(String password,String passwordNuova ){
-        if(containsAcquirente()){
-            if(password.equals(getAcquirentePassword())) {
-                aggiornaPasswordAcquirenteViewModel(passwordNuova);
+
+        if(passwordValide(password,passwordNuova)) {
+
+            if (containsAcquirente()) {
+
+
+                if (password.equals(getAcquirentePassword())) {
+                    aggiornaPasswordAcquirenteViewModel(passwordNuova);
+                }else{setMessaggioErrorePasswordVecchia("La password vecchia non coincide con quella dell'utente");}
+            } else if (containsVenditore()) {
+
+                if (password.equals(getVenditorePassword())) {
+                    aggiornaPasswordVenditoreViewModel(passwordNuova);
+                }else{setMessaggioErrorePasswordVecchia("La password vecchia non coincide con quella dell'utente");}
             }
         }
-        else if(containsVenditore()){
-
-            if(password.equals(getVenditorePassword())) {
-                aggiornaPasswordVenditoreViewModel(passwordNuova);
-            }
-        }
-
     }
 
     public void aggiungiSocialAcquirenteViewModel(String nome,String link){
@@ -281,6 +503,7 @@ public class FragmentProfiloViewModel extends ViewModel {
             @Override
             public void onAggiungiSocialAcquirente(SocialAcquirenteModel socialAcquirenteModel) {
                 repository.addSocialAcquirente(socialAcquirenteModel);
+                setIsSocialAggiunto(true);
             }
         });
     }
@@ -304,6 +527,7 @@ public class FragmentProfiloViewModel extends ViewModel {
             @Override
             public void onAggiornaSocialAcquirente(String nomeVecchio,String linkVecchio,String nomeNuovo,String linkNuovo) {
                 repository.updateSocialAcquirente(nomeVecchio,linkVecchio,nomeNuovo,linkNuovo);
+                setIsSocialCambiato(true);
             }
         });
     }
@@ -315,6 +539,7 @@ public class FragmentProfiloViewModel extends ViewModel {
             @Override
             public void onAggiornaAcquirente(String nomeNuovo,String cognomeNuovo,String bioNuovo,String linkNuovo,String areageograficaNuovo) {
                 repository.updateAcquirente(nomeNuovo,cognomeNuovo,bioNuovo,linkNuovo,areageograficaNuovo);
+                setIsUtenteCambiato(true);
             }
         });
     }
@@ -328,6 +553,7 @@ public class FragmentProfiloViewModel extends ViewModel {
                 @Override
                 public void onAggiornaPasswordAcquirente(String passwordNuovo) {
                     repository.updatePasswordAcquirente(passwordNuovo);
+                    setIsPasswordCambiata(true);
                 }
             });
 
@@ -337,19 +563,23 @@ public class FragmentProfiloViewModel extends ViewModel {
     //versione venditore
 
     public void trovaSocialVenditoreViewModel(){
-        String email=getVenditoreEmail();
-        System.out.println("entrato in fragmentProfilo di viewmodel con email:"+email);
-        System.out.println("in fragmentProfiloVenditore di viewmodel prima del try con email:"+email);
-        if(repository.getSocialVenditoreModelList()==null){System.out.println("lista social Venditore null");return ;}
-        try{
-            trovaSocialVenditore(email);
-            if(repository.getSocialVenditoreModelList().isEmpty()){
-                setMessaggioUtenteNonTrovato("acquirente non ha social");
-            } //altrimenti trova i social e non fa nulla perchè verranno semplicemente messi
-        } catch (Exception e){
-            e.printStackTrace();
+        if(containsVenditore()) {
+            String email = getVenditoreEmail();
+            System.out.println("entrato in fragmentProfilo di viewmodel con email:" + email);
+            System.out.println("in fragmentProfiloVenditore di viewmodel prima del try con email:" + email);
+            if (repository.getSocialVenditoreModelList() == null) {
+                System.out.println("lista social Venditore null");
+                return;
+            }
+            try {
+                trovaSocialVenditore(email);
+                if (repository.getSocialVenditoreModelList().isEmpty()) {
+                    setMessaggioUtenteNonTrovato("acquirente non ha social");
+                } //altrimenti trova i social e non fa nulla perchè verranno semplicemente messi
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
-
     }
 
     public void aggiungiSocialVenditoreViewModel(String nome,String link){
@@ -457,6 +687,7 @@ public class FragmentProfiloViewModel extends ViewModel {
             @Override
             public void onAggiungiSocialVenditore(SocialVenditoreModel socialVenditoreModel) {
                 repository.addSocialVenditore(socialVenditoreModel);
+                setIsSocialAggiunto(true);
             }
         });
     }
@@ -480,6 +711,7 @@ public class FragmentProfiloViewModel extends ViewModel {
             @Override
             public void onAggiornaSocialVenditore(String nomeVecchio,String linkVecchio,String nomeNuovo,String linkNuovo) {
                 repository.updateSocialVenditore(nomeVecchio,linkVecchio,nomeNuovo,linkNuovo);
+                setIsSocialCambiato(true);
             }
         });
     }
@@ -491,6 +723,7 @@ public class FragmentProfiloViewModel extends ViewModel {
             @Override
             public void onAggiornaVenditore(String nomeNuovo,String cognomeNuovo,String bioNuovo,String linkNuovo,String areageograficaNuovo) {
                 repository.updateVenditore(nomeNuovo,cognomeNuovo,bioNuovo,linkNuovo,areageograficaNuovo);
+                setIsUtenteCambiato(true);
             }
         });
     }
@@ -502,12 +735,40 @@ public class FragmentProfiloViewModel extends ViewModel {
                 @Override
                 public void onAggiornaPasswordVenditore(String passwordNuovo) {
                     repository.updatePasswordVenditore(passwordNuovo);
+                    setIsPasswordCambiata(true);
                 }
             });
 
 
     }
 
+    public void setIsPasswordCambiata(Boolean b){
+        isPasswordCambiata.setValue(b);
+    }
+    public Boolean getIsPasswordCambiata(){
+        return isPasswordCambiata.getValue();
+    }
+    public void setIsSocialCambiato(Boolean b){
+        isSocialCambiato.setValue(b);
+    }
+    public Boolean getIsSocialCambiato(){
+        return isSocialCambiato.getValue();
+    }
+
+    public void setIsUtenteCambiato(Boolean b){
+        isUtenteCambiato.setValue(b);
+    }
+    public Boolean getIsUtenteCambiato(){
+        return isUtenteCambiato.getValue();
+    }
+
+
+    public void setIsSocialAggiunto(Boolean b){
+        isSocialAggiunto.setValue(b);
+    }
+    public Boolean getIsSocialAggiunto(){
+        return isSocialAggiunto.getValue();
+    }
 
 
     public void setMessaggioUtenteNonTrovato(String messaggio){
