@@ -445,15 +445,22 @@ public class CreaAstaRibassoViewModel extends ViewModel{
         categorieScelteProvvisorie.remove(nomeCategoria);
     }
     public void saveCategorieScelte(){
-        this.categorieScelte = categorieScelteProvvisorie;
+        Log.d("save","in categorie scelte metto categorie provvisorie" + categorieScelteProvvisorie);
+        this.categorieScelte = new ArrayList<>(categorieScelteProvvisorie);
+        setCategorieInserite(categorieScelte);
+        this.categorieScelteProvvisorie.clear();
     }
     public void setCategoriaProvvisoria(ArrayList<String> lista){
-        this.categorieScelteProvvisorie = lista;
+        this.categorieScelteProvvisorie = new ArrayList<>(lista);
     }
     public void checkCategorieInserite(){
         if(categorieScelte != null && !categorieScelte.isEmpty()){
+            Log.d("checkCategorieInserite","categorie scelte non null e non vuoto");
             setCategoriaProvvisoria(categorieScelte);
             setCategorieInserite(categorieScelte);
+        }else{
+            Log.d("checkCategorieInserite","categorie scelte null o vuoto");
+            categorieScelteProvvisorie = new ArrayList<>();
         }
     }
 }

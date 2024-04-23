@@ -2,6 +2,8 @@ package com.example.progettoingsw.viewmodel;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.util.Log;
 import android.view.View;
 import android.view.contentcapture.ContentCaptureCondition;
@@ -26,6 +28,7 @@ public class LoginViewModel extends ViewModel {
     public MutableLiveData<String> messaggioUtenteNonTrovato = new MutableLiveData<>("");
     public MutableLiveData<String> proseguiLogin = new MutableLiveData<>("");
     public MutableLiveData<String> tokenSalvato = new MutableLiveData<>("");
+    public MutableLiveData<Boolean> connessioneSpenta = new MutableLiveData<>(false);
     private String token;
 
     private String tokenViewModel;
@@ -36,6 +39,19 @@ public class LoginViewModel extends ViewModel {
     public LoginViewModel(){
         repository = Repository.getInstance();
         loginRepository = new LoginRepository();
+    }
+
+    public Boolean getConnessioneSpenta() {
+        return connessioneSpenta.getValue();
+    }
+    public void setConnessioneSpenta(Boolean connessioneSpenta) {
+        this.connessioneSpenta.setValue(connessioneSpenta);
+    }
+    public void checkConnessione(Context context) {
+        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetwork = connectivityManager.getActiveNetworkInfo();
+        Log.d("isNetworkConnected","valore : " + !(activeNetwork != null && activeNetwork.isConnected()));
+        setConnessioneSpenta(!(activeNetwork != null && activeNetwork.isConnected()));
     }
 
     public String getTokenViewModel() {

@@ -105,7 +105,6 @@ public class FragmentCreaAstaInversa extends Fragment {
         imageButtonRimuoviImmagine.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //OSSERVATOREEEEEE
                 immagineProdotto.setImageResource(android.R.color.transparent); // Rimuove l'immagine
                 bitmap = null;
 //                imageBytes = null; // Reimposta il byte array a null
@@ -129,7 +128,6 @@ public class FragmentCreaAstaInversa extends Fragment {
         descrizioneProdottoAstaAstaInversa = view2.findViewById(R.id.editTextDescrizioneProdottoAstaAstaInversa);
         prezzoAstaInversa=view2.findViewById(R.id.editTextPrezzoAstaInversa);
 
-//        imageBytes=null;
 
         bottone_info = view2.findViewById(R.id.bottone_info);
         bottone_info.setOnClickListener(new View.OnClickListener() {
@@ -139,10 +137,6 @@ public class FragmentCreaAstaInversa extends Fragment {
             }
         });
 
-//        //bitmap = BitmapFactory.decodeByteArray(img, 0, img.length);
-//
-//        // Imposta l'immagine nel tuo ImageView
-//        //immagineProdotto.setImageBitmap(bitmap);
 
         bottoneData.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -319,32 +313,4 @@ public class FragmentCreaAstaInversa extends Fragment {
             }
         });
     }
-
-
-
-//    public void handlePopUp(ArrayList<String> switchTexts){
-//        this.listaCategorieScelte = switchTexts;
-//        // Iterare attraverso gli elementi di switchTexts e stamparli nel log
-//        for (String categoria : switchTexts) {
-//            Log.d("PopUpHandler", "Categoria: " + categoria);
-//        }
-//    }
-//    public void handleID(int id){
-//        this.idAsta = id;
-//        AstaInversaDAO astaInversaDAO = new AstaInversaDAO(FragmentCreaAstaInversa.this);
-//        if(!listaCategorieScelte.isEmpty()){
-//            astaInversaDAO.openConnection();
-//            Log.d("id recuperato è ACquirente : " , " id: " + idAsta);
-//            InsertAsta asta = new InsertAsta(idAsta,listaCategorieScelte);
-//            astaInversaDAO.inserisciCategorieAstaInversa(asta);
-//            astaInversaDAO.closeConnection();
-//        }else{
-//            astaInversaDAO.closeConnection();
-//        }
-//        Toast.makeText(getContext(), "Asta creata con successo!", Toast.LENGTH_SHORT).show();
-//        Intent intent = new Intent(getContext(), MainActivity.class);//test del login
-//        intent.putExtra("email", email);
-//        intent.putExtra("tipoUtente", "acquirente");
-//        startActivity(intent);
-//    }
 }
