@@ -24,7 +24,7 @@ import com.example.progettoingsw.R;
 import com.example.progettoingsw.classe_da_estendere.GestoreComuniImplementazioni;
 import com.example.progettoingsw.model.AcquirenteModel;
 import com.example.progettoingsw.model.VenditoreModel;
-import com.example.progettoingsw.view.acquirente.AcquirenteMainActivity;
+import com.example.progettoingsw.view.acquirente.MainActivity;
 import com.example.progettoingsw.viewmodel.RegistrazioneViewModel;
 import com.google.android.material.button.MaterialButton;
 
@@ -63,7 +63,7 @@ public class RegistrazioneCategorie extends GestoreComuniImplementazioni {
                     registrazioneViewModel.checkTipoUtente();
                 }
 
-                    Intent intent = new Intent(RegistrazioneCategorie.this, AcquirenteMainActivity.class);//test del login
+                    Intent intent = new Intent(RegistrazioneCategorie.this, MainActivity.class);//test del login
                     startActivity(intent);
             }
         });
@@ -71,7 +71,7 @@ public class RegistrazioneCategorie extends GestoreComuniImplementazioni {
         bottoneSaltaRegistrazioneCategorie.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                    Intent intent = new Intent(RegistrazioneCategorie.this, AcquirenteMainActivity.class);//test del login
+                    Intent intent = new Intent(RegistrazioneCategorie.this, MainActivity.class);//test del login
                     startActivity(intent);
             }
         });
