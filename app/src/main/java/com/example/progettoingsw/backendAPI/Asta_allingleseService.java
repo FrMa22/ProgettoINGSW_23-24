@@ -45,6 +45,9 @@ public interface Asta_allingleseService {
     @GET("/asta_allingleseController/getAsteInglesePreferite/{indirizzo_email}")
     Call<ArrayList<Asta_allinglese_DTO>> getAsteInglesePreferite(@Path("indirizzo_email") String indirizzo_email);
 
+    @GET("/asta_allingleseController/getAsteInglesePartecipate/{indirizzo_email}")
+    Call<ArrayList<Asta_allinglese_DTO>> getAste_allinglesePartecipateByEmail(@Path("indirizzo_email") String indirizzo_email);
+
     @POST("/asta_allingleseController/insertAstaInglese/{asta_inglese}/{lista_categorie}")
     Call<Long> saveAsta_inglese(@Body Asta_allinglese_DTO asta_allinglese_dto, @Query("lista_categorie") ArrayList<String> lista_categorie);
 

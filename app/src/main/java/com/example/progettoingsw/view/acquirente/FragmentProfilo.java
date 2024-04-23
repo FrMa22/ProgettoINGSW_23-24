@@ -32,6 +32,7 @@ import com.example.progettoingsw.controllers_package.Controller;
 import com.example.progettoingsw.gestori_gui.CustomAdapter_gridview_profilo_social;
 import com.example.progettoingsw.view.LoginActivity;
 import com.example.progettoingsw.view.PopUpModificaSocial;
+import com.example.progettoingsw.view.SchermataPartecipazioneAste;
 import com.example.progettoingsw.viewmodel.FragmentProfiloViewModel;
 import com.google.android.material.button.MaterialButton;
 
@@ -42,9 +43,9 @@ public class FragmentProfilo extends Fragment implements PopUpModificaCampiProfi
 
 
     private TextView text_view_nessun_social;
-    private MaterialButton button_partecipazione_aste;
     ImageButton button_log_out;
     MaterialButton button_le_mie_aste;
+    MaterialButton button_partecipazione_aste;
     ImageButton button_modifica;
     ImageButton bottone_info;
     Button button_cambia_password_profilo;
@@ -160,6 +161,19 @@ public class FragmentProfilo extends Fragment implements PopUpModificaCampiProfi
                 //Controller.redirectActivity(getContext(), LoginActivity.class);
             }
         });
+
+
+        button_partecipazione_aste=view.findViewById(R.id.button_partecipazione_aste);
+
+        button_partecipazione_aste.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                System.out.println("le aste oooh");
+                //passaggio alle mie aste
+                fragmentProfiloViewModel.setApriPartecipazioneAste(true);
+            }
+        });
+
 
         button_le_mie_aste = view.findViewById(R.id.button_le_mie_aste);
         button_le_mie_aste.setOnClickListener(new View.OnClickListener() {
@@ -402,6 +416,7 @@ public class FragmentProfilo extends Fragment implements PopUpModificaCampiProfi
                 osservaSocialAcquirentePresenti();
                 osservaAcquirenteRecuperato();//nel suo corpo ha un observer di un oggetto Acquirente Model che poi si usa per fare i vari get per un metodo che setta nella gui i valori
                 osservaApriPopUpAggiungiSocial();
+                osservaApriPartecipazioneAste();
                 osservaApriLeMieAste();
                 //in teoria deve fare qui la chiamata per trovare i social dal backend
                 fragmentProfiloViewModel.trovaSocialAcquirenteViewModel();//questa chiamata trova i social dal backend
@@ -430,6 +445,18 @@ public class FragmentProfilo extends Fragment implements PopUpModificaCampiProfi
             }
         });
     }
+
+
+    public void osservaApriPartecipazioneAste(){
+        fragmentProfiloViewModel.apriPartecipazioneAste.observe(getViewLifecycleOwner(), (messaggio) -> {
+            if (fragmentProfiloViewModel.getApriPartecipazioneAste()){
+                //fa le cose che si farebbero premendo il pulsante apri partecipazioni aste
+                Intent intent = new Intent(getContext(), SchermataPartecipazioneAste.class);
+                startActivity(intent);
+            }
+        });
+    }
+
 
 
     public void osservaSocialAcquirentePresenti() {
@@ -536,6 +563,7 @@ public class FragmentProfilo extends Fragment implements PopUpModificaCampiProfi
                 osservaVenditoreRecuperato();//nel suo corpo ha un observer di un oggetto Acquirente Model che poi si usa per fare i vari get per un metodo che setta nella gui i valori
                 osservaApriPopUpAggiungiSocial();
                 osservaApriLeMieAste();
+                osservaApriPartecipazioneAste();
                 //in teoria deve fare qui la chiamata per trovare i social dal backend
                 fragmentProfiloViewModel.trovaSocialVenditoreViewModel();//questa chiamata trova i social dal backend
 

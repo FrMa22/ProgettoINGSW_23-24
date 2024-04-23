@@ -18,7 +18,7 @@ import java.util.List;
 
 public class LeMieAsteViewModel extends ViewModel {
 
-    public MutableLiveData<String> messaggioSocialUtenteNonTrovato = new MutableLiveData<>("");
+
 
     public MutableLiveData<Boolean> acquirenteModelPresente = new MutableLiveData<>(false);
     public MutableLiveData<Boolean> venditoreModelPresente = new MutableLiveData<>(false);
@@ -338,12 +338,7 @@ public class LeMieAsteViewModel extends ViewModel {
     }
 
 
-    public void setMessaggioUtenteNonTrovato(String messaggio){
-        messaggioSocialUtenteNonTrovato.setValue(messaggio);
-    }
-    private String getMessaggioUtenteNonTrovato() {
-        return messaggioSocialUtenteNonTrovato.getValue();
-    }
+
 
 
     private void setAcquirenteModelPresente() {
