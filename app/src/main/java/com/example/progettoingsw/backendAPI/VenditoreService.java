@@ -15,7 +15,8 @@ import retrofit2.http.Query;
 public interface VenditoreService {
     @GET("/utenteController/loginVenditore/{indirizzo_email}/{password}")
     Call<VenditoreDTO> logInVenditore(@Path("indirizzo_email") String indirizzo_email, @Path("password") String password);
-
+    @GET("/utenteController/loginVenditoreConToken/{token}")
+    Call<VenditoreDTO> loginVenditoreConToken(@Path("token") String token);
     @GET("/utenteController/findCategorieByIndirizzoEmailVenditore/{indirizzo_email}")
     Call<ArrayList<String>> findCategorieByIndirizzoEmailVenditore(@Path(("indirizzo_email")) String indirizzo_email);
     @GET("/utenteController/registrazioneVenditoreDoppio/{indirizzo_email}")
@@ -37,4 +38,12 @@ public interface VenditoreService {
     @POST("utenteController/saveCategorieVenditore/{email}/{lista_categorie}")
     Call<Void> saveCategorieVenditore(@Path("email")String email, @Query("lista_categorie")ArrayList<String> lista_categorie);
 
+    @PUT("/utenteController/setTokenVenditore/{indirizzo_email}/{token}")
+    Call<Integer> setTokenVenditore(@Path("indirizzo_email") String indirizzo_email,@Path(("token")) String token);
+
+    @PUT("/utenteController/removeTokenFromVenditore/{indirizzo_email}")
+    Call<Integer> removeTokenFromVenditore(@Path("indirizzo_email") String indirizzo_email);
+
+    @GET("/utenteController/getVenditoreByIndirizzo_email/{indirizzo_email}")
+    Call<VenditoreDTO> getVenditoreByIndirizzo_email(@Path("indirizzo_email") String indirizzo_email);
 }

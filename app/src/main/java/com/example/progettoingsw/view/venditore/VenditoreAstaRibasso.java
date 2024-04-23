@@ -1,16 +1,10 @@
 package com.example.progettoingsw.view.venditore;
 
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Matrix;
-import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -26,18 +20,13 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.progettoingsw.DAO.AstaRibassoDAO;
 import com.example.progettoingsw.view.PopUpAggiungiCategorieAsta;
 import com.example.progettoingsw.R;
 import com.example.progettoingsw.classe_da_estendere.GestoreComuniImplementazioni;
-import com.example.progettoingsw.controllers_package.InsertAsta;
-import com.example.progettoingsw.view.acquirente.AcquirenteMainActivity;
+import com.example.progettoingsw.view.acquirente.MainActivity;
 import com.example.progettoingsw.viewmodel.CreaAstaRibassoViewModel;
 import com.google.android.material.button.MaterialButton;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 
 
@@ -149,7 +138,7 @@ public class VenditoreAstaRibasso extends GestoreComuniImplementazioni {
 
         bottoneBack.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                Intent intent = new Intent(VenditoreAstaRibasso.this, AcquirenteMainActivity.class);
+                Intent intent = new Intent(VenditoreAstaRibasso.this, MainActivity.class);
                 startActivity(intent);
             }
         });
@@ -367,7 +356,7 @@ public class VenditoreAstaRibasso extends GestoreComuniImplementazioni {
 //        }else{
 //            astaRibassoDAO.closeConnection();
 //        }
-//        Intent intent = new Intent(VenditoreAstaRibasso.this, AcquirenteMainActivity.class);//test del login
+//        Intent intent = new Intent(VenditoreAstaRibasso.this, MainActivity.class);//test del login
 //        intent.putExtra("email", email);
 //        intent.putExtra("tipoUtente", "venditore");
 //        startActivity(intent);

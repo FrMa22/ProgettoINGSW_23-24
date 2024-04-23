@@ -1,5 +1,6 @@
 package com.example.progettoingsw.view;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -90,8 +91,8 @@ public class SchermataAstaInglese extends GestoreComuniImplementazioni implement
         osservaIsPartecipazioneAvvenuta();
         osservaIsAstaInPreferiti();
         osservaIsUltimaOffertaTua();
-        schermataAstaIngleseViewModel.checkUltimaOfferta();
-        schermataAstaIngleseViewModel.verificaAstaInPreferiti();
+        osservaVaiInVenditore();
+
         schermataAstaIngleseViewModel.checkTipoUtente();
         schermataAstaIngleseViewModel.getAstaData();
 
@@ -122,7 +123,7 @@ public class SchermataAstaInglese extends GestoreComuniImplementazioni implement
         bottoneBack =  findViewById(R.id.bottoneBackSchermataAstaInglese);
         bottoneBack.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-//                Intent intent = new Intent(SchermataAstaInglese.this, AcquirenteMainActivity.class);//test del login
+//                Intent intent = new Intent(SchermataAstaInglese.this, MainActivity.class);//test del login
 //                intent.putExtra("email", email);
 //                intent.putExtra("tipoUtente", tipoUtente);
 //                startActivity(intent);
@@ -155,15 +156,14 @@ public class SchermataAstaInglese extends GestoreComuniImplementazioni implement
 
 
 
-//    textViewVenditore.setOnClickListener(new View.OnClickListener() {
-//        @Override
-//        public void onClick(View v) {
-//            String emailVenditore = textViewVenditore.getText().toString();
-//            Intent intent=new Intent(SchermataAstaInglese.this, ProfiloVenditore.class);
-//            intent.putExtra("email",emailVenditore);
-//            startActivity(intent);
-//        }
-//    });
+    textViewVenditore.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            String emailVenditore = textViewVenditore.getText().toString();
+            schermataAstaIngleseViewModel.vaiInVenditore(emailVenditore);
+
+        }
+    });
 //        if(tipoUtente.equals("venditore")){
 //            imageButtonPreferiti.setVisibility(View.INVISIBLE);
 //        }else{
@@ -351,7 +351,8 @@ public class SchermataAstaInglese extends GestoreComuniImplementazioni implement
         });
     }
     public void setImpostazioniAstaAcquirente(){
-
+        schermataAstaIngleseViewModel.checkUltimaOfferta();
+        schermataAstaIngleseViewModel.verificaAstaInPreferiti();
     }
     public void setImpostazioniAstaVenditore(){
         imageButtonPreferiti.setVisibility(View.INVISIBLE);
@@ -406,6 +407,13 @@ public class SchermataAstaInglese extends GestoreComuniImplementazioni implement
             }
         });
     }
-
+    public void osservaVaiInVenditore(){
+        schermataAstaIngleseViewModel.vaiInVenditore.observe(this, (valore) ->{
+            if(valore){
+                Intent intent=new Intent(SchermataAstaInglese.this, ProfiloVenditore.class);
+                startActivity(intent);
+            }
+        });
+    }
 
 }

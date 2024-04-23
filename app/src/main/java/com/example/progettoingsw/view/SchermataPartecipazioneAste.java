@@ -1,6 +1,7 @@
 package com.example.progettoingsw.view;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,27 +20,34 @@ import com.example.progettoingsw.controllers_package.AstaAdapter;
 import com.example.progettoingsw.item.AstaIngleseItem;
 import com.example.progettoingsw.item.AstaInversaItem;
 import com.example.progettoingsw.item.AstaRibassoItem;
+import com.example.progettoingsw.viewmodel.LeMieAsteViewModel;
+import com.example.progettoingsw.viewmodel.SchermataPartecipazioneAsteViewModel;
 
 import java.util.ArrayList;
 
 public class SchermataPartecipazioneAste extends AppCompatActivity {
     private ProgressBar progress_bar_schermata_partecipazione_aste;
     private TextView text_view_nessuna_partecipazione;
-    private String email;
-    private String tipoUtente;
     private RecyclerView recyclerView_schermata_partecipazione_aste;
     private AstaAdapter astaAdapter;
     private ImageButton bottone_back_schermata_partecipazione_aste;
+    private SchermataPartecipazioneAsteViewModel schermataPartecipazioneAsteViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_schermata_partecipazione_aste);
 
-        email = getIntent().getStringExtra("email");
-        tipoUtente = getIntent().getStringExtra("tipoUtente");
-
         astaAdapter = new AstaAdapter(this,null);
+
+        schermataPartecipazioneAsteViewModel=new ViewModelProvider(this).get(SchermataPartecipazioneAsteViewModel.class);
+
+        osservaAsteRecuperate();
+        osservaEntraInSchermataAstaInglese();
+        osservaEntraInSchermataAstaInversa();
+        schermataPartecipazioneAsteViewModel.trovaAsteViewModel();
+
+
         recyclerView_schermata_partecipazione_aste = findViewById(R.id.recyclerView_schermata_partecipazione_aste);
         bottone_back_schermata_partecipazione_aste = findViewById(R.id.bottone_back_schermata_partecipazione_aste);
         progress_bar_schermata_partecipazione_aste = findViewById(R.id.progress_bar_schermata_partecipazione_aste);
@@ -60,40 +68,17 @@ public class SchermataPartecipazioneAste extends AppCompatActivity {
 
                 // Ottieni l'oggetto Asta corrispondente alla posizione cliccata
                 Object asta = astaAdapter.getItem(position);
-
-                // Esegui le azioni desiderate con l'oggetto Asta
-                if (asta instanceof AstaIngleseItem) {
-                    int id = ((AstaIngleseItem) asta).getId();
-                    Log.d("Asta inglese", "id è " + id);
-                    Intent intent = new Intent(SchermataPartecipazioneAste.this, SchermataAstaInglese.class);//test del login
-                    intent.putExtra("email", email);
-                    intent.putExtra("tipoUtente", tipoUtente);
-                    intent.putExtra("id", id);
-                    startActivity(intent);
-                } else if (asta instanceof AstaRibassoItem) {
-                    int id = ((AstaRibassoItem) asta).getId();
-                    Intent intent = new Intent(SchermataPartecipazioneAste.this, SchermataAstaRibasso.class);//test del login
-                    intent.putExtra("email", email);
-                    intent.putExtra("tipoUtente", tipoUtente);
-                    intent.putExtra("id", id);
-                    startActivity(intent);
-                } else if (asta instanceof AstaInversaItem) {
-                    int id = ((AstaInversaItem) asta).getId();
-                    Intent intent = new Intent(SchermataPartecipazioneAste.this, SchermataAstaInversa.class);//test del login
-                    intent.putExtra("email", email);
-                    intent.putExtra("tipoUtente", tipoUtente);
-                    intent.putExtra("id", id);
-                    startActivity(intent);
-                }
+                System.out.println("entrah, non penso proprio");
+                schermataPartecipazioneAsteViewModel.gestisciClickRecyclerView(asta);
             }
         });
 
         recyclerView_schermata_partecipazione_aste.setAdapter(astaAdapter);
 
-        SchermataPartecipazioneAsteDAO schermataPartecipazioneAsteDAO = new SchermataPartecipazioneAsteDAO(SchermataPartecipazioneAste.this,email,tipoUtente);
-        schermataPartecipazioneAsteDAO.openConnection();
-        schermataPartecipazioneAsteDAO.partecipazioneAste();
-        schermataPartecipazioneAsteDAO.closeConnection();
+//        SchermataPartecipazioneAsteDAO schermataPartecipazioneAsteDAO = new SchermataPartecipazioneAsteDAO(SchermataPartecipazioneAste.this,email,tipoUtente);
+//        schermataPartecipazioneAsteDAO.openConnection();
+//        schermataPartecipazioneAsteDAO.partecipazioneAste();
+//        schermataPartecipazioneAsteDAO.closeConnection();
 
         bottone_back_schermata_partecipazione_aste.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -109,9 +94,9 @@ public class SchermataPartecipazioneAste extends AppCompatActivity {
         boolean asteVuote = aste == null || aste.isEmpty();
         Log.d("updatePartecipazioni", "asteVuote: " + asteVuote);
         if (!asteVuote) {
-            astaAdapter.setAste(aste);
+            astaAdapter.setAstecopia(aste);
         } else {
-            astaAdapter.setAste(null);
+            astaAdapter.setAstecopia(null);
         }
         if(asteVuote){
             Log.d("updateNotifiche", "caso vuoto: ");
@@ -121,6 +106,46 @@ public class SchermataPartecipazioneAste extends AppCompatActivity {
         }
         progress_bar_schermata_partecipazione_aste.setVisibility(View.GONE);
 
+    }
+
+
+
+
+    public void osservaEntraInSchermataAstaInglese(){
+        schermataPartecipazioneAsteViewModel.entraInSchermataAstaInglese.observe(this, (messaggio) -> {
+            if (schermataPartecipazioneAsteViewModel.getEntraInSchermataAstaInglese()){
+                Intent intent = new Intent(SchermataPartecipazioneAste.this, SchermataAstaInglese.class);
+                startActivity(intent);
+            }
+        });
+    }
+
+
+    public void osservaEntraInSchermataAstaInversa(){
+        schermataPartecipazioneAsteViewModel.entraInSchermataAstaInversa.observe(this, (messaggio) -> {
+            if (schermataPartecipazioneAsteViewModel.getEntraInSchermataAstaInversa()){
+                Intent intent = new Intent(SchermataPartecipazioneAste.this, SchermataAstaInversa.class);
+                startActivity(intent);
+            }
+        });
+    }
+
+
+    public void osservaAsteRecuperate() {
+        schermataPartecipazioneAsteViewModel.asteRecuperate.observe(this, (lista) -> {
+            if (lista != null) {
+                System.out.println("in osserva aste  recuperate");
+                //lista di aste TUTTI I TIPI DI ASTA aperte recuperate(fare 3 recuperi per singolo tipo poi fondere in una mega lista)
+                updatePartecipazioni(lista);
+            }
+        });
+    }
+
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 
 }

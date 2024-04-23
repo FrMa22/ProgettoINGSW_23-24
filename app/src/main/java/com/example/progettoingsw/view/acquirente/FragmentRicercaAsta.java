@@ -3,9 +3,11 @@ package com.example.progettoingsw.view.acquirente;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
@@ -99,12 +101,17 @@ public class FragmentRicercaAsta extends Fragment {
                 parolaRicercata = edittext_ricerca.getText().toString();
                 asteRecuperate.clearItems();
                 ricercaAstaViewModel.getAsteRicerca(edittext_ricerca.getText().toString());
-                //eseguiRicercaAste(parolaRicercata,listaCategorieScelte,ordinamentoPrezzo);
             }
         });
 
         edittext_ricerca = view.findViewById(R.id.edittext_ricerca);
-
+        edittext_ricerca.setOnEditorActionListener((textView, actionId, keyEvent) -> {
+            if (actionId == EditorInfo.IME_ACTION_DONE || keyEvent.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
+                button_cerca_asta.performClick();
+                return true;
+            }
+            return false;
+        });
 
         button_filtro = view.findViewById(R.id.button_filtro);
         button_filtro.setOnClickListener(new View.OnClickListener() {
@@ -150,7 +157,7 @@ public class FragmentRicercaAsta extends Fragment {
 //
 //    }
 //    private void setNavigationView(Boolean valore) {
-//        AcquirenteMainActivity activity = (AcquirenteMainActivity) getActivity();
+//        MainActivity activity = (MainActivity) getActivity();
 //        if (activity != null) {
 //            activity.enableBottomNavigationView(valore);
 //        }

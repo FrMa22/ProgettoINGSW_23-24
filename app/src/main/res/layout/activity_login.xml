@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/linear_layout_login"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colore_base"
     tools:context=".view.LoginActivity"
-    android:orientation="vertical"
     android:fitsSystemWindows="true">
 
 
@@ -15,7 +13,8 @@
             android:id="@+id/textViewBenvenuto"
             android:layout_width="320dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
             android:gravity="center"
             android:text="AstApp"
             android:textColor="@color/colore_secondario"
@@ -23,13 +22,22 @@
             android:textStyle="bold"
             android:fontFamily="casual"
             android:layout_marginTop="20dp"/>
-
-    <LinearLayout
+    <ProgressBar
+        android:id="@+id/progress_bar_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center"
+        android:visibility="invisible"
+        android:indeterminate="true"/>
+    <RelativeLayout
+        android:id="@+id/relative_layout_login_activity"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="50dp"
         android:orientation="vertical"
+        android:layout_below="@id/textViewBenvenuto"
         >
 
 
@@ -56,6 +64,7 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="@color/colore_trattino_separatore"
+            android:layout_below="@id/editTextEmail"
             android:layout_gravity="center"
             android:layout_marginTop="-2dp"
             android:layout_marginStart="40dp"
@@ -71,6 +80,7 @@
             android:layout_marginEnd="20dp"
             android:background="@drawable/edit_text_bottom_corners_rounded_grigi"
             android:drawableStart="@drawable/ic_lucchetto"
+            android:layout_below="@id/editTextEmail"
             android:drawablePadding="15dp"
             android:textSize="24dp"
             android:hint="Password"
@@ -85,70 +95,70 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Mostra password"
+            android:layout_below="@id/editTextPassword"
+            android:layout_alignParentEnd="true"
             android:textSize="16dp"
             android:textColor="@color/colore_secondario"
             android:layout_gravity="end"
             android:layout_marginEnd="30dp"
+            android:layout_marginBottom="200dp"
             />
 
-        <ProgressBar
-            android:id="@+id/progress_bar_login"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:visibility="invisible"
-            android:indeterminate="true"/>
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/bottonelogin"
             android:layout_width="match_parent"
             android:layout_height="70dp"
+            android:layout_centerHorizontal="true"
             android:layout_marginStart="50dp"
-            android:layout_marginTop="150dp"
             android:layout_marginEnd="50dp"
             android:layout_marginBottom="20dp"
             android:layout_gravity="center"
+            android:contentDescription="Clicca per accedere"
+            android:layout_below="@id/switch_mostra_password"
             android:background="@drawable/button_background"
             android:text="Accedi"
             android:textColor="@color/colore_base"
             android:textSize="30dp"
             android:textStyle="bold"/>
 
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="20dp"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/TextViewNonHaiUnAccount"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Non hai un account?"
-            android:textColor="@color/colore_hint"
-            android:textSize="25dp" />
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/bottonelogin">
 
-        <TextView
-            android:id="@+id/TextViewRegistrati"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Registrati"
-            android:textColor="@color/colore_secondario"
-            android:textSize="25dp"
-            android:textStyle="bold"
-            android:layout_marginStart="5dp"/>
-    </LinearLayout>
+            <TextView
+                android:id="@+id/TextViewNonHaiUnAccount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Non hai un account?"
+                android:textColor="@color/colore_hint"
+                android:textSize="25dp" />
+
+            <TextView
+                android:id="@+id/TextViewRegistrati"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Registrati"
+                android:textColor="@color/colore_secondario"
+                android:textSize="25dp"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"/>
+        </LinearLayout>
+    </RelativeLayout>
 
 
 
 
 
 
-</LinearLayout>
+
+
+</RelativeLayout>
 
 
 

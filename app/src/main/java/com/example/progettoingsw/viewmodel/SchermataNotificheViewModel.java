@@ -33,6 +33,7 @@ public class SchermataNotificheViewModel extends ViewModel {
         isAcquirente.setValue(b);
     }
     public void getTipoUtente(){
+        Log.d("getTipoUtente","entrato, schermata notifiche");
         if(repository.getAcquirenteModel()!=null){
             setIsAcquirente(true);
         }else{
@@ -45,8 +46,10 @@ public class SchermataNotificheViewModel extends ViewModel {
             @Override
             public void OnGetNotificheAcquirente(ArrayList<NotificheAcquirenteModel> list) {
                 if(list != null) {
+                    setNotificheAssenti(false);
                     setNotificheAcquirenteRecuperate(list);
                 }else{
+                    setNotificheAssenti(true);
                     Log.d("notifiche null", "null");
                 }
             }
@@ -58,8 +61,10 @@ public class SchermataNotificheViewModel extends ViewModel {
             @Override
             public void OnGetNotificheVenditore(ArrayList<NotificheVenditoreModel> list) {
                 if(list != null) {
+                    setNotificheAssenti(false);
                 setNotificheVenditoreRecuperate(list);
                 }else{
+                    setNotificheAssenti(true);
                     Log.d("notifiche null", "null");
                 }
             }

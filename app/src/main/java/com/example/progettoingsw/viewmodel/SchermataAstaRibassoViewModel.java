@@ -7,6 +7,7 @@ import android.util.Log;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.progettoingsw.model.AcquirenteModel;
 import com.example.progettoingsw.model.Asta_alribassoModel;
 import com.example.progettoingsw.repository.Asta_alribassoRepository;
 import com.example.progettoingsw.repository.Repository;
@@ -26,6 +27,7 @@ public class SchermataAstaRibassoViewModel extends ViewModel {
     public MutableLiveData<Bitmap> immagineAstaConvertita = new MutableLiveData<>(null);
     public MutableLiveData<Boolean> isAstaChiusa = new MutableLiveData<>(false);
     public MutableLiveData<String> intervalloOfferteConvertito = new MutableLiveData("");
+    public MutableLiveData<Boolean> vaiInVenditore = new MutableLiveData<>(false);
     private Boolean isAcquistoAvvenuto;
     private String tipoUtente;
 
@@ -194,22 +196,25 @@ public class SchermataAstaRibassoViewModel extends ViewModel {
         return isAstaInPreferiti.getValue();
     }
     public void verificaAstaInPreferiti(){
-        String indirizzoEmail = repository.getAcquirenteModel().getIndirizzo_email();
-        Long idAsta = repository.getAsta_alribassoSelezionata().getId();
-        astaAlribassoRepository.verificaAstaRibassoInPreferiti(indirizzoEmail,idAsta, new Asta_alribassoRepository.OnVerificaAstaRibassoInPreferitiListener() {
-            @Override
-            public void OnVerificaAstaRibassoInPreferiti(Integer numeroRecuperato) {
-                Log.d("asta ricercata" , "qui");
-                if(numeroRecuperato!=null && numeroRecuperato!=0){
-                    Log.d("asta ricercata" , "è nei preferiti");
-                    setIsAstaInPreferiti(true);
-                }else{
-                    Log.d("asta ricercata" , "non è nei preferiti");
-                    setErroreRecuperoAsta("errore nella verifica asta in preferiti");
-                    setIsAstaInPreferiti(false);
+        AcquirenteModel acquirenteModel=repository.getAcquirenteModel();
+        if(acquirenteModel!=null) {
+            String indirizzoEmail = repository.getAcquirenteModel().getIndirizzo_email();
+            Long idAsta = repository.getAsta_alribassoSelezionata().getId();
+            astaAlribassoRepository.verificaAstaRibassoInPreferiti(indirizzoEmail, idAsta, new Asta_alribassoRepository.OnVerificaAstaRibassoInPreferitiListener() {
+                @Override
+                public void OnVerificaAstaRibassoInPreferiti(Integer numeroRecuperato) {
+                    Log.d("asta ricercata", "qui");
+                    if (numeroRecuperato != null && numeroRecuperato != 0) {
+                        Log.d("asta ricercata", "è nei preferiti");
+                        setIsAstaInPreferiti(true);
+                    } else {
+                        Log.d("asta ricercata", "non è nei preferiti");
+                        setErroreRecuperoAsta("errore nella verifica asta in preferiti");
+                        setIsAstaInPreferiti(false);
+                    }
                 }
-            }
-        });
+            });
+        }
     }
     public void inserimentoAstaInPreferiti(){
         String indirizzoEmail = repository.getAcquirenteModel().getIndirizzo_email();
@@ -245,6 +250,16 @@ public class SchermataAstaRibassoViewModel extends ViewModel {
             }
         });
     }
-
+    public void setVaiInVenditore(Boolean b){
+        this.vaiInVenditore.setValue(b);
+    }
+    public Boolean getVaiInvVenditore(){
+        return vaiInVenditore.getValue();
+    }
+    public void vaiInVenditore(String emailVenditore){
+        repository.setVenditoreEmailDaAsta(emailVenditore);
+        repository.setLeMieAsteUtenteAttuale(false);
+        setVaiInVenditore(true);
+    }
 
 }

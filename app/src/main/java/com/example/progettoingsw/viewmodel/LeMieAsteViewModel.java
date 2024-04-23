@@ -1,5 +1,7 @@
 package com.example.progettoingsw.viewmodel;
 
+import android.util.Log;
+
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -16,7 +18,7 @@ import java.util.List;
 
 public class LeMieAsteViewModel extends ViewModel {
 
-    public MutableLiveData<String> messaggioSocialUtenteNonTrovato = new MutableLiveData<>("");
+
 
     public MutableLiveData<Boolean> acquirenteModelPresente = new MutableLiveData<>(false);
     public MutableLiveData<Boolean> venditoreModelPresente = new MutableLiveData<>(false);
@@ -70,22 +72,35 @@ public class LeMieAsteViewModel extends ViewModel {
 
     public void trovaAsteAperteViewModel(){
         try{
+            if(repository.getLeMieAsteUtenteAttuale()) {
+                Log.d("trovaAsteAperteViewModel","utente attuale");
+                if (containsAcquirente()) {
+                    String email = getAcquirenteEmail();
+                    trovaAsteInglesiAperte(email);
+                    trovaAsteRibassoAperte(email);
+                    trovaAsteInverseAperte(email);
 
-            if(containsAcquirente()){
-                String email=getAcquirenteEmail();
-                trovaAsteInglesiAperte(email);
-                trovaAsteRibassoAperte(email);
-                trovaAsteInverseAperte(email);
+                } else if (containsVenditore()) {
+                    String email = getVenditoreEmail();
+                    trovaAsteInglesiAperte(email);
+                    trovaAsteRibassoAperte(email);
+                    trovaAsteInverseAperte(email);
 
+                }
+            }else{
+                Log.d("trovaAsteAperteViewModel","utente da asta");
+                if(repository.getAcquirenteEmailDaAsta()!=null){
+                    String email = repository.getAcquirenteEmailDaAsta();
+                    trovaAsteInglesiAperte(email);
+                    trovaAsteRibassoAperte(email);
+                    trovaAsteInverseAperte(email);
+                }else if(repository.getVenditoreEmailDaAsta()!=null){
+                    String email = repository.getVenditoreEmailDaAsta();
+                    trovaAsteInglesiAperte(email);
+                    trovaAsteRibassoAperte(email);
+                    trovaAsteInverseAperte(email);
+                }
             }
-            else if(containsVenditore()){
-                String email=getVenditoreEmail();
-                trovaAsteInglesiAperte(email);
-                trovaAsteRibassoAperte(email);
-                trovaAsteInverseAperte(email);
-
-            }
-
 
         }catch(Exception e){
             e.printStackTrace();
@@ -108,22 +123,34 @@ public class LeMieAsteViewModel extends ViewModel {
 
     public void trovaAsteChiuseViewModel(){
         try{
+            if(repository.getLeMieAsteUtenteAttuale()) {
+                Log.d("trovaAsteAperteViewModel", "utente attuale");
+                if (containsAcquirente()) {
+                    String email = getAcquirenteEmail();
+                    trovaAsteInglesiChiuse(email);
+                    trovaAsteRibassoChiuse(email);
+                    trovaAsteInverseChiuse(email);
 
-            if(containsAcquirente()){
-                String email=getAcquirenteEmail();
-                trovaAsteInglesiChiuse(email);
-                trovaAsteRibassoChiuse(email);
-                trovaAsteInverseChiuse(email);
-
+                } else if (containsVenditore()) {
+                    String email = getVenditoreEmail();
+                    trovaAsteInglesiChiuse(email);
+                    trovaAsteRibassoChiuse(email);
+                    trovaAsteInverseChiuse(email);
+                }
+            }else{
+                Log.d("trovaAsteAperteViewModel","utente da asta");
+                if(repository.getAcquirenteEmailDaAsta()!=null){
+                    String email = repository.getAcquirenteEmailDaAsta();
+                    trovaAsteInglesiChiuse(email);
+                    trovaAsteRibassoChiuse(email);
+                    trovaAsteInverseChiuse(email);
+                }else if(repository.getVenditoreEmailDaAsta()!=null){
+                    String email = repository.getVenditoreEmailDaAsta();
+                    trovaAsteInglesiChiuse(email);
+                    trovaAsteRibassoChiuse(email);
+                    trovaAsteInverseChiuse(email);
+                }
             }
-            else if(containsVenditore()){
-                String email=getVenditoreEmail();
-                trovaAsteInglesiChiuse(email);
-                trovaAsteRibassoChiuse(email);
-                trovaAsteInverseChiuse(email);
-
-            }
-
 
         }catch(Exception e){
             e.printStackTrace();
@@ -311,12 +338,7 @@ public class LeMieAsteViewModel extends ViewModel {
     }
 
 
-    public void setMessaggioUtenteNonTrovato(String messaggio){
-        messaggioSocialUtenteNonTrovato.setValue(messaggio);
-    }
-    private String getMessaggioUtenteNonTrovato() {
-        return messaggioSocialUtenteNonTrovato.getValue();
-    }
+
 
 
     private void setAcquirenteModelPresente() {

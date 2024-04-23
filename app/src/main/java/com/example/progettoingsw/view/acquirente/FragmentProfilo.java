@@ -32,18 +32,20 @@ import com.example.progettoingsw.controllers_package.Controller;
 import com.example.progettoingsw.gestori_gui.CustomAdapter_gridview_profilo_social;
 import com.example.progettoingsw.view.LoginActivity;
 import com.example.progettoingsw.view.PopUpModificaSocial;
+import com.example.progettoingsw.view.SchermataPartecipazioneAste;
 import com.example.progettoingsw.viewmodel.FragmentProfiloViewModel;
 import com.google.android.material.button.MaterialButton;
 
 import java.util.ArrayList;
 import java.util.List;
-public class FragmentProfilo extends Fragment{
+public class FragmentProfilo extends Fragment implements PopUpModificaCampiProfilo.PopupDismissListener, PopUpAggiungiSocialProfilo.PopupAggiungiSocialDismissListener, PopUpModificaSocial.PopupModificaSocialDismissListener {
+
 
 
     private TextView text_view_nessun_social;
-    private MaterialButton button_partecipazione_aste;
     ImageButton button_log_out;
     MaterialButton button_le_mie_aste;
+    MaterialButton button_partecipazione_aste;
     ImageButton button_modifica;
     ImageButton bottone_info;
     Button button_cambia_password_profilo;
@@ -129,7 +131,7 @@ public class FragmentProfilo extends Fragment{
                 String nome = socialNames.get(position);
                 String link = socialLinks.get(position);
                 //fragmentProfiloViewModel.gestisciModificaSocial(nome,link);
-                PopUpModificaSocial popUpModificaSocial = new PopUpModificaSocial(getContext(), FragmentProfilo.this, fragmentProfiloViewModel, nome, link);
+                PopUpModificaSocial popUpModificaSocial = new PopUpModificaSocial(getContext(), FragmentProfilo.this, fragmentProfiloViewModel, nome, link,FragmentProfilo.this);
                 popUpModificaSocial.show();
             }
         });
@@ -155,10 +157,23 @@ public class FragmentProfilo extends Fragment{
             @Override
             public void onClick(View view) {
                 osservaEsci();
-                fragmentProfiloViewModel.logout();
+                fragmentProfiloViewModel.logout(requireContext());
                 //Controller.redirectActivity(getContext(), LoginActivity.class);
             }
         });
+
+
+        button_partecipazione_aste=view.findViewById(R.id.button_partecipazione_aste);
+
+        button_partecipazione_aste.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                System.out.println("le aste oooh");
+                //passaggio alle mie aste
+                fragmentProfiloViewModel.setApriPartecipazioneAste(true);
+            }
+        });
+
 
         button_le_mie_aste = view.findViewById(R.id.button_le_mie_aste);
         button_le_mie_aste.setOnClickListener(new View.OnClickListener() {
@@ -174,7 +189,7 @@ public class FragmentProfilo extends Fragment{
         button_modifica.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                PopUpModificaCampiProfilo popUpModificaCampiProfilo = new PopUpModificaCampiProfilo(getContext(), FragmentProfilo.this,fragmentProfiloViewModel);
+                PopUpModificaCampiProfilo popUpModificaCampiProfilo = new PopUpModificaCampiProfilo(getContext(), FragmentProfilo.this,fragmentProfiloViewModel,FragmentProfilo.this);
                 popUpModificaCampiProfilo.show();
             }
         });
@@ -295,48 +310,57 @@ public class FragmentProfilo extends Fragment{
 
     public void updateSocialNames(List<String> socialNames, List<String> socialLinks) {
         try {
-            System.out.println("in update Social names");
-            gridView = view.findViewById(R.id.gridview_social_activity_profilo);
-            if (socialNames != null && !socialNames.isEmpty() && socialLinks!=null && !socialLinks.isEmpty()) {
-                // Aggiorna l'interfaccia utente con i nomi dei social
-                System.out.println("in update social names con nomi e link non nulli e non vuoti ");
 
-                System.out.println("Stampa a schermo dei nomi dei social");
-                for(String nome:socialNames){System.out.println(nome);}
-                System.out.println("Stampa a schermo dei link dei social");
-                for(String link:socialLinks){System.out.println(link);}
 
-                gridView.setVisibility(View.VISIBLE);
-                text_view_nessun_social.setVisibility(View.GONE);
-                adapterSocial = new CustomAdapter_gridview_profilo_social(getContext());
-                gridView.setAdapter(adapterSocial);
 
-                // Aggiungi i nomi dei social alla tua adapter
-                adapterSocial.setData(socialNames, socialLinks);
-                setGridViewHeightBasedOnChildren(gridView);
-                // Aggiungi stampe nel log per verificare che i dati siano correttamente passati
-                for (int i = 0; i < socialNames.size(); i++) {
-                    Log.d("FragmentProfilo", "Nome Social: " + socialNames.get(i) + ", Link Social: " + socialLinks.get(i));
-                }
-            } else {
-                text_view_nessun_social.setVisibility(View.VISIBLE);
-                gridView.setVisibility(View.GONE);
-                // Rimuovi tutti i dati dall'adattatore e aggiorna la GridView
+                System.out.println("in update Social names");
                 gridView = view.findViewById(R.id.gridview_social_activity_profilo);
-                adapterSocial = new CustomAdapter_gridview_profilo_social(getContext());
-                gridView.setAdapter(adapterSocial);
+                if (socialNames != null && !socialNames.isEmpty() && socialLinks != null && !socialLinks.isEmpty()) {
+                    // Aggiorna l'interfaccia utente con i nomi dei social
+                    System.out.println("in update social names con nomi e link non nulli e non vuoti ");
 
-                // Aggiungi stampe nel log per verificare che i dati siano correttamente passati
-                Log.d("FragmentProfilo", "Nessun social disponibile");
+                    System.out.println("Stampa a schermo dei nomi dei social");
+                    for (String nome : socialNames) {
+                        System.out.println(nome);
+                    }
+                    System.out.println("Stampa a schermo dei link dei social");
+                    for (String link : socialLinks) {
+                        System.out.println(link);
+                    }
 
-                // Imposta l'altezza della GridView a 50dp
-                gridView.setMinimumHeight((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 50, getResources().getDisplayMetrics()));
+                    gridView.setVisibility(View.VISIBLE);
+                    text_view_nessun_social.setVisibility(View.GONE);
+                    adapterSocial = new CustomAdapter_gridview_profilo_social(getContext());
+                    gridView.setAdapter(adapterSocial);
 
-            }
-            setAllClickable(relative_layout_fragment_profilo, true);
-            //progressBarAcquirenteFragmentProfilo.setVisibility(View.INVISIBLE);
-            Log.d("update social names", "sblocco navigation bar");
-            setNavigationView(true);
+                    // Aggiungi i nomi dei social alla tua adapter
+                    adapterSocial.setData(socialNames, socialLinks);
+                    setGridViewHeightBasedOnChildren(gridView);
+
+                    // Aggiungi stampe nel log per verificare che i dati siano correttamente passati
+                    for (int i = 0; i < socialNames.size(); i++) {
+                        Log.d("FragmentProfilo", "Nome Social: " + socialNames.get(i) + ", Link Social: " + socialLinks.get(i));
+                    }
+                } else {
+                    text_view_nessun_social.setVisibility(View.VISIBLE);
+                    gridView.setVisibility(View.GONE);
+                    // Rimuovi tutti i dati dall'adattatore e aggiorna la GridView
+                    gridView = view.findViewById(R.id.gridview_social_activity_profilo);
+                    adapterSocial = new CustomAdapter_gridview_profilo_social(getContext());
+                    gridView.setAdapter(adapterSocial);
+
+                    // Aggiungi stampe nel log per verificare che i dati siano correttamente passati
+                    Log.d("FragmentProfilo", "Nessun social disponibile");
+
+                    // Imposta l'altezza della GridView a 50dp
+                    gridView.setMinimumHeight((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 50, getResources().getDisplayMetrics()));
+
+                }
+                setAllClickable(relative_layout_fragment_profilo, true);
+                //progressBarAcquirenteFragmentProfilo.setVisibility(View.INVISIBLE);
+                Log.d("update social names", "sblocco navigation bar");
+                setNavigationView(true);
+
         }catch (IllegalStateException e) {
             // Gestione dell'eccezione
             Log.e("FragmentProfilo", "Error updating social names: " + e.getMessage());
@@ -368,7 +392,7 @@ public class FragmentProfilo extends Fragment{
 
     //metodo per rendere clickabile o non la bottom navigation view, accede alla bottom di main tramite un metodo di main
     private void setNavigationView(Boolean valore) {
-            AcquirenteMainActivity activity = (AcquirenteMainActivity) getActivity();
+            MainActivity activity = (MainActivity) getActivity();
             if (activity != null) {
                 // Abilita la BottomNavigationView
                 // Log.d("acquirente", "disabilito");
@@ -392,6 +416,7 @@ public class FragmentProfilo extends Fragment{
                 osservaSocialAcquirentePresenti();
                 osservaAcquirenteRecuperato();//nel suo corpo ha un observer di un oggetto Acquirente Model che poi si usa per fare i vari get per un metodo che setta nella gui i valori
                 osservaApriPopUpAggiungiSocial();
+                osservaApriPartecipazioneAste();
                 osservaApriLeMieAste();
                 //in teoria deve fare qui la chiamata per trovare i social dal backend
                 fragmentProfiloViewModel.trovaSocialAcquirenteViewModel();//questa chiamata trova i social dal backend
@@ -405,7 +430,7 @@ public class FragmentProfilo extends Fragment{
         fragmentProfiloViewModel.apriPopUpAggiungiSocial.observe(getViewLifecycleOwner(), (messaggio) -> {
             if (fragmentProfiloViewModel.getApriPopUpAggiungiSocial()){
                  //fa le cose che si farebbero premendo il pulsante aggiungi social
-                PopUpAggiungiSocialProfilo popUpAggiungiSocialProfilo = new PopUpAggiungiSocialProfilo(FragmentProfilo.this,fragmentProfiloViewModel);
+                PopUpAggiungiSocialProfilo popUpAggiungiSocialProfilo = new PopUpAggiungiSocialProfilo(FragmentProfilo.this,fragmentProfiloViewModel,FragmentProfilo.this);
                 popUpAggiungiSocialProfilo.show();
             }
         });
@@ -420,6 +445,18 @@ public class FragmentProfilo extends Fragment{
             }
         });
     }
+
+
+    public void osservaApriPartecipazioneAste(){
+        fragmentProfiloViewModel.apriPartecipazioneAste.observe(getViewLifecycleOwner(), (messaggio) -> {
+            if (fragmentProfiloViewModel.getApriPartecipazioneAste()){
+                //fa le cose che si farebbero premendo il pulsante apri partecipazioni aste
+                Intent intent = new Intent(getContext(), SchermataPartecipazioneAste.class);
+                startActivity(intent);
+            }
+        });
+    }
+
 
 
     public void osservaSocialAcquirentePresenti() {
@@ -526,6 +563,7 @@ public class FragmentProfilo extends Fragment{
                 osservaVenditoreRecuperato();//nel suo corpo ha un observer di un oggetto Acquirente Model che poi si usa per fare i vari get per un metodo che setta nella gui i valori
                 osservaApriPopUpAggiungiSocial();
                 osservaApriLeMieAste();
+                osservaApriPartecipazioneAste();
                 //in teoria deve fare qui la chiamata per trovare i social dal backend
                 fragmentProfiloViewModel.trovaSocialVenditoreViewModel();//questa chiamata trova i social dal backend
 
@@ -543,5 +581,29 @@ public class FragmentProfilo extends Fragment{
 //        });
 //    }
 
+
+    @Override
+    public void onPopupDismissed() {
+        System.out.println("In on popupDismissed");
+        fragmentProfiloViewModel.checkTipoUtente();
+       // schermataAstaIngleseViewModel.checkUltimaOfferta();
+      //  schermataAstaIngleseViewModel.getAstaData();
+    }
+
+
+
+    @Override
+    public void onPopupAggiungiSocialDismissed() {
+        System.out.println("In on popupAggiungiSocialDismissed");
+        fragmentProfiloViewModel.trovaSocialAcquirenteViewModel();
+        fragmentProfiloViewModel.trovaSocialVenditoreViewModel();
+    }
+
+    @Override
+    public void onPopupModificaSocialDismissed() {
+        System.out.println("In on popupModificaSocialDismissed");
+        fragmentProfiloViewModel.trovaSocialAcquirenteViewModel();
+        fragmentProfiloViewModel.trovaSocialVenditoreViewModel();
+    }
 }
 

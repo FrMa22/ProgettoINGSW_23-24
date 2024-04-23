@@ -7,6 +7,8 @@ import android.util.Log;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.progettoingsw.DAO.Acquirente;
+import com.example.progettoingsw.model.AcquirenteModel;
 import com.example.progettoingsw.model.Asta_allingleseModel;
 import com.example.progettoingsw.repository.Asta_allingleseRepository;
 import com.example.progettoingsw.repository.Asta_alribassoRepository;
@@ -15,6 +17,7 @@ import com.example.progettoingsw.repository.Repository;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 
 public class SchermataAstaIngleseViewModel extends ViewModel {
     private Repository repository;
@@ -26,7 +29,7 @@ public class SchermataAstaIngleseViewModel extends ViewModel {
     public MutableLiveData<Boolean> isAstaInPreferiti = new MutableLiveData<>(false);
     public MutableLiveData<Bitmap> immagineAstaConvertita = new MutableLiveData<>(null);
     public MutableLiveData<Boolean> isAstaChiusa = new MutableLiveData<>(false);
-
+    public MutableLiveData<Boolean> vaiInVenditore = new MutableLiveData<>(false);
     public MutableLiveData<Boolean> isUltimaOffertaTua = new MutableLiveData<>(false);
     public MutableLiveData<String> intervalloOfferteConvertito = new MutableLiveData("");
     private String messaggioPartecipazioneAstaInglese;
@@ -239,6 +242,17 @@ public class SchermataAstaIngleseViewModel extends ViewModel {
                 }
             }
         });
+    }
+    public void setVaiInVenditore(Boolean b){
+        this.vaiInVenditore.setValue(b);
+    }
+    public Boolean getVaiInvVenditore(){
+        return vaiInVenditore.getValue();
+    }
+    public void vaiInVenditore(String emailVenditore){
+        repository.setVenditoreEmailDaAsta(emailVenditore);
+        repository.setLeMieAsteUtenteAttuale(false);
+        setVaiInVenditore(true);
     }
 
 }

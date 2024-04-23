@@ -5,6 +5,12 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <permission
+        android:name="com.example.progettoingsw.permission.POST_NOTIFICATIONS"
+        android:protectionLevel="normal" />
+    <uses-permission android:name="com.example.progettoingsw.permission.POST_NOTIFICATIONS" />
 
 
     <application
@@ -13,12 +19,20 @@
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:enableOnBackInvokedCallback="true"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/ic_app_256px"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ProgettoINGSW"
         tools:targetApi="31">
+        <service
+            android:name=".MyFirebaseMessagingService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
         <activity
             android:name=".view.SchermataPartecipazioneAste"
             android:exported="false" />
@@ -29,7 +43,8 @@
             android:name=".view.PopUpAggiungiCategorieAsta"
             android:exported="false" />
         <activity
-            android:name=".view.acquirente.AcquirenteMainActivity"
+            android:name=".view.acquirente.MainActivity"
+            android:windowSoftInputMode="adjustPan"
             android:exported="false" />
         <activity
             android:name=".view.ElencoCategorie"
@@ -48,7 +63,7 @@
             android:exported="true" />
         <activity
             android:name=".view.acquirente.FragmentProfilo"
-            android:exported="true" />
+            android:exported="false" />
         <activity
             android:name=".view.PopUpModificaCampiProfilo"
             android:theme="@style/Base.Theme.ProgettoINGSW.CustomThemeSfocato" />
@@ -66,7 +81,6 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -76,46 +90,46 @@
         <activity android:name=".view.Registrazione" />
         <activity
             android:name=".view.RegistrazioneCampiFacoltativi"
-            android:exported="true" />
+            android:exported="false" />
         <activity
             android:name=".view.RegistrazioneCategorie"
-            android:exported="true" />
+            android:exported="false" />
         <activity
             android:name=".view.acquirente.AcquirenteFragmentCreaLaTuaAstaAcquirente"
-            android:exported="true" />
+            android:exported="false" />
         <activity
             android:name=".view.venditore.VenditoreAstaInglese"
-            android:exported="true" />
+            android:exported="false" />
         <activity
             android:name=".view.venditore.VenditoreAstaRibasso"
-            android:exported="true" />
+            android:exported="false" />
         <activity
             android:name=".view.acquirente.FragmentCreaAstaInversa"
-            android:exported="true" />
+            android:exported="false" />
         <activity
             android:name=".view.ProfiloAcquirente"
-            android:exported="true" />
+            android:exported="false" />
         <activity
             android:name=".view.ProfiloVenditore"
-            android:exported="true" />
+            android:exported="false" />
         <activity
             android:name=".view.SchermataAstaInglese"
-            android:exported="true" />
+            android:exported="false" />
         <activity
             android:name=".view.SchermataAstaInversa"
-            android:exported="true" />
+            android:exported="false" />
         <activity
             android:name=".view.SchermataAstaRibasso"
-            android:exported="true" />
+            android:exported="false" />
         <activity
             android:name=".view.LeMieAste"
-            android:exported="true" />
+            android:exported="false" />
         <activity
             android:name=".view.SchermataNotifiche"
             android:exported="true" />
         <activity
             android:name=".view.PopUpRegistrazioneSocial"
-            android:exported="true"
+            android:exported="false"
             android:theme="@style/Base.Theme.ProgettoINGSW.CustomTheme" />
         <activity
             android:name=".view.venditore.VenditorePopUpCreaAsta"

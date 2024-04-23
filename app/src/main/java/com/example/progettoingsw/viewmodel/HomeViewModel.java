@@ -17,6 +17,7 @@ import com.example.progettoingsw.model.Asta_inversaModel;
 import com.example.progettoingsw.repository.Asta_allingleseRepository;
 import com.example.progettoingsw.repository.Asta_alribassoRepository;
 import com.example.progettoingsw.repository.Asta_inversaRepository;
+import com.example.progettoingsw.repository.NotificheRepository;
 import com.example.progettoingsw.repository.Repository;
 import com.example.progettoingsw.view.SchermataAstaInglese;
 import com.example.progettoingsw.view.SchermataAstaInversa;
@@ -31,6 +32,7 @@ public class HomeViewModel extends ViewModel {
     private Asta_allingleseRepository astaAllingleseRepository;
     private Asta_alribassoRepository astaAlribassoRepository;
     private Asta_inversaRepository astaInversaRepository;
+    private NotificheRepository notificheRepository;
     private Repository repository;
     public MutableLiveData<Boolean> aste_allingleseInScadenzaPresenti = new MutableLiveData<>(false);
     public MutableLiveData<ArrayList<Object>> aste_allingleseInScadenzaRecuperate = new MutableLiveData<>(null);
@@ -58,6 +60,8 @@ public class HomeViewModel extends ViewModel {
     public MutableLiveData<Boolean> entraInSchermataAstaRibasso = new MutableLiveData<>(false);
     public MutableLiveData<Boolean> entraInSchermataAstaInversa = new MutableLiveData<>(false);
 
+    public MutableLiveData<Integer> numeroNotifiche = new MutableLiveData<>(0);
+
     private ArrayList<Asta_allingleseModel> listAsta_allingleseScadenzaRecente = new ArrayList<>();
     private ArrayList<Asta_allingleseModel> listAsta_allingleseNuove = new ArrayList<>();
     private ArrayList<Asta_inversaModel> listAsta_inversaScadenzaRecente = new ArrayList<>();
@@ -67,15 +71,44 @@ public class HomeViewModel extends ViewModel {
         astaAllingleseRepository = new Asta_allingleseRepository();
         astaAlribassoRepository = new Asta_alribassoRepository();
         astaInversaRepository = new Asta_inversaRepository();
+        notificheRepository = new NotificheRepository();
     }
 
     public void checkTipoUtente(){
+        checkNumeroNotifiche();
         if(containsAcquirente()){
             setAcquirenteModelPresente();
         }else if(containsVenditore()) {
             setVenditoreModelPresente();
         }
 
+    }
+    public Integer getNumeroNotifiche() {
+        return numeroNotifiche.getValue();
+    }
+    public void setNumeroNotifiche(Integer numeroNotifiche) {
+        this.numeroNotifiche.setValue(numeroNotifiche);
+    }
+    public void checkNumeroNotifiche(){
+        if(containsAcquirente()){
+            notificheRepository.getNumeroNotificheAcquirente(repository.getAcquirenteModel().getIndirizzo_email(), new NotificheRepository.OnGetNumeroNotificheAcquirenteListener() {
+                @Override
+                public void OnGetNumeroNotificheAcquirente(Integer result) {
+                    if(result>0){
+                        setNumeroNotifiche(result);
+                    }
+                }
+            });
+        }else{
+            notificheRepository.getNumeroNotificheVenditore(repository.getVenditoreModel().getIndirizzo_email(), new NotificheRepository.OnGetNumeroNotificheVenditoreListener() {
+                @Override
+                public void OnGetNumeroNotificheVenditore(Integer result) {
+                    if(result>0){
+                        setNumeroNotifiche(result);
+                    }
+                }
+            });
+        }
     }
     public void trovaEImpostaAste(){
         if(repository.getAcquirenteModel()!=null){

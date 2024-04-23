@@ -36,7 +36,18 @@
         public void setOnItemClickListener(View.OnClickListener listener) {
             mItemClickListener = listener;
         }
-
+        public void clearItems() {
+            if (notificheAcquirenteItemList != null) {
+                Log.d("clearItemsNotifiche","acquirente");
+                notificheAcquirenteItemList.clear(); // Svuota la lista degli elementi
+                notifyDataSetChanged(); // Notifica che i dati sono cambiati
+            }
+            if(notificheVenditoreItemList!=null){
+                Log.d("clearItemsNotifiche","venditore");
+                notificheVenditoreItemList.clear();
+                notifyDataSetChanged();
+            }
+        }
         @NonNull
         @Override
         public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

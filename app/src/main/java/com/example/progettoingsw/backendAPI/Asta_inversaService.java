@@ -27,6 +27,9 @@ public interface Asta_inversaService {
     @GET("/asta_inversaController/getAste_inversaApertaByEmail/{indirizzo_email}")
     Call<List<Asta_inversa_DTO>> getAste_inversaApertaByEmail(@Path("indirizzo_email") String indirizzo_email);
 
+    @GET("/asta_inversaController/getAsteInversaPartecipate/{indirizzo_email}")
+    Call<ArrayList<Asta_inversa_DTO>> getAste_inversaPartecipateByEmail(@Path("indirizzo_email") String indirizzo_email);
+
     @GET("/asta_inversaController/getAste_inversaChiusaByEmail/{indirizzo_email}")
     Call<List<Asta_inversa_DTO>> getAste_inversaChiusaByEmail(@Path("indirizzo_email") String indirizzo_email);
 

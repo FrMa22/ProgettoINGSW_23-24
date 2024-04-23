@@ -22,4 +22,10 @@ public interface NotificheService {
     Call<Integer> deleteNotificheAcquirente(@Path("id") Long id);
     @DELETE("/notificheController/deleteNotificheVenditore/{id}")
     Call<Integer> deleteNotificheVenditore(@Path("id") Long id);
+
+    @GET("/notificheController/getNumeroNotificheAcquirente/{indirizzo_email}")
+    Call<Integer> getNumeroNotificheAcquirente(@Path("indirizzo_email") String indirizzo_email);
+    @GET("/notificheController/getNumeroNotificheVenditore/{indirizzo_email}")
+    Call<Integer> getNumeroNotificheVenditore(@Path("indirizzo_email") String indirizzo_email);
+
 }

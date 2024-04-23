@@ -265,18 +265,24 @@ public class PopUpAggiungiCategorieAsta extends DialogPersonalizzato implements 
                 if (creaAstaInversaViewModel.listaCategorieNotEmpty()) {
                     Log.d("popupaggiungicategoriaAsta", "categorie " + listaCategorie);
                     selectCategories(listaCategorie);
+                }else{
+                    populateLinearLayout();
                 }
             });
         }else if(creaAstaIngleseViewModel!=null){
             creaAstaIngleseViewModel.categorieInserite.observe(venditoreAstaInglese, (listaCategorie) -> {
                 if (creaAstaIngleseViewModel.listaCategorieNotEmpty()) {
                     selectCategories(listaCategorie);
-                }
+                }else{
+                    populateLinearLayout();
+            }
             });
         }else if(creaAstaRibassoViewModel!=null){
             creaAstaRibassoViewModel.categorieInserite.observe(venditoreAstaRibasso, (listaCategorie) -> {
                 if (creaAstaRibassoViewModel.listaCategorieNotEmpty()) {
                     selectCategories(listaCategorie);
+                }else{
+                    populateLinearLayout();
                 }
             });
         }

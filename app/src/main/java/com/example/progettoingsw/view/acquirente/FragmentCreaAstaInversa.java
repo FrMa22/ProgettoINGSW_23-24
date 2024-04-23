@@ -1,18 +1,12 @@
 package com.example.progettoingsw.view.acquirente;
 
 
-import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Matrix;
-import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,15 +29,10 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.progettoingsw.R;
 
-import com.example.progettoingsw.DAO.AstaInversaDAO;
-import com.example.progettoingsw.controllers_package.InsertAsta;
 import com.example.progettoingsw.view.PopUpAggiungiCategorieAsta;
 import com.example.progettoingsw.viewmodel.CreaAstaInversaViewModel;
 import com.google.android.material.button.MaterialButton;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -116,7 +105,6 @@ public class FragmentCreaAstaInversa extends Fragment {
         imageButtonRimuoviImmagine.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //OSSERVATOREEEEEE
                 immagineProdotto.setImageResource(android.R.color.transparent); // Rimuove l'immagine
                 bitmap = null;
 //                imageBytes = null; // Reimposta il byte array a null
@@ -140,7 +128,6 @@ public class FragmentCreaAstaInversa extends Fragment {
         descrizioneProdottoAstaAstaInversa = view2.findViewById(R.id.editTextDescrizioneProdottoAstaAstaInversa);
         prezzoAstaInversa=view2.findViewById(R.id.editTextPrezzoAstaInversa);
 
-//        imageBytes=null;
 
         bottone_info = view2.findViewById(R.id.bottone_info);
         bottone_info.setOnClickListener(new View.OnClickListener() {
@@ -150,10 +137,6 @@ public class FragmentCreaAstaInversa extends Fragment {
             }
         });
 
-//        //bitmap = BitmapFactory.decodeByteArray(img, 0, img.length);
-//
-//        // Imposta l'immagine nel tuo ImageView
-//        //immagineProdotto.setImageBitmap(bitmap);
 
         bottoneData.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -183,7 +166,7 @@ public class FragmentCreaAstaInversa extends Fragment {
         bottoneAnnullaAstaInversa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getContext(), AcquirenteMainActivity.class);
+                Intent intent = new Intent(getContext(), MainActivity.class);
                 startActivity(intent);
             }
         });
@@ -330,32 +313,4 @@ public class FragmentCreaAstaInversa extends Fragment {
             }
         });
     }
-
-
-
-//    public void handlePopUp(ArrayList<String> switchTexts){
-//        this.listaCategorieScelte = switchTexts;
-//        // Iterare attraverso gli elementi di switchTexts e stamparli nel log
-//        for (String categoria : switchTexts) {
-//            Log.d("PopUpHandler", "Categoria: " + categoria);
-//        }
-//    }
-//    public void handleID(int id){
-//        this.idAsta = id;
-//        AstaInversaDAO astaInversaDAO = new AstaInversaDAO(FragmentCreaAstaInversa.this);
-//        if(!listaCategorieScelte.isEmpty()){
-//            astaInversaDAO.openConnection();
-//            Log.d("id recuperato è ACquirente : " , " id: " + idAsta);
-//            InsertAsta asta = new InsertAsta(idAsta,listaCategorieScelte);
-//            astaInversaDAO.inserisciCategorieAstaInversa(asta);
-//            astaInversaDAO.closeConnection();
-//        }else{
-//            astaInversaDAO.closeConnection();
-//        }
-//        Toast.makeText(getContext(), "Asta creata con successo!", Toast.LENGTH_SHORT).show();
-//        Intent intent = new Intent(getContext(), AcquirenteMainActivity.class);//test del login
-//        intent.putExtra("email", email);
-//        intent.putExtra("tipoUtente", "acquirente");
-//        startActivity(intent);
-//    }
 }

@@ -44,6 +44,11 @@ public class PopUpControlloPassword extends DialogPersonalizzato implements View
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.pop_up_controllo_password);
 
+        osservaMessaggioErrorePasswordVecchia();
+        osservaMessaggioErrorePasswordNuova();
+        osservaIsPasswordCambiata();
+
+
         progress_bar_pop_up_controllo_password = findViewById(R.id.progress_bar_pop_up_controllo_password);
 
 
@@ -69,16 +74,16 @@ public class PopUpControlloPassword extends DialogPersonalizzato implements View
 private void confermaPassword(){
     String password_vecchia = edit_text_vecchia_password.getText().toString().trim();
     String password_nuova = edit_text_password_nuova.getText().toString().trim();
-    if (password_vecchia.length() > 100) {
-        edit_text_vecchia_password.setError("La password non può superare i 100 caratteri");
-        return; // Esce dal metodo onClick se la password supera i 100 caratteri
-    }
-    if (password_nuova.length() > 100) {
-        edit_text_password_nuova.setError("La password non può superare i 100 caratteri");
-        return; // Esce dal metodo onClick se la password supera i 100 caratteri
-    }
-    if (!password_nuova.isEmpty() && password_nuova.length() <= 100 &&
-            !password_vecchia.isEmpty() && password_vecchia.length() <= 100){
+   // if (password_vecchia.length() > 100) {
+   //     edit_text_vecchia_password.setError("La password non può superare i 100 caratteri");
+   //     return; // Esce dal metodo onClick se la password supera i 100 caratteri
+   // }
+   // if (password_nuova.length() > 100) {
+   //     edit_text_password_nuova.setError("La password non può superare i 100 caratteri");
+   //     return; // Esce dal metodo onClick se la password supera i 100 caratteri
+   // }
+   // if (!password_nuova.isEmpty() && password_nuova.length() <= 100 &&
+      //      !password_vecchia.isEmpty() && password_vecchia.length() <= 100){
 //        progress_bar_pop_up_controllo_password.setVisibility(View.VISIBLE);
 //        popUpControlloPasswordDAO.openConnection();
 //        popUpControlloPasswordDAO.checkPassword(password_vecchia);
@@ -86,9 +91,9 @@ private void confermaPassword(){
 
                     //chiamata al backend
                     fragmentProfiloViewModel.aggiornaPasswordViewModel(password_vecchia,password_nuova);
-                    dismiss();
+    //                dismiss();
 
-    }
+    //}
 
 }
     public void handleResultPassword(Boolean result){
@@ -106,5 +111,44 @@ private void confermaPassword(){
     public void dismissPopup() {
         dismiss();
     }
+
+
+    public void messaggioErrorePasswordVecchia(String messaggio){
+        edit_text_vecchia_password.setError(messaggio);
+    }
+    public void osservaMessaggioErrorePasswordVecchia() {
+        fragmentProfiloViewModel.messaggioErrorePasswordVecchia.observe(fragmentProfilo, (messaggio) -> {
+            if (fragmentProfiloViewModel.isNuovoMessaggioErrorePasswordVecchia()) {
+                messaggioErrorePasswordVecchia(messaggio);
+                //loginViewModel.cancellaMessaggioLogin();
+            }
+        });
+    }
+
+
+    public void messaggioErrorePasswordNuova(String messaggio){
+        edit_text_password_nuova.setError(messaggio);
+    }
+    public void osservaMessaggioErrorePasswordNuova() {
+        fragmentProfiloViewModel.messaggioErrorePasswordNuova.observe(fragmentProfilo, (messaggio) -> {
+            if (fragmentProfiloViewModel.isNuovoMessaggioErrorePasswordNuova()) {
+                messaggioErrorePasswordNuova(messaggio);
+                //loginViewModel.cancellaMessaggioLogin();
+            }
+        });
+    }
+
+    public void osservaIsPasswordCambiata(){
+        fragmentProfiloViewModel.isPasswordCambiata.observe(fragmentProfilo, (messaggio) -> {
+            if(fragmentProfiloViewModel.getIsPasswordCambiata()){
+                Log.d("osservaIsPasswordCambiata","prima di dismiss");
+                //dismiss();
+                dismissPopup();
+            }else{
+                Toast.makeText(getContext(), "Errore nelle password!", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
 
 }
