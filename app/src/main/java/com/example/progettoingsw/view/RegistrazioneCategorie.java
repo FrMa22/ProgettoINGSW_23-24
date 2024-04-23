@@ -16,10 +16,16 @@ import android.widget.ProgressBar;
 import android.widget.Switch;
 import android.widget.Toast;
 
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+
 import com.example.progettoingsw.DAO.RegistrazioneCategorieDAO;
 import com.example.progettoingsw.R;
 import com.example.progettoingsw.classe_da_estendere.GestoreComuniImplementazioni;
+import com.example.progettoingsw.model.AcquirenteModel;
+import com.example.progettoingsw.model.VenditoreModel;
 import com.example.progettoingsw.view.acquirente.AcquirenteMainActivity;
+import com.example.progettoingsw.viewmodel.RegistrazioneViewModel;
 import com.google.android.material.button.MaterialButton;
 
 import java.util.ArrayList;
@@ -33,6 +39,7 @@ public class RegistrazioneCategorie extends GestoreComuniImplementazioni {
     private String email;
     private String tipoUtente;
     private ProgressBar progress_bar_registrazione_categorie;
+    private RegistrazioneViewModel registrazioneViewModel;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,28 +47,23 @@ public class RegistrazioneCategorie extends GestoreComuniImplementazioni {
 
         Toast.makeText(this, "Registrazione completata! Aiutaci a capire cosa ti piace selezionando le categorie di tuo interesse.", Toast.LENGTH_LONG).show();
 
-        email = getIntent().getStringExtra("email").trim();
-        tipoUtente = getIntent().getStringExtra("tipoUtente");
-
         progress_bar_registrazione_categorie = findViewById(R.id.progress_bar_registrazione_categorie);
         switchTexts = new ArrayList<>();
         bottoneProseguiInteressiRegistrazione = findViewById(R.id.bottoneProseguiInteressiRegistrazione);
         bottoneSaltaRegistrazioneCategorie = findViewById(R.id.bottoneSaltaRegistrazioneCategorie);
         linear_layout_interno_registrazione_social = findViewById(R.id.linear_layout_interno_registrazione_social);
+        registrazioneViewModel = new ViewModelProvider(this).get(RegistrazioneViewModel.class);
 
+        osservaAcquirenteModelPresente();
+        osservaVenditoreModelPresente();
         bottoneProseguiInteressiRegistrazione.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(switchTexts != null && switchTexts.size() > 0) {
-                    progress_bar_registrazione_categorie.setVisibility(View.VISIBLE);
-                    RegistrazioneCategorieDAO registrazioneCategorieDAO = new RegistrazioneCategorieDAO(RegistrazioneCategorie.this, email, tipoUtente);
-                    registrazioneCategorieDAO.openConnection();
-                    registrazioneCategorieDAO.insertCategorie(switchTexts);
-                    registrazioneCategorieDAO.closeConnection();
+                if(switchTexts!=null && !switchTexts.isEmpty()) {
+                    registrazioneViewModel.checkTipoUtente();
                 }
+
                     Intent intent = new Intent(RegistrazioneCategorie.this, AcquirenteMainActivity.class);//test del login
-                    intent.putExtra("email", email);
-                    intent.putExtra("tipoUtente", tipoUtente);
                     startActivity(intent);
             }
         });
@@ -70,8 +72,6 @@ public class RegistrazioneCategorie extends GestoreComuniImplementazioni {
             @Override
             public void onClick(View view) {
                     Intent intent = new Intent(RegistrazioneCategorie.this, AcquirenteMainActivity.class);//test del login
-                    intent.putExtra("email", email);
-                    intent.putExtra("tipoUtente", tipoUtente);
                     startActivity(intent);
             }
         });
@@ -163,19 +163,45 @@ public class RegistrazioneCategorie extends GestoreComuniImplementazioni {
         immaginiArray.recycle();
     }
 
-    public void handleInsert(Boolean result){
-        progress_bar_registrazione_categorie.setVisibility(View.INVISIBLE);
-            if(result){
-                Log.d("handleInsert", "Inseriti");
-                    Intent intent = new Intent(RegistrazioneCategorie.this, AcquirenteMainActivity.class);
-                    intent.putExtra("email", email);
-                    intent.putExtra("tipoUtente", tipoUtente);
-                    startActivity(intent);
-            } else {
-                Log.d("handleInsert", "Errore durante l'inserimento");
+
+    public void osservaAcquirenteModelPresente(){
+        registrazioneViewModel.acquirenteModelPresente.observe(this, (messaggio) -> {
+            if (registrazioneViewModel.getAcquirenteModelPresente()) {
+                registrazioneViewModel.recuperoAcquirente();
+                osservaAcquirente();
             }
+        });
     }
 
+    public void osservaVenditoreModelPresente(){
+        registrazioneViewModel.venditoreModelPresente.observe(this, (messaggio) -> {
+            if (registrazioneViewModel.getVenditoreModelPresente()) {
+                registrazioneViewModel.recuperoVenditore();
+                osservaVenditore();
+            }
+        });
+    }
+
+    public void osservaAcquirente(){
+        registrazioneViewModel.getAcquirente().observe(this,new Observer<AcquirenteModel>(){
+            @Override
+            public void onChanged(AcquirenteModel acquirente) {
+
+              registrazioneViewModel.categorieAcquirente(acquirente.getIndirizzo_email(),switchTexts);
+
+            }
+        });
+    }
+
+    public void osservaVenditore(){
+        registrazioneViewModel.getVenditore().observe(this,new Observer<VenditoreModel>(){
+            @Override
+            public void onChanged(VenditoreModel venditore) {
+                registrazioneViewModel.categorieVenditore(venditore.getIndirizzo_email(),switchTexts);
+
+            }
+        });
+    }
 
 }
 
