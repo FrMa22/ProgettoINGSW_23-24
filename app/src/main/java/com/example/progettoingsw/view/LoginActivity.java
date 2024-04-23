@@ -123,65 +123,14 @@ public class LoginActivity extends GestoreComuniImplementazioni {
         osservaMessaggioErrorePassword();
         osservaProseguiLogin();
         osservaMessaggioUtenteNonTrovato();
+        osservaConnessioneSpenta();
+        loginViewModel.checkConnessione(this);
         //osservaTokenSalvato();
         //loginViewModel.checkSavedToken(getApplicationContext());
         osservaTokenSalvato();
         loginViewModel.checkSavedToken(getApplicationContext());
 
     }
-//    public void handleLoginResult(String tipoUtente) {
-//        progress_bar_login.setVisibility(View.INVISIBLE);
-//        setAllClickable(linear_layout_login,true);
-//        if (tipoUtente != null) {
-//            if(tipoUtente.equals("doppioAccount")){
-//                PopUpLogin popUpLogin = new PopUpLogin(LoginActivity.this,editText_mail.getText().toString());
-//                popUpLogin.show();
-//            }else{
-//                Toast.makeText(this, "Accesso eseguito come: " + tipoUtente, Toast.LENGTH_SHORT).show();
-//                Intent intent = new Intent(LoginActivity.this, MainActivity.class);//test del login
-//                intent.putExtra("email", editText_mail.getText().toString());
-//                intent.putExtra("tipoUtente", tipoUtente);
-//                startActivity(intent);
-//            }
-//
-//        } else {
-//            // L'utente non è stato trovato
-//            // Mostra un messaggio di errore o esegui altre azioni necessarie
-//            Toast.makeText(this, "Non trovato", Toast.LENGTH_SHORT).show();
-//
-//        }
-//    }
-//public void checkSavedToken(){
-//        Log.d("checkSavedToken","controllo il token");
-//        sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
-//        token = sharedPreferences.getString(TOKEN_KEY, null);
-//        if(token != null){
-//            Log.d("checkSavedToken","token recuperato : " + token);
-//            //setTokenSalvato(token);
-//            loginViewModel.loginAcquirenteConToken(token);
-//        }else{
-//            relative_layout_login_activity.setVisibility(View.VISIBLE);
-//            progress_bar_login.setVisibility(View.INVISIBLE);
-//            Log.d("checkSavedToken","token non trovato : ");
-//            Log.d("osservaTokenSalvato","entrato in token non trovato, token : "+ token);
-//            FirebaseMessaging.getInstance().getToken()
-//                    .addOnCompleteListener(task -> {
-//                        if (task.isSuccessful()) {
-//                            token = task.getResult();
-//                            Log.d("token creato", "token: " + token);
-//                            Log.d("Firebase", "Connessione a Firebase avvenuta con successo. Token: " + token);
-//                            // Memorizza il token nelle SharedPreferences
-//
-//
-//                        } else {
-//                            Log.e("Firebase", "Errore durante la connessione a Firebase", task.getException());
-//                        }
-//                    });
-//
-//        }
-//
-//        //setTokenSalvato("");
-//    }
 private void requestNotificationPermissions() {
     if (ContextCompat.checkSelfPermission(this, "com.example.progettoingsw.permission.POST_NOTIFICATIONS") != PackageManager.PERMISSION_GRANTED) {
         ActivityCompat.requestPermissions(this, new String[]{"com.example.progettoingsw.permission.POST_NOTIFICATIONS"}, PERMISSION_REQUEST_CODE);
@@ -297,5 +246,26 @@ private void requestNotificationPermissions() {
         });
     }
 
+    public void osservaConnessioneSpenta(){
+        loginViewModel.connessioneSpenta.observe(this, (valore) ->{
+            if(valore){
+                showPopUpConnessioneSpenta();
+            }
+        });
+    }
 
+    private void showPopUpConnessioneSpenta(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Connessione di rete necessaria");
+        builder.setMessage("Questa applicazione richiede una connessione di rete attiva. Controlla la tua connessione e riprova.");
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                // Chiudi l'applicazione o gestisci l'evento in base alle tue esigenze
+                finish();
+            }
+        });
+        builder.setCancelable(false); // Impedisci all'utente di chiudere il dialogo premendo al di fuori di esso
+        builder.show();
+    }
 }

@@ -44,6 +44,7 @@
             android:exported="false" />
         <activity
             android:name=".view.acquirente.MainActivity"
+            android:windowSoftInputMode="adjustPan"
             android:exported="false" />
         <activity
             android:name=".view.ElencoCategorie"

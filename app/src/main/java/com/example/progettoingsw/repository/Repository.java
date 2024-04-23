@@ -40,7 +40,7 @@ public class Repository {
 
 
     private String categoriaSelezionata;
-    public static final String backendUrl = "http:/15.236.133.106:8080/";
+    public static final String backendUrl = "http:/15.237.74.23:8080/";
     public static Repository questaRepository = null;
     //liste per le aste all'inglese nel caso di accesso come acquirente (aste in home)
     private ArrayList<Asta_allingleseModel> listaAsteAllIngleseInScadenza;

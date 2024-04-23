@@ -446,6 +446,8 @@ public class CreaAstaInversaViewModel extends ViewModel {
         if(categorieScelte != null && !categorieScelte.isEmpty()){
             setCategoriaProvvisoria(categorieScelte);
             setCategorieInserite(categorieScelte);
+        }else{
+            categorieScelteProvvisorie = new ArrayList<>();
         }
     }
 
