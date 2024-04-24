@@ -105,6 +105,7 @@ public class FragmentProfilo extends Fragment implements PopUpModificaCampiProfi
         osservaAcquirenteModelPresente();
         osservaVenditoreModelPresente();
         osservaSocialAssenti();
+        osservaMessaggioErroreSocial();
         fragmentProfiloViewModel.checkTipoUtente();
 
 
@@ -610,6 +611,13 @@ public void osservaSocialAssenti(){
         System.out.println("In on popupModificaSocialDismissed");
         fragmentProfiloViewModel.trovaSocialAcquirenteViewModel();
         fragmentProfiloViewModel.trovaSocialVenditoreViewModel();
+    }
+    public void osservaMessaggioErroreSocial(){
+        fragmentProfiloViewModel.messaggioErroreSocial.observe(getViewLifecycleOwner(), (errore) ->{
+            if(fragmentProfiloViewModel.isMessaggioErroreSocial()){
+                Toast.makeText(getContext(), errore, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }
 

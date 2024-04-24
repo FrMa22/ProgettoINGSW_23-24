@@ -12,7 +12,6 @@ import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ListAdapter;
-import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -51,7 +50,6 @@ public class ProfiloVenditore extends GestoreComuniImplementazioni {
     private TextView textview_paese;
 
     private TextView text_view_bio_profilo;
-    private ProgressBar progressBarAcquirenteFragmentProfilo;
 
     // Definisci la variabile di istanza view
 
@@ -81,10 +79,6 @@ public class ProfiloVenditore extends GestoreComuniImplementazioni {
         });
         relative_layout_profilo_venditore = findViewById(R.id.relative_layout_profilo_venditore);
 
-        //icona del caricamento
-        progressBarAcquirenteFragmentProfilo = findViewById(R.id.progressBarProfiloVenditore);
-        progressBarAcquirenteFragmentProfilo.setVisibility(View.VISIBLE);
-        setAllClickable(relative_layout_profilo_venditore,false);
 
         // Inizializza la GridView
         GridView gridView = findViewById(R.id.gridview_social_activity_profilo);
@@ -112,11 +106,6 @@ public class ProfiloVenditore extends GestoreComuniImplementazioni {
         textview_paese = findViewById(R.id.textview_paese);
         text_view_bio_profilo = findViewById(R.id.text_view_bio_profilo);
 
-        // Inizializza il DAO e recupera i dati dell'acquirente
-//        ProfiloVenditoreDaAstaDAO venditoreAstaDAO = new ProfiloVenditoreDaAstaDAO(this, email, "venditore");
-//        venditoreAstaDAO.openConnection();
-//        venditoreAstaDAO.findUser();
-       // venditoreAstaDAO.getSocialNamesForEmail();
 
 
 
@@ -126,22 +115,6 @@ public class ProfiloVenditore extends GestoreComuniImplementazioni {
 
 
 
-
-//    public void updateEditTexts(Acquirente acquirente) {
-//        if (acquirente != null) {
-//            // Esempio: aggiorna l'interfaccia utente con i dati dell'acquirente
-//            textview_nome.setText(acquirente.getNome());
-//            textview_cognome.setText(acquirente.getCognome());
-//            textview_email.setText(acquirente.getEmail());
-//            textview_sitoweb.setText(acquirente.getSitoWeb());
-//            textview_paese.setText(acquirente.getPaese());
-//            text_view_bio_profilo.setText(acquirente.getBio());
-//        } else {
-//            // L'acquirente non è stato trovato
-//        }
-//        progressBarAcquirenteFragmentProfilo.setVisibility(View.GONE);
-//        setAllClickable(relative_layout_profilo_venditore,true);
-//    }
     public void updateDatiUtente(String nome, String cognome, String email, String link, String paese, String bio){
         textview_nome.setText(nome);
         textview_cognome.setText(cognome);
@@ -210,8 +183,6 @@ public class ProfiloVenditore extends GestoreComuniImplementazioni {
             // Imposta l'altezza della GridView a 50dp
             gridView.setMinimumHeight((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 50, getResources().getDisplayMetrics()));
         }
-        progressBarAcquirenteFragmentProfilo.setVisibility(View.GONE);
-        setAllClickable(relative_layout_profilo_venditore,true);
 
     }
     public void osservaVenditoreRecuperato(){
