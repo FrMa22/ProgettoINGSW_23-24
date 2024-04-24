@@ -711,4 +711,35 @@ public void controlloSocial(){
             Log.d("stampaLista", "social acquirenti: " + listaSocialVenditore.getValue().size());
         }
     }
+    public void resetAllVariables() {
+        messaggioErroreEmail.setValue("");
+        messaggioErrorePassword.setValue("");
+        messaggioErroreConfermaPassword.setValue("");
+        messaggioErroreNome.setValue("");
+        messaggioErroreCognome.setValue("");
+        messaggioErroreLink.setValue("");
+        messaggioErroreNomeSocial.setValue("");
+        proseguiRegistrazione.setValue("");
+        proseguiInserimento.setValue("");
+        proseguiInserimentoSocial.setValue("");
+        messaggioErroreBio.setValue("");
+        messaggioErrorePaese.setValue("");
+        messaggioErroreSitoWeb.setValue("");
+        acquirenteModelPresente.setValue(false);
+        venditoreModelPresente.setValue(false);
+        acquirenteModel.setValue(null);
+        venditoreModel.setValue(null);
+        apriPopUpSocial.setValue(false);
+        listaSocialAcquirente.setValue(null);
+        listaSocialVenditore.setValue(null);
+        socialVuoti.setValue(false);
+        socialAcquirente.clear();
+        socialVenditore.clear();
+        valoriPresentiAcquirente.setValue(null);
+        valoriPresentiVenditore.setValue(null);
+        valoriPresentiFacoltativiAcquirente.setValue(null);
+        valoriPresentiFacoltativiVenditore.setValue(null);
+        isSocialCambiato.setValue(false);
+    }
+
 }

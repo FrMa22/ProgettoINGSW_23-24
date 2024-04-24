@@ -120,6 +120,13 @@ public class Registrazione extends GestoreComuniImplementazioni {
         super.onResume();
         registrazioneViewModel.checkValoriPresenti();
     }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        // Distrugge il ViewModel quando l'Activity viene distrutta
+        registrazioneViewModel.resetAllVariables();
+    }
+
     public void messaggioErroreMail(String messaggio){edittext_email.setError(messaggio);}
 
     public void messaggioErrorePassword(String messaggio){
