@@ -31,6 +31,7 @@ import com.example.progettoingsw.classe_da_estendere.GestoreComuniImplementazion
 import com.example.progettoingsw.view.acquirente.MainActivity;
 import com.example.progettoingsw.viewmodel.LoginViewModel;
 import com.google.firebase.FirebaseApp;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.messaging.FirebaseMessaging;
 
 public class LoginActivity extends GestoreComuniImplementazioni {
@@ -45,6 +46,7 @@ public class LoginActivity extends GestoreComuniImplementazioni {
     private static final int PERMISSION_REQUEST_CODE = 123;
     private static final String TOKEN_KEY = "token";
     private SharedPreferences sharedPreferences;
+    private FirebaseAnalytics firebaseAnalytics;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -118,6 +120,12 @@ public class LoginActivity extends GestoreComuniImplementazioni {
 
         // Inizializza Firebase
         FirebaseApp.initializeApp(this);
+        firebaseAnalytics = FirebaseAnalytics.getInstance(this);
+        Bundle bundle = new Bundle();
+        bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Schermata Login");
+        bundle.putString(FirebaseAnalytics.Param.SCREEN_CLASS, "LoginActivity");
+        firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SCREEN_VIEW, bundle);
+        firebaseAnalytics.setAnalyticsCollectionEnabled(true);
         loginViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
         osservaMessaggioErroreEmail();
         osservaMessaggioErrorePassword();
@@ -145,7 +153,6 @@ private void requestNotificationPermissions() {
         if (requestCode == PERMISSION_REQUEST_CODE) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 // I permessi sono stati concessi
-                // Puoi eseguire azioni aggiuntive qui se necessario
             } else {
                 // I permessi non sono stati concessi
                 // Puoi gestire questo caso in modo appropriato, ad esempio informando l'utente sui motivi per cui i permessi sono necessari

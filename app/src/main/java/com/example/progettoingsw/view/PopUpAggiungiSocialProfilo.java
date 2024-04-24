@@ -32,6 +32,7 @@ public class PopUpAggiungiSocialProfilo extends DialogPersonalizzato implements 
         this.fragmentProfilo = fragmentProfilo;
         this.fragmentProfiloViewModel=fragmentProfiloViewModel;
         this.popupDismissListener=popupAggiungiSocialDismissListener;
+        setCanceledOnTouchOutside(false);
     }
 
     @Override
@@ -40,9 +41,6 @@ public class PopUpAggiungiSocialProfilo extends DialogPersonalizzato implements 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.pop_up_aggiungi_social_profilo);
 
-        osservaMessaggioErroreLinkNuovo();
-        osservaMessaggioErroreNomeNuovo();
-        osservaIsSocialAggiunto();
 
 
 
@@ -57,7 +55,9 @@ public class PopUpAggiungiSocialProfilo extends DialogPersonalizzato implements 
         progressBarPopUpAggiungiSocialProfilo = findViewById(R.id.progressBarPopUpAggiungiSocialProfilo);
 
 
-
+        osservaMessaggioErroreLinkNuovo();
+        osservaMessaggioErroreNomeNuovo();
+        osservaIsSocialAggiunto();
 
         bottoneChiudiRegistrazioneSocial.setOnClickListener(this);
 
@@ -71,13 +71,18 @@ public class PopUpAggiungiSocialProfilo extends DialogPersonalizzato implements 
         if (viewId == R.id.bottoneChiudiRegistrazioneSocial) {
             fragmentProfiloViewModel.setApriPopUpAggiungiSocial(false);
             //dismissAggiungiSocialPopup();
+            fragmentProfiloViewModel.resetErroriSocialAggiunti();
             dismiss(); // Chiude il dialog
         } else if (viewId == R.id.bottoneConfermaRegistrazioneSocial) {
             confermaRegistrazioneSocialProfilo();
         }
     }
 
-
+    @Override
+    public void onBackPressed(){
+        Log.d("onBackPressed","onBackPressed");
+            bottoneChiudiRegistrazioneSocial.performClick();
+    }
     private void confermaRegistrazioneSocialProfilo() {
         String nomeSocial = editTextNomeSocial.getText().toString().trim();
         String linkSocial = editTextLinkSocial.getText().toString().trim();
@@ -175,6 +180,7 @@ public class PopUpAggiungiSocialProfilo extends DialogPersonalizzato implements 
             if(fragmentProfiloViewModel.getIsSocialAggiunto()){
                 Log.d("osservaIsSocialAggiunto","prima di dismiss");
                 //dismiss();
+                fragmentProfiloViewModel.resetErroriSocialAggiunti();
                 dismissAggiungiSocialPopup();
             }else{
                 Toast.makeText(getContext(), "Errore nei dati del social da aggiungere", Toast.LENGTH_SHORT).show();

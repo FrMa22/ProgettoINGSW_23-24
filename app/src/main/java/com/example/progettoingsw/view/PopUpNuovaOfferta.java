@@ -50,6 +50,7 @@ public class PopUpNuovaOfferta extends DialogPersonalizzato implements View.OnCl
         super(activity);
         this.fragmentActivity = activity;
         this.popupDismissListener = dismissListener;
+        setCanceledOnTouchOutside(false);
     }
 
     @Override
@@ -95,6 +96,7 @@ public class PopUpNuovaOfferta extends DialogPersonalizzato implements View.OnCl
     public void onClick(View v) {
         if (v.getId() == R.id.bottoneAnnullaPopUpAsta) {
             //dismiss();
+            popUpNuovaOffertaViewModel.resetErroriNuovaOfferta(fragmentActivity);
             dismissPopup();
         } else if (v.getId() == R.id.bottoneConfermaPopUpAsta) {
             offerta = textviewNuovoPrezzo.getText().toString();
@@ -103,21 +105,6 @@ public class PopUpNuovaOfferta extends DialogPersonalizzato implements View.OnCl
             popUpNuovaOffertaViewModel.checkOfferta(offerta);
 
 
-//                    }else if(schermataAstaInversa != null){
-//                        if(offertaAttuale>=offertaVecchia) {
-//                            Toast.makeText(getContext(), "Attenzione! L'offerta deve essere inferiore al prezzo attuale dell'asta.", Toast.LENGTH_SHORT).show();
-//                        } else if (offertaAttuale<=0.10) {
-//                            Toast.makeText(getContext(), "Attenzione! L'offerta deve essere almeno di 10 centesimi.", Toast.LENGTH_SHORT).show();
-//                        } else{
-//                            astaInversaDAO = new AstaInversaDAO();
-//                            astaInversaDAO.openConnection();
-//                            astaInversaDAO.partecipaAstaInversa(id_asta,emailOfferente,offertaAttuale);
-//                            astaInversaDAO.closeConnection();
-//                            Toast.makeText(getContext(), "Partecipazione aggiunta con successo!", Toast.LENGTH_SHORT).show();
-//                            schermataAstaInversa.setPrezzo(Math.round(offertaAttuale));
-//                            dismiss();
-//                        }
-//                    }
 
 
         }
@@ -172,6 +159,7 @@ public class PopUpNuovaOfferta extends DialogPersonalizzato implements View.OnCl
         }
     }
     public void osservaIsPartecipazioneAvvenuta(){
+        Log.d("osservaIsPartecipazioneAvvenuta","osservaIsPartecipazioneAvvenuta");
         popUpNuovaOffertaViewModel.isPartecipazioneAvvenuta.observe(fragmentActivity, (messaggio) -> {
             if(popUpNuovaOffertaViewModel.getIsPartecipazioneAvvenuta()){
                 String messaggioAcquisto = popUpNuovaOffertaViewModel.getMessaggioPartecipazioneAsta();
@@ -182,6 +170,7 @@ public class PopUpNuovaOfferta extends DialogPersonalizzato implements View.OnCl
                 }
                 Log.d("osservaIsPartecipazioneAvvenuta","prima di dismiss");
                 //dismiss();
+                popUpNuovaOffertaViewModel.resetErroriNuovaOfferta(fragmentActivity);
                 dismissPopup();
             }else{
                 Toast.makeText(getContext(), "Errore nell'offerta!", Toast.LENGTH_SHORT).show();

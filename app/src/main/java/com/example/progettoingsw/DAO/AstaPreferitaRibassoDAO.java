@@ -136,7 +136,7 @@ public class AstaPreferitaRibassoDAO {
         protected void onPostExecute(Boolean result) {
             // Chiamato dopo che doInBackground è completato
             // Puoi mostrare il risultato all'utente o gestirlo in modo appropriato
-            schermataAstaRibasso.handleInserimento(result);
+            //schermataAstaRibasso.handleInserimento(result);
         }
 
     }
@@ -169,7 +169,7 @@ public class AstaPreferitaRibassoDAO {
         protected void onPostExecute(Boolean result) {
             // Chiamato dopo che doInBackground è completato
             // Puoi mostrare il risultato all'utente o gestirlo in modo appropriato
-            schermataAstaRibasso.handleEliminazione(result);
+            //schermataAstaRibasso.handleEliminazione(result);
         }
 
     }

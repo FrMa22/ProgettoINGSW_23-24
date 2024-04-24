@@ -7,6 +7,7 @@ import android.util.Log;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.progettoingsw.model.Asta_alribassoModel;
 import com.example.progettoingsw.model.Asta_inversaModel;
 import com.example.progettoingsw.model.VenditoreModel;
 import com.example.progettoingsw.repository.Asta_inversaRepository;
@@ -23,6 +24,7 @@ public class SchermataAstaInversaViewModel extends ViewModel {
     public MutableLiveData<Boolean> isAstaChiusa = new MutableLiveData<>(false);
     public MutableLiveData<Boolean> isUltimaOffertaTua = new MutableLiveData<>(false);
     public MutableLiveData<Boolean> vaiInAcquirente = new MutableLiveData<>(false);
+    public MutableLiveData<Asta_inversaModel> astadaMostrare = new MutableLiveData<>(null);
     private String messaggioPartecipazioneAstaInglese;
     private Asta_inversaRepository astaInversaRepository;
 
@@ -32,6 +34,7 @@ public class SchermataAstaInversaViewModel extends ViewModel {
     }
 
     public void getAstaData(){
+        Log.d("getAstaData","entrato");
         Long idAsta = repository.getAsta_inversaSelezionata().getId();
         astaInversaRepository.trovaAsta_inversa(idAsta, new Asta_inversaRepository.OnTrovaAstaInversaListener() {
             @Override
@@ -194,5 +197,21 @@ public class SchermataAstaInversaViewModel extends ViewModel {
         repository.setAcquirenteEmailDaAsta(emailAcquirente);
         repository.setLeMieAsteUtenteAttuale(false);
         setVaiInAcquirente(true);
+    }
+    public Asta_inversaModel getAstadaMostrare() {
+        return astadaMostrare.getValue();
+    }
+
+    public void setAstadaMostrare(Asta_inversaModel astadaMostrare) {
+        this.astadaMostrare.setValue(astadaMostrare);
+    }
+    public Boolean isAstaDaMostrare(){
+        return (this.astadaMostrare.getValue()!=null);
+    }
+    public void recuperaAstaDaMostrare(){
+        if(astaRecuperata.getValue()!=null) {
+            Log.d("recuperaAstaDaMostrare", "valori: " + astaRecuperata.getValue().getNome());
+        }
+        setAstadaMostrare(repository.getAsta_inversaSelezionata());
     }
 }

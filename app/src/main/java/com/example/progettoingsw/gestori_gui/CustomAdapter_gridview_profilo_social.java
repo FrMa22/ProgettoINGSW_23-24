@@ -29,7 +29,12 @@ public class CustomAdapter_gridview_profilo_social extends BaseAdapter {
         notifyDataSetChanged();
     }
 
-
+public void clear(){
+        if(socialLinks!=null && !socialLinks.isEmpty()){
+            socialLinks.clear();
+        }
+        notifyDataSetChanged();
+}
     public List<String> getSocialNames() {
         return socialNames;
     }

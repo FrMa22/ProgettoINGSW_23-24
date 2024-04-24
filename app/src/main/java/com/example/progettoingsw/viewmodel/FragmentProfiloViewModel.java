@@ -8,7 +8,6 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.progettoingsw.model.AcquirenteModel;
-import com.example.progettoingsw.model.Asta_allingleseModel;
 import com.example.progettoingsw.model.SocialAcquirenteModel;
 import com.example.progettoingsw.model.SocialVenditoreModel;
 import com.example.progettoingsw.model.VenditoreModel;
@@ -44,6 +43,8 @@ public class FragmentProfiloViewModel extends ViewModel {
     public MutableLiveData<String> messaggioErrorePasswordVecchia = new MutableLiveData<>("");
     public MutableLiveData<String> messaggioErrorePasswordNuova = new MutableLiveData<>("");
 
+
+    public MutableLiveData<Boolean> socialAssenti = new MutableLiveData<>(false);
     public MutableLiveData<ArrayList<SocialAcquirenteModel>> socialAcquirenteRecuperati = new MutableLiveData<>(null);
 
     public MutableLiveData<ArrayList<SocialVenditoreModel>> socialVenditoreRecuperati = new MutableLiveData<>(null);
@@ -123,10 +124,11 @@ public class FragmentProfiloViewModel extends ViewModel {
             String email = getAcquirenteEmail();
             System.out.println("entrato in fragmentProfilo di viewmodel con email:" + email);
             System.out.println("in fragmentProfiloAcquirente di viewmodel prima del try con email:" + email);
-            if (repository.getSocialAcquirenteModelList() == null) {
-                System.out.println("lista social acquirente null");
-                return;
-            }
+//            if (repository.getSocialAcquirenteModelList() == null || repository.getSocialAcquirenteModelList().isEmpty()) {
+//                System.out.println("lista social acquirente null");
+//                setSocialAssenti(true);
+//                return;
+//            }
             try {
                 trovaSocialAcquirente(email);
                 if (repository.getSocialAcquirenteModelList().isEmpty()) {
@@ -137,6 +139,8 @@ public class FragmentProfiloViewModel extends ViewModel {
             }
         }
     }
+
+
 
 
     public boolean aggiunteSocialValide(String newnome,String newlink){
@@ -412,6 +416,12 @@ public class FragmentProfiloViewModel extends ViewModel {
 
     }
 
+    public Boolean getSocialAssenti() {
+        return socialAssenti.getValue();
+    }
+    public void setSocialAssenti(Boolean socialAssenti) {
+        this.socialAssenti.setValue(socialAssenti);
+    }
 
     public void eliminaSocialAcquirenteViewModel(String nome,String link){
         String email=getAcquirenteEmail();
@@ -493,7 +503,9 @@ public class FragmentProfiloViewModel extends ViewModel {
 
                 //se c'è la lista dei social allora setta il valore per l'observer della view
                 if(socialAcquirenteModelList!=null  && !socialAcquirenteModelList.isEmpty()){
-                    setSocialAcquirentePresenti(true);
+                    setSocialAcquirenteRecuperati((ArrayList<SocialAcquirenteModel>) socialAcquirenteModelList);
+                }else{
+                    setSocialAssenti(true);
                 }
             }
         });
@@ -568,11 +580,12 @@ public class FragmentProfiloViewModel extends ViewModel {
         if(containsVenditore()) {
             String email = getVenditoreEmail();
             System.out.println("entrato in fragmentProfilo di viewmodel con email:" + email);
-            System.out.println("in fragmentProfiloVenditore di viewmodel prima del try con email:" + email);
-            if (repository.getSocialVenditoreModelList() == null) {
-                System.out.println("lista social Venditore null");
-                return;
-            }
+            System.out.println("in fragmentProfiloVenditore di viewmodel prima del try con email:" + email + ", la repository social venditore ha: " + repository.getSocialVenditoreModelList());
+//            if (repository.getSocialVenditoreModelList() == null || repository.getSocialVenditoreModelList().isEmpty()) {
+//                System.out.println("lista social Venditore null");
+//                setSocialAssenti(true);
+//                return;
+//            }
             try {
                 trovaSocialVenditore(email);
                 if (repository.getSocialVenditoreModelList().isEmpty()) {
@@ -677,7 +690,9 @@ public class FragmentProfiloViewModel extends ViewModel {
 
                 //se c'è la lista dei social allora setta il valore per l'observer della view
                 if(socialVenditoreModelList!=null  && !socialVenditoreModelList.isEmpty()){
-                    setSocialVenditorePresenti(true);
+                    setSocialVenditoreRecuperati((ArrayList<SocialVenditoreModel>) socialVenditoreModelList);
+                }else{
+                    setSocialAssenti(true);
                 }
             }
         });
@@ -749,6 +764,10 @@ public class FragmentProfiloViewModel extends ViewModel {
     }
     public Boolean getIsPasswordCambiata(){
         return isPasswordCambiata.getValue();
+    }
+    public void resetErroriControlloPassword(){
+        setMessaggioErrorePasswordVecchia("");
+        setMessaggioErrorePasswordNuova("");
     }
     public void setIsSocialCambiato(Boolean b){
         isSocialCambiato.setValue(b);
@@ -952,6 +971,17 @@ public class FragmentProfiloViewModel extends ViewModel {
         return apriLeMieAste.getValue();
     }
 
+    public void resetErroriSocialAggiunti(){
+        setMessaggioErroreNomeNuovo("");
+        setMessaggioErroreLinkNuovo("");
+    }
+    public void resetErroriModificaCampoProfilo(){
+        setMessaggioErroreNomeNuovo("");
+        setMessaggioErroreCognomeNuovo("");
+        setMessaggioErroreSitoNuovo("");
+        setMessaggioErroreBioNuovo("");
+        setMessaggioErrorePaeseNuovo("");
+    }
     public void setApriPartecipazioneAste(Boolean b){
         apriPartecipazioneAste.setValue(b);
     }

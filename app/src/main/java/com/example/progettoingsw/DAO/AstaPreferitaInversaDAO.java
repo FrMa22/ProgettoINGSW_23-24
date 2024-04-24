@@ -137,7 +137,7 @@ public class AstaPreferitaInversaDAO {
         protected void onPostExecute(Boolean result) {
             // Chiamato dopo che doInBackground è completato
             // Puoi mostrare il risultato all'utente o gestirlo in modo appropriato
-            schermataAstaInversa.handleInserimento(result);
+            //schermataAstaInversa.handleInserimento(result);
         }
 
     }
@@ -170,7 +170,7 @@ public class AstaPreferitaInversaDAO {
         protected void onPostExecute(Boolean result) {
             // Chiamato dopo che doInBackground è completato
             // Puoi mostrare il risultato all'utente o gestirlo in modo appropriato
-            schermataAstaInversa.handleEliminazione(result);
+            //schermataAstaInversa.handleEliminazione(result);
         }
 
     }

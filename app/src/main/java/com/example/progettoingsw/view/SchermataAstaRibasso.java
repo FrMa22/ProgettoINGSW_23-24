@@ -78,39 +78,18 @@ public class SchermataAstaRibasso extends GestoreComuniImplementazioni {
         osservaTipoUtenteChecked();
         osservaIsAstaInPreferiti();
         osservaVaiInVenditore();
+        osservaAstaDaMostrare();
 
+        osservaConvertiIntervalloOfferte();
+        osservaIsAstaChiusa();
+        osservaImmagineAstaConvertita();
 
         schermataAstaRibassoViewModel.checkTipoUtente();
         schermataAstaRibassoViewModel.getAstaData();
 
         relativeLayoutSchermataAstaRibasso = findViewById(R.id.relativeLayoutSchermataAstaRibasso);
-//        astaRibassoDAO = new AstaRibassoDAO(this);
-//        astaPreferitaRibassoDAO = new AstaPreferitaRibassoDAO(this);
         progress_bar_schermata_asta_ribasso = findViewById(R.id.progress_bar_schermata_asta_ribasso);
 
-//        progress_bar_schermata_asta_ribasso.setVisibility(View.VISIBLE);
-//        setAllClickable(relativeLayoutSchermataAstaRibasso, false);
-
-//        id = getIntent().getIntExtra("id",0);
-//        email = getIntent().getStringExtra("email");
-//        tipoUtente = getIntent().getStringExtra("tipoUtente");
-//        Toast.makeText(this, "l'id è " + id + ", la mail è " + email + ", il tipoutente è " + tipoUtente, Toast.LENGTH_SHORT).show();
-
-
-
-
-
-//        countDownTimerControlloOgni10sec = new CountDownTimer(10000, 1000) {
-//            public void onTick(long millisUntilFinished) {
-//                // Il timer sta andando avanti, non è necessario fare nulla qui
-//                Log.d("Timer ribasso ogni 10sec", "Tempo rimanente: " + millisUntilFinished / 1000 + " secondi");
-//            }
-//            public void onFinish() {
-//                Log.d("Timer ribasso ogni 10sec", "Timer scaduto");
-//                astaRibassoDAO.recuperaInfoAsta(id);
-//                start();
-//            }
-//        };
 
         bottoneBack =  findViewById(R.id.bottoneBackSchermataAstaRibasso);
         bottoneBack.setOnClickListener(new View.OnClickListener() {
@@ -159,34 +138,6 @@ public class SchermataAstaRibasso extends GestoreComuniImplementazioni {
 
             }
         });
-//        if(tipoUtente.equals("venditore")){
-//            imageButtonPreferiti.setVisibility(View.INVISIBLE);
-//        }else{
-//            astaPreferitaRibassoDAO.openConnection();
-//            astaPreferitaRibassoDAO.verificaByID(id,email);
-//            imageButtonPreferiti.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    Log.d("Preferiti asta ribasso", "drawable preferiti");
-//                    if (imageButtonPreferiti.getDrawable().getConstantState().equals(drawableCuoreVuoto.getConstantState())){
-//                        Log.d("Preferiti asta ribasso", "non è in preferito");
-//                        setAllClickable(relativeLayoutSchermataAstaRibasso,false);
-//                        astaPreferitaRibassoDAO.inserisciByID(id,email);
-//
-//                    } else if (imageButtonPreferiti.getDrawable().getConstantState().equals(drawableCuorePieno.getConstantState())){
-//                        Log.d("Preferiti asta ribasso", "è in preferito");
-//                        setAllClickable(relativeLayoutSchermataAstaRibasso,false);
-//                        astaPreferitaRibassoDAO.eliminaByID(id,email);
-//                    }
-//                }
-//            });
-//        }
-//
-//        astaRibassoDAO.openConnection();
-//        astaRibassoDAO.getAstaRibassoByID(id);
-//        astaRibassoDAO.closeConnection();
-//
-//
         textViewVenditore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -208,23 +159,11 @@ public class SchermataAstaRibasso extends GestoreComuniImplementazioni {
             textViewOffertaAttuale.setText(String.valueOf(astaRibassoRecuperata.getPrezzoAttuale()));
 
             textViewVenditore.setText(astaRibassoRecuperata.getId_venditore());
-            // Imposta l'immagine solo se non è nulla
-            //imageViewProdotto.setImageBitmap(schermataAstaRibassoViewModel.convertiImmagine(astaRibassoRecuperata.getImmagine()));
-//            if(schermataAstaRibassoViewModel.isAstaChiusa()){
-//                bottoneNuovaOfferta.setVisibility(View.INVISIBLE);
-//                textViewProssimoDecremento.setText("Asta chiusa.");
-//                imageButtonPreferiti.setVisibility(View.INVISIBLE);
-//            }else{
-//                textViewProssimoDecremento.setText(schermataAstaRibassoViewModel.convertiIntervalloOfferte(astaRibassoRecuperata.getIntervalloDecrementale()));
-//            }
 
 
         } else {
-            // Gestisci il caso in cui non ci siano dati recuperati
             Log.d("Errore", "Impossibile recuperare i dati dell'asta");
         }
-//        progress_bar_schermata_asta_ribasso.setVisibility(View.GONE);
-//        setAllClickable(relativeLayoutSchermataAstaRibasso, true);
     }
     public void getPrezzoCondizioneIntervallo(String prezzoAttuale, String condizione, String intervallo) {
         if (condizione.equals("aperta")) {
@@ -314,61 +253,51 @@ public class SchermataAstaRibasso extends GestoreComuniImplementazioni {
 
         }
     }
-    public void handleInserimento(Boolean result){
-        if(result){
-            imageButtonPreferiti.setImageDrawable(drawableCuorePieno);
-        }else{
-            Toast.makeText(this, "Errore nell'inserimento.", Toast.LENGTH_SHORT).show();
-        }
-        setAllClickable(relativeLayoutSchermataAstaRibasso,true);
-    }
-    public void handleEliminazione(Boolean result){
-        if(result){
-            imageButtonPreferiti.setImageDrawable(drawableCuoreVuoto);
-        }else{
-            Toast.makeText(this, "Errore nella rimozione.", Toast.LENGTH_SHORT).show();
-        }
-        setAllClickable(relativeLayoutSchermataAstaRibasso,true);
-    }
 
 
 
     public void osservaAstaRecuperata(){
         schermataAstaRibassoViewModel.astaRecuperata.observe(this, (asta) -> {
             if (asta != null) {
-                osservaImmagineAstaConvertita(asta);
                 schermataAstaRibassoViewModel.convertiImmagine(asta.getPath_immagine());
             }
         });
     }
-    public void osservaImmagineAstaConvertita(Asta_alribassoModel asta){
+    public void osservaImmagineAstaConvertita(){
         schermataAstaRibassoViewModel.immagineAstaConvertita.observe(this, (immagine) -> {
             if (immagine != null) {
                 imageViewProdotto.setImageBitmap(immagine);
             }else{
                 imageViewProdotto.setImageResource(R.drawable.no_image_available);
             }
-            osservaIsAstaChiusa(asta);
             schermataAstaRibassoViewModel.isAstaChiusa();
         });
     }
-    public void osservaIsAstaChiusa(Asta_alribassoModel asta){
+    public void osservaIsAstaChiusa(){
         schermataAstaRibassoViewModel.isAstaChiusa.observe(this, (valore) -> {
             if(valore){
                 bottoneNuovaOfferta.setVisibility(View.INVISIBLE);
                 imageButtonPreferiti.setVisibility(View.INVISIBLE);
                 textViewProssimoDecremento.setText("Asta chiusa.");
             }else {
-                osservaConvertiIntervalloOfferte(asta);
-                schermataAstaRibassoViewModel.convertiIntervalloOfferte(asta);
+                schermataAstaRibassoViewModel.convertiIntervalloOfferte();
             }
         });
     }
-    public void osservaConvertiIntervalloOfferte(Asta_alribassoModel asta){
+    public void osservaConvertiIntervalloOfferte(){
         schermataAstaRibassoViewModel.intervalloOfferteConvertito.observe(this, (intervallo) ->{
-            Log.d("osservaConvertiIntervalloOfferte", intervallo);
-            textViewProssimoDecremento.setText(intervallo);
-            setAstaData(asta);
+            if(!intervallo.equals("")) {
+                Log.d("osservaConvertiIntervalloOfferte", intervallo);
+                textViewProssimoDecremento.setText(intervallo);
+                schermataAstaRibassoViewModel.recuperaAstaDaMostrare();
+            }
+        });
+    }
+    public void osservaAstaDaMostrare(){
+        schermataAstaRibassoViewModel.astadaMostrare.observe(this, (asta) ->{
+            if(schermataAstaRibassoViewModel.isAstaDaMostrare()){
+                setAstaData(asta);
+            }
         });
     }
     public void osservaErroreRecuperoAsta(){

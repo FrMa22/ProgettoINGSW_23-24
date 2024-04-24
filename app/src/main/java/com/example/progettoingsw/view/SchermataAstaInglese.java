@@ -93,32 +93,14 @@ public class SchermataAstaInglese extends GestoreComuniImplementazioni implement
         osservaIsUltimaOffertaTua();
         osservaVaiInVenditore();
 
+        osservaConvertiIntervalloOfferte();
+        osservaIsAstaChiusa();
+        osservaImmagineAstaConvertita();
+        osservaAstaDaMostrare();
+
         schermataAstaIngleseViewModel.checkTipoUtente();
         schermataAstaIngleseViewModel.getAstaData();
 
-//        id = getIntent().getIntExtra("id",0);
-//        email = getIntent().getStringExtra("email");
-//        tipoUtente = getIntent().getStringExtra("tipoUtente");
-//        Toast.makeText(this, "l'id è " + id + ", la mail è " + email + ", il tipoutente è " + tipoUtente, Toast.LENGTH_SHORT).show();
-
-
-
-        // Inizializza il timer con una durata di 10 secondi
-//        countDownTimer = new CountDownTimer(10000, 1000) {
-//            public void onTick(long millisUntilFinished) {
-//                // Stampa il numero di secondi rimanenti
-//                Log.d("Timer inglese", "Secondi mancanti: " + millisUntilFinished / 1000);
-//            }
-//            public void onFinish() {
-//                Log.d("Timer inglese", "Timer scaduto");
-//                //test: se getAstaIngleseByID è troppo pesante meglio l'altro ma va aggiunto il recupero e aggiornamento della scadenza
-//                astaIngleseDAO.getAstaIngleseByID(id);
-//                //astaIngleseDAO.getPrezzoECondizioneAstaByID(id);
-//                start();
-//            }
-//        };
-//        // Avvia il timer
-//        countDownTimer.start();
 
         bottoneBack =  findViewById(R.id.bottoneBackSchermataAstaInglese);
         bottoneBack.setOnClickListener(new View.OnClickListener() {
@@ -144,15 +126,6 @@ public class SchermataAstaInglese extends GestoreComuniImplementazioni implement
                 popUpNuovaOfferta.show();
             }
         });
-//        String valoreDaModificare = getIntent().getStringExtra("editTextPrezzo");
-//        if (valoreDaModificare != null) {
-//            textViewPrezzo.setText(valoreDaModificare);
-//        }
-//
-//        astaIngleseDAO.openConnection();
-//        astaIngleseDAO.getAstaIngleseByID(id);
-//        astaIngleseDAO.verificaAttualeVincitore(email,id);
-//        astaIngleseDAO.closeConnection();
 
 
 
@@ -194,6 +167,7 @@ public class SchermataAstaInglese extends GestoreComuniImplementazioni implement
     }
     @Override
     public void onPopupDismissed() {
+        Log.d("onPopUpDismissed","entrato in on popupdismissed");
         schermataAstaIngleseViewModel.checkUltimaOfferta();
         schermataAstaIngleseViewModel.getAstaData();
     }
@@ -218,37 +192,15 @@ public class SchermataAstaInglese extends GestoreComuniImplementazioni implement
     public void setAstaData(Asta_allingleseModel astaIngleseRecuperata) {
         if (astaIngleseRecuperata != null) {
             Log.d("setAstaData", "Entrato");
-            // Imposta i dati recuperati sui TextView e ImageView della tua activity
             textViewNomeProdotto.setText(astaIngleseRecuperata.getNome());
             textViewDescrizione.setText(astaIngleseRecuperata.getDescrizione());
             textViewPrezzo.setText(String.valueOf(astaIngleseRecuperata.getPrezzoAttuale()));
             textViewVenditore.setText(astaIngleseRecuperata.getId_venditore());
             textViewSogliaRialzoSchermataAstaInglese.setText(String.valueOf(astaIngleseRecuperata.getRialzoMin()));
-
-
-            //errore modello MVVM
-//            if(immagineConvertita != null){
-//                imageViewProdotto.setImageBitmap(immagineConvertita);
-//            }else{
-//                //immagine di default
-//            }
-
-
-//            if(isAstaChiusa){
-//                bottoneNuovaOfferta.setVisibility(View.INVISIBLE);
-//                imageButtonPreferiti.setVisibility(View.INVISIBLE);
-//                textViewIntervalloOfferte.setText("Asta chiusa.");
-//            }else{
-//                textViewIntervalloOfferte.setText(intervalloConvertito);
-//            }
-
         } else {
             // Gestisci il caso in cui non ci siano dati recuperati
             Log.d("Errore", "Impossibile recuperare i dati dell'asta");
         }
-
-//        progress_bar_schermata_asta_inglese.setVisibility(View.GONE);
-//        setAllClickable(relativeLayoutSchermataAstaInglese, true);
     }
 
     public  void verificaPreferiti(boolean check){
@@ -303,24 +255,22 @@ public class SchermataAstaInglese extends GestoreComuniImplementazioni implement
     public void osservaAstaRecuperata(){
         schermataAstaIngleseViewModel.astaRecuperata.observe(this, (asta) -> {
             if (asta != null) {
-                Log.d("asta recuperata" , "qui");
-                osservaImmagineAstaConvertita(asta);
                 schermataAstaIngleseViewModel.convertiImmagine(asta.getPath_immagine());
             }
         });
     }
-    public void osservaImmagineAstaConvertita(Asta_allingleseModel asta){
+    public void osservaImmagineAstaConvertita(){
         schermataAstaIngleseViewModel.immagineAstaConvertita.observe(this, (immagine) -> {
             if (immagine != null) {
                 imageViewProdotto.setImageBitmap(immagine);
             }else{
                 imageViewProdotto.setImageResource(R.drawable.no_image_available);
             }
-            osservaIsAstaChiusa(asta);
             schermataAstaIngleseViewModel.isAstaChiusa();
         });
     }
-    public void osservaIsAstaChiusa(Asta_allingleseModel asta){
+    public void osservaIsAstaChiusa(){
+        Log.d("ooservaAstaChiusa", "osservo");
         schermataAstaIngleseViewModel.isAstaChiusa.observe(this, (valore) -> {
             if(valore){
                 Log.d("asta chiusa" , "si");
@@ -329,19 +279,26 @@ public class SchermataAstaInglese extends GestoreComuniImplementazioni implement
                 textViewIntervalloOfferte.setText("Asta chiusa.");
             }else {
                 Log.d("asta chiusa" , "no");
-                osservaConvertiIntervalloOfferte(asta);
-                schermataAstaIngleseViewModel.convertiIntervalloOfferte(asta);
+                schermataAstaIngleseViewModel.convertiIntervalloOfferte();
             }
         });
     }
-    public void osservaConvertiIntervalloOfferte(Asta_allingleseModel asta){
+    public void osservaConvertiIntervalloOfferte(){
         schermataAstaIngleseViewModel.intervalloOfferteConvertito.observe(this, (intervallo) ->{
-            textViewIntervalloOfferte.setText(intervallo);
-            Log.d("converti intervallo" , "qui");
-            setAstaData(asta);
+            if(!intervallo.equals("")){
+                textViewIntervalloOfferte.setText(intervallo);
+                schermataAstaIngleseViewModel.recuperaAstaDaMostrare();
+            }
+
         });
     }
-
+    public void osservaAstaDaMostrare(){
+        schermataAstaIngleseViewModel.astadaMostrare.observe(this, (asta) ->{
+            if(schermataAstaIngleseViewModel.isAstaDaMostrare()){
+                setAstaData(asta);
+            }
+        });
+    }
 
     public void osservaErroreRecuperoAsta(){
         schermataAstaIngleseViewModel.erroreRecuperoAsta.observe(this, (messaggio) -> {
@@ -377,6 +334,7 @@ public class SchermataAstaInglese extends GestoreComuniImplementazioni implement
         schermataAstaIngleseViewModel.isPartecipazioneAvvenuta.observe(this, (messaggio) -> {
             Log.d("osservaIsAstaRecuperata", "sto recuper");
             if (messaggio) {
+                Log.d("osservaIsAstaRecuperata", "nell'if");
                 Toast.makeText(this, "Offerta accettata", Toast.LENGTH_SHORT).show();
                 schermataAstaIngleseViewModel.getAstaData();
             }
@@ -390,7 +348,7 @@ public class SchermataAstaInglese extends GestoreComuniImplementazioni implement
     }
     public void osservaIsAstaInPreferiti(){
         schermataAstaIngleseViewModel.isAstaInPreferiti.observe(this, (messaggio) -> {
-            Log.d("osservaIsAstaRecuperata", "sto recuper");
+            Log.d("osservaIsAstaInPreferiti", "sto recuper");
             if (messaggio) {
                 imageButtonPreferiti.setImageDrawable(drawableCuorePieno);
                 imageButtonPreferiti.setOnClickListener(v -> eliminazioneInPreferiti());

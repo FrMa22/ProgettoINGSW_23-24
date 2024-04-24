@@ -34,6 +34,7 @@ import com.example.progettoingsw.view.SchermataAstaInversa;
 import com.example.progettoingsw.view.SchermataAstaRibasso;
 import com.example.progettoingsw.view.SchermataNotifiche;
 import com.example.progettoingsw.viewmodel.HomeViewModel;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -270,6 +271,12 @@ public class FragmentHome extends Fragment {
     public void onResume() {
         Log.d("Home" , "entrato in onResume");
         super.onResume();
+        FirebaseAnalytics firebaseAnalytics = FirebaseAnalytics.getInstance(requireContext());
+        Bundle bundle = new Bundle();
+        bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Fragment Home");
+        bundle.putString(FirebaseAnalytics.Param.SCREEN_CLASS, "FragmentHome");
+        firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SCREEN_VIEW, bundle);
+        firebaseAnalytics.setAnalyticsCollectionEnabled(true);
     }
 
     public void osservaaste_allingleseCategoriaNomePresenti() {
