@@ -72,6 +72,8 @@ public class Registrazione extends GestoreComuniImplementazioni {
         osservaMessaggioErroreConfermaPassword();
         osservaProseguiRegistrazione();
 
+        osservaValoriPresentiAcquirente();
+        osservaValoriPresentiVenditore();
 
         bottoneAnnulla.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
@@ -87,6 +89,7 @@ public class Registrazione extends GestoreComuniImplementazioni {
                 // Ottieni i valori dai campi di input
                 String email = edittext_email.getText().toString().trim();
                 String tipoUtente = spinner_tipo_utente.getSelectedItem().toString().trim();
+                Log.d("onClickbottoneprosegui", "valore spinner : " + tipoUtente);
                 String nome = edittext_nome.getText().toString().trim();
                 String cognome = edittext_cognome.getText().toString().trim();
                 String password = edittext_password.getText().toString().trim();
@@ -197,6 +200,11 @@ public class Registrazione extends GestoreComuniImplementazioni {
         }
     }*/
 
+    @Override
+    public void onResume(){
+        super.onResume();
+        registrazioneViewModel.checkValoriPresenti();
+    }
     public void messaggioErroreMail(String messaggio){edittext_email.setError(messaggio);}
 
     public void messaggioErrorePassword(String messaggio){
@@ -253,16 +261,38 @@ public class Registrazione extends GestoreComuniImplementazioni {
         registrazioneViewModel.proseguiRegistrazione.observe(this, (messaggio) ->{
             if (registrazioneViewModel.isProseguiRegistrazione("nuovo acquirente")) {
                 Intent intent = new Intent(Registrazione.this, RegistrazioneCampiFacoltativi.class);
-                intent.putExtra("tipoUtente", "acquirente");
                 startActivity(intent);
                 Toast.makeText(this, "Passaggio ai campi facoltativi", Toast.LENGTH_SHORT).show();
             } else if (registrazioneViewModel.isProseguiRegistrazione("nuovo venditore")) {
                 Intent intent = new Intent(Registrazione.this, RegistrazioneCampiFacoltativi.class);
-                intent.putExtra("tipoUtente", "venditore");
                 startActivity(intent);
                 Toast.makeText(this, "Passaggio ai campi facoltativi", Toast.LENGTH_SHORT).show();
             }
 
+        });
+    }
+    public void osservaValoriPresentiAcquirente(){
+        registrazioneViewModel.valoriPresentiAcquirente.observe(this, (utente)->{
+            if(registrazioneViewModel.isValoriPresentiAcquirente()){
+                edittext_nome.setText(utente.getNome());
+                edittext_cognome.setText(utente.getCognome());
+                edittext_email.setText(utente.getIndirizzo_email());
+                edittext_password.setText(utente.getPassword());
+                edittext_conferma_password.setText(utente.getPassword());
+                spinner_tipo_utente.setSelection(0);
+            }
+        });
+    }
+    public void osservaValoriPresentiVenditore(){
+        registrazioneViewModel.valoriPresentiVenditore.observe(this, (utente) ->{
+            if(registrazioneViewModel.isValoriPresentiVenditore()){
+                edittext_nome.setText(utente.getNome());
+                edittext_cognome.setText(utente.getCognome());
+                edittext_email.setText(utente.getIndirizzo_email());
+                edittext_password.setText(utente.getPassword());
+                edittext_conferma_password.setText(utente.getPassword());
+                spinner_tipo_utente.setSelection(1);
+            }
         });
     }
 }

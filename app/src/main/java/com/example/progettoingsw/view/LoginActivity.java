@@ -117,6 +117,12 @@ public class LoginActivity extends GestoreComuniImplementazioni {
             }
         });
 
+        registrazione.setOnClickListener(v -> {
+            //apre schermata registrazione
+            Intent intent = new Intent(LoginActivity.this, Registrazione.class);
+            startActivity(intent);
+
+        });
 
         // Inizializza Firebase
         FirebaseApp.initializeApp(this);

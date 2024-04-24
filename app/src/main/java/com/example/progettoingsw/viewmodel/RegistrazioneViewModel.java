@@ -1,5 +1,7 @@
 package com.example.progettoingsw.viewmodel;
 
+import android.util.Log;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -36,7 +38,8 @@ public class RegistrazioneViewModel extends ViewModel {
     public ArrayList<SocialAcquirenteModel> socialAcquirente = new ArrayList<SocialAcquirenteModel>();
 
     public ArrayList<SocialVenditoreModel> socialVenditore = new ArrayList<SocialVenditoreModel>();
-
+    public MutableLiveData<AcquirenteModel> valoriPresentiAcquirente = new MutableLiveData<>(null);
+    public MutableLiveData<VenditoreModel> valoriPresentiVenditore = new MutableLiveData<>(null);
     private RegistrazioneRepository registrazioneRepository;
     private Repository repository;
 
@@ -95,15 +98,35 @@ public class RegistrazioneViewModel extends ViewModel {
     public void checkSocial(String nomeSocial, String link) {
         System.out.println("entrato in registrazione di viewmodel");
         if (socialValido(nomeSocial, link)) {
-            if (containsAcquirente()) {
-                SocialAcquirenteModel socialAcquirenteModel = new SocialAcquirenteModel(nomeSocial, link, repository.getAcquirenteModel().getIndirizzo_email());
-                socialAcquirente.add(socialAcquirenteModel);
-                setProseguiInserimentoSocial("inserito");
-            } else {
-                SocialVenditoreModel socialVenditoreModel = new SocialVenditoreModel(nomeSocial, link, repository.getVenditoreModel().getIndirizzo_email());
-                socialVenditore.add((socialVenditoreModel));
-                setProseguiInserimentoSocial("inserito");
+            boolean socialGiaPresente = false;
+                if (containsAcquirente()) {
+                    for (SocialAcquirenteModel social : socialAcquirente) {
+                        if (social.getNome().equals(nomeSocial) && social.getLink().equals(link)) {
+                            setMessaggioErroreLink("social già aggiunto");
+                            socialGiaPresente = true;
+                            break;
+                        }
+                    }
+                    if(!socialGiaPresente) {
+                        SocialAcquirenteModel socialAcquirenteModel = new SocialAcquirenteModel(nomeSocial, link, repository.getAcquirenteModel().getIndirizzo_email());
+                        socialAcquirente.add(socialAcquirenteModel);
+                        setProseguiInserimentoSocial("inserito");
+                    }
+                } else {
+                    for(SocialVenditoreModel social : socialVenditore) {
+                        if (social.getNome().equals(nomeSocial) && social.getLink().equals(link)) {
+                            setMessaggioErroreLink("social già aggiunto");
+                            socialGiaPresente = true;
+                            break;
+                        }
+                    }
+                    if(!socialGiaPresente){
+                        SocialVenditoreModel socialVenditoreModel = new SocialVenditoreModel(nomeSocial, link, repository.getVenditoreModel().getIndirizzo_email());
+                        socialVenditore.add((socialVenditoreModel));
+                        setProseguiInserimentoSocial("inserito");
+                    }
             }
+
         }
 
     }
@@ -183,8 +206,9 @@ public void controlloSocial(){
             @Override
             public void ricercaDoppia(AcquirenteModel acquirenteControllo) {
                 if (acquirenteControllo == null) {
-                    AcquirenteModel acquirenteModel = new AcquirenteModel(email, nome, cognome, password, null, null, null);
+                    AcquirenteModel acquirenteModel = new AcquirenteModel(nome, cognome, email, password, null, null, null);
                     repository.setAcquirenteModel(acquirenteModel);
+                    repository.setVenditoreModel(null);
                     setProseguiRegistrazione("nuovo acquirente");
                 } else {
                     setMessaggioErroreEmail("indirizzo email già usato");
@@ -226,8 +250,9 @@ public void controlloSocial(){
             @Override
             public void ricercaDoppia(VenditoreModel venditoreControllo) {
                 if (venditoreControllo == null) {
-                    VenditoreModel venditoreModel = new VenditoreModel(email, nome, cognome, password, null, null, null);
+                    VenditoreModel venditoreModel = new VenditoreModel(nome, cognome, email, password, null, null, null);
                     repository.setVenditoreModel(venditoreModel);
+                    repository.setAcquirenteModel(null);
                     setProseguiRegistrazione("nuovo venditore");
                 } else {
                     setMessaggioErroreEmail("indirizzo email già usato");
@@ -510,5 +535,29 @@ public void controlloSocial(){
         setApriPopUpsocial(true);
     }
 
+    public void resetErrori(){
+        setMessaggioErroreNomeSocial("");
+        setMessaggioErroreLink("");
+    }
+    public void setValoriPresentiAcquirente(AcquirenteModel utente){
+        this.valoriPresentiAcquirente.setValue(utente);
+    }
+    public Boolean isValoriPresentiAcquirente(){
+        return (valoriPresentiAcquirente.getValue()!=null);
+    }
+    public void setValoriPresentiVenditore(VenditoreModel utente){
+        this.valoriPresentiVenditore.setValue(utente);
+    }
+    public Boolean isValoriPresentiVenditore(){
+        return (valoriPresentiVenditore.getValue()!=null);
+    }
+    public void checkValoriPresenti(){
+        Log.d("checkValoriPresenti","entrato");
+        if(repository.getAcquirenteModel()!=null){
+            setValoriPresentiAcquirente(repository.getAcquirenteModel());
+        }else if(repository.getVenditoreModel()!=null){
+            setValoriPresentiVenditore(repository.getVenditoreModel());
+        }
+    }
 
 }

@@ -80,9 +80,7 @@ public class RegistrazioneCampiFacoltativi extends GestoreComuniImplementazioni 
         testoProvenienza = (EditText) findViewById(R.id.editTextPaeseDiProvenienza);
         testoSitoWeb = (EditText) findViewById(R.id.editTextSitoWeb);
         registrazioneViewModel = new ViewModelProvider(this).get(RegistrazioneViewModel.class);
-        bio = testoBio.getText().toString().trim();
-        paese = testoProvenienza.getText().toString().trim();
-        sitoWeb = testoSitoWeb.getText().toString().trim();
+
 
         osservaAcquirenteModelPresente();
         osservaVenditoreModelPresente();
@@ -194,6 +192,10 @@ public class RegistrazioneCampiFacoltativi extends GestoreComuniImplementazioni 
                 osservaMessaggioErroreBio();
                 osservaMessaggioErrorePaese();
                 osservaMessaggioErroreSitoWeb();
+                bio = testoBio.getText().toString().trim();
+                paese = testoProvenienza.getText().toString().trim();
+                sitoWeb = testoSitoWeb.getText().toString().trim();
+                Log.d("osservaAcquirente","valori : " + bio + paese + sitoWeb);
                 registrazioneViewModel.registrazioneAcquirenteCompleta(bio,paese,sitoWeb,acquirente);
             }
         });
@@ -207,6 +209,9 @@ public class RegistrazioneCampiFacoltativi extends GestoreComuniImplementazioni 
                 osservaMessaggioErroreBio();
                 osservaMessaggioErrorePaese();
                 osservaMessaggioErroreSitoWeb();
+                bio = testoBio.getText().toString().trim();
+                paese = testoProvenienza.getText().toString().trim();
+                sitoWeb = testoSitoWeb.getText().toString().trim();
                 registrazioneViewModel.registrazioneVenditoreCompleta(bio,paese,sitoWeb,venditore);
             }
         });

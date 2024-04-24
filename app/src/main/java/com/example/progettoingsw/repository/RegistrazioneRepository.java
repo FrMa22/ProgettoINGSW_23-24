@@ -259,9 +259,10 @@ public class RegistrazioneRepository {
                     .build();
 
             AcquirenteService service = retrofit.create(AcquirenteService.class);
-
+            Log.d("InserisciAcquirenteTask","valori : " + acquirenteModel.getBio() + acquirenteModel.getAreageografica() + acquirenteModel.getLink());
             AcquirenteDTO acquirenteDTO = new AcquirenteDTO(acquirenteModel.getNome(), acquirenteModel.getCognome(), acquirenteModel.getIndirizzo_email(), acquirenteModel.getPassword(), acquirenteModel.getBio(), acquirenteModel.getAreageografica(), acquirenteModel.getLink());
 
+            Log.d("InserisciAcquirenteTask","valoriDTO : " + acquirenteDTO.getBio() + acquirenteDTO.getAreageografica() + acquirenteDTO.getLink());
             Call<Long> call = service.saveAcquirente(acquirenteDTO);
 
             try {
@@ -305,7 +306,9 @@ public class RegistrazioneRepository {
             ArrayList<SocialAcquirenteModel> listaSocial = (ArrayList<SocialAcquirenteModel>) params[0];
             // Effettua l'operazione di rete qui...
             // Restituisci il risultato
-
+            if(listaSocial!=null) {
+                Log.d("categorie da inserire", "valori : " + listaSocial);
+            }
             OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
             // Configura il client OkHttpClient...
 
@@ -326,6 +329,7 @@ public class RegistrazioneRepository {
             }
 
 
+            Log.d("categorie da inserire", "valoriDTO2 : " + listaSocialDTO);
             Call<Void> call = service.insertSocialAcquirenteRegistrazione(listaSocialDTO);
 
             try {
@@ -402,7 +406,6 @@ public class RegistrazioneRepository {
             ArrayList<String> lista_categorie = (ArrayList<String>) params[1];
             // Effettua l'operazione di rete qui...
             // Restituisci il risultato
-
             OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
             // Configura il client OkHttpClient...
 

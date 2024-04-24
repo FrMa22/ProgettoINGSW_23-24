@@ -77,7 +77,7 @@ public class RegistrazioneDAO {
         protected void onPostExecute(Integer result) {
             // Qui puoi gestire il risultato in base a ciò che desideri fare con esso
             // Ad esempio, puoi chiamare un metodo specifico per gestire l'esito del check email
-            registrazione.handleCheckEmail(result);
+            //registrazione.handleCheckEmail(result);
         }
     }
 }
