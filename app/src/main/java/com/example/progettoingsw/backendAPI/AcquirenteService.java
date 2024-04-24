@@ -16,7 +16,8 @@ import retrofit2.http.Query;
 public interface AcquirenteService {
     @GET("/utenteController/loginAcquirente/{indirizzo_email}/{password}")
     Call<AcquirenteDTO> logInAcquirente(@Path("indirizzo_email") String indirizzo_email, @Path("password") String password);
-
+    @GET("/utenteController/loginAcquirenteConToken/{token}")
+    Call<AcquirenteDTO> loginAcquirenteConToken(@Path("token") String token);
     @GET("/utenteController/findCategorieByIndirizzoEmailAcquirente/{indirizzo_email}")
     Call<ArrayList<String>> findCategorieByIndirizzoEmailAcquirente(@Path(("indirizzo_email")) String indirizzo_email);
 
@@ -37,8 +38,8 @@ public interface AcquirenteService {
 
     @POST("/utenteController/insertAcquirente/{acquirente}")
     Call<Long> saveAcquirente(@Body AcquirenteDTO acquirenteDTO);
-    @POST("utenteController/saveCategorieAcquirente/{email}/{lista_categorie}")
-    Call<Void> saveCategorieAcquirente(@Path("email")String email, @Query("lista_categorie")ArrayList<String> lista_categorie);
+    @POST("utenteController/saveCategorieAcquirente/{indirizzo_email}/{lista_categorie}")
+    Call<Void> saveCategorieAcquirente(@Path("indirizzo_email")String email, @Query("lista_categorie")ArrayList<String> lista_categorie);
     @PUT("/utenteController/removeTokenFromAcquirente/{indirizzo_email}")
     Call<Integer> removeTokenFromAcquirente(@Path("indirizzo_email") String indirizzo_email);
 

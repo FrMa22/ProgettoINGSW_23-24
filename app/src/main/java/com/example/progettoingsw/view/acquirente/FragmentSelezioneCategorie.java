@@ -28,6 +28,7 @@ import com.example.progettoingsw.view.SchermataAstaInversa;
 import com.example.progettoingsw.view.SchermataAstaRibasso;
 import com.example.progettoingsw.view.SchermataAstePerCategoria;
 import com.example.progettoingsw.viewmodel.SelezioneCategorieViewModel;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,7 +57,16 @@ public class FragmentSelezioneCategorie extends Fragment {
 
 
     }
-
+    @Override
+    public void onResume() {
+        super.onResume();
+        FirebaseAnalytics firebaseAnalytics = FirebaseAnalytics.getInstance(requireContext());
+        Bundle bundle = new Bundle();
+        bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Fragment Selezione Categorie");
+        bundle.putString(FirebaseAnalytics.Param.SCREEN_CLASS, "FragmentSelezioneCategorie");
+        firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SCREEN_VIEW, bundle);
+        firebaseAnalytics.setAnalyticsCollectionEnabled(true);
+    }
     private void populateLinearLayout() {
         String[] categorieArray = getResources().getStringArray(R.array.categories_array);
         TypedArray immaginiArray = getResources().obtainTypedArray(R.array.immagini_categorie);

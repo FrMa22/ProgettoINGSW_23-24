@@ -19,7 +19,7 @@ public class AcquirenteDTO {
         this.password = password;
         this.bio = bio;
         this.link = link;
-        this.areageografica = this.areageografica;
+        this.areageografica = areageografica;
     }
 
     public String getIndirizzo_email() {

@@ -28,7 +28,7 @@
     <EditText
         android:id="@+id/editTextBio"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="150dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="20dp"
@@ -64,41 +64,86 @@
         android:singleLine="true"
         />
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:id="@+id/relative_layout_social_registrazione_campi_facoltativi"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_below="@id/editTextSitoWeb"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Social:"
+            android:layout_marginBottom="10dp"
+            android:textColor="@color/colore_secondario"
+            android:textSize="25dp"
+            android:textStyle="bold"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"/>
+
+        <ImageButton
+            android:id="@+id/bottone_info_social_registrazione_campi_facoltativi"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:src="@drawable/ic_informazioni"
+            android:layout_toLeftOf="@id/bottoneSocialRegistrazione"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="10dp"
+            android:backgroundTint="@android:color/transparent"
+            android:contentDescription="Premi per informazioni"
+            tools:ignore="TouchTargetSizeCheck"
+            />
+
+
+        <ImageButton
+            android:id="@+id/bottoneSocialRegistrazione"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:backgroundTint="@android:color/transparent"
+            android:contentDescription="Premi per modificare i social"
+            android:src="@drawable/ic_aggiungi"
+            tools:ignore="TouchTargetSizeCheck" />
+
+    </RelativeLayout>
+
 
     <TextView
-        android:id="@+id/textViewPremiPerInserire"
-        android:layout_width="match_parent"
+        android:id="@+id/text_view_nessun_social_registrazione_campi_facoltativi"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/editTextSitoWeb"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginEnd="15dp"
-        android:layout_marginBottom="15dp"
-        android:gravity="center"
-        android:text="Premi per inserire:"
-        android:textColor="@color/colore_hint"
-        android:textSize="25dp"
-        android:textStyle="bold" />
-
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/bottoneSocialRegistrazione"
-        android:layout_width="170dp"
-        android:layout_height="60dp"
-        android:layout_below="@id/textViewPremiPerInserire"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="20dp"
-        app:strokeColor="@color/colore_hint"
-        app:strokeWidth="2dp"
-        android:backgroundTint="@color/colore_base"
-        android:text="Social"
-        android:textColor="@color/colore_secondario"
+        android:text="Nessun social presente"
+        android:layout_gravity="center"
         android:textSize="20dp"
         android:textStyle="bold"
+        android:background="@drawable/bordo_colorato"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
         android:layout_centerHorizontal="true"
+        android:layout_below="@id/relative_layout_social_registrazione_campi_facoltativi"
+        android:visibility="gone"
         />
+    <GridView
+        android:id="@+id/gridview_social_registrazione_campi_facoltativi"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/bordo_colorato"
+        android:layout_above="@id/bottoneAnnullaRegistrazione"
+        android:layout_below="@id/text_view_nessun_social_registrazione_campi_facoltativi"
+        android:visibility="invisible"/>
+
+
 
 
 

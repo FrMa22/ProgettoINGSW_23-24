@@ -35,21 +35,15 @@ public class PopUpRegistrazioneSocial extends DialogPersonalizzato implements Vi
     RegistrazioneViewModel registrazioneViewModel;
     private ArrayList<String> elencoNomeSocialRegistrazioneStrings;
     ArrayList<String> elencoNomeUtenteSocialRegistrazione;
+    private PopupRegistrazioneSocialDismissListener popupRegistrazioneSocialDismissListener;
 
-    public PopUpRegistrazioneSocial(Context context, RegistrazioneCampiFacoltativi registrazioneCampiFacoltativi, RegistrazioneViewModel registrazioneViewModel) {
+    public PopUpRegistrazioneSocial(Context context, RegistrazioneCampiFacoltativi registrazioneCampiFacoltativi, RegistrazioneViewModel registrazioneViewModel, PopupRegistrazioneSocialDismissListener popupRegistrazioneSocialDismissListener) {
         super(context);
         mContext = context;
         this.registrazioneCampiFacoltativi = registrazioneCampiFacoltativi;
         this.registrazioneViewModel = registrazioneViewModel;
-        setOnDismissListener(new DialogInterface.OnDismissListener() {
-            @Override
-            public void onDismiss(DialogInterface dialog) {
-                // Esegui le azioni desiderate quando il popup viene chiuso
-                // Ad esempio, esegui un'azione o mostra un messaggio
-                Log.d("PopUp", "Popup chiuso premendo all'esterno");
-                // Aggiungi qui le azioni desiderate
-            }
-        });
+        this. popupRegistrazioneSocialDismissListener = popupRegistrazioneSocialDismissListener;
+        setCanceledOnTouchOutside(false);
 
     }
 
@@ -58,9 +52,6 @@ public class PopUpRegistrazioneSocial extends DialogPersonalizzato implements Vi
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.pop_up_registrazione_social);
-        // Stampa dei valori negli arraylist nel log
-        Log.d("PopUpRegistrazioneSocial", "Valori in elencoNomeSocialRegistrazioneStrings: " + elencoNomeSocialRegistrazioneStrings.toString());
-        Log.d("PopUpRegistrazioneSocial", "Valori in elencoNomeUtenteSocialRegistrazione: " + elencoNomeUtenteSocialRegistrazione.toString());
 
 
         // Riferimenti ai widget all'interno del pop-up
@@ -68,8 +59,7 @@ public class PopUpRegistrazioneSocial extends DialogPersonalizzato implements Vi
         bottoneConfermaRegistrazioneSocial = findViewById(R.id.bottoneConfermaRegistrazioneSocial);
         editTextLink = findViewById(R.id.editTextNomeUtenteSocial);
         editTextNomeSocial = findViewById(R.id.editTextNomeSocial);
-        nomeSocial = editTextNomeSocial.getText().toString().trim();
-        link = editTextLink.getText().toString().trim();
+
 
         osservaMessaggioErroreNomeSocial();
         osservaMessaggioErroreLink();
@@ -86,40 +76,17 @@ public class PopUpRegistrazioneSocial extends DialogPersonalizzato implements Vi
     public void onClick(View v) {
         int viewId = v.getId();
         if (viewId == R.id.bottoneChiudiRegistrazioneSocial) {
+            registrazioneViewModel.resetErrori();
             dismiss(); // Chiude il dialog
         } else if (viewId == R.id.bottoneConfermaRegistrazioneSocial) {
+            nomeSocial = editTextNomeSocial.getText().toString().trim();
+            link = editTextLink.getText().toString().trim();
             registrazioneViewModel.checkSocial(nomeSocial,link);
         }
     }
-
-
-  /*  private void confermaRegistrazioneSocial() {
-        String nomeSocial = editTextNomeSocial.getText().toString().trim();
-        String nomeUtenteSocial = editTextNomeUtenteSocial.getText().toString().trim();
-
-
-
-        if(nomeSocial.length() > 50){editTextNomeSocial.setError("Nome social oltre i 50 caratteri");}
-        if(nomeSocial.isEmpty()){editTextNomeSocial.setError("Nome  social vuoto");}
-        if(nomeUtenteSocial.length() > 50){editTextNomeUtenteSocial.setError("Nome utente social oltre i 50 caratteri");}
-        if(nomeUtenteSocial.isEmpty()){editTextNomeUtenteSocial.setError("Nome utente social vuoto");}
-        if (!nomeSocial.isEmpty() && nomeSocial.length() <= 50 &&
-                !nomeUtenteSocial.isEmpty() && nomeUtenteSocial.length() <= 50) {
-            //aggiungere qui il controllo negli array se i valori sono gia presenti con stessa posizione
-            int indiceNomeSocialTrovato = elencoNomeSocialRegistrazioneStrings.indexOf(nomeSocial);
-            int indiceNomeUtenteTrovato = elencoNomeUtenteSocialRegistrazione.indexOf(nomeUtenteSocial);
-            if(indiceNomeSocialTrovato != -1 && indiceNomeUtenteTrovato==indiceNomeSocialTrovato){
-                Toast.makeText(getContext(), "I valori per social e nome utente sono già stati inseriti", Toast.LENGTH_SHORT).show();
-            }else{
-                editTextNomeUtenteSocial.setError(null);
-                editTextNomeSocial.setError(null);
-                registrazioneCampiFacoltativi.setProfiloSocialRegistrazione(nomeSocial, nomeUtenteSocial);
-
-                // Chiudi il dialog dopo la conferma
-                dismiss();
-            }
-        }
-        }*/
+    public interface PopupRegistrazioneSocialDismissListener {
+        void onPopupRegistrazioneSocialDismissed();
+    }
 
     public void messaggioErroreNomeSocial(String messaggio){
         editTextNomeSocial.setError(messaggio);
@@ -129,7 +96,7 @@ public class PopUpRegistrazioneSocial extends DialogPersonalizzato implements Vi
         editTextLink.setError(messaggio);}
 
     public void osservaMessaggioErroreNomeSocial() {
-        registrazioneViewModel.messaggioErroreNomeSocial.observe((LifecycleOwner) this, (messaggio) -> {
+        registrazioneViewModel.messaggioErroreNomeSocial.observe(registrazioneCampiFacoltativi, (messaggio) -> {
             if (registrazioneViewModel.isNuovoMessaggioErrorNomeSociale()) {
                 messaggioErroreNomeSocial(messaggio);
             }
@@ -137,18 +104,26 @@ public class PopUpRegistrazioneSocial extends DialogPersonalizzato implements Vi
     }
 
     public void osservaMessaggioErroreLink() {
-        registrazioneViewModel.messaggioErroreLink.observe((LifecycleOwner) this, (messaggio) -> {
+        registrazioneViewModel.messaggioErroreLink.observe(registrazioneCampiFacoltativi, (messaggio) -> {
             if (registrazioneViewModel.isNuovoMessaggioErrorLink()) {
                 messaggioErroreLink(messaggio);
             }
         });
     }
     public void osservaProseguiInserimentoSocial(){
-        registrazioneViewModel.proseguiInserimentoSocial.observe((LifecycleOwner) this, (messaggio) ->{
+        registrazioneViewModel.proseguiInserimentoSocial.observe(registrazioneCampiFacoltativi, (messaggio) ->{
             if (registrazioneViewModel.isProseguiInserimentoSocial("inserito")) {
-                dismiss();
+                registrazioneViewModel.resetErrori();
+                dismissModificaSocialPopup();
             }
         });
     }
+    public void dismissModificaSocialPopup() {
+        if (popupRegistrazioneSocialDismissListener != null) {
+            Log.d("dismissModificaSocialPopup","chiamo");
+            popupRegistrazioneSocialDismissListener.onPopupRegistrazioneSocialDismissed();
+        }
+        dismiss();
 
+    }
 }

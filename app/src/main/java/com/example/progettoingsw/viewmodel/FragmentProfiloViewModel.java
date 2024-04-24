@@ -42,6 +42,7 @@ public class FragmentProfiloViewModel extends ViewModel {
     public MutableLiveData<String> messaggioErroreBioNuovo = new MutableLiveData<>("");
     public MutableLiveData<String> messaggioErrorePasswordVecchia = new MutableLiveData<>("");
     public MutableLiveData<String> messaggioErrorePasswordNuova = new MutableLiveData<>("");
+    public MutableLiveData<String> messaggioErroreSocial = new MutableLiveData<>("");
 
 
     public MutableLiveData<Boolean> socialAssenti = new MutableLiveData<>(false);
@@ -516,8 +517,13 @@ public class FragmentProfiloViewModel extends ViewModel {
         fragmentProfiloRepository.aggiungiSocialAcquirenteBackend(nome,link,email ,new FragmentProfiloRepository.OnAggiungiSocialAcquirenteListener() {
             @Override
             public void onAggiungiSocialAcquirente(SocialAcquirenteModel socialAcquirenteModel) {
-                repository.addSocialAcquirente(socialAcquirenteModel);
-                setIsSocialAggiunto(true);
+                if(socialAcquirenteModel!=null) {
+                    repository.addSocialAcquirente(socialAcquirenteModel);
+                    setIsSocialAggiunto(true);
+                }else{
+                    setMessaggioErroreSocial("Non è possibile inserire più volte lo stesso social.");
+                    setIsSocialAggiunto(true);
+                }
             }
         });
     }
@@ -703,8 +709,13 @@ public class FragmentProfiloViewModel extends ViewModel {
         fragmentProfiloRepository.aggiungiSocialVenditoreBackend(nome,link,email ,new FragmentProfiloRepository.OnAggiungiSocialVenditoreListener() {
             @Override
             public void onAggiungiSocialVenditore(SocialVenditoreModel socialVenditoreModel) {
+                if(socialVenditoreModel!=null){
                 repository.addSocialVenditore(socialVenditoreModel);
                 setIsSocialAggiunto(true);
+            }else{
+                setMessaggioErroreSocial("Non è possibile inserire più volte lo stesso social.");
+                setIsSocialAggiunto(true);
+            }
             }
         });
     }
@@ -989,4 +1000,10 @@ public class FragmentProfiloViewModel extends ViewModel {
         return apriPartecipazioneAste.getValue();
     }
 
+    public void setMessaggioErroreSocial(String errore){
+        this.messaggioErroreSocial.setValue(errore);
+    }
+    public Boolean isMessaggioErroreSocial(){
+        return !(messaggioErroreSocial.getValue().equals(""));
+    }
 }

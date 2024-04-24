@@ -12,7 +12,6 @@ import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ListAdapter;
-import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -35,7 +34,6 @@ public class ProfiloAcquirente extends GestoreComuniImplementazioni {
 
     MaterialButton button_le_mie_aste;
 
-    private GridView gridView;
     private CustomAdapter_gridview_profilo_social adapterSocial;
     private ImageButton bottoneBackProfiloAcquirente;
     private TextView textview_nome;
@@ -43,10 +41,10 @@ public class ProfiloAcquirente extends GestoreComuniImplementazioni {
     private TextView textview_email;
     private TextView textview_sitoweb;
     private TextView textview_paese;
-
+    private TextView text_view_nessun_social_profilo_acquirente;
     private TextView text_view_bio_profilo;
-    private ProgressBar progressBarAcquirenteFragmentProfilo;
 
+    private GridView gridView;
     // Definisci la variabile di istanza view
 
     private RelativeLayout relative_layout_profilo_acquirente;
@@ -59,10 +57,6 @@ public class ProfiloAcquirente extends GestoreComuniImplementazioni {
 
         schermataUtenteViewModel = new ViewModelProvider(this).get(SchermataUtenteViewModel.class);
 
-        osservaAcquirenteRecuperato();
-        osservaSocialAcquirente();
-        osservaApriLeMieAste();
-        schermataUtenteViewModel.getUtenteData();
 
         bottoneBackProfiloAcquirente=findViewById(R.id.bottoneBackProfiloAcquirente);
         bottoneBackProfiloAcquirente.setOnClickListener(new View.OnClickListener() {
@@ -73,12 +67,9 @@ public class ProfiloAcquirente extends GestoreComuniImplementazioni {
         });
         relative_layout_profilo_acquirente = findViewById(R.id.relative_layout_profilo_acquirente);
 
-        //icona del caricamento
-          progressBarAcquirenteFragmentProfilo = findViewById(R.id.progressBarProfiloAcquirente);
-          progressBarAcquirenteFragmentProfilo.setVisibility(View.VISIBLE);
-          setAllClickable(relative_layout_profilo_acquirente,false);
 
-        GridView gridView = findViewById(R.id.gridview_social_activity_profilo);
+
+        gridView = findViewById(R.id.gridview_social_activity_profilo);
         gridView.setMinimumHeight((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 50, getResources().getDisplayMetrics()));
         setGridViewHeightBasedOnChildren(gridView);
 
@@ -99,38 +90,20 @@ public class ProfiloAcquirente extends GestoreComuniImplementazioni {
         textview_sitoweb = findViewById(R.id.textview_sitoweb);
         textview_paese = findViewById(R.id.textview_paese);
         text_view_bio_profilo = findViewById(R.id.text_view_bio_profilo);
-
-        // Inizializza il DAO e recupera i dati dell'acquirente
-//        ProfiloAcquirenteDaAstaDAO acquirenteAstaDAO = new ProfiloAcquirenteDaAstaDAO(this, email, "acquirente");
-//        acquirenteAstaDAO.openConnection();
-//        acquirenteAstaDAO.findUser();
-        // venditoreAstaDAO.getSocialNamesForEmail();
+        text_view_nessun_social_profilo_acquirente = findViewById(R.id.text_view_nessun_social_profilo_acquirente);
 
 
+        osservaAcquirenteRecuperato();
+        osservaSocialAcquirente();
+        osservaApriLeMieAste();
+        osservaSocialAssenti();
 
-
-
+        schermataUtenteViewModel.getUtenteData();
     }
 
 
 
 
-//    public void updateEditTexts(AcquirenteModel acquirente) {
-//        if (acquirente != null) {
-//            // Esempio: aggiorna l'interfaccia utente con i dati dell'acquirente
-//            textview_nome.setText(acquirente.getNome());
-//            textview_cognome.setText(acquirente.getCognome());
-//            textview_email.setText(acquirente.getIndirizzo_email());
-//            textview_sitoweb.setText(acquirente.getLink());
-//            textview_paese.setText(acquirente.getAreageografica());
-//            text_view_bio_profilo.setText(acquirente.getBio());
-//        } else {
-//            // L'acquirente non è stato trovato
-//        }
-//
-//        setAllClickable(relative_layout_profilo_acquirente,true);
-//        progressBarAcquirenteFragmentProfilo.setVisibility(View.GONE);
-//    }
 public void updateDatiUtente(String nome, String cognome, String email, String link, String paese, String bio){
     textview_nome.setText(nome);
     textview_cognome.setText(cognome);
@@ -184,7 +157,12 @@ public void updateDatiUtente(String nome, String cognome, String email, String l
             for (int i = 0; i < socialNames.size(); i++) {
                 Log.d("FragmentProfilo", "Nome Social: " + socialNames.get(i) + ", Link Social: " + socialLinks.get(i));
             }
+            gridView.setVisibility(View.VISIBLE);
+            text_view_nessun_social_profilo_acquirente.setVisibility(View.GONE);
         } else {
+            Log.d("updateSocialNames", "no social");
+            text_view_nessun_social_profilo_acquirente.setVisibility(View.VISIBLE);
+            gridView.setVisibility(View.GONE);
             // Rimuovi tutti i dati dall'adattatore e aggiorna la GridView
             gridView = findViewById(R.id.gridview_social_activity_profilo);
             adapterSocial = new CustomAdapter_gridview_profilo_social(this);
@@ -197,8 +175,6 @@ public void updateDatiUtente(String nome, String cognome, String email, String l
             gridView.setMinimumHeight((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 50, getResources().getDisplayMetrics()));
         }
 
-        setAllClickable(relative_layout_profilo_acquirente,true);
-        progressBarAcquirenteFragmentProfilo.setVisibility(View.GONE);
     }
 
     public void osservaAcquirenteRecuperato(){
@@ -222,6 +198,15 @@ public void updateDatiUtente(String nome, String cognome, String email, String l
                     }
                     updateSocialNames(nomi,links);
                 }
+            }
+        });
+    }
+    public void osservaSocialAssenti() {
+        schermataUtenteViewModel.socialAssenti.observe(this, (valore) -> {
+            if (valore) {
+                Log.d("osservaSocialAssenti", "entrato");
+                gridView.setVisibility(View.GONE);
+                text_view_nessun_social_profilo_acquirente.setVisibility(View.VISIBLE);
             }
         });
     }

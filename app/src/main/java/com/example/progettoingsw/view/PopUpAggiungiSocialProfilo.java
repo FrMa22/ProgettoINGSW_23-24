@@ -87,51 +87,11 @@ public class PopUpAggiungiSocialProfilo extends DialogPersonalizzato implements 
         String nomeSocial = editTextNomeSocial.getText().toString().trim();
         String linkSocial = editTextLinkSocial.getText().toString().trim();
 
-     //   RegistrazioneSocialDAO registrazioneSocialDAO = new RegistrazioneSocialDAO(PopUpAggiungiSocialProfilo.this, email, tipoUtente);
-//        Log.d("pop", "conferma");
-//        if (nomeSocial.length() > 50) {
-//            editTextNomeSocial.setError("Nome social oltre i 50 caratteri");
-//        }
-//        if (nomeSocial.isEmpty()) {
-//            editTextNomeSocial.setError("Nome  social vuoto");
-//        }
-//        if (nomeUtenteSocial.length() > 50) {
-//            editTextNomeUtenteSocial.setError("Nome utente social oltre i 50 caratteri");
-//        }
-//        if (nomeUtenteSocial.isEmpty()) {
-//            editTextNomeUtenteSocial.setError("Nome utente social vuoto");
-//        }
-       // if (!nomeSocial.isEmpty() && nomeSocial.length() <= 50 &&
-           //     !nomeUtenteSocial.isEmpty() && nomeUtenteSocial.length() <= 50) {
-              //  progressBarPopUpAggiungiSocialProfilo.setVisibility(View.VISIBLE);
-            fragmentProfiloViewModel.aggiungiSocialViewModel(nomeSocial,linkSocial);
-         //   dismiss();
-                //         registrazioneSocialDAO.openConnection();
-         //       registrazioneSocialDAO.inserimentoSingoloSocial(nomeSocial, nomeUtenteSocial);
-           //     registrazioneSocialDAO.closeConnection();
-         //   }
+        fragmentProfiloViewModel.aggiungiSocialViewModel(nomeSocial,linkSocial);
+
 
         }
 
-//    public void handleRegistrazioneSocial(Integer result){
-//        Log.d("handleRegistrazioneSocial", "valore di result: " + result);
-//        progressBarPopUpAggiungiSocialProfilo.setVisibility(View.INVISIBLE);
-//        if(result == 0 ){
-//            Toast.makeText(getContext(), "Problema con la connessione rilevato", Toast.LENGTH_SHORT).show();
-//        }else if(result == -1){
-//            Toast.makeText(getContext(), "Valori già presenti in social", Toast.LENGTH_SHORT).show();
-//        }else{
-//            Log.d("handleRegistrazioneSocial", "entrato nell'else");
-//            // Chiudi il dialog dopo la conferma
-//            fragmentProfilo.onResume();
-//            dismiss();
-//        }
-//
-//    }
-
-  //  public void dismissPopup() {
-      //  dismiss();
-    //}
 
     public interface PopupAggiungiSocialDismissListener {
         void onPopupAggiungiSocialDismissed();

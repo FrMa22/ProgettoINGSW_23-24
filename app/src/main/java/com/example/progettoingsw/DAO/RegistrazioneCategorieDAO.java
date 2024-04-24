@@ -99,7 +99,7 @@ public class RegistrazioneCategorieDAO {
                 if (!result) {
                     Toast.makeText(registrazioneCategorie.getApplicationContext(), "Errore durante l'inserimento delle categorie", Toast.LENGTH_SHORT).show();
                 }else{
-                    registrazioneCategorie.handleInsert(result);
+                    //registrazioneCategorie.handleInsert(result);
                 }
             }
         }

@@ -7,7 +7,7 @@ import android.util.Log;
 
 import com.example.progettoingsw.R;
 import com.example.progettoingsw.controllers_package.DatabaseHelper;
-import com.example.progettoingsw.view.SchermataPartecipazioneAste;
+//import com.example.progettoingsw.view.SchermataPartecipazioneAste;
 import com.example.progettoingsw.item.AstaIngleseItem;
 import com.example.progettoingsw.item.AstaInversaItem;
 
@@ -18,14 +18,14 @@ import java.util.ArrayList;
 
 public class SchermataPartecipazioneAsteDAO {
     private Connection connection;
-    private SchermataPartecipazioneAste schermataPartecipazioneAste;
+    //private SchermataPartecipazioneAste schermataPartecipazioneAste;
     private String email;
     private String tipoUtente;
-    public SchermataPartecipazioneAsteDAO(SchermataPartecipazioneAste schermataPartecipazioneAste, String email, String tipoUtente){
-        this.schermataPartecipazioneAste = schermataPartecipazioneAste;
-        this.email = email;
-        this.tipoUtente = tipoUtente;
-    }
+//    public SchermataPartecipazioneAsteDAO(SchermataPartecipazioneAste schermataPartecipazioneAste, String email, String tipoUtente){
+//        this.schermataPartecipazioneAste = schermataPartecipazioneAste;
+//        this.email = email;
+//        this.tipoUtente = tipoUtente;
+//    }
 
     public void openConnection() {
         new SchermataPartecipazioneAsteDAO.DatabaseTask().execute("open");
@@ -95,7 +95,7 @@ public class SchermataPartecipazioneAsteDAO {
                         } else {
                             // In caso di immagine non disponibile, puoi impostare un'immagine predefinita o lasciare foto come null
                             // Ecco un esempio di impostazione di un'immagine predefinita
-                            foto = BitmapFactory.decodeResource(schermataPartecipazioneAste.getResources(), R.drawable.no_image_available);
+                            //foto = BitmapFactory.decodeResource(schermataPartecipazioneAste.getResources(), R.drawable.no_image_available);
                         }
                         String baseAsta = resultSetAsteInglese.getString("baseAsta");
                         String intervalloTempoOfferte = resultSetAsteInglese.getString("intervalloTempoOfferte");
@@ -120,7 +120,7 @@ public class SchermataPartecipazioneAsteDAO {
         }
         @Override
         protected void onPostExecute(ArrayList<Object> result) {
-            schermataPartecipazioneAste.updatePartecipazioni(result);
+           // schermataPartecipazioneAste.updatePartecipazioni(result);
         }
     }
     private class PartecipazioneAsteVenditore extends AsyncTask<String, Void, ArrayList<Object>> {
@@ -147,7 +147,7 @@ public class SchermataPartecipazioneAsteDAO {
                         } else {
                             // In caso di immagine non disponibile, puoi impostare un'immagine predefinita o lasciare foto come null
                             // Ecco un esempio di impostazione di un'immagine predefinita
-                            foto = BitmapFactory.decodeResource(schermataPartecipazioneAste.getResources(), R.drawable.no_image_available);
+                            //foto = BitmapFactory.decodeResource(schermataPartecipazioneAste.getResources(), R.drawable.no_image_available);
                         }
 
                         String prezzoMax = resultSetAsteInverse.getString("prezzoMax");
@@ -172,7 +172,7 @@ public class SchermataPartecipazioneAsteDAO {
         }
         @Override
         protected void onPostExecute(ArrayList<Object> result) {
-            schermataPartecipazioneAste.updatePartecipazioni(result);
+            //schermataPartecipazioneAste.updatePartecipazioni(result);
         }
     }
 }

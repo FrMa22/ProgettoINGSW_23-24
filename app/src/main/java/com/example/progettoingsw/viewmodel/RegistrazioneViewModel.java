@@ -1,5 +1,7 @@
 package com.example.progettoingsw.viewmodel;
 
+import android.util.Log;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -33,10 +35,20 @@ public class RegistrazioneViewModel extends ViewModel {
     public MutableLiveData<AcquirenteModel> acquirenteModel = new MutableLiveData<>();
     public MutableLiveData<VenditoreModel> venditoreModel = new MutableLiveData<>();
     public MutableLiveData<Boolean> apriPopUpSocial = new MutableLiveData<>(false);
+    public MutableLiveData<ArrayList<SocialAcquirenteModel>> listaSocialAcquirente = new MutableLiveData<>(null);
+    public MutableLiveData<ArrayList<SocialVenditoreModel>> listaSocialVenditore = new MutableLiveData<>(null);
+
     public ArrayList<SocialAcquirenteModel> socialAcquirente = new ArrayList<SocialAcquirenteModel>();
 
-    public ArrayList<SocialVenditoreModel> socialVenditore = new ArrayList<SocialVenditoreModel>();
 
+
+    public MutableLiveData<Boolean> socialVuoti = new MutableLiveData<>(false);
+    public ArrayList<SocialVenditoreModel> socialVenditore = new ArrayList<SocialVenditoreModel>();
+    public MutableLiveData<AcquirenteModel> valoriPresentiAcquirente = new MutableLiveData<>(null);
+    public MutableLiveData<VenditoreModel> valoriPresentiVenditore = new MutableLiveData<>(null);
+    public MutableLiveData<AcquirenteModel> valoriPresentiFacoltativiAcquirente = new MutableLiveData<>(null);
+    public MutableLiveData<VenditoreModel> valoriPresentiFacoltativiVenditore = new MutableLiveData<>(null);
+    public MutableLiveData<Boolean> isSocialCambiato = new MutableLiveData<>(false);
     private RegistrazioneRepository registrazioneRepository;
     private Repository repository;
 
@@ -95,15 +107,35 @@ public class RegistrazioneViewModel extends ViewModel {
     public void checkSocial(String nomeSocial, String link) {
         System.out.println("entrato in registrazione di viewmodel");
         if (socialValido(nomeSocial, link)) {
-            if (containsAcquirente()) {
-                SocialAcquirenteModel socialAcquirenteModel = new SocialAcquirenteModel(nomeSocial, link, repository.getAcquirenteModel().getIndirizzo_email());
-                socialAcquirente.add(socialAcquirenteModel);
-                setProseguiInserimentoSocial("inserito");
-            } else {
-                SocialVenditoreModel socialVenditoreModel = new SocialVenditoreModel(nomeSocial, link, repository.getVenditoreModel().getIndirizzo_email());
-                socialVenditore.add((socialVenditoreModel));
-                setProseguiInserimentoSocial("inserito");
+            boolean socialGiaPresente = false;
+                if (containsAcquirente()) {
+                    for (SocialAcquirenteModel social : socialAcquirente) {
+                        if (social.getNome().equals(nomeSocial) && social.getLink().equals(link)) {
+                            setMessaggioErroreLink("social già aggiunto");
+                            socialGiaPresente = true;
+                            break;
+                        }
+                    }
+                    if(!socialGiaPresente) {
+                        SocialAcquirenteModel socialAcquirenteModel = new SocialAcquirenteModel(nomeSocial, link, repository.getAcquirenteModel().getIndirizzo_email());
+                        socialAcquirente.add(socialAcquirenteModel);
+                        setProseguiInserimentoSocial("inserito");
+                    }
+                } else {
+                    for(SocialVenditoreModel social : socialVenditore) {
+                        if (social.getNome().equals(nomeSocial) && social.getLink().equals(link)) {
+                            setMessaggioErroreLink("social già aggiunto");
+                            socialGiaPresente = true;
+                            break;
+                        }
+                    }
+                    if(!socialGiaPresente){
+                        SocialVenditoreModel socialVenditoreModel = new SocialVenditoreModel(nomeSocial, link, repository.getVenditoreModel().getIndirizzo_email());
+                        socialVenditore.add((socialVenditoreModel));
+                        setProseguiInserimentoSocial("inserito");
+                    }
             }
+
         }
 
     }
@@ -183,8 +215,9 @@ public void controlloSocial(){
             @Override
             public void ricercaDoppia(AcquirenteModel acquirenteControllo) {
                 if (acquirenteControllo == null) {
-                    AcquirenteModel acquirenteModel = new AcquirenteModel(email, nome, cognome, password, null, null, null);
+                    AcquirenteModel acquirenteModel = new AcquirenteModel(nome, cognome, email, password, null, null, null);
                     repository.setAcquirenteModel(acquirenteModel);
+                    repository.setVenditoreModel(null);
                     setProseguiRegistrazione("nuovo acquirente");
                 } else {
                     setMessaggioErroreEmail("indirizzo email già usato");
@@ -226,8 +259,9 @@ public void controlloSocial(){
             @Override
             public void ricercaDoppia(VenditoreModel venditoreControllo) {
                 if (venditoreControllo == null) {
-                    VenditoreModel venditoreModel = new VenditoreModel(email, nome, cognome, password, null, null, null);
+                    VenditoreModel venditoreModel = new VenditoreModel(nome, cognome, email, password, null, null, null);
                     repository.setVenditoreModel(venditoreModel);
+                    repository.setAcquirenteModel(null);
                     setProseguiRegistrazione("nuovo venditore");
                 } else {
                     setMessaggioErroreEmail("indirizzo email già usato");
@@ -510,5 +544,202 @@ public void controlloSocial(){
         setApriPopUpsocial(true);
     }
 
+    public void resetErrori(){
+        setMessaggioErroreNomeSocial("");
+        setMessaggioErroreLink("");
+    }
+    public void setValoriPresentiAcquirente(AcquirenteModel utente){
+        this.valoriPresentiAcquirente.setValue(utente);
+    }
+    public Boolean isValoriPresentiAcquirente(){
+        return (valoriPresentiAcquirente.getValue()!=null);
+    }
+    public void setValoriPresentiVenditore(VenditoreModel utente){
+        this.valoriPresentiVenditore.setValue(utente);
+    }
+    public Boolean isValoriPresentiVenditore(){
+        return (valoriPresentiVenditore.getValue()!=null);
+    }
+    public void checkValoriPresenti(){
+        Log.d("checkValoriPresenti","entrato");
+        if(repository.getAcquirenteModel()!=null){
+            setValoriPresentiAcquirente(repository.getAcquirenteModel());
+        }else if(repository.getVenditoreModel()!=null){
+            setValoriPresentiVenditore(repository.getVenditoreModel());
+        }
+    }
+    public void setValoriPresentiFacoltativiAcquirente(AcquirenteModel utente){
+        this.valoriPresentiFacoltativiAcquirente.setValue(utente);
+    }
+    public Boolean isValoriPresentiFacoltativiAcquirente(){
+        return (valoriPresentiFacoltativiAcquirente.getValue()!=null);
+    }
+    public void setValoriPresentiFacoltativiVenditore(VenditoreModel utente){
+        this.valoriPresentiFacoltativiVenditore.setValue(utente);
+    }
+    public Boolean isValoriPresentiFacoltativiVenditore(){
+        return (valoriPresentiFacoltativiVenditore.getValue()!=null);
+    }
+    public void checkValoriPresentiFacoltativi(){
+        Log.d("checkValoriPresenti","entrato");
+        if(acquirenteModel.getValue()!=null){
+            Log.d("checkValoriPresenti","entrato caso acquirente");
+            setValoriPresentiFacoltativiAcquirente(acquirenteModel.getValue());
+        }else if(venditoreModel.getValue()!=null){
+            Log.d("checkValoriPresenti","entrato caso venditore");
+            setValoriPresentiFacoltativiVenditore(venditoreModel.getValue());
+        }
+    }
+    public void setIsSocialCambiato(Boolean b){
+        this.isSocialCambiato.setValue(b);
+    }
+    public void aggiornaSocialViewModel(String nome_vecchio, String link_vecchio, String nome, String link) {
+        boolean coppiaPresente = false;
+
+        if(socialValido(nome,link)) {
+            if (socialAcquirente != null && !socialAcquirente.isEmpty()) {
+                for (SocialAcquirenteModel social : socialAcquirente) {
+                    if (social.getNome().equals(nome) && social.getLink().equals(link)) {
+                        coppiaPresente = true;
+                        setMessaggioErroreLink("social già aggiunto");
+                        break;
+                    }
+                }
+            } else if (socialVenditore != null && !socialVenditore.isEmpty()) {
+                for (SocialVenditoreModel social : socialVenditore) {
+                    if (social.getNome().equals(nome) && social.getLink().equals(link)) {
+                        coppiaPresente = true;
+                        setMessaggioErroreLink("social già aggiunto");
+                        break;
+                    }
+                }
+            }
+
+            if (!coppiaPresente) {
+                if (socialAcquirente != null && !socialAcquirente.isEmpty()) {
+                    for (SocialAcquirenteModel social : socialAcquirente) {
+                        if (social.getNome().equals(nome_vecchio) && social.getLink().equals(link_vecchio)) {
+                            social.setNome(nome);
+                            social.setLink(link);
+                            setIsSocialCambiato(true);
+                            break;
+                        }
+                    }
+                } else if (socialVenditore != null && !socialVenditore.isEmpty()) {
+                    for (SocialVenditoreModel social : socialVenditore) {
+                        if (social.getNome().equals(nome_vecchio) && social.getLink().equals(link_vecchio)) {
+                            social.setNome(nome);
+                            social.setLink(link);
+                            setIsSocialCambiato(true);
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    public void eliminaSocialViewModel(String nome_vecchio,String link_vecchio){
+        if (socialAcquirente != null && !socialAcquirente.isEmpty()) {
+            for (SocialAcquirenteModel social : socialAcquirente) {
+                if (social.getNome().equals(nome_vecchio) && social.getLink().equals(link_vecchio)) {
+                    socialAcquirente.remove(social);
+                    setIsSocialCambiato(true);
+                    break;
+                }
+            }
+        } else if (socialVenditore != null && !socialVenditore.isEmpty()) {
+            for (SocialVenditoreModel social : socialVenditore) {
+                if (social.getNome().equals(nome_vecchio) && social.getLink().equals(link_vecchio)) {
+                    socialVenditore.remove(social);
+                    setIsSocialCambiato(true);
+                    break;
+                }
+            }
+        }
+    }
+    public void resetErroriModificaSocial(){
+        setMessaggioErroreNomeSocial("");
+        setMessaggioErroreLink("");
+        setIsSocialCambiato(false);
+    }
+    // Metodi per listaSocialAcquirente
+    public ArrayList<SocialAcquirenteModel> getListaSocialAcquirente() {
+        return listaSocialAcquirente.getValue();
+    }
+
+    public void setListaSocialAcquirente(ArrayList<SocialAcquirenteModel> listaSocialAcquirente) {
+        this.listaSocialAcquirente.setValue(listaSocialAcquirente);
+    }
+
+    public boolean isListaSocialAcquirente() {
+        return listaSocialAcquirente.getValue()!=null;
+    }
+
+    public ArrayList<SocialVenditoreModel> getListaSocialVenditore() {
+        return listaSocialVenditore.getValue();
+    }
+
+    public void setListaSocialVenditore(ArrayList<SocialVenditoreModel> listaSocialVenditore) {
+        this.listaSocialVenditore.setValue(listaSocialVenditore);
+    }
+
+    public boolean isListaSocialVenditore() {
+        return listaSocialVenditore.getValue()!=null;
+    }
+    public Boolean getSocialVuoti() {
+        return socialVuoti.getValue();
+    }
+
+    public void setSocialVuoti(Boolean socialVuoti) {
+        this.socialVuoti.setValue(socialVuoti);
+    }
+    public void inserisciSocialNellaLista(){
+        Log.d("inserisciSocialNellaLista","entrato");
+        if(socialAcquirente!=null && !socialAcquirente.isEmpty()){
+            setListaSocialAcquirente(socialAcquirente);
+        }else if(socialVenditore!=null && !socialVenditore.isEmpty()){
+            setListaSocialVenditore(socialVenditore);
+        }else {
+            setSocialVuoti(true);
+        }
+    }
+    public void stampaLista() {
+        if (listaSocialAcquirente != null && listaSocialAcquirente.getValue() != null) {
+            Log.d("stampaLista", "social acquirenti: " + listaSocialAcquirente.getValue().size());
+        } else if (listaSocialVenditore != null && listaSocialVenditore.getValue() != null) {
+            Log.d("stampaLista", "social acquirenti: " + listaSocialVenditore.getValue().size());
+        }
+    }
+    public void resetAllVariables() {
+        messaggioErroreEmail.setValue("");
+        messaggioErrorePassword.setValue("");
+        messaggioErroreConfermaPassword.setValue("");
+        messaggioErroreNome.setValue("");
+        messaggioErroreCognome.setValue("");
+        messaggioErroreLink.setValue("");
+        messaggioErroreNomeSocial.setValue("");
+        proseguiRegistrazione.setValue("");
+        proseguiInserimento.setValue("");
+        proseguiInserimentoSocial.setValue("");
+        messaggioErroreBio.setValue("");
+        messaggioErrorePaese.setValue("");
+        messaggioErroreSitoWeb.setValue("");
+        acquirenteModelPresente.setValue(false);
+        venditoreModelPresente.setValue(false);
+        acquirenteModel.setValue(null);
+        venditoreModel.setValue(null);
+        apriPopUpSocial.setValue(false);
+        listaSocialAcquirente.setValue(null);
+        listaSocialVenditore.setValue(null);
+        socialVuoti.setValue(false);
+        socialAcquirente.clear();
+        socialVenditore.clear();
+        valoriPresentiAcquirente.setValue(null);
+        valoriPresentiVenditore.setValue(null);
+        valoriPresentiFacoltativiAcquirente.setValue(null);
+        valoriPresentiFacoltativiVenditore.setValue(null);
+        isSocialCambiato.setValue(false);
+    }
 
 }

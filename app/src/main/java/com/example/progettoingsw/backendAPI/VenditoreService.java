@@ -35,8 +35,8 @@ public interface VenditoreService {
     Call<Void> updatePasswordVenditore(@Path("password") String password,@Path("indirizzo_email") String indirizzo_email);
     @POST("/utenteController/insertVenditore/{venditore}")
     Call<Long> saveVenditore(@Body VenditoreDTO venditoreDTO);
-    @POST("utenteController/saveCategorieVenditore/{email}/{lista_categorie}")
-    Call<Void> saveCategorieVenditore(@Path("email")String email, @Query("lista_categorie")ArrayList<String> lista_categorie);
+    @POST("utenteController/saveCategorieVenditore/{indirizzo_email}/{lista_categorie}")
+    Call<Void> saveCategorieVenditore(@Path("indirizzo_email")String email, @Query("lista_categorie")ArrayList<String> lista_categorie);
 
     @PUT("/utenteController/setTokenVenditore/{indirizzo_email}/{token}")
     Call<Integer> setTokenVenditore(@Path("indirizzo_email") String indirizzo_email,@Path(("token")) String token);
