@@ -1,18 +1,19 @@
 package com.example.progettoingsw.view;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.EditText;
-import android.widget.Toast;
 
-import androidx.annotation.NonNull;
+import androidx.lifecycle.LifecycleOwner;
 
 import com.example.progettoingsw.R;
 import com.example.progettoingsw.classe_da_estendere.DialogPersonalizzato;
 import com.example.progettoingsw.controllers_package.Controller;
+import com.example.progettoingsw.viewmodel.RegistrazioneViewModel;
 import com.google.android.material.button.MaterialButton;
 
 import java.util.ArrayList;
@@ -23,21 +24,33 @@ public class PopUpRegistrazioneSocial extends DialogPersonalizzato implements Vi
     private String opzioneSelezionata;
     private String email;
     private String tipoUtente;
+    private Context mContext;
+    String nomeSocial;
+    String link;
     private RegistrazioneCampiFacoltativi registrazioneCampiFacoltativi;
     MaterialButton bottoneChiudiRegistrazioneSocial;
     MaterialButton bottoneConfermaRegistrazioneSocial;
-    EditText editTextNomeUtenteSocial;
+    EditText editTextLink;
     EditText editTextNomeSocial;
+    RegistrazioneViewModel registrazioneViewModel;
     private ArrayList<String> elencoNomeSocialRegistrazioneStrings;
     ArrayList<String> elencoNomeUtenteSocialRegistrazione;
 
-    public PopUpRegistrazioneSocial(@NonNull Context context, RegistrazioneCampiFacoltativi registrazioneCampiFacoltativi, String email, String tipoUtente, ArrayList<String> elencoNomeSocialRegistrazioneStrings, ArrayList<String> elencoNomeUtenteSocialRegistrazione) {
+    public PopUpRegistrazioneSocial(Context context, RegistrazioneCampiFacoltativi registrazioneCampiFacoltativi, RegistrazioneViewModel registrazioneViewModel) {
         super(context);
-        this.email=email;
-        this.tipoUtente=tipoUtente;
+        mContext = context;
         this.registrazioneCampiFacoltativi = registrazioneCampiFacoltativi;
-        this.elencoNomeSocialRegistrazioneStrings = elencoNomeSocialRegistrazioneStrings;
-        this.elencoNomeUtenteSocialRegistrazione = elencoNomeUtenteSocialRegistrazione;
+        this.registrazioneViewModel = registrazioneViewModel;
+        setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                // Esegui le azioni desiderate quando il popup viene chiuso
+                // Ad esempio, esegui un'azione o mostra un messaggio
+                Log.d("PopUp", "Popup chiuso premendo all'esterno");
+                // Aggiungi qui le azioni desiderate
+            }
+        });
+
     }
 
     @Override
@@ -45,9 +58,6 @@ public class PopUpRegistrazioneSocial extends DialogPersonalizzato implements Vi
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.pop_up_registrazione_social);
-
-        controller = new Controller();
-
         // Stampa dei valori negli arraylist nel log
         Log.d("PopUpRegistrazioneSocial", "Valori in elencoNomeSocialRegistrazioneStrings: " + elencoNomeSocialRegistrazioneStrings.toString());
         Log.d("PopUpRegistrazioneSocial", "Valori in elencoNomeUtenteSocialRegistrazione: " + elencoNomeUtenteSocialRegistrazione.toString());
@@ -56,10 +66,14 @@ public class PopUpRegistrazioneSocial extends DialogPersonalizzato implements Vi
         // Riferimenti ai widget all'interno del pop-up
         bottoneChiudiRegistrazioneSocial = findViewById(R.id.bottoneChiudiRegistrazioneSocial);
         bottoneConfermaRegistrazioneSocial = findViewById(R.id.bottoneConfermaRegistrazioneSocial);
-        editTextNomeUtenteSocial = findViewById(R.id.editTextNomeUtenteSocial);
+        editTextLink = findViewById(R.id.editTextNomeUtenteSocial);
         editTextNomeSocial = findViewById(R.id.editTextNomeSocial);
+        nomeSocial = editTextNomeSocial.getText().toString().trim();
+        link = editTextLink.getText().toString().trim();
 
-
+        osservaMessaggioErroreNomeSocial();
+        osservaMessaggioErroreLink();
+        osservaProseguiInserimentoSocial();
 
 
 
@@ -71,16 +85,15 @@ public class PopUpRegistrazioneSocial extends DialogPersonalizzato implements Vi
     @Override
     public void onClick(View v) {
         int viewId = v.getId();
-
         if (viewId == R.id.bottoneChiudiRegistrazioneSocial) {
             dismiss(); // Chiude il dialog
         } else if (viewId == R.id.bottoneConfermaRegistrazioneSocial) {
-            confermaRegistrazioneSocial();
+            registrazioneViewModel.checkSocial(nomeSocial,link);
         }
     }
 
 
-    private void confermaRegistrazioneSocial() {
+  /*  private void confermaRegistrazioneSocial() {
         String nomeSocial = editTextNomeSocial.getText().toString().trim();
         String nomeUtenteSocial = editTextNomeUtenteSocial.getText().toString().trim();
 
@@ -106,5 +119,36 @@ public class PopUpRegistrazioneSocial extends DialogPersonalizzato implements Vi
                 dismiss();
             }
         }
-        }
+        }*/
+
+    public void messaggioErroreNomeSocial(String messaggio){
+        editTextNomeSocial.setError(messaggio);
+    }
+
+    public void messaggioErroreLink(String messaggio){
+        editTextLink.setError(messaggio);}
+
+    public void osservaMessaggioErroreNomeSocial() {
+        registrazioneViewModel.messaggioErroreNomeSocial.observe((LifecycleOwner) this, (messaggio) -> {
+            if (registrazioneViewModel.isNuovoMessaggioErrorNomeSociale()) {
+                messaggioErroreNomeSocial(messaggio);
+            }
+        });
+    }
+
+    public void osservaMessaggioErroreLink() {
+        registrazioneViewModel.messaggioErroreLink.observe((LifecycleOwner) this, (messaggio) -> {
+            if (registrazioneViewModel.isNuovoMessaggioErrorLink()) {
+                messaggioErroreLink(messaggio);
+            }
+        });
+    }
+    public void osservaProseguiInserimentoSocial(){
+        registrazioneViewModel.proseguiInserimentoSocial.observe((LifecycleOwner) this, (messaggio) ->{
+            if (registrazioneViewModel.isProseguiInserimentoSocial("inserito")) {
+                dismiss();
+            }
+        });
+    }
+
 }

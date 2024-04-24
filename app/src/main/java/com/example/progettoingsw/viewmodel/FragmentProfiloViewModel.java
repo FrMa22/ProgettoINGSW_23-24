@@ -32,6 +32,8 @@ public class FragmentProfiloViewModel extends ViewModel {
     public MutableLiveData<Boolean> apriPopUpAggiungiSocial = new MutableLiveData<>(false);
 
     public MutableLiveData<Boolean> apriLeMieAste = new MutableLiveData<>(false);
+
+    public MutableLiveData<Boolean> apriPartecipazioneAste = new MutableLiveData<>(false);
     public MutableLiveData<String> messaggioErroreNomeNuovo = new MutableLiveData<>("");
     public MutableLiveData<String> messaggioErroreLinkNuovo = new MutableLiveData<>("");
     public MutableLiveData<String> messaggioErroreCognomeNuovo = new MutableLiveData<>("");
@@ -980,4 +982,11 @@ public class FragmentProfiloViewModel extends ViewModel {
         setMessaggioErroreBioNuovo("");
         setMessaggioErrorePaeseNuovo("");
     }
+    public void setApriPartecipazioneAste(Boolean b){
+        apriPartecipazioneAste.setValue(b);
+    }
+    public Boolean getApriPartecipazioneAste(){
+        return apriPartecipazioneAste.getValue();
+    }
+
 }

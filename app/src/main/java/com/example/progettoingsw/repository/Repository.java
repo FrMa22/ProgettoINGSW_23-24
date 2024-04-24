@@ -158,10 +158,7 @@ public class Repository {
     }
 
     public void deleteSocialVenditore(SocialVenditoreModel socialVenditoreModel){
-        Log.d("deleteSocialVenditore", "social da eliminare :" + socialVenditoreModel);
-        Log.d("deleteSocialVenditore","valori prima: " + socialVenditoreModelList);
         this.socialVenditoreModelList.remove(socialVenditoreModel);
-        Log.d("deleteSocialVenditore","valori dopo: " + socialVenditoreModelList);
     }
 
     public void updateSocialVenditore(String oldNome,String oldLink,String newNome,String newLink){

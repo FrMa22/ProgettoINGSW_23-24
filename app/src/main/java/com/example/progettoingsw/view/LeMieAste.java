@@ -76,38 +76,6 @@ public class LeMieAste extends GestoreComuniImplementazioni {
                 System.out.println("entrah, non penso proprio");
                 leMieAsteViewModel.gestisciClickRecyclerView(asta);
 
-//                // Esegui le azioni desiderate con l'oggetto Asta
-//                if (asta instanceof AstaIngleseItem) {
-//
-//                    leMieAsteViewModel.setAstaIngleseSelezionata((Asta_allingleseModel) asta);
-//                    leMieAsteViewModel.setEntraInSchermataAstaInglese(true);
-//                    //int id = ((AstaIngleseItem) asta).getId();
-////                    Log.d("Asta inglese", "id è " + id);
-////                    Intent intent = new Intent(LeMieAste.this, SchermataAstaInglese.class);//test del login
-////                    intent.putExtra("email", email);
-////                    intent.putExtra("tipoUtente", tipoUtente);
-////                    intent.putExtra("id", id);
-////                    startActivity(intent);
-//                } else if (asta instanceof AstaRibassoItem) {
-//                    leMieAsteViewModel.setAstaRibassoSelezionata((Asta_alribassoModel) asta);
-//                    leMieAsteViewModel.setEntraInSchermataAstaRibasso(true);
-////                    int id = ((AstaRibassoItem) asta).getId();
-////                    Intent intent = new Intent(LeMieAste.this, SchermataAstaRibasso.class);//test del login
-////                    intent.putExtra("email", email);
-////                    intent.putExtra("tipoUtente", tipoUtente);
-////                    intent.putExtra("id", id);
-////                    startActivity(intent);
-//                } else if (asta instanceof AstaInversaItem) {
-//                    System.out.println("entrah, non penso proprio");
-//                    leMieAsteViewModel.setAstaInversaSelezionata((Asta_inversaModel) asta);
-//                    leMieAsteViewModel.setEntraInSchermataAstaInversa(true);
-//                  //  int id = ((AstaInversaItem) asta).getId();
-////                    Intent intent = new Intent(LeMieAste.this, SchermataAstaInversa.class);//test del login
-////                    intent.putExtra("email", email);
-////                    intent.putExtra("tipoUtente", tipoUtente);
-////                    intent.putExtra("id", id);
-////                    startActivity(intent);
-//                }
             }
         });
 
@@ -123,42 +91,10 @@ public class LeMieAste extends GestoreComuniImplementazioni {
             public void onClick(View v) {
                 // Ottieni la posizione dell'elemento cliccato
                 int position = recyclerViewAsteNonAttive.getChildAdapterPosition(v);
-
                 // Ottieni l'oggetto Asta corrispondente alla posizione cliccata
                 Object asta = astaAdapterNonAttive.getItem(position);
                 System.out.println("entrah, non penso proprio");
                 leMieAsteViewModel.gestisciClickRecyclerView(asta);
-
-//                // Esegui le azioni desiderate con l'oggetto Asta
-//                if (asta instanceof AstaIngleseItem) {
-//                    leMieAsteViewModel.setAstaIngleseSelezionata((Asta_allingleseModel) asta);
-//                    leMieAsteViewModel.setEntraInSchermataAstaInglese(true);
-//                    //int id = ((AstaIngleseItem) asta).getId();
-////                    Log.d("Asta inglese", "id è " + id);
-////                    Intent intent = new Intent(LeMieAste.this, SchermataAstaInglese.class);//test del login
-////                    intent.putExtra("email", email);
-////                    intent.putExtra("tipoUtente", tipoUtente);
-////                    intent.putExtra("id", id);
-////                    startActivity(intent);
-//                } else if (asta instanceof AstaRibassoItem) {
-//                    leMieAsteViewModel.setAstaRibassoSelezionata((Asta_alribassoModel) asta);
-//                    leMieAsteViewModel.setEntraInSchermataAstaRibasso(true);
-//                   // int id = ((AstaRibassoItem) asta).getId();
-////                    Intent intent = new Intent(LeMieAste.this, SchermataAstaRibasso.class);//test del login
-////                    intent.putExtra("email", email);
-////                    intent.putExtra("tipoUtente", tipoUtente);
-////                    intent.putExtra("id", id);
-////                    startActivity(intent);
-//                } else if (asta instanceof AstaInversaItem) {
-//                    leMieAsteViewModel.setAstaInversaSelezionata((Asta_inversaModel) asta);
-//                    leMieAsteViewModel.setEntraInSchermataAstaInversa(true);
-//                  //  int id = ((AstaInversaItem) asta).getId();
-////                    Intent intent = new Intent(LeMieAste.this, SchermataAstaInversa.class);//test del login
-////                    intent.putExtra("email", email);
-////                    intent.putExtra("tipoUtente", tipoUtente);
-////                    intent.putExtra("id", id);
-////                    startActivity(intent);
-//                }
             }
         });
 
@@ -167,15 +103,6 @@ public class LeMieAste extends GestoreComuniImplementazioni {
         progress_bar_le_mie_aste = findViewById(R.id.progress_bar_le_mie_aste);
         progress_bar_le_mie_aste.setVisibility(View.VISIBLE);
 
-
-
-        //
-
-        //Ora inizia codice solo per LeMieAste
-
-//        RadioGroup radioGroup = findViewById(R.id.radioGroupLeMieAste);
-//        RadioButton btnAttivi = findViewById(R.id.bottoneAttive);
-//        RadioButton btnNonAttivi = findViewById(R.id.bottoneNonAttive);
 
         text_view_aste_attive_non_attive = findViewById(R.id.text_view_aste_attive_non_attive);
         switch_compat_aste_attive_nonattive = findViewById(R.id.switch_compat_aste_attive_nonattive);

@@ -1,7 +1,9 @@
 package com.example.progettoingsw.backendAPI;
 
 import com.example.progettoingsw.DTO.SocialAcquirenteDTO;
+import com.example.progettoingsw.model.SocialAcquirenteModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -25,5 +27,8 @@ public interface SocialAcquirenteService {
 
     @PUT("/socialAcquirenteController/updateSocialAcquirente/{oldNome}/{oldLink}/{newNome}/{newLink}")
     Call<Void> updateSocialAcquirente(@Path("oldNome") String oldNome,@Path("oldLink") String oldLink,@Path("newNome") String newNome,@Path("newLink") String newLink);
+
+    @POST("/socialAcquirenteController/insertSocialAcquirenteRegistrazione/{listaSocialDTO}")
+    Call<Void> insertSocialAcquirenteRegistrazione(@Body ArrayList<SocialAcquirenteDTO> listaSocialDTO);
 
 }
