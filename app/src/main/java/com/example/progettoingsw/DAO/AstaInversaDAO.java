@@ -370,7 +370,7 @@ public class AstaInversaDAO {
         @Override
         protected void onPostExecute(Boolean result) {
             if (result != null) {
-                schermataAstaInversa.handleOffertaAttualeTua(result);
+                //schermataAstaInversa.handleOffertaAttualeTua(result);
             } else {
                 // Errore durante la verifica o nessun risultato trovato
                 // Puoi gestire la situazione qui

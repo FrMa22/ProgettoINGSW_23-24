@@ -14,7 +14,6 @@ import androidx.appcompat.widget.AppCompatButton;
 import com.example.progettoingsw.DAO.PopUpControlloPasswordDAO;
 import com.example.progettoingsw.R;
 import com.example.progettoingsw.classe_da_estendere.DialogPersonalizzato;
-import com.example.progettoingsw.repository.Repository;
 import com.example.progettoingsw.view.acquirente.FragmentProfilo;
 import com.example.progettoingsw.viewmodel.FragmentProfiloViewModel;
 
@@ -35,6 +34,7 @@ public class PopUpControlloPassword extends DialogPersonalizzato implements View
         super(context);
        this.fragmentProfiloViewModel=fragmentProfiloViewModel;
         this.fragmentProfilo=fragmentProfilo;
+        setCanceledOnTouchOutside(false);
         //this.popUpControlloPasswordDAO = new PopUpControlloPasswordDAO(this,email,tipoUtente);
     }
 
@@ -47,7 +47,6 @@ public class PopUpControlloPassword extends DialogPersonalizzato implements View
         osservaMessaggioErrorePasswordVecchia();
         osservaMessaggioErrorePasswordNuova();
         osservaIsPasswordCambiata();
-
 
         progress_bar_pop_up_controllo_password = findViewById(R.id.progress_bar_pop_up_controllo_password);
 
@@ -64,13 +63,18 @@ public class PopUpControlloPassword extends DialogPersonalizzato implements View
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.bottoneAnnullaControlloPassword) {
+            fragmentProfiloViewModel.resetErroriControlloPassword();
             dismiss();
         } else if(v.getId() == R.id.bottoneConfermaControlloPassword){
             confermaPassword();
 
         }
     }
-
+    @Override
+    public void onBackPressed(){
+        Log.d("onBackPressed","onBackPressed");
+        bottoneAnnullaControlloPassword.performClick();
+    }
 private void confermaPassword(){
     String password_vecchia = edit_text_vecchia_password.getText().toString().trim();
     String password_nuova = edit_text_password_nuova.getText().toString().trim();
@@ -127,11 +131,13 @@ private void confermaPassword(){
 
 
     public void messaggioErrorePasswordNuova(String messaggio){
+        Log.d("messaggioErrorePasswordNuova","setto : " + messaggio);
         edit_text_password_nuova.setError(messaggio);
     }
     public void osservaMessaggioErrorePasswordNuova() {
         fragmentProfiloViewModel.messaggioErrorePasswordNuova.observe(fragmentProfilo, (messaggio) -> {
             if (fragmentProfiloViewModel.isNuovoMessaggioErrorePasswordNuova()) {
+                Log.d("osservaMessaggioErrorePasswordNuova","nel'if");
                 messaggioErrorePasswordNuova(messaggio);
                 //loginViewModel.cancellaMessaggioLogin();
             }
@@ -142,7 +148,7 @@ private void confermaPassword(){
         fragmentProfiloViewModel.isPasswordCambiata.observe(fragmentProfilo, (messaggio) -> {
             if(fragmentProfiloViewModel.getIsPasswordCambiata()){
                 Log.d("osservaIsPasswordCambiata","prima di dismiss");
-                //dismiss();
+                fragmentProfiloViewModel.resetErroriControlloPassword();
                 dismissPopup();
             }else{
                 Toast.makeText(getContext(), "Errore nelle password!", Toast.LENGTH_SHORT).show();

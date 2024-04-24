@@ -27,6 +27,10 @@ public class SchermataAstaRibassoViewModel extends ViewModel {
     public MutableLiveData<Bitmap> immagineAstaConvertita = new MutableLiveData<>(null);
     public MutableLiveData<Boolean> isAstaChiusa = new MutableLiveData<>(false);
     public MutableLiveData<String> intervalloOfferteConvertito = new MutableLiveData("");
+
+
+
+    public MutableLiveData<Asta_alribassoModel> astadaMostrare = new MutableLiveData<>(null);
     public MutableLiveData<Boolean> vaiInVenditore = new MutableLiveData<>(false);
     private Boolean isAcquistoAvvenuto;
     private String tipoUtente;
@@ -44,10 +48,6 @@ public class SchermataAstaRibassoViewModel extends ViewModel {
             public void OnTrovaAstaRibasso(Asta_alribassoModel astaRecuperata) {
                 Log.d("asta ricercata" , "qui");
                 if(astaRecuperata!=null){
-                    if(astaRecuperata.getPath_immagine()==null){
-                        Log.d("immagine null", "null");
-                        //astaRecuperata.setImmagine(R.drawable.image_default_low_quality);
-                    }
                     repository.setAsta_alribassoSelezionata(astaRecuperata);
                     setAstaRecuperata(astaRecuperata);
                 }else{
@@ -82,8 +82,8 @@ public class SchermataAstaRibassoViewModel extends ViewModel {
     public void setIntervalloOfferteConvertito(String intervallo){
         intervalloOfferteConvertito.setValue(intervallo);
     }
-    public void convertiIntervalloOfferte(Asta_alribassoModel asta){
-        String intervallo = asta.getIntervalloDecrementale();
+    public void convertiIntervalloOfferte(){
+        String intervallo = repository.getAsta_alribassoSelezionata().getIntervalloDecrementale();
         long orarioAttuale = System.currentTimeMillis();
         long intervalloMillisecondi = convertiIntervallo(intervallo);
         long prossimoDecremento = orarioAttuale + intervalloMillisecondi;
@@ -262,4 +262,17 @@ public class SchermataAstaRibassoViewModel extends ViewModel {
         setVaiInVenditore(true);
     }
 
+    public Asta_alribassoModel getAstadaMostrare() {
+        return astadaMostrare.getValue();
+    }
+
+    public void setAstadaMostrare(Asta_alribassoModel astadaMostrare) {
+        this.astadaMostrare.setValue(astadaMostrare);
+    }
+    public Boolean isAstaDaMostrare(){
+        return (this.astadaMostrare.getValue()!=null);
+    }
+    public void recuperaAstaDaMostrare(){
+        setAstadaMostrare(astaRecuperata.getValue());
+    }
 }

@@ -2,6 +2,7 @@ package com.example.progettoingsw.viewmodel;
 
 import android.util.Log;
 
+import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -203,6 +204,14 @@ public class PopUpNuovaOffertaViewModel extends ViewModel {
         float minimaOfferta = getPrezzoVecchio() + getRialzoMin();
         return String.valueOf(minimaOfferta);
     }
-
+    public void resetErroriNuovaOfferta(LifecycleOwner lifecycleOwner){
+        setMessaggioErrore("");
+        setMessaggioErroreOfferta(false);
+        setOffertaValida(false);
+//        tipoAstaChecked.removeObservers(lifecycleOwner);
+//        isPartecipazioneAvvenuta.removeObservers(lifecycleOwner);
+//        offertaValida.removeObservers(lifecycleOwner);
+//        messaggioErroreOfferta.removeObservers(lifecycleOwner);
+    }
 
 }

@@ -33,12 +33,7 @@ import java.util.List;
 public class ProfiloAcquirente extends GestoreComuniImplementazioni {
 
 
-    ImageButton button_log_out;
     MaterialButton button_le_mie_aste;
-    ImageButton button_modifica;
-    ImageButton bottone_info;
-    Button button_cambia_password_profilo;
-    ImageButton button_aggiungi_social;
 
     private GridView gridView;
     private CustomAdapter_gridview_profilo_social adapterSocial;
@@ -54,9 +49,7 @@ public class ProfiloAcquirente extends GestoreComuniImplementazioni {
 
     // Definisci la variabile di istanza view
 
-    private String email;
     private RelativeLayout relative_layout_profilo_acquirente;
-    private BottomNavigationView acquirente_nav_view;
     private SchermataUtenteViewModel schermataUtenteViewModel;
 
     @Override

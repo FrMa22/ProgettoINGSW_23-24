@@ -37,6 +37,7 @@ public class PopUpModificaCampiProfilo extends DialogPersonalizzato implements V
         this.fragmentProfilo = fragmentProfilo;
         this.fragmentProfiloViewModel=fragmentProfiloViewModel;
         this.popupDismissListener=popupDismissListener;
+        setCanceledOnTouchOutside(false);
     }
 
     @Override
@@ -72,6 +73,7 @@ public class PopUpModificaCampiProfilo extends DialogPersonalizzato implements V
     public void onClick(View v) {
         if (v.getId() == R.id.bottoneAnnullaModifica) {
             Toast.makeText(getContext(), "Annulla", Toast.LENGTH_SHORT).show();
+            fragmentProfiloViewModel.resetErroriModificaCampoProfilo();
             dismiss();
         } else if (v.getId() == R.id.bottoneConfermaModifica) {
             Toast.makeText(getContext(), "Conferma", Toast.LENGTH_SHORT).show();
@@ -81,46 +83,14 @@ public class PopUpModificaCampiProfilo extends DialogPersonalizzato implements V
             String paese = edit_text_modifica_paese.getText().toString();
             String bio = edit_text_modifica_bio.getText().toString();
 
-           // if (!nome.isEmpty() && !cognome.isEmpty() && nome.length()<=50 && cognome.length()<=50 && sitoweb.length()<=50 && paese.length()<=25 && bio.length()<=100) {
-             //   Log.d("bottone", " i valori di nome e cognome sono: " + nome + cognome);
-//                popUpModificaCampiProfiloDAO.updateFields(nome, cognome, sitoweb, paese, bio);
-                //chiamata al backend
-                fragmentProfiloViewModel.aggiornaViewModel(nome,cognome,bio,sitoweb,paese);
-                //fragmentProfilo.onResume();
-                //dismiss();
-//            }else{
-//                if(nome.isEmpty() && cognome.isEmpty()){
-//                    Toast.makeText(getContext(), "I valori di Nome e Cognome non possono essere vuoti!", Toast.LENGTH_SHORT).show();
-//                }else if(nome.isEmpty()){
-//                    Toast.makeText(getContext(), "Il valore di Nome non può essere vuoto!", Toast.LENGTH_SHORT).show();
-//                }else{
-//                    Toast.makeText(getContext(), "Il valore di Cognome non può essere vuoto!", Toast.LENGTH_SHORT).show();
-//                }
-//                if (nome.length() > 50) {
-//                    edit_text_modifica_nome.setError("Il nome non può superare i 50 caratteri");
-//                    return;
-//                }
-//                if (cognome.length() > 50) {
-//                    edit_text_modifica_cognome.setError("Il cognome non può superare i 50 caratteri");
-//                    return;
-//                }
-//                if (bio.length() > 100) {
-//                    edit_text_modifica_bio.setError("La bio non può superare i 100 caratteri");
-//                    return;
-//                }
-//
-//                if (paese.length() > 25) {
-//                    edit_text_modifica_paese.setError("Il paese non può superare i 25 caratteri");
-//                    return;
-//                }
-//                if (sitoweb.length() > 50) {
-//                    edit_text_modifica_sitoweb.setError("Il sito web non può superare i 50 caratteri");
-//                    return;
-//                }
-//            }
+            fragmentProfiloViewModel.aggiornaViewModel(nome,cognome,bio,sitoweb,paese);
         }
     }
 
+    @Override
+    public void onBackPressed(){
+        bottoneAnnullaModifica.performClick();
+    }
     public void setFields(Object[] object) {
         if (object != null && object.length >= 5) {
             String nome = (String) object[0];
@@ -225,6 +195,7 @@ public class PopUpModificaCampiProfilo extends DialogPersonalizzato implements V
             if(fragmentProfiloViewModel.getIsUtenteCambiato()){
                 Log.d("osservaIsUtenteCambiato","prima di dismiss");
                 //dismiss();
+                fragmentProfiloViewModel.resetErroriModificaCampoProfilo();
                 dismissPopup();
             }else{
                 Toast.makeText(getContext(), "Errore nei dati del utente", Toast.LENGTH_SHORT).show();

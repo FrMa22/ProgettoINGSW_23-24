@@ -40,7 +40,7 @@ public class Repository {
 
 
     private String categoriaSelezionata;
-    public static final String backendUrl = "http:/15.237.74.23:8080/";
+    public static final String backendUrl = "http:/13.38.66.92:8080/";
     public static Repository questaRepository = null;
     //liste per le aste all'inglese nel caso di accesso come acquirente (aste in home)
     private ArrayList<Asta_allingleseModel> listaAsteAllIngleseInScadenza;
@@ -158,7 +158,10 @@ public class Repository {
     }
 
     public void deleteSocialVenditore(SocialVenditoreModel socialVenditoreModel){
+        Log.d("deleteSocialVenditore", "social da eliminare :" + socialVenditoreModel);
+        Log.d("deleteSocialVenditore","valori prima: " + socialVenditoreModelList);
         this.socialVenditoreModelList.remove(socialVenditoreModel);
+        Log.d("deleteSocialVenditore","valori dopo: " + socialVenditoreModelList);
     }
 
     public void updateSocialVenditore(String oldNome,String oldLink,String newNome,String newLink){

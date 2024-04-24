@@ -103,6 +103,7 @@ public class FragmentProfilo extends Fragment implements PopUpModificaCampiProfi
 
         osservaAcquirenteModelPresente();
         osservaVenditoreModelPresente();
+        osservaSocialAssenti();
         fragmentProfiloViewModel.checkTipoUtente();
 
 
@@ -113,7 +114,7 @@ public class FragmentProfilo extends Fragment implements PopUpModificaCampiProfi
 
 
          //Inizializza la GridView
-        GridView gridView = view.findViewById(R.id.gridview_social_activity_profilo);
+        gridView = view.findViewById(R.id.gridview_social_activity_profilo);
 
 // Imposta un'altezza minima per la GridView
         gridView.setMinimumHeight((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 50, getResources().getDisplayMetrics()));
@@ -296,9 +297,6 @@ public class FragmentProfilo extends Fragment implements PopUpModificaCampiProfi
 
     public void updateSocialNames(List<String> socialNames, List<String> socialLinks) {
         try {
-
-
-
                 System.out.println("in update Social names");
                 gridView = view.findViewById(R.id.gridview_social_activity_profilo);
                 if (socialNames != null && !socialNames.isEmpty() && socialLinks != null && !socialLinks.isEmpty()) {
@@ -399,7 +397,7 @@ public class FragmentProfilo extends Fragment implements PopUpModificaCampiProfi
             if (fragmentProfiloViewModel.getAcquirenteModelPresente()) {
                 Toast.makeText(getContext(), "Entrato come acquirente in fragment profilo.", Toast.LENGTH_SHORT).show();
                 //chiamate ai vari observer, tra cui quelli di cambiare schermata quindi pure per la gestione dei popup
-                osservaSocialAcquirentePresenti();
+                osservaSocialAcquirenteRecuperati();
                 osservaAcquirenteRecuperato();//nel suo corpo ha un observer di un oggetto Acquirente Model che poi si usa per fare i vari get per un metodo che setta nella gui i valori
                 osservaApriPopUpAggiungiSocial();
                 osservaApriLeMieAste();
@@ -438,7 +436,6 @@ public class FragmentProfilo extends Fragment implements PopUpModificaCampiProfi
                 System.out.println("in osserva social acquirente presenti");
                 osservaSocialAcquirenteRecuperati();
                 fragmentProfiloViewModel.recuperaSocialAcquirente();
-
             }
 
 
@@ -456,6 +453,7 @@ public class FragmentProfilo extends Fragment implements PopUpModificaCampiProfi
                     links.add(social.getLink());
                     nomi.add(social.getNome());
                 }
+                gridView.setVisibility(View.VISIBLE);
                 updateSocialNames(nomi,links);
             }
         });
@@ -473,6 +471,7 @@ public class FragmentProfilo extends Fragment implements PopUpModificaCampiProfi
                     links.add(social.getLink());
                     nomi.add(social.getNome());
                 }
+                gridView.setVisibility(View.VISIBLE);
                 updateSocialNames(nomi,links);
             }
         });
@@ -501,7 +500,6 @@ public class FragmentProfilo extends Fragment implements PopUpModificaCampiProfi
                 System.out.println("in osserva social venditore presenti");
                 osservaSocialVenditoreRecuperati();
                 fragmentProfiloViewModel.recuperaSocialVenditore();
-
             }
 
 
@@ -524,7 +522,15 @@ public class FragmentProfilo extends Fragment implements PopUpModificaCampiProfi
             }
         });
     }
-
+public void osservaSocialAssenti(){
+        fragmentProfiloViewModel.socialAssenti.observe(getViewLifecycleOwner(), (valore) ->{
+            if(valore){
+                Log.d("osservaSocialAssenti","entrato");
+                gridView.setVisibility(View.GONE);
+                text_view_nessun_social.setVisibility(View.VISIBLE);
+            }
+        });
+}
 
     public void osservaVenditoreModelPresente(){
         fragmentProfiloViewModel.venditoreModelPresente.observe(getViewLifecycleOwner(), (messaggio) -> {
@@ -532,7 +538,7 @@ public class FragmentProfilo extends Fragment implements PopUpModificaCampiProfi
                 System.out.println("venditore esiste");
                 Toast.makeText(getContext(), "Entrato come venditore in fragment profilo.", Toast.LENGTH_SHORT).show();
                 //chiamate ai vari observer, tra cui quelli di cambiare schermata quindi pure per la gestione dei popup
-                osservaSocialVenditorePresenti();
+                osservaSocialVenditoreRecuperati();
                 osservaVenditoreRecuperato();//nel suo corpo ha un observer di un oggetto Acquirente Model che poi si usa per fare i vari get per un metodo che setta nella gui i valori
                 osservaApriPopUpAggiungiSocial();
                 osservaApriLeMieAste();
