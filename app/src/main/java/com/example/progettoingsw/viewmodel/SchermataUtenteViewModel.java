@@ -19,6 +19,7 @@ public class SchermataUtenteViewModel extends ViewModel {
     private SchermataUtenteRepository schermataUtenteRepository;
     private FragmentProfiloRepository fragmentProfiloRepository;
 
+    public MutableLiveData<Boolean> socialAssenti = new MutableLiveData<>(false);
 
     public MutableLiveData<AcquirenteModel> acquirenteRecuperato = new MutableLiveData<>(null);
     public MutableLiveData<ArrayList<SocialAcquirenteModel>> socialAcquirente = new MutableLiveData<>(null);
@@ -35,7 +36,9 @@ public class SchermataUtenteViewModel extends ViewModel {
         schermataUtenteRepository = new SchermataUtenteRepository();
         fragmentProfiloRepository = new FragmentProfiloRepository();
     }
-
+    public void setSocialAssenti(Boolean socialAssenti) {
+        this.socialAssenti.setValue(socialAssenti);
+    }
     public void getUtenteData(){
         if(repository.getAcquirenteEmailDaAsta()!=null){
             recuperaAcquirente();
@@ -63,7 +66,11 @@ public class SchermataUtenteViewModel extends ViewModel {
         fragmentProfiloRepository.trovaSocialAcquirenteBackend(email, new FragmentProfiloRepository.OnFragmentProfiloAcquirenteListener() {
             @Override
             public void onFragmentProfilo(List<SocialAcquirenteModel> socialAcquirenteModelList) {
-                setSocialAcquirente((ArrayList<SocialAcquirenteModel>) socialAcquirenteModelList);
+                if(socialAcquirenteModelList!=null && !socialAcquirenteModelList.isEmpty()) {
+                    setSocialAcquirente((ArrayList<SocialAcquirenteModel>) socialAcquirenteModelList);
+                }else{
+                    setSocialAssenti(true);
+                }
             }
         });
     }
@@ -86,7 +93,11 @@ public class SchermataUtenteViewModel extends ViewModel {
         fragmentProfiloRepository.trovaSocialVenditoreBackend(email, new FragmentProfiloRepository.OnFragmentProfiloVenditoreListener() {
             @Override
             public void onFragmentProfiloVenditore(List<SocialVenditoreModel> socialVenditoreModelList) {
-                setSocialVenditore((ArrayList<SocialVenditoreModel>) socialVenditoreModelList);
+                if(socialVenditoreModelList!=null && !socialVenditoreModelList.isEmpty()) {
+                    setSocialVenditore((ArrayList<SocialVenditoreModel>) socialVenditoreModelList);
+                }else{
+                    setSocialAssenti(true);
+                }
             }
         });
     }

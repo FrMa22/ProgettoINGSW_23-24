@@ -34,7 +34,6 @@ public class ProfiloAcquirente extends GestoreComuniImplementazioni {
 
     MaterialButton button_le_mie_aste;
 
-    private GridView gridView;
     private CustomAdapter_gridview_profilo_social adapterSocial;
     private ImageButton bottoneBackProfiloAcquirente;
     private TextView textview_nome;
@@ -42,9 +41,10 @@ public class ProfiloAcquirente extends GestoreComuniImplementazioni {
     private TextView textview_email;
     private TextView textview_sitoweb;
     private TextView textview_paese;
-
+    private TextView text_view_nessun_social_profilo_acquirente;
     private TextView text_view_bio_profilo;
 
+    private GridView gridView;
     // Definisci la variabile di istanza view
 
     private RelativeLayout relative_layout_profilo_acquirente;
@@ -57,10 +57,6 @@ public class ProfiloAcquirente extends GestoreComuniImplementazioni {
 
         schermataUtenteViewModel = new ViewModelProvider(this).get(SchermataUtenteViewModel.class);
 
-        osservaAcquirenteRecuperato();
-        osservaSocialAcquirente();
-        osservaApriLeMieAste();
-        schermataUtenteViewModel.getUtenteData();
 
         bottoneBackProfiloAcquirente=findViewById(R.id.bottoneBackProfiloAcquirente);
         bottoneBackProfiloAcquirente.setOnClickListener(new View.OnClickListener() {
@@ -73,7 +69,7 @@ public class ProfiloAcquirente extends GestoreComuniImplementazioni {
 
 
 
-        GridView gridView = findViewById(R.id.gridview_social_activity_profilo);
+        gridView = findViewById(R.id.gridview_social_activity_profilo);
         gridView.setMinimumHeight((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 50, getResources().getDisplayMetrics()));
         setGridViewHeightBasedOnChildren(gridView);
 
@@ -94,8 +90,15 @@ public class ProfiloAcquirente extends GestoreComuniImplementazioni {
         textview_sitoweb = findViewById(R.id.textview_sitoweb);
         textview_paese = findViewById(R.id.textview_paese);
         text_view_bio_profilo = findViewById(R.id.text_view_bio_profilo);
+        text_view_nessun_social_profilo_acquirente = findViewById(R.id.text_view_nessun_social_profilo_acquirente);
 
 
+        osservaAcquirenteRecuperato();
+        osservaSocialAcquirente();
+        osservaApriLeMieAste();
+        osservaSocialAssenti();
+
+        schermataUtenteViewModel.getUtenteData();
     }
 
 
@@ -154,7 +157,12 @@ public void updateDatiUtente(String nome, String cognome, String email, String l
             for (int i = 0; i < socialNames.size(); i++) {
                 Log.d("FragmentProfilo", "Nome Social: " + socialNames.get(i) + ", Link Social: " + socialLinks.get(i));
             }
+            gridView.setVisibility(View.VISIBLE);
+            text_view_nessun_social_profilo_acquirente.setVisibility(View.GONE);
         } else {
+            Log.d("updateSocialNames", "no social");
+            text_view_nessun_social_profilo_acquirente.setVisibility(View.VISIBLE);
+            gridView.setVisibility(View.GONE);
             // Rimuovi tutti i dati dall'adattatore e aggiorna la GridView
             gridView = findViewById(R.id.gridview_social_activity_profilo);
             adapterSocial = new CustomAdapter_gridview_profilo_social(this);
@@ -190,6 +198,15 @@ public void updateDatiUtente(String nome, String cognome, String email, String l
                     }
                     updateSocialNames(nomi,links);
                 }
+            }
+        });
+    }
+    public void osservaSocialAssenti() {
+        schermataUtenteViewModel.socialAssenti.observe(this, (valore) -> {
+            if (valore) {
+                Log.d("osservaSocialAssenti", "entrato");
+                gridView.setVisibility(View.GONE);
+                text_view_nessun_social_profilo_acquirente.setVisibility(View.VISIBLE);
             }
         });
     }

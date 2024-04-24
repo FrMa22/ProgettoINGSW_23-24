@@ -49,6 +49,7 @@ public class ProfiloVenditore extends GestoreComuniImplementazioni {
     private TextView textview_sitoweb;
     private TextView textview_paese;
 
+    private TextView text_view_nessun_social_profilo_venditore;
     private TextView text_view_bio_profilo;
 
     // Definisci la variabile di istanza view
@@ -65,10 +66,7 @@ public class ProfiloVenditore extends GestoreComuniImplementazioni {
 
         schermataUtenteViewModel = new ViewModelProvider(this).get(SchermataUtenteViewModel.class);
 
-        osservaVenditoreRecuperato();
-        osservaSocialVenditore();
-        osservaApriLeMieAste();
-        schermataUtenteViewModel.getUtenteData();
+
 
         bottoneBackProfiloVenditore = findViewById(R.id.bottoneBackProfiloVenditore);
         bottoneBackProfiloVenditore.setOnClickListener(new View.OnClickListener() {
@@ -81,7 +79,7 @@ public class ProfiloVenditore extends GestoreComuniImplementazioni {
 
 
         // Inizializza la GridView
-        GridView gridView = findViewById(R.id.gridview_social_activity_profilo);
+        gridView = findViewById(R.id.gridview_social_activity_profilo);
 
         gridView.setMinimumHeight((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 50, getResources().getDisplayMetrics()));
 
@@ -105,10 +103,14 @@ public class ProfiloVenditore extends GestoreComuniImplementazioni {
         textview_sitoweb = findViewById(R.id.textview_sitoweb);
         textview_paese = findViewById(R.id.textview_paese);
         text_view_bio_profilo = findViewById(R.id.text_view_bio_profilo);
+        text_view_nessun_social_profilo_venditore = findViewById(R.id.text_view_nessun_social_profilo_venditore);
 
 
-
-
+        osservaVenditoreRecuperato();
+        osservaSocialVenditore();
+        osservaApriLeMieAste();
+        osservaSocialAssenti();
+        schermataUtenteViewModel.getUtenteData();
 
 
     }
@@ -218,4 +220,13 @@ public class ProfiloVenditore extends GestoreComuniImplementazioni {
             }
         });
     }
+    public void osservaSocialAssenti() {
+        schermataUtenteViewModel.socialAssenti.observe(this, (valore) -> {
+            if (valore) {
+                Log.d("osservaSocialAssenti", "entrato");
+                gridView.setVisibility(View.GONE);
+                text_view_nessun_social_profilo_venditore.setVisibility(View.VISIBLE);
+            }
+        });
     }
+}
