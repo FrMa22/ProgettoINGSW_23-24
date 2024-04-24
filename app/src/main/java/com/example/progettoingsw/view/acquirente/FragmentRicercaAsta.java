@@ -32,6 +32,7 @@ import com.example.progettoingsw.view.SchermataAstaRibasso;
 import com.example.progettoingsw.view.SchermataAstePerCategoria;
 import com.example.progettoingsw.viewmodel.RicercaAstaViewModel;
 import com.google.android.material.button.MaterialButton;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.util.ArrayList;
 
@@ -43,8 +44,6 @@ public class FragmentRicercaAsta extends Fragment {
     private ArrayList<String> listaCategorieScelte;
     private String ordinamentoPrezzo;
     private AstaAdapter asteRecuperate;
-    private String tipoUtente;
-    private String email;
     private ProgressBar progress_bar_schermata_ricerca_asta;
     private RelativeLayout relative_layout_fragment_ricerca;
     private TextView text_view_nessuna_asta_ricercata;
@@ -124,72 +123,16 @@ public class FragmentRicercaAsta extends Fragment {
 
 
     }
-//    public void handlePopUp(ArrayList<String> switchTexts, String ordinamentoPrezzo){
-//        this.listaCategorieScelte = switchTexts;
-//        this.ordinamentoPrezzo = ordinamentoPrezzo;
-//// Stampare l'ordinamento nel log
-//        Log.d("PopUpHandler", "Ordinamento Prezzo: " + ordinamentoPrezzo);
-//
-//        // Iterare attraverso gli elementi di switchTexts e stamparli nel log
-//        for (String categoria : switchTexts) {
-//            Log.d("PopUpHandler", "Categoria: " + categoria);
-//        }
-//    }
-//
-//    public void handleAsteRecuperate(ArrayList<Object> asteItems){
-//        boolean asteVuote = asteItems == null || asteItems.isEmpty();
-//        if (!asteVuote)  {
-//            asteRecuperate.setAste(asteItems);
-//        } else {
-//            asteRecuperate.setAste(null);
-//            // Nessun nome asta trovato per l'email specificata
-//        }
-//        if(asteVuote){
-//            text_view_nessuna_asta_ricercata.setVisibility(View.VISIBLE);
-//        }else{
-//            text_view_nessuna_asta_ricercata.setVisibility(View.INVISIBLE);
-//        }
-//
-//            progress_bar_schermata_ricerca_asta.setVisibility(View.INVISIBLE);
-//            setAllClickable(relative_layout_fragment_ricerca,true);
-//            setNavigationView(true);
-//            System.out.println("Aste gestite con successo");
-//
-//    }
-//    private void setNavigationView(Boolean valore) {
-//        MainActivity activity = (MainActivity) getActivity();
-//        if (activity != null) {
-//            activity.enableBottomNavigationView(valore);
-//        }
-//
-//    }
-//    protected void setAllClickable(ViewGroup viewGroup, boolean enabled) {
-//        for (int i = 0; i < viewGroup.getChildCount(); i++) {
-//            View child = viewGroup.getChildAt(i);
-//            child.setEnabled(enabled);
-//            if (child instanceof ViewGroup) {
-//                setAllClickable((ViewGroup) child, enabled);
-//            }
-//        }
-//
-//
-//
-//    }
-//
-//
-//    public void eseguiRicercaAste(String parolaRicercata, ArrayList<String> listaCategorieScelte, String ordinamentoPrezzo) {
-//
-//            if (parolaRicercata.length() > 100) {
-//                edittext_ricerca.setError("Attenzione! La parola ricercata non può essere più lunga di 100 caratteri.");
-//            } else {
-//                progress_bar_schermata_ricerca_asta.setVisibility(View.VISIBLE);
-//                setAllClickable(relative_layout_fragment_ricerca, false);
-//                setNavigationView(false);
-//                ricercaAsteDAO.openConnection();
-//                ricercaAsteDAO.ricercaAste(parolaRicercata, listaCategorieScelte, ordinamentoPrezzo);
-//                ricercaAsteDAO.closeConnection();
-//            }
-//    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        FirebaseAnalytics firebaseAnalytics = FirebaseAnalytics.getInstance(requireContext());
+        Bundle bundle = new Bundle();
+        bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Fragment Ricerca Asta");
+        bundle.putString(FirebaseAnalytics.Param.SCREEN_CLASS, "FragmentRicercaAsta");
+        firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SCREEN_VIEW, bundle);
+        firebaseAnalytics.setAnalyticsCollectionEnabled(true);
+    }
 
     public void osservaIsAcquirente(){
         ricercaAstaViewModel.isAcquirente.observe(getViewLifecycleOwner(), (valore) -> {

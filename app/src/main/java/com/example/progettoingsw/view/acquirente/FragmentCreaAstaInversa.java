@@ -32,6 +32,7 @@ import com.example.progettoingsw.R;
 import com.example.progettoingsw.view.PopUpAggiungiCategorieAsta;
 import com.example.progettoingsw.viewmodel.CreaAstaInversaViewModel;
 import com.google.android.material.button.MaterialButton;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -171,6 +172,17 @@ public class FragmentCreaAstaInversa extends Fragment {
             }
         });
 
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        FirebaseAnalytics firebaseAnalytics = FirebaseAnalytics.getInstance(requireContext());
+        Bundle bundle = new Bundle();
+        bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Fragment Crea Asta Inversa");
+        bundle.putString(FirebaseAnalytics.Param.SCREEN_CLASS, "FragmentCreaAstaInversa");
+        firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SCREEN_VIEW, bundle);
+        firebaseAnalytics.setAnalyticsCollectionEnabled(true);
     }
     public void osservaApriPopUpInformazioni(){
         creaAstaInversaViewModel.apriPopUpInformazioni.observe(getViewLifecycleOwner(), (valore) ->{

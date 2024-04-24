@@ -39,6 +39,7 @@ public class PopUpModificaSocial extends DialogPersonalizzato implements View.On
         this.link_vecchio = link;
         this.fragmentProfiloViewModel=fragmentProfiloViewModel;
         this.popupDismissListener=popupDismissListener;
+        setCanceledOnTouchOutside(false);
     }
 
     @Override

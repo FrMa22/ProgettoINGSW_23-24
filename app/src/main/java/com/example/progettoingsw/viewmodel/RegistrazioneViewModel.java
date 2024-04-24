@@ -35,11 +35,20 @@ public class RegistrazioneViewModel extends ViewModel {
     public MutableLiveData<AcquirenteModel> acquirenteModel = new MutableLiveData<>();
     public MutableLiveData<VenditoreModel> venditoreModel = new MutableLiveData<>();
     public MutableLiveData<Boolean> apriPopUpSocial = new MutableLiveData<>(false);
+    public MutableLiveData<ArrayList<SocialAcquirenteModel>> listaSocialAcquirente = new MutableLiveData<>(null);
+    public MutableLiveData<ArrayList<SocialVenditoreModel>> listaSocialVenditore = new MutableLiveData<>(null);
+
     public ArrayList<SocialAcquirenteModel> socialAcquirente = new ArrayList<SocialAcquirenteModel>();
 
+
+
+    public MutableLiveData<Boolean> socialVuoti = new MutableLiveData<>(false);
     public ArrayList<SocialVenditoreModel> socialVenditore = new ArrayList<SocialVenditoreModel>();
     public MutableLiveData<AcquirenteModel> valoriPresentiAcquirente = new MutableLiveData<>(null);
     public MutableLiveData<VenditoreModel> valoriPresentiVenditore = new MutableLiveData<>(null);
+    public MutableLiveData<AcquirenteModel> valoriPresentiFacoltativiAcquirente = new MutableLiveData<>(null);
+    public MutableLiveData<VenditoreModel> valoriPresentiFacoltativiVenditore = new MutableLiveData<>(null);
+    public MutableLiveData<Boolean> isSocialCambiato = new MutableLiveData<>(false);
     private RegistrazioneRepository registrazioneRepository;
     private Repository repository;
 
@@ -559,5 +568,147 @@ public void controlloSocial(){
             setValoriPresentiVenditore(repository.getVenditoreModel());
         }
     }
+    public void setValoriPresentiFacoltativiAcquirente(AcquirenteModel utente){
+        this.valoriPresentiFacoltativiAcquirente.setValue(utente);
+    }
+    public Boolean isValoriPresentiFacoltativiAcquirente(){
+        return (valoriPresentiFacoltativiAcquirente.getValue()!=null);
+    }
+    public void setValoriPresentiFacoltativiVenditore(VenditoreModel utente){
+        this.valoriPresentiFacoltativiVenditore.setValue(utente);
+    }
+    public Boolean isValoriPresentiFacoltativiVenditore(){
+        return (valoriPresentiFacoltativiVenditore.getValue()!=null);
+    }
+    public void checkValoriPresentiFacoltativi(){
+        Log.d("checkValoriPresenti","entrato");
+        if(acquirenteModel.getValue()!=null){
+            Log.d("checkValoriPresenti","entrato caso acquirente");
+            setValoriPresentiFacoltativiAcquirente(acquirenteModel.getValue());
+        }else if(venditoreModel.getValue()!=null){
+            Log.d("checkValoriPresenti","entrato caso venditore");
+            setValoriPresentiFacoltativiVenditore(venditoreModel.getValue());
+        }
+    }
+    public void setIsSocialCambiato(Boolean b){
+        this.isSocialCambiato.setValue(b);
+    }
+    public void aggiornaSocialViewModel(String nome_vecchio, String link_vecchio, String nome, String link) {
+        boolean coppiaPresente = false;
 
+        if(socialValido(nome,link)) {
+            if (socialAcquirente != null && !socialAcquirente.isEmpty()) {
+                for (SocialAcquirenteModel social : socialAcquirente) {
+                    if (social.getNome().equals(nome) && social.getLink().equals(link)) {
+                        coppiaPresente = true;
+                        setMessaggioErroreLink("social già aggiunto");
+                        break;
+                    }
+                }
+            } else if (socialVenditore != null && !socialVenditore.isEmpty()) {
+                for (SocialVenditoreModel social : socialVenditore) {
+                    if (social.getNome().equals(nome) && social.getLink().equals(link)) {
+                        coppiaPresente = true;
+                        setMessaggioErroreLink("social già aggiunto");
+                        break;
+                    }
+                }
+            }
+
+            if (!coppiaPresente) {
+                if (socialAcquirente != null && !socialAcquirente.isEmpty()) {
+                    for (SocialAcquirenteModel social : socialAcquirente) {
+                        if (social.getNome().equals(nome_vecchio) && social.getLink().equals(link_vecchio)) {
+                            social.setNome(nome);
+                            social.setLink(link);
+                            setIsSocialCambiato(true);
+                            break;
+                        }
+                    }
+                } else if (socialVenditore != null && !socialVenditore.isEmpty()) {
+                    for (SocialVenditoreModel social : socialVenditore) {
+                        if (social.getNome().equals(nome_vecchio) && social.getLink().equals(link_vecchio)) {
+                            social.setNome(nome);
+                            social.setLink(link);
+                            setIsSocialCambiato(true);
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    public void eliminaSocialViewModel(String nome_vecchio,String link_vecchio){
+        if (socialAcquirente != null && !socialAcquirente.isEmpty()) {
+            for (SocialAcquirenteModel social : socialAcquirente) {
+                if (social.getNome().equals(nome_vecchio) && social.getLink().equals(link_vecchio)) {
+                    socialAcquirente.remove(social);
+                    setIsSocialCambiato(true);
+                    break;
+                }
+            }
+        } else if (socialVenditore != null && !socialVenditore.isEmpty()) {
+            for (SocialVenditoreModel social : socialVenditore) {
+                if (social.getNome().equals(nome_vecchio) && social.getLink().equals(link_vecchio)) {
+                    socialVenditore.remove(social);
+                    setIsSocialCambiato(true);
+                    break;
+                }
+            }
+        }
+    }
+    public void resetErroriModificaSocial(){
+        setMessaggioErroreNomeSocial("");
+        setMessaggioErroreLink("");
+        setIsSocialCambiato(false);
+    }
+    // Metodi per listaSocialAcquirente
+    public ArrayList<SocialAcquirenteModel> getListaSocialAcquirente() {
+        return listaSocialAcquirente.getValue();
+    }
+
+    public void setListaSocialAcquirente(ArrayList<SocialAcquirenteModel> listaSocialAcquirente) {
+        this.listaSocialAcquirente.setValue(listaSocialAcquirente);
+    }
+
+    public boolean isListaSocialAcquirente() {
+        return listaSocialAcquirente.getValue()!=null;
+    }
+
+    public ArrayList<SocialVenditoreModel> getListaSocialVenditore() {
+        return listaSocialVenditore.getValue();
+    }
+
+    public void setListaSocialVenditore(ArrayList<SocialVenditoreModel> listaSocialVenditore) {
+        this.listaSocialVenditore.setValue(listaSocialVenditore);
+    }
+
+    public boolean isListaSocialVenditore() {
+        return listaSocialVenditore.getValue()!=null;
+    }
+    public Boolean getSocialVuoti() {
+        return socialVuoti.getValue();
+    }
+
+    public void setSocialVuoti(Boolean socialVuoti) {
+        this.socialVuoti.setValue(socialVuoti);
+    }
+    public void inserisciSocialNellaLista(){
+        Log.d("inserisciSocialNellaLista","entrato");
+        if(socialAcquirente!=null && !socialAcquirente.isEmpty()){
+            setListaSocialAcquirente(socialAcquirente);
+        }else if(socialVenditore!=null && !socialVenditore.isEmpty()){
+            setListaSocialVenditore(socialVenditore);
+        }else {
+            setSocialVuoti(true);
+        }
+    }
+    public void stampaLista() {
+        if (listaSocialAcquirente != null && listaSocialAcquirente.getValue() != null) {
+            Log.d("stampaLista", "social acquirenti: " + listaSocialAcquirente.getValue().size());
+        } else if (listaSocialVenditore != null && listaSocialVenditore.getValue() != null) {
+            Log.d("stampaLista", "social acquirenti: " + listaSocialVenditore.getValue().size());
+        }
+    }
 }
