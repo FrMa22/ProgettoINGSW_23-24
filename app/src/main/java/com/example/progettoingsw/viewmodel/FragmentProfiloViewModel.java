@@ -44,8 +44,9 @@ public class FragmentProfiloViewModel extends ViewModel {
     public MutableLiveData<String> messaggioErrorePasswordNuova = new MutableLiveData<>("");
     public MutableLiveData<String> messaggioErroreSocial = new MutableLiveData<>("");
 
-
     public MutableLiveData<Boolean> socialAssenti = new MutableLiveData<>(false);
+    public MutableLiveData<String> nomeSocialSelezionato = new MutableLiveData<>("");
+    public MutableLiveData<String> nomeLinkSelezionato = new MutableLiveData<>("");
     public MutableLiveData<ArrayList<SocialAcquirenteModel>> socialAcquirenteRecuperati = new MutableLiveData<>(null);
 
     public MutableLiveData<ArrayList<SocialVenditoreModel>> socialVenditoreRecuperati = new MutableLiveData<>(null);
@@ -803,6 +804,9 @@ public class FragmentProfiloViewModel extends ViewModel {
     }
 
 
+
+
+
     public void setMessaggioUtenteNonTrovato(String messaggio){
         messaggioSocialUtenteNonTrovato.setValue(messaggio);
     }
@@ -880,10 +884,26 @@ public class FragmentProfiloViewModel extends ViewModel {
             setVenditoreModelPresente();
             setVenditoreRecuperato(getVenditore());
         }
-
-
-
     }
+
+
+    public void findSocialUtente(){
+        if(containsAcquirente()){
+            System.out.println("contains di acquirente");
+            if(repository.findSocialAcquirente(getNomeSocialSelezionato(),getNomeLinkSelezionato()) ){
+                setNomeSocial(getNomeSocialSelezionato());
+                setLinkSocial(getNomeLinkSelezionato());
+            }
+
+        }else if(containsVenditore()) {
+            System.out.println("contains di venditore");
+            if(repository.findSocialVenditore(getNomeSocialSelezionato(),getNomeLinkSelezionato()) ){
+                setNomeSocialSelezionato(getNomeSocialSelezionato());
+                setNomeLinkSelezionato(getNomeLinkSelezionato());
+            }
+        }
+    }
+
 
 
     public void gestisciModificaSocial(String nome,String link){
@@ -932,6 +952,16 @@ public class FragmentProfiloViewModel extends ViewModel {
     public void setSocialAcquirenteRecuperati(ArrayList<SocialAcquirenteModel> lista){
         socialAcquirenteRecuperati.setValue(lista);
     }
+
+    public void setNomeSocial(String nome){
+        nomeSocialSelezionato.setValue(nome);
+    }
+
+    public void setLinkSocial(String link){
+        nomeLinkSelezionato.setValue(link);
+    }
+
+
 
 
     public ArrayList<SocialVenditoreModel> getListaSocialVenditoreRecuperati(){
@@ -1006,4 +1036,26 @@ public class FragmentProfiloViewModel extends ViewModel {
     public Boolean isMessaggioErroreSocial(){
         return !(messaggioErroreSocial.getValue().equals(""));
     }
+
+
+
+    public void setNomeSocialSelezionato(String nome){
+        repository.setNomeSocialSelezionato(nome);
+    }
+
+
+    public  String getNomeSocialSelezionato(){
+       return repository.getNomeSocialSelezionato();
+    }
+
+
+    public void setNomeLinkSelezionato(String link){
+        repository.setNomeLinkSelezionato(link);
+    }
+
+
+    public  String getNomeLinkSelezionato(){
+        return repository.getNomeLinkSelezionato();
+    }
+
 }

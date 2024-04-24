@@ -13,11 +13,7 @@ import com.example.progettoingsw.model.SocialVenditoreModel;
 import com.example.progettoingsw.model.VenditoreModel;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-
-import java.util.ArrayList;
-import java.util.Set;
 
 public class Repository {
     private AcquirenteModel acquirenteModel;
@@ -27,6 +23,8 @@ public class Repository {
     private List<SocialVenditoreModel> socialVenditoreModelList;
     private String acquirenteEmailDaAsta;
     private String venditoreEmailDaAsta;
+    private String nomeSocialSelezionato;
+    private String nomeLinkSelezionato;
 
 
 
@@ -40,7 +38,7 @@ public class Repository {
 
 
     private String categoriaSelezionata;
-    public static final String backendUrl = "http:/13.38.43.118:8080/";
+    public static final String backendUrl = "http:/13.53.134.211:8080/";
     public static Repository questaRepository = null;
     //liste per le aste all'inglese nel caso di accesso come acquirente (aste in home)
     private ArrayList<Asta_allingleseModel> listaAsteAllIngleseInScadenza;
@@ -138,6 +136,17 @@ public class Repository {
 
     }
 
+
+    public boolean findSocialAcquirente(String oldNome,String oldLink){
+        for(SocialAcquirenteModel s:socialAcquirenteModelList){
+            if (s.getNome().equals(oldNome) && s.getLink().equals(oldLink)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
     public void updateAcquirente(String nomeNuovo,String cognomeNuovo,String bioNuovo,String linkNuovo,String areageograficaNuovo){
          this.acquirenteModel.setNome(nomeNuovo);
         this.acquirenteModel.setCognome(cognomeNuovo);
@@ -171,6 +180,16 @@ public class Repository {
         }
 
     }
+
+    public boolean findSocialVenditore(String oldNome,String oldLink){
+        for(SocialVenditoreModel s:socialVenditoreModelList){
+            if (s.getNome().equals(oldNome) && s.getLink().equals(oldLink)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 
     public void updateVenditore(String nomeNuovo,String cognomeNuovo,String bioNuovo,String linkNuovo,String areageograficaNuovo){
         this.venditoreModel.setNome(nomeNuovo);
@@ -376,5 +395,22 @@ public class Repository {
     }
     public void setLeMieAsteUtenteAttuale(Boolean leMieAsteUtenteAttuale) {
         this.leMieAsteUtenteAttuale = leMieAsteUtenteAttuale;
+    }
+
+
+    public void setNomeSocialSelezionato(String nomeSocialSelezionato) {
+        this.nomeSocialSelezionato = nomeSocialSelezionato;
+    }
+
+    public String getNomeSocialSelezionato() {
+        return nomeSocialSelezionato;
+    }
+
+    public void setNomeLinkSelezionato(String nomeLinkSelezioanto) {
+        this.nomeLinkSelezionato = nomeLinkSelezioanto;
+    }
+
+    public String getNomeLinkSelezionato() {
+        return nomeLinkSelezionato;
     }
 }

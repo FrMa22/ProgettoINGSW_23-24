@@ -52,7 +52,8 @@ public class PopUpModificaCampiProfilo extends DialogPersonalizzato implements V
         osservaMessaggioErroreSitoNuovo();
         osservaMessaggioErrorePaeseNuovo();
         osservaIsUtenteCambiato();
-        fragmentProfiloViewModel.checkTipoUtente();
+
+
 
 
 
@@ -70,6 +71,13 @@ public class PopUpModificaCampiProfilo extends DialogPersonalizzato implements V
         bottoneAnnullaModifica.setOnClickListener(this);
         bottoneConfermaModifica = findViewById(R.id.bottoneConfermaModifica);
         bottoneConfermaModifica.setOnClickListener(this);
+
+
+        osservaAcquirenteRecuperato();
+        osservaVenditoreRecuperato();
+        fragmentProfiloViewModel.checkTipoUtente();
+
+
     }
 
     @Override
