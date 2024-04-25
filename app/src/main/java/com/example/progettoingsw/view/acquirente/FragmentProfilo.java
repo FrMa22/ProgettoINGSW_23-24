@@ -108,6 +108,10 @@ public class FragmentProfilo extends Fragment implements PopUpModificaCampiProfi
         osservaVenditoreModelPresente();
         osservaSocialAssenti();
         osservaMessaggioErroreSocial();
+        osservaMessaggioInfoToast();
+        osservaModificaCampoProfilo();
+        osservaCambiaPassword();
+
         fragmentProfiloViewModel.checkTipoUtente();
 
 
@@ -139,9 +143,10 @@ public class FragmentProfilo extends Fragment implements PopUpModificaCampiProfi
         bottone_info.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getContext(), "Cliccare un social per modificarlo. ", Toast.LENGTH_SHORT).show();
+                fragmentProfiloViewModel.mostraToastInfo();
             }
         });
+
 
 
         button_log_out = view.findViewById(R.id.button_log_out_profilo);
@@ -160,8 +165,6 @@ public class FragmentProfilo extends Fragment implements PopUpModificaCampiProfi
         button_partecipazione_aste.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                System.out.println("le aste oooh");
-                //passaggio alle mie aste
                 fragmentProfiloViewModel.setApriPartecipazioneAste(true);
             }
         });
@@ -171,8 +174,6 @@ public class FragmentProfilo extends Fragment implements PopUpModificaCampiProfi
         button_le_mie_aste.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                System.out.println("le aste oooh");
-                //passaggio alle mie aste
                 fragmentProfiloViewModel.setApriLeMieAste(true);
             }
         });
@@ -181,17 +182,16 @@ public class FragmentProfilo extends Fragment implements PopUpModificaCampiProfi
         button_modifica.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                PopUpModificaCampiProfilo popUpModificaCampiProfilo = new PopUpModificaCampiProfilo(getContext(), FragmentProfilo.this, fragmentProfiloViewModel, FragmentProfilo.this);
-                popUpModificaCampiProfilo.show();
+                fragmentProfiloViewModel.mostraModificaCampoProfilo();
             }
         });
+
 
         button_cambia_password_profilo = view.findViewById(R.id.button_cambia_password_profilo);
         button_cambia_password_profilo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                PopUpControlloPassword popUpControlloPassword = new PopUpControlloPassword(getContext(), FragmentProfilo.this, fragmentProfiloViewModel);
-                popUpControlloPassword.show();
+                fragmentProfiloViewModel.mostraCambiaPassword();
             }
         });
 
@@ -337,7 +337,13 @@ public class FragmentProfilo extends Fragment implements PopUpModificaCampiProfi
         }
 
     }
-
+    public void osservaMessaggioInfoToast(){
+        fragmentProfiloViewModel.messaggioInfoToast.observe(getViewLifecycleOwner(), (messaggio ->{
+            if(fragmentProfiloViewModel.isMessaggioInfoToast()){
+                Toast.makeText(getContext(), messaggio, Toast.LENGTH_SHORT).show();
+            }
+        }));
+    }
     public void osservaEsci() {
         fragmentProfiloViewModel.esci.observe(getViewLifecycleOwner(), (valore) -> {
             if (valore) {
@@ -345,7 +351,22 @@ public class FragmentProfilo extends Fragment implements PopUpModificaCampiProfi
             }
         });
     }
-
+    public void osservaModificaCampoProfilo(){
+        fragmentProfiloViewModel.modificaCampoProfilo.observe(getViewLifecycleOwner() , (valore) ->{
+            if(valore){
+                PopUpModificaCampiProfilo popUpModificaCampiProfilo = new PopUpModificaCampiProfilo(getContext(), FragmentProfilo.this, fragmentProfiloViewModel, FragmentProfilo.this);
+                popUpModificaCampiProfilo.show();
+            }
+        });
+    }
+    public void osservaCambiaPassword(){
+        fragmentProfiloViewModel.cambiaPassword.observe(getViewLifecycleOwner() , (valore) ->{
+            if(valore){
+                PopUpControlloPassword popUpControlloPassword = new PopUpControlloPassword(getContext(), FragmentProfilo.this, fragmentProfiloViewModel);
+                popUpControlloPassword.show();
+            }
+        });
+    }
     public void osservaAcquirenteModelPresente() {
         fragmentProfiloViewModel.acquirenteModelPresente.observe(getViewLifecycleOwner(), (messaggio) -> {
             if (fragmentProfiloViewModel.getAcquirenteModelPresente()) {

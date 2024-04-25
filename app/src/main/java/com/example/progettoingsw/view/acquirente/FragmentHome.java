@@ -199,7 +199,7 @@ public class FragmentHome extends Fragment {
         osservaaste_inversaNuovePresenti();
         osservaaste_inversaCategoriaNomePresenti();
 
-        homeViewModel.checkTipoUtente();
+        //homeViewModel.checkTipoUtente();
 
         scrollView = view.findViewById(R.id.scroll_view);
         swipeRefreshLayout = view.findViewById(R.id.swipe_refresh_layout);
@@ -277,6 +277,11 @@ public class FragmentHome extends Fragment {
         bundle.putString(FirebaseAnalytics.Param.SCREEN_CLASS, "FragmentHome");
         firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SCREEN_VIEW, bundle);
         firebaseAnalytics.setAnalyticsCollectionEnabled(true);
+
+        astaAdapterConsigliate.clearItems();
+        astaAdapterInScadenza.clearItems();
+        astaAdapterNuove.clearItems();
+        homeViewModel.checkTipoUtente();
     }
 
     public void osservaaste_allingleseCategoriaNomePresenti() {
@@ -290,7 +295,7 @@ public class FragmentHome extends Fragment {
     public void osservaaste_allingleseCategoriaNomeRecuperate() {
         homeViewModel.aste_allingleseCategoriaNomeRecuperate.observe(getViewLifecycleOwner(), (listaAste) -> {
             if (listaAste!=null) {
-                Log.d("aste inglesi recuperate" , "numero: " + listaAste.size());
+                Log.d("aste inglesi categoria recuperate" , "numero: " + listaAste.size());
                 astaAdapterConsigliate.setAste(listaAste);
             }
         });
@@ -306,7 +311,7 @@ public class FragmentHome extends Fragment {
     public void osservaaste_allingleseInScadenzaRecuperate() {
         homeViewModel.aste_allingleseInScadenzaRecuperate.observe(getViewLifecycleOwner(), (lista) -> {
             if (lista != null) {
-                Log.d("aste ribasso recuperate" , "numero: " + lista.size());
+                Log.d("aste inglese scadenza recuperate" , "numero: " + lista.size());
                 astaAdapterInScadenza.setAste(lista);
             }
         });
@@ -323,7 +328,7 @@ public class FragmentHome extends Fragment {
     public void osservaaste_allingleseNuoveRecuperate() {
         homeViewModel.aste_allingleseNuoveRecuperate.observe(getViewLifecycleOwner(), (lista) -> {
             if (lista != null) {
-                Log.d("aste inverse recuperate" , "numero: " + lista.size());
+                Log.d("aste inglese nuove recuperate" , "numero: " + lista.size());
                 astaAdapterNuove.setAste(lista);
             }
         });
@@ -337,9 +342,10 @@ public class FragmentHome extends Fragment {
         });
     }
     public void osservaaste_alribassoCategoriaNomeRecuperate() {
-        homeViewModel.aste_alribassoCategoriaNomeRecuperate.observe(getViewLifecycleOwner(), (liste) -> {
-            if (liste != null) {
-                astaAdapterConsigliate.setAste(liste);
+        homeViewModel.aste_alribassoCategoriaNomeRecuperate.observe(getViewLifecycleOwner(), (lista) -> {
+            if (lista != null) {
+                Log.d("aste ribasso categoria recuperate" , "numero: " + lista.size());
+                astaAdapterConsigliate.setAste(lista);
             }
         });
     }
@@ -354,6 +360,7 @@ public class FragmentHome extends Fragment {
     public void osservaAste_alribassoNuoveRecuperate() {
         homeViewModel.aste_alribassoNuoveRecuperate.observe(getViewLifecycleOwner(), (lista) -> {
             if (lista != null) {
+                Log.d("aste ribasso nuove recuperate" , "numero: " + lista.size());
                 astaAdapterNuove.setAste(lista);
             }
         });
@@ -393,6 +400,7 @@ public class FragmentHome extends Fragment {
     public void osservaaste_inversaInScadenzaRecuperate() {
         homeViewModel.aste_inversaInScadenzaRecuperate.observe(getViewLifecycleOwner(), (lista) -> {
             if (lista != null) {
+                Log.d("aste inversa scadenza recuperate" , "numero: " + lista.size());
                 astaAdapterInScadenza.setAste(lista);
             }
         });
@@ -408,6 +416,7 @@ public class FragmentHome extends Fragment {
     public void osservaaste_inversaNuoveRecuperate() {
         homeViewModel.aste_inversaNuoveRecuperate.observe(getViewLifecycleOwner(), (lista) -> {
             if (lista != null) {
+                Log.d("aste inversa nuove recuperate" , "numero: " + lista.size());
                 astaAdapterNuove.setAste(lista);
             }
         });
@@ -423,6 +432,7 @@ public class FragmentHome extends Fragment {
     public void osservaaste_inversaCategoriaNomeRecuperate() {
         homeViewModel.aste_inversaCategoriaNomeRecuperate.observe(getViewLifecycleOwner(), (lista) -> {
             if (lista != null) {
+                Log.d("aste inversa categoria recuperate" , "numero: " + lista.size());
                 astaAdapterConsigliate.setAste(lista);
             }
         });

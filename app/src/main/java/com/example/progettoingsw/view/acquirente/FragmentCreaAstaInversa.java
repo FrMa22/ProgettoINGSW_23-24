@@ -30,6 +30,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.progettoingsw.R;
 
 import com.example.progettoingsw.view.PopUpAggiungiCategorieAsta;
+import com.example.progettoingsw.view.venditore.VenditoreAstaInglese;
 import com.example.progettoingsw.viewmodel.CreaAstaInversaViewModel;
 import com.google.android.material.button.MaterialButton;
 import com.google.firebase.analytics.FirebaseAnalytics;
@@ -88,6 +89,7 @@ public class FragmentCreaAstaInversa extends Fragment {
         osservaCreaPopUpInformazioni();
         osservaImmagineConvertita();
         osservaAstaCreata();
+        osservaTornaIndietro();
 
 
         bottoneAnnullaAstaInversa = view2.findViewById(R.id.bottoneAnnullaAstaInversa);
@@ -167,8 +169,7 @@ public class FragmentCreaAstaInversa extends Fragment {
         bottoneAnnullaAstaInversa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getContext(), MainActivity.class);
-                startActivity(intent);
+                creaAstaInversaViewModel.premutoBack();
             }
         });
 
@@ -183,6 +184,14 @@ public class FragmentCreaAstaInversa extends Fragment {
         bundle.putString(FirebaseAnalytics.Param.SCREEN_CLASS, "FragmentCreaAstaInversa");
         firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SCREEN_VIEW, bundle);
         firebaseAnalytics.setAnalyticsCollectionEnabled(true);
+    }
+    public void osservaTornaIndietro(){
+        creaAstaInversaViewModel.tornaIndietro.observe(getViewLifecycleOwner() , (valore)->{
+            if(valore){
+                Intent intent = new Intent(getContext(), MainActivity.class);
+                startActivity(intent);
+            }
+        });
     }
     public void osservaApriPopUpInformazioni(){
         creaAstaInversaViewModel.apriPopUpInformazioni.observe(getViewLifecycleOwner(), (valore) ->{

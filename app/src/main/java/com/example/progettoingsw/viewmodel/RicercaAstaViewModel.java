@@ -34,6 +34,8 @@ public class RicercaAstaViewModel extends ViewModel {
     public MutableLiveData<ArrayList<Object>> listaAstaRibassoRicercaConvertite = new MutableLiveData<>(null);
     public MutableLiveData<ArrayList<Asta_inversaModel>> listaAstaInversaRicerca = new MutableLiveData<>(null);
     public MutableLiveData<ArrayList<Object>> listaAstaInversaRicercaConvertite = new MutableLiveData<>(null);
+
+    public MutableLiveData<Boolean> apriFiltro = new MutableLiveData<>(false);
     public MutableLiveData<String> ordinamento = new MutableLiveData<>(null);
     public MutableLiveData<Boolean> chiudiPopUp = new MutableLiveData<>(false);
 
@@ -312,5 +314,11 @@ public class RicercaAstaViewModel extends ViewModel {
         }else{
             setIsAcquirente(false);
         }
+    }
+    public void setApriFiltro(Boolean apriFiltro) {
+        this.apriFiltro.setValue(apriFiltro);
+    }
+    public void apriFiltro(){
+        setApriFiltro(true);
     }
 }

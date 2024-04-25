@@ -123,8 +123,12 @@ public class SchermataAstaInversaViewModel extends ViewModel {
     public String getMessaggioPartecipazioneAstaInglese(){
         return messaggioPartecipazioneAstaInglese;
     }
-    public Boolean isAstaChiusa(){
-        return !repository.getAsta_inversaSelezionata().getCondizione().equals("aperta");
+
+    public void setIsAstaChiusa(Boolean b){
+        isAstaChiusa.setValue(b);
+    }
+    public void isAstaChiusa(){
+        setIsAstaChiusa(!repository.getAsta_inversaSelezionata().getCondizione().equals("aperta"));
     }
     public void setIsAstaInPreferiti(Boolean b){
         isAstaInPreferiti.setValue(b);

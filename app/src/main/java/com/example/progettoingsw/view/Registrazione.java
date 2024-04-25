@@ -47,6 +47,8 @@ public class Registrazione extends GestoreComuniImplementazioni {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 // Se lo switch è selezionato, mostra la password
+                int cursorPositionPassword = edittext_password.getSelectionStart();
+                int cursorPositionPasswordConferma = edittext_conferma_password.getSelectionStart();
                 if (isChecked) {
                     edittext_password.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
                     edittext_conferma_password.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
@@ -55,6 +57,8 @@ public class Registrazione extends GestoreComuniImplementazioni {
                     edittext_password.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
                     edittext_conferma_password.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
                 }
+                edittext_password.setSelection(cursorPositionPassword);
+                edittext_conferma_password.setSelection(cursorPositionPasswordConferma);
             }
         });
 
@@ -217,4 +221,5 @@ public class Registrazione extends GestoreComuniImplementazioni {
             }
         });
     }
+
 }

@@ -61,8 +61,7 @@ public class FragmentRicercaAsta extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ricercaAstaViewModel = new ViewModelProvider(this).get(RicercaAstaViewModel.class);
-        osservaIsAcquirente();
-        ricercaAstaViewModel.checkTipoUtente();
+
 
 
         text_view_nessuna_asta_ricercata = view.findViewById(R.id.text_view_nessuna_asta_ricercata);
@@ -116,11 +115,15 @@ public class FragmentRicercaAsta extends Fragment {
         button_filtro.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                PopUpFiltroRicerca popUpFiltroRicerca = new PopUpFiltroRicerca(getContext(),FragmentRicercaAsta.this,ricercaAstaViewModel);
-                popUpFiltroRicerca.show();
+                ricercaAstaViewModel.apriFiltro();
+
             }
         });
 
+        osservaIsAcquirente();
+        osservaApriFiltro();
+
+        ricercaAstaViewModel.checkTipoUtente();
 
     }
     @Override
@@ -133,7 +136,14 @@ public class FragmentRicercaAsta extends Fragment {
         firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SCREEN_VIEW, bundle);
         firebaseAnalytics.setAnalyticsCollectionEnabled(true);
     }
-
+    public void osservaApriFiltro(){
+        ricercaAstaViewModel.apriFiltro.observe(getViewLifecycleOwner(), (valore) ->{
+            if(valore){
+                PopUpFiltroRicerca popUpFiltroRicerca = new PopUpFiltroRicerca(getContext(),FragmentRicercaAsta.this,ricercaAstaViewModel);
+                popUpFiltroRicerca.show();
+            }
+        });
+    }
     public void osservaIsAcquirente(){
         ricercaAstaViewModel.isAcquirente.observe(getViewLifecycleOwner(), (valore) -> {
             if(valore){

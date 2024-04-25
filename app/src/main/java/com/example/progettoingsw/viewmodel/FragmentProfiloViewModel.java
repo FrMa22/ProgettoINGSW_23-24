@@ -24,6 +24,9 @@ public class FragmentProfiloViewModel extends ViewModel {
     public MutableLiveData<Boolean> acquirenteModelPresente = new MutableLiveData<>(false);
     public MutableLiveData<Boolean> venditoreModelPresente = new MutableLiveData<>(false);
     public MutableLiveData<Boolean> socialAcquirentePresenti = new MutableLiveData<>(false);
+    public MutableLiveData<String> messaggioInfoToast = new MutableLiveData<>("");
+    public MutableLiveData<Boolean> modificaCampoProfilo = new MutableLiveData<>(false);
+    public MutableLiveData<Boolean> cambiaPassword = new MutableLiveData<>(false);
 
     public MutableLiveData<Boolean> socialVenditorePresenti = new MutableLiveData<>(false);
 
@@ -1005,5 +1008,27 @@ public class FragmentProfiloViewModel extends ViewModel {
     }
     public Boolean isMessaggioErroreSocial(){
         return !(messaggioErroreSocial.getValue().equals(""));
+    }
+    public void setMessaggioInfoToast(String messaggio){
+        this.messaggioInfoToast.setValue(messaggio);
+    }
+    public Boolean isMessaggioInfoToast(){
+        return !(messaggioInfoToast.getValue().equals(""));
+    }
+
+    public void mostraToastInfo(){
+        setMessaggioInfoToast("Cliccare un social per modificarlo.");
+    }
+    public void setModificaCampoProfilo(Boolean b){
+        this.modificaCampoProfilo.setValue(b);
+    }
+    public void setCambiaPassword(Boolean b){
+        this.cambiaPassword.setValue(b);
+    }
+    public void mostraModificaCampoProfilo(){
+        setModificaCampoProfilo(true);
+    }
+    public void mostraCambiaPassword(){
+        setCambiaPassword(true);
     }
 }

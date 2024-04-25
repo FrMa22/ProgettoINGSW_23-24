@@ -94,18 +94,15 @@ public class HomeViewModel extends ViewModel {
             notificheRepository.getNumeroNotificheAcquirente(repository.getAcquirenteModel().getIndirizzo_email(), new NotificheRepository.OnGetNumeroNotificheAcquirenteListener() {
                 @Override
                 public void OnGetNumeroNotificheAcquirente(Integer result) {
-                    if(result>0){
-                        setNumeroNotifiche(result);
-                    }
+                    setNumeroNotifiche(result);
+
                 }
             });
         }else{
             notificheRepository.getNumeroNotificheVenditore(repository.getVenditoreModel().getIndirizzo_email(), new NotificheRepository.OnGetNumeroNotificheVenditoreListener() {
                 @Override
                 public void OnGetNumeroNotificheVenditore(Integer result) {
-                    if(result>0){
-                        setNumeroNotifiche(result);
-                    }
+                    setNumeroNotifiche(result);
                 }
             });
         }
@@ -175,7 +172,6 @@ public class HomeViewModel extends ViewModel {
         });
     }
     private void trovaAste_allingleseCategoriaNome(ArrayList<String> nomiCategorie) {
-        Log.d("Cerco aste inglesi per categorie", ""+nomiCategorie.get(0) + nomiCategorie.get(1));
         astaAllingleseRepository.getAste_allingleseCategoriaNomeBackend(nomiCategorie, new Asta_allingleseRepository.OnGetAsteCategoriaNomeListener() {
             @Override
             public void OnGetAsteCategoriaNome(ArrayList<Asta_allingleseModel> list) {

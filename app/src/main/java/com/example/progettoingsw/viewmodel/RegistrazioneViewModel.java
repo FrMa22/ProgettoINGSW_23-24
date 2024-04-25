@@ -1,6 +1,9 @@
 package com.example.progettoingsw.viewmodel;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
+import android.view.contentcapture.ContentCaptureCondition;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -10,6 +13,7 @@ import com.example.progettoingsw.model.AcquirenteModel;
 import com.example.progettoingsw.model.SocialAcquirenteModel;
 import com.example.progettoingsw.model.SocialVenditoreModel;
 import com.example.progettoingsw.model.VenditoreModel;
+import com.example.progettoingsw.repository.LoginRepository;
 import com.example.progettoingsw.repository.RegistrazioneRepository;
 import com.example.progettoingsw.repository.Repository;
 
@@ -25,6 +29,16 @@ public class RegistrazioneViewModel extends ViewModel {
     public MutableLiveData<String> messaggioErroreLink = new MutableLiveData<>("");
     public MutableLiveData<String> messaggioErroreNomeSocial = new MutableLiveData<>("");
     public MutableLiveData<String> proseguiRegistrazione = new MutableLiveData<>("");
+
+private String token;
+
+    public MutableLiveData<Boolean> vaiInHome = new MutableLiveData<>(false);
+
+
+    private ArrayList<String> listaCategorieScelte = new ArrayList<>();
+
+
+    public MutableLiveData<Boolean> tornaInRegistrazione = new MutableLiveData<>(false);
     public MutableLiveData<String> proseguiInserimento = new MutableLiveData<>("");
     public MutableLiveData<String> proseguiInserimentoSocial = new MutableLiveData<>("");
     public MutableLiveData<String> messaggioErroreBio = new MutableLiveData<>("");
@@ -50,10 +64,13 @@ public class RegistrazioneViewModel extends ViewModel {
     public MutableLiveData<VenditoreModel> valoriPresentiFacoltativiVenditore = new MutableLiveData<>(null);
     public MutableLiveData<Boolean> isSocialCambiato = new MutableLiveData<>(false);
     private RegistrazioneRepository registrazioneRepository;
+    private LoginRepository loginRepository;
     private Repository repository;
 
+    private static final String TOKEN_KEY = "token";
     public RegistrazioneViewModel() {
         repository = Repository.getInstance();
+        loginRepository = new LoginRepository();
         registrazioneRepository = new RegistrazioneRepository();
     }
 
@@ -194,6 +211,10 @@ public void controlloSocial(){
         });
     }
 
+    public void recuperaToken(Context context) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+        token = sharedPreferences.getString(TOKEN_KEY, null);
+    }
     public void inserisciAcquirente(AcquirenteModel acquirente) {
         System.out.println("entrato in inserisci acquirente di view model");
         registrazioneRepository.inserimentoAcquirente(acquirente, new RegistrazioneRepository.OnInserisciAcquirenteListener() {
@@ -201,6 +222,7 @@ public void controlloSocial(){
             public void confermaAcquirente(Long check) {
                 if (check == 0) {
                     repository.setAcquirenteModel(acquirente);
+                    mandaTokenAcquirenteBackend(acquirente.getIndirizzo_email(),token);
                     setProseguiInserimento("inserito");
                 } else {
                     setProseguiInserimento("inserimento fallito");
@@ -245,6 +267,7 @@ public void controlloSocial(){
             public void confermaVenditore(Long check) {
                 if (check == 0) {
                     repository.setVenditoreModel(venditore);
+                    mandaTokenVenditoreBackend(venditore.getIndirizzo_email(),token);
                     setProseguiInserimento("inserito");
                 } else {
                     setProseguiInserimento("inserimento fallito");
@@ -283,19 +306,27 @@ public void controlloSocial(){
         }
     }
 
-    public void categorieAcquirente(String email, ArrayList<String> categorieScelte){
-        registrazioneRepository.saveCategorieAcquirente(email,categorieScelte, new RegistrazioneRepository.OnInserimentoCategorieAcquirente(){
+    public void categorieAcquirente(String email){
+        registrazioneRepository.saveCategorieAcquirente(email,listaCategorieScelte, new RegistrazioneRepository.OnInserimentoCategorieAcquirente(){
             @Override
-            public void   categorieInseriteAcquirente(){
-
+            public void  categorieInseriteAcquirente(Integer valore){
+                if(valore==1){
+                    Log.d("categorieAcquirente","inserite categorie acquirente");
+                    repository.setListaCategorieAcquirente(listaCategorieScelte);
+                    setVaiInHome(true);
+                }
             }
         });
     }
-    public void categorieVenditore(String email, ArrayList<String> categorieScelte){
-        registrazioneRepository.saveCategorieVenditore(email,categorieScelte, new RegistrazioneRepository.OnInserimentoCategorieVenditore(){
+    public void categorieVenditore(String email){
+        registrazioneRepository.saveCategorieVenditore(email,listaCategorieScelte, new RegistrazioneRepository.OnInserimentoCategorieVenditore(){
             @Override
-            public void   categorieInseriteVenditore(){
-
+            public void categorieInseriteVenditore(Integer valore){
+                if(valore==1) {
+                    Log.d("categorieVenditore", "inserite categorie venditore");
+                    repository.setListaCategorieVenditore(listaCategorieScelte);
+                    setVaiInHome(true);
+                }
             }
         });
     }
@@ -741,5 +772,71 @@ public void controlloSocial(){
         valoriPresentiFacoltativiVenditore.setValue(null);
         isSocialCambiato.setValue(false);
     }
+    public Boolean getTornaInRegistrazione() {
+        return tornaInRegistrazione.getValue();
+    }
+    public void setTornaInRegistrazione(Boolean tornaInRegistrazione) {
+        this.tornaInRegistrazione.setValue(tornaInRegistrazione);
+    }
+    public void tornaInRegistrazione(){
+        setTornaInRegistrazione(true);
+    }
 
+    public ArrayList<String> getListaCategorieScelte() {
+        return listaCategorieScelte;
+    }
+
+    public void setListaCategorieScelte(ArrayList<String> listaCategorieScelte) {
+        this.listaCategorieScelte = new ArrayList<>(listaCategorieScelte);
+    }
+    public void aggiungiCategoria(String categoria){
+        Log.d("aggiungiCategoria","categorie prima: " + listaCategorieScelte);
+        listaCategorieScelte.add(categoria);
+        Log.d("aggiungiCategoria","categorie dopo: " + listaCategorieScelte);
+    }
+    public void rimuoviCategoria(String categoria){
+        Log.d("rimuoviCategoria","categorie prima: " + listaCategorieScelte);
+        listaCategorieScelte.remove(categoria);
+        Log.d("rimuoviCategoria","categorie dopo: " + listaCategorieScelte);
+    }
+    public Boolean getVaiInHome() {
+        return vaiInHome.getValue();
+    }
+    public void setVaiInHome(Boolean vaiInHome) {
+        this.vaiInHome.setValue(vaiInHome);
+    }
+    public void registraCategorie(){
+        if(repository.getAcquirenteModel()!=null){
+            categorieAcquirente(repository.getAcquirenteModel().getIndirizzo_email());
+        }else{
+            categorieVenditore(repository.getVenditoreModel().getIndirizzo_email());
+        }
+    }
+    public void premutoSalta(){
+        setVaiInHome(true);
+    }
+    public void mandaTokenAcquirenteBackend(String email, String token){
+        loginRepository.setTokenAcquirente(email, token, new LoginRepository.OnSetTokenAcquirenteListener() {
+            @Override
+            public void onSetTokenAcquirente(Integer valore) {
+                if(valore>0){
+                    Log.d("TOKEN", "Token inviato con successo");
+                }else{
+                    Log.d("TOKEN", "Problema con l'invio del token");
+                }
+            }
+        });
+    }
+    public void mandaTokenVenditoreBackend(String email, String token){
+        loginRepository.setTokenVenditore(email, token, new LoginRepository.OnSetTokenVenditoreListener() {
+            @Override
+            public void onSetTokenVenditore(Integer valore) {
+                if(valore>0){
+                    Log.d("TOKEN", "Token inviato con successo");
+                }else{
+                    Log.d("TOKEN", "Problema con l'invio del token");
+                }
+            }
+        });
+    }
 }

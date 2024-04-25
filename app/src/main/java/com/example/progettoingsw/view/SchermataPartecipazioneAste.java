@@ -99,7 +99,6 @@ public class SchermataPartecipazioneAste extends AppCompatActivity {
             astaAdapter.setAstecopia(null);
         }
         if(asteVuote){
-            Log.d("updateNotifiche", "caso vuoto: ");
             text_view_nessuna_partecipazione.setVisibility(View.VISIBLE);
         }else{
             text_view_nessuna_partecipazione.setVisibility(View.INVISIBLE);

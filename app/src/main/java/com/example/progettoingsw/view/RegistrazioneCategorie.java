@@ -16,6 +16,7 @@ import android.widget.ProgressBar;
 import android.widget.Switch;
 import android.widget.Toast;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -54,31 +55,32 @@ public class RegistrazioneCategorie extends GestoreComuniImplementazioni {
         linear_layout_interno_registrazione_social = findViewById(R.id.linear_layout_interno_registrazione_social);
         registrazioneViewModel = new ViewModelProvider(this).get(RegistrazioneViewModel.class);
 
-        osservaAcquirenteModelPresente();
-        osservaVenditoreModelPresente();
+        osservaVaiInHome();
+
         bottoneProseguiInteressiRegistrazione.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(switchTexts!=null && !switchTexts.isEmpty()) {
-                    registrazioneViewModel.checkTipoUtente();
-                }
-
-                    Intent intent = new Intent(RegistrazioneCategorie.this, MainActivity.class);//test del login
-                    startActivity(intent);
+                registrazioneViewModel.registraCategorie();
             }
         });
 
         bottoneSaltaRegistrazioneCategorie.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                    Intent intent = new Intent(RegistrazioneCategorie.this, MainActivity.class);//test del login
-                    startActivity(intent);
+                registrazioneViewModel.premutoSalta();
             }
         });
 
-
+// Aggiungi un'azione al dispatcher del tasto indietro
+        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                bottoneSaltaRegistrazioneCategorie.performClick();
+            }
+        });
         populateLinearLayout();
     }
+
 
 
     private void populateLinearLayout() {
@@ -136,10 +138,10 @@ public class RegistrazioneCategorie extends GestoreComuniImplementazioni {
                     // Se lo switch è stato selezionato, aggiungi il testo all'array
                     if (isChecked) {
                         switchButton.setTextColor(getResources().getColor(R.color.colore_secondario));
-                        switchTexts.add(switchButton.getText().toString());
+                        registrazioneViewModel.aggiungiCategoria(switchButton.getText().toString());
                     } else { // Se lo switch è stato deselezionato, rimuovi il testo dall'array
                         switchButton.setTextColor(getResources().getColor(R.color.colore_hint));
-                        switchTexts.remove(switchButton.getText().toString());
+                        registrazioneViewModel.rimuoviCategoria(switchButton.getText().toString());
                     }
                 }
             });
@@ -164,41 +166,14 @@ public class RegistrazioneCategorie extends GestoreComuniImplementazioni {
     }
 
 
-    public void osservaAcquirenteModelPresente(){
-        registrazioneViewModel.acquirenteModelPresente.observe(this, (messaggio) -> {
-            if (registrazioneViewModel.getAcquirenteModelPresente()) {
-                registrazioneViewModel.recuperoAcquirente();
-                osservaAcquirente();
-            }
-        });
-    }
 
-    public void osservaVenditoreModelPresente(){
-        registrazioneViewModel.venditoreModelPresente.observe(this, (messaggio) -> {
-            if (registrazioneViewModel.getVenditoreModelPresente()) {
-                registrazioneViewModel.recuperoVenditore();
-                osservaVenditore();
-            }
-        });
-    }
 
-    public void osservaAcquirente(){
-        registrazioneViewModel.getAcquirente().observe(this,new Observer<AcquirenteModel>(){
-            @Override
-            public void onChanged(AcquirenteModel acquirente) {
-
-              registrazioneViewModel.categorieAcquirente(acquirente.getIndirizzo_email(),switchTexts);
-
-            }
-        });
-    }
-
-    public void osservaVenditore(){
-        registrazioneViewModel.getVenditore().observe(this,new Observer<VenditoreModel>(){
-            @Override
-            public void onChanged(VenditoreModel venditore) {
-                registrazioneViewModel.categorieVenditore(venditore.getIndirizzo_email(),switchTexts);
-
+    public void osservaVaiInHome(){
+        registrazioneViewModel.vaiInHome.observe(this, (valore) ->{
+            if(valore){
+                Log.d("osservaVaiInHome", "entrato");
+                Intent intent = new Intent(RegistrazioneCategorie.this, MainActivity.class);//test del login
+                startActivity(intent);
             }
         });
     }

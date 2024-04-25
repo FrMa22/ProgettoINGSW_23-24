@@ -346,5 +346,10 @@ public class AstaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         }
         countDownTimers.clear();
     }
+    public void startAllTimers(){
+        for(CountDownTimer timer : countDownTimers){
+            timer.start();
+        }
+    }
 
 }

@@ -12,6 +12,7 @@ import com.example.progettoingsw.backendAPI.SocialAcquirenteService;
 import com.example.progettoingsw.backendAPI.SocialVenditoreService;
 import com.example.progettoingsw.backendAPI.VenditoreService;
 import com.example.progettoingsw.model.AcquirenteModel;
+import com.example.progettoingsw.model.Asta_allingleseModel;
 import com.example.progettoingsw.model.SocialAcquirenteModel;
 import com.example.progettoingsw.model.SocialVenditoreModel;
 import com.example.progettoingsw.model.VenditoreModel;
@@ -393,7 +394,7 @@ public class RegistrazioneRepository {
         }
 
     }
-    private static class inserimentoCategorieAcquirenteTask extends AsyncTask<Object, Void, Void> {
+    private static class inserimentoCategorieAcquirenteTask extends AsyncTask<Object, Void, Integer> {
         private RegistrazioneRepository.OnInserimentoCategorieAcquirente listener;
 
         public inserimentoCategorieAcquirenteTask(RegistrazioneRepository.OnInserimentoCategorieAcquirente listener) {
@@ -401,7 +402,7 @@ public class RegistrazioneRepository {
         }
 
         @Override
-        protected Void doInBackground(Object... params) {
+        protected Integer doInBackground(Object... params) {
             String email = (String) params[0];
             ArrayList<String> lista_categorie = (ArrayList<String>) params[1];
             // Effettua l'operazione di rete qui...
@@ -424,6 +425,7 @@ public class RegistrazioneRepository {
                 Response<Void> response = call.execute();
                 if (response.isSuccessful()) {
                     System.out.println("response successful");
+                    return 1;
                 }
                 System.out.println("response non successful");
             } catch (IOException e) {
@@ -433,9 +435,19 @@ public class RegistrazioneRepository {
             return null;
         }
 
+        @Override
+        protected void onPostExecute(Integer result) {
+            System.out.println("on post execute GetAsteNuoveTask" + result);
+            if (listener != null) {
+                listener.categorieInseriteAcquirente(result);
+            }
+        }
     }
 
-    private static class inserimentoCategorieVenditoreTask extends AsyncTask<Object, Void, Void> {
+    public interface OnInserimentoCategorieAcquirente {
+        void categorieInseriteAcquirente(Integer valore);
+    }
+    private static class inserimentoCategorieVenditoreTask extends AsyncTask<Object, Void, Integer> {
         private RegistrazioneRepository.OnInserimentoCategorieVenditore listener;
 
         public inserimentoCategorieVenditoreTask(RegistrazioneRepository.OnInserimentoCategorieVenditore listener) {
@@ -443,7 +455,7 @@ public class RegistrazioneRepository {
         }
 
         @Override
-        protected Void doInBackground(Object... params) {
+        protected Integer doInBackground(Object... params) {
             String email = (String) params[0];
             ArrayList<String> lista_categorie = (ArrayList<String>) params[1];
             // Effettua l'operazione di rete qui...
@@ -467,6 +479,7 @@ public class RegistrazioneRepository {
                 Response<Void> response = call.execute();
                 if (response.isSuccessful()) {
                     System.out.println("response successful");
+                    return 1;
                 }
                 System.out.println("response non successful");
             } catch (IOException e) {
@@ -475,15 +488,19 @@ public class RegistrazioneRepository {
             }
             return null;
         }
-
+        @Override
+        protected void onPostExecute(Integer result) {
+            System.out.println("on post execute GetAsteNuoveTask" + result);
+            if (listener != null) {
+                listener.categorieInseriteVenditore(result);
+            }
+        }
     }
 
-        public interface OnInserimentoCategorieAcquirente {
-            void categorieInseriteAcquirente();
-        }
+
 
         public interface OnInserimentoCategorieVenditore {
-            void categorieInseriteVenditore();
+            void categorieInseriteVenditore(Integer result);
         }
 
         public interface OnInserimentoSocialVenditoreListener {
