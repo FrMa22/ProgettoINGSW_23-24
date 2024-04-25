@@ -30,6 +30,10 @@ public class RegistrazioneViewModel extends ViewModel {
     public MutableLiveData<String> messaggioErroreNomeSocial = new MutableLiveData<>("");
     public MutableLiveData<String> proseguiRegistrazione = new MutableLiveData<>("");
 
+    private String nomeSocialSelezionato;
+    private String linkSocialSelezionato;
+    public MutableLiveData<String>  nomeSocialRecuperato = new MutableLiveData<>("");
+    public MutableLiveData<String>  linkSocialRecuperato = new MutableLiveData<>("");
 private String token;
 
     public MutableLiveData<Boolean> vaiInHome = new MutableLiveData<>(false);
@@ -838,5 +842,27 @@ public void controlloSocial(){
                 }
             }
         });
+    }
+    public void setNomeSocialSelezionato(String nomeSocial){
+        this.nomeSocialSelezionato = nomeSocial;
+    }
+    public void setLinkSocialSelezionato(String link){
+        this.linkSocialSelezionato =link;
+    }
+    private void setNomeSocialRecuperato(String nome){
+        this.nomeSocialRecuperato.setValue(nome);
+    }
+    private void setLinkSocialRecuperato(String link){
+        this.linkSocialRecuperato.setValue(link);
+    }
+    public Boolean isNomeSocialRecuperato(){
+        return !(nomeSocialRecuperato.getValue().equals(""));
+    }
+    public Boolean isLinkSocialRecuperato(){
+        return !(linkSocialRecuperato.getValue().equals(""));
+    }
+    public void recuperaNomeLinkSocial(){
+        setNomeSocialRecuperato(nomeSocialSelezionato);
+        setLinkSocialRecuperato(linkSocialSelezionato);
     }
 }

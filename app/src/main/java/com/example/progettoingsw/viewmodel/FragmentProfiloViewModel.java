@@ -898,8 +898,8 @@ public class FragmentProfiloViewModel extends ViewModel {
         }else if(containsVenditore()) {
             System.out.println("contains di venditore");
             if(repository.findSocialVenditore(getNomeSocialSelezionato(),getNomeLinkSelezionato()) ){
-                setNomeSocialSelezionato(getNomeSocialSelezionato());
-                setNomeLinkSelezionato(getNomeLinkSelezionato());
+                setNomeSocial(getNomeSocialSelezionato());
+                setLinkSocial(getNomeLinkSelezionato());
             }
         }
     }

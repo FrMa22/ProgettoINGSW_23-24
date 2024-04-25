@@ -125,8 +125,10 @@ public class RegistrazioneCampiFacoltativi extends GestoreComuniImplementazioni 
 
                 String nome = socialNames.get(position);
                 String link = socialLinks.get(position);
+                registrazioneViewModel.setNomeSocialSelezionato(nome);
+                registrazioneViewModel.setLinkSocialSelezionato(link);
                 //fragmentProfiloViewModel.gestisciModificaSocial(nome,link);
-                PopUpModificaSocialRegistrazione popUpModificaSocialRegistrazione = new PopUpModificaSocialRegistrazione(RegistrazioneCampiFacoltativi.this, registrazioneViewModel,RegistrazioneCampiFacoltativi.this, nome, link,RegistrazioneCampiFacoltativi.this );
+                PopUpModificaSocialRegistrazione popUpModificaSocialRegistrazione = new PopUpModificaSocialRegistrazione(RegistrazioneCampiFacoltativi.this, registrazioneViewModel,RegistrazioneCampiFacoltativi.this,RegistrazioneCampiFacoltativi.this );
                 popUpModificaSocialRegistrazione.show();
             }
         });
