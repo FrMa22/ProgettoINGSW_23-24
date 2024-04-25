@@ -1,10 +1,13 @@
 package com.example.progettoingsw.view;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
@@ -138,12 +141,31 @@ public class LoginActivity extends GestoreComuniImplementazioni {
         osservaProseguiLogin();
         osservaMessaggioUtenteNonTrovato();
         osservaConnessioneSpenta();
-        loginViewModel.checkConnessione(this);
-        //osservaTokenSalvato();
-        //loginViewModel.checkSavedToken(getApplicationContext());
+
+        checkConnessione();
+
         osservaTokenSalvato();
         loginViewModel.checkSavedToken(getApplicationContext());
 
+    }
+    public void checkConnessione() {
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetwork = connectivityManager.getActiveNetworkInfo();
+        Log.d("isNetworkConnected","valore : " + !(activeNetwork != null && activeNetwork.isConnected()));
+        if(!(activeNetwork != null && activeNetwork.isConnected())){
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Connessione di rete necessaria");
+            builder.setMessage("Questa applicazione richiede una connessione di rete attiva. Controlla la tua connessione e riprova.");
+            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    // Chiudi l'applicazione o gestisci l'evento in base alle tue esigenze
+                    finish();
+                }
+            });
+            builder.setCancelable(false); // Impedisci all'utente di chiudere il dialogo premendo al di fuori di esso
+            builder.show();
+        }
     }
 private void requestNotificationPermissions() {
     if (ContextCompat.checkSelfPermission(this, "com.example.progettoingsw.permission.POST_NOTIFICATIONS") != PackageManager.PERMISSION_GRANTED) {

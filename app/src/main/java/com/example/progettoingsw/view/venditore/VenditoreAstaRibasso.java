@@ -58,20 +58,6 @@ public class VenditoreAstaRibasso extends GestoreComuniImplementazioni {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.venditore_asta_ribasso);
-        creaAstaRibassoViewModel = new ViewModelProvider(this).get(CreaAstaRibassoViewModel.class);
-        osservaErroreNome();
-        osservaErroreDescrizione();
-        osservaErroreBaseAsta();
-        osservaErroreIntervalloDecrementale();
-        osservaErrorePrezzoSegreto();
-        osservaErroreSogliaDiDecremento();
-        osservaErroreGenerico();
-        osservaApriGalleria();
-        osservaCreaPopUpInformazioni();
-        osservaApriPopUpInformazioni();
-        osservaApriPopUpCategorie();
-        osservaAstaCreata();
-        osservaImmagineConvertita();
 
 
 
@@ -138,8 +124,8 @@ public class VenditoreAstaRibasso extends GestoreComuniImplementazioni {
 
         bottoneBack.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                Intent intent = new Intent(VenditoreAstaRibasso.this, MainActivity.class);
-                startActivity(intent);
+                creaAstaRibassoViewModel.premutoBack();
+
             }
         });
         button_info_asta_Ribasso.setOnClickListener(new View.OnClickListener() {
@@ -148,8 +134,32 @@ public class VenditoreAstaRibasso extends GestoreComuniImplementazioni {
                 creaAstaRibassoViewModel.apriPopUpInformazioni();
             }
         });
-    }
 
+        creaAstaRibassoViewModel = new ViewModelProvider(this).get(CreaAstaRibassoViewModel.class);
+        osservaErroreNome();
+        osservaErroreDescrizione();
+        osservaErroreBaseAsta();
+        osservaErroreIntervalloDecrementale();
+        osservaErrorePrezzoSegreto();
+        osservaErroreSogliaDiDecremento();
+        osservaErroreGenerico();
+        osservaApriGalleria();
+        osservaCreaPopUpInformazioni();
+        osservaApriPopUpInformazioni();
+        osservaApriPopUpCategorie();
+        osservaAstaCreata();
+        osservaImmagineConvertita();
+        osservaTornaIndietro();
+
+    }
+    public void osservaTornaIndietro(){
+        creaAstaRibassoViewModel.tornaIndietro.observe(this , (valore)->{
+            if(valore){
+                Intent intent = new Intent(VenditoreAstaRibasso.this, MainActivity.class);
+                startActivity(intent);
+            }
+        });
+    }
     public void osservaApriPopUpInformazioni(){
         creaAstaRibassoViewModel.apriPopUpInformazioni.observe(this, (valore) ->{
             if(valore){

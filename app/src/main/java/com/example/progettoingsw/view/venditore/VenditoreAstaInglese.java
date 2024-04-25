@@ -61,19 +61,7 @@ public class VenditoreAstaInglese extends GestoreComuniImplementazioni {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.venditore_asta_inglese);
 
-        creaAstaIngleseViewModel = new ViewModelProvider(this).get(CreaAstaIngleseViewModel.class);
-        osservaErroreNome();
-        osservaErroreDescrizione();
-        osservaErroreBaseAsta();
-        osservaErroreIntervallo();
-        osservaErroreSogliaRialzoMinimo();
-        osservaErroreGenerico();
-        osservaApriPopUpCategorie();
-        osservaApriGalleria();
-        osservaAstaCreata();
-        osservaApriPopUpInformazioni();
-        osservaCreaPopUpInformazioni();
-        osservaImmagineConvertita();
+
 
          controller = new Controller();
         progressBarVenditoreAstaInglese = findViewById(R.id.progressBarVenditoreAstaInglese);
@@ -128,8 +116,8 @@ public class VenditoreAstaInglese extends GestoreComuniImplementazioni {
 
         bottoneBack.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                Intent intent = new Intent(VenditoreAstaInglese.this, MainActivity.class);
-                startActivity(intent);
+                creaAstaIngleseViewModel.premutoBack();
+
             }
         });
 
@@ -141,10 +129,31 @@ public class VenditoreAstaInglese extends GestoreComuniImplementazioni {
             String rialzo = rialzoAsta.getText().toString().trim();
             creaAstaIngleseViewModel.creaAsta(nomeProdotto, descrizioneProdotto,base,intervallo,rialzo,bitmap);
         });
-
+        creaAstaIngleseViewModel = new ViewModelProvider(this).get(CreaAstaIngleseViewModel.class);
+        osservaErroreNome();
+        osservaErroreDescrizione();
+        osservaErroreBaseAsta();
+        osservaErroreIntervallo();
+        osservaErroreSogliaRialzoMinimo();
+        osservaErroreGenerico();
+        osservaApriPopUpCategorie();
+        osservaApriGalleria();
+        osservaAstaCreata();
+        osservaApriPopUpInformazioni();
+        osservaCreaPopUpInformazioni();
+        osservaImmagineConvertita();
+        osservaTornaIndietro();
 
     }
 
+    public void osservaTornaIndietro(){
+        creaAstaIngleseViewModel.tornaIndietro.observe(this , (valore)->{
+            if(valore){
+                Intent intent = new Intent(VenditoreAstaInglese.this, MainActivity.class);
+                startActivity(intent);
+            }
+        });
+    }
     public void osservaApriPopUpInformazioni(){
         creaAstaIngleseViewModel.apriPopUpInformazioni.observe(this, (valore) ->{
             if(valore){
@@ -234,27 +243,6 @@ public class VenditoreAstaInglese extends GestoreComuniImplementazioni {
         });
     }
 
-//    private void showPopup() {
-//        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-//        builder.setTitle("Cos'è un asta all'inglese?"); // Puoi impostare un titolo per il popup
-//        builder.setMessage(" Un’asta all’inglese è caratterizzata da una base d’asta iniziale pubblica, specificata dal venditore al momento della " +
-//                "creazione dell’asta, da un intervallo di tempo fisso per presentare nuove offerte (di default 1 " +
-//                "ora), e da una soglia di rialzo (di default 10€).\n Gli acquirenti possono presentare un’offerta per " +
-//                "il prezzo corrente.\n Quando viene presentata un’offerta, il timer per la presentazione di nuove " +
-//                "offerte viene resettato. Quando il timer raggiunge lo zero senza che siano presentate nuove " +
-//                "offerte, l’ultima offerta si aggiudica il bene/servizio in vendita, e il venditore e gli acquirenti che " +
-//                "hanno partecipato all’asta visualizzano una notifica. "); // Il testo da mostrare nel popup
-//
-//        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-//            public void onClick(DialogInterface dialog, int which) {
-//                // Azione da eseguire quando si preme il pulsante OK
-//                dialog.dismiss(); // Chiudi il popup
-//            }
-//        });
-//
-//        AlertDialog dialog = builder.create();
-//        dialog.show();
-//    }
 
 
     private void prelevaImmagine(){

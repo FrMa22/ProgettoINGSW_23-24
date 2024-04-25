@@ -167,6 +167,7 @@ public class SchermataAstaInversa extends GestoreComuniImplementazioni implement
             // Imposta i dati recuperati sui TextView e ImageView della tua activity
             textViewNomeProdottoSchermataAstaInversa.setText(astaInversaRecuperata.getNome());
             textViewDescrizioneSchermataAstaInversa.setText(astaInversaRecuperata.getDescrizione());
+            Log.d("setAstaDataInversa", "valore per prezzo : " + String.valueOf(astaInversaRecuperata.getPrezzoAttuale()));
             textViewPrezzoAttualeSchermataAstaInversa.setText(String.valueOf(astaInversaRecuperata.getPrezzoAttuale()));
 
             textViewAcquirenteSchermataAstaInversa.setText(astaInversaRecuperata.getId_acquirente());
@@ -236,6 +237,7 @@ public class SchermataAstaInversa extends GestoreComuniImplementazioni implement
     public void osservaAstaRecuperata(){
         schermataAstaInversaViewModel.astaRecuperata.observe(this, (asta) -> {
             if (asta != null) {
+                Log.d("osservaAstaRecuperata","entrato");
                 schermataAstaInversaViewModel.convertiImmagine(asta.getPath_immagine());
             }
         });
@@ -247,6 +249,7 @@ public class SchermataAstaInversa extends GestoreComuniImplementazioni implement
             }else{
                 imageViewSchermataAstaInversa.setImageResource(R.drawable.no_image_available);
             }
+            Log.d("osservaImmagineAstaConvertita","entrato");
             schermataAstaInversaViewModel.isAstaChiusa();
         });
     }

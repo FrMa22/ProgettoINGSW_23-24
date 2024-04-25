@@ -43,6 +43,7 @@ public class CreaAstaIngleseViewModel extends ViewModel {
     public MutableLiveData<AlertDialog> popUpInformazioni = new MutableLiveData<>(null);
     public MutableLiveData<Boolean> apriPopUpInformazioni = new MutableLiveData<>(false);
     public MutableLiveData<Bitmap> immagineConvertita = new MutableLiveData<>(null);
+    public MutableLiveData<Boolean> tornaIndietro = new MutableLiveData<>(false);
 
 
     public CreaAstaIngleseViewModel(){
@@ -429,5 +430,11 @@ public class CreaAstaIngleseViewModel extends ViewModel {
             Log.d("checkCategorieInserite","categorie scelte null o vuoto");
             categorieScelteProvvisorie = new ArrayList<>();
         }
+    }
+    public void setTornaIndietro(Boolean b){
+        this.tornaIndietro.setValue(b);
+    }
+    public void premutoBack(){
+        setTornaIndietro(true);
     }
 }

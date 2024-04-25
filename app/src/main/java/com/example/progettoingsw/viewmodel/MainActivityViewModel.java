@@ -12,12 +12,12 @@ import com.example.progettoingsw.repository.Repository;
 public class MainActivityViewModel extends ViewModel {
 
     private Repository repository;
-    public MutableLiveData<MenuItem> sceltoHome = new MutableLiveData<>(null);
-    public MutableLiveData<MenuItem> sceltoCategorie = new MutableLiveData<>(null);
-    public MutableLiveData<MenuItem> sceltoCreaAstaAcquirente = new MutableLiveData<>(null);
-    public MutableLiveData<MenuItem> sceltoCreaAstaVenditore = new MutableLiveData<>(null);
-    public MutableLiveData<MenuItem> sceltoRicerca = new MutableLiveData<>(null);
-    public MutableLiveData<MenuItem> sceltoProfilo = new MutableLiveData<>(null);
+    public MutableLiveData<Boolean> sceltoHome = new MutableLiveData<>(false);
+    public MutableLiveData<Boolean> sceltoCategorie = new MutableLiveData<>(false);
+    public MutableLiveData<Boolean> sceltoCreaAstaAcquirente = new MutableLiveData<>(false);
+    public MutableLiveData<Boolean> sceltoCreaAstaVenditore = new MutableLiveData<>(false);
+    public MutableLiveData<Boolean> sceltoRicerca = new MutableLiveData<>(false);
+    public MutableLiveData<Boolean> sceltoProfilo = new MutableLiveData<>(false);
     public MutableLiveData<Boolean> apriSchermataAstaInglese = new MutableLiveData<>(false);
     public MutableLiveData<Boolean> apriSchermataAstaRibasso = new MutableLiveData<>(false);
 
@@ -33,38 +33,38 @@ public class MainActivityViewModel extends ViewModel {
     private Boolean containsVenditore(){
         return (repository.getVenditoreModel()!=null);
     }
-    public void gestisciFragment(MenuItem item){
+    public void gestisciFragment(int itemPosition){
 
 
-        if (item.getItemId() == R.id.action_home) {
+        if (itemPosition==1) {
             Log.d("BottomNav", "Selected Home");
-            resetAllExcept(sceltoHome);
-            setSceltoHome(item);
+            resetAllExcept(1);
+            setSceltoHome(true);
 
-        } else if (item.getItemId() == R.id.action_categories) {
+        } else if (itemPosition==2) {
             Log.d("BottomNav", "Selected Categories");
-            resetAllExcept(sceltoCategorie);
-            setSceltoCategorie(item);
+            resetAllExcept(2);
+            setSceltoCategorie(true);
 
-        } else if (item.getItemId() == R.id.action_crea_asta) {
+        } else if (itemPosition==3) {
             Log.d("BottomNav", "Selected Crea Asta");
             if(containsAcquirente()){
-                resetAllExcept(sceltoCreaAstaAcquirente);
-                setSceltoCreaAstaAcquirente(item);
+                resetAllExcept(3);
+                setSceltoCreaAstaAcquirente(true);
             }else if(containsVenditore()){
-                resetAllExcept(sceltoCreaAstaVenditore);
-                setSceltoCreaAstaVenditore(item);
+                resetAllExcept(4);
+                setSceltoCreaAstaVenditore(true);
             }
 
-        } else if (item.getItemId() == R.id.action_search) {
+        } else if (itemPosition==4) {
             Log.d("BottomNav", "Selected Search");
-            resetAllExcept(sceltoRicerca);
-            setSceltoRicerca(item);
+            resetAllExcept(5);
+            setSceltoRicerca(true);
 
-        } else if (item.getItemId() == R.id.action_profile) {
+        } else if (itemPosition==5) {
             Log.d("BottomNav", "Selected Profile");
-            resetAllExcept(sceltoProfilo);
-            setSceltoProfilo(item);
+            resetAllExcept(6);
+            setSceltoProfilo(true);
 
         }
 
@@ -73,87 +73,87 @@ public class MainActivityViewModel extends ViewModel {
 
 
     }
-    private MenuItem getSceltoHome(){
+    private Boolean getSceltoHome(){
         return sceltoHome.getValue();
     }
-    private void setSceltoHome(MenuItem valore){
+    private void setSceltoHome(Boolean valore){
         this.sceltoHome.setValue(valore);
     }
-    private MenuItem getSceltoCategorie(){
+    private Boolean getSceltoCategorie(){
         return sceltoCategorie.getValue();
     }
-    private void setSceltoCategorie(MenuItem valore){
+    private void setSceltoCategorie(Boolean valore){
         this.sceltoCategorie.setValue(valore);
     }
-    private MenuItem getSceltoCreaAstaAcquirente(){
+    private Boolean getSceltoCreaAstaAcquirente(){
         return sceltoCreaAstaAcquirente.getValue();
     }
-    private void setSceltoCreaAstaAcquirente(MenuItem valore){
+    private void setSceltoCreaAstaAcquirente(Boolean valore){
         this.sceltoCreaAstaAcquirente.setValue(valore);
     }
-    private MenuItem getSceltoCreaAstaVenditore(){
+    private Boolean getSceltoCreaAstaVenditore(){
         return sceltoCreaAstaVenditore.getValue();
     }
-    private void setSceltoCreaAstaVenditore(MenuItem valore){
+    private void setSceltoCreaAstaVenditore(Boolean valore){
         this.sceltoCreaAstaVenditore.setValue(valore);
     }
-    private MenuItem getSceltoRicerca(){
+    private Boolean getSceltoRicerca(){
         return sceltoRicerca.getValue();
     }
-    private void setSceltoRicerca(MenuItem valore){
+    private void setSceltoRicerca(Boolean valore){
         this.sceltoRicerca.setValue(valore);
     }
-    private MenuItem getSceltoProfilo(){
+    private Boolean getSceltoProfilo(){
         return sceltoProfilo.getValue();
     }
-    private void setSceltoProfilo(MenuItem valore){
+    private void setSceltoProfilo(Boolean valore){
         this.sceltoProfilo.setValue(valore);
     }
-    public void resetAllExcept(MutableLiveData<MenuItem> selectedMutableLiveData) {
-        if (selectedMutableLiveData != null) {
-            if (selectedMutableLiveData != sceltoHome) {
+    public void resetAllExcept(int position){
+        if(position>0){
+            if (position!=1) {
                 sceltoHome.setValue(null);
             }
-            if (selectedMutableLiveData != sceltoCategorie) {
+            if (position!=2) {
                 sceltoCategorie.setValue(null);
             }
-            if (selectedMutableLiveData != sceltoCreaAstaAcquirente) {
+            if (position!=3) {
                 sceltoCreaAstaAcquirente.setValue(null);
             }
-            if (selectedMutableLiveData != sceltoCreaAstaVenditore) {
+            if (position!=4) {
                 sceltoCreaAstaVenditore.setValue(null);
             }
-            if (selectedMutableLiveData != sceltoRicerca) {
+            if (position!=5) {
                 sceltoRicerca.setValue(null);
             }
-            if (selectedMutableLiveData != sceltoProfilo) {
+            if (position!=6) {
                 sceltoProfilo.setValue(null);
             }
         }
     }
 
     public boolean isSceltoHome() {
-        return sceltoHome.getValue() != null;
+        return (sceltoHome.getValue()!=null && sceltoHome.getValue());
     }
 
     public boolean isSceltoCategorie() {
-        return sceltoCategorie.getValue() != null;
+        return (sceltoCategorie.getValue()!=null && sceltoCategorie.getValue());
     }
 
     public boolean isSceltoCreaAstaAcquirente() {
-        return sceltoCreaAstaAcquirente.getValue() != null;
+        return (sceltoCreaAstaAcquirente.getValue()!=null && sceltoCreaAstaAcquirente.getValue());
     }
 
     public boolean isSceltoCreaAstaVenditore() {
-        return sceltoCreaAstaVenditore.getValue() != null;
+        return (sceltoCreaAstaVenditore.getValue()!=null && sceltoCreaAstaVenditore.getValue()) ;
     }
 
     public boolean isSceltoRicerca() {
-        return sceltoRicerca.getValue() != null;
+        return (sceltoRicerca.getValue()!=null && sceltoRicerca.getValue());
     }
 
     public boolean isSceltoProfilo() {
-        return sceltoProfilo.getValue() != null;
+        return (sceltoProfilo.getValue()!=null && sceltoProfilo.getValue());
     }
 
     public void setApriSchermataAstaInglese(Boolean b){

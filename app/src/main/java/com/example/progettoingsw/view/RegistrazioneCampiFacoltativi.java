@@ -35,6 +35,7 @@ import com.example.progettoingsw.view.acquirente.FragmentCreaAstaInversa;
 import com.example.progettoingsw.view.acquirente.FragmentProfilo;
 import com.example.progettoingsw.viewmodel.RegistrazioneViewModel;
 import com.google.android.material.button.MaterialButton;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -74,7 +75,7 @@ public class RegistrazioneCampiFacoltativi extends GestoreComuniImplementazioni 
     String paese;
     String sitoWeb;
     private TextView text_view_nessun_social;
-
+    private FirebaseAnalytics mFirebaseAnalytics;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,7 +90,8 @@ public class RegistrazioneCampiFacoltativi extends GestoreComuniImplementazioni 
         password =intent.getStringExtra("password");
 
         Log.d("i valori in entrata facoltativi", " " + nome + cognome + email + password + tipoUtente);*/
-
+// Inizializzazione di FirebaseAnalytics
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
         bottoneAnnulla = (MaterialButton) findViewById(R.id.bottoneAnnullaRegistrazione);
         bottoneSocial =  findViewById(R.id.bottoneSocialRegistrazione);
@@ -123,8 +125,10 @@ public class RegistrazioneCampiFacoltativi extends GestoreComuniImplementazioni 
 
                 String nome = socialNames.get(position);
                 String link = socialLinks.get(position);
+                registrazioneViewModel.setNomeSocialSelezionato(nome);
+                registrazioneViewModel.setLinkSocialSelezionato(link);
                 //fragmentProfiloViewModel.gestisciModificaSocial(nome,link);
-                PopUpModificaSocialRegistrazione popUpModificaSocialRegistrazione = new PopUpModificaSocialRegistrazione(RegistrazioneCampiFacoltativi.this, registrazioneViewModel,RegistrazioneCampiFacoltativi.this, nome, link,RegistrazioneCampiFacoltativi.this );
+                PopUpModificaSocialRegistrazione popUpModificaSocialRegistrazione = new PopUpModificaSocialRegistrazione(RegistrazioneCampiFacoltativi.this, registrazioneViewModel,RegistrazioneCampiFacoltativi.this,RegistrazioneCampiFacoltativi.this );
                 popUpModificaSocialRegistrazione.show();
             }
         });
@@ -140,10 +144,11 @@ public class RegistrazioneCampiFacoltativi extends GestoreComuniImplementazioni 
         osservaSocialVuoti();
         osservaValoriPresentiFacoltativiAcquirente();
         osservaValoriPresentiFacoltativiVenditore();
+        osservaTornaInRegistrazione();
 
         bottoneAnnulla.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                controller.redirectActivity(RegistrazioneCampiFacoltativi.this, Registrazione.class);
+                registrazioneViewModel.tornaInRegistrazione();
             }
         });
 
@@ -158,6 +163,7 @@ public class RegistrazioneCampiFacoltativi extends GestoreComuniImplementazioni 
         bottoneProseguiRegistrazione.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
 
+                registrazioneViewModel.recuperaToken(RegistrazioneCampiFacoltativi.this);
                 registrazioneViewModel.checkTipoUtente();
 
             }
@@ -345,6 +351,7 @@ public class RegistrazioneCampiFacoltativi extends GestoreComuniImplementazioni 
         registrazioneViewModel.proseguiInserimento.observe(this, (messaggio) -> {
             if (registrazioneViewModel.isProseguiInserimento("inserito")) {
                 registrazioneViewModel.controlloSocial();
+                logEvent("Registrazione utente",null);
                 Intent intent = new Intent(RegistrazioneCampiFacoltativi.this, RegistrazioneCategorie.class);
                 startActivity(intent);
             } else if (registrazioneViewModel.isProseguiInserimento("inserimento fallito")) {
@@ -353,7 +360,10 @@ public class RegistrazioneCampiFacoltativi extends GestoreComuniImplementazioni 
 
         });
     }
-
+    // Metodo per registrare un evento con Firebase Analytics
+    private void logEvent(String eventName, Bundle bundle) {
+        mFirebaseAnalytics.logEvent(eventName, bundle);
+    }
     public void osservaApriPopUpSocial() {
         registrazioneViewModel.apriPopUpSocial.observe(this, (valore) -> {
             if (valore) {
@@ -431,6 +441,14 @@ public class RegistrazioneCampiFacoltativi extends GestoreComuniImplementazioni 
                 testoProvenienza.setText(utente.getAreageografica());
                 testoSitoWeb.setText(utente.getLink());
                 registrazioneViewModel.stampaLista();
+            }
+        });
+    }
+    public void osservaTornaInRegistrazione(){
+        registrazioneViewModel.tornaInRegistrazione.observe(this, (valore) ->{
+            if(valore){
+                Intent intent = new Intent(RegistrazioneCampiFacoltativi.this, Registrazione.class);
+                startActivity(intent);
             }
         });
     }

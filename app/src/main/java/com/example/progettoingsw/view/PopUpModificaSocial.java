@@ -32,11 +32,9 @@ public class PopUpModificaSocial extends DialogPersonalizzato implements View.On
     private FragmentProfiloViewModel fragmentProfiloViewModel;
 
 
-    public PopUpModificaSocial(Context context, FragmentProfilo fragmentProfilo, FragmentProfiloViewModel fragmentProfiloViewModel, String nome, String link,PopupModificaSocialDismissListener popupDismissListener) {
+    public PopUpModificaSocial(Context context, FragmentProfilo fragmentProfilo, FragmentProfiloViewModel fragmentProfiloViewModel,PopupModificaSocialDismissListener popupDismissListener) {
         super(context);
         this.fragmentProfilo = fragmentProfilo;
-        this.nome_vecchio = nome;
-        this.link_vecchio = link;
         this.fragmentProfiloViewModel=fragmentProfiloViewModel;
         this.popupDismissListener=popupDismissListener;
         setCanceledOnTouchOutside(false);
@@ -87,8 +85,6 @@ public class PopUpModificaSocial extends DialogPersonalizzato implements View.On
             String nome = edit_text_nome_social.getText().toString();
             String link = edit_text_link_social.getText().toString();
             System.out.println("dopo aver premuto conferma e prima dei controlli con nome:"+ nome + " e link: "+link);
-
-
                 System.out.println("prima della chiamata al backend");
                  fragmentProfiloViewModel.aggiornaSocialViewModel(nome_vecchio,link_vecchio,nome,link);
 
@@ -170,8 +166,8 @@ public class PopUpModificaSocial extends DialogPersonalizzato implements View.On
         fragmentProfiloViewModel.nomeSocialSelezionato.observe(fragmentProfilo, (nome) -> {
             if (nome != null) {
                 //lista social quindi estrarre nomi e link poi fare chiamata a update social names per mostrarli graficamente
-                String nomeSocial=nome;
-                setNome(nomeSocial);
+                nome_vecchio=nome;
+                setNome(nome);
             }
         });
     }
@@ -181,8 +177,8 @@ public class PopUpModificaSocial extends DialogPersonalizzato implements View.On
         fragmentProfiloViewModel.nomeLinkSelezionato.observe(fragmentProfilo, (link) -> {
             if (link != null) {
                 //lista social quindi estrarre nomi e link poi fare chiamata a update social names per mostrarli graficamente
-                String linkSocial=link;
-                setLink(linkSocial);
+                link_vecchio=link;
+                setLink(link);
             }
         });
     }

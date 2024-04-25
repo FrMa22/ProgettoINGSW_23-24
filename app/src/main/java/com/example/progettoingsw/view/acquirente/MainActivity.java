@@ -29,6 +29,11 @@
         private boolean controlloIniziale = true;
         private MainActivityViewModel mainActivityViewModel;
         private Fragment selectedFragment;
+        private MenuItem homeMenuItem;
+        private MenuItem categoriesMenuItem;
+        private MenuItem creaAstaMenuItem;
+        private MenuItem searchMenuItem;
+        private MenuItem profileMenuItem;
 
         @Override
         protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +42,13 @@
             bottomNavigationView = findViewById(R.id.acquirente_nav_view);
 
             mainActivityViewModel = new ViewModelProvider(this).get(MainActivityViewModel.class);
+
+            Menu menu = bottomNavigationView.getMenu();
+            homeMenuItem = menu.findItem(R.id.action_home);
+            categoriesMenuItem = menu.findItem(R.id.action_categories);
+            creaAstaMenuItem = menu.findItem(R.id.action_crea_asta);
+            searchMenuItem = menu.findItem(R.id.action_search);
+            profileMenuItem = menu.findItem(R.id.action_profile);
 
             osservaSceltoHome();
             osservaSceltoCategorie();
@@ -57,7 +69,15 @@
                 Fragment currentFragment =(Fragment) getSupportFragmentManager().findFragmentById(R.id.fragment_container);
                 selectedFragment = (currentFragment != null) ? currentFragment : new FragmentHome();
 
-                mainActivityViewModel.gestisciFragment(item);
+                int positionItem = 0;
+                for(int i=0;i<menu.size();i++){
+                    if(menu.getItem(i).getItemId() == item.getItemId()){
+                        positionItem = i;
+                        break;
+                    }
+                }
+                Log.d("bottomNavigationView","id dell'item : " + (positionItem+1));
+                mainActivityViewModel.gestisciFragment(positionItem + 1);
 
                 // Controlla se il fragment corrente è già quello selezionato
                 if (currentFragment != null && currentFragment.getClass().equals(selectedFragment.getClass())) {
@@ -202,8 +222,9 @@
         public void osservaSceltoHome(){
             mainActivityViewModel.sceltoHome.observe(this, (valore) ->{
                 if(mainActivityViewModel.isSceltoHome()){
-                    valore.setIcon(R.drawable.ic_home);
-                    resetOtherIcons(bottomNavigationView, valore);
+                    Log.d("osservaSceltoHome","entrato");
+                    homeMenuItem.setIcon(R.drawable.ic_home);
+                    resetOtherIcons(bottomNavigationView, homeMenuItem);
                     selectedFragment = new FragmentHome();
                     getSupportFragmentManager().beginTransaction()
                             .replace(R.id.fragment_container, selectedFragment)
@@ -215,8 +236,8 @@
             mainActivityViewModel.sceltoCategorie.observe(this, (valore) -> {
                 if(mainActivityViewModel.isSceltoCategorie()){
                     Log.d("osservaSceltoCategorie","entrato");
-                    valore.setIcon(R.drawable.ic_categorie);
-                    resetOtherIcons(bottomNavigationView, valore);
+                    categoriesMenuItem.setIcon(R.drawable.ic_categorie);
+                    resetOtherIcons(bottomNavigationView, categoriesMenuItem);
                     selectedFragment = new FragmentSelezioneCategorie();
                     getSupportFragmentManager().beginTransaction()
                             .replace(R.id.fragment_container, selectedFragment)
@@ -227,8 +248,9 @@
         public void osservaSceltoCreaAstaAcquirente(){
             mainActivityViewModel.sceltoCreaAstaAcquirente.observe(this, (valore) -> {
                 if(mainActivityViewModel.isSceltoCreaAstaAcquirente()){
-                    valore.setIcon(R.drawable.ic_plus);
-                    resetOtherIcons(bottomNavigationView, valore);
+                    Log.d("osservaSceltoCreaAstaAcquirente","entrato");
+                    creaAstaMenuItem.setIcon(R.drawable.ic_plus);
+                    resetOtherIcons(bottomNavigationView, creaAstaMenuItem);
                     selectedFragment = new FragmentCreaAstaInversa();
                     getSupportFragmentManager().beginTransaction()
                             .replace(R.id.fragment_container, selectedFragment)
@@ -239,8 +261,9 @@
         public void osservaSceltoCreaAstaVenditore(){
             mainActivityViewModel.sceltoCreaAstaVenditore.observe(this, (valore) -> {
                 if(mainActivityViewModel.isSceltoCreaAstaVenditore()){
-                    valore.setIcon(R.drawable.ic_plus);
-                    resetOtherIcons(bottomNavigationView, valore);
+                    Log.d("osservaSceltoCreaAstaVenditore","entrato");
+                    creaAstaMenuItem.setIcon(R.drawable.ic_plus);
+                    resetOtherIcons(bottomNavigationView, creaAstaMenuItem);
                     VenditorePopUpCreaAsta popAsta  = new VenditorePopUpCreaAsta(MainActivity.this,MainActivity.this,mainActivityViewModel);
                     popAsta.show();
                     getSupportFragmentManager().beginTransaction()
@@ -252,8 +275,9 @@
         public void osservaSceltoRicerca(){
             mainActivityViewModel.sceltoRicerca.observe(this, (valore) -> {
                 if(mainActivityViewModel.isSceltoRicerca()){
-                    valore.setIcon(R.drawable.ic_search);
-                    resetOtherIcons(bottomNavigationView, valore);
+                    Log.d("osservaSceltoRicerca","entrato");
+                    searchMenuItem.setIcon(R.drawable.ic_search);
+                    resetOtherIcons(bottomNavigationView, searchMenuItem);
                     selectedFragment = new FragmentRicercaAsta();
                     getSupportFragmentManager().beginTransaction()
                             .replace(R.id.fragment_container, selectedFragment)
@@ -264,8 +288,8 @@
         public void osservaSceltoProfilo(){
             mainActivityViewModel.sceltoProfilo.observe(this, (valore) -> {
                 if(mainActivityViewModel.isSceltoProfilo()){
-                    valore.setIcon(R.drawable.ic_profilo);
-                    resetOtherIcons(bottomNavigationView, valore);
+                    profileMenuItem.setIcon(R.drawable.ic_profilo);
+                    resetOtherIcons(bottomNavigationView, profileMenuItem);
                     selectedFragment = new FragmentProfilo();
                     getSupportFragmentManager().beginTransaction()
                             .replace(R.id.fragment_container, selectedFragment)

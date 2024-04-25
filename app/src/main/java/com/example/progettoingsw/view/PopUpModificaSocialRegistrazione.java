@@ -27,12 +27,10 @@ public class PopUpModificaSocialRegistrazione extends DialogPersonalizzato imple
     private RegistrazioneCampiFacoltativi registrazioneCampiFacoltativi;
     private PopupModificaSocialRegistrazioneDismissListener popupDismissListener;
 
-    public PopUpModificaSocialRegistrazione(Context context, RegistrazioneViewModel registrazioneViewModel, RegistrazioneCampiFacoltativi registrazioneCampiFacoltativi, String nome, String link, PopupModificaSocialRegistrazioneDismissListener popupDismissListener){
+    public PopUpModificaSocialRegistrazione(Context context, RegistrazioneViewModel registrazioneViewModel, RegistrazioneCampiFacoltativi registrazioneCampiFacoltativi, PopupModificaSocialRegistrazioneDismissListener popupDismissListener){
         super(context);
         this.registrazioneViewModel = registrazioneViewModel;
         this.registrazioneCampiFacoltativi = registrazioneCampiFacoltativi;
-        this.nome_vecchio = nome;
-        this.link_vecchio = link;
         this.popupDismissListener = popupDismissListener;
         setCanceledOnTouchOutside(false);
     }
@@ -45,15 +43,11 @@ public class PopUpModificaSocialRegistrazione extends DialogPersonalizzato imple
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.pop_up_modifica_social);
 
-        osservaMessaggioErroreLinkNuovo();
-        osservaMessaggioErroreNomeSocial();
-        osservaIsSocialCambiato();
+
 
 
         edit_text_nome_social = findViewById(R.id.edit_text_nome_social);
-        edit_text_nome_social.setText(nome_vecchio);
         edit_text_link_social = findViewById(R.id.edit_text_link_social);
-        edit_text_link_social.setText(link_vecchio);
 
         //popUpModificaSocialDAO = new PopUpModificaSocialDAO(this,email,tipoUtente);
 
@@ -63,6 +57,13 @@ public class PopUpModificaSocialRegistrazione extends DialogPersonalizzato imple
         bottoneConfermaModifica.setOnClickListener(this);
         bottoneEliminaSocial = findViewById(R.id.bottoneEliminaSocial);
         bottoneEliminaSocial.setOnClickListener(this);
+
+        osservaMessaggioErroreLinkNuovo();
+        osservaMessaggioErroreNomeSocial();
+        osservaIsSocialCambiato();
+        osservaNomeSocial();
+        osservaLinkSocial();
+        registrazioneViewModel.recuperaNomeLinkSocial();
     }
 
     @Override
@@ -130,5 +131,22 @@ public class PopUpModificaSocialRegistrazione extends DialogPersonalizzato imple
             }
         });
     }
+    public void osservaNomeSocial() {
+        registrazioneViewModel.nomeSocialRecuperato.observe(registrazioneCampiFacoltativi, (nome) -> {
+            if (registrazioneViewModel.isNomeSocialRecuperato()) {
+                nome_vecchio = nome;
+                edit_text_nome_social.setText(nome);
+            }
+        });
+    }
 
+
+    public void osservaLinkSocial() {
+        registrazioneViewModel.linkSocialRecuperato.observe(registrazioneCampiFacoltativi, (link) -> {
+            if (registrazioneViewModel.isLinkSocialRecuperato()) {
+                link_vecchio = link;
+                edit_text_link_social.setText(link);
+            }
+        });
+    }
 }

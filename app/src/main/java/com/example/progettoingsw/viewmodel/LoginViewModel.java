@@ -41,18 +41,6 @@ public class LoginViewModel extends ViewModel {
         loginRepository = new LoginRepository();
     }
 
-    public Boolean getConnessioneSpenta() {
-        return connessioneSpenta.getValue();
-    }
-    public void setConnessioneSpenta(Boolean connessioneSpenta) {
-        this.connessioneSpenta.setValue(connessioneSpenta);
-    }
-    public void checkConnessione(Context context) {
-        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetwork = connectivityManager.getActiveNetworkInfo();
-        Log.d("isNetworkConnected","valore : " + !(activeNetwork != null && activeNetwork.isConnected()));
-        setConnessioneSpenta(!(activeNetwork != null && activeNetwork.isConnected()));
-    }
 
     public String getTokenViewModel() {
         return tokenViewModel;
