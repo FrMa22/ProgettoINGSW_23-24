@@ -57,11 +57,11 @@ public class SchermataPartecipazioneAsteViewModel  extends ViewModel {
                 if (containsAcquirente()) {
                     String email = getAcquirenteEmail();
                     trovaAsteInglesi(email);
-                    trovaAsteInverse(email);
+//                    trovaAsteInverse(email);
 
                 } else if (containsVenditore()) {
                     String email = getVenditoreEmail();
-                    trovaAsteInglesi(email);
+//                    trovaAsteInglesi(email);
                     trovaAsteInverse(email);
                 }
         }catch(Exception e){
@@ -77,13 +77,22 @@ public class SchermataPartecipazioneAsteViewModel  extends ViewModel {
 
 
 
-    private void checkAndMergeAste() {
+    private void checkAndMergeAsteAcquirente() {
         // Controlla se tutte e tre le ricerche sono completate
-        if (isAsteInglesiRecuperate && isAsteInverseRecuperate) {
+        if (isAsteInglesiRecuperate) {
             System.out.println("tutte le ricerche sono finite");
             mergeAsteTrovate();
         }
     }
+
+    private void checkAndMergeAsteVenditore() {
+        // Controlla se tutte e tre le ricerche sono completate
+        if (isAsteInverseRecuperate) {
+            System.out.println("tutte le ricerche sono finite");
+            mergeAsteTrovate();
+        }
+    }
+
 
 
 
@@ -98,7 +107,7 @@ public class SchermataPartecipazioneAsteViewModel  extends ViewModel {
                 setAsteInglesiRecuperateList(asteInglesiRecuperateList);//cosi poi la gui "acchiappa" le aste trovate
                 // Imposta il flag su true quando la ricerca è completata
                 isAsteInglesiRecuperate = true;
-                checkAndMergeAste();
+                checkAndMergeAsteAcquirente();
 
             }
         });
@@ -118,7 +127,7 @@ public class SchermataPartecipazioneAsteViewModel  extends ViewModel {
                 setAsteInverseRecuperateList(asteInverseRecuperateList);//cosi poi la gui "acchiappa" le aste trovate
                 // Imposta il flag su true quando la ricerca è completata
                 isAsteInverseRecuperate = true;
-                checkAndMergeAste();
+                checkAndMergeAsteVenditore();
             }
         });
     }
