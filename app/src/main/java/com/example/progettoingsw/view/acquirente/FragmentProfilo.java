@@ -133,6 +133,8 @@ public class FragmentProfilo extends Fragment implements PopUpModificaCampiProfi
                 String nome = socialNames.get(position);
                 String link = socialLinks.get(position);
                 //fragmentProfiloViewModel.gestisciModificaSocial(nome,link);
+                fragmentProfiloViewModel.setNomeSocialSelezionato(nome);
+                fragmentProfiloViewModel.setNomeLinkSelezionato(link);
                 PopUpModificaSocial popUpModificaSocial = new PopUpModificaSocial(getContext(), FragmentProfilo.this, fragmentProfiloViewModel, nome, link, FragmentProfilo.this);
                 popUpModificaSocial.show();
             }

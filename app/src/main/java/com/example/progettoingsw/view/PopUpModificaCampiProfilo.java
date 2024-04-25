@@ -53,6 +53,10 @@ public class PopUpModificaCampiProfilo extends DialogPersonalizzato implements V
         osservaMessaggioErrorePaeseNuovo();
         osservaIsUtenteCambiato();
 
+
+
+
+
         edit_text_modifica_nome = findViewById(R.id.edit_text_modifica_nome);
         edit_text_modifica_cognome = findViewById(R.id.edit_text_modifica_cognome);
         edit_text_modifica_sitoweb = findViewById(R.id.edit_text_modifica_sitoweb);
@@ -67,6 +71,13 @@ public class PopUpModificaCampiProfilo extends DialogPersonalizzato implements V
         bottoneAnnullaModifica.setOnClickListener(this);
         bottoneConfermaModifica = findViewById(R.id.bottoneConfermaModifica);
         bottoneConfermaModifica.setOnClickListener(this);
+
+
+        osservaAcquirenteRecuperato();
+        osservaVenditoreRecuperato();
+        fragmentProfiloViewModel.checkTipoUtente();
+
+
     }
 
     @Override
@@ -105,6 +116,15 @@ public class PopUpModificaCampiProfilo extends DialogPersonalizzato implements V
             edit_text_modifica_bio.setText(bio);
             edit_text_modifica_paese.setText(paese);
         }
+    }
+
+
+    public void setCampi(String nome,String cognome,String sitoweb,String bio,String paese){
+        edit_text_modifica_nome.setText(nome);
+        edit_text_modifica_cognome.setText(cognome);
+        edit_text_modifica_sitoweb.setText(sitoweb);
+        edit_text_modifica_bio.setText(bio);
+        edit_text_modifica_paese.setText(paese);
     }
 
 
@@ -204,6 +224,34 @@ public class PopUpModificaCampiProfilo extends DialogPersonalizzato implements V
     }
 
 
+    public void osservaAcquirenteRecuperato() {
+        fragmentProfiloViewModel.acquirenteRecuperato.observe(fragmentProfilo, (acquirente) -> {
+            if (acquirente != null) {
+                //lista social quindi estrarre nomi e link poi fare chiamata a update social names per mostrarli graficamente
+                String nome=acquirente.getNome();
+                String cognome=acquirente.getCognome();
+                String sitoweb=acquirente.getLink();
+                String paese=acquirente.getAreageografica();
+                String bio=acquirente.getBio();
+                setCampi(nome,cognome,sitoweb,bio,paese);
+            }
+        });
+    }
+
+
+    public void osservaVenditoreRecuperato() {
+        fragmentProfiloViewModel.venditoreRecuperato.observe(fragmentProfilo, (venditore) -> {
+            if (venditore != null) {
+                //lista social quindi estrarre nomi e link poi fare chiamata a update social names per mostrarli graficamente
+                String nome=venditore.getNome();
+                String cognome=venditore.getCognome();
+                String sitoweb=venditore.getLink();
+                String paese=venditore.getAreageografica();
+                String bio=venditore.getBio();
+                setCampi(nome,cognome,sitoweb,bio,paese);
+            }
+        });
+    }
 
 
 }
