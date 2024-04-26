@@ -357,7 +357,6 @@ public class FragmentProfilo extends Fragment implements PopUpModificaCampiProfi
     public void osservaAcquirenteModelPresente() {
         fragmentProfiloViewModel.acquirenteModelPresente.observe(getViewLifecycleOwner(), (messaggio) -> {
             if (fragmentProfiloViewModel.getAcquirenteModelPresente()) {
-                Toast.makeText(getContext(), "Entrato come acquirente in  profilo.", Toast.LENGTH_SHORT).show();
                 //chiamate ai vari observer, tra cui quelli di cambiare schermata quindi pure per la gestione dei popup
                 osservaSocialAcquirenteRecuperati();
                 osservaAcquirenteRecuperato();//nel suo corpo ha un observer di un oggetto Acquirente Model che poi si usa per fare i vari get per un metodo che setta nella gui i valori
@@ -504,7 +503,6 @@ public class FragmentProfilo extends Fragment implements PopUpModificaCampiProfi
     public void osservaVenditoreModelPresente() {
         fragmentProfiloViewModel.venditoreModelPresente.observe(getViewLifecycleOwner(), (messaggio) -> {
             if (fragmentProfiloViewModel.getVenditoreModelPresente()) {
-                Toast.makeText(getContext(), "Entrato come venditore in  profilo.", Toast.LENGTH_SHORT).show();
                 //chiamate ai vari observer, tra cui quelli di cambiare schermata quindi pure per la gestione dei popup
                 osservaSocialVenditoreRecuperati();
                 osservaVenditoreRecuperato();//nel suo corpo ha un observer di un oggetto Acquirente Model che poi si usa per fare i vari get per un metodo che setta nella gui i valori
