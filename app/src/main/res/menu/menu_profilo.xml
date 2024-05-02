@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/action_le_mie_aste"
+        android:title="Le mie aste" />
+    <item
+        android:id="@+id/action_aste_partecipi"
+        android:title="Le aste a cui partecipi"
+        android:iconTint="@color/rosso"/>
+    <item
+        android:id="@+id/action_modifica_valori"
+        android:title="Modifica profilo" />
+    <item
+        android:id="@+id/action_log_out"
+        android:title="Esci"
+        android:iconTint="@color/rosso"/>
+
+</menu>

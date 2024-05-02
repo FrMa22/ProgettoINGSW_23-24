@@ -8,6 +8,12 @@
     android:id="@+id/relative_layout_fragment_profilo"
     tools:context=".view.acquirente.FragmentProfilo">
 
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="bordo_sotto_grigio" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -30,7 +36,6 @@
                     android:layout_height="80dp"
                     android:background="@drawable/design_toolbar">
 
-
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -45,14 +50,25 @@
                         android:id="@+id/button_log_out_profilo"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="end"
                         android:layout_marginEnd="10dp"
                         android:backgroundTint="@android:color/transparent"
                         android:contentDescription="premi per uscire dall'account"
                         android:src="@drawable/ic_log_out"
                         android:textColor="@color/colore_secondario"
-                        android:textSize="25sp" />
+                        android:textSize="25sp"
+                        android:visibility="gone" />
 
+                    <ImageButton
+                        android:id="@+id/button_menu_profilo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginEnd="10dp"
+                        android:layout_gravity="end"
+                        android:backgroundTint="@android:color/transparent"
+                        android:contentDescription="Menu"
+                        android:src="@drawable/ic_menu_puntini"
+                        android:textColor="@color/colore_secondario"
+                        android:textSize="25sp" />
 
                 </androidx.appcompat.widget.Toolbar>
 
@@ -70,7 +86,8 @@
                         android:layout_centerVertical="true"
                         android:backgroundTint="@android:color/transparent"
                         android:contentDescription="Descrizione dell'immagine"
-                        android:src="@drawable/ic_edit_outfilled" />
+                        android:src="@drawable/ic_edit_outfilled"
+                        android:visibility="gone" />
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/button_le_mie_aste"
@@ -85,7 +102,8 @@
                         android:textSize="25dp"
                         android:textStyle="bold"
                         app:strokeColor="#AAAAAA"
-                        app:strokeWidth="2dp" />
+                        app:strokeWidth="2dp"
+                        android:visibility="gone"/>
 
 
                 </RelativeLayout>
@@ -101,7 +119,8 @@
                     android:textSize="25dp"
                     android:textStyle="bold"
                     app:strokeColor="#AAAAAA"
-                    app:strokeWidth="2dp" />
+                    app:strokeWidth="2dp"
+                    android:visibility="gone"/>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -148,7 +167,8 @@
                                 android:gravity="start"
                                 android:textColor="@color/colore_secondario"
                                 android:textSize="22dp"
-                                android:textStyle="bold" />
+                                android:textStyle="bold"
+                                android:paddingBottom="5dp" />
 
 
                         </LinearLayout>
@@ -159,7 +179,7 @@
                             android:layout_gravity="center"
                             android:layout_marginStart="20dp"
                             android:layout_marginEnd="20dp"
-                            android:background="@color/colore_secondario" />
+                            android:background="@color/colore_bordo_sotto" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -190,7 +210,8 @@
                                 android:gravity="start"
                                 android:textColor="@color/colore_secondario"
                                 android:textSize="22dp"
-                                android:textStyle="bold" />
+                                android:textStyle="bold"
+                                android:paddingBottom="5dp" />
 
                         </LinearLayout>
 
@@ -200,7 +221,7 @@
                             android:layout_gravity="center"
                             android:layout_marginStart="20dp"
                             android:layout_marginEnd="20dp"
-                            android:background="@color/colore_secondario" />
+                            android:background="@color/colore_bordo_sotto" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -231,7 +252,8 @@
                                 android:gravity="start"
                                 android:textColor="@color/colore_secondario"
                                 android:textSize="22dp"
-                                android:textStyle="bold" />
+                                android:textStyle="bold"
+                                android:paddingBottom="5dp" />
 
                         </LinearLayout>
 
@@ -241,7 +263,7 @@
                             android:layout_gravity="center"
                             android:layout_marginStart="20dp"
                             android:layout_marginEnd="20dp"
-                            android:background="@color/colore_secondario" />
+                            android:background="@color/colore_bordo_sotto" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -272,7 +294,8 @@
                                 android:gravity="start"
                                 android:textColor="@color/colore_secondario"
                                 android:textSize="22dp"
-                                android:textStyle="bold" />
+                                android:textStyle="bold"
+                                android:paddingBottom="5dp"  />
 
                         </LinearLayout>
 
@@ -282,7 +305,7 @@
                             android:layout_gravity="center"
                             android:layout_marginStart="20dp"
                             android:layout_marginEnd="20dp"
-                            android:background="@color/colore_secondario" />
+                            android:background="@color/colore_bordo_sotto" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -313,7 +336,8 @@
                                 android:gravity="start"
                                 android:textColor="@color/colore_secondario"
                                 android:textSize="22dp"
-                                android:textStyle="bold" />
+                                android:textStyle="bold"
+                                android:paddingBottom="5dp"  />
 
                         </LinearLayout>
 
@@ -326,7 +350,7 @@
                         android:layout_gravity="center"
                         android:layout_marginStart="20dp"
                         android:layout_marginEnd="20dp"
-                        android:background="@color/colore_secondario" />
+                        android:background="@color/colore_bordo_sotto" />
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -405,6 +429,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
+                        android:layout_marginTop="5dp"
                         android:text="Bio:"
                         android:textSize="20dp"
                         android:textStyle="bold" />
@@ -416,12 +441,15 @@
                         android:layout_marginEnd="20dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_marginBottom="20dp"
-                        android:background="@drawable/design_bio_personale"
-                        android:minHeight="48dp"
-                        android:paddingLeft="10dp"
+                        android:layout_marginBottom="30dp"
+                        android:layout_marginTop="5dp"
+                        android:background="@drawable/bordo_sotto_grigio"
+                        android:text="Bio di prova"
+                        android:paddingBottom="5dp"
+                        android:paddingStart="5dp"
                         android:textColorHint="@color/colore_hint"
-                        android:textSize="20dp" />
+                        android:textSize="22dp"
+                        android:textStyle="bold"/>
                 </LinearLayout>
 
 

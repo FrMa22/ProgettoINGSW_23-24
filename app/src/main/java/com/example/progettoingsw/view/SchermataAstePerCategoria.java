@@ -81,7 +81,7 @@ public class SchermataAstePerCategoria extends GestoreComuniImplementazioni {
         recyclerViewAstePerCategoria.setLayoutManager(gridLayoutManagerAttive);
         // Aggiungi un decorator predefinito per ridurre lo spazio tra le aste, superfluo
         DividerItemDecoration dividerItemDecorationAttive = new DividerItemDecoration(this, gridLayoutManagerAttive.getOrientation());
-        recyclerViewAstePerCategoria.addItemDecoration(dividerItemDecorationAttive);
+        //recyclerViewAstePerCategoria.addItemDecoration(dividerItemDecorationAttive);
         recyclerViewAstePerCategoria.setAdapter(astaAdapter);
         astaAdapter.setOnItemClickListener(new View.OnClickListener() {
             @Override

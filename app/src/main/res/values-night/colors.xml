@@ -6,7 +6,7 @@
     <color name="backgroundColorLight">#99CCFF</color>
     <color name="backgroundColorDark">#003366</color>
 <!--    <color name="colore_base">#0A0A0A</color>-->
-     <color name="colore_base">#111111</color>
+     <color name="colore_base">#000000</color>
 <!--    <color name="colore_base">#0E1514</color>-->
     <color name="colore_secondario">#FFFFFF</color>
     <color name="status_bar_color">#222222</color>
@@ -21,6 +21,10 @@
     <color name="rosso">#FF0000</color>
     <color name="verde">#B0BF1A</color>
     <color name="colore_bordo_edit_text">#AAAAAA</color>
-
+    <color name="colore_item_asta_inglese">#BFEEFF</color>
+    <color name="colore_item_asta_inversa">#FFF9E7</color>
+    <color name="colore_item_asta_ribasso">#F68833</color>
+    <color name="colore_background_image_view_item">#191919</color>
+    <color name="colore_bordo_sotto">#808080</color>
 
 </resources>

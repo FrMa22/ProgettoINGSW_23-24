@@ -41,8 +41,7 @@
                 android:layout_height="wrap_content"
                 android:text="Prezzo attuale :"
                 android:textColor="@color/colore_hint"
-                android:textSize="18dp"
-                android:textStyle="bold" />
+                android:textSize="18dp"/>
 
             <TextView
                 android:id="@+id/TextViewPrezzoOffertaAsta"
@@ -62,18 +61,11 @@
                 android:textStyle="bold" />
         </LinearLayout>
 
-        <View
-            android:id="@+id/view_popup_nuova_offerta"
-            android:layout_width="2dp"
-            android:layout_height="match_parent"
-            android:background="@color/colore_hint"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
-            />
         <LinearLayout
             android:id="@+id/linear_layout_rialzo_minimo_popup_nuova_offerta"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
             android:orientation="vertical"
             >
             <TextView
@@ -82,8 +74,7 @@
                 android:layout_height="wrap_content"
                 android:text="Offerta minima :"
                 android:textColor="@color/colore_hint"
-                android:textSize="18dp"
-                android:textStyle="bold" />
+                android:textSize="18dp"/>
 
             <TextView
                 android:id="@+id/TextViewPrezzoRialzoMinimo"
@@ -111,10 +102,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="Fai un\' offerta :"
         android:layout_marginTop="10dp"
-        android:textSize="20dp"
+        android:text="Fai un\' offerta"
         android:textColor="@color/colore_hint"
+        android:textSize="20dp"
         android:textStyle="bold" />
 
     <EditText
@@ -137,9 +128,7 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
+        android:layout_margin="20dp"
         android:orientation="horizontal"
         android:layout_gravity="center"
         >
@@ -147,8 +136,7 @@
             android:id="@+id/bottoneAnnullaPopUpAsta"
             android:layout_width="150dp"
             android:layout_height="60dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="5dp"
+            android:layout_marginEnd="10dp"
             app:strokeColor="#AAAAAA"
             app:strokeWidth="2dp"
             android:backgroundTint="@color/colore_base"
@@ -161,12 +149,12 @@
             android:id="@+id/bottoneConfermaPopUpAsta"
             android:layout_width="150dp"
             android:layout_height="60dp"
-            android:layout_marginEnd="10dp"
+            android:layout_marginStart="10dp"
             android:backgroundTint="@color/colore_secondario"
             android:text="Conferma"
             android:textColor="@color/colore_base"
             android:textSize="20dp"
-            android:textStyle="bold"  />
+            android:textStyle="bold" />
     </LinearLayout>
 
 

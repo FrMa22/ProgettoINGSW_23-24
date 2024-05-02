@@ -152,6 +152,13 @@ public class VenditoreAstaRibasso extends GestoreComuniImplementazioni {
         osservaTornaIndietro();
 
     }
+    public void osservaAstaCreataPopUp(){
+        creaAstaRibassoViewModel.astaCreataPopUp.observe(VenditoreAstaRibasso.this, (testo) -> {
+            if(creaAstaRibassoViewModel.checkAstaCreataPopUp()){
+                Toast.makeText(this, testo, Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
     public void osservaTornaIndietro(){
         creaAstaRibassoViewModel.tornaIndietro.observe(this , (valore)->{
             if(valore){

@@ -18,4 +18,9 @@
     <color name="rosso">#FF0000</color>
     <color name="verde">#B0BF1A</color>
     <color name="colore_bordo_edit_text">#AAAAAA</color>
+    <color name="colore_item_asta_inglese">#400D51</color>
+    <color name="colore_item_asta_inversa">#4D4D4D</color>
+    <color name="colore_item_asta_ribasso">#8B0000</color>
+    <color name="colore_background_image_view_item">#F6F6F6</color>
+    <color name="colore_bordo_sotto">#808080</color>
 </resources>

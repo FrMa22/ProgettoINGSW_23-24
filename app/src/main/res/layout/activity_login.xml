@@ -102,6 +102,8 @@
             android:layout_gravity="end"
             android:layout_marginEnd="30dp"
             android:layout_marginBottom="200dp"
+            android:layout_marginTop="5dp"
+            android:theme="@style/SwitchTema"
             />
 
 

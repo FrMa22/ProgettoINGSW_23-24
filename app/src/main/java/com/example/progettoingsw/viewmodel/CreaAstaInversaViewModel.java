@@ -47,6 +47,7 @@ public class CreaAstaInversaViewModel extends ViewModel {
     public MutableLiveData<Boolean> apriPopUpInformazioni = new MutableLiveData<>(false);
     public MutableLiveData<Bitmap> immagineConvertita = new MutableLiveData<>(null);
     public MutableLiveData<Boolean> tornaIndietro = new MutableLiveData<>(false);
+    public MutableLiveData<String> astaCreataPopUp = new MutableLiveData<>("");
 
 
     public CreaAstaInversaViewModel() {
@@ -307,6 +308,7 @@ public class CreaAstaInversaViewModel extends ViewModel {
             @Override
             public void OnInserimentoAstaInversa(Long numeroRecuperato) {
                 if(numeroRecuperato==0){
+                    setAstaCreataPopUp();
                     setAstaCreata(true);
                 }else{
                     setErroreDataOra("Errore nella creazione dell'asta, riprovare più tardi."+ numeroRecuperato);
@@ -456,5 +458,11 @@ public class CreaAstaInversaViewModel extends ViewModel {
     }
     public void premutoBack(){
         setTornaIndietro(true);
+    }
+    public void setAstaCreataPopUp(){
+        astaCreataPopUp.setValue("Asta creata con successo!");
+    }
+    public Boolean checkAstaCreataPopUp(){
+        return !astaCreataPopUp.getValue().equals("");
     }
 }

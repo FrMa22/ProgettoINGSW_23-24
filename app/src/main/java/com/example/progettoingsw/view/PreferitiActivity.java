@@ -82,7 +82,7 @@ public class PreferitiActivity extends GestoreComuniImplementazioni {
         recyclerViewAstePreferite.setLayoutManager(gridLayoutManagerAttive);
         // Aggiungi un decorator predefinito per ridurre lo spazio tra le aste, superfluo
         DividerItemDecoration dividerItemDecorationAttive = new DividerItemDecoration(this, gridLayoutManagerAttive.getOrientation());
-        recyclerViewAstePreferite.addItemDecoration(dividerItemDecorationAttive);
+        //recyclerViewAstePreferite.addItemDecoration(dividerItemDecorationAttive);
 
         astaAdapter.setOnItemClickListener(new View.OnClickListener() {
             @Override

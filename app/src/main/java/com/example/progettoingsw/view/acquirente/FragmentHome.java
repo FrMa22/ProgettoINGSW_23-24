@@ -46,6 +46,7 @@ public class FragmentHome extends Fragment {
     private AstaAdapter astaAdapterNuove;
     private TextView iconaNotifiche;
     private ProgressBar progressBarAcquirenteFragmentHome;
+    private RecyclerView recyclerViewAsteConsigliate;
     ImageButton button_notifiche;
     private TextView text_view_nessuna_asta_in_scadenza;
     private TextView text_view_nessuna_asta_nuova;
@@ -86,13 +87,13 @@ public class FragmentHome extends Fragment {
           astaAdapterConsigliate = new AstaAdapter(getContext(), null);
 
           // Inizializza il RecyclerView e imposta l'adapter
-          RecyclerView recyclerViewAsteConsigliate = view.findViewById(R.id.recycler_view_aste_consigliate);
+          recyclerViewAsteConsigliate = view.findViewById(R.id.recycler_view_aste_consigliate);
 //        // Utilizza LinearLayoutManager con orientamento orizzontale per far si che il recycler sia orizzontale, di default è verticale
           LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
           recyclerViewAsteConsigliate.setLayoutManager(linearLayoutManager);
 
           DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(getContext(), linearLayoutManager.getOrientation());
-          recyclerViewAsteConsigliate.addItemDecoration(dividerItemDecoration);
+          //recyclerViewAsteConsigliate.addItemDecoration(dividerItemDecoration);
 
           astaAdapterConsigliate.setOnItemClickListener(new View.OnClickListener() {
             @Override
@@ -114,7 +115,7 @@ public class FragmentHome extends Fragment {
         recyclerViewAsteInScadenza.setLayoutManager(linearLayoutManager2);
 
 
-        recyclerViewAsteInScadenza.addItemDecoration(dividerItemDecoration);
+        //recyclerViewAsteInScadenza.addItemDecoration(dividerItemDecoration);
         recyclerViewAsteInScadenza.setAdapter(astaAdapterInScadenza);
         astaAdapterInScadenza.setOnItemClickListener(new View.OnClickListener() {
             @Override
@@ -135,7 +136,7 @@ public class FragmentHome extends Fragment {
         recyclerViewAsteNuove.setLayoutManager(linearLayoutManager3);
 
 
-        recyclerViewAsteNuove.addItemDecoration(dividerItemDecoration);
+        //recyclerViewAsteNuove.addItemDecoration(dividerItemDecoration);
         recyclerViewAsteNuove.setAdapter(astaAdapterNuove);
         astaAdapterNuove.setOnItemClickListener(new View.OnClickListener() {
             @Override
@@ -198,6 +199,8 @@ public class FragmentHome extends Fragment {
         osservaaste_inversaInScadenzaPresenti();
         osservaaste_inversaNuovePresenti();
         osservaaste_inversaCategoriaNomePresenti();
+
+        osservaCategorieVuote();
 
         //homeViewModel.checkTipoUtente();
 
@@ -453,20 +456,36 @@ public class FragmentHome extends Fragment {
             }
         });
     }
+    public void osservaCategorieVuote(){
+        homeViewModel.categorieVuote.observe(getViewLifecycleOwner(), (valore)->{
+            if(valore){
+                text_view_nessuna_asta_in_categorie.setVisibility(View.GONE);
+                text_view_aste_consigliate_home.setVisibility(View.GONE);
+                recyclerViewAsteConsigliate.setVisibility(View.GONE);
+            }else{
+                text_view_nessuna_asta_in_categorie.setVisibility(View.VISIBLE);
+            }
+        });
+    }
 
     public void osservaNumeroNotifiche(){
         homeViewModel.numeroNotifiche.observe(getViewLifecycleOwner(), (numero)->{
-            if(numero>0){
-                iconaNotifiche.setVisibility(View.VISIBLE);
-                iconaNotifiche.setText(String.valueOf(numero));
-            }else{
+            if(numero > 0){
+                if(numero > 9){
+                    iconaNotifiche.setVisibility(View.VISIBLE);
+                    iconaNotifiche.setText("9+");
+                } else {
+                    iconaNotifiche.setVisibility(View.VISIBLE);
+                    iconaNotifiche.setText(String.valueOf(numero));
+                }
+            } else {
                 iconaNotifiche.setVisibility(View.GONE);
             }
         });
     }
     public void checkRecylerVuoti(){
         if(astaAdapterConsigliate.getItemCount()==0){
-            text_view_nessuna_asta_in_categorie.setVisibility(View.VISIBLE);
+            homeViewModel.checkCategorie();
         }else{
             text_view_nessuna_asta_in_categorie.setVisibility(View.GONE);
         }

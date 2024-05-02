@@ -4,17 +4,12 @@
     android:id="@+id/layout_notifica"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_marginTop="10dp"
-    android:layout_marginBottom="10dp"
+    android:layout_marginStart="20dp"
+    android:layout_marginEnd="20dp"
+    android:layout_marginTop="15dp"
+    android:layout_marginBottom="15dp"
     android:background="@drawable/design_bio_personale">
 
-    <RelativeLayout
-        android:id="@+id/rectangle_layout"
-        android:layout_width="370dp"
-        android:layout_height="100dp"
-        android:layout_centerInParent="true"
-        android:background="@drawable/design_bio_personale"
-        android:layout_margin="10dp">
 
         <TextView
             android:id="@+id/textview_titolo_notifica"
@@ -22,11 +17,11 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:gravity="center"
+            android:padding="15dp"
             android:background="@drawable/bordi_trasparenti"
+            android:gravity="center"
             android:textColor="@color/colore_secondario"
             android:textSize="20dp" />
 
-    </RelativeLayout>
 
 </RelativeLayout>

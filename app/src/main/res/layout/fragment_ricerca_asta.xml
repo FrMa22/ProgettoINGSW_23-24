@@ -54,14 +54,17 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        >
 
 
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view_aste_per_ricerca"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            />
 
 
     </LinearLayout>

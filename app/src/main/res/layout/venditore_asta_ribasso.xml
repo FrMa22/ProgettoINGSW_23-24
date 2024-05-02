@@ -29,7 +29,7 @@
             android:layout_gravity="center"
             android:gravity="center"
             android:text="Asta al ribasso"
-            android:textColor="@color/colore_secondario"
+            android:textColor="@color/colore_item_asta_ribasso"
             android:textSize="35dp"
             android:textStyle="bold" />
 
@@ -83,7 +83,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
                     android:layout_marginEnd="20dp"
-                    android:background="@drawable/edit_text_top_corners_rounded_grigi"
+                    android:background="@drawable/design_schermata_asta_ribasso_nome"
                     android:gravity="center"
                     android:maxLength="100"
                     android:hint="Nome"
@@ -113,7 +113,7 @@
                     android:layout_marginBottom="20dp"
                     android:maxLength="250"
                     android:textSize="20dp"
-                    android:background="@drawable/edit_text_bottom_corners_rounded_grigi"
+                    android:background="@drawable/design_schermata_asta_ribasso"
                     android:gravity="top|center"
                     android:hint="Descrizione:"
                     android:minHeight="100dp"
@@ -173,7 +173,7 @@
                 android:layout_marginTop="-60dp"
                 android:layout_below="@+id/textViewInserisciImmagineVenditore"
                 android:layout_gravity="center"
-                android:background="@drawable/design_bio_personale"
+                android:background="@drawable/design_image_crea_asta_ribasso"
                 android:scaleType="fitXY" />
 
             <TextView
@@ -195,7 +195,7 @@
                 android:layout_height="48dp"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
-                android:background="@drawable/edit_text_tutti_lati_grigi_rounded"
+                android:background="@drawable/design_edit_text_crea_asta_ribasso"
                 android:drawableStart="@drawable/ic_euro"
                 android:drawablePadding="10dp"
                 android:hint="100"
@@ -227,7 +227,7 @@
                 android:layout_height="48dp"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
-                android:background="@drawable/edit_text_tutti_lati_grigi_rounded"
+                android:background="@drawable/design_edit_text_crea_asta_ribasso"
                 android:drawableStart="@drawable/ic_time"
                 android:drawablePadding="10dp"
                 android:hint="60 min"
@@ -259,7 +259,7 @@
                 android:layout_height="48dp"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
-                android:background="@drawable/edit_text_tutti_lati_grigi_rounded"
+                android:background="@drawable/design_edit_text_crea_asta_ribasso"
                 android:drawableStart="@drawable/ic_euro"
                 android:drawablePadding="10dp"
                 android:hint="10"
@@ -290,7 +290,7 @@
                 android:layout_height="48dp"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
-                android:background="@drawable/edit_text_tutti_lati_grigi_rounded"
+                android:background="@drawable/design_edit_text_crea_asta_ribasso"
                 android:drawableStart="@drawable/ic_euro"
                 android:drawablePadding="10dp"
                 android:hint="20"
@@ -312,7 +312,7 @@
                 android:textColor="@color/colore_secondario"
                 android:textSize="20dp"
                 android:textStyle="bold"
-                app:strokeColor="#AAAAAA"
+                app:strokeColor="@color/colore_item_asta_ribasso"
                 app:strokeWidth="2dp" />
 
 

@@ -64,7 +64,7 @@ public class LeMieAste extends GestoreComuniImplementazioni {
         GridLayoutManager gridLayoutManagerAttive = new GridLayoutManager(this, 2, RecyclerView.VERTICAL, false);
         recyclerViewAsteAttive.setLayoutManager(gridLayoutManagerAttive);
         DividerItemDecoration dividerItemDecorationAttive = new DividerItemDecoration(this, gridLayoutManagerAttive.getOrientation());
-        recyclerViewAsteAttive.addItemDecoration(dividerItemDecorationAttive);
+        //recyclerViewAsteAttive.addItemDecoration(dividerItemDecorationAttive);
         astaAdapterAttive.setOnItemClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -84,8 +84,8 @@ public class LeMieAste extends GestoreComuniImplementazioni {
         RecyclerView recyclerViewAsteNonAttive = findViewById(R.id.recyclerViewAsteNonAttive);
         GridLayoutManager gridLayoutManagerNonAttive = new GridLayoutManager(this, 2, RecyclerView.VERTICAL, false);
         recyclerViewAsteNonAttive.setLayoutManager(gridLayoutManagerNonAttive);
-        DividerItemDecoration dividerItemDecorationNonAttive = new DividerItemDecoration(this, gridLayoutManagerNonAttive.getOrientation());
-        recyclerViewAsteNonAttive.addItemDecoration(dividerItemDecorationNonAttive);
+//        DividerItemDecoration dividerItemDecorationNonAttive = new DividerItemDecoration(this, gridLayoutManagerNonAttive.getOrientation());
+//        recyclerViewAsteNonAttive.addItemDecoration(dividerItemDecorationNonAttive);
         astaAdapterNonAttive.setOnItemClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -122,7 +122,7 @@ public class LeMieAste extends GestoreComuniImplementazioni {
                    leMieAsteViewModel.setVisualizzaAsteChiuse(false);
                    //
                    text_view_aste_attive_non_attive.setText("ASTE ATTIVE");
-                   text_view_aste_attive_non_attive.setTextColor(getResources().getColor(R.color.verde));
+                   text_view_aste_attive_non_attive.setTextColor(getResources().getColor(R.color.colore_secondario));
                } else {
                    text_view_nessuna_asta_trovata.setVisibility(View.INVISIBLE);
                    recyclerViewAsteNonAttive.setVisibility(View.VISIBLE);
@@ -136,7 +136,7 @@ public class LeMieAste extends GestoreComuniImplementazioni {
                    leMieAsteViewModel.setVisualizzaAsteChiuse(true);
                    //
                    text_view_aste_attive_non_attive.setText("ASTE NON ATTIVE");
-                   text_view_aste_attive_non_attive.setTextColor(getResources().getColor(R.color.rosso));
+                   text_view_aste_attive_non_attive.setTextColor(getResources().getColor(R.color.colore_secondario));
                }
            }
        });

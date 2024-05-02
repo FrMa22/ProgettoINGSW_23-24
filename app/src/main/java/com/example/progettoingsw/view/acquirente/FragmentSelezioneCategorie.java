@@ -87,7 +87,7 @@ public class FragmentSelezioneCategorie extends Fragment {
             }
             button.setGravity(Gravity.CENTER);
             button.setBackgroundColor(Color.TRANSPARENT);
-            button.setBackgroundResource(R.drawable.bordo_sotto_grigio);
+            //button.setBackgroundResource(R.drawable.bordo_sotto_grigio);
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

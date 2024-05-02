@@ -184,28 +184,37 @@ public class AstaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             }else{
                 imageView.setImageResource(R.drawable.no_image_available);
             }
-            intervalloOfferte.setText(item.getIntervalloTempoOfferte());
-            prezzo.setText(item.getPrezzoAttuale());
+            prezzo.setText( "€ " + item.getPrezzoAttuale());
             rialzo.setText(item.getRialzoMin());
-            startCountDownTimer(item.getIntervalloTempoOfferte());
+            if(item.getCondizione().equals("chiusa")){
+                intervalloOfferte.setText("Asta Scaduta");
+            }else{
+                intervalloOfferte.setText(item.getIntervalloTempoOfferte());
+                startCountDownTimer(item.getIntervalloTempoOfferte());
+            }
+
         }
 
         private void startCountDownTimer(String intervalloOfferteString) {
             Log.d("startCountDownTimer", "intervallo prima: " + intervalloOfferteString);
             long intervalloOfferteSeconds = convertiStringaInSecondi(intervalloOfferteString);
             Log.d("startCountDownTimer", "intervallo : " + intervalloOfferteSeconds);
-            countDownTimer = new CountDownTimer(intervalloOfferteSeconds * 1000, 1000) {
-                public void onTick(long millisUntilFinished) {
-                    Log.d("asta adapter asta inglese", "aggiornato textview intervallo offerte");
-                    intervalloOfferte.setText(calcolaTempoRimanente(millisUntilFinished / 1000));
-                }
+            if (intervalloOfferteSeconds != 0) {
+                countDownTimer = new CountDownTimer(intervalloOfferteSeconds * 1000, 1000) {
+                    public void onTick(long millisUntilFinished) {
+                        Log.d("asta adapter asta inglese", "aggiornato textview intervallo offerte");
+                        intervalloOfferte.setText(calcolaTempoRimanente(millisUntilFinished / 1000));
+                    }
 
-                public void onFinish() {
-                    Log.d("scaduto", "scaduto");
-                    intervalloOfferte.setText("Asta Scaduta");
-                }
-            }.start();
-            countDownTimers.add(countDownTimer);
+                    public void onFinish() {
+                        Log.d("scaduto", "scaduto");
+                        intervalloOfferte.setText("Asta Scaduta");
+                    }
+                }.start();
+                countDownTimers.add(countDownTimer);
+            }else{
+                intervalloOfferte.setText("Asta Scaduta");
+            }
         }
 
 
@@ -267,8 +276,13 @@ public class AstaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             }else{
                 imageView.setImageResource(R.drawable.no_image_available);
             }
-            prezzoAttuale.setText(item.getPrezzoAttuale());
-            intervalloDecremento.setText(item.getIntervalloDecrementale());
+            if(item.getCondizione().equals("chiusa")){
+                intervalloDecremento.setText("Asta Scaduta");
+            }else{
+                intervalloDecremento.setText(item.getIntervalloDecrementale());
+            }
+            prezzoAttuale.setText("€ " + item.getPrezzoAttuale());
+
             prezzoDecremento.setText(item.getDecrementoAutomatico());
         }
     }
@@ -299,7 +313,7 @@ public class AstaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 imageView.setImageResource(R.drawable.no_image_available);
             }
             dataScadenza.setText(item.getDataDiScadenza());
-            prezzo.setText(item.getPrezzoAttuale());
+            prezzo.setText("€ " + item.getPrezzoAttuale() );
         }
     }
 

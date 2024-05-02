@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="370dp"
-    android:layout_height="400dp"
+    android:layout_height="wrap_content"
     android:layout_gravity="center"
     android:background="@drawable/bordo_non_stondato"
     android:orientation="vertical"
@@ -14,8 +14,7 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
+            android:layout_margin="10dp"
             android:orientation="horizontal"
             android:layout_gravity="center">
 
@@ -38,21 +37,20 @@
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:text="Crescente"
+                android:textColor="@color/colore_secondario"
+                android:theme="@style/SwitchTema"
                 android:textSize="20dp"/>
 
 
         </LinearLayout>
 
 
-
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="280dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:background="@drawable/design_bio_personale"
-        >
+        android:layout_margin="20dp"
+        android:padding="5dp"
+        android:background="@drawable/design_bio_personale">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -64,24 +62,23 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="Categorie"
+                android:layout_marginTop="5dp"
                 android:textColor="@color/colore_secondario"
                 android:textSize="25dp"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
 
             <LinearLayout
                 android:id="@+id/linear_layout_categorie_popup_ricerca"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="5dp"
                 android:layout_marginStart="20dp"
+                android:layout_marginTop="5dp"
                 android:layout_marginEnd="20dp"
-                android:orientation="vertical"/>
-
+                android:orientation="vertical" />
 
 
         </LinearLayout>
     </ScrollView>
-
 
     <RelativeLayout
         android:layout_width="match_parent"

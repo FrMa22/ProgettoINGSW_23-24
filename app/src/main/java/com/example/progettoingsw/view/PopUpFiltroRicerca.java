@@ -182,17 +182,17 @@ public class PopUpFiltroRicerca extends DialogPersonalizzato implements View.OnC
             linear_layout_categorie_popup_ricerca.addView(switchButton);
 
             // Aggiungi la vista con lo spessore nero tra gli switch
-            if (i < categorieArray.length - 1) { // Aggiungi la vista solo se non è l'ultimo elemento
-                View separatorView = new View(getContext());
-                separatorView.setBackgroundColor(resources.getColor(R.color.colore_trattino_separatore));
-                LinearLayout.LayoutParams separatorLayoutParams = new LinearLayout.LayoutParams(
-                        LinearLayout.LayoutParams.MATCH_PARENT,
-                        thickness
-                );
-                separatorLayoutParams.setMargins(marginStartEndInPixel, marginStartEndInPixel, marginStartEndInPixel, 0); // Margini Start e End di 20dp
-                separatorView.setLayoutParams(separatorLayoutParams);
-                linear_layout_categorie_popup_ricerca.addView(separatorView);
-            }
+//            if (i < categorieArray.length - 1) { // Aggiungi la vista solo se non è l'ultimo elemento
+//                View separatorView = new View(getContext());
+//                separatorView.setBackgroundColor(resources.getColor(R.color.colore_trattino_separatore));
+//                LinearLayout.LayoutParams separatorLayoutParams = new LinearLayout.LayoutParams(
+//                        LinearLayout.LayoutParams.MATCH_PARENT,
+//                        thickness
+//                );
+//                separatorLayoutParams.setMargins(marginStartEndInPixel, marginStartEndInPixel, marginStartEndInPixel, 0); // Margini Start e End di 20dp
+//                separatorView.setLayoutParams(separatorLayoutParams);
+//                linear_layout_categorie_popup_ricerca.addView(separatorView);
+//            }
         }
 
         immaginiArray.recycle();

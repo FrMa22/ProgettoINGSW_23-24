@@ -53,12 +53,12 @@ public class SchermataNotifiche extends GestoreComuniImplementazioni implements 
         // Inizializza il RecyclerView e imposta l'adapter
         RecyclerView recyclerViewNotifiche = findViewById(R.id.recycler_view_notifiche);
         // Utilizza GridLayoutManager con due colonne
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2, RecyclerView.VERTICAL, false);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 1, RecyclerView.VERTICAL, false);
         recyclerViewNotifiche.setLayoutManager(gridLayoutManager);
 
         // Aggiungi un decorator predefinito per ridurre lo spazio tra le aste
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(this, gridLayoutManager.getOrientation());
-        recyclerViewNotifiche.addItemDecoration(dividerItemDecoration);
+        //recyclerViewNotifiche.addItemDecoration(dividerItemDecoration);
 
         adapterNotifiche.setOnItemClickListener(new View.OnClickListener() {
             @Override

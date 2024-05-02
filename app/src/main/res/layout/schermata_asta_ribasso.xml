@@ -23,7 +23,7 @@
             android:textSize="35dp"
             android:textStyle="bold"
             android:text="Asta Ribasso"
-            android:textColor="@color/colore_secondario"/>
+            android:textColor="@color/colore_item_asta_ribasso"/>
         <ImageButton
             android:id="@+id/bottoneBackSchermataAstaRibasso"
             android:layout_width="60dp"
@@ -62,54 +62,78 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
-            <TextView
-                android:id="@+id/textViewNomeProdottoSchermataAstaRibasso"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="5dp"
-                android:layout_marginBottom="-1dp"
-                android:background="@drawable/design_bio_personale"
-                android:gravity="center"
-                android:text="Nome asta"
-                android:textSize="25dp"
-                android:textStyle="bold"
-                />
+
 
             <ImageView
                 android:id="@+id/ImageViewSchermataAstaRibasso"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:minWidth="200dp"
-                android:minHeight="180dp"
                 android:layout_margin="25dp"
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/design_bio_personale"
                 android:scaleType="fitXY"/>
 
+<RelativeLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    >
+    <TextView
+        android:id="@+id/textViewNomeProdottoSchermataAstaRibasso"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="-1dp"
+        android:padding="10dp"
+        android:paddingBottom="5dp"
+        android:background="@drawable/design_schermata_asta_ribasso_nome"
+        android:gravity="center"
+        android:textColor="@color/colore_secondario"
+        android:text="nome asta"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:textSize="30dp"
+        />
 
+    <View
+        android:id="@+id/trattino_asta_ribasso"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:elevation="2dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="40dp"
+        android:background="@color/colore_item_asta_ribasso"
+        android:layout_below="@id/textViewNomeProdottoSchermataAstaRibasso"
+        />
 
+    <TextView
+        android:id="@+id/textViewDescrizioneSchermataAstaRibasso"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="-1dp"
+        android:background="@drawable/design_schermata_asta_ribasso"
+        android:gravity="center"
+        android:hint="Descrizione Prodotto Assente"
+        android:textColor="@color/colore_secondario"
+        android:textColorHint="@color/colore_hint"
+        android:padding="10dp"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:textSize="20dp"
+        android:layout_below="@id/trattino_asta_ribasso"/>
+</RelativeLayout>
 
-
-            <TextView
-                android:id="@+id/textViewDescrizioneSchermataAstaRibasso"
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:layout_margin="10dp"
-                android:background="@drawable/design_bio_personale"
-                android:gravity="center"
-                android:hint="Descrizione Prodotto"
-                android:textColor="@color/colore_secondario"
-                android:textSize="20dp"
-                android:textStyle="bold"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
+                android:layout_marginTop="10dp"
                 android:orientation="horizontal">
 
                 <LinearLayout
@@ -121,10 +145,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:layout_gravity="start"
+                        android:gravity="center"
                         android:text="Prossimo decremento:"
                         android:textColor="@color/colore_secondario"
-                        android:textSize="20dp"
-                        android:textStyle="bold" />
+                        android:textSize="20dp" />
                     <TextView
                         android:id="@+id/textViewProssimoDecrementoAstaRibasso"
                         android:layout_width="match_parent"
@@ -136,13 +160,6 @@
                 </LinearLayout>
 
 
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="match_parent"
-                    android:background="@color/colore_secondario"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginEnd="5dp"/>
-
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_weight="1"
@@ -153,8 +170,8 @@
                         android:layout_height="50dp"
                         android:layout_gravity="end"
                         android:text="Offerta attuale:"
+                        android:gravity="center"
                         android:textSize="20dp"
-                        android:textStyle="bold"
                         android:textColor="@color/colore_secondario" />
                     <TextView
                         android:id="@+id/textViewOffertaAttualeSchermataAstaRibasso"
@@ -176,32 +193,34 @@
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/bottoneOffertaSchermataAstaRibasso"
-                android:layout_width="150dp"
-                android:layout_height="100dp"
-                android:layout_gravity="end"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:layout_marginTop="20dp"
-                android:layout_marginEnd="20dp"
-                android:contentDescription="offerta nuova"
-                android:textColor="@color/colore_secondario"
-                android:textStyle="bold"
-                android:textSize="30dp"
-                app:strokeColor="#AAAAAA"
-                app:strokeWidth="2dp"
                 android:backgroundTint="@color/colore_base"
+                android:contentDescription="offerta nuova"
                 android:text="Fai un offerta"
+                android:textColor="@color/colore_secondario"
+                android:textSize="30dp"
+                android:textStyle="bold"
+                app:cornerRadius="30dp"
+                app:strokeColor="@color/colore_item_asta_ribasso"
+                app:strokeWidth="2dp"
                 />
 
 
             <TextView
                 android:id="@+id/textViewVenditoreSchermataAstaRibasso"
                 android:layout_width="wrap_content"
-                android:layout_height="50dp"
+                android:layout_height="wrap_content"
                 android:layout_marginBottom="-1dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
                 android:drawableLeft="@drawable/ic_profilo"
                 android:gravity="center"
-                android:text="Nome venditore"
+                android:text="Email venditore"
                 android:textColor="@color/colore_secondario"
-                android:textSize="25dp"
+                android:textSize="20dp"
                 android:textStyle="bold"
                 />
 

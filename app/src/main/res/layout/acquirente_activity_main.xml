@@ -21,6 +21,7 @@
         android:id="@+id/acquirente_nav_view"
         android:layout_width="match_parent"
         android:layout_height="70dp"
+        app:itemActiveIndicatorStyle="@color/colore_base"
         android:background="@drawable/bottom_nav_design"
         app:itemIconTint="@color/bottom_navigation_colors"
         app:itemTextColor="@color/bottom_navigation_colors"

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+
+    <item
+        android:bottom="-4dp">
+        <shape>
+            <solid android:color="@color/edit_text_color" />
+            <corners
+                android:topLeftRadius="30dp"
+                android:topRightRadius="30dp" />
+            <stroke
+                android:width="2dp"
+                android:color="@color/colore_item_asta_inversa" />
+        </shape>
+    </item>
+
+</layer-list>

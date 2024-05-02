@@ -78,7 +78,7 @@ public class FragmentRicercaAsta extends Fragment {
 
         // Aggiungi un decorator predefinito per ridurre lo spazio tra le aste, superfluo
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(getContext(), gridLayoutManager.getOrientation());
-        recyclerViewAsteRecuperate.addItemDecoration(dividerItemDecoration);
+        //recyclerViewAsteRecuperate.addItemDecoration(dividerItemDecoration);
 
         //bisogna aggiungere il setOnItemClickListener per ogni setAdapter di ogni recycler view specificando cosa fare per ogni tipo di asta clickato
         asteRecuperate.setOnItemClickListener(new View.OnClickListener() {

@@ -68,7 +68,6 @@ public class PopUpNuovaOfferta extends DialogPersonalizzato implements View.OnCl
         prezzoVecchio = textviewPrezzoAttuale.getText().toString();
         linear_layout_prezzo_attuale_popup_nuova_offerta = findViewById(R.id.linear_layout_prezzo_attuale_popup_nuova_offerta);
         linear_layout_rialzo_minimo_popup_nuova_offerta = findViewById(R.id.linear_layout_rialzo_minimo_popup_nuova_offerta);
-        view_popup_nuova_offerta = findViewById(R.id.view_popup_nuova_offerta);
         TextViewPrezzoRialzoMinimo = findViewById(R.id.TextViewPrezzoRialzoMinimo);
 
 
@@ -122,7 +121,7 @@ public class PopUpNuovaOfferta extends DialogPersonalizzato implements View.OnCl
     }
     public void setImpostazioniPerAstainversa(){
         linear_layout_rialzo_minimo_popup_nuova_offerta.setVisibility(View.GONE);
-        view_popup_nuova_offerta.setVisibility(View.GONE);
+        //view_popup_nuova_offerta.setVisibility(View.GONE);
     }
     public void osservamessaggioErroreOfferta(){
         popUpNuovaOffertaViewModel.messaggioErroreOfferta.observe(fragmentActivity, (messaggio) -> {

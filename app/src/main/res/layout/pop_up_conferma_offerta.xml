@@ -24,11 +24,9 @@
         android:layout_marginTop="11dp"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="20dp"
-        android:background="@drawable/edit_text_tutti_lati_grigi_rounded"
         android:gravity="center"
         android:layout_gravity="center"
-       android:textSize="25dp"
-        android:drawableEnd="@drawable/ic_euro"
+       android:textSize="35dp"
         android:textStyle="bold"
         android:text="100"
         android:textColor="@color/colore_secondario"
@@ -37,9 +35,7 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="5dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
+        android:layout_margin="20dp"
         android:orientation="horizontal"
         android:layout_gravity="center">
         <com.google.android.material.button.MaterialButton
@@ -49,7 +45,7 @@
             android:layout_marginEnd="10dp"
             android:layout_gravity="start"
             app:strokeColor="#AAAAAA"
-            app:strokeWidth="2dp"
+            app:strokeWidth="1dp"
             android:backgroundTint="@color/colore_base"
             android:text="Annulla"
             android:textColor="@color/colore_secondario"

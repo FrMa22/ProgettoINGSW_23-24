@@ -90,7 +90,7 @@ public class FragmentCreaAstaInversa extends Fragment {
         osservaImmagineConvertita();
         osservaAstaCreata();
         osservaTornaIndietro();
-
+        osservaAstaCreataPopUp();
 
         bottoneAnnullaAstaInversa = view2.findViewById(R.id.bottoneAnnullaAstaInversa);
         bottoneConferma = view2.findViewById(R.id.bottoneConfermaAstaInversa);
@@ -212,6 +212,13 @@ public class FragmentCreaAstaInversa extends Fragment {
             if(valore){
                 PopUpAggiungiCategorieAsta popUpAggiungiCategorieAsta = new PopUpAggiungiCategorieAsta(getContext(), FragmentCreaAstaInversa.this,creaAstaInversaViewModel);
                 popUpAggiungiCategorieAsta.show();
+            }
+        });
+    }
+    public void osservaAstaCreataPopUp(){
+        creaAstaInversaViewModel.astaCreataPopUp.observe(getViewLifecycleOwner(), (testo) -> {
+            if(creaAstaInversaViewModel.checkAstaCreataPopUp()){
+                Toast.makeText(getContext(), testo, Toast.LENGTH_SHORT).show();
             }
         });
     }

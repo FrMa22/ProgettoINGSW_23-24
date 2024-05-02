@@ -143,9 +143,16 @@ public class VenditoreAstaInglese extends GestoreComuniImplementazioni {
         osservaCreaPopUpInformazioni();
         osservaImmagineConvertita();
         osservaTornaIndietro();
+        osservaAstaCreataPopUp();
 
     }
-
+    public void osservaAstaCreataPopUp(){
+        creaAstaIngleseViewModel.astaCreataPopUp.observe(VenditoreAstaInglese.this, (testo) -> {
+            if(creaAstaIngleseViewModel.checkAstaCreataPopUp()){
+                Toast.makeText(this, testo, Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
     public void osservaTornaIndietro(){
         creaAstaIngleseViewModel.tornaIndietro.observe(this , (valore)->{
             if(valore){
@@ -273,98 +280,6 @@ public class VenditoreAstaInglese extends GestoreComuniImplementazioni {
     }
 
 
-//    // Metodo per comprimere un'immagine Bitmap e convertirla in un array di byte
-//    private byte[] compressAndConvertToByteArray(Bitmap bitmap) {
-//        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-//        bitmap.compress(Bitmap.CompressFormat.JPEG, 50, outputStream); // Compressione JPEG con qualità del 50%
-//        return outputStream.toByteArray();
-//    }
-//
-//    private void displayImage(Uri uri) {
-//        try {
-//            InputStream inputStream = this.getContentResolver().openInputStream(uri);
-//            Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
-//
-//            // Controllo dell'orientamento dell'immagine e rotazione se necessario
-//            int orientation = getImageOrientation(uri);
-//            if (orientation != 0) {
-//                Matrix matrix = new Matrix();
-//                matrix.postRotate(orientation);
-//                bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
-//            }
-//
-//            // Ridimensiona l'immagine per adattarla alla dimensione desiderata
-//            int targetWidth = 500; // Imposta la larghezza desiderata
-//            int targetHeight = (int) (bitmap.getHeight() * (targetWidth / (double) bitmap.getWidth())); // Calcola l'altezza in base al rapporto
-//            Bitmap resizedBitmap = Bitmap.createScaledBitmap(bitmap, targetWidth, targetHeight, false);
-//
-//            // Comprimi l'immagine
-//            byte[] compressedImageBytes = compressAndConvertToByteArray(resizedBitmap);
-//
-//            // Imposta l'immagine ridimensionata nella ImageView
-//            immagineProdotto.setImageBitmap(resizedBitmap);
-//
-//            // Salva i byte compressi per l'invio
-//            img = compressedImageBytes;
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
-//
-//    // Metodo per ottenere l'orientamento dell'immagine dalla Uri
-//    private int getImageOrientation(Uri uri) {
-//        int orientation = ExifInterface.ORIENTATION_UNDEFINED;
-//        try {
-//            InputStream inputStream = this.getContentResolver().openInputStream(uri);
-//            ExifInterface exifInterface = new ExifInterface(inputStream);
-//            orientation = exifInterface.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_UNDEFINED);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        return getImageRotation(orientation);
-//    }
-//
-//    // Metodo per ottenere la rotazione in gradi in base all'orientamento
-//    private int getImageRotation(int orientation) {
-//        switch (orientation) {
-//            case ExifInterface.ORIENTATION_ROTATE_90:
-//                return 90;
-//            case ExifInterface.ORIENTATION_ROTATE_180:
-//                return 180;
-//            case ExifInterface.ORIENTATION_ROTATE_270:
-//                return 270;
-//            default:
-//                return 0;
-//        }
-//    }
-//    public void handlePopUp(ArrayList<String> switchTexts){
-//        this.listaCategorieScelte = switchTexts;
-//        // Iterare attraverso gli elementi di switchTexts e stamparli nel log
-//        for (String categoria : switchTexts) {
-//            Log.d("PopUpHandler", "Categoria: " + categoria);
-//        }
-//    }
-//    public void handleID(int id){
-//        this.idAsta = id;
-//        AstaIngleseDAO astaIngleseDAO = new AstaIngleseDAO(VenditoreAstaInglese.this);
-//        if(!listaCategorieScelte.isEmpty()){
-//            astaIngleseDAO.openConnection();
-//            Log.d("id recuperato è Venditore inglese : " , " id: " + idAsta);
-//            InsertAsta asta = new InsertAsta(idAsta,listaCategorieScelte);
-//            astaIngleseDAO.inserisciCategorieAstaInglese(asta);
-//            astaIngleseDAO.closeConnection();
-//
-//        }else{
-//            astaIngleseDAO.closeConnection();
-//        }
-//        Intent intent = new Intent(VenditoreAstaInglese.this, MainActivity.class);//test del login
-//        intent.putExtra("email", email);
-//        intent.putExtra("tipoUtente", "venditore");
-//        startActivity(intent);
-//        progressBarVenditoreAstaInglese.setVisibility(View.INVISIBLE);
-//        setAllClickable(relativeLayoutAstaInglese,true);
-//        Toast.makeText(this, "Asta creata con successo!", Toast.LENGTH_SHORT).show();
-//    }
 
 
 }

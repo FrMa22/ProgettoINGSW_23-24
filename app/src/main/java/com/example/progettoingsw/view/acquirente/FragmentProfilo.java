@@ -1,10 +1,15 @@
 package com.example.progettoingsw.view.acquirente;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -12,6 +17,7 @@ import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ListAdapter;
+import android.widget.PopupMenu;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -69,6 +75,7 @@ public class FragmentProfilo extends Fragment implements PopUpModificaCampiProfi
     String tipoUtente;
     private RelativeLayout relative_layout_fragment_profilo;
     public FragmentProfiloViewModel fragmentProfiloViewModel;
+    private ImageButton button_menu_profilo;
 
     public FragmentProfilo() {
     }
@@ -106,11 +113,25 @@ public class FragmentProfilo extends Fragment implements PopUpModificaCampiProfi
 
         osservaAcquirenteModelPresente();
         osservaVenditoreModelPresente();
+        osservaVenditoreRecuperato();
+        osservaAcquirenteRecuperato();
+
         osservaSocialAssenti();
+        osservaSocialVenditoreRecuperati();
+        osservaSocialAcquirenteRecuperati();
+
         osservaMessaggioErroreSocial();
         osservaMessaggioInfoToast();
+
         osservaModificaCampoProfilo();
         osservaCambiaPassword();
+
+        osservaApriLeMieAste();
+
+        osservaApriPopUpAggiungiSocial();
+        osservaApriPartecipazioneAste();
+
+
 
         fragmentProfiloViewModel.checkTipoUtente();
 
@@ -204,6 +225,60 @@ public class FragmentProfilo extends Fragment implements PopUpModificaCampiProfi
                 fragmentProfiloViewModel.setApriPopUpAggiungiSocial(true);
             }
         });
+
+        button_menu_profilo = view.findViewById(R.id.button_menu_profilo);
+        button_menu_profilo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Context wrapper = new ContextThemeWrapper(getContext(), R.style.AppTheme_Dark);
+                PopupMenu popupMenu = new PopupMenu(wrapper, view);
+
+                popupMenu.getMenuInflater().inflate(R.menu.menu_profilo, popupMenu.getMenu());
+
+                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem menuItem) {
+                        // Gestisci i clic sui singoli elementi del menu qui
+                        if(menuItem.getItemId()==R.id.action_le_mie_aste){
+                            Log.d("menu","le mie aste");
+                            button_le_mie_aste.performClick();
+                            return true;
+                        }else if(menuItem.getItemId()==R.id.action_aste_partecipi){
+                            Log.d("menu","aste a cui partecipi");
+                            button_partecipazione_aste.performClick();
+                            return true;
+                        }else if(menuItem.getItemId()==R.id.action_modifica_valori){
+                            Log.d("menu","modifica valori");
+                            button_modifica.performClick();
+                            return true;
+                        }else if(menuItem.getItemId()==R.id.action_log_out){
+                            Log.d("menu","log out");
+                            button_log_out.performClick();
+                            return true;
+                        }
+                        return false;
+                    }
+                });
+                enableImmersiveMode();
+                popupMenu.show();
+            }
+        });
+
+
+
+
+    }
+    protected void enableImmersiveMode() {
+        View decorView = getActivity().getWindow().getDecorView();
+        int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
+        decorView.setSystemUiVisibility(uiOptions);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_profilo, menu);
+        super.onCreateOptionsMenu(menu, inflater);
     }
 
     @Override
@@ -356,6 +431,7 @@ public class FragmentProfilo extends Fragment implements PopUpModificaCampiProfi
     public void osservaModificaCampoProfilo(){
         fragmentProfiloViewModel.modificaCampoProfilo.observe(getViewLifecycleOwner() , (valore) ->{
             if(valore){
+                Log.d("osserva","entro in modifica");
                 PopUpModificaCampiProfilo popUpModificaCampiProfilo = new PopUpModificaCampiProfilo(getContext(), FragmentProfilo.this, fragmentProfiloViewModel, FragmentProfilo.this);
                 popUpModificaCampiProfilo.show();
             }
@@ -374,11 +450,7 @@ public class FragmentProfilo extends Fragment implements PopUpModificaCampiProfi
             if (fragmentProfiloViewModel.getAcquirenteModelPresente()) {
                 Toast.makeText(getContext(), "Entrato come acquirente in fragment profilo.", Toast.LENGTH_SHORT).show();
                 //chiamate ai vari observer, tra cui quelli di cambiare schermata quindi pure per la gestione dei popup
-                osservaSocialAcquirenteRecuperati();
-                osservaAcquirenteRecuperato();//nel suo corpo ha un observer di un oggetto Acquirente Model che poi si usa per fare i vari get per un metodo che setta nella gui i valori
-                osservaApriPopUpAggiungiSocial();
-                osservaApriPartecipazioneAste();
-                osservaApriLeMieAste();
+
                 //in teoria deve fare qui la chiamata per trovare i social dal backend
                 fragmentProfiloViewModel.trovaSocialAcquirenteViewModel();//questa chiamata trova i social dal backend
 
@@ -400,6 +472,7 @@ public class FragmentProfilo extends Fragment implements PopUpModificaCampiProfi
     public void osservaApriLeMieAste() {
         fragmentProfiloViewModel.apriLeMieAste.observe(getViewLifecycleOwner(), (messaggio) -> {
             if (fragmentProfiloViewModel.getApriLeMieAste()) {
+                Log.d("osserva","entro in le mie aste");
                 //fa le cose che si farebbero premendo il pulsante apri le mie aste
                 Intent intent = new Intent(getContext(), LeMieAste.class);
                 startActivity(intent);
@@ -411,6 +484,7 @@ public class FragmentProfilo extends Fragment implements PopUpModificaCampiProfi
     public void osservaApriPartecipazioneAste() {
         fragmentProfiloViewModel.apriPartecipazioneAste.observe(getViewLifecycleOwner(), (messaggio) -> {
             if (fragmentProfiloViewModel.getApriPartecipazioneAste()) {
+                Log.d("osserva","entro in aste a cui partecipi");
                 //fa le cose che si farebbero premendo il pulsante apri partecipazioni aste
                 Intent intent = new Intent(getContext(), SchermataPartecipazioneAste.class);
                 startActivity(intent);
@@ -527,11 +601,7 @@ public class FragmentProfilo extends Fragment implements PopUpModificaCampiProfi
                 System.out.println("venditore esiste");
                 Toast.makeText(getContext(), "Entrato come venditore in fragment profilo.", Toast.LENGTH_SHORT).show();
                 //chiamate ai vari observer, tra cui quelli di cambiare schermata quindi pure per la gestione dei popup
-                osservaSocialVenditoreRecuperati();
-                osservaVenditoreRecuperato();//nel suo corpo ha un observer di un oggetto Acquirente Model che poi si usa per fare i vari get per un metodo che setta nella gui i valori
-                osservaApriPopUpAggiungiSocial();
-                osservaApriLeMieAste();
-                osservaApriPartecipazioneAste();
+
                 //in teoria deve fare qui la chiamata per trovare i social dal backend
                 fragmentProfiloViewModel.trovaSocialVenditoreViewModel();//questa chiamata trova i social dal backend
 

@@ -4,7 +4,7 @@
     android:id="@+id/interessi_registrazione_relativelayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/colore_base"
     android:orientation="vertical"
     tools:context=".view.RegistrazioneCategorie">
 
@@ -12,22 +12,16 @@
         android:id="@+id/textViewRaccontaciDeiTuoiInteressi"
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:background="@color/colore_base"
+        android:background="@drawable/design_toolbar"
         android:gravity="center"
-        android:text="Raccontaci dei tuoi interessi selezionando tra le seguenti categorie"
-        android:textSize="20dp"
-        android:textStyle="bold"
-        android:textColor="@color/colore_secondario"/>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:background="@color/colore_secondario"
-        android:layout_gravity="center"
-        android:layout_marginTop="-1dp"/>
+        android:text="Spuntare le categorie in base ai propri interessi"
+        android:textSize="25dp"
+        android:textColor="@color/colore_secondario" />
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
+        android:layout_marginBottom="5dp"
         android:background="@color/colore_base">
 
         <ScrollView
@@ -53,14 +47,16 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:background="@color/colore_secondario"
+        android:layout_height="0.5dp"
+        android:background="@color/colore_bordo"
+        android:elevation="1dp"
         android:layout_gravity="center"
         android:layout_marginTop="-1dp"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
         android:background="@color/colore_base"
         >
 
@@ -69,6 +65,7 @@
             android:id="@+id/bottoneSaltaRegistrazioneCategorie"
             android:layout_width="150dp"
             android:layout_height="70dp"
+            android:layout_marginBottom="10dp"
             android:layout_marginStart="20dp"
             android:layout_centerVertical="true"
             android:backgroundTint="@color/colore_secondario"
@@ -85,6 +82,7 @@
             android:layout_width="150dp"
             android:layout_height="70dp"
             android:layout_marginEnd="20dp"
+            android:layout_marginBottom="10dp"
             android:layout_centerVertical="true"
             android:backgroundTint="@color/colore_secondario"
             android:textColor="@color/colore_base"

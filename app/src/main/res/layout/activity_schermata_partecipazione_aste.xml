@@ -27,9 +27,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Aste a cui si sta partecipando"
+            android:text="Aste alle quali partecipi"
             android:textColor="@color/colore_secondario"
-            android:textSize="30dp"
+            android:textSize="28dp"
             android:textStyle="bold" />
 
 

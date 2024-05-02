@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-
 <RelativeLayout
     android:id="@+id/relative_layout_home_acquirente" xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:backgroundTint="@color/colore_base"
+    android:background="@color/colore_base"
     tools:context=".view.acquirente.FragmentHome">
 
 
@@ -34,15 +32,14 @@
             android:layout_marginLeft="20dp"
             android:text="Home"
             android:textColor="@color/colore_secondario"
-            android:textSize="50dp"
+            android:textSize="40dp"
             android:textStyle="bold" />
 
         <ImageButton
             android:id="@+id/openPreferiti"
-            android:layout_width="50dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
-            android:layout_marginEnd="10dp"
             android:backgroundTint="@android:color/transparent"
             android:contentDescription="Clicca per aprire i preferiti."
             android:drawableTint="@android:color/transparent"
@@ -56,25 +53,26 @@
 
             <ImageButton
                 android:id="@+id/openNotifiche"
-                android:layout_width="50dp"
-                android:layout_height="60dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:backgroundTint="@android:color/transparent"
                 android:contentDescription="Clicca per aprire le notifiche."
-                android:src="@drawable/ic_notifiche" />
+                android:src="@drawable/ic_notifiche"
+                android:layout_marginEnd="-20dp"/>
 
             <TextView
                 android:id="@+id/iconaNotifiche"
                 android:layout_width="15dp"
                 android:layout_height="15dp"
-                android:layout_marginStart="30dp"
+                android:layout_marginStart="35dp"
                 android:layout_marginTop="3dp"
                 android:background="@drawable/numero_notifiche_background"
                 android:gravity="center"
                 android:text="1"
-                android:textColor="@color/colore_base"
+                android:textColor="@color/white"
                 android:textSize="11dp"
                 android:textStyle="bold"
-                android:visibility="gone" />
+                android:visibility="visible" />
         </FrameLayout>
 
     </androidx.appcompat.widget.Toolbar>
@@ -94,7 +92,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colore_base"
+            android:backgroundTint="@color/colore_hint"
             android:orientation="vertical">
 
 
@@ -102,15 +100,15 @@
                 android:id="@+id/text_view_aste_consigliate_home"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
+                android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="30dp"
+                android:layout_marginBottom="10dp"
                 android:drawablePadding="30dp"
                 android:gravity="center_vertical"
                 android:text="Consigliati in base alle tue categorie"
                 android:textColor="@color/colore_secondario"
-                android:textSize="28dp"
-                android:textStyle="bold" />
+                android:textSize="25dp" />
 
             <TextView
                 android:id="@+id/text_view_nessuna_asta_in_categorie"
@@ -127,7 +125,7 @@
                 android:id="@+id/recycler_view_aste_consigliate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
+                android:layout_marginStart="10dp"
                 android:layout_marginTop="5dp" />
 
 
@@ -136,12 +134,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:layout_marginTop="30dp"
+                android:layout_marginBottom="10dp"
                 android:drawablePadding="30dp"
                 android:gravity="center_vertical"
                 android:text="Offerte in scadenza"
                 android:textColor="@color/colore_secondario"
-                android:textSize="28dp"
-                android:textStyle="bold" />
+                android:textSize="25dp"/>
 
             <TextView
                 android:id="@+id/text_view_nessuna_asta_in_scadenza"
@@ -165,12 +163,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:layout_marginTop="30dp"
+                android:layout_marginBottom="10dp"
                 android:drawablePadding="30dp"
                 android:gravity="center_vertical"
                 android:text="Nuove proposte"
                 android:textColor="@color/colore_secondario"
-                android:textSize="28dp"
-                android:textStyle="bold" />
+                android:textSize="25dp" />
 
             <TextView
                 android:id="@+id/text_view_nessuna_asta_nuova"

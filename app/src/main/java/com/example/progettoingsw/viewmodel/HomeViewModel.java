@@ -59,6 +59,7 @@ public class HomeViewModel extends ViewModel {
     public MutableLiveData<Boolean> entraInSchermataAstaInglese = new MutableLiveData<>(false);
     public MutableLiveData<Boolean> entraInSchermataAstaRibasso = new MutableLiveData<>(false);
     public MutableLiveData<Boolean> entraInSchermataAstaInversa = new MutableLiveData<>(false);
+    public MutableLiveData<Boolean> categorieVuote = new MutableLiveData<>(false);
 
     public MutableLiveData<Integer> numeroNotifiche = new MutableLiveData<>(0);
 
@@ -105,6 +106,20 @@ public class HomeViewModel extends ViewModel {
                     setNumeroNotifiche(result);
                 }
             });
+        }
+    }
+    public void setCategorieVuote(Boolean b){
+        this.categorieVuote.setValue(b);
+    }
+    public void checkCategorie(){
+        if(repository.getAcquirenteModel()!=null){
+            if(getListaCategorieAcquirente()==null || getListaCategorieAcquirente().isEmpty()){
+                setCategorieVuote(true);
+            }
+        }else{
+            if(getListaCategorieVenditore() == null || getListaCategorieVenditore().isEmpty()){
+                setCategorieVuote(true);
+            }
         }
     }
     public void trovaEImpostaAste(){

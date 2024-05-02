@@ -117,7 +117,7 @@ public class SchermataAstaRibasso extends GestoreComuniImplementazioni {
                 MaterialButton bottoneAnnullaPopuP=(MaterialButton) popUpConfermaOffertaDialog.findViewById(R.id.bottoneAnnullaPopUpAsta);;
                 MaterialButton bottoneConfermaPopUP=(MaterialButton) popUpConfermaOffertaDialog.findViewById(R.id.bottoneConfermaPopUpAsta);;
                 TextView offertaAttuale= (TextView) popUpConfermaOffertaDialog.findViewById(R.id.TextViewOffertaAsta);
-                offertaAttuale.setText(textViewOffertaAttuale.getText().toString());
+                offertaAttuale.setText("€ " + textViewOffertaAttuale.getText().toString());
                 bottoneAnnullaPopuP.setOnClickListener(new View.OnClickListener(){
                     @Override
                     public void onClick(View v) {

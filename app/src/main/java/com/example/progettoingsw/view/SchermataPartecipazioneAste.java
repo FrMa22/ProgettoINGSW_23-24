@@ -59,7 +59,7 @@ public class SchermataPartecipazioneAste extends AppCompatActivity {
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2, RecyclerView.VERTICAL, false);
         recyclerView_schermata_partecipazione_aste.setLayoutManager(gridLayoutManager);
         DividerItemDecoration dividerItemDecorationAttive = new DividerItemDecoration(this, gridLayoutManager.getOrientation());
-        recyclerView_schermata_partecipazione_aste.addItemDecoration(dividerItemDecorationAttive);
+        //recyclerView_schermata_partecipazione_aste.addItemDecoration(dividerItemDecorationAttive);
         astaAdapter.setOnItemClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
