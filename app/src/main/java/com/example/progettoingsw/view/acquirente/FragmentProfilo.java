@@ -327,20 +327,10 @@ public class FragmentProfilo extends Fragment implements PopUpModificaCampiProfi
 
     public void updateSocialNames(List<String> socialNames, List<String> socialLinks) {
         try {
-            System.out.println("in update Social names");
+
             gridView = view.findViewById(R.id.gridview_social_activity_profilo);
             if (socialNames != null && !socialNames.isEmpty() && socialLinks != null && !socialLinks.isEmpty()) {
                 // Aggiorna l'interfaccia utente con i nomi dei social
-                System.out.println("in update social names con nomi e link non nulli e non vuoti ");
-
-                System.out.println("Stampa a schermo dei nomi dei social");
-                for (String nome : socialNames) {
-                    System.out.println(nome);
-                }
-                System.out.println("Stampa a schermo dei link dei social");
-                for (String link : socialLinks) {
-                    System.out.println(link);
-                }
 
                 gridView.setVisibility(View.VISIBLE);
                 text_view_nessun_social.setVisibility(View.GONE);
@@ -351,10 +341,6 @@ public class FragmentProfilo extends Fragment implements PopUpModificaCampiProfi
                 adapterSocial.setData(socialNames, socialLinks);
                 setGridViewHeightBasedOnChildren(gridView);
 
-                // Aggiungi stampe nel log per verificare che i dati siano correttamente passati
-                for (int i = 0; i < socialNames.size(); i++) {
-                    Log.d("FragmentProfilo", "Nome Social: " + socialNames.get(i) + ", Link Social: " + socialLinks.get(i));
-                }
             } else {
                 text_view_nessun_social.setVisibility(View.VISIBLE);
                 gridView.setVisibility(View.GONE);
@@ -363,8 +349,7 @@ public class FragmentProfilo extends Fragment implements PopUpModificaCampiProfi
                 adapterSocial = new CustomAdapter_gridview_profilo_social(getContext());
                 gridView.setAdapter(adapterSocial);
 
-                // Aggiungi stampe nel log per verificare che i dati siano correttamente passati
-                Log.d("FragmentProfilo", "Nessun social disponibile");
+
 
                 // Imposta l'altezza della GridView a 50dp
                 gridView.setMinimumHeight((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 50, getResources().getDisplayMetrics()));
@@ -372,7 +357,7 @@ public class FragmentProfilo extends Fragment implements PopUpModificaCampiProfi
             }
             setAllClickable(relative_layout_fragment_profilo, true);
             //progressBarAcquirenteFragmentProfilo.setVisibility(View.INVISIBLE);
-            Log.d("update social names", "sblocco navigation bar");
+
             setNavigationView(true);
 
         } catch (IllegalStateException e) {
@@ -448,7 +433,6 @@ public class FragmentProfilo extends Fragment implements PopUpModificaCampiProfi
     public void osservaAcquirenteModelPresente() {
         fragmentProfiloViewModel.acquirenteModelPresente.observe(getViewLifecycleOwner(), (messaggio) -> {
             if (fragmentProfiloViewModel.getAcquirenteModelPresente()) {
-                Toast.makeText(getContext(), "Entrato come acquirente in fragment profilo.", Toast.LENGTH_SHORT).show();
                 //chiamate ai vari observer, tra cui quelli di cambiare schermata quindi pure per la gestione dei popup
 
                 //in teoria deve fare qui la chiamata per trovare i social dal backend
@@ -496,7 +480,6 @@ public class FragmentProfilo extends Fragment implements PopUpModificaCampiProfi
     public void osservaSocialAcquirentePresenti() {
         fragmentProfiloViewModel.socialAcquirentePresenti.observe(getViewLifecycleOwner(), (messaggio) -> {
             if (messaggio) {//vede se sono presenti,li recupera,e poi deve aggiornare la gui
-                System.out.println("in osserva social acquirente presenti");
                 osservaSocialAcquirenteRecuperati();
                 fragmentProfiloViewModel.recuperaSocialAcquirente();
             }
@@ -508,7 +491,6 @@ public class FragmentProfilo extends Fragment implements PopUpModificaCampiProfi
     public void osservaSocialAcquirenteRecuperati() {
         fragmentProfiloViewModel.socialAcquirenteRecuperati.observe(getViewLifecycleOwner(), (lista) -> {
             if (lista != null && !lista.isEmpty()) {
-                System.out.println("in osserva social acquirente recuperati");
                 //lista social quindi estrarre nomi e link poi fare chiamata a update social names per mostrarli graficamente
                 List<String> links = new ArrayList<>();
                 List<String> nomi = new ArrayList<>();
@@ -526,7 +508,6 @@ public class FragmentProfilo extends Fragment implements PopUpModificaCampiProfi
     public void osservaSocialVenditoreRecuperati() {
         fragmentProfiloViewModel.socialVenditoreRecuperati.observe(getViewLifecycleOwner(), (lista) -> {
             if (lista != null && !lista.isEmpty()) {
-                System.out.println("in osserva social venditore recuperati");
                 //lista social quindi estrarre nomi e link poi fare chiamata a update social names per mostrarli graficamente
                 List<String> links = new ArrayList<>();
                 List<String> nomi = new ArrayList<>();
@@ -560,7 +541,6 @@ public class FragmentProfilo extends Fragment implements PopUpModificaCampiProfi
     public void osservaSocialVenditorePresenti() {
         fragmentProfiloViewModel.socialVenditorePresenti.observe(getViewLifecycleOwner(), (messaggio) -> {
             if (messaggio) {//vede se sono presenti,li recupera,e poi deve aggiornare la gui
-                System.out.println("in osserva social venditore presenti");
                 osservaSocialVenditoreRecuperati();
                 fragmentProfiloViewModel.recuperaSocialVenditore();
             }
@@ -588,7 +568,6 @@ public class FragmentProfilo extends Fragment implements PopUpModificaCampiProfi
     public void osservaSocialAssenti() {
         fragmentProfiloViewModel.socialAssenti.observe(getViewLifecycleOwner(), (valore) -> {
             if (valore) {
-                Log.d("osservaSocialAssenti", "entrato");
                 gridView.setVisibility(View.GONE);
                 text_view_nessun_social.setVisibility(View.VISIBLE);
             }
@@ -598,8 +577,6 @@ public class FragmentProfilo extends Fragment implements PopUpModificaCampiProfi
     public void osservaVenditoreModelPresente() {
         fragmentProfiloViewModel.venditoreModelPresente.observe(getViewLifecycleOwner(), (messaggio) -> {
             if (fragmentProfiloViewModel.getVenditoreModelPresente()) {
-                System.out.println("venditore esiste");
-                Toast.makeText(getContext(), "Entrato come venditore in fragment profilo.", Toast.LENGTH_SHORT).show();
                 //chiamate ai vari observer, tra cui quelli di cambiare schermata quindi pure per la gestione dei popup
 
                 //in teoria deve fare qui la chiamata per trovare i social dal backend
@@ -612,35 +589,23 @@ public class FragmentProfilo extends Fragment implements PopUpModificaCampiProfi
     }
 
 
-//    public void osservaMessaggioErroreEmail() {
-//        fragmentProfiloViewModel.messaggioSocialUtenteNonTrovato.observe(this, (messaggio) -> {
-//            if (fragmentProfiloViewModel.isNuovoMessaggioErroreEmail()) {
-//                messaggioErroreMail(messaggio);
-//                //loginViewModel.cancellaMessaggioLogin();
-//            }
-//        });
-//    }
+
 
 
     @Override
     public void onPopupDismissed() {
-        System.out.println("In on popupDismissed");
         fragmentProfiloViewModel.checkTipoUtente();
-        // schermataAstaIngleseViewModel.checkUltimaOfferta();
-        //  schermataAstaIngleseViewModel.getAstaData();
     }
 
 
     @Override
     public void onPopupAggiungiSocialDismissed() {
-        System.out.println("In on popupAggiungiSocialDismissed");
         fragmentProfiloViewModel.trovaSocialAcquirenteViewModel();
         fragmentProfiloViewModel.trovaSocialVenditoreViewModel();
     }
 
     @Override
     public void onPopupModificaSocialDismissed() {
-        System.out.println("In on popupModificaSocialDismissed");
         fragmentProfiloViewModel.trovaSocialAcquirenteViewModel();
         fragmentProfiloViewModel.trovaSocialVenditoreViewModel();
     }

@@ -63,9 +63,7 @@ public class PopUpModificaCampiProfilo extends DialogPersonalizzato implements V
         edit_text_modifica_bio = findViewById(R.id.edit_text_modifica_bio);
         edit_text_modifica_paese = findViewById(R.id.edit_text_modifica_paese);
 
-//        popUpModificaCampiProfiloDAO = new PopUpModificaCampiProfiloDAO(this, email, tipoUtente);
-//        popUpModificaCampiProfiloDAO.openConnection();
-//        popUpModificaCampiProfiloDAO.getFields();
+
 
         bottoneAnnullaModifica = findViewById(R.id.bottoneAnnullaModifica);
         bottoneAnnullaModifica.setOnClickListener(this);
@@ -83,11 +81,9 @@ public class PopUpModificaCampiProfilo extends DialogPersonalizzato implements V
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.bottoneAnnullaModifica) {
-            Toast.makeText(getContext(), "Annulla", Toast.LENGTH_SHORT).show();
             fragmentProfiloViewModel.resetErroriModificaCampoProfilo();
             dismiss();
         } else if (v.getId() == R.id.bottoneConfermaModifica) {
-            Toast.makeText(getContext(), "Conferma", Toast.LENGTH_SHORT).show();
             String nome = edit_text_modifica_nome.getText().toString();
             String cognome = edit_text_modifica_cognome.getText().toString();
             String sitoweb = edit_text_modifica_sitoweb.getText().toString();

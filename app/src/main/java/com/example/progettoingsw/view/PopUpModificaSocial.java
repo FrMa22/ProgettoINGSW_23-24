@@ -45,7 +45,6 @@ public class PopUpModificaSocial extends DialogPersonalizzato implements View.On
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.pop_up_modifica_social);
-        System.out.println("interno al popUpModificaSocial");
 
         osservaMessaggioErroreLinkNuovo();
         osservaMessaggioErroreNomeNuovo();
@@ -54,11 +53,8 @@ public class PopUpModificaSocial extends DialogPersonalizzato implements View.On
 
 
         edit_text_nome_social = findViewById(R.id.edit_text_nome_social);
-       // edit_text_nome_social.setText(nome_vecchio);
         edit_text_link_social = findViewById(R.id.edit_text_link_social);
-       // edit_text_link_social.setText(link_vecchio);
 
-        //popUpModificaSocialDAO = new PopUpModificaSocialDAO(this,email,tipoUtente);
 
         bottoneAnnullaModifica = findViewById(R.id.bottoneAnnullaModifica);
         bottoneAnnullaModifica.setOnClickListener(this);
@@ -78,15 +74,11 @@ public class PopUpModificaSocial extends DialogPersonalizzato implements View.On
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.bottoneAnnullaModifica) {
-            Toast.makeText(getContext(), "Annulla", Toast.LENGTH_SHORT).show();
             dismiss();
         } else if (v.getId() == R.id.bottoneConfermaModifica) {
-            Toast.makeText(getContext(), "Conferma", Toast.LENGTH_SHORT).show();
             String nome = edit_text_nome_social.getText().toString();
             String link = edit_text_link_social.getText().toString();
-            System.out.println("dopo aver premuto conferma e prima dei controlli con nome:"+ nome + " e link: "+link);
-                System.out.println("prima della chiamata al backend");
-                 fragmentProfiloViewModel.aggiornaSocialViewModel(nome_vecchio,link_vecchio,nome,link);
+            fragmentProfiloViewModel.aggiornaSocialViewModel(nome_vecchio,link_vecchio,nome,link);
 
         }else if(v.getId() == R.id.bottoneEliminaSocial){
             fragmentProfiloViewModel.eliminaSocialViewModel(nome_vecchio,link_vecchio);
@@ -131,7 +123,6 @@ public class PopUpModificaSocial extends DialogPersonalizzato implements View.On
         fragmentProfiloViewModel.messaggioErroreNomeNuovo.observe(fragmentProfilo, (messaggio) -> {
             if (fragmentProfiloViewModel.isNuovoMessaggioErroreNomeNuovo()) {
                 messaggioErroreNomeNuovo(messaggio);
-                //loginViewModel.cancellaMessaggioLogin();
             }
         });
     }
@@ -144,7 +135,6 @@ public class PopUpModificaSocial extends DialogPersonalizzato implements View.On
         fragmentProfiloViewModel.messaggioErroreLinkNuovo.observe(fragmentProfilo, (messaggio) -> {
             if (fragmentProfiloViewModel.isNuovoMessaggioErroreLinkNuovo()) {
                 messaggioErroreLinkNuovo(messaggio);
-                //loginViewModel.cancellaMessaggioLogin();
             }
         });
     }
@@ -152,8 +142,6 @@ public class PopUpModificaSocial extends DialogPersonalizzato implements View.On
     public void osservaIsSocialCambiato(){
         fragmentProfiloViewModel.isSocialCambiato.observe(fragmentProfilo, (messaggio) -> {
             if(fragmentProfiloViewModel.getIsSocialCambiato()){
-                Log.d("osservaIsSocialCambiato","prima di dismiss");
-                //dismiss();
                 dismissModificaSocialPopup();
             }else{
                 Toast.makeText(getContext(), "Errore nei dati del social", Toast.LENGTH_SHORT).show();

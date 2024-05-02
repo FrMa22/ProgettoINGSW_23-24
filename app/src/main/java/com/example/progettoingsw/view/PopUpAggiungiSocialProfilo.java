@@ -80,7 +80,6 @@ public class PopUpAggiungiSocialProfilo extends DialogPersonalizzato implements 
 
     @Override
     public void onBackPressed(){
-        Log.d("onBackPressed","onBackPressed");
             bottoneChiudiRegistrazioneSocial.performClick();
     }
     private void confermaRegistrazioneSocialProfilo() {
@@ -138,7 +137,6 @@ public class PopUpAggiungiSocialProfilo extends DialogPersonalizzato implements 
     public void osservaIsSocialAggiunto(){
         fragmentProfiloViewModel.isSocialAggiunto.observe(fragmentProfilo, (messaggio) -> {
             if(fragmentProfiloViewModel.getIsSocialAggiunto()){
-                Log.d("osservaIsSocialAggiunto","prima di dismiss");
                 //dismiss();
                 fragmentProfiloViewModel.resetErroriSocialAggiunti();
                 dismissAggiungiSocialPopup();

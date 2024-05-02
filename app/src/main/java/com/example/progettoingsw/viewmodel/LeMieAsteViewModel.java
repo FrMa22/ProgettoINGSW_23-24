@@ -76,29 +76,29 @@ public class LeMieAsteViewModel extends ViewModel {
                 Log.d("trovaAsteAperteViewModel","utente attuale");
                 if (containsAcquirente()) {
                     String email = getAcquirenteEmail();
-                    trovaAsteInglesiAperte(email);
-                    trovaAsteRibassoAperte(email);
+//                    trovaAsteInglesiAperte(email);
+//                    trovaAsteRibassoAperte(email);
                     trovaAsteInverseAperte(email);
 
                 } else if (containsVenditore()) {
                     String email = getVenditoreEmail();
                     trovaAsteInglesiAperte(email);
                     trovaAsteRibassoAperte(email);
-                    trovaAsteInverseAperte(email);
+//                    trovaAsteInverseAperte(email);
 
                 }
             }else{
                 Log.d("trovaAsteAperteViewModel","utente da asta");
                 if(repository.getAcquirenteEmailDaAsta()!=null){
                     String email = repository.getAcquirenteEmailDaAsta();
-                    trovaAsteInglesiAperte(email);
-                    trovaAsteRibassoAperte(email);
+//                    trovaAsteInglesiAperte(email);
+//                    trovaAsteRibassoAperte(email);
                     trovaAsteInverseAperte(email);
                 }else if(repository.getVenditoreEmailDaAsta()!=null){
                     String email = repository.getVenditoreEmailDaAsta();
                     trovaAsteInglesiAperte(email);
                     trovaAsteRibassoAperte(email);
-                    trovaAsteInverseAperte(email);
+//                    trovaAsteInverseAperte(email);
                 }
             }
 
@@ -127,28 +127,28 @@ public class LeMieAsteViewModel extends ViewModel {
                 Log.d("trovaAsteAperteViewModel", "utente attuale");
                 if (containsAcquirente()) {
                     String email = getAcquirenteEmail();
-                    trovaAsteInglesiChiuse(email);
-                    trovaAsteRibassoChiuse(email);
+//                    trovaAsteInglesiChiuse(email);
+//                    trovaAsteRibassoChiuse(email);
                     trovaAsteInverseChiuse(email);
 
                 } else if (containsVenditore()) {
                     String email = getVenditoreEmail();
                     trovaAsteInglesiChiuse(email);
                     trovaAsteRibassoChiuse(email);
-                    trovaAsteInverseChiuse(email);
+//                    trovaAsteInverseChiuse(email);
                 }
             }else{
                 Log.d("trovaAsteAperteViewModel","utente da asta");
                 if(repository.getAcquirenteEmailDaAsta()!=null){
                     String email = repository.getAcquirenteEmailDaAsta();
-                    trovaAsteInglesiChiuse(email);
-                    trovaAsteRibassoChiuse(email);
+//                    trovaAsteInglesiChiuse(email);
+//                    trovaAsteRibassoChiuse(email);
                     trovaAsteInverseChiuse(email);
                 }else if(repository.getVenditoreEmailDaAsta()!=null){
                     String email = repository.getVenditoreEmailDaAsta();
                     trovaAsteInglesiChiuse(email);
                     trovaAsteRibassoChiuse(email);
-                    trovaAsteInverseChiuse(email);
+//                    trovaAsteInverseChiuse(email);
                 }
             }
 
@@ -170,21 +170,41 @@ public class LeMieAsteViewModel extends ViewModel {
 //    }
 
 
-    private void checkAndMergeAsteAperte() {
+    private void checkAndMergeAsteVenditoreAperte() {
         // Controlla se tutte e tre le ricerche sono completate
-        if (isAsteInglesiRecuperateAperte && isAsteRibassoRecuperateAperte && isAsteInverseRecuperateAperte) {
+        if (isAsteInglesiRecuperateAperte && isAsteRibassoRecuperateAperte) {
             System.out.println("tutte le ricerche sono finite");
             mergeAsteAperteTrovate();
         }
     }
 
-    private void checkAndMergeAsteChiuse() {
+
+    private void checkAndMergeAsteAcquirenteAperte() {
         // Controlla se tutte e tre le ricerche sono completate
-        if (isAsteInglesiRecuperateChiuse && isAsteRibassoRecuperateChiuse && isAsteInverseRecuperateChiuse) {
+        if (isAsteInverseRecuperateAperte) {
+            System.out.println("tutte le ricerche sono finite");
+            mergeAsteAperteTrovate();
+        }
+    }
+
+
+
+    private void checkAndMergeAsteVenditoreChiuse() {
+        // Controlla se tutte e tre le ricerche sono completate
+        if (isAsteInglesiRecuperateChiuse && isAsteRibassoRecuperateChiuse) {
             System.out.println("tutte le ricerche sono finite");
             mergeAsteChiuseTrovate();
         }
     }
+
+    private void checkAndMergeAsteAcquirenteChiuse() {
+        // Controlla se tutte e tre le ricerche sono completate
+        if (isAsteInverseRecuperateChiuse) {
+            System.out.println("tutte le ricerche sono finite");
+            mergeAsteChiuseTrovate();
+        }
+    }
+
 
 
     private void trovaAsteInglesiAperte(String email) {
@@ -197,7 +217,7 @@ public class LeMieAsteViewModel extends ViewModel {
                 setAsteInglesiAperteRecuperateList(asteInglesiAperteRecuperateList);//cosi poi la gui "acchiappa" le aste trovate
                 // Imposta il flag su true quando la ricerca è completata
                 isAsteInglesiRecuperateAperte = true;
-                checkAndMergeAsteAperte();
+                checkAndMergeAsteVenditoreAperte();
 
             }
         });
@@ -214,7 +234,7 @@ public class LeMieAsteViewModel extends ViewModel {
                 setAsteRibassoAperteRecuperateList(asteRibassoAperteRecuperateList);//cosi poi la gui "acchiappa" le aste trovate
                 // Imposta il flag su true quando la ricerca è completata
                 isAsteRibassoRecuperateAperte = true;
-                checkAndMergeAsteAperte();
+                checkAndMergeAsteVenditoreAperte();
             }
         });
     }
@@ -229,7 +249,7 @@ public class LeMieAsteViewModel extends ViewModel {
                 setAsteInverseAperteRecuperateList(asteInverseAperteRecuperateList);//cosi poi la gui "acchiappa" le aste trovate
                 // Imposta il flag su true quando la ricerca è completata
                 isAsteInverseRecuperateAperte = true;
-                checkAndMergeAsteAperte();
+                checkAndMergeAsteAcquirenteAperte();
             }
         });
     }
@@ -245,7 +265,7 @@ public class LeMieAsteViewModel extends ViewModel {
                 setAsteInglesiChiuseRecuperateList(asteInglesiChiuseRecuperateList);//cosi poi la gui "acchiappa" le aste trovate
                 // Imposta il flag su true quando la ricerca è completata
                 isAsteInglesiRecuperateChiuse = true;
-                checkAndMergeAsteChiuse();
+                checkAndMergeAsteVenditoreChiuse();
             }
         });
     }
@@ -261,7 +281,7 @@ public class LeMieAsteViewModel extends ViewModel {
                 setAsteRibassoChiuseRecuperateList(asteRibassoChiuseRecuperateList);//cosi poi la gui "acchiappa" le aste trovate
                 // Imposta il flag su true quando la ricerca è completata
                 isAsteRibassoRecuperateChiuse = true;
-                checkAndMergeAsteChiuse();
+                checkAndMergeAsteVenditoreChiuse();
             }
         });
     }
@@ -276,7 +296,7 @@ public class LeMieAsteViewModel extends ViewModel {
                 setAsteInverseChiuseRecuperateList(asteInverseChiuseRecuperateList);//cosi poi la gui "acchiappa" le aste trovate
                 // Imposta il flag su true quando la ricerca è completata
                 isAsteInverseRecuperateChiuse = true;
-                checkAndMergeAsteChiuse();
+                checkAndMergeAsteAcquirenteChiuse();
             }
         });
     }

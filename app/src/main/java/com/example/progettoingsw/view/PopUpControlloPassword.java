@@ -72,43 +72,20 @@ public class PopUpControlloPassword extends DialogPersonalizzato implements View
     }
     @Override
     public void onBackPressed(){
-        Log.d("onBackPressed","onBackPressed");
         bottoneAnnullaControlloPassword.performClick();
     }
 private void confermaPassword(){
     String password_vecchia = edit_text_vecchia_password.getText().toString().trim();
     String password_nuova = edit_text_password_nuova.getText().toString().trim();
-   // if (password_vecchia.length() > 100) {
-   //     edit_text_vecchia_password.setError("La password non può superare i 100 caratteri");
-   //     return; // Esce dal metodo onClick se la password supera i 100 caratteri
-   // }
-   // if (password_nuova.length() > 100) {
-   //     edit_text_password_nuova.setError("La password non può superare i 100 caratteri");
-   //     return; // Esce dal metodo onClick se la password supera i 100 caratteri
-   // }
-   // if (!password_nuova.isEmpty() && password_nuova.length() <= 100 &&
-      //      !password_vecchia.isEmpty() && password_vecchia.length() <= 100){
-//        progress_bar_pop_up_controllo_password.setVisibility(View.VISIBLE);
-//        popUpControlloPasswordDAO.openConnection();
-//        popUpControlloPasswordDAO.checkPassword(password_vecchia);
-        //controllo password vecchia=quella del repository + chiamata al backend
-
-                    //chiamata al backend
-                    fragmentProfiloViewModel.aggiornaPasswordViewModel(password_vecchia,password_nuova);
-    //                dismiss();
-
-    //}
-
+    fragmentProfiloViewModel.aggiornaPasswordViewModel(password_vecchia,password_nuova);
 }
     public void handleResultPassword(Boolean result){
         if(result){
             //sostituzione in db
-            Log.d("handleResultPassword", "result è positivo: password corretta");
             popUpControlloPasswordDAO.updatePassword( edit_text_password_nuova.getText().toString().trim());
         }else{
             Toast.makeText(getContext(), "Password non corretta, riprovare.", Toast.LENGTH_SHORT).show();
             progress_bar_pop_up_controllo_password.setVisibility(View.INVISIBLE);
-            Log.d("handleResultPassword", "result è negativo: password non corretta");
         }
 
     }
@@ -131,13 +108,11 @@ private void confermaPassword(){
 
 
     public void messaggioErrorePasswordNuova(String messaggio){
-        Log.d("messaggioErrorePasswordNuova","setto : " + messaggio);
         edit_text_password_nuova.setError(messaggio);
     }
     public void osservaMessaggioErrorePasswordNuova() {
         fragmentProfiloViewModel.messaggioErrorePasswordNuova.observe(fragmentProfilo, (messaggio) -> {
             if (fragmentProfiloViewModel.isNuovoMessaggioErrorePasswordNuova()) {
-                Log.d("osservaMessaggioErrorePasswordNuova","nel'if");
                 messaggioErrorePasswordNuova(messaggio);
                 //loginViewModel.cancellaMessaggioLogin();
             }
@@ -147,7 +122,6 @@ private void confermaPassword(){
     public void osservaIsPasswordCambiata(){
         fragmentProfiloViewModel.isPasswordCambiata.observe(fragmentProfilo, (messaggio) -> {
             if(fragmentProfiloViewModel.getIsPasswordCambiata()){
-                Log.d("osservaIsPasswordCambiata","prima di dismiss");
                 fragmentProfiloViewModel.resetErroriControlloPassword();
                 dismissPopup();
             }else{
