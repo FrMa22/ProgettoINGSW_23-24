@@ -53,9 +53,9 @@ public class SchermataAstaRibasso extends GestoreComuniImplementazioni {
     Drawable drawablePreferiti ;
     Drawable drawableCuoreVuoto;
     Drawable drawableCuorePieno;
-    private AstaPreferitaRibassoDAO astaPreferitaRibassoDAO;
     private RelativeLayout relativeLayoutSchermataAstaRibasso;
     private Dialog popUpConfermaOffertaDialog;
+    private ImageButton bottone_info_schermata_asta_ribasso;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,7 +71,7 @@ public class SchermataAstaRibasso extends GestoreComuniImplementazioni {
         drawablePreferiti = imageButtonPreferiti.getDrawable();
         drawableCuoreVuoto = ContextCompat.getDrawable(this, R.drawable.ic_cuore_vuoto);
         drawableCuorePieno = ContextCompat.getDrawable(this, R.drawable.ic_cuore_pieno);
-
+        bottone_info_schermata_asta_ribasso = findViewById(R.id.bottone_info_schermata_asta_ribasso);
         schermataAstaRibassoViewModel =new ViewModelProvider(this).get(SchermataAstaRibassoViewModel.class);
         osservaAstaRecuperata();
         osservaErroreRecuperoAsta();
@@ -79,6 +79,7 @@ public class SchermataAstaRibasso extends GestoreComuniImplementazioni {
         osservaIsAstaInPreferiti();
         osservaVaiInVenditore();
         osservaAstaDaMostrare();
+        osservaApriPopUpInfo();
 
         osservaConvertiIntervalloOfferte();
         osservaIsAstaChiusa();
@@ -147,7 +148,12 @@ public class SchermataAstaRibasso extends GestoreComuniImplementazioni {
         });
         //astaRibassoDAO.recuperaInfoAsta(id);
 
-
+        bottone_info_schermata_asta_ribasso.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                schermataAstaRibassoViewModel.creaPopUpInformazioni(SchermataAstaRibasso.this);
+            }
+        });
 
     }
 
@@ -366,6 +372,13 @@ public class SchermataAstaRibasso extends GestoreComuniImplementazioni {
             if(valore){
                 Intent intent=new Intent(SchermataAstaRibasso.this, ProfiloVenditore.class);
                 startActivity(intent);
+            }
+        });
+    }
+    public void osservaApriPopUpInfo(){
+        schermataAstaRibassoViewModel.popUpInformazioni.observe(this, (valore) ->{
+            if(schermataAstaRibassoViewModel.isPopUpInformazioni()){
+                valore.show();
             }
         });
     }

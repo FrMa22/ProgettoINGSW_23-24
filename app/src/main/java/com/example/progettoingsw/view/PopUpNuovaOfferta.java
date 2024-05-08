@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.FragmentActivity;
+import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.progettoingsw.DAO.AstaIngleseDAO;
@@ -59,7 +60,6 @@ public class PopUpNuovaOfferta extends DialogPersonalizzato implements View.OnCl
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.pop_up_nuova_offerta);
 
-        popUpNuovaOffertaViewModel = new ViewModelProvider(fragmentActivity).get(PopUpNuovaOffertaViewModel.class);
         textviewPrezzoAttuale = (TextView) findViewById(R.id.TextViewPrezzoOffertaAsta);
         textviewNuovoPrezzo = (EditText) findViewById(R.id.EditTextPrezzoNuovaOffertaAsta);
         bottoneAnnullaPopUpOfferta = findViewById(R.id.bottoneAnnullaPopUpAsta);
@@ -72,10 +72,13 @@ public class PopUpNuovaOfferta extends DialogPersonalizzato implements View.OnCl
 
 
 
+        popUpNuovaOffertaViewModel = new ViewModelProvider(fragmentActivity).get(PopUpNuovaOffertaViewModel.class);
+
         osservaTipoAstaChecked();
         osservamessaggioErroreOfferta();
         osservaOffertaValida();
         osservaIsPartecipazioneAvvenuta();
+        Log.d("PopUpNuovaOfferta onCreate", "osservatori riaperti");
         popUpNuovaOffertaViewModel.checkTipoAsta();
         textviewPrezzoAttuale.setText(String.valueOf(popUpNuovaOffertaViewModel.getPrezzoVecchio()));
 
@@ -108,6 +111,7 @@ public class PopUpNuovaOfferta extends DialogPersonalizzato implements View.OnCl
 
         }
     }
+
     public interface PopupDismissListener {
         void onPopupDismissed();
     }
@@ -134,6 +138,7 @@ public class PopUpNuovaOfferta extends DialogPersonalizzato implements View.OnCl
     }
     public void osservaOffertaValida(){
         popUpNuovaOffertaViewModel.offertaValida.observe( fragmentActivity, (messaggio) -> {
+            Log.d("osservaOffertaValida", "avviato osservatore");
             if(popUpNuovaOffertaViewModel.isOffertaValida()){
                 Log.d("osservaOffertaValida", "entrato");
                 popUpNuovaOffertaViewModel.proseguiPartecipazione(offerta);

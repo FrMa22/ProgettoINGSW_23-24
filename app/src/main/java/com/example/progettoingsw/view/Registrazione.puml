@@ -1,0 +1,403 @@
+@startuml RegistrazioneCampiFacoltativi
+
+
+package com.example.progettoingsw.view {
+class Registrazione {
+        - EditText edittext_nome
+        - EditText edittext_cognome
+        - EditText edittext_email
+        - EditText edittext_password
+        - EditText edittext_conferma_password
+        - Spinner spinner_tipo_utente
+        - SwitchCompat switch_mostra_password_registrazione
+        - RegistrazioneViewModel registrazioneViewModel
+        + void onCreate(Bundle savedInstanceState)
+        + void onResume()
+        - void messaggioErroreMail(String messaggio)
+        - void messaggioErrorePassword(String messaggio)
+        - void messaggioErroreConfermaPassword(String messaggio)
+        - void messaggioErroreNome(String messaggio)
+        - void messaggioErroreCognome(String messaggio)
+        + void osservaMessaggioErroreEmail()
+        + void osservaMessaggioErrorePassword()
+        + void osservaMessaggioErroreConfermaPassword()
+        + void osservaMessaggioErroreNome()
+        + void osservaMessaggioErroreCognome()
+        + void osservaProseguiRegistrazione()
+        + void osservaValoriPresentiAcquirente()
+        + void osservaValoriPresentiVenditore()
+    }
+    class RegistrazioneCampiFacoltativi {
+            - MaterialButton bottoneAnnulla
+            - ImageButton bottoneSocial
+            - MaterialButton bottoneProseguiRegistrazione
+            - EditText testoBio
+            - EditText testoProvenienza
+            - EditText testoSitoWeb
+            - RegistrazioneViewModel registrazioneViewModel
+            - ImageButton bottone_info_social_registrazione_campi_facoltativi
+            - CustomAdapter_gridview_profilo_social adapterSocial
+            - GridView gridView
+            - String bio
+            - String paese
+            - String sitoWeb
+            - TextView text_view_nessun_social
+            - FirebaseAnalytics mFirebaseAnalytics
+            + void onCreate(Bundle savedInstanceState)
+            + void onResume()
+            - void setGridViewHeightBasedOnChildren(GridView gridView)
+            + void updateSocialNames(List<String> socialNames, List<String> socialLinks)
+            + void messaggioErroreBio(String messaggio)
+            + void messaggioErrorePaese(String messaggio)
+            + void messaggioErroreSitoWeb(String messaggio)
+            + void osservaMessaggioErroreBio()
+            + void osservaMessaggioErrorePaese()
+            + void osservaMessaggioErroreSitoWeb()
+            + void osservaAcquirente()
+            + void osservaVenditore()
+            + void osservaAcquirenteModelPresente()
+            + void osservaVenditoreModelPresente()
+            + void osservaProseguiInserimento()
+            + void logEvent(String eventName, Bundle bundle)
+            + void osservaApriPopUpSocial()
+            + void onPopupModificaSocialRegistrazioneDismissed()
+            + void osservaListaSocialAcquirente()
+            + void osservaListaSocialVenditore()
+            + void osservaSocialVuoti()
+            + void onPopupRegistrazioneSocialDismissed()
+            + void osservaValoriPresentiFacoltativiAcquirente()
+            + void osservaValoriPresentiFacoltativiVenditore()
+            + void osservaTornaInRegistrazione()
+        }
+        class RegistrazioneCategorie {
+                - MaterialButton bottoneProseguiInteressiRegistrazione
+                - MaterialButton bottoneSaltaRegistrazioneCategorie
+                - LinearLayout linear_layout_interno_registrazione_social
+                - ArrayList<String> switchTexts
+                - ProgressBar progress_bar_registrazione_categorie
+                - RegistrazioneViewModel registrazioneViewModel
+                + void onCreate(Bundle savedInstanceState)
+                - void populateLinearLayout()
+                + void osservaVaiInHome()
+            }
+    class PopUpModificaSocialRegistrazione {
+        - registrazioneViewModel: RegistrazioneViewModel
+        - bottoneAnnullaModifica: AppCompatButton
+        - bottoneConfermaModifica: AppCompatButton
+        - bottoneEliminaSocial: AppCompatButton
+        - nome_vecchio: String
+        - link_vecchio: String
+        - edit_text_nome_social: EditText
+        - edit_text_link_social: EditText
+        - registrazioneCampiFacoltativi: RegistrazioneCampiFacoltativi
+        - popupDismissListener: PopupModificaSocialRegistrazioneDismissListener
+        + PopUpModificaSocialRegistrazione(Context, RegistrazioneViewModel,
+         RegistrazioneCampiFacoltativi, PopupModificaSocialRegistrazioneDismissListener)
+        + onCreate(Bundle): void
+        + onClick(View): void
+        + dismissModificaSocialPopup(): void
+        + messaggioErroreNomeSocial(String): void
+        + osservaMessaggioErroreNomeSocial(): void
+        + messaggioErroreLinkNuovo(String): void
+        + osservaMessaggioErroreLinkNuovo(): void
+        + osservaIsSocialCambiato(): void
+        + osservaNomeSocial(): void
+        + osservaLinkSocial(): void
+    }
+    class PopUpRegistrazioneSocial {
+        - mContext: Context
+        - nomeSocial: String
+        - link: String
+        - registrazioneCampiFacoltativi: RegistrazioneCampiFacoltativi
+        - bottoneChiudiRegistrazioneSocial: MaterialButton
+        - bottoneConfermaRegistrazioneSocial: MaterialButton
+        - editTextLink: EditText
+        - editTextNomeSocial: EditText
+        - registrazioneViewModel: RegistrazioneViewModel
+        - popupRegistrazioneSocialDismissListener: PopupRegistrazioneSocialDismissListener
+        + PopUpRegistrazioneSocial(Context,
+         RegistrazioneCampiFacoltativi, RegistrazioneViewModel, PopupRegistrazioneSocialDismissListener)
+        + onCreate(Bundle): void
+        + onClick(View): void
+        + messaggioErroreNomeSocial(String): void
+        + messaggioErroreLink(String): void
+        + osservaMessaggioErroreNomeSocial(): void
+        + osservaMessaggioErroreLink(): void
+        + osservaProseguiInserimentoSocial(): void
+        + dismissModificaSocialPopup(): void
+    }
+    class MainActivity{
+            - bottomNavigationView: BottomNavigationView
+            - mainActivityViewModel: MainActivityViewModel
+            - selectedFragment: Fragment
+            - homeMenuItem: MenuItem
+            - categoriesMenuItem: MenuItem
+            - creaAstaMenuItem: MenuItem
+            - searchMenuItem: MenuItem
+            - profileMenuItem: MenuItem
+            + onCreate(savedInstanceState: Bundle): void
+            + enableBottomNavigationView(enabled: boolean): void
+            + resetOtherIcons(bottomNavigationView: BottomNavigationView, selectedItem: MenuItem): void
+            + getIconResource(itemId: int): int
+            + osservaSceltoHome(): void
+            + osservaSceltoCategorie(): void
+            + osservaSceltoCreaAstaAcquirente(): void
+            + osservaSceltoCreaAstaVenditore(): void
+            + osservaSceltoRicerca(): void
+            + osservaSceltoProfilo(): void
+        }
+}
+
+
+package com.example.progettoingsw.viewmodel {
+        class RegistrazioneViewModel {
+                - ArrayList<String> listaCategorieScelte
+                - ArrayList<SocialAcquirenteModel> socialAcquirente
+                - ArrayList<SocialVenditoreModel> socialVenditore
+                - String nomeSocialSelezionato
+                - String linkSocialSelezionato
+                - String token
+
+                - MutableLiveData<String> messaggioErroreEmail
+                - MutableLiveData<String> messaggioErrorePassword
+                - MutableLiveData<String> messaggioErroreConfermaPassword
+                - MutableLiveData<String> messaggioErroreNome
+                - MutableLiveData<String> messaggioErroreCognome
+                - MutableLiveData<String> messaggioErroreLink
+                - MutableLiveData<String> messaggioErroreNomeSocial
+                - MutableLiveData<String> proseguiRegistrazione
+                - MutableLiveData<String> proseguiInserimento
+                - MutableLiveData<String> proseguiInserimentoSocial
+                - MutableLiveData<String> messaggioErroreBio
+                - MutableLiveData<String> messaggioErrorePaese
+                - MutableLiveData<String> messaggioErroreSitoWeb
+                - MutableLiveData<Boolean> acquirenteModelPresente
+                - MutableLiveData<Boolean> venditoreModelPresente
+                - MutableLiveData<AcquirenteModel> acquirenteModel
+                - MutableLiveData<VenditoreModel> venditoreModel
+                - MutableLiveData<Boolean> apriPopUpSocial
+                - MutableLiveData<ArrayList<SocialAcquirenteModel>> listaSocialAcquirente
+                - MutableLiveData<ArrayList<SocialVenditoreModel>> listaSocialVenditore
+                - MutableLiveData<Boolean> socialVuoti
+                - MutableLiveData<AcquirenteModel> valoriPresentiAcquirente
+                - MutableLiveData<VenditoreModel> valoriPresentiVenditore
+                - MutableLiveData<AcquirenteModel> valoriPresentiFacoltativiAcquirente
+                - MutableLiveData<VenditoreModel> valoriPresentiFacoltativiVenditore
+                - MutableLiveData<Boolean> isSocialCambiato
+
+                - RegistrazioneRepository registrazioneRepository
+                - LoginRepository loginRepository
+                - Repository repository
+
+                - static final String TOKEN_KEY
+
+                + RegistrazioneViewModel()
+                + void checkTipoUtente()
+                + void checkSocial(String nomeSocial, String link)
+                + void controlloSocial()
+                + void registrazioneAcquirente(String email, String password, String confermaPassword, String nome, String cognome)
+                + void registrazioneAcquirenteCompleta(String bio, String paese, String sitoWeb, AcquirenteModel acquirente)
+                + void inserisciSocialAcquirente()
+                + void inserisciSocialVenditore()
+                + void recuperaToken(Context context)
+                + void inserisciAcquirente(AcquirenteModel acquirente)
+                + void trovaAcquirenteDoppio(String email, String password, String nome, String cognome)
+                + void registrazioneVenditoreCompleta(String bio, String paese, String sitoWeb, VenditoreModel venditore)
+                + void inserisciVenditore(VenditoreModel venditore)
+                + void trovaVenditoreDoppio(String email, String password, String nome, String cognome)
+                + void categorieAcquirente(String email)
+                + void categorieVenditore(String email)
+                + Boolean socialValido(String nomeSocial, String link)
+                + Boolean registrazioneValida(String mail, String password,String confermaPassword, String nome, String cognome)
+                + Boolean registrazioneParzialeValidaAcquirente(String bio,String paese,String sitoWeb,AcquirenteModel acquirente)
+                + Boolean registrazioneParzialeValidaVenditore(String bio,String paese,String sitoWeb,VenditoreModel venditore)
+                + void setIsSocialCambiato(Boolean b)
+                + void aggiornaSocialViewModel(String nome_vecchio, String link_vecchio, String nome, String link)
+                + eliminaSocialViewModel(nome_vecchio: String, link_vecchio: String): void
+                + resetErroriModificaSocial(): void
+                + inserisciSocialNellaLista(): void
+                + stampaLista(): void
+                + resetAllVariables(): void
+                + tornaInRegistrazione(): void
+                + aggiungiCategoria(categoria: String): void
+                + rimuoviCategoria(categoria: String): void
+                + registraCategorie(): void
+                + premutoSalta(): void
+                + mandaTokenAcquirenteBackend(email: String, token: String): void
+                + mandaTokenVenditoreBackend(email: String, token: String): void
+                + setNomeSocialSelezionato(nomeSocial: String): void
+                + setLinkSocialSelezionato(link: String): void
+                + setNomeSocialRecuperato(nome: String): void
+                + setLinkSocialRecuperato(link: String): void
+                + recuperaNomeLinkSocial(): void
+            }
+}
+
+
+package com.example.progettoingsw.repository {
+class Repository {
+    - acquirenteModel: AcquirenteModel
+    - listaCategorieAcquirente: ArrayList<String>
+    - venditoreModel: VenditoreModel
+    - socialAcquirenteModelList: List<SocialAcquirenteModel>
+    - socialVenditoreModelList: List<SocialVenditoreModel>
+    - acquirenteEmailDaAsta: String
+    - venditoreEmailDaAsta: String
+    - nomeSocialSelezionato: String
+    - nomeLinkSelezionato: String
+    - leMieAsteUtenteAttuale: Boolean
+    - listaSocialAcquirenteRecuperati: ArrayList<SocialAcquirenteModel>
+    - listaSocialVenditoreRecuperati: ArrayList<SocialVenditoreModel>
+    - listaCategorieVenditore: ArrayList<String>
+    - categoriaSelezionata: String
+    - backendUrl: String
+    - questaRepository: Repository
+    - listaAsteAllIngleseInScadenza: ArrayList<Asta_allingleseModel>
+    - listaAsteAllIngleseCategoriaNome: ArrayList<Asta_allingleseModel>
+    - listaAsteAllIngleseNuove: ArrayList<Asta_allingleseModel>
+    - listaAsteAlRibassoCategoriaNome: ArrayList<Asta_alribassoModel>
+    - listaAsteAlRibassoNuove: ArrayList<Asta_alribassoModel>
+    - listaAsteInversaInScadenza: ArrayList<Asta_inversaModel>
+    - listaAsteInversaCategoriaNome: ArrayList<Asta_inversaModel>
+    - listaAsteInversaNuove: ArrayList<Asta_inversaModel>
+    - notificaAcquirenteScelta: NotificheAcquirenteModel
+    - notificaVenditoreScelta: NotificheVenditoreModel
+    - nome_socialAcquirenteSelezionato: String
+    - link_socialAcquirenteSelezionato: String
+    - asta_allingleseSelezionata: Asta_allingleseModel
+    - asta_alribassoSelezionata: Asta_alribassoModel
+    - asta_inversaSelezionata: Asta_inversaModel
+    + getInstance(): Repository
+    + deleteRepository(): void
+}
+class RegistrazioneRepository {
+        - backendUrl: String
+        + registrazioneAcquirenteDoppioBackend(String, OnRegistrazioneAcquirenteDoppioListener): void
+        + registrazioneVenditoreDoppioBackend(String, OnRegistrazioneVenditoreDoppioListener): void
+        + inserimentoAcquirente(AcquirenteModel, OnInserisciAcquirenteListener): void
+        + inserimentoVenditore(VenditoreModel, OnInserisciVenditoreListener): void
+        + inserimentoSocialAcquirente(ArrayList<SocialAcquirenteModel>, OnInserimentoSocialAcquirenteListener): void
+        + inserimentoSocialVenditore(ArrayList<SocialVenditoreModel>, OnInserimentoSocialVenditoreListener): void
+        + saveCategorieAcquirente(String, ArrayList<String>, OnInserimentoCategorieAcquirente): void
+        + saveCategorieVenditore(String, ArrayList<String>, OnInserimentoCategorieVenditore): void
+        - RegistrazioneAcquirenteDoppioTask
+        - RegistrazioneVenditoreDoppioTask
+        - InserisciVenditoreTask
+        - InserisciAcquirenteTask
+        - inserimentoSocialAcquirenteTask
+        - inserimentoSocialVenditoreTask
+        - inserimentoCategorieAcquirenteTask
+        - inserimentoCategorieVenditoreTask
+        + OnInserimentoCategorieAcquirente
+        + OnInserimentoCategorieVenditore
+        + OnInserimentoSocialVenditoreListener
+        + OnInserimentoSocialAcquirenteListener
+        + OnRegistrazioneAcquirenteDoppioListener
+        + OnRegistrazioneVenditoreDoppioListener
+        + OnInserisciAcquirenteListener
+        + OnInserisciVenditoreListener
+    }
+    class LoginRepository {
+            - OnLoginAcquirenteListener listener
+            - OnRecuperaCategorieAcquirenteListener listener
+            - OnSetTokenAcquirenteListener listener
+            - OnLoginVenditoreListener listener
+            - OnRecuperaCategorieVenditoreListener listener
+            - OnSetTokenVenditoreListener listener
+            - OnLoginAcquirenteConTokenListener listener
+            - OnLoginVenditoreConTokenListener listener
+            - class LoginAcquirenteTask
+            - class RecuperaCategorieAcquirenteTask
+            - class SetTokenAcquirenteTask
+            - class LoginVenditoreTask
+            - class RecuperaCategorieVenditoreTask
+            - class SetTokenVenditoreTask
+            - class LoginAcquirenteConTokenTask
+            - class LoginVenditoreConTokenTask
+
+            + loginAcquirenteBackend(email: String, password: String, listener: OnLoginAcquirenteListener): void
+            + loginAcquirenteConTokenBackend(token: String, listener: OnLoginAcquirenteConTokenListener): void
+            + recuperaCategorieAcquirenteBackend(email: String, listener: OnRecuperaCategorieAcquirenteListener): void
+            + setTokenAcquirente(email: String, token: String, listener: OnSetTokenAcquirenteListener): void
+            + loginVenditoreBackend(email: String, password: String, listener: OnLoginVenditoreListener): void
+            + loginVenditoreConTokenBackend(token: String, listener: OnLoginVenditoreConTokenListener): void
+            + recuperaCategorieVenditoreBackend(email: String, listener: OnRecuperaCategorieVenditoreListener): void
+            + setTokenVenditore(email: String, token: String, listener: OnSetTokenVenditoreListener): void
+        }
+}
+package com.example.progettoingsw.model {
+    class AcquirenteModel {
+        - String indirizzo_email
+        - String nome
+        - String cognome
+        - String password
+        - String bio
+        - String link
+        - String areageografica
+
+        + AcquirenteModel(nome: String, cognome: String, indirizzo_email: String, password: String, bio: String, areageografica: String, link: String)
+        + getIndirizzo_email(): String
+        + setIndirizzo_email(indirizzo_email: String): void
+        + getNome(): String
+        + setNome(nome: String): void
+        + getCognome(): String
+        + setCognome(cognome: String): void
+        + getPassword(): String
+        + setPassword(password: String): void
+        + getBio(): String
+        + setBio(bio: String): void
+        + getLink(): String
+        + setLink(link: String): void
+        + getAreageografica(): String
+        + setAreageografica(areageografica: String): void
+    }
+    class VenditoreModel {
+            - String indirizzo_email
+            - String nome
+            - String cognome
+            - String password
+            - String bio
+            - String link
+            - String areageografica
+
+            + VenditoreModel(nome: String, cognome: String, indirizzo_email: String, password: String, bio: String, areageografica: String, link: String)
+            + getIndirizzo_email(): String
+            + setIndirizzo_email(indirizzo_email: String): void
+            + getNome(): String
+            + setNome(nome: String): void
+            + getCognome(): String
+            + setCognome(cognome: String): void
+            + getPassword(): String
+            + setPassword(password: String): void
+            + getBio(): String
+            + setBio(bio: String): void
+            + getLink(): String
+            + setLink(link: String): void
+            + getAreageografica(): String
+            + setAreageografica(areageografica: String): void
+        }
+
+
+}
+Registrazione --> RegistrazioneViewModel
+        RegistrazioneCampiFacoltativi --> RegistrazioneViewModel
+        RegistrazioneCategorie --> RegistrazioneViewModel
+
+        PopUpRegistrazioneSocial --> RegistrazioneViewModel
+        PopUpModificaSocialRegistrazione --> RegistrazioneViewModel
+
+RegistrazioneCampiFacoltativi --> PopUpModificaSocialRegistrazione
+RegistrazioneCampiFacoltativi --> PopUpRegistrazioneSocial
+RegistrazioneCategorie --> MainActivity
+
+        RegistrazioneViewModel --> Repository
+        RegistrazioneViewModel --> LoginRepository
+        RegistrazioneViewModel --> RegistrazioneRepository
+
+        Repository --> AcquirenteModel
+        Repository --> VenditoreModel
+        LoginRepository --> AcquirenteModel
+        LoginRepository --> VenditoreModel
+        RegistrazioneRepository --> AcquirenteModel
+        RegistrazioneRepository --> VenditoreModel
+@enduml

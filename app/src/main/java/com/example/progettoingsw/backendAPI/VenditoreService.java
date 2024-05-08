@@ -24,11 +24,9 @@ public interface VenditoreService {
 
 
 
-    @PUT("/utenteController/updateVenditore/{oldNome}/{oldLink}/{newNome}/{newLink}")
-    Call<Void> updateVenditore(@Path("oldNome") String oldNome,@Path("oldLink") String oldLink,@Path("newNome") String newNome,@Path("newLink") String newLink);
 
-    @PUT("/utenteController/updateVenditore/{nome}/{cognome}/{bio}/{link}/{areageografica}/{indirizzo_email}")
-    Call<Void> updateVenditore(@Path("nome") String nome, @Path("cognome") String cognome, @Path("bio") String bio, @Path("link") String link, @Path("areageografica") String areageografica, @Path("indirizzo_email") String indirizzo_email);
+    @PUT("/utenteController/updateVenditore/{venditore}")
+    Call<Void> updateVenditore(@Body VenditoreDTO venditoreDTO);
 
 
     @PUT("/utenteController/updatePasswordVenditore/{password}/{indirizzo_email}")

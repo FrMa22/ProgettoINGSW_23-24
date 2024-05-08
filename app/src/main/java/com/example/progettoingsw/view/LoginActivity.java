@@ -1,6 +1,7 @@
 package com.example.progettoingsw.view;
 
 import android.app.AlertDialog;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -8,14 +9,15 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.text.InputType;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -31,18 +33,15 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.progettoingsw.R;
 import com.example.progettoingsw.classe_da_estendere.GestoreComuniImplementazioni;
-import com.example.progettoingsw.view.acquirente.MainActivity;
 import com.example.progettoingsw.viewmodel.LoginViewModel;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.analytics.FirebaseAnalytics;
-import com.google.firebase.messaging.FirebaseMessaging;
 
 public class LoginActivity extends GestoreComuniImplementazioni {
     private SwitchCompat switch_mostra_password;
     ProgressBar progress_bar_login;
     EditText editText_mail;
     EditText editText_password;
-    private CheckBox checkbox_ricordami;
     private LoginViewModel loginViewModel;
     private RelativeLayout relative_layout_login_activity;
     private String token;
@@ -112,7 +111,6 @@ public class LoginActivity extends GestoreComuniImplementazioni {
                 String mail = editText_mail.getText().toString().trim();
                 String password = editText_password.getText().toString().trim();
 
-                requestNotificationPermissions();
                 Log.d("premuto accedi", "mando token : " + token);
                 loginViewModel.loginAcquirente(mail,password,token);
 
@@ -145,7 +143,8 @@ public class LoginActivity extends GestoreComuniImplementazioni {
         checkConnessione();
 
         osservaTokenSalvato();
-        loginViewModel.checkSavedToken(getApplicationContext());
+
+        requestNotificationPermissions();
 
     }
     public void checkConnessione() {
@@ -168,10 +167,12 @@ public class LoginActivity extends GestoreComuniImplementazioni {
         }
     }
 private void requestNotificationPermissions() {
+        Log.d("requestNotifiche", "entrato");
     if (ContextCompat.checkSelfPermission(this, "com.example.progettoingsw.permission.POST_NOTIFICATIONS") != PackageManager.PERMISSION_GRANTED) {
         ActivityCompat.requestPermissions(this, new String[]{"com.example.progettoingsw.permission.POST_NOTIFICATIONS"}, PERMISSION_REQUEST_CODE);
     }else{
         Log.d("Permesso", "il permesso c'è");
+        checkNotificationPermissions();
     }
 }
 
@@ -180,11 +181,39 @@ private void requestNotificationPermissions() {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == PERMISSION_REQUEST_CODE) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Log.d("notifiche","notifiche  attive");
                 // I permessi sono stati concessi
             } else {
+                Toast.makeText(this, "Devi abilitare i permessi per le notifiche", Toast.LENGTH_SHORT).show();
+                Log.d("notifiche","notifiche non attive");
                 // I permessi non sono stati concessi
                 // Puoi gestire questo caso in modo appropriato, ad esempio informando l'utente sui motivi per cui i permessi sono necessari
             }
+        }
+    }
+    public void checkNotificationPermissions() {
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+        // Controlla se le notifiche sono abilitate
+        if (!notificationManager.areNotificationsEnabled()) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this,R.style.CustomDialogTheme);
+            builder.setTitle("Notifiche disabilitate");
+            builder.setMessage("Le notifiche sono disabilitate. Per il funzionamento ottimale dell'app sono necessarie, si prega di attivarle.");
+            builder.setPositiveButton("Le attivo subito!", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    // Puoi guidare l'utente alle impostazioni dell'app per abilitare le notifiche
+                    Intent intent = new Intent();
+                    intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                    Uri uri = Uri.fromParts("package", getPackageName(), null);
+                    intent.setData(uri);
+                    startActivity(intent);
+                }
+            });
+            builder.setCancelable(false);
+            builder.show();
+        }else{
+            loginViewModel.checkSavedToken(getApplicationContext());
         }
     }
     public void messaggioErroreMail(String messaggio){
@@ -238,7 +267,8 @@ private void requestNotificationPermissions() {
         });
     }
     private void showAccountSelectionPopup() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this,R.style.CustomDialogTheme);
+
         builder.setTitle("Doppio account rilevato");
         builder.setMessage("Seleziona con quale account accedere:");
         builder.setPositiveButton("Acquirente", new DialogInterface.OnClickListener() {

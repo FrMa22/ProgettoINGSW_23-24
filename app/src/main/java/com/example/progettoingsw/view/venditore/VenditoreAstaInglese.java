@@ -2,7 +2,6 @@ package com.example.progettoingsw.view.venditore;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -19,12 +18,11 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.progettoingsw.DAO.AstaIngleseDAO;
 import com.example.progettoingsw.view.PopUpAggiungiCategorieAsta;
 import com.example.progettoingsw.R;
 import com.example.progettoingsw.classe_da_estendere.GestoreComuniImplementazioni;
 import com.example.progettoingsw.controllers_package.Controller;
-import com.example.progettoingsw.view.acquirente.MainActivity;
+import com.example.progettoingsw.view.MainActivity;
 import com.example.progettoingsw.viewmodel.CreaAstaIngleseViewModel;
 import com.google.android.material.button.MaterialButton;
 
@@ -36,26 +34,20 @@ public class VenditoreAstaInglese extends GestoreComuniImplementazioni {
     ImageButton bottoneBack;
     ImageButton bottone_info;
     EditText nome;
-    private int idAsta;
     private ImageButton imageButtonRimuoviImmagineCreaAstaInglese;
     EditText descrizione;
     EditText baseAsta;
     EditText intervalloAsta;
     EditText rialzoAsta;
-    Uri uriImmagine;
     private Bitmap bitmap;
     Controller controller;
-    private byte [] img;
     ImageView immagineProdotto;
     ImageButton bottoneInserisciImmagine;
     private ArrayList<String> listaCategorieScelte;
     ActivityResultLauncher<Intent> resultLauncher;
-    private String selectedDateString;
-    private String selectedHourString;
     private MaterialButton bottoneCategorieAstaInglese;
     private ProgressBar progressBarVenditoreAstaInglese;
     private RelativeLayout relativeLayoutAstaInglese;
-    private String email;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,7 +58,6 @@ public class VenditoreAstaInglese extends GestoreComuniImplementazioni {
          controller = new Controller();
         progressBarVenditoreAstaInglese = findViewById(R.id.progressBarVenditoreAstaInglese);
         relativeLayoutAstaInglese = findViewById(R.id.relativeLayoutAstaInglese);
-        AstaIngleseDAO astaIngleseDao = new AstaIngleseDAO(VenditoreAstaInglese.this);
         listaCategorieScelte = new ArrayList<>();
         baseAsta=findViewById(R.id.editTextBaseAstaAstaInglese);
         intervalloAsta=findViewById(R.id.editTextTimerDecrementoAstaInglese);

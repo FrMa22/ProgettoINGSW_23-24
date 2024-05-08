@@ -48,7 +48,7 @@ public class SchermataAstaInversa extends GestoreComuniImplementazioni implement
     Drawable drawablePreferiti ;
     Drawable drawableCuoreVuoto;
     Drawable drawableCuorePieno;
-    private AstaPreferitaInversaDAO astaPreferitaInversaDAO;
+    private ImageButton bottone_info_schermata_asta_inversa;
 
     private AstaInversaDAO astaInversaDAO;
     @Override
@@ -67,6 +67,7 @@ public class SchermataAstaInversa extends GestoreComuniImplementazioni implement
         drawableCuoreVuoto = ContextCompat.getDrawable(this, R.drawable.ic_cuore_vuoto);
         drawableCuorePieno = ContextCompat.getDrawable(this, R.drawable.ic_cuore_pieno);
         text_view_tua_offerta_attuale_asta_inversa = findViewById(R.id.text_view_tua_offerta_attuale_asta_inversa);
+        bottone_info_schermata_asta_inversa = findViewById(R.id.bottone_info_schermata_asta_inversa);
 
         schermataAstaInversaViewModel = new ViewModelProvider(this).get(SchermataAstaInversaViewModel.class);
 
@@ -77,7 +78,7 @@ public class SchermataAstaInversa extends GestoreComuniImplementazioni implement
         osservaIsPartecipazioneAvvenuta();
         osservaIsUltimaOffertaTua();
         osservaVaiInAcquirente();
-
+        osservaApriPopUpInfo();
 
         osservaIsAstaChiusa();
         osservaImmagineAstaConvertita();
@@ -114,6 +115,12 @@ public class SchermataAstaInversa extends GestoreComuniImplementazioni implement
             public void onClick(View v) {
                 PopUpNuovaOfferta popUpNuovaOfferta = new PopUpNuovaOfferta(SchermataAstaInversa.this, SchermataAstaInversa.this);
                 popUpNuovaOfferta.show();
+            }
+        });
+        bottone_info_schermata_asta_inversa.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                schermataAstaInversaViewModel.creaPopUpInformazioni(SchermataAstaInversa.this);
             }
         });
     }
@@ -341,6 +348,13 @@ public class SchermataAstaInversa extends GestoreComuniImplementazioni implement
             if(valore){
                 Intent intent=new Intent(SchermataAstaInversa.this, ProfiloAcquirente.class);
                 startActivity(intent);
+            }
+        });
+    }
+    public void osservaApriPopUpInfo(){
+        schermataAstaInversaViewModel.popUpInformazioni.observe(this, (valore) ->{
+            if(schermataAstaInversaViewModel.isPopUpInformazioni()){
+                valore.show();
             }
         });
     }

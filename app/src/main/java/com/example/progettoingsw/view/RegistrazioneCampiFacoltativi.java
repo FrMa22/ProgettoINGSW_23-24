@@ -1,6 +1,5 @@
 package com.example.progettoingsw.view;
 
-import static java.security.AccessController.getContext;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,26 +12,19 @@ import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ListAdapter;
-import android.widget.TextClock;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.progettoingsw.DAO.RegistrazioneFacoltativaDAO;
-import com.example.progettoingsw.DAO.RegistrazioneSocialDAO;
 import com.example.progettoingsw.R;
 import com.example.progettoingsw.classe_da_estendere.GestoreComuniImplementazioni;
-import com.example.progettoingsw.controllers_package.Controller;
 import com.example.progettoingsw.gestori_gui.CustomAdapter_gridview_profilo_social;
 import com.example.progettoingsw.model.AcquirenteModel;
 import com.example.progettoingsw.model.SocialAcquirenteModel;
 import com.example.progettoingsw.model.SocialVenditoreModel;
 import com.example.progettoingsw.model.VenditoreModel;
-import com.example.progettoingsw.repository.Repository;
-import com.example.progettoingsw.view.acquirente.FragmentCreaAstaInversa;
-import com.example.progettoingsw.view.acquirente.FragmentProfilo;
 import com.example.progettoingsw.viewmodel.RegistrazioneViewModel;
 import com.google.android.material.button.MaterialButton;
 import com.google.firebase.analytics.FirebaseAnalytics;
@@ -42,30 +34,13 @@ import java.util.List;
 
 public class RegistrazioneCampiFacoltativi extends GestoreComuniImplementazioni implements PopUpModificaSocialRegistrazione.PopupModificaSocialRegistrazioneDismissListener, PopUpRegistrazioneSocial.PopupRegistrazioneSocialDismissListener  {
 
-    Controller controller;
-    Intent intent;
-    private String nome;
-    private String cognome;
-    private String email;
-    private String password;
-    private String tipoUtente;
-    private AcquirenteModel acquirenteModel;
-    private VenditoreModel venditoreModel;
-    String nomeSocial;
-    String nomeUtente;
-    ArrayList<String> elencoNomeSocialRegistrazione = new ArrayList<String>();
-    ArrayList<String> elencoNomeUtenteSocialRegistrazione = new ArrayList<String>();
-
     MaterialButton bottoneAnnulla;
     ImageButton bottoneSocial;
     MaterialButton bottoneProseguiRegistrazione;
     EditText testoBio;
     EditText testoProvenienza;
     EditText testoSitoWeb;
-    private Repository repository;
     RegistrazioneViewModel registrazioneViewModel;
-    private AcquirenteModel acquirente;
-    private VenditoreModel venditore;
     private ImageButton bottone_info_social_registrazione_campi_facoltativi;
     private CustomAdapter_gridview_profilo_social adapterSocial;
 
@@ -81,16 +56,7 @@ public class RegistrazioneCampiFacoltativi extends GestoreComuniImplementazioni 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.registrazione_campi_facoltativi);
 
-      /*  controller = new Controller();
-        intent = getIntent();
-        email =intent.getStringExtra("email").trim();
-        tipoUtente =intent.getStringExtra("tipoUtente");
-        nome =intent.getStringExtra("nome");
-        cognome =intent.getStringExtra("cognome");
-        password =intent.getStringExtra("password");
 
-        Log.d("i valori in entrata facoltativi", " " + nome + cognome + email + password + tipoUtente);*/
-// Inizializzazione di FirebaseAnalytics
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
         bottoneAnnulla = (MaterialButton) findViewById(R.id.bottoneAnnullaRegistrazione);
@@ -127,7 +93,6 @@ public class RegistrazioneCampiFacoltativi extends GestoreComuniImplementazioni 
                 String link = socialLinks.get(position);
                 registrazioneViewModel.setNomeSocialSelezionato(nome);
                 registrazioneViewModel.setLinkSocialSelezionato(link);
-                //fragmentProfiloViewModel.gestisciModificaSocial(nome,link);
                 PopUpModificaSocialRegistrazione popUpModificaSocialRegistrazione = new PopUpModificaSocialRegistrazione(RegistrazioneCampiFacoltativi.this, registrazioneViewModel,RegistrazioneCampiFacoltativi.this,RegistrazioneCampiFacoltativi.this );
                 popUpModificaSocialRegistrazione.show();
             }
@@ -354,6 +319,7 @@ public class RegistrazioneCampiFacoltativi extends GestoreComuniImplementazioni 
                 logEvent("Registrazione utente",null);
                 Intent intent = new Intent(RegistrazioneCampiFacoltativi.this, RegistrazioneCategorie.class);
                 startActivity(intent);
+                finish();
             } else if (registrazioneViewModel.isProseguiInserimento("inserimento fallito")) {
 
             }

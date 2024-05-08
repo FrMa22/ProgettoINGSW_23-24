@@ -1,4 +1,4 @@
-package com.example.progettoingsw.view.acquirente;
+package com.example.progettoingsw.view;
 
 import com.example.progettoingsw.R;
 

@@ -1,14 +1,12 @@
 package com.example.progettoingsw.view;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.EditText;
 
-import androidx.lifecycle.LifecycleOwner;
 
 import com.example.progettoingsw.R;
 import com.example.progettoingsw.classe_da_estendere.DialogPersonalizzato;
@@ -20,10 +18,6 @@ import java.util.ArrayList;
 
 public class PopUpRegistrazioneSocial extends DialogPersonalizzato implements View.OnClickListener {
 
-    private Controller controller;
-    private String opzioneSelezionata;
-    private String email;
-    private String tipoUtente;
     private Context mContext;
     String nomeSocial;
     String link;
@@ -33,8 +27,6 @@ public class PopUpRegistrazioneSocial extends DialogPersonalizzato implements Vi
     EditText editTextLink;
     EditText editTextNomeSocial;
     RegistrazioneViewModel registrazioneViewModel;
-    private ArrayList<String> elencoNomeSocialRegistrazioneStrings;
-    ArrayList<String> elencoNomeUtenteSocialRegistrazione;
     private PopupRegistrazioneSocialDismissListener popupRegistrazioneSocialDismissListener;
 
     public PopUpRegistrazioneSocial(Context context, RegistrazioneCampiFacoltativi registrazioneCampiFacoltativi, RegistrazioneViewModel registrazioneViewModel, PopupRegistrazioneSocialDismissListener popupRegistrazioneSocialDismissListener) {

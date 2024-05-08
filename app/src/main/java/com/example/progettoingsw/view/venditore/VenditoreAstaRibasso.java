@@ -23,7 +23,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.progettoingsw.view.PopUpAggiungiCategorieAsta;
 import com.example.progettoingsw.R;
 import com.example.progettoingsw.classe_da_estendere.GestoreComuniImplementazioni;
-import com.example.progettoingsw.view.acquirente.MainActivity;
+import com.example.progettoingsw.view.MainActivity;
 import com.example.progettoingsw.viewmodel.CreaAstaRibassoViewModel;
 import com.google.android.material.button.MaterialButton;
 
@@ -150,6 +150,7 @@ public class VenditoreAstaRibasso extends GestoreComuniImplementazioni {
         osservaAstaCreata();
         osservaImmagineConvertita();
         osservaTornaIndietro();
+        osservaAstaCreataPopUp();
 
     }
     public void osservaAstaCreataPopUp(){

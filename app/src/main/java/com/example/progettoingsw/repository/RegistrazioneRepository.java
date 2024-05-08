@@ -12,7 +12,6 @@ import com.example.progettoingsw.backendAPI.SocialAcquirenteService;
 import com.example.progettoingsw.backendAPI.SocialVenditoreService;
 import com.example.progettoingsw.backendAPI.VenditoreService;
 import com.example.progettoingsw.model.AcquirenteModel;
-import com.example.progettoingsw.model.Asta_allingleseModel;
 import com.example.progettoingsw.model.SocialAcquirenteModel;
 import com.example.progettoingsw.model.SocialVenditoreModel;
 import com.example.progettoingsw.model.VenditoreModel;
@@ -28,7 +27,6 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RegistrazioneRepository {
-    Repository repository = Repository.getInstance();
 
     public void registrazioneAcquirenteDoppioBackend(String email, OnRegistrazioneAcquirenteDoppioListener listener) {
         System.out.println("entrato in registrazioneAcquirente backend");

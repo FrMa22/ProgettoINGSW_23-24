@@ -1,5 +1,8 @@
 package com.example.progettoingsw.viewmodel;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
@@ -7,6 +10,7 @@ import android.util.Log;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.progettoingsw.R;
 import com.example.progettoingsw.model.AcquirenteModel;
 import com.example.progettoingsw.model.Asta_alribassoModel;
 import com.example.progettoingsw.repository.Asta_alribassoRepository;
@@ -28,6 +32,7 @@ public class SchermataAstaRibassoViewModel extends ViewModel {
     public MutableLiveData<Boolean> isAstaChiusa = new MutableLiveData<>(false);
     public MutableLiveData<String> intervalloOfferteConvertito = new MutableLiveData("");
 
+    public MutableLiveData<AlertDialog> popUpInformazioni = new MutableLiveData<>(null);
 
 
     public MutableLiveData<Asta_alribassoModel> astadaMostrare = new MutableLiveData<>(null);
@@ -274,5 +279,31 @@ public class SchermataAstaRibassoViewModel extends ViewModel {
     }
     public void recuperaAstaDaMostrare(){
         setAstadaMostrare(astaRecuperata.getValue());
+    }
+    public void setPopUpInformazioni(AlertDialog popUpInformazioni) {
+        this.popUpInformazioni.setValue(popUpInformazioni);
+    }
+    public Boolean isPopUpInformazioni(){
+        return (popUpInformazioni.getValue()!=null);
+    }
+    public void creaPopUpInformazioni(Activity activity){
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity, R.style.CustomDialogThemeRibasso);
+        builder.setTitle("Cos'è un asta al ribasso?"); // Puoi impostare un titolo per il popup
+        builder.setMessage("In un'asta al ribasso, il venditore fissa un prezzo iniziale per il suo prodotto o servizio. Successivamente, viene avviato un timer che " +
+                "decrementa il prezzo di un certo importo ogni volta che scade. Il primo acquirente a fare un'offerta al prezzo corrente si aggiudica il prodotto o servizio. " +
+                "Tuttavia, se il prezzo scende fino a raggiungere un prezzo minimo segreto impostato dal venditore, l'asta viene chiusa e non sarà più possibile fare offerte.\nNon lasciartelo scappare! "); // Il testo da mostrare nel popup
+
+
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                // Azione da eseguire quando si preme il pulsante OK
+                dialog.dismiss(); // Chiudi il popup
+            }
+        });
+
+        AlertDialog dialog = builder.create();
+        //dialog.show();
+        setPopUpInformazioni(dialog);
+        setPopUpInformazioni(dialog);
     }
 }

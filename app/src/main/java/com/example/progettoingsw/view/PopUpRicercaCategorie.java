@@ -13,7 +13,6 @@ import android.widget.Button;
 
 import com.example.progettoingsw.R;
 import com.example.progettoingsw.controllers_package.Controller;
-import com.example.progettoingsw.view.acquirente.FragmentSelezioneCategorie;
 
 import java.util.ArrayList;
 

@@ -5,7 +5,7 @@ import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 
 import com.example.progettoingsw.controllers_package.DatabaseHelper;
-import com.example.progettoingsw.view.acquirente.FragmentHome;
+import com.example.progettoingsw.view.FragmentHome;
 import com.example.progettoingsw.item.AstaIngleseItem;
 
 import java.sql.Connection;

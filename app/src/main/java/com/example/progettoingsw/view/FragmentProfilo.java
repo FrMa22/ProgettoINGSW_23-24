@@ -1,4 +1,4 @@
-package com.example.progettoingsw.view.acquirente;
+package com.example.progettoingsw.view;
 
 import android.content.Context;
 import android.content.Intent;
@@ -30,16 +30,9 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.progettoingsw.model.SocialAcquirenteModel;
 import com.example.progettoingsw.model.SocialVenditoreModel;
-import com.example.progettoingsw.view.LeMieAste;
-import com.example.progettoingsw.view.PopUpAggiungiSocialProfilo;
-import com.example.progettoingsw.view.PopUpControlloPassword;
-import com.example.progettoingsw.view.PopUpModificaCampiProfilo;
 import com.example.progettoingsw.R;
 import com.example.progettoingsw.controllers_package.Controller;
 import com.example.progettoingsw.gestori_gui.CustomAdapter_gridview_profilo_social;
-import com.example.progettoingsw.view.LoginActivity;
-import com.example.progettoingsw.view.PopUpModificaSocial;
-import com.example.progettoingsw.view.SchermataPartecipazioneAste;
 import com.example.progettoingsw.viewmodel.FragmentProfiloViewModel;
 import com.google.android.material.button.MaterialButton;
 import com.google.firebase.analytics.FirebaseAnalytics;

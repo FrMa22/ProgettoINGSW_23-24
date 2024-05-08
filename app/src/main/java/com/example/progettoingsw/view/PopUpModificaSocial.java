@@ -2,7 +2,6 @@ package com.example.progettoingsw.view;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.EditText;
@@ -13,7 +12,6 @@ import androidx.appcompat.widget.AppCompatButton;
 import com.example.progettoingsw.DAO.PopUpModificaSocialDAO;
 import com.example.progettoingsw.R;
 import com.example.progettoingsw.classe_da_estendere.DialogPersonalizzato;
-import com.example.progettoingsw.view.acquirente.FragmentProfilo;
 import com.example.progettoingsw.viewmodel.FragmentProfiloViewModel;
 
 public class PopUpModificaSocial extends DialogPersonalizzato implements View.OnClickListener {

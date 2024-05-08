@@ -1,4 +1,4 @@
-package com.example.progettoingsw.view.acquirente;
+package com.example.progettoingsw.view;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -25,11 +25,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.progettoingsw.DAO.RicercaAsteDAO;
 import com.example.progettoingsw.R;
 import com.example.progettoingsw.controllers_package.AstaAdapter;
-import com.example.progettoingsw.view.PopUpFiltroRicerca;
-import com.example.progettoingsw.view.SchermataAstaInglese;
-import com.example.progettoingsw.view.SchermataAstaInversa;
-import com.example.progettoingsw.view.SchermataAstaRibasso;
-import com.example.progettoingsw.view.SchermataAstePerCategoria;
 import com.example.progettoingsw.viewmodel.RicercaAstaViewModel;
 import com.google.android.material.button.MaterialButton;
 import com.google.firebase.analytics.FirebaseAnalytics;

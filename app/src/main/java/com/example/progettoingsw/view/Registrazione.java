@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
-import android.util.Patterns;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -14,7 +13,6 @@ import android.widget.Toast;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.progettoingsw.DAO.RegistrazioneDAO;
 import com.example.progettoingsw.R;
 import com.example.progettoingsw.classe_da_estendere.GestoreComuniImplementazioni;
 import com.example.progettoingsw.controllers_package.Controller;
@@ -188,10 +186,12 @@ public class Registrazione extends GestoreComuniImplementazioni {
             if (registrazioneViewModel.isProseguiRegistrazione("nuovo acquirente")) {
                 Intent intent = new Intent(Registrazione.this, RegistrazioneCampiFacoltativi.class);
                 startActivity(intent);
+                finish();
                 Toast.makeText(this, "Passaggio ai campi facoltativi", Toast.LENGTH_SHORT).show();
             } else if (registrazioneViewModel.isProseguiRegistrazione("nuovo venditore")) {
                 Intent intent = new Intent(Registrazione.this, RegistrazioneCampiFacoltativi.class);
                 startActivity(intent);
+                finish();
                 Toast.makeText(this, "Passaggio ai campi facoltativi", Toast.LENGTH_SHORT).show();
             }
 

@@ -3,7 +3,11 @@ package com.example.progettoingsw.backendAPI;
 import com.example.progettoingsw.DTO.AcquirenteDTO;
 import com.example.progettoingsw.DTO.Asta_allinglese_DTO;
 
+import net.bytebuddy.implementation.bind.annotation.Empty;
+
 import java.util.ArrayList;
+
+import javax.annotation.Nullable;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -21,11 +25,9 @@ public interface AcquirenteService {
     @GET("/utenteController/findCategorieByIndirizzoEmailAcquirente/{indirizzo_email}")
     Call<ArrayList<String>> findCategorieByIndirizzoEmailAcquirente(@Path(("indirizzo_email")) String indirizzo_email);
 
-    @PUT("/utenteController/updateAcquirente/{oldNome}/{oldLink}/{newNome}/{newLink}")
-    Call<Void> updateAcquirente(@Path("oldNome") String oldNome,@Path("oldLink") String oldLink,@Path("newNome") String newNome,@Path("newLink") String newLink);
 
-    @PUT("/utenteController/updateAcquirente/{nome}/{cognome}/{bio}/{link}/{areageografica}/{indirizzo_email}")
-    Call<Void> updateAcquirente(@Path("nome") String nome, @Path("cognome") String cognome, @Path("bio") String bio, @Path("link") String link, @Path("areageografica") String areageografica, @Path("indirizzo_email") String indirizzo_email);
+    @PUT("/utenteController/updateAcquirente/{acquirente}")
+    Call<Void> updateAcquirente(@Body AcquirenteDTO acquirenteDTO);
 
 
     @PUT("/utenteController/updatePasswordAcquirente/{password}/{indirizzo_email}")

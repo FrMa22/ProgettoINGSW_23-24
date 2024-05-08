@@ -4,16 +4,13 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
-import android.view.WindowManager;
 
 import androidx.appcompat.widget.AppCompatButton;
 
 import com.example.progettoingsw.R;
-import com.example.progettoingsw.view.SchermataAstaInglese;
-import com.example.progettoingsw.view.acquirente.MainActivity;
+import com.example.progettoingsw.view.MainActivity;
 import com.example.progettoingsw.viewmodel.MainActivityViewModel;
 
 public class VenditorePopUpCreaAsta extends Dialog implements View.OnClickListener{

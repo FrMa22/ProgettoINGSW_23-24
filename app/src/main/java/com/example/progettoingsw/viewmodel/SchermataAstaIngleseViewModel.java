@@ -1,5 +1,8 @@
     package com.example.progettoingsw.viewmodel;
     
+    import android.app.Activity;
+    import android.app.AlertDialog;
+    import android.content.DialogInterface;
     import android.graphics.Bitmap;
     import android.graphics.BitmapFactory;
     import android.util.Log;
@@ -8,6 +11,7 @@
     import androidx.lifecycle.ViewModel;
     
     import com.example.progettoingsw.DAO.Acquirente;
+    import com.example.progettoingsw.R;
     import com.example.progettoingsw.model.AcquirenteModel;
     import com.example.progettoingsw.model.Asta_allingleseModel;
     import com.example.progettoingsw.model.Asta_alribassoModel;
@@ -34,6 +38,7 @@
         public MutableLiveData<Boolean> isUltimaOffertaTua = new MutableLiveData<>(false);
         public MutableLiveData<String> intervalloOfferteConvertito = new MutableLiveData("");
         public MutableLiveData<Asta_allingleseModel> astadaMostrare = new MutableLiveData<>(null);
+        public MutableLiveData<AlertDialog> popUpInformazioni = new MutableLiveData<>(null);
         private String messaggioPartecipazioneAstaInglese;
         private String tipoUtente;
         //private Asta_allingleseModel astaRecuperata;
@@ -269,4 +274,33 @@
         public void recuperaAstaDaMostrare(){
             setAstadaMostrare(astaRecuperata.getValue());
         }
+        public void setPopUpInformazioni(AlertDialog popUpInformazioni) {
+            this.popUpInformazioni.setValue(popUpInformazioni);
+        }
+        public Boolean isPopUpInformazioni(){
+            return (popUpInformazioni.getValue()!=null);
+        }
+        public void creaPopUpInformazioni(Activity activity){
+            AlertDialog.Builder builder = new AlertDialog.Builder(activity, R.style.CustomDialogThemeInglese);
+            builder.setTitle("Cos'è un asta all'inglese?"); // Puoi impostare un titolo per il popup
+            builder.setMessage("Un’asta all’inglese è caratterizzata da una base d’asta iniziale, da un intervallo di tempo fisso per presentare nuove offerte " +
+                    ", e da una soglia di rialzo .\nGli acquirenti possono presentare un’offerta per " +
+                    "il prezzo corrente.\nQuando viene presentata un’offerta, il timer per la presentazione di nuove " +
+                    "offerte viene resettato.\nQuando il timer raggiunge lo zero senza che siano presentate nuove " +
+                    "offerte, l’ultima offerta si aggiudica il bene/servizio in vendita.\nNon lasciartelo scappare! "); // Il testo da mostrare nel popup
+
+
+            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    // Azione da eseguire quando si preme il pulsante OK
+                    dialog.dismiss(); // Chiudi il popup
+                }
+            });
+
+            AlertDialog dialog = builder.create();
+            //dialog.show();
+            setPopUpInformazioni(dialog);
+            setPopUpInformazioni(dialog);
+        }
+
     }

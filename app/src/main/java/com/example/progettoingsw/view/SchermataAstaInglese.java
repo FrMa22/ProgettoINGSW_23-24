@@ -59,6 +59,7 @@ public class SchermataAstaInglese extends GestoreComuniImplementazioni implement
     private Bitmap immagineConvertita;
     private Boolean isAstaChiusa;
     private String intervalloConvertito;
+    private ImageButton bottone_info_schermata_asta_inglese;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,6 +84,7 @@ public class SchermataAstaInglese extends GestoreComuniImplementazioni implement
         drawableCuoreVuoto = ContextCompat.getDrawable(this, R.drawable.ic_cuore_vuoto);
         drawableCuorePieno = ContextCompat.getDrawable(this, R.drawable.ic_cuore_pieno);
         text_view_tua_offerta_attuale = findViewById(R.id.text_view_tua_offerta_attuale);
+        bottone_info_schermata_asta_inglese = findViewById(R.id.bottone_info_schermata_asta_inglese);
 
         schermataAstaIngleseViewModel = new ViewModelProvider(this).get(SchermataAstaIngleseViewModel.class);
         osservaAstaRecuperata();
@@ -97,6 +99,7 @@ public class SchermataAstaInglese extends GestoreComuniImplementazioni implement
         osservaIsAstaChiusa();
         osservaImmagineAstaConvertita();
         osservaAstaDaMostrare();
+        osservaApriPopUpInfo();
 
         schermataAstaIngleseViewModel.checkTipoUtente();
         schermataAstaIngleseViewModel.getAstaData();
@@ -137,28 +140,12 @@ public class SchermataAstaInglese extends GestoreComuniImplementazioni implement
 
         }
     });
-//        if(tipoUtente.equals("venditore")){
-//            imageButtonPreferiti.setVisibility(View.INVISIBLE);
-//        }else{
-//            astaPreferitaIngleseDAO.openConnection();
-//            astaPreferitaIngleseDAO.verificaByID(id,email);
-//            imageButtonPreferiti.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    Log.d("Preferiti asta inglese", "drawable preferiti");
-//                    if (imageButtonPreferiti.getDrawable().getConstantState().equals(drawableCuoreVuoto.getConstantState())){
-//                        Log.d("Preferiti asta inglese", "non è in preferito");
-//                        setAllClickable(relativeLayoutSchermataAstaInglese,false);
-//                        astaPreferitaIngleseDAO.inserisciByID(id,email);
-//
-//                    } else if (imageButtonPreferiti.getDrawable().getConstantState().equals(drawableCuorePieno.getConstantState())){
-//                        Log.d("Preferiti asta inglese", "è in preferito");
-//                        setAllClickable(relativeLayoutSchermataAstaInglese,false);
-//                        astaPreferitaIngleseDAO.eliminaByID(id,email);
-//                    }
-//                }
-//            });
-//        }
+    bottone_info_schermata_asta_inglese.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            schermataAstaIngleseViewModel.creaPopUpInformazioni(SchermataAstaInglese.this);
+        }
+    });
 
 
 
@@ -370,6 +357,13 @@ public class SchermataAstaInglese extends GestoreComuniImplementazioni implement
             if(valore){
                 Intent intent=new Intent(SchermataAstaInglese.this, ProfiloVenditore.class);
                 startActivity(intent);
+            }
+        });
+    }
+    public void osservaApriPopUpInfo(){
+        schermataAstaIngleseViewModel.popUpInformazioni.observe(this, (valore) ->{
+            if(schermataAstaIngleseViewModel.isPopUpInformazioni()){
+                valore.show();
             }
         });
     }

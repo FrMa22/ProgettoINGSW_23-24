@@ -17,15 +17,10 @@ import android.widget.Switch;
 import android.widget.Toast;
 
 import androidx.activity.OnBackPressedCallback;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.progettoingsw.DAO.RegistrazioneCategorieDAO;
 import com.example.progettoingsw.R;
 import com.example.progettoingsw.classe_da_estendere.GestoreComuniImplementazioni;
-import com.example.progettoingsw.model.AcquirenteModel;
-import com.example.progettoingsw.model.VenditoreModel;
-import com.example.progettoingsw.view.acquirente.MainActivity;
 import com.example.progettoingsw.viewmodel.RegistrazioneViewModel;
 import com.google.android.material.button.MaterialButton;
 
@@ -36,9 +31,7 @@ public class RegistrazioneCategorie extends GestoreComuniImplementazioni {
     private MaterialButton bottoneProseguiInteressiRegistrazione;
     private MaterialButton bottoneSaltaRegistrazioneCategorie;
     private LinearLayout linear_layout_interno_registrazione_social;
-    private ArrayList<String> switchTexts; // Array per memorizzare il testo degli switch selezionati
-    private String email;
-    private String tipoUtente;
+    private ArrayList<String> switchTexts;
     private ProgressBar progress_bar_registrazione_categorie;
     private RegistrazioneViewModel registrazioneViewModel;
 
@@ -174,6 +167,7 @@ public class RegistrazioneCategorie extends GestoreComuniImplementazioni {
                 Log.d("osservaVaiInHome", "entrato");
                 Intent intent = new Intent(RegistrazioneCategorie.this, MainActivity.class);//test del login
                 startActivity(intent);
+                finish();
             }
         });
     }

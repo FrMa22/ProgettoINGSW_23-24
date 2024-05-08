@@ -529,7 +529,7 @@ public class FragmentProfiloViewModel extends ViewModel {
         fragmentProfiloRepository.aggiornaAcquirenteBackend(nome,cognome,bio,link,areageografica,email ,new FragmentProfiloRepository.OnAggiornaAcquirenteListener() {
             @Override
             public void onAggiornaAcquirente(String nomeNuovo,String cognomeNuovo,String bioNuovo,String linkNuovo,String areageograficaNuovo) {
-                repository.updateAcquirente(nomeNuovo,cognomeNuovo,bioNuovo,linkNuovo,areageograficaNuovo);
+                repository.updateAcquirente(nomeNuovo.trim(),cognomeNuovo.trim(),bioNuovo.trim(),linkNuovo.trim(),areageograficaNuovo.trim());
                 setIsUtenteCambiato(true);
             }
         });
@@ -681,7 +681,7 @@ public class FragmentProfiloViewModel extends ViewModel {
         fragmentProfiloRepository.aggiornaVenditoreBackend(nome,cognome,bio,link,areageografica,email ,new FragmentProfiloRepository.OnAggiornaVenditoreListener() {
             @Override
             public void onAggiornaVenditore(String nomeNuovo,String cognomeNuovo,String bioNuovo,String linkNuovo,String areageograficaNuovo) {
-                repository.updateVenditore(nomeNuovo,cognomeNuovo,bioNuovo,linkNuovo,areageograficaNuovo);
+                repository.updateVenditore(nomeNuovo.trim(),cognomeNuovo.trim(),bioNuovo.trim(),linkNuovo.trim(),areageograficaNuovo.trim());
                 setIsUtenteCambiato(true);
             }
         });

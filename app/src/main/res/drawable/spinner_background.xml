@@ -1,8 +1,5 @@
 <!-- spinner_background.xml -->
-<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:drawable="@drawable/edit_text_tutti_lati_grigi_rounded" />
-    <item
-        android:drawable="@drawable/baseline_arrow_drop_down_24"
-        android:gravity="end|center_vertical"
-        android:right="10dp" />
-</layer-list>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_window_focused="true" android:drawable="@drawable/spinner_background_opened" />
+    <item android:drawable="@drawable/spinner_background_closed" />
+</selector>

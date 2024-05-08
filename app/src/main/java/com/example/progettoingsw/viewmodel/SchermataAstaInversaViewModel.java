@@ -1,5 +1,8 @@
 package com.example.progettoingsw.viewmodel;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
@@ -7,6 +10,7 @@ import android.util.Log;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.progettoingsw.R;
 import com.example.progettoingsw.model.Asta_alribassoModel;
 import com.example.progettoingsw.model.Asta_inversaModel;
 import com.example.progettoingsw.model.VenditoreModel;
@@ -25,6 +29,7 @@ public class SchermataAstaInversaViewModel extends ViewModel {
     public MutableLiveData<Boolean> isUltimaOffertaTua = new MutableLiveData<>(false);
     public MutableLiveData<Boolean> vaiInAcquirente = new MutableLiveData<>(false);
     public MutableLiveData<Asta_inversaModel> astadaMostrare = new MutableLiveData<>(null);
+    public MutableLiveData<AlertDialog> popUpInformazioni = new MutableLiveData<>(null);
     private String messaggioPartecipazioneAstaInglese;
     private Asta_inversaRepository astaInversaRepository;
 
@@ -217,5 +222,33 @@ public class SchermataAstaInversaViewModel extends ViewModel {
             Log.d("recuperaAstaDaMostrare", "valori: " + astaRecuperata.getValue().getNome());
         }
         setAstadaMostrare(repository.getAsta_inversaSelezionata());
+    }
+    public void setPopUpInformazioni(AlertDialog popUpInformazioni) {
+        this.popUpInformazioni.setValue(popUpInformazioni);
+    }
+    public Boolean isPopUpInformazioni(){
+        return (popUpInformazioni.getValue()!=null);
+    }
+    public void creaPopUpInformazioni(Activity activity){
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity, R.style.CustomDialogThemeInversa);
+        builder.setTitle("Cos'è un asta inversa?"); // Puoi impostare un titolo per il popup
+
+        builder.setMessage("Nell'asta inversa, il compratore specifica il prodotto/servizio richiesto," +
+                " un prezzo iniziale che è disposto a pagare, e una data di scadenza.\nI venditori " +
+                "possono partecipare all’asta competendo abbassando il prezzo, con offerte al ribasso. \n" +
+                "Al momento della scadenza dell’asta, il venditore con l’offerta più bassa si aggiudica la fornitura del prodotto/servizio.\nNon lasciartelo scappare!");
+
+
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                // Azione da eseguire quando si preme il pulsante OK
+                dialog.dismiss(); // Chiudi il popup
+            }
+        });
+
+        AlertDialog dialog = builder.create();
+        //dialog.show();
+        setPopUpInformazioni(dialog);
+        setPopUpInformazioni(dialog);
     }
 }

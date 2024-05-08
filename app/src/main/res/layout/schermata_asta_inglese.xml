@@ -251,19 +251,40 @@
                 app:strokeColor="@color/colore_item_asta_inglese"
                 app:strokeWidth="2dp" />
 
-            <TextView
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                >
+
+
+                <TextView
                 android:id="@+id/textViewVenditoreSchermataAstaInglese"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="-1dp"
-                android:layout_gravity="center"
-                android:layout_marginTop="20dp"
+                    android:layout_alignParentStart="true"
                 android:drawableLeft="@drawable/ic_profilo"
-                android:gravity="center"
+                    android:layout_toStartOf="@id/bottone_info_schermata_asta_inglese"
+                android:gravity="start|center_vertical"
                 android:text="Email venditore"
                 android:textColor="@color/colore_secondario"
                 android:textSize="20dp"
                 android:textStyle="bold"/>
+                <ImageButton
+                    android:id="@+id/bottone_info_schermata_asta_inglese"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:backgroundTint="@android:color/transparent"
+                    android:contentDescription="Premi per informazioni"
+                    android:src="@drawable/ic_info"
+                    tools:ignore="TouchTargetSizeCheck" />
+            </RelativeLayout>
+
 
 
         </LinearLayout>

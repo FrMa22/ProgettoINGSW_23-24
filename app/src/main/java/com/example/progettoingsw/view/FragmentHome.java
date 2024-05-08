@@ -1,8 +1,7 @@
-package com.example.progettoingsw.view.acquirente;
+package com.example.progettoingsw.view;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,7 +12,6 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -24,10 +22,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.example.progettoingsw.DAO.AstaDAOAcquirente;
 import com.example.progettoingsw.R;
 import com.example.progettoingsw.controllers_package.AstaAdapter;
-import com.example.progettoingsw.model.Asta_allingleseModel;
+import com.example.progettoingsw.view.MainActivity;
 import com.example.progettoingsw.view.PreferitiActivity;
 import com.example.progettoingsw.view.SchermataAstaInglese;
 import com.example.progettoingsw.view.SchermataAstaInversa;
@@ -35,9 +32,6 @@ import com.example.progettoingsw.view.SchermataAstaRibasso;
 import com.example.progettoingsw.view.SchermataNotifiche;
 import com.example.progettoingsw.viewmodel.HomeViewModel;
 import com.google.firebase.analytics.FirebaseAnalytics;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class FragmentHome extends Fragment {
     private RelativeLayout relative_layout_home_acquirente;

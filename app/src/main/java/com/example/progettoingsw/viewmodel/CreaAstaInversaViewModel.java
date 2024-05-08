@@ -15,6 +15,7 @@ import androidx.activity.result.ActivityResult;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.progettoingsw.R;
 import com.example.progettoingsw.model.Asta_inversaModel;
 import com.example.progettoingsw.repository.Asta_inversaRepository;
 import com.example.progettoingsw.repository.Repository;
@@ -401,12 +402,12 @@ public class CreaAstaInversaViewModel extends ViewModel {
     }
 
     public void creaPopUpInformazioni(Activity activity) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity, R.style.CustomDialogThemeInversa);
         builder.setTitle("Cos'è un asta inversa?"); // Puoi impostare un titolo per il popup
-        builder.setMessage("Nell'asta inversa, il compratore specifica il prodotto/servizio richiesto, eventualmente inserendo un’immagine dello stesso," +
-                " un prezzo iniziale che è disposto a pagare, e una data di scadenza. I venditori in grado di fornire quel particolare prodotto/servizio " +
-                "possono quindi partecipare all’asta competendo abbassando il prezzo. In particolare, fino al momento della scadenza dell’asta, i venditori " +
-                "possono presentare offerte al ribasso. Al momento della scadenza dell’asta, il venditore con l’offerta più bassa si aggiudica la fornitura del prodotto/servizio.");
+        builder.setMessage("Nell'asta inversa, il compratore specifica il prodotto/servizio richiesto," +
+                " un prezzo iniziale che è disposto a pagare, e una data di scadenza. I venditori " +
+                "possono partecipare all’asta competendo abbassando il prezzo, con offerte al ribasso. " +
+                "Al momento della scadenza dell’asta, il venditore con l’offerta più bassa si aggiudica la fornitura del prodotto/servizio. Al termine l'acquirente riceve una notifica.");
 
 
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {

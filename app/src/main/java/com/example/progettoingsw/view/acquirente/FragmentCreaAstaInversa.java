@@ -29,8 +29,8 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.progettoingsw.R;
 
+import com.example.progettoingsw.view.MainActivity;
 import com.example.progettoingsw.view.PopUpAggiungiCategorieAsta;
-import com.example.progettoingsw.view.venditore.VenditoreAstaInglese;
 import com.example.progettoingsw.viewmodel.CreaAstaInversaViewModel;
 import com.google.android.material.button.MaterialButton;
 import com.google.firebase.analytics.FirebaseAnalytics;

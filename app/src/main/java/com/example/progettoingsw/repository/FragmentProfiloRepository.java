@@ -6,6 +6,7 @@ import android.util.Log;
 import com.example.progettoingsw.DTO.AcquirenteDTO;
 import com.example.progettoingsw.DTO.SocialAcquirenteDTO;
 import com.example.progettoingsw.DTO.SocialVenditoreDTO;
+import com.example.progettoingsw.DTO.VenditoreDTO;
 import com.example.progettoingsw.backendAPI.AcquirenteService;
 import com.example.progettoingsw.backendAPI.SocialAcquirenteService;
 import com.example.progettoingsw.backendAPI.SocialVenditoreService;
@@ -513,10 +514,20 @@ public class FragmentProfiloRepository {
                     .build();
 
             AcquirenteService service = retrofit.create(AcquirenteService.class);
-            Call<Void> call=service.updateAcquirente(nome,cognome,bio,link,areageografica,email);
+            if( bio.isEmpty()){
+                System.out.println("bio null o vuota");
+            }
+            if( link.isEmpty()){
+                System.out.println("link null o vuota");
+            }
+            if(areageografica.isEmpty()){
+                System.out.println("areageografica null o vuota");
+            }
+            AcquirenteDTO acquirenteDTO = new AcquirenteDTO(nome, cognome,email,null,bio,areageografica,link);
+            Call<Void> call=service.updateAcquirente(acquirenteDTO);
 
 
-            System.out.println("entrato nel collegamento al backend,prima del try");
+            System.out.println("entrato nel collegamento al backend,prima del try, valori : " + nome + cognome + bio + link + areageografica + email);
             try {
                 Response<Void> response = call.execute();
                 if (response.isSuccessful()) {
@@ -719,7 +730,8 @@ public class FragmentProfiloRepository {
                     .build();
 
             VenditoreService service = retrofit.create(VenditoreService.class);
-            Call<Void> call=service.updateVenditore(nome,cognome,bio,link,areageografica,email);
+            VenditoreDTO venditoreDTO = new VenditoreDTO(nome,cognome,email,null,bio,areageografica,link);
+            Call<Void> call=service.updateVenditore(venditoreDTO);
 
 
             System.out.println("entrato nel collegamento al backend,prima del try");

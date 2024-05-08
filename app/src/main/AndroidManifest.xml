@@ -43,23 +43,23 @@
             android:name=".view.PopUpAggiungiCategorieAsta"
             android:exported="false" />
         <activity
-            android:name=".view.acquirente.MainActivity"
+            android:name=".view.MainActivity"
             android:windowSoftInputMode="adjustPan"
             android:exported="false" />
         <activity
             android:name=".view.PopUpFiltroRicerca"
             android:theme="@style/Base.Theme.ProgettoINGSW.CustomThemeSfocato" />
         <activity
-            android:name=".view.acquirente.FragmentRicercaAsta"
+            android:name=".view.FragmentRicercaAsta"
             android:exported="false" />
         <activity
-            android:name=".view.acquirente.FragmentSelezioneCategorie"
+            android:name=".view.FragmentSelezioneCategorie"
             android:exported="false" />
         <activity
-            android:name=".view.acquirente.FragmentHome"
+            android:name=".view.FragmentHome"
             android:exported="true" />
         <activity
-            android:name=".view.acquirente.FragmentProfilo"
+            android:name=".view.FragmentProfilo"
             android:exported="false" />
         <activity
             android:name=".view.PopUpModificaCampiProfilo"
@@ -91,9 +91,6 @@
             android:exported="false" />
         <activity
             android:name=".view.RegistrazioneCategorie"
-            android:exported="false" />
-        <activity
-            android:name=".view.acquirente.AcquirenteFragmentCreaLaTuaAstaAcquirente"
             android:exported="false" />
         <activity
             android:name=".view.venditore.VenditoreAstaInglese"

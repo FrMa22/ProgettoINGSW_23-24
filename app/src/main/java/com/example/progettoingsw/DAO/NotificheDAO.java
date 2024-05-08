@@ -4,8 +4,8 @@ import android.util.Log;
 
 import com.example.progettoingsw.controllers_package.DatabaseHelper;
 import com.example.progettoingsw.view.SchermataNotifiche;
-import com.example.progettoingsw.view.acquirente.FragmentHome;
-import com.example.progettoingsw.view.acquirente.MainActivity;
+import com.example.progettoingsw.view.FragmentHome;
+import com.example.progettoingsw.view.MainActivity;
 import com.example.progettoingsw.item.NotificaItem;
 
 import java.sql.Connection;

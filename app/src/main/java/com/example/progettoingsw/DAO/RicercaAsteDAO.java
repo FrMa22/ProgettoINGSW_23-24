@@ -9,7 +9,7 @@ import android.widget.Toast;
 import com.example.progettoingsw.R;
 import com.example.progettoingsw.controllers_package.DatabaseHelper;
 import com.example.progettoingsw.gestori_gui.ItemRicercaAste;
-import com.example.progettoingsw.view.acquirente.FragmentRicercaAsta;
+import com.example.progettoingsw.view.FragmentRicercaAsta;
 import com.example.progettoingsw.item.AstaIngleseItem;
 import com.example.progettoingsw.item.AstaInversaItem;
 import com.example.progettoingsw.item.AstaRibassoItem;

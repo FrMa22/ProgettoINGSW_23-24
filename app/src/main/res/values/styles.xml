@@ -35,5 +35,65 @@
         <!-- inactive track color (30% transparency) -->
         <item name="android:colorForeground">@color/colore_hint</item>
     </style>
+    <style name="CustomDialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:windowBackground">@drawable/dialog_border</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowSoftInputMode">stateUnspecified|adjustPan</item>
+        <item name="android:buttonBarNegativeButtonStyle">@style/PositiveButtonStyle</item>
+        <item name="android:buttonBarPositiveButtonStyle">@style/PositiveButtonStyle</item>
+    </style>
+    <style name="PositiveButtonStyle" parent="Widget.AppCompat.Button.ButtonBar.AlertDialog">
+        <item name="android:textColor">@color/colore_secondario</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="CustomDialogThemeRibasso" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:windowBackground">@drawable/dialog_border_ribasso</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowSoftInputMode">stateUnspecified|adjustPan</item>
+        <item name="android:textColor">@color/colore_item_asta_ribasso</item>
+        <item name="android:buttonBarNegativeButtonStyle">@style/PositiveButtonStyleRibasso</item>
+        <item name="android:buttonBarPositiveButtonStyle">@style/PositiveButtonStyleRibasso</item>
+    </style>
+    <style name="PositiveButtonStyleRibasso" parent="Widget.AppCompat.Button.ButtonBar.AlertDialog">
+        <item name="android:textColor">@color/colore_item_asta_ribasso</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="CustomDialogThemeInglese" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:windowBackground">@drawable/dialog_border_inglese</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowSoftInputMode">stateUnspecified|adjustPan</item>
+        <item name="android:textColor">@color/colore_item_asta_inglese</item>
+        <item name="android:buttonBarNegativeButtonStyle">@style/PositiveButtonStyleInglese</item>
+        <item name="android:buttonBarPositiveButtonStyle">@style/PositiveButtonStyleInglese</item>
+    </style>
+    <style name="PositiveButtonStyleInglese" parent="Widget.AppCompat.Button.ButtonBar.AlertDialog">
+        <item name="android:textColor">@color/colore_item_asta_inglese</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="CustomDialogThemeInversa" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:windowBackground">@drawable/dialog_border_inversa</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowSoftInputMode">stateUnspecified|adjustPan</item>
+        <item name="android:textColor">@color/colore_item_asta_inversa</item>
+        <item name="android:buttonBarNegativeButtonStyle">@style/PositiveButtonStyleInversa</item>
+        <item name="android:buttonBarPositiveButtonStyle">@style/PositiveButtonStyleInversa</item>
+    </style>
+    <style name="PositiveButtonStyleInversa" parent="Widget.AppCompat.Button.ButtonBar.AlertDialog">
+        <item name="android:textColor">@color/colore_item_asta_inversa</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="spinner_style" parent="Widget.AppCompat.Spinner">
+        <item name="overlapAnchor">false</item>
+        <item name="android:dropDownVerticalOffset">1dp</item>
+        <item name="android:dropDownSelector">@drawable/spinner_background_opened</item>
+    </style>
+
+
 
 </resources>

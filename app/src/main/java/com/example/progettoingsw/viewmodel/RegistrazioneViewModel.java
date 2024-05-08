@@ -3,7 +3,6 @@ package com.example.progettoingsw.viewmodel;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
-import android.view.contentcapture.ContentCaptureCondition;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;

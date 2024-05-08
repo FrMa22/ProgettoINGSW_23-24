@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:id="@+id/relative_layout_fragment_profilo"
-    tools:context=".view.acquirente.FragmentProfilo">
+    tools:context=".view.FragmentProfilo">
 
     <TextView
         android:id="@+id/textView2"

@@ -15,6 +15,7 @@ import androidx.activity.result.ActivityResult;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.progettoingsw.R;
 import com.example.progettoingsw.model.Asta_allingleseModel;
 import com.example.progettoingsw.repository.Asta_allingleseRepository;
 import com.example.progettoingsw.repository.Repository;
@@ -376,15 +377,13 @@ public class CreaAstaIngleseViewModel extends ViewModel {
     }
 
     public void creaPopUpInformazioni(Activity activity) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity, R.style.CustomDialogThemeInglese);
         builder.setTitle("Cos'è un asta all'inglese?"); // Puoi impostare un titolo per il popup
-        builder.setMessage(" Un’asta all’inglese è caratterizzata da una base d’asta iniziale pubblica, specificata dal venditore al momento della " +
-                "creazione dell’asta, da un intervallo di tempo fisso per presentare nuove offerte (di default 1 " +
-                "ora), e da una soglia di rialzo (di default 10€).\n Gli acquirenti possono presentare un’offerta per " +
-                "il prezzo corrente.\n Quando viene presentata un’offerta, il timer per la presentazione di nuove " +
-                "offerte viene resettato. Quando il timer raggiunge lo zero senza che siano presentate nuove " +
-                "offerte, l’ultima offerta si aggiudica il bene/servizio in vendita, e il venditore e gli acquirenti che " +
-                "hanno partecipato all’asta visualizzano una notifica. "); // Il testo da mostrare nel popup
+        builder.setMessage("Un’asta all’inglese è caratterizzata da una base d’asta iniziale, da un intervallo di tempo fisso per presentare nuove offerte " +
+                ", e da una soglia di rialzo .\nGli acquirenti possono presentare un’offerta per " +
+                "il prezzo corrente.\nQuando viene presentata un’offerta, il timer per la presentazione di nuove " +
+                "offerte viene resettato.\nQuando il timer raggiunge lo zero senza che siano presentate nuove " +
+                "offerte, l’ultima offerta si aggiudica il bene/servizio in vendita. Al termine il venditore riceve una notifica. "); // Il testo da mostrare nel popup
 
 
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {

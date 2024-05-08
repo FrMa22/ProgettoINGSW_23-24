@@ -1,7 +1,6 @@
 package com.example.progettoingsw.view;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.EditText;
@@ -10,7 +9,6 @@ import android.widget.Toast;
 
 import com.example.progettoingsw.R;
 import com.example.progettoingsw.classe_da_estendere.DialogPersonalizzato;
-import com.example.progettoingsw.view.acquirente.FragmentProfilo;
 import com.example.progettoingsw.viewmodel.FragmentProfiloViewModel;
 import com.google.android.material.button.MaterialButton;
 

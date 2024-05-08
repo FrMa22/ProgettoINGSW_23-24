@@ -1,32 +1,21 @@
-    package com.example.progettoingsw.view.acquirente;
+    package com.example.progettoingsw.view;
 
     import androidx.fragment.app.Fragment;
     import androidx.lifecycle.ViewModelProvider;
 
     import android.os.Bundle;
-    import android.os.CountDownTimer;
     import android.util.Log;
     import android.view.Menu;
     import android.view.MenuItem;
 
     import com.example.progettoingsw.R;
     import com.example.progettoingsw.classe_da_estendere.GestoreComuniImplementazioni;
-    import com.example.progettoingsw.model.AcquirenteModel;
-    import com.example.progettoingsw.model.VenditoreModel;
-    import com.example.progettoingsw.repository.Repository;
+    import com.example.progettoingsw.view.acquirente.FragmentCreaAstaInversa;
     import com.example.progettoingsw.view.venditore.VenditorePopUpCreaAsta;
     import com.example.progettoingsw.viewmodel.MainActivityViewModel;
     import com.google.android.material.bottomnavigation.BottomNavigationView;
     public class MainActivity extends GestoreComuniImplementazioni {
-        private AcquirenteModel acquirenteModel;
-        private VenditoreModel venditoreModel;
         private BottomNavigationView bottomNavigationView;
-        private String email;
-        private String tipoUtente;
-        private CountDownTimer countDownTimer;
-        private int numeroNotifiche;
-        private int numeroNotificheChecked;
-        private boolean controlloIniziale = true;
         private MainActivityViewModel mainActivityViewModel;
         private Fragment selectedFragment;
         private MenuItem homeMenuItem;
@@ -130,94 +119,6 @@
                 return 0;
             }
         }
-//        public void navigateToFragmentAndSelectIcon(Fragment fragment) {
-//            // Controlla se il fragment corrente è già quello selezionato
-//            Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
-//            if (currentFragment != null && currentFragment.getClass().equals(fragment.getClass())) {
-//                // Non fare nulla se il fragment corrente è già quello selezionato
-//                Log.d("BottomNav", "Fragment already selected");
-//                return;
-//            }
-//
-//            // Imposta il nuovo fragment
-//            getSupportFragmentManager().beginTransaction()
-//                    .replace(R.id.fragment_container, fragment)
-//                    .commit();
-//
-//            // Imposta l'icona corrispondente nella BottomNavigationView
-//            MenuItem menuItem = null;
-//            if (fragment instanceof FragmentHome) {
-//                menuItem = bottomNavigationView.getMenu().findItem(R.id.action_home);
-//            } else if (fragment instanceof FragmentSelezioneCategorie) {
-//                menuItem = bottomNavigationView.getMenu().findItem(R.id.action_categories);
-//            } else if (fragment instanceof FragmentCreaAstaInversa) {
-//                menuItem = bottomNavigationView.getMenu().findItem(R.id.action_crea_asta);
-//            } else if (fragment instanceof FragmentRicercaAsta) {
-//                menuItem = bottomNavigationView.getMenu().findItem(R.id.action_search);
-//            } else if (fragment instanceof FragmentProfilo) {
-//                menuItem = bottomNavigationView.getMenu().findItem(R.id.action_profile);
-//            }
-//
-//            // Se l'elemento di menu corrispondente è stato trovato, imposta l'elemento come selezionato
-//            if (menuItem != null) {
-//                menuItem.setChecked(true);
-//                resetOtherIcons(bottomNavigationView, menuItem);
-//            }
-//        }
-
-//    public void handleGetNumeroNotifiche(int numero){
-//            if(controlloIniziale){
-//                this.numeroNotifiche = numero;
-//                controlloIniziale = false;
-//                Log.d("handleGetNumeroNotifiche", "controllo inizale, numero = " + numero + ", numero notifiche= " + numeroNotifiche);
-//            }else{
-//                Log.d("handleGetNumeroNotifiche", "controllo, numero: "+ numero + ", num notifich: " + numeroNotifiche);
-//                if(numero>numeroNotifiche){
-//                    int notificheNuove = numero - numeroNotifiche;
-//                    PopUpNotificaRicevuta popUpNotificaRicevuta = new PopUpNotificaRicevuta(MainActivity.this,notificheNuove,email,tipoUtente);
-//                    popUpNotificaRicevuta.show();
-//                    numeroNotifiche = numero;
-//                    Log.d("Numero notifiche in handle" , " Notifiche: " + numeroNotifiche );
-//                }else{
-//                    this.numeroNotifiche = numero;
-//                    Log.d("Numero notifiche in handle" , " Notifiche resettate : " + numeroNotifiche );
-//                }
-//            }
-//    }
-        // questi metodi onPause, onStop, onDestroy e onResume servono a stoppare il timer quando non si è piu su questa schermata e a farlo ricominciare quando si torna
-//        @Override
-//        protected void onPause() {
-//            super.onPause();
-//            // Ferma il countDownTimer se è attivo
-//            if (countDownTimer != null) {
-//                countDownTimer.cancel();
-//            }
-//        }
-//        @Override
-//        protected void onStop() {
-//            super.onStop();
-//            // Ferma il countDownTimer se è attivo
-//            if (countDownTimer != null) {
-//                countDownTimer.cancel();
-//            }
-//        }
-//        @Override
-//        protected void onDestroy() {
-//            super.onDestroy();
-//            // Ferma il countDownTimer se è attivo
-//            if (countDownTimer != null) {
-//                countDownTimer.cancel();
-//            }
-//        }
-//        @Override
-//        public void onResume() {
-//            super.onResume();
-//            // Ferma il countDownTimer se è attivo
-//            if (countDownTimer != null) {
-//                countDownTimer.cancel();
-//                countDownTimer.start();
-//            }
-//        }
 
         public void osservaSceltoHome(){
             mainActivityViewModel.sceltoHome.observe(this, (valore) ->{

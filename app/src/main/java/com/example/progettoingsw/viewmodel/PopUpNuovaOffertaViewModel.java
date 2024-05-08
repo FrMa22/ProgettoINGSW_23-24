@@ -204,14 +204,19 @@ public class PopUpNuovaOffertaViewModel extends ViewModel {
         float minimaOfferta = getPrezzoVecchio() + getRialzoMin();
         return String.valueOf(minimaOfferta);
     }
-    public void resetErroriNuovaOfferta(LifecycleOwner lifecycleOwner){
+    public void resetErroriNuovaOfferta(
+            LifecycleOwner lifecycleOwner
+    ){
         setMessaggioErrore("");
         setMessaggioErroreOfferta(false);
         setOffertaValida(false);
-//        tipoAstaChecked.removeObservers(lifecycleOwner);
-//        isPartecipazioneAvvenuta.removeObservers(lifecycleOwner);
-//        offertaValida.removeObservers(lifecycleOwner);
-//        messaggioErroreOfferta.removeObservers(lifecycleOwner);
+        setIsPartecipazioneAvvenuta(false);
+        setTipoAsta("");
+        setMessaggioPartecipazioneAsta("");
+        tipoAstaChecked.removeObservers(lifecycleOwner);
+        isPartecipazioneAvvenuta.removeObservers(lifecycleOwner);
+        offertaValida.removeObservers(lifecycleOwner);
+        messaggioErroreOfferta.removeObservers(lifecycleOwner);
     }
 
 }

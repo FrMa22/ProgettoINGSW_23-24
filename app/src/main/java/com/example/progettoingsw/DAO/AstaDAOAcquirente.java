@@ -7,7 +7,7 @@ import android.util.Log;
 
 import com.example.progettoingsw.R;
 import com.example.progettoingsw.controllers_package.DatabaseHelper;
-import com.example.progettoingsw.view.acquirente.FragmentHome;
+import com.example.progettoingsw.view.FragmentHome;
 import com.example.progettoingsw.item.AstaIngleseItem;
 import com.example.progettoingsw.item.AstaRibassoItem;
 import com.example.progettoingsw.item.AstaInversaItem;

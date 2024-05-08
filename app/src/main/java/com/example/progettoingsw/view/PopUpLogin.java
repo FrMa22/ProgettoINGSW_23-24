@@ -9,7 +9,6 @@ import android.widget.Toast;
 
 import com.example.progettoingsw.R;
 import com.example.progettoingsw.classe_da_estendere.DialogPersonalizzato;
-import com.example.progettoingsw.view.acquirente.MainActivity;
 
 public class PopUpLogin extends DialogPersonalizzato implements View.OnClickListener {
     private TextView bottoneAcquirente;

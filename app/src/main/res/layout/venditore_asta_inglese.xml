@@ -110,6 +110,7 @@
                     android:textColorHint="@color/colore_hint"
                     android:minHeight="100dp"
                     android:maxLength="250"
+                    android:singleLine="true"
                     android:textColor="@color/colore_secondario"
                     android:layout_marginStart="20dp"
                     android:layout_marginEnd="20dp"

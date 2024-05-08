@@ -2,14 +2,9 @@ package com.example.progettoingsw.viewmodel;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.util.Log;
-import android.view.View;
-import android.view.contentcapture.ContentCaptureCondition;
 
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.SavedStateHandle;
 import androidx.lifecycle.ViewModel;
 
 import com.example.progettoingsw.model.AcquirenteModel;

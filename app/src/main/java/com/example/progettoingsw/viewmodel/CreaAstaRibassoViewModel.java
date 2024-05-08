@@ -15,6 +15,7 @@ import androidx.activity.result.ActivityResult;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.progettoingsw.R;
 import com.example.progettoingsw.model.Asta_alribassoModel;
 import com.example.progettoingsw.repository.Asta_alribassoRepository;
 import com.example.progettoingsw.repository.Repository;
@@ -418,12 +419,11 @@ public class CreaAstaRibassoViewModel extends ViewModel{
     }
 
     public void creaPopUpInformazioni(Activity activity) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity, R.style.CustomDialogThemeRibasso);
         builder.setTitle("Cos'è un asta al ribasso?"); // Puoi impostare un titolo per il popup
-        builder.setMessage(" Un’asta al ribasso è caratterizzata da un prezzo iniziale elevato specificato dal venditore, da un timer per il decremento del prezzo da un importo, in €," +
-                " per ciascun decremento, e da un prezzo minimo (segreto) a cui vendere il prodotto/servizio. Il prodotto/servizio sarà in vendita al prezzo iniziale stabilito dal venditore." +
-                " Al raggiungimento del timer, il prezzo verrà decrementato dell’importo previsto. Il primo compratore a presentare un’offerta si aggiudica il prodotto/servizio. Se il prezzo viene " +
-                "decrementato fino a raggiungere il prezzo minimo segreto, l’asta viene considerata fallita e il venditore visualizza una notifica. "); // Il testo da mostrare nel popup
+        builder.setMessage("Un’asta al ribasso è caratterizzata da un prezzo iniziale specificato dal venditore, da un timer per il decremento del prezzo e da un prezzo minimo (segreto e noto solo al venditore) a cui vendere il prodotto/servizio.\n" +
+                "Al raggiungimento del timer, il prezzo verrà decrementato dell’importo previsto.\nIl primo compratore a presentare un’offerta si aggiudica il prodotto/servizio. Se il prezzo viene " +
+                "decrementato fino a raggiungere il prezzo minimo segreto, l’asta viene considerata chiusa e non saranno possibili offerte. Al termine il venditore riceve una notifica."); // Il testo da mostrare nel popup
 
 
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {

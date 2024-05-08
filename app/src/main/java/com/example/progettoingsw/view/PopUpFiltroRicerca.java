@@ -18,7 +18,6 @@ import androidx.appcompat.widget.SwitchCompat;
 
 import com.example.progettoingsw.R;
 import com.example.progettoingsw.classe_da_estendere.DialogPersonalizzato;
-import com.example.progettoingsw.view.acquirente.FragmentRicercaAsta;
 import com.example.progettoingsw.viewmodel.RicercaAstaViewModel;
 
 import java.util.ArrayList;
