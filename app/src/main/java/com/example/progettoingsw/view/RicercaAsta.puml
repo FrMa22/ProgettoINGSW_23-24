@@ -1,0 +1,437 @@
+@startuml
+scale 3
+package com.example.progettoingsw.view {
+    class FragmentRicercaAsta {
+        -edittext_ricerca: EditText
+        -button_cerca_asta: MaterialButton
+        -button_filtro: ImageButton
+        -parolaRicercata: String
+        -asteRecuperate: AstaAdapter
+        -progress_bar_schermata_ricerca_asta: ProgressBar
+        -relative_layout_fragment_ricerca: RelativeLayout
+        -text_view_nessuna_asta_ricercata: TextView
+        -ricercaAstaViewModel: RicercaAstaViewModel
+        +FragmentRicercaAsta()
+        +onCreateView(inflater: LayoutInflater, container: ViewGroup,
+         savedInstanceState: Bundle): View
+        +onViewCreated(view: View, savedInstanceState: Bundle)
+        +onResume()
+        +osservaApriFiltro()
+        +osservaIsAcquirente()
+        +osservaEntraInSchermataAstaInglese()
+        +osservaEntraInSchermataAstaRibasso()
+        +osservaEntraInSchermataAstaInversa()
+        +osservaListaAstaIngleseRicerca()
+        +osservaListaAstaIngleseRicercaConvertite()
+        +osservaListaAstaRibassoRicerca()
+        +osservaListaAstaRibassoRicercaConvertite()
+        +osservaListaAstaInversaRicerca()
+        +osservaListaAstaInversaRicercaConvertite()
+    }
+     class FragmentSelezioneCategorie {
+        -selectedRadioButtonItems: List<String>
+        -linearLayoutCategorie: LinearLayout
+        -selezioneCategorieViewModel: SelezioneCategorieViewModel
+        +FragmentSelezioneCategorie()
+        +onCreateView(inflater: LayoutInflater, container: ViewGroup,
+         savedInstanceState: Bundle): View
+        +onViewCreated(view: View, savedInstanceState: Bundle)
+        +onResume()
+        -populateLinearLayout()
+        +osservaCategoriaSelezionata()
+    }
+    class SchermataAstePerCategoria {
+            -textViewTtitoloCategorie: TextView
+            -backBottone: ImageButton
+            -astaAdapter: AstaAdapter
+            -progress_bar_schermata_aste_per_categoria: ProgressBar
+            -text_view_nessuna_asta_ricercata_per_categoria: TextView
+            -schermataAstePerCategoriaViewModel: SchermataAstePerCategoriaViewModel
+            -swipe_refresh_layout_aste_per_categoria: SwipeRefreshLayout
+            +onCreate(savedInstanceState: Bundle): void
+            +osservaIsAcquirente(): void
+            +osservaListaAstaIngleseCategoria(): void
+            +osservaListaAstaIngleseCategoriaConvertite(): void
+            +osservaListaAstaRibassoCategoria(): void
+            +osservaListaAstaRibassoCategoriaConvertite(): void
+            +osservaListaAstaInversaCategoria(): void
+            +osservaListaAstaInversaCategoriaConvertite(): void
+            +osservaNomeCategoriaPerTextview(): void
+            +osservaEntraInSchermataAstaInglese(): void
+            +osservaEntraInSchermataAstaRibasso(): void
+            +osservaEntraInSchermataAstaInversa(): void
+        }
+    class PopUpFiltroRicerca {
+        -buttonSalva: Button
+        -buttonAnnullaFiltro: Button
+        -mContext: Context
+        -switch_ordinamento_popup_ricerca: SwitchCompat
+        -linear_layout_categorie_popup_ricerca: LinearLayout
+        -resources: Resources
+        -fragmentRicercaAsta: FragmentRicercaAsta
+        -categorieScelte: ArrayList<String>
+        -ricercaAstaViewModel: RicercaAstaViewModel
+        +PopUpFiltroRicerca(Context context, FragmentRicercaAsta fragmentRicercaAsta, RicercaAstaViewModel ricercaAstaViewModel)
+        +onCreate(Bundle savedInstanceState): void
+        +onClick(view: View): void
+        -populateLinearLayout(): void
+        -rimuoviOsservatori(): void
+        +osservaNoCategorie(): void
+        +osservaCategorie(): void
+        +osservaOrdinamento(): void
+        +osservaChiudiPopUp(): void
+    }
+
+}
+package com.example.progettoingsw.controllers_package {
+    class AstaAdapter {
+        - context: Context
+        - astaItemList: ArrayList<Object>
+        - countDownTimers: ArrayList<CountDownTimer>
+        - mItemClickListener: View.OnClickListener
+        + AstaAdapter(Context, ArrayList<Object>)
+        + setOnItemClickListener(View.OnClickListener)
+        + onCreateViewHolder(@NonNull ViewGroup, int): RecyclerView.ViewHolder
+        + onBindViewHolder(@NonNull RecyclerView.ViewHolder, int)
+        + getItemCount(): int
+        + getItem(int): Object
+        + getItemViewType(int): int
+        + clearItems()
+        + stopAllTimers()
+        + startAllTimers()
+    }
+}
+
+package com.example.progettoingsw.repository{
+    class Repository {
+        - acquirenteModel: AcquirenteModel
+        - listaCategorieAcquirente: ArrayList<String>
+        - venditoreModel: VenditoreModel
+        - socialAcquirenteModelList: List<SocialAcquirenteModel>
+        - socialVenditoreModelList: List<SocialVenditoreModel>
+        - acquirenteEmailDaAsta: String
+        - venditoreEmailDaAsta: String
+        - nomeSocialSelezionato: String
+        - nomeLinkSelezionato: String
+        - leMieAsteUtenteAttuale: Boolean
+        - listaSocialAcquirenteRecuperati: ArrayList<SocialAcquirenteModel>
+        - listaSocialVenditoreRecuperati: ArrayList<SocialVenditoreModel>
+        - listaCategorieVenditore: ArrayList<String>
+        - categoriaSelezionata: String
+        - backendUrl: String
+        - questaRepository: Repository
+        - listaAsteAllIngleseInScadenza: ArrayList<Asta_allingleseModel>
+        - listaAsteAllIngleseCategoriaNome: ArrayList<Asta_allingleseModel>
+        - listaAsteAllIngleseNuove: ArrayList<Asta_allingleseModel>
+        - listaAsteAlRibassoCategoriaNome: ArrayList<Asta_alribassoModel>
+        - listaAsteAlRibassoNuove: ArrayList<Asta_alribassoModel>
+        - listaAsteInversaInScadenza: ArrayList<Asta_inversaModel>
+        - listaAsteInversaCategoriaNome: ArrayList<Asta_inversaModel>
+        - listaAsteInversaNuove: ArrayList<Asta_inversaModel>
+        - notificaAcquirenteScelta: NotificheAcquirenteModel
+        - notificaVenditoreScelta: NotificheVenditoreModel
+        - nome_socialAcquirenteSelezionato: String
+        - link_socialAcquirenteSelezionato: String
+        - asta_allingleseSelezionata: Asta_allingleseModel
+        - asta_alribassoSelezionata: Asta_alribassoModel
+        - asta_inversaSelezionata: Asta_inversaModel
+        + getInstance(): Repository
+        + deleteRepository(): void
+    }
+    class Asta_allingleseRepository{
+        - GetAsteScadenzaRecenteTask
+        - OnGetAsteScadenzaRecenteListener
+        - GetAsteNuoveTask
+        - OnGetAsteNuoveListener
+        - GetAsteCategoriaNomeTask
+        - OnGetAsteCategoriaNomeListener
+        - PartecipaAsta_allingleseTask
+        - OnPartecipazioneAstaIngleseListener
+        - TrovaAsta_allingleseTask
+        - OnTrovaAstaIngleseListener
+        - VerificaAsta_allingleseInPreferitiTask
+        - OnVerificaAstaIngleseInPreferitiListener
+        - InserimentoAsta_allingleseInPreferitiTask
+        - OnInserimentoAstaIngleseInPreferitiListener
+        - EliminazioneAsta_allingleseInPreferitiTask
+        - OnEliminazioneAstaIngleseInPreferitiListener
+        - GetAsteInglesePreferiteTask
+        - OnGetAstePreferiteListener
+        - InserimentoAsta_ingleseTask
+        - OnInserimentoAstaIngleseListener
+        - GetEmailVincenteTask
+        - OnGetEmailVincenteListener
+        - GetAstePerRicercaTask
+        - OnGetAstePerRicercaListener
+        + getAste_allingleseScadenzaRecenteBackend(listener: OnGetAsteScadenzaRecenteListener): void
+        + getAste_allingleseNuoveBackend(listener: OnGetAsteNuoveListener): void
+        + getAste_allingleseCategoriaNomeBackend(nomiCategorie: ArrayList<String>, listener: OnGetAsteCategoriaNomeListener): void
+        + partecipaAsta_allinglese(idAsta: Long, emailAcquirente: String, offerta: String, tempoOfferta: String, stato: String, listener: OnPartecipazioneAstaIngleseListener): void
+        + trovaAsta_allinglese(idAsta: Long, listener: OnTrovaAstaIngleseListener): void
+        + verificaAstaIngleseInPreferiti(indirizzo_email: String, idAsta: Long, listener: OnVerificaAstaIngleseInPreferitiListener): void
+        + inserimentoAstaInPreferiti(idAsta: Long, indirizzo_email: String, listener: OnInserimentoAstaIngleseInPreferitiListener): void
+        + eliminazioneAstaInPreferiti(idAsta: Long, indirizzo_email: String, listener: OnEliminazioneAstaIngleseInPreferitiListener): void
+        + getAsteInglesePreferite(indirizzo_email: String, listener: OnGetAstePreferiteListener): void
+        + saveAsta_inglese(astaIngleseModel: Asta_allingleseModel, listaCategorie: ArrayList<String>, listener: OnInserimentoAstaIngleseListener): void
+        + getEmailVincente(indirizzo_email: String, idAsta: Long, listener: OnGetEmailVincenteListener): void
+        + getAstePerRicerca(nome: String, nomiCategorie: ArrayList<String>, ordinamento: String, listener: OnGetAstePerRicercaListener): void
+        + base64ToByteArray(base64String: String): byte[]
+        + byteArrayToBase64(byteArray: byte[]): String
+    }
+
+    class Asta_alribassoRepository{
+        - GetAste_alribassoNuoveTask
+        - OnGetAsteRibassoNuoveListener
+        - GetAste_alribassoCategoriaNomeTask
+        - OnGetAsteRibassoCategoriaNomeListener
+        - AcquistaAsta_aliribassoTask
+        - OnAcquistaAstaRibassoListener
+        - TrovaAsta_alribassoTask
+        - OnTrovaAstaRibassoListener
+        - VerificaAsta_alribassoInPreferitiTask
+        - OnVerificaAstaRibassoInPreferitiListener
+        - InserimentoAsta_alribassoInPreferitiTask
+        - OnInserimentoAstaRibassoInPreferitiListener
+        - EliminazioneAsta_alribassoInPreferitiTask
+        - OnEliminazioneAstaRibassoInPreferitiListener
+        - GetAste_alribassoPreferiteTask
+        - OnGetAsteRibassoPreferiteListener
+        - InserimentoAsta_ribassoTask
+        - OnInserimentoAstaRibassoListener
+        - GetAstePerRicercaTask
+        - OnGetAstePerRicercaListener
+        + getAste_alribassoNuoveBackend(listener: OnGetAsteRibassoNuoveListener): void
+        + getAste_alribassoCategoriaNomeBackend(nomiCategorie: ArrayList<String>, listener: OnGetAsteRibassoCategoriaNomeListener): void
+        + acquistaAsta_alribasso(idAsta: Long, emailAcquirente: String, prezzoAttuale: String, listener: OnAcquistaAstaRibassoListener): void
+        + trovaAsta_alribasso(idAsta: Long, listener: OnTrovaAstaRibassoListener): void
+        + verificaAstaRibassoInPreferiti(indirizzo_email: String, idAsta: Long, listener: OnVerificaAstaRibassoInPreferitiListener): void
+        + inserimentoAstaInPreferiti(idAsta: Long, indirizzo_email: String, listener: OnInserimentoAstaRibassoInPreferitiListener): void
+        + eliminazioneAstaInPreferiti(idAsta: Long, indirizzo_email: String, listener: OnEliminazioneAstaRibassoInPreferitiListener): void
+        + getAsteRibassoPreferite(indirizzo_email: String, listener: OnGetAsteRibassoPreferiteListener): void
+        + saveAsta_ribasso(astaRibassoModel: Asta_alribassoModel, listaCategorie: ArrayList<String>, listener: OnInserimentoAstaRibassoListener): void
+        + getAstePerRicerca(nome: String, nomiCategorie: ArrayList<String>, ordinamento: String, listener: OnGetAstePerRicercaListener): void
+        + base64ToByteArray(base64String: String): byte[]
+        + byteArrayToBase64(byteArray: byte[]): String
+    }
+
+    class Asta_inversaRepository{
+        - GetAsteScadenzaRecenteTask
+        - OnGetAsteScadenzaRecenteListener
+        - GetAste_inversaNuoveTask
+        - OnGetAsteInversaNuoveListener
+        - GetAste_inversaCategoriaNomeTask
+        - OnGetAsteInversaCategoriaNomeListener
+        - PartecipaAsta_inversaTask
+        - OnPartecipazioneAstaInversaListener
+        - TrovaAsta_inversaTask
+        - OnTrovaAstaInversaListener
+        - VerificaAsta_inversaInPreferitiTask
+        - OnVerificaAstaInversaInPreferitiListener
+        - InserimentoAsta_inversaInPreferitiTask
+        - OnInserimentoAstaInversaInPreferitiListener
+        - EliminazioneAsta_inversaInPreferitiTask
+        - OnEliminazioneAstaInversaInPreferitiListener
+        - GetAste_inversaPreferiteTask
+        - OnGetAsteInversaPreferiteListener
+        - InserimentoAsta_inversaTask
+        - OnInserimentoAstaInversaListener
+        - GetEmailVincenteTask
+        - OnGetEmailVincenteListener
+        - GetAstePerRicercaTask
+        - OnGetAstePerRicercaListener
+        + getAste_inversaScadenzaRecenteBackend(listener: OnGetAsteScadenzaRecenteListener): void
+        + getAste_inversaNuoveBackend(listener: OnGetAsteInversaNuoveListener): void
+        + getAste_inversaCategoriaNomeBackend(nomiCategorie: ArrayList<String>, listener: OnGetAsteInversaCategoriaNomeListener): void
+        + partecipaAsta_inversa(idAsta: Long, emailVenditore: String, offerta: String, tempoOfferta: String, stato: String, listener: OnPartecipazioneAstaInversaListener): void
+        + trovaAsta_inversa(idAsta: Long, listener: OnTrovaAstaInversaListener): void
+        + verificaAstaInversaInPreferiti(indirizzo_email: String, idAsta: Long, listener: OnVerificaAstaInversaInPreferitiListener): void
+        + inserimentoAstaInPreferiti(idAsta: Long, indirizzo_email: String, listener: OnInserimentoAstaInversaInPreferitiListener): void
+        + eliminazioneAstaInPreferiti(idAsta: Long, indirizzo_email: String, listener: OnEliminazioneAstaInversaInPreferitiListener): void
+        + getAsteInversaPreferite(indirizzo_email: String, listener: OnGetAsteInversaPreferiteListener): void
+        + saveAsta_inversa(astaInversaModel: Asta_inversaModel, listaCategorie: ArrayList<String>, listener: OnInserimentoAstaInversaListener): void
+        + getEmailVincente(indirizzo_email: String, idAsta: Long, listener: OnGetEmailVincenteListener): void
+        + getAstePerRicerca(nome: String, nomiCategorie: ArrayList<String>, ordinamento: String, listener: OnGetAstePerRicercaListener): void
+    }
+
+}
+package com.example.progettoingsw.model{
+    class Asta_allingleseModel {
+        - id: Long
+        - nome: String
+        - descrizione: String
+        - path_immagine: byte[]
+        - baseAsta: float
+        - intervalloTempoOfferte: String
+        - intervalloOfferteBase: String
+        - rialzoMin: float
+        - prezzoAttuale: float
+        - condizione: String
+        - id_venditore: String
+        + Asta_allingleseModel()
+        + Asta_allingleseModel(id: Long, nome: String, descrizione: String, path_immagine: byte[], baseAsta: float,
+         intervalloTempoOfferte: String, intervalloOfferteBase: String, rialzoMin: float,prezzoAttuale: float, condizione: String, id_venditore: String)
+        + Asta_allingleseModel(nome: String, descrizione: String, path_immagine: byte[],baseAsta: float,
+         intervalloTempoOfferte: String, intervalloOfferteBase: String, rialzoMin: float, prezzoAttuale: float, condizione: String, id_venditore: String)
+    }
+    class Asta_alribassoModel {
+        - id: Long
+        - nome: String
+        - descrizione: String
+        - path_immagine: byte[]
+        - prezzoBase: float
+        - intervalloDecrementale: String
+        - intervalloBase: String
+        - decrementoAutomaticoCifra: float
+        - prezzoMin: float
+        - prezzoAttuale: float
+        - condizione: String
+        - id_venditore: String
+        + Asta_alribassoModel()
+        + Asta_alribassoModel(id: Long, nome: String, descrizione: String, path_immagine: byte[], prezzoBase: float, intervalloDecrementale: String,
+         intervalloBase: String, decrementoAutomaticoCifra: float, prezzoMin: float, prezzoAttuale: float, condizione: String, id_venditore: String)
+        + Asta_alribassoModel(nome: String, descrizione: String, path_immagine: byte[], prezzoBase: float, intervalloDecrementale: String,
+         intervalloBase: String, decrementoAutomaticoCifra: float, prezzoMin: float, prezzoAttuale: float, condizione: String, id_venditore: String)
+    }
+    class Asta_inversaModel {
+        - id: Long
+        - nome: String
+        - descrizione: String
+        - path_immagine: byte[]
+        - prezzoMax: float
+        - prezzoAttuale: float
+        - dataDiScadenza: String
+        - condizione: String
+        - id_acquirente: String
+        + Asta_inversaModel()
+        + Asta_inversaModel(id: Long, nome: String, descrizione: String, path_immagine: byte[],
+         prezzoMax: float, prezzoAttuale: float, dataDiScadenza: String, condizione: String, id_acquirente: String)
+        + Asta_inversaModel(nome: String, descrizione: String, path_immagine: byte[],
+         prezzoMax: float, prezzoAttuale: float, dataDiScadenza: String, condizione: String, id_acquirente: String)
+    }
+}
+package com.example.progettoingsw.viewmodel {
+    class RicercaAstaViewModel {
+        -repository: Repository
+        -astaAllingleseRepository: Asta_allingleseRepository
+        -astaAlribassoRepository: Asta_alribassoRepository
+        -astaInversaRepository: Asta_inversaRepository
+        -selectedRadioButtonItems: List<String>
+        -categorieScelte: ArrayList<String>
+        -ordinamentoScelto: String
+        -categorieAncoraDaSalvare: ArrayList<String>
+        -ordinamentoAncoraDaSalvare: String
+        -noCategorie: MutableLiveData<Boolean>
+        -listaAstaIngleseRicerca: MutableLiveData<ArrayList<Asta_allingleseModel>>
+        -listaAstaIngleseRicercaConvertite: MutableLiveData<ArrayList<Object>>
+        -listaAstaRibassoRicerca: MutableLiveData<ArrayList<Asta_alribassoModel>>
+        -listaAstaRibassoRicercaConvertite: MutableLiveData<ArrayList<Object>>
+        -listaAstaInversaRicerca: MutableLiveData<ArrayList<Asta_inversaModel>>
+        -listaAstaInversaRicercaConvertite: MutableLiveData<ArrayList<Object>>
+        -isAcquirente: MutableLiveData<Boolean>
+        -categorie: MutableLiveData<ArrayList<String>>
+        -ordinamento: MutableLiveData<String>
+        -apriFiltro: MutableLiveData<Boolean>
+        -chiudiPopUp: MutableLiveData<Boolean>
+        -entraInSchermataAstaInglese: MutableLiveData<Boolean>
+        -entraInSchermataAstaRibasso: MutableLiveData<Boolean>
+        -entraInSchermataAstaInversa: MutableLiveData<Boolean>
+        +RicercaAstaViewModel()
+        +setChiudiPopUp(Boolean b)
+        +salva()
+        +chiudi()
+        +resetPerPopUp()
+        +setEntraInSchermataAstaInglese(Boolean b)
+        +getEntraInSchermataAstaInglese(): Boolean
+        +setEntraInSchermataAstaRibasso(Boolean b)
+        +getEntraInSchermataAstaRibasso(): Boolean
+        +setEntraInSchermataAstaInversa(Boolean b)
+        +getEntraInSchermataAstaInversa(): Boolean
+        +gestisciClickRecyclerView(asta: Object)
+        +convertiAsteInglese()
+        +convertiAsteRibasso()
+        +convertiAsteInversa()
+        +getAsteRicerca(nomeRicercato: String)
+        +checkTipoUtente()
+        +setApriFiltro(Boolean apriFiltro)
+        +apriFiltro()
+    }
+    class SchermataAstePerCategoriaViewModel {
+            -repository: Repository
+            -astaAllingleseRepository: Asta_allingleseRepository
+            -astaAlribassoRepository: Asta_alribassoRepository
+            -astaInversaRepository: Asta_inversaRepository
+            -isAcquirente: MutableLiveData<Boolean>
+            -listaAstaIngleseCategoria: MutableLiveData<ArrayList<Asta_allingleseModel>>
+            -listaAstaIngleseCategoriaConvertite: MutableLiveData<ArrayList<Object>>
+            -listaAstaRibassoCategoria: MutableLiveData<ArrayList<Asta_alribassoModel>>
+            -listaAstaRibassoCategoriaConvertite: MutableLiveData<ArrayList<Object>>
+            -listaAstaInversaCategoria: MutableLiveData<ArrayList<Asta_inversaModel>>
+            -listaAstaInversaCategoriaConvertite: MutableLiveData<ArrayList<Object>>
+            -nomeCategoriaPerTextview: MutableLiveData<String>
+            -entraInSchermataAstaInglese: MutableLiveData<Boolean>
+            -entraInSchermataAstaRibasso: MutableLiveData<Boolean>
+            -entraInSchermataAstaInversa: MutableLiveData<Boolean>
+            +SchermataAstePerCategoriaViewModel()
+            +getAstePerCategoria()
+            +checkTipoUtente()
+            +convertiAsteInglese()
+            +convertiAsteRibasso()
+            +convertiAsteInversa()
+            +checkNomeCategoriaPerTextview()
+            +gestisciClickRecyclerView(asta: Object)
+            +getEntraInSchermataAstaInglese(): Boolean
+            +getEntraInSchermataAstaRibasso(): Boolean
+            +getEntraInSchermataAstaInversa(): Boolean
+            +setEntraInSchermataAstaInglese(Boolean b)
+            +setEntraInSchermataAstaRibasso(Boolean b)
+            +setEntraInSchermataAstaInversa(Boolean b)
+        }
+        class SelezioneCategorieViewModel {
+                -repository: Repository
+                -categoriaSelezionata: MutableLiveData<Boolean>
+                +SelezioneCategorieViewModel()
+                +setCategoriaSelezionata(Boolean b): void
+                +getCategoriaSelezionata(): Boolean
+                +categoriaCliccata(categoria: String): void
+            }
+}
+AstaAdapter --> Asta_allingleseModel
+AstaAdapter --> Asta_alribassoModel
+AstaAdapter --> Asta_inversaModel
+
+Asta_allingleseRepository --> Asta_allingleseModel
+Asta_alribassoRepository --> Asta_alribassoModel
+Asta_inversaRepository --> Asta_inversaModel
+
+FragmentRicercaAsta --> PopUpFiltroRicerca
+FragmentRicercaAsta --> RicercaAstaViewModel
+FragmentRicercaAsta --> AstaAdapter
+
+RicercaAstaViewModel --> Repository
+RicercaAstaViewModel --> Asta_alribassoRepository
+RicercaAstaViewModel --> Asta_allingleseRepository
+RicercaAstaViewModel --> Asta_inversaRepository
+RicercaAstaViewModel --> Asta_alribassoModel
+RicercaAstaViewModel --> Asta_allingleseModel
+RicercaAstaViewModel --> Asta_inversaModel
+
+PopUpFiltroRicerca --> RicercaAstaViewModel
+
+FragmentSelezioneCategorie --> SelezioneCategorieViewModel
+FragmentSelezioneCategorie --> SchermataAstePerCategoria
+
+SchermataAstePerCategoria --> SchermataAstePerCategoriaViewModel
+SchermataAstePerCategoria --> AstaAdapter
+
+SchermataAstePerCategoriaViewModel --> Repository
+SchermataAstePerCategoriaViewModel --> Asta_allingleseRepository
+SchermataAstePerCategoriaViewModel --> Asta_alribassoRepository
+SchermataAstePerCategoriaViewModel --> Asta_inversaRepository
+SchermataAstePerCategoriaViewModel --> Asta_allingleseModel
+SchermataAstePerCategoriaViewModel --> Asta_alribassoModel
+SchermataAstePerCategoriaViewModel --> Asta_inversaModel
+
+SelezioneCategorieViewModel --> Repository
+
+
+@enduml

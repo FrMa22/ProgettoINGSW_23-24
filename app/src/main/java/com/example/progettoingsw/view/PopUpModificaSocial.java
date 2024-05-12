@@ -9,7 +9,6 @@ import android.widget.Toast;
 
 import androidx.appcompat.widget.AppCompatButton;
 
-import com.example.progettoingsw.DAO.PopUpModificaSocialDAO;
 import com.example.progettoingsw.R;
 import com.example.progettoingsw.classe_da_estendere.DialogPersonalizzato;
 import com.example.progettoingsw.viewmodel.FragmentProfiloViewModel;
@@ -24,9 +23,7 @@ public class PopUpModificaSocial extends DialogPersonalizzato implements View.On
     private String link_vecchio;
     private EditText edit_text_nome_social;
     private EditText edit_text_link_social;
-    private PopUpModificaSocialDAO popUpModificaSocialDAO;
     private FragmentProfilo fragmentProfilo;
-    private String tipoUtente;
     private FragmentProfiloViewModel fragmentProfiloViewModel;
 
 

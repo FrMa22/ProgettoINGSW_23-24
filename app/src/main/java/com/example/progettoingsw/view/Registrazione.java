@@ -15,7 +15,6 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.progettoingsw.R;
 import com.example.progettoingsw.classe_da_estendere.GestoreComuniImplementazioni;
-import com.example.progettoingsw.controllers_package.Controller;
 import com.example.progettoingsw.viewmodel.RegistrazioneViewModel;
 import com.google.android.material.button.MaterialButton;
 
@@ -79,9 +78,9 @@ public class Registrazione extends GestoreComuniImplementazioni {
 
         bottoneAnnulla.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                Intent intent = new Intent(String.valueOf(LoginActivity.class));
-                Controller.redirectActivity(Registrazione.this, LoginActivity.class);
-
+                Intent intent = new Intent(Registrazione.this, LoginActivity.class);
+                startActivity(intent);
+                finish();
             }
         });
 

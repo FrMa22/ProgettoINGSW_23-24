@@ -1,10 +1,7 @@
 package com.example.progettoingsw.backendAPI;
 
-import com.example.progettoingsw.DTO.Asta_allinglese_DTO;
 import com.example.progettoingsw.DTO.NotificheAcquirente_DTO;
 import com.example.progettoingsw.DTO.NotificheVenditore_DTO;
-import com.example.progettoingsw.model.NotificheAcquirenteModel;
-import com.example.progettoingsw.model.NotificheVenditoreModel;
 
 import java.util.ArrayList;
 

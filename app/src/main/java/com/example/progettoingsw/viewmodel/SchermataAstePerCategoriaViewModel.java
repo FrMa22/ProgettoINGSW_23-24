@@ -12,7 +12,6 @@ import com.example.progettoingsw.repository.Asta_allingleseRepository;
 import com.example.progettoingsw.repository.Asta_alribassoRepository;
 import com.example.progettoingsw.repository.Asta_inversaRepository;
 import com.example.progettoingsw.repository.Repository;
-import com.google.android.material.internal.ManufacturerUtils;
 
 import java.util.ArrayList;
 

@@ -1,7 +1,6 @@
 package com.example.progettoingsw.view;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -17,11 +16,8 @@ import android.widget.Toast;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.progettoingsw.DAO.AstaIngleseDAO;
-import com.example.progettoingsw.DAO.AstaPreferitaIngleseDAO;
 import com.example.progettoingsw.R;
 import com.example.progettoingsw.classe_da_estendere.GestoreComuniImplementazioni;
-import com.example.progettoingsw.controllers_package.Controller;
 import com.example.progettoingsw.model.Asta_allingleseModel;
 import com.example.progettoingsw.viewmodel.SchermataAstaIngleseViewModel;
 import com.google.android.material.button.MaterialButton;
@@ -31,19 +27,12 @@ public class SchermataAstaInglese extends GestoreComuniImplementazioni implement
     private ProgressBar progress_bar_schermata_asta_inglese;
     private RelativeLayout relativeLayoutSchermataAstaInglese;
     private TextView text_view_tua_offerta_attuale;
-    Controller controller;
     ImageButton bottoneBack;
     MaterialButton bottoneNuovaOfferta;
-    ImageButton bottonePreferito;
-    private int id;
-    private String email;
-    private String tipoUtente;
     private CountDownTimer countDownTimer;
-    private CountDownTimer countDownTimerTempoRimanente;
     TextView textViewNomeProdotto;
     ImageView imageViewProdotto;
     TextView textViewDescrizione;
-    TextView textViewScadenza;
     TextView textViewPrezzo;
     TextView textViewOffertaAttuale;
     TextView textViewIntervalloOfferte;
@@ -52,13 +41,8 @@ public class SchermataAstaInglese extends GestoreComuniImplementazioni implement
     Drawable drawablePreferiti ;
     Drawable drawableCuoreVuoto;
     Drawable drawableCuorePieno;
-    private AstaIngleseDAO astaIngleseDAO;
-    private AstaPreferitaIngleseDAO astaPreferitaIngleseDAO;
     boolean isPreferito;
     private TextView textViewSogliaRialzoSchermataAstaInglese;
-    private Bitmap immagineConvertita;
-    private Boolean isAstaChiusa;
-    private String intervalloConvertito;
     private ImageButton bottone_info_schermata_asta_inglese;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,8 +51,6 @@ public class SchermataAstaInglese extends GestoreComuniImplementazioni implement
 
         relativeLayoutSchermataAstaInglese = findViewById(R.id.relativeLayoutSchermataAstaInglese);
         progress_bar_schermata_asta_inglese = findViewById(R.id.progress_bar_schermata_asta_inglese);
-        //progress_bar_schermata_asta_inglese.setVisibility(View.VISIBLE);
-        //setAllClickable(relativeLayoutSchermataAstaInglese,false);
 
         // Inizializzazione dei TextView, ImageView e altri elementi
         textViewSogliaRialzoSchermataAstaInglese = findViewById(R.id.textViewSogliaRialzoSchermataAstaInglese);
@@ -108,11 +90,6 @@ public class SchermataAstaInglese extends GestoreComuniImplementazioni implement
         bottoneBack =  findViewById(R.id.bottoneBackSchermataAstaInglese);
         bottoneBack.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-//                Intent intent = new Intent(SchermataAstaInglese.this, MainActivity.class);//test del login
-//                intent.putExtra("email", email);
-//                intent.putExtra("tipoUtente", tipoUtente);
-//                startActivity(intent);
-                Log.d("bottone back schermata asta inglese", "premuto");
                 onBackPressed();
             }
         });
@@ -120,9 +97,6 @@ public class SchermataAstaInglese extends GestoreComuniImplementazioni implement
 
 
         bottoneNuovaOfferta =  findViewById(R.id.bottoneOffertaSchermataAstaInglese);
-//        if(tipoUtente.equals("venditore")){
-//            bottoneNuovaOfferta.setVisibility(View.INVISIBLE);
-//        }
         bottoneNuovaOfferta.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 PopUpNuovaOfferta popUpNuovaOfferta = new PopUpNuovaOfferta(SchermataAstaInglese.this, SchermataAstaInglese.this);

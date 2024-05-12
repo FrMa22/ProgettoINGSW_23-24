@@ -14,13 +14,8 @@ import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.example.progettoingsw.DAO.SchermataPartecipazioneAsteDAO;
 import com.example.progettoingsw.R;
 import com.example.progettoingsw.controllers_package.AstaAdapter;
-import com.example.progettoingsw.item.AstaIngleseItem;
-import com.example.progettoingsw.item.AstaInversaItem;
-import com.example.progettoingsw.item.AstaRibassoItem;
-import com.example.progettoingsw.viewmodel.LeMieAsteViewModel;
 import com.example.progettoingsw.viewmodel.SchermataPartecipazioneAsteViewModel;
 
 import java.util.ArrayList;
@@ -75,10 +70,6 @@ public class SchermataPartecipazioneAste extends AppCompatActivity {
 
         recyclerView_schermata_partecipazione_aste.setAdapter(astaAdapter);
 
-//        SchermataPartecipazioneAsteDAO schermataPartecipazioneAsteDAO = new SchermataPartecipazioneAsteDAO(SchermataPartecipazioneAste.this,email,tipoUtente);
-//        schermataPartecipazioneAsteDAO.openConnection();
-//        schermataPartecipazioneAsteDAO.partecipazioneAste();
-//        schermataPartecipazioneAsteDAO.closeConnection();
 
         bottone_back_schermata_partecipazione_aste.setOnClickListener(new View.OnClickListener() {
             @Override

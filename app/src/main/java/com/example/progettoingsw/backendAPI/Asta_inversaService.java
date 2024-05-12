@@ -1,6 +1,5 @@
 package com.example.progettoingsw.backendAPI;
 
-import com.example.progettoingsw.DTO.Asta_allinglese_DTO;
 import com.example.progettoingsw.DTO.Asta_inversa_DTO;
 
 import java.util.ArrayList;

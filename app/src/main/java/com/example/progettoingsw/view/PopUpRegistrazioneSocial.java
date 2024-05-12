@@ -10,11 +10,8 @@ import android.widget.EditText;
 
 import com.example.progettoingsw.R;
 import com.example.progettoingsw.classe_da_estendere.DialogPersonalizzato;
-import com.example.progettoingsw.controllers_package.Controller;
 import com.example.progettoingsw.viewmodel.RegistrazioneViewModel;
 import com.google.android.material.button.MaterialButton;
-
-import java.util.ArrayList;
 
 public class PopUpRegistrazioneSocial extends DialogPersonalizzato implements View.OnClickListener {
 

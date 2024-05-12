@@ -37,19 +37,19 @@ public class Asta_allingleseRepository {
     }
     public void trovaAsta_allinglese(Long idAsta, Asta_allingleseRepository.OnTrovaAstaIngleseListener listener) {
         System.out.println("entrato in trovaAsta_allinglese");
-        new Asta_allingleseRepository.trovaAsta_allingleseTask(listener).execute(String.valueOf(idAsta));
+        new TrovaAsta_allingleseTask(listener).execute(String.valueOf(idAsta));
     }
     public void verificaAstaIngleseInPreferiti(String indirizzo_email, Long idAsta, Asta_allingleseRepository.OnVerificaAstaIngleseInPreferitiListener listener) {
         System.out.println("entrato in verificaAstaIngleseInPreferiti");
-        new Asta_allingleseRepository.verificaAsta_allingleseInPreferitiTask(listener).execute(indirizzo_email, String.valueOf(idAsta));
+        new VerificaAsta_allingleseInPreferitiTask(listener).execute(indirizzo_email, String.valueOf(idAsta));
     }
     public void inserimentoAstaInPreferiti( Long idAsta,String indirizzo_email, Asta_allingleseRepository.OnInserimentoAstaIngleseInPreferitiListener listener) {
         System.out.println("entrato in inserimentoAstaInPreferiti");
-        new Asta_allingleseRepository.inserimentoAsta_allingleseInPreferitiTask(listener).execute(String.valueOf(idAsta), indirizzo_email);
+        new InserimentoAsta_allingleseInPreferitiTask(listener).execute(String.valueOf(idAsta), indirizzo_email);
     }
     public void eliminazioneAstaInPreferiti( Long idAsta,String indirizzo_email, Asta_allingleseRepository.OnEliminazioneAstaIngleseInPreferitiListener listener) {
         System.out.println("entrato in eliminazioneAstaInPreferiti");
-        new Asta_allingleseRepository.eliminazioneAsta_allingleseInPreferitiTask(listener).execute(String.valueOf(idAsta), indirizzo_email);
+        new EliminazioneAsta_allingleseInPreferitiTask(listener).execute(String.valueOf(idAsta), indirizzo_email);
     }
     public void getAsteInglesePreferite(String indirizzo_email, Asta_allingleseRepository.OnGetAstePreferiteListener listener) {
         System.out.println("entrato in getAsteInglesePreferite");
@@ -57,7 +57,7 @@ public class Asta_allingleseRepository {
     }
     public void saveAsta_inglese(Asta_allingleseModel astaIngleseModel, ArrayList<String> listaCategorie, Asta_allingleseRepository.OnInserimentoAstaIngleseListener listener) {
         System.out.println("entrato in saveAsta_inglese");
-        new Asta_allingleseRepository.inserimentoAsta_ingleseTask(listener).execute(astaIngleseModel,listaCategorie);
+        new InserimentoAsta_ingleseTask(listener).execute(astaIngleseModel,listaCategorie);
     }
     public void getEmailVincente(String indirizzo_email, Long idAsta, Asta_allingleseRepository.OnGetEmailVincenteListener listener) {
         System.out.println("entrato in getEmailVincente");
@@ -356,10 +356,10 @@ public class Asta_allingleseRepository {
     public interface OnPartecipazioneAstaIngleseListener {
         void OnPartecipazioneAstaInglese(Integer risposta);
     }
-    private static class trovaAsta_allingleseTask extends AsyncTask<String, Void, Asta_allingleseModel> {
+    private static class TrovaAsta_allingleseTask extends AsyncTask<String, Void, Asta_allingleseModel> {
         private Asta_allingleseRepository.OnTrovaAstaIngleseListener listener;
 
-        public trovaAsta_allingleseTask(Asta_allingleseRepository.OnTrovaAstaIngleseListener listener) {
+        public TrovaAsta_allingleseTask(Asta_allingleseRepository.OnTrovaAstaIngleseListener listener) {
             this.listener = listener;
         }
 
@@ -429,10 +429,10 @@ public class Asta_allingleseRepository {
     public interface OnTrovaAstaIngleseListener {
         void OnTrovaAstaInglese(Asta_allingleseModel list);
     }
-    private static class verificaAsta_allingleseInPreferitiTask extends AsyncTask<String, Void, Integer> {
+    private static class VerificaAsta_allingleseInPreferitiTask extends AsyncTask<String, Void, Integer> {
         private Asta_allingleseRepository.OnVerificaAstaIngleseInPreferitiListener listener;
 
-        public verificaAsta_allingleseInPreferitiTask(Asta_allingleseRepository.OnVerificaAstaIngleseInPreferitiListener listener) {
+        public VerificaAsta_allingleseInPreferitiTask(Asta_allingleseRepository.OnVerificaAstaIngleseInPreferitiListener listener) {
             this.listener = listener;
         }
 
@@ -486,10 +486,10 @@ public class Asta_allingleseRepository {
     public interface OnVerificaAstaIngleseInPreferitiListener {
         void OnVerificaAstaIngleseInPreferiti(Integer numeroRecuperato);
     }
-    private static class inserimentoAsta_allingleseInPreferitiTask extends AsyncTask<String, Void, Integer> {
+    private static class InserimentoAsta_allingleseInPreferitiTask extends AsyncTask<String, Void, Integer> {
         private Asta_allingleseRepository.OnInserimentoAstaIngleseInPreferitiListener listener;
 
-        public inserimentoAsta_allingleseInPreferitiTask(Asta_allingleseRepository.OnInserimentoAstaIngleseInPreferitiListener listener) {
+        public InserimentoAsta_allingleseInPreferitiTask(Asta_allingleseRepository.OnInserimentoAstaIngleseInPreferitiListener listener) {
             this.listener = listener;
         }
 
@@ -543,10 +543,10 @@ public class Asta_allingleseRepository {
     public interface OnInserimentoAstaIngleseInPreferitiListener {
         void OnInserimentoAstaIngleseInPreferiti(Integer numeroRecuperato);
     }
-    private static class eliminazioneAsta_allingleseInPreferitiTask extends AsyncTask<String, Void, Integer> {
+    private static class EliminazioneAsta_allingleseInPreferitiTask extends AsyncTask<String, Void, Integer> {
         private Asta_allingleseRepository.OnEliminazioneAstaIngleseInPreferitiListener listener;
 
-        public eliminazioneAsta_allingleseInPreferitiTask(Asta_allingleseRepository.OnEliminazioneAstaIngleseInPreferitiListener listener) {
+        public EliminazioneAsta_allingleseInPreferitiTask(Asta_allingleseRepository.OnEliminazioneAstaIngleseInPreferitiListener listener) {
             this.listener = listener;
         }
 
@@ -680,10 +680,10 @@ public class Asta_allingleseRepository {
     }
 
 
-    private static class inserimentoAsta_ingleseTask extends AsyncTask<Object, Void, Long> {
+    private static class InserimentoAsta_ingleseTask extends AsyncTask<Object, Void, Long> {
         private Asta_allingleseRepository.OnInserimentoAstaIngleseListener listener;
 
-        public inserimentoAsta_ingleseTask(Asta_allingleseRepository.OnInserimentoAstaIngleseListener listener) {
+        public InserimentoAsta_ingleseTask(Asta_allingleseRepository.OnInserimentoAstaIngleseListener listener) {
             this.listener = listener;
         }
 

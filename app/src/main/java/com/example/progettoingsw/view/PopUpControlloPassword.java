@@ -10,7 +10,6 @@ import android.widget.Toast;
 
 import androidx.appcompat.widget.AppCompatButton;
 
-import com.example.progettoingsw.DAO.PopUpControlloPasswordDAO;
 import com.example.progettoingsw.R;
 import com.example.progettoingsw.classe_da_estendere.DialogPersonalizzato;
 import com.example.progettoingsw.viewmodel.FragmentProfiloViewModel;
@@ -21,7 +20,6 @@ public class PopUpControlloPassword extends DialogPersonalizzato implements View
     private EditText edit_text_vecchia_password;
     private EditText edit_text_password_nuova;
 
-    private PopUpControlloPasswordDAO popUpControlloPasswordDAO;
 
     private ProgressBar progress_bar_pop_up_controllo_password;
 
@@ -33,7 +31,6 @@ public class PopUpControlloPassword extends DialogPersonalizzato implements View
        this.fragmentProfiloViewModel=fragmentProfiloViewModel;
         this.fragmentProfilo=fragmentProfilo;
         setCanceledOnTouchOutside(false);
-        //this.popUpControlloPasswordDAO = new PopUpControlloPasswordDAO(this,email,tipoUtente);
     }
 
     @Override
@@ -77,16 +74,7 @@ private void confermaPassword(){
     String password_nuova = edit_text_password_nuova.getText().toString().trim();
     fragmentProfiloViewModel.aggiornaPasswordViewModel(password_vecchia,password_nuova);
 }
-    public void handleResultPassword(Boolean result){
-        if(result){
-            //sostituzione in db
-            popUpControlloPasswordDAO.updatePassword( edit_text_password_nuova.getText().toString().trim());
-        }else{
-            Toast.makeText(getContext(), "Password non corretta, riprovare.", Toast.LENGTH_SHORT).show();
-            progress_bar_pop_up_controllo_password.setVisibility(View.INVISIBLE);
-        }
 
-    }
     public void dismissPopup() {
         dismiss();
     }

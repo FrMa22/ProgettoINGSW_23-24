@@ -9,20 +9,14 @@
     
     import androidx.lifecycle.MutableLiveData;
     import androidx.lifecycle.ViewModel;
-    
-    import com.example.progettoingsw.DAO.Acquirente;
+
     import com.example.progettoingsw.R;
-    import com.example.progettoingsw.model.AcquirenteModel;
     import com.example.progettoingsw.model.Asta_allingleseModel;
-    import com.example.progettoingsw.model.Asta_alribassoModel;
     import com.example.progettoingsw.repository.Asta_allingleseRepository;
-    import com.example.progettoingsw.repository.Asta_alribassoRepository;
     import com.example.progettoingsw.repository.Repository;
-    
-    import java.sql.Timestamp;
+
     import java.time.LocalDateTime;
     import java.time.format.DateTimeFormatter;
-    import java.util.ArrayList;
     
     public class SchermataAstaIngleseViewModel extends ViewModel {
         private Repository repository;

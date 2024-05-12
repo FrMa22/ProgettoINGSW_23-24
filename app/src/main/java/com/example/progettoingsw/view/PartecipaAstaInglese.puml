@@ -1,0 +1,286 @@
+@startuml
+scale 3
+package com.example.progettoingsw.view{
+    class SchermataAstaInglese {
+        - SchermataAstaIngleseViewModel schermataAstaIngleseViewModel
+        - ProgressBar progress_bar_schermata_asta_inglese
+        - RelativeLayout relativeLayoutSchermataAstaInglese
+        - TextView text_view_tua_offerta_attuale
+        - ImageButton bottoneBack
+        - MaterialButton bottoneNuovaOfferta
+        - CountDownTimer countDownTimer
+        - TextView textViewNomeProdotto
+        - ImageView imageViewProdotto
+        - TextView textViewDescrizione
+        - TextView textViewPrezzo
+        - TextView textViewOffertaAttuale
+        - TextView textViewIntervalloOfferte
+        - TextView textViewVenditore
+        - ImageButton imageButtonPreferiti
+        - Drawable drawablePreferiti
+        - Drawable drawableCuoreVuoto
+        - Drawable drawableCuorePieno
+        - boolean isPreferito
+        - TextView textViewSogliaRialzoSchermataAstaInglese
+        - ImageButton bottone_info_schermata_asta_inglese
+        + void onCreate(Bundle savedInstanceState)
+        + void onPopupDismissed()
+        + void onPause()
+        + void onStop()
+        + void onDestroy()
+        + void onResume()
+        + void setAstaData(Asta_allingleseModel astaIngleseRecuperata)
+        + void verificaPreferiti(boolean check)
+        + void setPrezzo(Integer prezzoNuovo)
+        + void getPrezzoeCondizione(String prezzo_aggiornato, String condizione_aggiornata)
+        + void handleOffertaAttualeTua(Boolean result)
+        + void handleInserimento(Boolean result)
+        + void handleEliminazione(Boolean result)
+        + void osservaAstaRecuperata()
+        + void osservaImmagineAstaConvertita()
+        + void osservaIsAstaChiusa()
+        + void osservaConvertiIntervalloOfferte()
+        + void osservaAstaDaMostrare()
+        + void osservaErroreRecuperoAsta()
+        + void setImpostazioniAstaAcquirente()
+        + void setImpostazioniAstaVenditore()
+        + void osservaTipoUtenteChecked()
+        + void osservaIsPartecipazioneAvvenuta()
+        + void inserimentoInPreferiti()
+        + void eliminazioneInPreferiti()
+        + void osservaIsAstaInPreferiti()
+        + void osservaIsUltimaOffertaTua()
+        + void osservaVaiInVenditore()
+        + void osservaApriPopUpInfo()
+    }
+    class PopUpNuovaOfferta {
+        - PopUpNuovaOffertaViewModel popUpNuovaOffertaViewModel
+        - PopupDismissListener popupDismissListener
+        - TextView textviewPrezzoAttuale
+        - EditText textviewNuovoPrezzo
+        - Button bottoneAnnullaPopUpOfferta
+        - Button bottoneConfermaPopUpOfferta
+        - String offerta
+        - String prezzoVecchio
+        - LinearLayout linear_layout_prezzo_attuale_popup_nuova_offerta
+        - LinearLayout linear_layout_rialzo_minimo_popup_nuova_offerta
+        - TextView TextViewPrezzoRialzoMinimo
+        - FragmentActivity fragmentActivity
+        + PopUpNuovaOfferta(FragmentActivity activity, PopupDismissListener dismissListener)
+        + onCreate(Bundle savedInstanceState): void
+        + onClick(View v): void
+        + setPopupDismissListener(PopupDismissListener listener): void
+        + setImpostazioniPerAstaInglese(): void
+        + setImpostazioniPerAstainversa(): void
+        + osservamessaggioErroreOfferta(): void
+        + osservaOffertaValida(): void
+        + osservaTipoAstaChecked(): void
+        + dismissPopup(): void
+        + osservaIsPartecipazioneAvvenuta(): void
+    }
+}
+package com.example.progettoingsw.viewmodel{
+class SchermataAstaIngleseViewModel {
+    - Repository repository
+    - MutableLiveData<Asta_allingleseModel> astaRecuperata
+    - MutableLiveData<String> erroreRecuperoAsta
+    - MutableLiveData<Boolean> tipoUtenteChecked
+    - MutableLiveData<Boolean> isPartecipazioneAvvenuta
+    - MutableLiveData<Boolean> astaInPreferiti
+    - MutableLiveData<Boolean> isAstaInPreferiti
+    - MutableLiveData<Bitmap> immagineAstaConvertita
+    - MutableLiveData<Boolean> isAstaChiusa
+    - MutableLiveData<Boolean> vaiInVenditore
+    - MutableLiveData<Boolean> isUltimaOffertaTua
+    - MutableLiveData<String> intervalloOfferteConvertito
+    - MutableLiveData<Asta_allingleseModel> astadaMostrare
+    - MutableLiveData<AlertDialog> popUpInformazioni
+    - String messaggioPartecipazioneAstaInglese
+    - String tipoUtente
+    - Asta_allingleseRepository astaAllingleseRepository
+    + SchermataAstaIngleseViewModel()
+    + void checkUltimaOfferta()
+    + Boolean isErroreRecuperoAsta()
+    + void convertiIntervalloOfferte()
+    + void convertiImmagine(byte[] immagine)
+    + Boolean isTipoUtenteChecked()
+    + Boolean isAcquirente()
+    + void checkTipoUtente()
+    + void isAstaChiusa()
+    + Boolean isAstaInPreferiti()
+    + void verificaAstaInPreferiti()
+    + void inserimentoAstaInPreferiti()
+    + void eliminazioneAstaInPreferiti()
+    + void vaiInVenditore(String emailVenditore)
+    + Boolean isAstaDaMostrare()
+    + void recuperaAstaDaMostrare()
+    + Boolean isPopUpInformazioni()
+    + void creaPopUpInformazioni(Activity activity)
+}
+class PopUpNuovaOffertaViewModel {
+    - Repository repository
+    - Asta_allingleseRepository astaAllingleseRepository
+    - Asta_inversaRepository astaInversaRepository
+    - SchermataAstaIngleseViewModel schermataAstaIngleseViewModel
+    - SchermataAstaInversaViewModel schermataAstaInversaViewModel
+    - MutableLiveData<Boolean> tipoAstaChecked
+    - MutableLiveData<Boolean> isPartecipazioneAvvenuta
+    - String messaggioPartecipazioneAsta
+    - MutableLiveData<Boolean> offertaValida
+    - MutableLiveData<Boolean> messaggioErroreOfferta
+    - String messaggioErrore
+    - String tipoAsta
+    + PopUpNuovaOffertaViewModel()
+    + checkTipoAsta(): void
+    + isTipoAstaChecked(): Boolean
+    + isAstaInglese(): Boolean
+    + isMessaggioErroreOfferta(): Boolean
+    + isOffertaValida(): Boolean
+    + checkOfferta(String offerta): void
+    + eseguiPartecipazioneAstaInglese(String offerta): void
+    + eseguiPartecipazioneAstaInversa(String offerta): void
+    + proseguiPartecipazione(String offerta): void
+    + recuperaIdAstaInglese(): Long
+    + recuperaIdAstaInversa(): Long
+    + recuperaEmailAcquirente(): String
+    + recuperaEmailVenditore(): String
+    + resetErroriNuovaOfferta(LifecycleOwner lifecycleOwner): void
+}
+}
+package com.example.progettoingsw.model{
+    class Asta_allingleseModel {
+        - Long id
+        - String nome
+        - String descrizione
+        - byte[] path_immagine
+        - float baseAsta
+        - String intervalloTempoOfferte
+        - String intervalloOfferteBase
+        - float rialzoMin
+        - float prezzoAttuale
+        - String condizione
+        - String id_venditore
+        + Asta_allingleseModel()
+        + Asta_allingleseModel(Long id, String nome, String descrizione, byte[] path_immagine, float baseAsta,
+         String intervalloTempoOfferte, String intervalloOfferteBase, float rialzoMin, float prezzoAttuale, String condizione, String id_venditore)
+        + Asta_allingleseModel(String nome, String descrizione, byte[] path_immagine, float baseAsta,
+         String intervalloTempoOfferte, String intervalloOfferteBase, float rialzoMin, float prezzoAttuale, String condizione, String id_venditore)
+        + Long getId()
+        + void setId(Long id)
+        + String getNome()
+        + void setNome(String nome)
+        + String getDescrizione()
+        + void setDescrizione(String descrizione)
+        + byte[] getPath_immagine()
+        + void setPath_immagine(byte[] path_immagine)
+        + float getBaseAsta()
+        + void setBaseAsta(float baseAsta)
+        + String getIntervalloTempoOfferte()
+        + void setIntervalloTempoOfferte(String intervalloTempoOfferte)
+        + String getIntervalloOfferteBase()
+        + void setIntervalloOfferteBase(String intervalloOfferteBase)
+        + float getRialzoMin()
+        + void setRialzoMin(float rialzoMin)
+        + float getPrezzoAttuale()
+        + void setPrezzoAttuale(float prezzoAttuale)
+        + String getCondizione()
+        + void setCondizione(String condizione)
+        + String getId_venditore()
+        + void setId_venditore(String id_venditore)
+    }
+}
+package com.example.progettoingsw.repository{
+class Repository {
+    - acquirenteModel: AcquirenteModel
+    - listaCategorieAcquirente: ArrayList<String>
+    - venditoreModel: VenditoreModel
+    - socialAcquirenteModelList: List<SocialAcquirenteModel>
+    - socialVenditoreModelList: List<SocialVenditoreModel>
+    - acquirenteEmailDaAsta: String
+    - venditoreEmailDaAsta: String
+    - nomeSocialSelezionato: String
+    - nomeLinkSelezionato: String
+    - leMieAsteUtenteAttuale: Boolean
+    - listaSocialAcquirenteRecuperati: ArrayList<SocialAcquirenteModel>
+    - listaSocialVenditoreRecuperati: ArrayList<SocialVenditoreModel>
+    - listaCategorieVenditore: ArrayList<String>
+    - categoriaSelezionata: String
+    - backendUrl: String
+    - questaRepository: Repository
+    - listaAsteAllIngleseInScadenza: ArrayList<Asta_allingleseModel>
+    - listaAsteAllIngleseCategoriaNome: ArrayList<Asta_allingleseModel>
+    - listaAsteAllIngleseNuove: ArrayList<Asta_allingleseModel>
+    - listaAsteAlRibassoCategoriaNome: ArrayList<Asta_alribassoModel>
+    - listaAsteAlRibassoNuove: ArrayList<Asta_alribassoModel>
+    - listaAsteInversaInScadenza: ArrayList<Asta_inversaModel>
+    - listaAsteInversaCategoriaNome: ArrayList<Asta_inversaModel>
+    - listaAsteInversaNuove: ArrayList<Asta_inversaModel>
+    - notificaAcquirenteScelta: NotificheAcquirenteModel
+    - notificaVenditoreScelta: NotificheVenditoreModel
+    - nome_socialAcquirenteSelezionato: String
+    - link_socialAcquirenteSelezionato: String
+    - asta_allingleseSelezionata: Asta_allingleseModel
+    - asta_alribassoSelezionata: Asta_alribassoModel
+    - asta_inversaSelezionata: Asta_inversaModel
+    + getInstance(): Repository
+    + deleteRepository(): void
+}
+class Asta_allingleseRepository{
+    - GetAsteScadenzaRecenteTask
+    - OnGetAsteScadenzaRecenteListener
+    - GetAsteNuoveTask
+    - OnGetAsteNuoveListener
+    - GetAsteCategoriaNomeTask
+    - OnGetAsteCategoriaNomeListener
+    - PartecipaAsta_allingleseTask
+    - OnPartecipazioneAstaIngleseListener
+    - TrovaAsta_allingleseTask
+    - OnTrovaAstaIngleseListener
+    - VerificaAsta_allingleseInPreferitiTask
+    - OnVerificaAstaIngleseInPreferitiListener
+    - InserimentoAsta_allingleseInPreferitiTask
+    - OnInserimentoAstaIngleseInPreferitiListener
+    - EliminazioneAsta_allingleseInPreferitiTask
+    - OnEliminazioneAstaIngleseInPreferitiListener
+    - GetAsteInglesePreferiteTask
+    - OnGetAstePreferiteListener
+    - InserimentoAsta_ingleseTask
+    - OnInserimentoAstaIngleseListener
+    - GetEmailVincenteTask
+    - OnGetEmailVincenteListener
+    - GetAstePerRicercaTask
+    - OnGetAstePerRicercaListener
+
+    + GetAsteScadenzaRecenteTask(OnGetAsteScadenzaRecenteListener listener)
+    + GetAsteNuoveTask(OnGetAsteNuoveListener listener)
+    + GetAsteCategoriaNomeTask(OnGetAsteCategoriaNomeListener listener)
+    + PartecipaAsta_allingleseTask(OnPartecipazioneAstaIngleseListener listener)
+    + TrovaAsta_allingleseTask(OnTrovaAstaIngleseListener listener)
+    + VerificaAsta_allingleseInPreferitiTask(OnVerificaAstaIngleseInPreferitiListener listener)
+    + InserimentoAsta_allingleseInPreferitiTask(OnInserimentoAstaIngleseInPreferitiListener listener)
+    + EliminazioneAsta_allingleseInPreferitiTask(OnEliminazioneAstaIngleseInPreferitiListener listener)
+    + GetAsteInglesePreferiteTask(OnGetAstePreferiteListener listener)
+    + InserimentoAsta_ingleseTask(OnInserimentoAstaIngleseListener listener)
+    + GetEmailVincenteTask(OnGetEmailVincenteListener listener)
+    + GetAstePerRicercaTask(OnGetAstePerRicercaListener listener)
+    + static byte[] base64ToByteArray(String base64String)
+    + static String byteArrayToBase64(byte[] byteArray)
+
+}
+}
+
+SchermataAstaInglese --> Asta_allingleseModel
+SchermataAstaInglese --> PopUpNuovaOfferta
+SchermataAstaInglese --> SchermataAstaIngleseViewModel
+
+SchermataAstaIngleseViewModel --> Repository
+SchermataAstaIngleseViewModel --> Asta_allingleseModel
+SchermataAstaIngleseViewModel --> Asta_allingleseRepository
+Asta_allingleseRepository --> Asta_allingleseModel
+
+PopUpNuovaOfferta --> PopUpNuovaOffertaViewModel
+PopUpNuovaOffertaViewModel --> Repository
+PopUpNuovaOffertaViewModel --> Asta_allingleseRepository
+
+
+@enduml

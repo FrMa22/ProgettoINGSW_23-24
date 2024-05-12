@@ -1,0 +1,53 @@
+@startuml
+scale 3
+package ActivityCompat{
+    interface OnRequestPermissionsResultCallback{
+    }
+}
+package com.example.progettoingsw{
+ class MyFirebaseMessagingService implements ActivityCompat.OnRequestPermissionsResultCallback{
+        -TAG: String
+        -CHANNEL_ID: String
+        -NOTIFICATION_ID: int
+        -PERMISSION_REQUEST_CODE: int
+        -mActivity: Activity
+        +onMessageReceived(remoteMessage: RemoteMessage): void
+        +createNotificationChannel(): void
+        +onRequestPermissionsResult(requestCode: int, permissions: String[], grantResults: int[]): void
+    }
+}
+
+package com.example.progettoingsw.view {
+    class LoginActivity {
+        - switch_mostra_password: SwitchCompat
+        - progress_bar_login: ProgressBar
+        - editText_mail: EditText
+        - editText_password: EditText
+        - checkbox_ricordami: CheckBox
+        - loginViewModel: LoginViewModel
+        - relative_layout_login_activity: RelativeLayout
+        - token: String
+        - sharedPreferences: SharedPreferences
+        - firebaseAnalytics: FirebaseAnalytics
+        + onCreate(savedInstanceState: Bundle): void
+        + checkConnessione(): void
+        + requestNotificationPermissions(): void
+        + onRequestPermissionsResult(requestCode: int, permissions: String[],
+         grantResults: int[]): void
+        + checkNotificationPermissions(): void
+        + messaggioErroreMail(messaggio: String): void
+        + messaggioErrorePassword(messaggio: String): void
+        + osservaMessaggioErroreEmail(): void
+        + osservaMessaggioErrorePassword(): void
+        + salvaTokenInLocale(): void
+        + osservaProseguiLogin(): void
+        + showAccountSelectionPopup(): void
+        + osservaMessaggioUtenteNonTrovato(): void
+        + osservaTokenSalvato(): void
+        + osservaConnessioneSpenta(): void
+        + showPopUpConnessioneSpenta(): void
+    }
+}
+LoginActivity --> MyFirebaseMessagingService
+
+@enduml

@@ -18,7 +18,6 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.progettoingsw.DAO.ProfiloVenditoreDaAstaDAO;
 import com.example.progettoingsw.R;
 import com.example.progettoingsw.classe_da_estendere.GestoreComuniImplementazioni;
 import com.example.progettoingsw.gestori_gui.CustomAdapter_gridview_profilo_social;
@@ -33,12 +32,7 @@ import java.util.List;
 public class ProfiloVenditore extends GestoreComuniImplementazioni {
 
     private ImageButton bottoneBackProfiloVenditore;
-    ImageButton button_log_out;
     MaterialButton button_le_mie_aste;
-    ImageButton button_modifica;
-    ImageButton bottone_info;
-    Button button_cambia_password_profilo;
-    ImageButton button_aggiungi_social;
 
     private GridView gridView;
     private CustomAdapter_gridview_profilo_social adapterSocial;

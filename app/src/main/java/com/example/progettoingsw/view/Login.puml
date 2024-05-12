@@ -1,5 +1,6 @@
 @startuml
 left to right direction
+scale 3
 package com.example.progettoingsw.view {
     class LoginActivity {
         - switch_mostra_password: SwitchCompat
@@ -135,14 +136,14 @@ class Repository {
             - OnSetTokenVenditoreListener listener
             - OnLoginAcquirenteConTokenListener listener
             - OnLoginVenditoreConTokenListener listener
-            - class LoginAcquirenteTask
-            - class RecuperaCategorieAcquirenteTask
-            - class SetTokenAcquirenteTask
-            - class LoginVenditoreTask
-            - class RecuperaCategorieVenditoreTask
-            - class SetTokenVenditoreTask
-            - class LoginAcquirenteConTokenTask
-            - class LoginVenditoreConTokenTask
+            -  LoginAcquirenteTask
+            -  RecuperaCategorieAcquirenteTask
+            -  SetTokenAcquirenteTask
+            -  LoginVenditoreTask
+            -  RecuperaCategorieVenditoreTask
+            -  SetTokenVenditoreTask
+            -  LoginAcquirenteConTokenTask
+            -  LoginVenditoreConTokenTask
 
             + loginAcquirenteBackend(email: String, password: String, listener: OnLoginAcquirenteListener): void
             + loginAcquirenteConTokenBackend(token: String, listener: OnLoginAcquirenteConTokenListener): void

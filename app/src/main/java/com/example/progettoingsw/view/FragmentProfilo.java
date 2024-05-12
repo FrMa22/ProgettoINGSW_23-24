@@ -31,7 +31,6 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.progettoingsw.model.SocialAcquirenteModel;
 import com.example.progettoingsw.model.SocialVenditoreModel;
 import com.example.progettoingsw.R;
-import com.example.progettoingsw.controllers_package.Controller;
 import com.example.progettoingsw.gestori_gui.CustomAdapter_gridview_profilo_social;
 import com.example.progettoingsw.viewmodel.FragmentProfiloViewModel;
 import com.google.android.material.button.MaterialButton;
@@ -382,12 +381,9 @@ public class FragmentProfilo extends Fragment implements PopUpModificaCampiProfi
         }
     }
 
-    //metodo per rendere clickabile o non la bottom navigation view, accede alla bottom di main tramite un metodo di main
     private void setNavigationView(Boolean valore) {
         MainActivity activity = (MainActivity) getActivity();
         if (activity != null) {
-            // Abilita la BottomNavigationView
-            // Log.d("acquirente", "disabilito");
             activity.enableBottomNavigationView(valore);
         }
 
@@ -402,7 +398,9 @@ public class FragmentProfilo extends Fragment implements PopUpModificaCampiProfi
     public void osservaEsci() {
         fragmentProfiloViewModel.esci.observe(getViewLifecycleOwner(), (valore) -> {
             if (valore) {
-                Controller.redirectActivity(getContext(), LoginActivity.class);
+                Intent intent = new Intent(getContext(), LoginActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
             }
         });
     }

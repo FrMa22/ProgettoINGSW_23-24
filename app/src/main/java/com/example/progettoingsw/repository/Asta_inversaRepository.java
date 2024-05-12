@@ -25,39 +25,39 @@ public class Asta_inversaRepository {
     }
     public void getAste_inversaNuoveBackend( Asta_inversaRepository.OnGetAsteInversaNuoveListener listener) {
         System.out.println("entrato in getAste_inversaNuoveBackend");
-        new Asta_inversaRepository.getAste_inversaNuoveTask(listener).execute();
+        new GetAste_inversaNuoveTask(listener).execute();
     }
     public void getAste_inversaCategoriaNomeBackend(ArrayList<String> nomiCategorie, Asta_inversaRepository.OnGetAsteInversaCategoriaNomeListener listener) {
         System.out.println("entrato in getAste_inversaCategoriaNomeBackend");
-        new Asta_inversaRepository.getAste_inversaCategoriaNomeTask(listener).execute(nomiCategorie);
+        new GetAste_inversaCategoriaNomeTask(listener).execute(nomiCategorie);
     }
     public void partecipaAsta_inversa(Long idAsta, String emailVenditore,String offerta,String tempoOfferta, String stato, Asta_inversaRepository.OnPartecipazioneAstaInversaListener listener) {
         System.out.println("entrato in partecipaAsta_inversa");
-        new Asta_inversaRepository.partecipaAsta_inversaTask(listener).execute(String.valueOf(idAsta),emailVenditore,offerta, tempoOfferta, stato);
+        new PartecipaAsta_inversaTask(listener).execute(String.valueOf(idAsta),emailVenditore,offerta, tempoOfferta, stato);
     }
     public void trovaAsta_inversa(Long idAsta, Asta_inversaRepository.OnTrovaAstaInversaListener listener) {
         System.out.println("entrato in trovaAsta_inversa");
-        new Asta_inversaRepository.trovaAsta_inversaTask(listener).execute(String.valueOf(idAsta));
+        new TrovaAsta_inversaTask(listener).execute(String.valueOf(idAsta));
     }
     public void verificaAstaInversaInPreferiti(String indirizzo_email, Long idAsta, Asta_inversaRepository.OnVerificaAstaInversaInPreferitiListener listener) {
         System.out.println("entrato in verificaAstaInversaInPreferiti");
-        new Asta_inversaRepository.verificaAsta_inversaInPreferitiTask(listener).execute(indirizzo_email, String.valueOf(idAsta));
+        new VerificaAsta_inversaInPreferitiTask(listener).execute(indirizzo_email, String.valueOf(idAsta));
     }
     public void inserimentoAstaInPreferiti( Long idAsta,String indirizzo_email, Asta_inversaRepository.OnInserimentoAstaInversaInPreferitiListener listener) {
         System.out.println("entrato in inserimentoAstaInPreferiti");
-        new Asta_inversaRepository.inserimentoAsta_inversaInPreferitiTask(listener).execute(String.valueOf(idAsta), indirizzo_email);
+        new InserimentoAsta_inversaInPreferitiTask(listener).execute(String.valueOf(idAsta), indirizzo_email);
     }
     public void eliminazioneAstaInPreferiti( Long idAsta,String indirizzo_email, Asta_inversaRepository.OnEliminazioneAstaInversaInPreferitiListener listener) {
         System.out.println("entrato in eliminazioneAstaInPreferiti");
-        new Asta_inversaRepository.eliminazioneAsta_inversaInPreferitiTask(listener).execute(String.valueOf(idAsta), indirizzo_email);
+        new EliminazioneAsta_inversaInPreferitiTask(listener).execute(String.valueOf(idAsta), indirizzo_email);
     }
     public void getAsteInversaPreferite(String indirizzo_email, Asta_inversaRepository.OnGetAsteInversaPreferiteListener listener) {
         System.out.println("entrato in getAsteInversaPreferite");
-        new Asta_inversaRepository.getAste_inversaPreferiteTask(listener).execute(indirizzo_email);
+        new GetAste_inversaPreferiteTask(listener).execute(indirizzo_email);
     }
     public void saveAsta_inversa(Asta_inversaModel astaInversaModel, ArrayList<String> listaCategorie, Asta_inversaRepository.OnInserimentoAstaInversaListener listener) {
         System.out.println("entrato in saveAsta_inversa");
-        new Asta_inversaRepository.inserimentoAsta_inversaTask(listener).execute(astaInversaModel,listaCategorie);
+        new InserimentoAsta_inversaTask(listener).execute(astaInversaModel,listaCategorie);
     }
     public void getEmailVincente(String indirizzo_email, Long idAsta, Asta_inversaRepository.OnGetEmailVincenteListener listener) {
         System.out.println("entrato in getEmailVincente");
@@ -146,10 +146,10 @@ public class Asta_inversaRepository {
     public interface OnGetAsteScadenzaRecenteListener {
         void OnGetAsteScadenzaRecente(ArrayList<Asta_inversaModel> list);
     }
-    private static class getAste_inversaNuoveTask extends AsyncTask<Void, Void, ArrayList<Asta_inversaModel>> {
+    private static class GetAste_inversaNuoveTask extends AsyncTask<Void, Void, ArrayList<Asta_inversaModel>> {
         private Asta_inversaRepository.OnGetAsteInversaNuoveListener listener;
 
-        public getAste_inversaNuoveTask(Asta_inversaRepository.OnGetAsteInversaNuoveListener listener) {
+        public GetAste_inversaNuoveTask(Asta_inversaRepository.OnGetAsteInversaNuoveListener listener) {
             this.listener = listener;
         }
 
@@ -211,7 +211,7 @@ public class Asta_inversaRepository {
 
         @Override
         protected void onPostExecute(ArrayList<Asta_inversaModel> result) {
-            System.out.println("on post execute getAste_inversaNuoveTask" + result);
+            System.out.println("on post execute GetAste_inversaNuoveTask" + result);
             if (listener != null) {
                 listener.OnGetAsteInversaNuove(result);
             }
@@ -220,10 +220,10 @@ public class Asta_inversaRepository {
     public interface OnGetAsteInversaNuoveListener {
         void OnGetAsteInversaNuove(ArrayList<Asta_inversaModel> list);
     }
-    private static class getAste_inversaCategoriaNomeTask extends AsyncTask<ArrayList<String>, Void, ArrayList<Asta_inversaModel>> {
+    private static class GetAste_inversaCategoriaNomeTask extends AsyncTask<ArrayList<String>, Void, ArrayList<Asta_inversaModel>> {
         private Asta_inversaRepository.OnGetAsteInversaCategoriaNomeListener listener;
 
-        public getAste_inversaCategoriaNomeTask(Asta_inversaRepository.OnGetAsteInversaCategoriaNomeListener listener) {
+        public GetAste_inversaCategoriaNomeTask(Asta_inversaRepository.OnGetAsteInversaCategoriaNomeListener listener) {
             this.listener = listener;
         }
 
@@ -296,10 +296,10 @@ public class Asta_inversaRepository {
     }
 
 
-    private static class partecipaAsta_inversaTask extends AsyncTask<String, Void, Integer> {
+    private static class PartecipaAsta_inversaTask extends AsyncTask<String, Void, Integer> {
         private Asta_inversaRepository.OnPartecipazioneAstaInversaListener listener;
 
-        public partecipaAsta_inversaTask(Asta_inversaRepository.OnPartecipazioneAstaInversaListener listener) {
+        public PartecipaAsta_inversaTask(Asta_inversaRepository.OnPartecipazioneAstaInversaListener listener) {
             this.listener = listener;
         }
 
@@ -355,10 +355,10 @@ public class Asta_inversaRepository {
     public interface OnPartecipazioneAstaInversaListener {
         void OnPartecipazioneAstaInversa(Integer risposta);
     }
-    private static class trovaAsta_inversaTask extends AsyncTask<String, Void, Asta_inversaModel> {
+    private static class TrovaAsta_inversaTask extends AsyncTask<String, Void, Asta_inversaModel> {
         private Asta_inversaRepository.OnTrovaAstaInversaListener listener;
 
-        public trovaAsta_inversaTask(Asta_inversaRepository.OnTrovaAstaInversaListener listener) {
+        public TrovaAsta_inversaTask(Asta_inversaRepository.OnTrovaAstaInversaListener listener) {
             this.listener = listener;
         }
 
@@ -426,10 +426,10 @@ public class Asta_inversaRepository {
     public interface OnTrovaAstaInversaListener {
         void OnTrovaAstaInversa(Asta_inversaModel list);
     }
-    private static class verificaAsta_inversaInPreferitiTask extends AsyncTask<String, Void, Integer> {
+    private static class VerificaAsta_inversaInPreferitiTask extends AsyncTask<String, Void, Integer> {
         private Asta_inversaRepository.OnVerificaAstaInversaInPreferitiListener listener;
 
-        public verificaAsta_inversaInPreferitiTask(Asta_inversaRepository.OnVerificaAstaInversaInPreferitiListener listener) {
+        public VerificaAsta_inversaInPreferitiTask(Asta_inversaRepository.OnVerificaAstaInversaInPreferitiListener listener) {
             this.listener = listener;
         }
 
@@ -483,10 +483,10 @@ public class Asta_inversaRepository {
     public interface OnVerificaAstaInversaInPreferitiListener {
         void OnVerificaAstaInversaInPreferiti(Integer numeroRecuperato);
     }
-    private static class inserimentoAsta_inversaInPreferitiTask extends AsyncTask<String, Void, Integer> {
+    private static class InserimentoAsta_inversaInPreferitiTask extends AsyncTask<String, Void, Integer> {
         private Asta_inversaRepository.OnInserimentoAstaInversaInPreferitiListener listener;
 
-        public inserimentoAsta_inversaInPreferitiTask(Asta_inversaRepository.OnInserimentoAstaInversaInPreferitiListener listener) {
+        public InserimentoAsta_inversaInPreferitiTask(Asta_inversaRepository.OnInserimentoAstaInversaInPreferitiListener listener) {
             this.listener = listener;
         }
 
@@ -540,10 +540,10 @@ public class Asta_inversaRepository {
     public interface OnInserimentoAstaInversaInPreferitiListener {
         void OnInserimentoAstaInversaInPreferiti(Integer numeroRecuperato);
     }
-    private static class eliminazioneAsta_inversaInPreferitiTask extends AsyncTask<String, Void, Integer> {
+    private static class EliminazioneAsta_inversaInPreferitiTask extends AsyncTask<String, Void, Integer> {
         private Asta_inversaRepository.OnEliminazioneAstaInversaInPreferitiListener listener;
 
-        public eliminazioneAsta_inversaInPreferitiTask(Asta_inversaRepository.OnEliminazioneAstaInversaInPreferitiListener listener) {
+        public EliminazioneAsta_inversaInPreferitiTask(Asta_inversaRepository.OnEliminazioneAstaInversaInPreferitiListener listener) {
             this.listener = listener;
         }
 
@@ -597,10 +597,10 @@ public class Asta_inversaRepository {
     public interface OnEliminazioneAstaInversaInPreferitiListener {
         void OnEliminazioneAstaInversaInPreferiti(Integer numeroRecuperato);
     }
-    private static class getAste_inversaPreferiteTask extends AsyncTask<String, Void, ArrayList<Asta_inversaModel>> {
+    private static class GetAste_inversaPreferiteTask extends AsyncTask<String, Void, ArrayList<Asta_inversaModel>> {
         private Asta_inversaRepository.OnGetAsteInversaPreferiteListener listener;
 
-        public getAste_inversaPreferiteTask(Asta_inversaRepository.OnGetAsteInversaPreferiteListener listener) {
+        public GetAste_inversaPreferiteTask(Asta_inversaRepository.OnGetAsteInversaPreferiteListener listener) {
             this.listener = listener;
         }
 
@@ -671,10 +671,10 @@ public class Asta_inversaRepository {
     public interface OnGetAsteInversaPreferiteListener {
         void OnGetAsteInversaPreferite(ArrayList<Asta_inversaModel> list);
     }
-    private static class inserimentoAsta_inversaTask extends AsyncTask<Object, Void, Long> {
+    private static class InserimentoAsta_inversaTask extends AsyncTask<Object, Void, Long> {
         private Asta_inversaRepository.OnInserimentoAstaInversaListener listener;
 
-        public inserimentoAsta_inversaTask(Asta_inversaRepository.OnInserimentoAstaInversaListener listener) {
+        public InserimentoAsta_inversaTask(Asta_inversaRepository.OnInserimentoAstaInversaListener listener) {
             this.listener = listener;
         }
 

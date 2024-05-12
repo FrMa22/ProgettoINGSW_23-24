@@ -22,27 +22,21 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.progettoingsw.DAO.RicercaAsteDAO;
 import com.example.progettoingsw.R;
 import com.example.progettoingsw.controllers_package.AstaAdapter;
 import com.example.progettoingsw.viewmodel.RicercaAstaViewModel;
 import com.google.android.material.button.MaterialButton;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
-import java.util.ArrayList;
-
 public class FragmentRicercaAsta extends Fragment {
     private EditText edittext_ricerca;
     private MaterialButton button_cerca_asta;
     private ImageButton button_filtro;
     private String parolaRicercata;
-    private ArrayList<String> listaCategorieScelte;
-    private String ordinamentoPrezzo;
     private AstaAdapter asteRecuperate;
     private ProgressBar progress_bar_schermata_ricerca_asta;
     private RelativeLayout relative_layout_fragment_ricerca;
     private TextView text_view_nessuna_asta_ricercata;
-    private RicercaAsteDAO ricercaAsteDAO;
     private RicercaAstaViewModel ricercaAstaViewModel;
 
     public FragmentRicercaAsta() {

@@ -9,22 +9,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.FragmentActivity;
-import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelStoreOwner;
 
-import com.example.progettoingsw.DAO.PopUpNotificheDAO;
 import com.example.progettoingsw.R;
 import com.example.progettoingsw.classe_da_estendere.DialogPersonalizzato;
 import com.example.progettoingsw.viewmodel.PopUpNotificheViewModel;
-import com.example.progettoingsw.viewmodel.SchermataNotificheViewModel;
 
 public class PopUpNotifiche extends DialogPersonalizzato implements View.OnClickListener{
     private PopUpNotifiche.PopupDismissListener popupDismissListener;
-    private String titolo;
-    private String commento;
-    private int idNotifica;
-    private String tipoUtente;
     private Button buttonCancella;
     private Button buttonChiudi;
     private TextView textViewTitolo;
@@ -59,8 +51,6 @@ public class PopUpNotifiche extends DialogPersonalizzato implements View.OnClick
             buttonChiudi.setOnClickListener(this);
 
 
-//        textViewTitolo.setText(titolo);
-//        textViewCommento.setText(commento);
 
 
     }
@@ -70,15 +60,11 @@ public class PopUpNotifiche extends DialogPersonalizzato implements View.OnClick
         if(v.getId() == R.id.button_cancella_notifica_popup_notifica){
 
             popUpNotificheViewModel.eliminaNotifica();
-            //cancella dal db la notifica
         }else
             if(v.getId() == R.id.button_chiudi_popup_notifica){
                 Toast.makeText(fragmentActivity, "premuto annulla", Toast.LENGTH_SHORT).show();
                 dismiss();
             }
-//fare un dao che cancella se cliccato cancella e se chiude fa solo il dismiss
-        //a prescindere chiude il popup se si preme uno dei bottoni
-        //schermataNotifiche.onResume();
         }
     public void dismissPopup() {
         dismiss();

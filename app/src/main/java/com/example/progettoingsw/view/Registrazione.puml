@@ -1,6 +1,7 @@
 @startuml RegistrazioneCampiFacoltativi
 
-
+left to right direction
+scale 3
 package com.example.progettoingsw.view {
 class Registrazione {
         - EditText edittext_nome
@@ -27,7 +28,7 @@ class Registrazione {
         + void osservaValoriPresentiAcquirente()
         + void osservaValoriPresentiVenditore()
     }
-    class RegistrazioneCampiFacoltativi {
+    class RegistrazioneCampiFacoltativi implements PopupRegistrazioneSocialDismissListener, PopupModificaSocialRegistrazioneDismissListener{
             - MaterialButton bottoneAnnulla
             - ImageButton bottoneSocial
             - MaterialButton bottoneProseguiRegistrazione
@@ -306,14 +307,14 @@ class RegistrazioneRepository {
             - OnSetTokenVenditoreListener listener
             - OnLoginAcquirenteConTokenListener listener
             - OnLoginVenditoreConTokenListener listener
-            - class LoginAcquirenteTask
-            - class RecuperaCategorieAcquirenteTask
-            - class SetTokenAcquirenteTask
-            - class LoginVenditoreTask
-            - class RecuperaCategorieVenditoreTask
-            - class SetTokenVenditoreTask
-            - class LoginAcquirenteConTokenTask
-            - class LoginVenditoreConTokenTask
+            -  LoginAcquirenteTask
+            -  RecuperaCategorieAcquirenteTask
+            -  SetTokenAcquirenteTask
+            -  LoginVenditoreTask
+            -  RecuperaCategorieVenditoreTask
+            -  SetTokenVenditoreTask
+            -  LoginAcquirenteConTokenTask
+            -  LoginVenditoreConTokenTask
 
             + loginAcquirenteBackend(email: String, password: String, listener: OnLoginAcquirenteListener): void
             + loginAcquirenteConTokenBackend(token: String, listener: OnLoginAcquirenteConTokenListener): void
@@ -335,7 +336,8 @@ package com.example.progettoingsw.model {
         - String link
         - String areageografica
 
-        + AcquirenteModel(nome: String, cognome: String, indirizzo_email: String, password: String, bio: String, areageografica: String, link: String)
+        + AcquirenteModel(nome: String, cognome: String, indirizzo_email: String, password: String,
+         bio: String, areageografica: String, link: String)
         + getIndirizzo_email(): String
         + setIndirizzo_email(indirizzo_email: String): void
         + getNome(): String
@@ -360,7 +362,8 @@ package com.example.progettoingsw.model {
             - String link
             - String areageografica
 
-            + VenditoreModel(nome: String, cognome: String, indirizzo_email: String, password: String, bio: String, areageografica: String, link: String)
+            + VenditoreModel(nome: String, cognome: String, indirizzo_email: String, password: String,
+             bio: String, areageografica: String, link: String)
             + getIndirizzo_email(): String
             + setIndirizzo_email(indirizzo_email: String): void
             + getNome(): String
@@ -376,19 +379,69 @@ package com.example.progettoingsw.model {
             + getAreageografica(): String
             + setAreageografica(areageografica: String): void
         }
-
+    class SocialAcquirenteModel {
+        - String nome
+        - String link
+        - String indirizzo_email
+        + SocialAcquirenteModel(String nome, String link, String indirizzo_email)
+        + getNome(): String
+        + setNome(String nome): void
+        + getLink(): String
+        + setLink(String link): void
+        + getIndirizzo_email(): String
+        + setIndirizzo_email(String indirizzo_email): void
+    }
+    class SocialVenditoreModel {
+        - String nome
+        - String link
+        - String indirizzo_email
+        + SocialVenditoreModel(String nome, String link, String indirizzo_email)
+        + getNome(): String
+        + setNome(String nome): void
+        + getLink(): String
+        + setLink(String link): void
+        + getIndirizzo_email(): String
+        + setIndirizzo_email(String indirizzo_email): void
+    }
 
 }
-Registrazione --> RegistrazioneViewModel
+package com.example.progettoingsw.gestori_gui{
+    class CustomAdapter_gridview_profilo_social {
+        - Context context
+        - List<String> socialNames
+        - List<String> socialLinks
+        + CustomAdapter_gridview_profilo_social(Context context)
+        + setData(List<String> socialNames, List<String> socialLinks): void
+        + clear(): void
+        + getSocialNames(): List<String>
+        + getSocialLinks(): List<String>
+        + getCount(): int
+        + getItem(int position): Object
+        + getItemId(int position): long
+        + getView(int position, View convertView, ViewGroup parent): View
+        - static class ViewHolder
+    }
+}
+
+        Registrazione --> RegistrazioneViewModel
+        Registrazione --> RegistrazioneCampiFacoltativi
         RegistrazioneCampiFacoltativi --> RegistrazioneViewModel
+        RegistrazioneCampiFacoltativi --> RegistrazioneCategorie
         RegistrazioneCategorie --> RegistrazioneViewModel
 
         PopUpRegistrazioneSocial --> RegistrazioneViewModel
         PopUpModificaSocialRegistrazione --> RegistrazioneViewModel
 
-RegistrazioneCampiFacoltativi --> PopUpModificaSocialRegistrazione
-RegistrazioneCampiFacoltativi --> PopUpRegistrazioneSocial
-RegistrazioneCategorie --> MainActivity
+        RegistrazioneCampiFacoltativi --> PopUpModificaSocialRegistrazione
+        RegistrazioneCampiFacoltativi --> PopUpRegistrazioneSocial
+        RegistrazioneCampiFacoltativi --> CustomAdapter_gridview_profilo_social
+        RegistrazioneCampiFacoltativi --> AcquirenteModel
+        RegistrazioneCampiFacoltativi --> VenditoreModel
+        RegistrazioneCampiFacoltativi --> SocialAcquirenteModel
+        RegistrazioneCampiFacoltativi --> SocialVenditoreModel
+
+        RegistrazioneCategorie --> MainActivity
+
 
         RegistrazioneViewModel --> Repository
         RegistrazioneViewModel --> LoginRepository

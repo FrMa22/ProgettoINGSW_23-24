@@ -15,24 +15,14 @@ import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.example.progettoingsw.DAO.AstePerCategorieDAO;
 import com.example.progettoingsw.R;
 import com.example.progettoingsw.classe_da_estendere.GestoreComuniImplementazioni;
 import com.example.progettoingsw.controllers_package.AstaAdapter;
-import com.example.progettoingsw.controllers_package.Controller;
-import com.example.progettoingsw.item.AstaIngleseItem;
-import com.example.progettoingsw.item.AstaInversaItem;
-import com.example.progettoingsw.item.AstaRibassoItem;
 import com.example.progettoingsw.viewmodel.SchermataAstePerCategoriaViewModel;
 
-import java.util.ArrayList;
 
 public class SchermataAstePerCategoria extends GestoreComuniImplementazioni {
      TextView textViewTtitoloCategorie;
-     Controller controller;
-     Intent intent;
-     String email;
-     String tipoUtente;
       ImageButton backBottone;
      AstaAdapter astaAdapter;
      private ProgressBar progress_bar_schermata_aste_per_categoria;
@@ -46,7 +36,6 @@ public class SchermataAstePerCategoria extends GestoreComuniImplementazioni {
         setContentView(R.layout.activity_schermata_aste_per_categoria);
         textViewTtitoloCategorie = findViewById(R.id.titoloRicercaCategoria);
         progress_bar_schermata_aste_per_categoria = findViewById(R.id.progress_bar_schermata_aste_per_categoria);
-        //progress_bar_schermata_aste_per_categoria.setVisibility(View.VISIBLE);
         text_view_nessuna_asta_ricercata_per_categoria = findViewById(R.id.text_view_nessuna_asta_ricercata_per_categoria);
         text_view_nessuna_asta_ricercata_per_categoria.setVisibility(View.VISIBLE);
 
@@ -126,21 +115,6 @@ public class SchermataAstePerCategoria extends GestoreComuniImplementazioni {
 
     }
 
-//    public void asteCategorie(ArrayList<Object> aste) {
-//        boolean asteVuote = aste == null || aste.isEmpty();
-//        if (!asteVuote)  {
-//            astaAdapter.setAste(aste);
-//        } else {
-//            astaAdapter.setAste(null);
-//            // Nessun nome asta trovato per l'email specificata
-//        }
-//        if(asteVuote){
-//            text_view_nessuna_asta_ricercata_per_categoria.setVisibility(View.VISIBLE);
-//        }else{
-//            text_view_nessuna_asta_ricercata_per_categoria.setVisibility(View.INVISIBLE);
-//        }
-//        progress_bar_schermata_aste_per_categoria.setVisibility(View.INVISIBLE);
-//    }
 
     public void osservaIsAcquirente(){
         schermataAstePerCategoriaViewModel.isAcquirente.observe(this, (valore) -> {

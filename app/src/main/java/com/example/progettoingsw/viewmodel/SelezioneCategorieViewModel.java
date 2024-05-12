@@ -3,10 +3,6 @@ package com.example.progettoingsw.viewmodel;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.progettoingsw.R;
-import com.example.progettoingsw.repository.Asta_allingleseRepository;
-import com.example.progettoingsw.repository.Asta_alribassoRepository;
-import com.example.progettoingsw.repository.Asta_inversaRepository;
 import com.example.progettoingsw.repository.Repository;
 
 public class SelezioneCategorieViewModel extends ViewModel {

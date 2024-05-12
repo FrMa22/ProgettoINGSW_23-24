@@ -10,7 +10,6 @@ import android.widget.Toast;
 
 import androidx.appcompat.widget.AppCompatButton;
 
-import com.example.progettoingsw.DAO.PopUpModificaCampiProfiloDAO;
 import com.example.progettoingsw.R;
 import com.example.progettoingsw.classe_da_estendere.DialogPersonalizzato;
 import com.example.progettoingsw.viewmodel.FragmentProfiloViewModel;
@@ -25,7 +24,6 @@ public class PopUpModificaCampiProfilo extends DialogPersonalizzato implements V
     private EditText edit_text_modifica_sitoweb;
     private EditText edit_text_modifica_bio;
     private EditText edit_text_modifica_paese;
-    private PopUpModificaCampiProfiloDAO popUpModificaCampiProfiloDAO;
     private FragmentProfilo fragmentProfilo;
 
     private FragmentProfiloViewModel fragmentProfiloViewModel;

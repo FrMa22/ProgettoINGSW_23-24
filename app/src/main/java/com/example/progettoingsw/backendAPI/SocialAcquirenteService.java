@@ -1,7 +1,6 @@
 package com.example.progettoingsw.backendAPI;
 
 import com.example.progettoingsw.DTO.SocialAcquirenteDTO;
-import com.example.progettoingsw.model.SocialAcquirenteModel;
 
 import java.util.ArrayList;
 import java.util.List;

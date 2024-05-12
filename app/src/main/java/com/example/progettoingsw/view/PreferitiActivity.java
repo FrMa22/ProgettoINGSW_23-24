@@ -10,7 +10,6 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DividerItemDecoration;
@@ -18,22 +17,15 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.example.progettoingsw.DAO.AstePreferiteDAO;
 import com.example.progettoingsw.R;
 import com.example.progettoingsw.classe_da_estendere.GestoreComuniImplementazioni;
 import com.example.progettoingsw.controllers_package.AstaAdapter;
-import com.example.progettoingsw.controllers_package.Controller;
 import com.example.progettoingsw.viewmodel.SchermataPreferityViewModel;
 
 public class PreferitiActivity extends GestoreComuniImplementazioni {
-    Controller controller;
     private ImageButton backBottone;
     private TextView text_view_nessuna_asta_preferita_trovata;
-    Intent intent;
-    private String email;
-    private String tipoUtente;
     private AstaAdapter astaAdapter;
-    private AstePreferiteDAO astePreferiteDAO;
     private ProgressBar progress_bar_schermata_preferiti;
     private RelativeLayout relative_layout_schermata_preferiti;
     private SchermataPreferityViewModel schermataPreferityViewModel;
@@ -63,11 +55,6 @@ public class PreferitiActivity extends GestoreComuniImplementazioni {
 
         schermataPreferityViewModel.getTipoUtente();
 
-//        controller = new Controller();
-//         intent= getIntent();
-//        email =intent.getStringExtra("email").trim();
-//        tipoUtente =intent.getStringExtra("tipoUtente");
-//        Log.d("preferitiActivity", "email : " + email + ", tipoutente: " + tipoUtente);
         backBottone = findViewById(R.id.backButton);
         astaAdapter = new AstaAdapter(this, null);
 
@@ -100,22 +87,12 @@ public class PreferitiActivity extends GestoreComuniImplementazioni {
         });
         recyclerViewAstePreferite.setAdapter(astaAdapter);
 
-//        astePreferiteDAO = new AstePreferiteDAO(this);
-//        //di default appena si apre la schermata si è già su aste aperte quindi escono già
-//        setAllClickable(relative_layout_schermata_preferiti,false);
-//        astePreferiteDAO.openConnection();
-//        astePreferiteDAO.getAsteForEmailUtente(email,tipoUtente);
-//        recyclerViewAstePreferite.setVisibility(View.VISIBLE);
 
 
         backBottone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 onBackPressed();
-//                Intent intent = new Intent(PreferitiActivity.this, MainActivity.class);//test del login
-//                intent.putExtra("email", email);
-//                intent.putExtra("tipoUtente", tipoUtente);
-//                startActivity(intent);
 
             }
         });
@@ -145,30 +122,6 @@ public class PreferitiActivity extends GestoreComuniImplementazioni {
 
     }
 
-//    public void astePreferite(ArrayList<Object> aste) {
-//        boolean asteVuote = aste == null || aste.isEmpty();
-//            if (!asteVuote)  {
-//                astaAdapter.setAste(aste);
-//            } else {
-//                astaAdapter.setAste(null);
-//                // Nessun nome asta trovato per l'email specificata
-//            }
-//            if(asteVuote){
-//                text_view_nessuna_asta_preferita_trovata.setVisibility(View.VISIBLE);
-//            }else{
-//                text_view_nessuna_asta_preferita_trovata.setVisibility(View.INVISIBLE);
-//            }
-//            progress_bar_schermata_preferiti.setVisibility(View.INVISIBLE);
-//            setAllClickable(relative_layout_schermata_preferiti, true);
-//    }
-//    @Override
-//    protected void onResume() {
-//        super.onResume();
-//        progress_bar_schermata_preferiti.setVisibility(View.VISIBLE);
-//        setAllClickable(relative_layout_schermata_preferiti, false);
-//        astePreferiteDAO.openConnection();
-//        astePreferiteDAO.getAsteForEmailUtente(email, tipoUtente);
-//    }
 
     public void osservaListaAstaInglesePreferite(){
         schermataPreferityViewModel.listaAstaInglesePreferite.observe(this, (listaAste) -> {

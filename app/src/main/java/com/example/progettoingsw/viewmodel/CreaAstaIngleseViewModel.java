@@ -221,7 +221,7 @@ public class CreaAstaIngleseViewModel extends ViewModel {
         if (prezzo == null || prezzo.isEmpty()) {
             setErroreBaseAsta("Si prega di inserire un prezzo.");
             return false;
-        } else if (!prezzo.matches("^\\d+(\\.\\d+)?$")) {
+        } else if (!prezzo.matches("^-?\\d+(\\.\\d+)?$")) {
             setErroreBaseAsta("Il prezzo deve essere un numero valido.");
             return false;
         } else if (Float.parseFloat(prezzo) <= 0) {
@@ -249,7 +249,7 @@ public class CreaAstaIngleseViewModel extends ViewModel {
         if(rialzo == null || rialzo.isEmpty()) {
             setErroreSogliaRialzoMinimo("Si prega di inserire un valore minimo di rialzo.");
             return false;
-        } else if (!rialzo.matches("^\\d*\\.?\\d+$")) {
+        } else if (!rialzo.matches("^-?\\d*\\.?\\d+$")) {
             setErroreSogliaRialzoMinimo("Si prega di inserire solo numeri per il valore minimo di rialzo.");
             return false;
         }else if(Float.parseFloat(rialzo)<=0){
@@ -273,9 +273,7 @@ public class CreaAstaIngleseViewModel extends ViewModel {
             String id_venditore = repository.getVenditoreModel().getIndirizzo_email();
 
             Asta_allingleseModel asta = new Asta_allingleseModel(nome,descrizione,image_byte, baseAsta_float,intervallo,intervallo, rialzo_float,baseAsta_float,"aperta",id_venditore);
-            if(categorieScelte!=null && !categorieScelte.isEmpty()) {
-                Log.d("creo asta", "nome: " + nome + "categorie: " + categorieScelte.get(0));
-            }
+
 
             creaAstaBackend(asta);
 

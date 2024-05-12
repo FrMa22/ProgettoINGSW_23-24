@@ -65,9 +65,6 @@
             android:name=".view.PopUpModificaCampiProfilo"
             android:theme="@style/Base.Theme.ProgettoINGSW.CustomThemeSfocato" />
         <activity
-            android:name=".view.PopUpRicercaCategorie"
-            android:theme="@style/Base.Theme.ProgettoINGSW.CustomTheme" />
-        <activity
             android:name=".view.PopUpNuovaOfferta"
             android:theme="@style/Base.Theme.ProgettoINGSW.CustomThemeSfocato" />
         <activity

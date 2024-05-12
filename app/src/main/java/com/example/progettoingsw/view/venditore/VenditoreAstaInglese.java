@@ -21,7 +21,6 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.progettoingsw.view.PopUpAggiungiCategorieAsta;
 import com.example.progettoingsw.R;
 import com.example.progettoingsw.classe_da_estendere.GestoreComuniImplementazioni;
-import com.example.progettoingsw.controllers_package.Controller;
 import com.example.progettoingsw.view.MainActivity;
 import com.example.progettoingsw.viewmodel.CreaAstaIngleseViewModel;
 import com.google.android.material.button.MaterialButton;
@@ -40,7 +39,6 @@ public class VenditoreAstaInglese extends GestoreComuniImplementazioni {
     EditText intervalloAsta;
     EditText rialzoAsta;
     private Bitmap bitmap;
-    Controller controller;
     ImageView immagineProdotto;
     ImageButton bottoneInserisciImmagine;
     private ArrayList<String> listaCategorieScelte;
@@ -55,7 +53,6 @@ public class VenditoreAstaInglese extends GestoreComuniImplementazioni {
 
 
 
-         controller = new Controller();
         progressBarVenditoreAstaInglese = findViewById(R.id.progressBarVenditoreAstaInglese);
         relativeLayoutAstaInglese = findViewById(R.id.relativeLayoutAstaInglese);
         listaCategorieScelte = new ArrayList<>();

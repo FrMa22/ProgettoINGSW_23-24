@@ -24,12 +24,6 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.progettoingsw.R;
 import com.example.progettoingsw.controllers_package.AstaAdapter;
-import com.example.progettoingsw.view.MainActivity;
-import com.example.progettoingsw.view.PreferitiActivity;
-import com.example.progettoingsw.view.SchermataAstaInglese;
-import com.example.progettoingsw.view.SchermataAstaInversa;
-import com.example.progettoingsw.view.SchermataAstaRibasso;
-import com.example.progettoingsw.view.SchermataNotifiche;
 import com.example.progettoingsw.viewmodel.HomeViewModel;
 import com.google.firebase.analytics.FirebaseAnalytics;
 

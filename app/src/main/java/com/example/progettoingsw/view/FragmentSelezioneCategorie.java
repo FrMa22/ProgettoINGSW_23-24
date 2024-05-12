@@ -14,7 +14,6 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
@@ -23,10 +22,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.progettoingsw.view.SchermataAstaInglese;
-import com.example.progettoingsw.view.SchermataAstaInversa;
-import com.example.progettoingsw.view.SchermataAstaRibasso;
-import com.example.progettoingsw.view.SchermataAstePerCategoria;
 import com.example.progettoingsw.viewmodel.SelezioneCategorieViewModel;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
@@ -36,7 +31,6 @@ import java.util.List;
 public class FragmentSelezioneCategorie extends Fragment {
     private List<String> selectedRadioButtonItems = new ArrayList<>();
     private LinearLayout linearLayoutCategorie;
-    private ArrayAdapter<String> categorieAdapter;
     private SelezioneCategorieViewModel selezioneCategorieViewModel;
     public FragmentSelezioneCategorie() {
     }

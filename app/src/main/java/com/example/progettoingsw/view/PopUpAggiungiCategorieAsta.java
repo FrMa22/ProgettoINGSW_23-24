@@ -32,8 +32,6 @@ public class PopUpAggiungiCategorieAsta extends DialogPersonalizzato implements 
     private LinearLayout linear_layout_categorie_crea_asta;
     private Context mContext;
     private Resources resources;
-    private ArrayList<String> categorieScelte;
-    private ArrayList<String> switchTexts;
     private FragmentCreaAstaInversa fragmentCreaAstaInversa;
     private VenditoreAstaInglese venditoreAstaInglese;
     private VenditoreAstaRibasso venditoreAstaRibasso;

@@ -170,10 +170,58 @@ public void controlloSocial(){
             }
         }
 }
+    public Boolean registrazioneValida(String mail, String password,String confermaPassword, String nome, String cognome){
+        System.out.println("entrato in registrazione valida");
+        if(mail == null || mail.isEmpty() ){
+            setMessaggioErroreEmail("L'indirizzo email non può essere vuoto");
+            return false;
+        }else if(mail.length()>100){
+            setMessaggioErroreEmail("L'indirizzo email non può essere più lungo di 100 caratteri");
+            return false;
+        } else if(!mail.matches("^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@"
+                + "[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$")) {
+            setMessaggioErroreEmail("L'indirizzo email non è nel formato corretto");
+            return false;
+        }else if(password == null || password.isEmpty()){
+            setMessaggioErrorePassword("La password non può essere vuota");
+            return false;
+        }else if(password.length()>100){
+            setMessaggioErrorePassword("La password non può essere più lunga di 100 caratteri");
+            return false;
+        }else if(confermaPassword == null || confermaPassword.isEmpty()){
+            setMessaggioErroreConfermaPassword("Conferma password non può essere vuota");
+            return false;
+        } else if (confermaPassword.length()>100) {
+            setMessaggioErroreConfermaPassword("Conferma password non può essere più lunga di 100 caratteri");
+            return false;
+        } else if (!confermaPassword.equals(password)) {
+            setMessaggioErroreConfermaPassword("Le password sono diverse");
+            return false;
+        } else if (nome == null || nome.isEmpty()) {
+            setMessaggioErroreNome("il nome non può essere vuoto");
+            return false;
+        } else if(!nome.matches("[a-zA-Z ]+")) {
+            setMessaggioErroreNome("Il nome può contenere solo lettere");
+            return false;
+        }else if (nome.length() > 50) {
+            setMessaggioErroreNome("il nome non può essere più lungo di 50 caratteri");
+            return false;
+        } else if (cognome == null || cognome.isEmpty()) {
+            setMessaggioErroreCognome("il cognome non può essere vuoto");
+            return false;
+        }  else if(!cognome.matches("[a-zA-Z ]+")) {
+            setMessaggioErroreCognome("Il cognome può contenere solo lettere");
+            return false;
+        }else if (cognome.length() > 50) {
+            setMessaggioErroreCognome("il cognome non può essere più lungo di 50 caratteri");
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
     public void registrazioneAcquirente(String email, String password, String confermaPassword, String nome, String cognome) {
-        System.out.println("entrato in registrazione di viewmodel");
         if (registrazioneValida(email, password, confermaPassword, nome, cognome)) {
-            System.out.println("in registrazione di viewmodel prima del try");
             try {
                 trovaAcquirenteDoppio(email, password, nome, cognome);
             } catch (Exception e) {
@@ -234,7 +282,7 @@ public void controlloSocial(){
         });
     }
 
-    private void trovaAcquirenteDoppio(String email, String password, String nome, String cognome) {
+    public void trovaAcquirenteDoppio(String email, String password, String nome, String cognome) {
         System.out.println("entrato in trova acquirente di view model");
         registrazioneRepository.registrazioneAcquirenteDoppioBackend(email, new RegistrazioneRepository.OnRegistrazioneAcquirenteDoppioListener() {
             @Override
@@ -354,40 +402,7 @@ public void controlloSocial(){
 
 
 
-    public Boolean registrazioneValida(String mail, String password,String confermaPassword, String nome, String cognome){
-        System.out.println("entrato in registrazione valida");
-        if(mail == null || mail.isEmpty() ){
-            setMessaggioErroreEmail("L'indirizzo email non può essere vuoto");
-            return false;
-        }else if(mail.length()>100){
-            setMessaggioErroreEmail("L'indirizzo email non può essere più lungo di 100 caratteri");
-            return false;
-        }else if(password == null || password.isEmpty()){
-            setMessaggioErrorePassword("La passsword non può essere vuota");
-            return false;
-        }else if(password.length()>100){
-            setMessaggioErrorePassword("La passsword non può essere più lunga di 100 caratteri");
-            return false;
-        } else if (!confermaPassword.equals(password)) {
-            setMessaggioErroreConfermaPassword("Le password sono diverse");
-            return false;
-        } else if (nome == null || nome.isEmpty()) {
-            setMessaggioErroreNome("il nome non può essere vuoto");
-            return false;
-        } else if (nome.length() > 50) {
-            setMessaggioErroreNome("il nome non può essere più lungo di 50 caratteri");
-            return false;
-        } else if (cognome == null || nome.isEmpty()) {
-            setMessaggioErroreCognome("il cognome non può essere vuoto");
-            return false;
-        } else if (cognome.length() > 50) {
-            setMessaggioErroreCognome("il cognome non può essere più lungo di 50 caratteri");
-            return false;
-        }
-        else{
-            return true;
-        }
-    }
+
     public Boolean registrazioneParzialeValidaAcquirente(String bio,String paese,String sitoWeb,AcquirenteModel acquirente){
         if (bio.length() > 100) {
             setMessaggioErroreBio("La bio non può superare i 100 caratteri");

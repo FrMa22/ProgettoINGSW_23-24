@@ -5,7 +5,6 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
@@ -18,11 +17,8 @@ import android.widget.Toast;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.progettoingsw.DAO.AstaPreferitaRibassoDAO;
-import com.example.progettoingsw.DAO.AstaRibassoDAO;
 import com.example.progettoingsw.R;
 import com.example.progettoingsw.classe_da_estendere.GestoreComuniImplementazioni;
-import com.example.progettoingsw.controllers_package.Controller;
 import com.example.progettoingsw.model.Asta_alribassoModel;
 import com.example.progettoingsw.viewmodel.SchermataAstaRibassoViewModel;
 import com.google.android.material.button.MaterialButton;
@@ -33,22 +29,15 @@ import java.time.format.DateTimeFormatter;
 
 public class SchermataAstaRibasso extends GestoreComuniImplementazioni {
     private SchermataAstaRibassoViewModel schermataAstaRibassoViewModel;
-    Controller controller;
     ImageButton bottoneBack;
     MaterialButton bottoneNuovaOfferta;
-    ImageButton bottonePreferito;
     private ProgressBar progress_bar_schermata_asta_ribasso;
-    private int id;
-    private String email;
-    private String tipoUtente;
     TextView textViewNomeProdotto;
     ImageView imageViewProdotto;
     TextView textViewDescrizione;
     TextView textViewProssimoDecremento;
     TextView textViewOffertaAttuale;
     TextView textViewVenditore;
-    private AstaRibassoDAO astaRibassoDAO;
-    private CountDownTimer countDownTimerControlloOgni10sec;
     ImageButton imageButtonPreferiti;
     Drawable drawablePreferiti ;
     Drawable drawableCuoreVuoto;
@@ -95,10 +84,6 @@ public class SchermataAstaRibasso extends GestoreComuniImplementazioni {
         bottoneBack =  findViewById(R.id.bottoneBackSchermataAstaRibasso);
         bottoneBack.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-//                Intent intent = new Intent(SchermataAstaRibasso.this, MainActivity.class);//test del login
-//                intent.putExtra("email", email);
-//                intent.putExtra("tipoUtente", tipoUtente);
-//                startActivity(intent);
                 onBackPressed();
             }
         });
@@ -106,9 +91,6 @@ public class SchermataAstaRibasso extends GestoreComuniImplementazioni {
 
           bottoneNuovaOfferta =  findViewById(R.id.bottoneOffertaSchermataAstaRibasso);
 
-//        if(tipoUtente.equals("venditore")){
-//            bottoneNuovaOfferta.setVisibility(View.INVISIBLE);
-//        }
 
         bottoneNuovaOfferta.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -123,10 +105,6 @@ public class SchermataAstaRibasso extends GestoreComuniImplementazioni {
                     @Override
                     public void onClick(View v) {
                         popUpConfermaOffertaDialog.dismiss();
-//                        Intent intent = new Intent(SchermataAstaRibasso.this, MainActivity.class);//test del login
-//                        intent.putExtra("email", email);
-//                        intent.putExtra("tipoUtente", tipoUtente);
-//                        startActivity(intent);
                     }
                 });
                 bottoneConfermaPopUP.setOnClickListener(new View.OnClickListener() {
@@ -146,7 +124,6 @@ public class SchermataAstaRibasso extends GestoreComuniImplementazioni {
                 schermataAstaRibassoViewModel.vaiInVenditore(emailVenditore);
             }
         });
-        //astaRibassoDAO.recuperaInfoAsta(id);
 
         bottone_info_schermata_asta_ribasso.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -171,25 +148,7 @@ public class SchermataAstaRibasso extends GestoreComuniImplementazioni {
             Log.d("Errore", "Impossibile recuperare i dati dell'asta");
         }
     }
-    public void getPrezzoCondizioneIntervallo(String prezzoAttuale, String condizione, String intervallo) {
-        if (condizione.equals("aperta")) {
-            textViewOffertaAttuale.setText(prezzoAttuale);
-            long orarioAttuale = System.currentTimeMillis();
-            long intervalloMillisecondi = convertiIntervallo(intervallo);
-            long prossimoDecremento = orarioAttuale + intervalloMillisecondi;
-            String orarioProssimoDecremento = convertiOrario(prossimoDecremento);
-            // Imposta l'orario del prossimo decremento nel TextView
-            textViewProssimoDecremento.setText(orarioProssimoDecremento);
-        } else {
-            textViewProssimoDecremento.setText("Asta chiusa.");
-            if(countDownTimerControlloOgni10sec != null){
-                countDownTimerControlloOgni10sec.cancel();
-            }
-            bottoneNuovaOfferta.setVisibility(View.INVISIBLE);
-            Toast.makeText(this, "Accidenti! L'asta si è conclusa", Toast.LENGTH_SHORT).show();
-            //bottoneBack.callOnClick();
-        }
-    }
+
     private long convertiIntervallo(String intervallo) {
         // Dividi l'intervallo in ore, minuti e secondi
         String[] partiIntervallo = intervallo.split(":");
@@ -215,50 +174,27 @@ public class SchermataAstaRibasso extends GestoreComuniImplementazioni {
     @Override
     protected void onPause() {
         super.onPause();
-        // Ferma il countDownTimerControlloOgni10sec se è attivo
-        if (countDownTimerControlloOgni10sec != null) {
-            countDownTimerControlloOgni10sec.cancel();
-        }
+
 
     }
     @Override
     protected void onStop() {
         super.onStop();
-        // Ferma il countDownTimerControlloOgni10sec se è attivo
-        if (countDownTimerControlloOgni10sec != null) {
-            countDownTimerControlloOgni10sec.cancel();
-        }
+
 
     }
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        // Ferma il countDownTimerControlloOgni10sec se è attivo
-        if (countDownTimerControlloOgni10sec != null) {
-            countDownTimerControlloOgni10sec.cancel();
-        }
+
 
     }
     @Override
     public void onResume() {
         super.onResume();
-        // Avvia nuovamente il countDownTimer
-        if (countDownTimerControlloOgni10sec != null) {
-            Log.d("onResume ribasso" ,"timer ");
-            countDownTimerControlloOgni10sec.cancel();
-            countDownTimerControlloOgni10sec.start();
-        }
 
     }
 
-    public  void verificaPreferiti(boolean check){
-        if (check){
-            imageButtonPreferiti.setImageDrawable(drawableCuorePieno);
-        }else {
-            imageButtonPreferiti.setImageDrawable(drawableCuoreVuoto);
-
-        }
-    }
 
 
 

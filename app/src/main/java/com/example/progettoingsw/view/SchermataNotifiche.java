@@ -13,9 +13,6 @@ import android.view.ViewTreeObserver;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.example.progettoingsw.DAO.NotificheDAO;
 import com.example.progettoingsw.R;
 import com.example.progettoingsw.classe_da_estendere.GestoreComuniImplementazioni;
 import com.example.progettoingsw.controllers_package.NotificheAdapter;
@@ -25,11 +22,7 @@ import com.example.progettoingsw.viewmodel.SchermataNotificheViewModel;
 public class SchermataNotifiche extends GestoreComuniImplementazioni implements PopUpNotifiche.PopupDismissListener {
     private SchermataNotificheViewModel schermataNotificheViewModel;
     private ImageButton bottoneBackNotifiche;
-    private String tipoUtente;
-    private String email;
     private NotificheAdapter adapterNotifiche;
-    private NotificheDAO notificheDAO;
-    private int numeroNotifiche;
     private ProgressBar progressBarSchermataNotifiche;
     private TextView text_view_nessuna_notifica;
     private SwipeRefreshLayout swipe_refresh_layout_notifiche;
@@ -69,20 +62,6 @@ public class SchermataNotifiche extends GestoreComuniImplementazioni implements 
                 schermataNotificheViewModel.gestisciClickRecyclerView(recyclerViewNotifiche,adapterNotifiche,v);
 
 
-                // Ottieni la posizione dell'elemento cliccato
-//                int position = recyclerViewNotifiche.getChildAdapterPosition(v);
-//                schermataNotificheViewModel.onItemClick(position);
-                // Ottieni l'oggetto Asta corrispondente alla posizione cliccata
-                //Object notifica = adapterNotifiche.getItem(position);
-
-//                // Esegui le azioni desiderate con l'oggetto Asta
-//                if (notifica instanceof NotificaItem) {
-//                    int id = ((NotificaItem) notifica).getId();
-//                    String titolo=((NotificaItem) notifica).getTitolo();
-//                    String commento=((NotificaItem) notifica).getCommento();
-//                    PopUpNotifiche popUpNotifiche=new PopUpNotifiche(SchermataNotifiche.this,titolo,commento,id,tipoUtente,SchermataNotifiche.this);
-//                    popUpNotifiche.show();
-//                }
             }
         });
 
@@ -91,21 +70,10 @@ public class SchermataNotifiche extends GestoreComuniImplementazioni implements 
         bottoneBackNotifiche.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Intent resultIntent = new Intent();
-//                resultIntent.putExtra("numeroNotifiche", numeroNotifiche); // Passa il numero di notifiche come extra
-//                setResult(Activity.RESULT_OK, resultIntent);
                 onBackPressed();
-//                Intent intent = new Intent(SchermataNotifiche.this, MainActivity.class);//test del login
-//                intent.putExtra("email", email);
-//                intent.putExtra("tipoUtente", tipoUtente);
-//                startActivity(intent);
             }
         });
 
-//        notificheDAO=new NotificheDAO(this);
-//        notificheDAO.openConnection();
-//        notificheDAO.getNotificheForEmail(email,tipoUtente);
-//        notificheDAO.closeConnection();
 
         osservaIsAcquirente();
         osservaVaiInNotificaPopUp();
@@ -142,33 +110,9 @@ public class SchermataNotifiche extends GestoreComuniImplementazioni implements 
     @Override //questo metodo serve per fare un refresh dei valori dei campi dopo una possibile modifica fatta da PopUp
     public void onResume() {
         super.onResume();
-//        progressBarSchermataNotifiche.setVisibility(View.VISIBLE);
-//        notificheDAO.openConnection();
-//        notificheDAO.getNotificheForEmail(email,tipoUtente);
-//        notificheDAO.closeConnection();
     }
 
 
-
-//    public void updateNotifiche(ArrayList<Object> notifiche) {
-//        boolean notificheVuote = notifiche == null || notifiche.isEmpty();
-//        Log.d("updateNotifiche", "notificheVuote: " + notificheVuote);
-//            if (!notificheVuote) {
-//                AdapterNotifiche.setNotifiche(notifiche);
-//                numeroNotifiche = notifiche.size();
-//            } else {
-//                numeroNotifiche = 0;
-//                // Nessun nome asta trovato per l'email specificata
-//            }
-//            if(notificheVuote){
-//                Log.d("updateNotifiche", "caso vuoto: ");
-//                text_view_nessuna_notifica.setVisibility(View.VISIBLE);
-//            }else{
-//            text_view_nessuna_notifica.setVisibility(View.INVISIBLE);
-//        }
-//        progressBarSchermataNotifiche.setVisibility(View.GONE);
-//
-//    }
 
     @Override
     public void onPopupDismissed() {

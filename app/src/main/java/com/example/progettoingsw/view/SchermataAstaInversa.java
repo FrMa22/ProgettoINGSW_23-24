@@ -3,40 +3,26 @@ package com.example.progettoingsw.view;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.progettoingsw.DAO.AstaInversaDAO;
-import com.example.progettoingsw.DAO.AstaPreferitaInversaDAO;
 import com.example.progettoingsw.R;
 import com.example.progettoingsw.classe_da_estendere.GestoreComuniImplementazioni;
-import com.example.progettoingsw.controllers_package.Controller;
 import com.example.progettoingsw.model.Asta_inversaModel;
-import com.example.progettoingsw.repository.Repository;
 import com.example.progettoingsw.viewmodel.SchermataAstaInversaViewModel;
 import com.google.android.material.button.MaterialButton;
 
 public class SchermataAstaInversa extends GestoreComuniImplementazioni implements PopUpNuovaOfferta.PopupDismissListener{
     private SchermataAstaInversaViewModel schermataAstaInversaViewModel;
-    Controller controller;
     ImageButton bottoneBack;
     private TextView text_view_tua_offerta_attuale_asta_inversa;
-    private CountDownTimer countDownTimer;
-    private ProgressBar progress_bar_schermata_asta_inversa;
-    private RelativeLayout relativeLayoutSchermataAstaInversa;
-    private int id;
-    private String email;
-    private String tipoUtente;
     private TextView textViewNomeProdottoSchermataAstaInversa;
     private ImageView imageViewSchermataAstaInversa;
     private TextView textViewDescrizioneSchermataAstaInversa;
@@ -50,7 +36,6 @@ public class SchermataAstaInversa extends GestoreComuniImplementazioni implement
     Drawable drawableCuorePieno;
     private ImageButton bottone_info_schermata_asta_inversa;
 
-    private AstaInversaDAO astaInversaDAO;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,10 +77,6 @@ public class SchermataAstaInversa extends GestoreComuniImplementazioni implement
 
         bottoneBack.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-//                Intent intent = new Intent(SchermataAstaInversa.this, MainActivity.class);//test del login
-//                intent.putExtra("email", email);
-//                intent.putExtra("tipoUtente", tipoUtente);
-//                startActivity(intent);
                 onBackPressed();
             }
         });
@@ -135,37 +116,19 @@ public class SchermataAstaInversa extends GestoreComuniImplementazioni implement
     @Override
     protected void onPause() {
         super.onPause();
-        // Ferma il countDownTimer se è attivo
-//        if (countDownTimer != null) {
-//            countDownTimer.cancel();
-//        }
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        // Ferma il countDownTimer se è attivo
-//        if (countDownTimer != null) {
-//            countDownTimer.cancel();
-//        }
     }
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        // Ferma il countDownTimer se è attivo
-//        if (countDownTimer != null) {
-//            countDownTimer.cancel();
-//        }
     }
     @Override
     public void onResume() {
         super.onResume();
-        // Avvia nuovamente il countDownTimer
-//        if (countDownTimer != null ) {
-//            Log.d("timer ", "inizia on Resume");
-//            countDownTimer.cancel();
-//            countDownTimer.start();
-//        }
     }
 
 
@@ -179,30 +142,6 @@ public class SchermataAstaInversa extends GestoreComuniImplementazioni implement
 
             textViewAcquirenteSchermataAstaInversa.setText(astaInversaRecuperata.getId_acquirente());
 
-//            ImageViewSchermataAstaInversa.setImageBitmap(schermataAstaInversaViewModel.convertiImmagine(astaInversaRecuperata.getImmagine()));
-//
-//            if(schermataAstaInversaViewModel.isAstaChiusa()){
-//                bottoneOffertaSchermataAstaInversa.setVisibility(View.INVISIBLE);
-//                imageButtonPreferiti.setVisibility(View.INVISIBLE);
-//                textViewDataScadenzaSchermataAstaInversa.setText("Asta chiusa");
-//            }else{
-//                textViewDataScadenzaSchermataAstaInversa.setText(String.valueOf(astaInversaRecuperata.getDataDiScadenza()));
-//            }
-//            if (astaInversaItem.getCondizione().equals("chiusa")) {
-//
-//
-//                if(countDownTimer != null){
-//                    countDownTimer.cancel();
-//                }
-//            }else{
-//                if(countDownTimer!=null) {
-//                    countDownTimer.cancel();
-//                    countDownTimer.start();
-//                }
-//            }
-//
-//            progress_bar_schermata_asta_inversa.setVisibility(View.GONE);
-//            setAllClickable(relativeLayoutSchermataAstaInversa, true);
         } else {
             // Gestisci il caso in cui non ci siano dati recuperati
             Log.d("Errore", "Impossibile recuperare i dati dell'asta");
@@ -211,35 +150,9 @@ public class SchermataAstaInversa extends GestoreComuniImplementazioni implement
 
     public void setPrezzo(Integer prezzoNuovo){
         textViewPrezzoAttualeSchermataAstaInversa.setText(Integer.toString(prezzoNuovo));
-        astaInversaDAO.verificaAttualeVincitore(email,id);
-    }
-    public void getPrezzoeCondizione(String prezzo_aggiornato, String condizione_aggiornata){
-        if(condizione_aggiornata.equals("aperta")){
-            textViewPrezzoAttualeSchermataAstaInversa.setText(prezzo_aggiornato);
-            // Resetta il timer per farlo ripartire da 10 secondi
-            Log.d("timer ", "cancello e faccio iniziare");
-            if(countDownTimer != null) {
-                countDownTimer.cancel();
-                countDownTimer.start();
-            }
-        }else{
-            Toast.makeText(this, "Accidenti! L'asta si è conclusa", Toast.LENGTH_SHORT).show();
-            bottoneOffertaSchermataAstaInversa.setVisibility(View.INVISIBLE);
-            if(countDownTimer != null){
-                countDownTimer.cancel();
-            }
-        }
 
     }
 
-    public  void verificaPreferiti(boolean check){
-        if (check){
-            imageButtonPreferiti.setImageDrawable(drawableCuorePieno);
-        }else {
-            imageButtonPreferiti.setImageDrawable(drawableCuoreVuoto);
-
-        }
-    }
 
     public void osservaAstaRecuperata(){
         schermataAstaInversaViewModel.astaRecuperata.observe(this, (asta) -> {

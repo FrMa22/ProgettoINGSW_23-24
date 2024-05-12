@@ -11,39 +11,23 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.FragmentActivity;
-import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.progettoingsw.DAO.AstaIngleseDAO;
-import com.example.progettoingsw.DAO.AstaInversaDAO;
 import com.example.progettoingsw.R;
 import com.example.progettoingsw.classe_da_estendere.DialogPersonalizzato;
-import com.example.progettoingsw.controllers_package.Controller;
 import com.example.progettoingsw.viewmodel.PopUpNuovaOffertaViewModel;
 
 public class PopUpNuovaOfferta extends DialogPersonalizzato implements View.OnClickListener {
     private PopUpNuovaOffertaViewModel popUpNuovaOffertaViewModel;
     private PopupDismissListener popupDismissListener;
-    Controller controller;
     TextView textviewPrezzoAttuale;
     EditText textviewNuovoPrezzo;
     Button bottoneAnnullaPopUpOfferta;
     Button bottoneConfermaPopUpOfferta;
-    String textViewPrezzo;
-    String tipo ;
     String offerta;
     String prezzoVecchio;
-    String emailOfferente;
-    String tipoAsta;
-    int id_asta;
-    private AstaIngleseDAO astaIngleseDAO;
-    private AstaInversaDAO astaInversaDAO;
-    private SchermataAstaInglese schermataAstaInglese;
-    private SchermataAstaInversa schermataAstaInversa;
     private LinearLayout linear_layout_prezzo_attuale_popup_nuova_offerta;
     private LinearLayout linear_layout_rialzo_minimo_popup_nuova_offerta;
-    private View view_popup_nuova_offerta;
-    private String rialzoMin;
     private TextView TextViewPrezzoRialzoMinimo;
     private FragmentActivity fragmentActivity;
 
@@ -84,13 +68,6 @@ public class PopUpNuovaOfferta extends DialogPersonalizzato implements View.OnCl
 
 
 
-//        if(schermataAstaInglese!=null){
-//            Integer minimaOffeta = Math.round(Float.parseFloat(rialzoMin) + Float.parseFloat(prezzoVecchio));
-//            TextViewPrezzoRialzoMinimo.setText(minimaOffeta.toString());
-//        }else{
-//            linear_layout_rialzo_minimo_popup_nuova_offerta.setVisibility(View.GONE);
-//            view_popup_nuova_offerta.setVisibility(View.GONE);
-//        }
         bottoneConfermaPopUpOfferta.setOnClickListener(this);
         bottoneAnnullaPopUpOfferta.setOnClickListener(this);
     }
@@ -125,7 +102,6 @@ public class PopUpNuovaOfferta extends DialogPersonalizzato implements View.OnCl
     }
     public void setImpostazioniPerAstainversa(){
         linear_layout_rialzo_minimo_popup_nuova_offerta.setVisibility(View.GONE);
-        //view_popup_nuova_offerta.setVisibility(View.GONE);
     }
     public void osservamessaggioErroreOfferta(){
         popUpNuovaOffertaViewModel.messaggioErroreOfferta.observe(fragmentActivity, (messaggio) -> {
