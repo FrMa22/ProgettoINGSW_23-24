@@ -379,21 +379,20 @@ public class FragmentProfiloViewModel extends ViewModel {
         }
     }
 
-    public void aggiornaPasswordViewModel(String password,String passwordNuova ){
-
+    public void aggiornaPasswordViewModel(String password,String passwordNuova){
         if(passwordValide(password,passwordNuova)) {
-
             if (containsAcquirente()) {
-
-
                 if (password.equals(getAcquirentePassword())) {
                     aggiornaPasswordAcquirenteViewModel(passwordNuova);
-                }else{setMessaggioErrorePasswordVecchia("La password vecchia non coincide con quella dell'utente");}
+                }else{
+                    setMessaggioErrorePasswordVecchia("La password vecchia non coincide con quella dell'utente");
+                }
             } else if (containsVenditore()) {
-
                 if (password.equals(getVenditorePassword())) {
                     aggiornaPasswordVenditoreViewModel(passwordNuova);
-                }else{setMessaggioErrorePasswordVecchia("La password vecchia non coincide con quella dell'utente");}
+                }else{
+                    setMessaggioErrorePasswordVecchia("La password vecchia non coincide con quella dell'utente");
+                }
             }
         }
     }

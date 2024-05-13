@@ -30,6 +30,17 @@ public class TestAggiornaPasswordViewModel {
         verify(spyViewModel).aggiornaPasswordAcquirenteViewModel(newPassword);
     }
     @Test
+    public void testPasswordValide_OldPasswordDiversaDallaAttuale() {
+        String oldPassword = "password";
+        String newPassword = "newPassword";
+        repository.setAcquirenteModel(acquirenteModel);
+
+        FragmentProfiloViewModel spyViewModel = spy(viewModel);
+        doNothing().when(spyViewModel).aggiornaPasswordAcquirenteViewModel(newPassword);
+        spyViewModel.aggiornaPasswordViewModel(oldPassword,newPassword);
+        verify(spyViewModel).setMessaggioErrorePasswordVecchia("La password vecchia non coincide con quella dell'utente");
+    }
+    @Test
     public void testPasswordValide_OldPasswordVuota() {
         String oldPassword = "";
         String newPassword = "newPassword";
