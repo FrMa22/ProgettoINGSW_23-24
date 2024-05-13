@@ -57,7 +57,7 @@
             android:exported="false" />
         <activity
             android:name=".view.FragmentHome"
-            android:exported="true" />
+            android:exported="false" />
         <activity
             android:name=".view.FragmentProfilo"
             android:exported="false" />
@@ -118,7 +118,7 @@
             android:exported="false" />
         <activity
             android:name=".view.SchermataNotifiche"
-            android:exported="true" />
+            android:exported="false" />
         <activity
             android:name=".view.PopUpRegistrazioneSocial"
             android:exported="false"
