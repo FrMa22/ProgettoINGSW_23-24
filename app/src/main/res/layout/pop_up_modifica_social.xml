@@ -61,7 +61,7 @@
             android:layout_marginTop="10dp"
             android:background="@drawable/bordo_rettangolare_per_bottone"
             android:text="Elimina"
-            android:textColor="@color/colore_secondario"
+            android:textColor="@color/colore_base"
             android:textSize="22dp"
             android:textStyle="bold" />
 
@@ -80,7 +80,7 @@
                 android:layout_weight="1"
                 android:background="@drawable/bordo_rettangolare_per_bottone"
                 android:text="Annulla"
-                android:textColor="@color/colore_secondario"
+                android:textColor="@color/colore_base"
                 android:textSize="22dp"
                 android:textStyle="bold" />
 
@@ -97,7 +97,7 @@
                 android:layout_weight="1"
                 android:background="@drawable/bordo_rettangolare_per_bottone"
                 android:text="Conferma"
-                android:textColor="@color/colore_secondario"
+                android:textColor="@color/colore_base"
                 android:textSize="22dp"
                 android:textStyle="bold" />
         </LinearLayout>

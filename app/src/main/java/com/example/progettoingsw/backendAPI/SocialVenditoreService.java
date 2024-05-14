@@ -27,6 +27,6 @@ public interface SocialVenditoreService {
 
     @PUT("/socialVenditoreController/updateSocialVenditore/{oldNome}/{oldLink}/{newNome}/{newLink}")
     Call<Void> updateSocialVenditore(@Path("oldNome") String oldNome,@Path("oldLink") String oldLink,@Path("newNome") String newNome,@Path("newLink") String newLink);
-    @POST("/socialVenditoreController/insertSocialVenditoreRegistrazione/{listaSocialDTO}")
+    @POST("/socialVenditoreController/insertSocialVenditoreRegistrazione")
     Call<Void> insertSocialVenditoreRegistrazione(@Body ArrayList<SocialVenditoreDTO> listaSocialDTO);
 }

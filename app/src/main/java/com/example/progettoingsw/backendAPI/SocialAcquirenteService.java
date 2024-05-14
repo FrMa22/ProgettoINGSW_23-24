@@ -27,7 +27,7 @@ public interface SocialAcquirenteService {
     @PUT("/socialAcquirenteController/updateSocialAcquirente/{oldNome}/{oldLink}/{newNome}/{newLink}")
     Call<Void> updateSocialAcquirente(@Path("oldNome") String oldNome,@Path("oldLink") String oldLink,@Path("newNome") String newNome,@Path("newLink") String newLink);
 
-    @POST("/socialAcquirenteController/insertSocialAcquirenteRegistrazione/{listaSocialDTO}")
+    @POST("/socialAcquirenteController/insertSocialAcquirenteRegistrazione")
     Call<Void> insertSocialAcquirenteRegistrazione(@Body ArrayList<SocialAcquirenteDTO> listaSocialDTO);
 
 }

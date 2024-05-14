@@ -26,7 +26,7 @@ public interface AcquirenteService {
     Call<ArrayList<String>> findCategorieByIndirizzoEmailAcquirente(@Path(("indirizzo_email")) String indirizzo_email);
 
 
-    @PUT("/utenteController/updateAcquirente/{acquirente}")
+    @PUT("/utenteController/updateAcquirente")
     Call<Void> updateAcquirente(@Body AcquirenteDTO acquirenteDTO);
 
 
@@ -38,9 +38,9 @@ public interface AcquirenteService {
     @PUT("/utenteController/setTokenAcquirente/{indirizzo_email}/{token}")
     Call<Integer> setTokenAcquirente(@Path("indirizzo_email") String indirizzo_email,@Path(("token")) String token);
 
-    @POST("/utenteController/insertAcquirente/{acquirente}")
+    @POST("/utenteController/insertAcquirente")
     Call<Long> saveAcquirente(@Body AcquirenteDTO acquirenteDTO);
-    @POST("utenteController/saveCategorieAcquirente/{indirizzo_email}/{lista_categorie}")
+    @POST("utenteController/saveCategorieAcquirente/{indirizzo_email}")
     Call<Void> saveCategorieAcquirente(@Path("indirizzo_email")String email, @Query("lista_categorie")ArrayList<String> lista_categorie);
     @PUT("/utenteController/removeTokenFromAcquirente/{indirizzo_email}")
     Call<Integer> removeTokenFromAcquirente(@Path("indirizzo_email") String indirizzo_email);

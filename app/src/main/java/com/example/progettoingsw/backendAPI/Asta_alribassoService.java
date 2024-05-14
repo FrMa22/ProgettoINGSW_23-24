@@ -19,7 +19,7 @@ public interface Asta_alribassoService {
     @GET("/asta_alribassoController/getAste_alRibassoNuove")
     Call<ArrayList<Asta_alribasso_DTO>> getAste_alribassoNuove();
 
-    @GET("/asta_alribassoController/getAste_alribassoNomeCategoria/{nomiCategorie}")
+    @GET("/asta_alribassoController/getAste_alribassoNomeCategoria")
     Call<ArrayList<Asta_alribasso_DTO>> getAste_alribassoCategoriaNome(@Query("nomiCategorie") ArrayList<String> nomiCategorie);
 
     @GET("/asta_alribassoController/getAste_alribassoApertaByEmail/{indirizzo_email}")
@@ -43,9 +43,9 @@ public interface Asta_alribassoService {
     @GET("/asta_alribassoController/getAsteRibassoPreferite/{indirizzo_email}")
     Call<ArrayList<Asta_alribasso_DTO>> getAsteRibassoPreferite(@Path("indirizzo_email") String indirizzo_email);
 
-    @POST("/asta_alribassoController/insertAstaRibasso/{asta_ribasso}/{lista_categorie}")
+    @POST("/asta_alribassoController/insertAstaRibasso")
     Call<Long> saveAsta_ribasso(@Body Asta_alribasso_DTO asta_ribasso_dto, @Query("lista_categorie") ArrayList<String> lista_categorie);
 
-    @GET("/asta_alribassoController/getAstePerRicerca/{nome}/{ordinamento}/{nomiCategorie}")
+    @GET("/asta_alribassoController/getAstePerRicerca")
     Call<ArrayList<Asta_alribasso_DTO>> getAstePerRicerca(@Query("nome") String nome,@Query("ordinamento") String ordinamento,@Query("nomiCategorie") ArrayList<String> nomiCategorie );
 }

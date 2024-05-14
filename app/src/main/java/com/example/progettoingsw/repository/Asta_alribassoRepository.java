@@ -618,6 +618,7 @@ public class Asta_alribassoRepository {
                     astaRibassoModel.getPrezzoMin(),astaRibassoModel.getPrezzoBase(),
                     astaRibassoModel.getCondizione(),astaRibassoModel.getId_venditore());
 
+            Log.d("insert asta ribasso", "mando asta con intervallo : " + asta_alribasso_dto.getIntervalloDecrementale());
             Call<Long> call = service.saveAsta_ribasso(asta_alribasso_dto, lista_categorie);
 
             try {

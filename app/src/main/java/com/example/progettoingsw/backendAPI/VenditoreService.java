@@ -25,15 +25,15 @@ public interface VenditoreService {
 
 
 
-    @PUT("/utenteController/updateVenditore/{venditore}")
+    @PUT("/utenteController/updateVenditore")
     Call<Void> updateVenditore(@Body VenditoreDTO venditoreDTO);
 
 
     @PUT("/utenteController/updatePasswordVenditore/{password}/{indirizzo_email}")
     Call<Void> updatePasswordVenditore(@Path("password") String password,@Path("indirizzo_email") String indirizzo_email);
-    @POST("/utenteController/insertVenditore/{venditore}")
+    @POST("/utenteController/insertVenditore")
     Call<Long> saveVenditore(@Body VenditoreDTO venditoreDTO);
-    @POST("utenteController/saveCategorieVenditore/{indirizzo_email}/{lista_categorie}")
+    @POST("utenteController/saveCategorieVenditore/{indirizzo_email}")
     Call<Void> saveCategorieVenditore(@Path("indirizzo_email")String email, @Query("lista_categorie")ArrayList<String> lista_categorie);
 
     @PUT("/utenteController/setTokenVenditore/{indirizzo_email}/{token}")
