@@ -15,7 +15,6 @@ import com.example.progettoingsw.viewmodel.MainActivityViewModel;
 
 public class VenditorePopUpCreaAsta extends Dialog implements View.OnClickListener{
 
-    private String email;
     private AppCompatButton bottoneAstaInglese;
     private AppCompatButton bottoneAstaRibasso;
     private MainActivityViewModel mainActivityViewModel;
@@ -67,7 +66,4 @@ public class VenditorePopUpCreaAsta extends Dialog implements View.OnClickListen
         } );
     }
 
-    public void dismissPopup() {
-        dismiss();
-    }
 }

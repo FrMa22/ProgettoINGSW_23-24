@@ -9,7 +9,6 @@ import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.media.ExifInterface;
 import android.net.Uri;
-import android.util.Log;
 
 import androidx.activity.result.ActivityResult;
 import androidx.lifecycle.MutableLiveData;
@@ -226,7 +225,6 @@ public class CreaAstaInversaViewModel extends ViewModel {
     private boolean isValidDateTime(String data, String ora) {
         if (data==null || data.isEmpty() || ora==null || ora.isEmpty()) {
             setErroreDataOra("Si prega di selezionare una data e un'ora valida.");
-            //Toast.makeText(getContext(), "Si prega di selezionare una data e un'ora valida.", Toast.LENGTH_SHORT).show();
             return false;
         }
         // Converte la data e l'ora in oggetti Calendar per la comparazione
@@ -242,7 +240,6 @@ public class CreaAstaInversaViewModel extends ViewModel {
         // Controlla se la data è precedente a oggi o se la data e l'ora sono precedenti all'istante attuale
         if (selectedDateTime.before(currentDateTime)) {
             setErroreDataOra("La data e l'ora devono essere in futuro.");
-            //Toast.makeText(getContext(), "La data e l'ora devono essere in futuro.", Toast.LENGTH_SHORT).show();
             return false;
         }
         return true;
@@ -296,9 +293,6 @@ public class CreaAstaInversaViewModel extends ViewModel {
                 String id_acquirente = repository.getAcquirenteModel().getIndirizzo_email();
 
                 Asta_inversaModel asta = new Asta_inversaModel(nome,descrizione,image_byte, prezzo_float, prezzo_float,data_e_ora,"aperta",id_acquirente);
-                if(categorieScelte!=null && !categorieScelte.isEmpty()) {
-                    Log.d("creo asta", "nome: " + nome + "categorie: " + categorieScelte.get(0));
-                }
                 creaAstaBackend(asta);
             }
 
@@ -317,24 +311,7 @@ public class CreaAstaInversaViewModel extends ViewModel {
             }
         });
     }
-    public void onActivityResult(Uri uriImmagine) {
-        try {
-            Log.d("ok","ok");
-            //displayImage(uriImmagine);
-        } catch (Exception e) {
-            setErroreDataOra("Nessuna Immagine selezionata");
-        }
-    }
-    public void prelevaImmagine(Activity activity){
-        Intent intent= new Intent(Intent.ACTION_PICK);
-        intent.setType("image/*");
-        if (intent.resolveActivity(activity.getPackageManager()) != null) {
-            setApriGalleria(intent);
-            //resultLauncher.launch(intent);
-        } else {
-            setErroreDataOra("Nessuna app disponibile per gestire la selezione delle immagini");
-        }
-    }
+
     public void setImmagine(ActivityResult result, Activity activity){
         uriImmagine = result.getData().getData();
         displayImage(uriImmagine,activity);
@@ -384,7 +361,6 @@ public class CreaAstaInversaViewModel extends ViewModel {
             // Imposta l'immagine ridimensionata nella ImageView
             setImmagineConvertita(resizedBitmap);
 
-            //immagineProdotto.setImageBitmap(resizedBitmap);
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -418,27 +394,17 @@ public class CreaAstaInversaViewModel extends ViewModel {
         });
 
         AlertDialog dialog = builder.create();
-        //dialog.show();
         setPopUpInformazioni(dialog);
 
     }
 
     public void addCategoriaProvvisoria(String nomeCategoria){
-        Log.d("addcategoria", "entrato" + nomeCategoria);
-        Log.d("addcategoria", "entrato e scelte: " + categorieScelte);
-        Log.d("removecategoria", "prima di aver aggiunto " + nomeCategoria + " si ha " + categorieScelteProvvisorie );
         categorieScelteProvvisorie.add(nomeCategoria);
-        Log.d("removecategoria", "dopo aver aggiunto " + nomeCategoria + " si ha " + categorieScelteProvvisorie );
     }
     public void removeCategoriaProvvisoria(String nomeCategoria){
-        Log.d("removecategoria", "entrato" + nomeCategoria);
-        Log.d("removecategoria", "entrato e scelte: " + categorieScelte);
-        Log.d("removecategoria", "prima di aver rimosso " + nomeCategoria + " si ha " + categorieScelteProvvisorie );
         categorieScelteProvvisorie.remove(nomeCategoria);
-        Log.d("removecategoria", "dopo aver rimosso " + nomeCategoria + " si ha " + categorieScelteProvvisorie );
     }
     public void saveCategorieScelte(){
-        Log.d("save","in categorie scelte metto categorie provvisorie" + categorieScelteProvvisorie);
         this.categorieScelte = new ArrayList<>(categorieScelteProvvisorie);
         setCategorieInserite(categorieScelte);
         this.categorieScelteProvvisorie.clear();

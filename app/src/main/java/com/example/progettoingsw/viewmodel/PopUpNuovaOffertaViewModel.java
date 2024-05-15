@@ -1,6 +1,5 @@
 package com.example.progettoingsw.viewmodel;
 
-import android.util.Log;
 
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.MutableLiveData;
@@ -20,7 +19,7 @@ public class PopUpNuovaOffertaViewModel extends ViewModel {
     private SchermataAstaInversaViewModel schermataAstaInversaViewModel;
     public MutableLiveData<Boolean> tipoAstaChecked = new MutableLiveData<>(false);
     public MutableLiveData<Boolean> isPartecipazioneAvvenuta = new MutableLiveData<>(false);
-    private String messaggioPartecipazioneAsta;
+    public MutableLiveData<String> messaggioPartecipazioneAsta = new MutableLiveData<>("");
     public MutableLiveData<Boolean> offertaValida = new MutableLiveData<>(false);
     public MutableLiveData<Boolean> messaggioErroreOfferta = new MutableLiveData<>(false);
     private String messaggioErrore;
@@ -54,6 +53,9 @@ public class PopUpNuovaOffertaViewModel extends ViewModel {
     public Boolean isAstaInglese(){
         return tipoAsta.equals("inglese");
     }
+    public Boolean isAstaInversa(){
+        return tipoAsta.equals("inversa");
+    }
     public String getMessaggioErrore() {
         return messaggioErrore;
     }
@@ -74,17 +76,13 @@ public class PopUpNuovaOffertaViewModel extends ViewModel {
     }
 
     public void checkOfferta(String offerta){
-        Log.d("checkOfferta", "valore : " + offerta);
         if(offerta==null || offerta.isEmpty()){
-            Log.d("checkOfferta", "caso in cui offerta è null o vuoto");
             setMessaggioErrore("Si prega di inserire un offerta!");
             setMessaggioErroreOfferta(true);
         }else if (!offerta.matches("^\\d*\\.?\\d+$")) {
-            Log.d("checkOfferta", "caso in cui offerta è di un formato non valido");
             setMessaggioErrore("Si prega di inserire solo numeri per la nuova offerta.");
             setMessaggioErroreOfferta(true);
         } else if (offerta.length()>20) {
-            Log.d("checkOfferta", "caso in cui offerta è piu lungo di 20");
             setMessaggioErrore("offerta fuori limite, inseriti più di 20 numeri");
             setMessaggioErroreOfferta(true);
         }else{
@@ -93,7 +91,6 @@ public class PopUpNuovaOffertaViewModel extends ViewModel {
                 float minimaOffeta = (getRialzoMin()) + (getPrezzoVecchio());
                 float offertaAttuale = Float.parseFloat(offerta);
                 if(offertaAttuale< minimaOffeta){
-                    Log.d("checkOfferta", "caso in cui offerta è minore della minima offerta");
                     setMessaggioErrore("L'offerta deve almeno eguagliare il valore dell'offerta attuale + il valore del rialzo minimo!");
                     setMessaggioErroreOfferta(true);
                 }else{
@@ -104,7 +101,6 @@ public class PopUpNuovaOffertaViewModel extends ViewModel {
                 float offertaAttuale = Float.parseFloat(offerta);
                 float offertaVecchia = repository.getAsta_inversaSelezionata().getPrezzoAttuale();
                 if(offertaAttuale >= (offertaVecchia-0.10)){
-                    Log.d("checkOfferta", "caso in cui offerta è piu lungo di 20");
                     setMessaggioErrore("l'offerta deve essere inferiore rispetto all'offerta attuale di almeno 0.10€. ");
                     setMessaggioErroreOfferta(true);
                 }else{
@@ -130,14 +126,11 @@ public class PopUpNuovaOffertaViewModel extends ViewModel {
         astaAllingleseRepository.partecipaAsta_allinglese(recuperaIdAstaInglese(), recuperaEmailAcquirente(), offerta, getTempoOfferta(),getStatoAsta(), new Asta_allingleseRepository.OnPartecipazioneAstaIngleseListener() {
             @Override
             public void OnPartecipazioneAstaInglese(Integer risposta) {
-                Log.d("partecipazione fatta" , "valore : " + risposta);
+                setIsPartecipazioneAvvenuta(true);
                 if(risposta!=null && risposta==1){
-                    setMessaggioPartecipazioneAsta("ok");
                     setMessaggioPartecipazioneAsta("Offerta effettuata con successo!");
-                    setIsPartecipazioneAvvenuta(true);
                 }else{
-                    setMessaggioPartecipazioneAsta("errore nel recupero del valore di ritorno ");
-                    setIsPartecipazioneAvvenuta(false);
+                    setMessaggioPartecipazioneAsta("Errore nell'effettuare l'offerta, riprovare. ");
                 }
 
             }
@@ -147,14 +140,11 @@ public class PopUpNuovaOffertaViewModel extends ViewModel {
         astaInversaRepository.partecipaAsta_inversa(recuperaIdAstaInversa(), recuperaEmailVenditore(), offerta, getTempoOfferta(),getStatoAsta(), new Asta_inversaRepository.OnPartecipazioneAstaInversaListener() {
             @Override
             public void OnPartecipazioneAstaInversa(Integer risposta) {
-                Log.d("partecipazione fatta" , "valore : " + risposta);
+                setIsPartecipazioneAvvenuta(true);
                 if(risposta!=null && risposta==1){
-                    setMessaggioPartecipazioneAsta("ok");
                     setMessaggioPartecipazioneAsta("Offerta effettuata con successo!");
-                    setIsPartecipazioneAvvenuta(true);
                 }else{
-                    setMessaggioPartecipazioneAsta("errore nel recupero del valore di ritorno ");
-                    setIsPartecipazioneAvvenuta(false);
+                    setMessaggioPartecipazioneAsta("Errore nell'effettuare l'offerta, riprovare. ");
                 }
 
             }
@@ -169,10 +159,10 @@ public class PopUpNuovaOffertaViewModel extends ViewModel {
         }
     }
     public void setMessaggioPartecipazioneAsta(String risposta){
-        this.messaggioPartecipazioneAsta = risposta;
+        this.messaggioPartecipazioneAsta.setValue(risposta);
     }
     public String getMessaggioPartecipazioneAsta(){
-        return messaggioPartecipazioneAsta;
+        return messaggioPartecipazioneAsta.getValue();
     }
     public void setIsPartecipazioneAvvenuta(Boolean b){
         isPartecipazioneAvvenuta.setValue(b);
@@ -204,19 +194,25 @@ public class PopUpNuovaOffertaViewModel extends ViewModel {
         float minimaOfferta = getPrezzoVecchio() + getRialzoMin();
         return String.valueOf(minimaOfferta);
     }
-    public void resetErroriNuovaOfferta(
-            LifecycleOwner lifecycleOwner
-    ){
+    public void resetErroriNuovaOfferta(LifecycleOwner lifecycleOwner){
         setMessaggioErrore("");
         setMessaggioErroreOfferta(false);
         setOffertaValida(false);
         setIsPartecipazioneAvvenuta(false);
         setTipoAsta("");
         setMessaggioPartecipazioneAsta("");
-        tipoAstaChecked.removeObservers(lifecycleOwner);
-        isPartecipazioneAvvenuta.removeObservers(lifecycleOwner);
-        offertaValida.removeObservers(lifecycleOwner);
-        messaggioErroreOfferta.removeObservers(lifecycleOwner);
+        if(tipoAstaChecked.hasActiveObservers()){
+            tipoAstaChecked.removeObservers(lifecycleOwner);
+        }
+        if(messaggioPartecipazioneAsta.hasActiveObservers()) {
+            messaggioPartecipazioneAsta.removeObservers(lifecycleOwner);
+        }
+        if(offertaValida.hasActiveObservers()) {
+            offertaValida.removeObservers(lifecycleOwner);
+        }
+        if(messaggioErroreOfferta.hasActiveObservers()) {
+            messaggioErroreOfferta.removeObservers(lifecycleOwner);
+        }
     }
 
 }

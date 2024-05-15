@@ -3,7 +3,6 @@ package com.example.progettoingsw.view;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -107,8 +106,6 @@ public class SchermataAstaInversa extends GestoreComuniImplementazioni implement
     }
     @Override
     public void onPopupDismissed() {
-        // Metodo chiamato quando il pop-up viene chiuso
-        Log.d("OnPopUpDismissed", "entrato");
         schermataAstaInversaViewModel.checkUltimaOfferta();
         schermataAstaInversaViewModel.getAstaData();
     }
@@ -137,14 +134,10 @@ public class SchermataAstaInversa extends GestoreComuniImplementazioni implement
             // Imposta i dati recuperati sui TextView e ImageView della tua activity
             textViewNomeProdottoSchermataAstaInversa.setText(astaInversaRecuperata.getNome());
             textViewDescrizioneSchermataAstaInversa.setText(astaInversaRecuperata.getDescrizione());
-            Log.d("setAstaDataInversa", "valore per prezzo : " + String.valueOf(astaInversaRecuperata.getPrezzoAttuale()));
             textViewPrezzoAttualeSchermataAstaInversa.setText(String.valueOf(astaInversaRecuperata.getPrezzoAttuale()));
 
             textViewAcquirenteSchermataAstaInversa.setText(astaInversaRecuperata.getId_acquirente());
 
-        } else {
-            // Gestisci il caso in cui non ci siano dati recuperati
-            Log.d("Errore", "Impossibile recuperare i dati dell'asta");
         }
     }
 
@@ -157,7 +150,6 @@ public class SchermataAstaInversa extends GestoreComuniImplementazioni implement
     public void osservaAstaRecuperata(){
         schermataAstaInversaViewModel.astaRecuperata.observe(this, (asta) -> {
             if (asta != null) {
-                Log.d("osservaAstaRecuperata","entrato");
                 schermataAstaInversaViewModel.convertiImmagine(asta.getPath_immagine());
             }
         });
@@ -169,7 +161,6 @@ public class SchermataAstaInversa extends GestoreComuniImplementazioni implement
             }else{
                 imageViewSchermataAstaInversa.setImageResource(R.drawable.no_image_available);
             }
-            Log.d("osservaImmagineAstaConvertita","entrato");
             schermataAstaInversaViewModel.isAstaChiusa();
         });
     }
@@ -180,7 +171,6 @@ public class SchermataAstaInversa extends GestoreComuniImplementazioni implement
                 imageButtonPreferiti.setVisibility(View.INVISIBLE);
                 textViewDataScadenzaSchermataAstaInversa.setText("Asta chiusa");
             }else {
-                Log.d("osservaIsAstaChiusa","caso asta aperta");
                 schermataAstaInversaViewModel.recuperaAstaDaMostrare();
             }
         });
@@ -188,7 +178,6 @@ public class SchermataAstaInversa extends GestoreComuniImplementazioni implement
     public void osservaAstaDaMostrare(){
         schermataAstaInversaViewModel.astadaMostrare.observe(this, (asta) ->{
             if(schermataAstaInversaViewModel.isAstaDaMostrare()){
-                Log.d("osservaAstaDaMostrare","valori : " + asta.getNome());
                 textViewDataScadenzaSchermataAstaInversa.setText(String.valueOf(asta.getDataDiScadenza()));
                 setAstaData(asta);
             }
@@ -223,7 +212,6 @@ public class SchermataAstaInversa extends GestoreComuniImplementazioni implement
     public void osservaIsPartecipazioneAvvenuta(){
         schermataAstaInversaViewModel.isPartecipazioneAvvenuta.observe(this, (messaggio) -> {
             if (messaggio) {
-                Toast.makeText(this, "Offerta accettata", Toast.LENGTH_SHORT).show();
                 schermataAstaInversaViewModel.getAstaData();
             }
         });
@@ -236,7 +224,6 @@ public class SchermataAstaInversa extends GestoreComuniImplementazioni implement
     }
     public void osservaIsAstaInPreferiti(){
         schermataAstaInversaViewModel.isAstaInPreferiti.observe(this, (messaggio) -> {
-            Log.d("osservaIsAstaRecuperata", "sto recuper");
             if (messaggio) {
                 imageButtonPreferiti.setImageDrawable(drawableCuorePieno);
                 imageButtonPreferiti.setOnClickListener(v -> eliminazioneInPreferiti());
@@ -244,9 +231,6 @@ public class SchermataAstaInversa extends GestoreComuniImplementazioni implement
                 imageButtonPreferiti.setImageDrawable(drawableCuoreVuoto);
                 imageButtonPreferiti.setOnClickListener(v -> inserimentoInPreferiti());
             }
-//                osservaIsAstaInPreferiti();
-//                schermataAstaIngleseViewModel.getIsAstaInPreferiti();
-
         });
     }
     public void osservaIsUltimaOffertaTua(){

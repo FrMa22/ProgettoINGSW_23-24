@@ -53,15 +53,12 @@ public class SchermataPartecipazioneAsteViewModel  extends ViewModel {
 
     public void trovaAsteViewModel(){
         try{
-                Log.d("trovaAsteViewModel","utente attuale");
                 if (containsAcquirente()) {
                     String email = getAcquirenteEmail();
                     trovaAsteInglesi(email);
-//                    trovaAsteInverse(email);
 
                 } else if (containsVenditore()) {
                     String email = getVenditoreEmail();
-//                    trovaAsteInglesi(email);
                     trovaAsteInverse(email);
                 }
         }catch(Exception e){
@@ -80,7 +77,6 @@ public class SchermataPartecipazioneAsteViewModel  extends ViewModel {
     private void checkAndMergeAsteAcquirente() {
         // Controlla se tutte e tre le ricerche sono completate
         if (isAsteInglesiRecuperate) {
-            System.out.println("tutte le ricerche sono finite");
             mergeAsteTrovate();
         }
     }
@@ -88,7 +84,6 @@ public class SchermataPartecipazioneAsteViewModel  extends ViewModel {
     private void checkAndMergeAsteVenditore() {
         // Controlla se tutte e tre le ricerche sono completate
         if (isAsteInverseRecuperate) {
-            System.out.println("tutte le ricerche sono finite");
             mergeAsteTrovate();
         }
     }
@@ -98,13 +93,10 @@ public class SchermataPartecipazioneAsteViewModel  extends ViewModel {
 
 
     private void trovaAsteInglesi(String email) {
-
-        System.out.println("entrato in trova aste inglesi   di view model");
         schermataPartecipazioneAsteRepository.trovaAsteInglesiBackend(email, new SchermataPartecipazioneAsteRepository.OnTrovaAsteInglesiListener() {
             @Override
             public void onTrovaAsteInglesi(List<Asta_allingleseModel> asteInglesiRecuperateList) {
-                // repository.setAsteAperteRecuperateList(asteAperteRecuperateList);//non so se serve visto che sono acchiappate dal viewModel
-                setAsteInglesiRecuperateList(asteInglesiRecuperateList);//cosi poi la gui "acchiappa" le aste trovate
+                setAsteInglesiRecuperateList(asteInglesiRecuperateList);
                 // Imposta il flag su true quando la ricerca è completata
                 isAsteInglesiRecuperate = true;
                 checkAndMergeAsteAcquirente();
@@ -119,12 +111,10 @@ public class SchermataPartecipazioneAsteViewModel  extends ViewModel {
 
 
     private void trovaAsteInverse(String email) {
-        System.out.println("entrato in trova aste inverse   di view model");
         schermataPartecipazioneAsteRepository.trovaAsteInverseBackend(email, new SchermataPartecipazioneAsteRepository.OnTrovaAsteInverseListener() {
             @Override
             public void onTrovaAsteInverse(List<Asta_inversaModel> asteInverseRecuperateList) {
-                // repository.setAsteAperteRecuperateList(asteAperteRecuperateList);//non so se serve visto che sono acchiappate dal viewModel
-                setAsteInverseRecuperateList(asteInverseRecuperateList);//cosi poi la gui "acchiappa" le aste trovate
+                setAsteInverseRecuperateList(asteInverseRecuperateList);
                 // Imposta il flag su true quando la ricerca è completata
                 isAsteInverseRecuperate = true;
                 checkAndMergeAsteVenditore();
@@ -132,22 +122,21 @@ public class SchermataPartecipazioneAsteViewModel  extends ViewModel {
         });
     }
 
-//
-
 
 
 
     //merge di tutte e 3 le liste di aste
     public  void mergeAsteTrovate(){
-        System.out.println("in merge aste  trovate");
         List<Asta_allingleseModel> asteInglesi=getAsteInglesiRecuperateList();
         List<Asta_inversaModel> asteInverse=getAsteInverseRecuperateList();
         ArrayList<Object> aste=new ArrayList<>();
         //get delle liste e le mette in variabili
-        if(asteInglesi!=null && !asteInglesi.isEmpty()){aste.addAll(asteInglesi);System.out.println("aggiunte aste inglesi");}
-        if(asteInverse!=null && !asteInverse.isEmpty()){aste.addAll(asteInverse);System.out.println("aggiunte aste inverse");}
-        //setta poi la variabile osservata
-        System.out.println("Finito il merge");
+        if(asteInglesi!=null && !asteInglesi.isEmpty()){
+            aste.addAll(asteInglesi);
+        }
+        if(asteInverse!=null && !asteInverse.isEmpty()){
+            aste.addAll(asteInverse);
+        }
         setAsteRecuperateList(aste);
         isAsteInglesiRecuperate =false;
         isAsteInverseRecuperate =false;
@@ -190,11 +179,9 @@ public class SchermataPartecipazioneAsteViewModel  extends ViewModel {
 
     public void checkTipoUtente(){
         if(containsAcquirente()){
-            System.out.println("contains di acquirente");
             setAcquirenteModelPresente();
             setAcquirenteRecuperato(getAcquirente());
         }else if(containsVenditore()) {
-            System.out.println("contains di venditore");
             setVenditoreModelPresente();
             setVenditoreRecuperato(getVenditore());
         }
@@ -252,7 +239,6 @@ public class SchermataPartecipazioneAsteViewModel  extends ViewModel {
     }
 
 
-    //
     public List<Asta_allingleseModel> getAsteInglesiRecuperateList(){
         return asteInglesiRecuperate.getValue();
     }
@@ -262,7 +248,6 @@ public class SchermataPartecipazioneAsteViewModel  extends ViewModel {
     public List<Asta_inversaModel> getAsteInverseRecuperateList(){
         return asteInverseRecuperate.getValue();
     }
-//
 
 
 

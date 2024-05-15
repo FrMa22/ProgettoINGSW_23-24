@@ -4,7 +4,6 @@
     import androidx.lifecycle.ViewModelProvider;
 
     import android.os.Bundle;
-    import android.util.Log;
     import android.view.Menu;
     import android.view.MenuItem;
 
@@ -65,13 +64,10 @@
                         break;
                     }
                 }
-                Log.d("bottomNavigationView","id dell'item : " + (positionItem+1));
                 mainActivityViewModel.gestisciFragment(positionItem + 1);
 
                 // Controlla se il fragment corrente è già quello selezionato
                 if (currentFragment != null && currentFragment.getClass().equals(selectedFragment.getClass())) {
-                    // Non fare nulla se il fragment corrente è già quello selezionato
-                    Log.d("BottomNav", "Fragment already selected");
                     return true;
                 }
 
@@ -84,7 +80,6 @@
         }
 
         public void enableBottomNavigationView(boolean enabled) {
-            Log.d("enable" , "preso comando : " + enabled);
             bottomNavigationView.getMenu().getItem(0).setEnabled(enabled);
             bottomNavigationView.getMenu().getItem(1).setEnabled(enabled);
             bottomNavigationView.getMenu().getItem(2).setEnabled(enabled);
@@ -123,7 +118,6 @@
         public void osservaSceltoHome(){
             mainActivityViewModel.sceltoHome.observe(this, (valore) ->{
                 if(mainActivityViewModel.isSceltoHome()){
-                    Log.d("osservaSceltoHome","entrato");
                     homeMenuItem.setIcon(R.drawable.ic_home);
                     resetOtherIcons(bottomNavigationView, homeMenuItem);
                     selectedFragment = new FragmentHome();
@@ -136,7 +130,6 @@
         public void osservaSceltoCategorie(){
             mainActivityViewModel.sceltoCategorie.observe(this, (valore) -> {
                 if(mainActivityViewModel.isSceltoCategorie()){
-                    Log.d("osservaSceltoCategorie","entrato");
                     categoriesMenuItem.setIcon(R.drawable.ic_categorie);
                     resetOtherIcons(bottomNavigationView, categoriesMenuItem);
                     selectedFragment = new FragmentSelezioneCategorie();
@@ -149,7 +142,6 @@
         public void osservaSceltoCreaAstaAcquirente(){
             mainActivityViewModel.sceltoCreaAstaAcquirente.observe(this, (valore) -> {
                 if(mainActivityViewModel.isSceltoCreaAstaAcquirente()){
-                    Log.d("osservaSceltoCreaAstaAcquirente","entrato");
                     creaAstaMenuItem.setIcon(R.drawable.ic_plus);
                     resetOtherIcons(bottomNavigationView, creaAstaMenuItem);
                     selectedFragment = new FragmentCreaAstaInversa();
@@ -162,7 +154,6 @@
         public void osservaSceltoCreaAstaVenditore(){
             mainActivityViewModel.sceltoCreaAstaVenditore.observe(this, (valore) -> {
                 if(mainActivityViewModel.isSceltoCreaAstaVenditore()){
-                    Log.d("osservaSceltoCreaAstaVenditore","entrato");
                     creaAstaMenuItem.setIcon(R.drawable.ic_plus);
                     resetOtherIcons(bottomNavigationView, creaAstaMenuItem);
                     VenditorePopUpCreaAsta popAsta  = new VenditorePopUpCreaAsta(MainActivity.this,MainActivity.this,mainActivityViewModel);
@@ -176,7 +167,6 @@
         public void osservaSceltoRicerca(){
             mainActivityViewModel.sceltoRicerca.observe(this, (valore) -> {
                 if(mainActivityViewModel.isSceltoRicerca()){
-                    Log.d("osservaSceltoRicerca","entrato");
                     searchMenuItem.setIcon(R.drawable.ic_search);
                     resetOtherIcons(bottomNavigationView, searchMenuItem);
                     selectedFragment = new FragmentRicercaAsta();

@@ -5,7 +5,6 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.util.Log;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -51,7 +50,6 @@ public class SchermataAstaRibassoViewModel extends ViewModel {
         astaAlribassoRepository.trovaAsta_alribasso(idAsta, new Asta_alribassoRepository.OnTrovaAstaRibassoListener() {
             @Override
             public void OnTrovaAstaRibasso(Asta_alribassoModel astaRecuperata) {
-                Log.d("asta ricercata" , "qui");
                 if(astaRecuperata!=null){
                     repository.setAsta_alribassoSelezionata(astaRecuperata);
                     setAstaRecuperata(astaRecuperata);
@@ -60,13 +58,6 @@ public class SchermataAstaRibassoViewModel extends ViewModel {
                 }
             }
         });
-//        Asta_alribassoModel asta = repository.getAsta_alribassoSelezionata();
-//        if(asta!=null){
-//            setAstaRecuperata(asta);
-//            setIsAstaRecuperata(true);
-//        }else{
-//            setErroreRecuperoAsta("Errore nel recupero asta!");
-//        }
     }
     public void setAstaRecuperata(Asta_alribassoModel b){
         astaRecuperata.setValue(b);
@@ -93,7 +84,6 @@ public class SchermataAstaRibassoViewModel extends ViewModel {
         long intervalloMillisecondi = convertiIntervallo(intervallo);
         long prossimoDecremento = orarioAttuale + intervalloMillisecondi;
         String orarioProssimoDecremento = convertiOrario(prossimoDecremento);
-        Log.d("convertiIntervalloOfferte", orarioProssimoDecremento);
 
         setIntervalloOfferteConvertito(orarioProssimoDecremento);
     }
@@ -158,7 +148,6 @@ public class SchermataAstaRibassoViewModel extends ViewModel {
         astaAlribassoRepository.acquistaAsta_alribasso(recuperaIdAstaRibasso(), recuperaEmailAcquirente(), recuperaPrezzoAttualeAstaRibasso(), new Asta_alribassoRepository.OnAcquistaAstaRibassoListener() {
             @Override
             public void OnAcquistaAstaRibasso(Integer risposta) {
-                Log.d("acquisto fatto" , "valore : " + risposta);
                 setIsAcquistoAvvenuto(true);
                 if(risposta==1){
                     setMessaggioAcquistaAstaRibasso("ok");
@@ -172,11 +161,9 @@ public class SchermataAstaRibassoViewModel extends ViewModel {
         messaggioAcquistaAstaRibasso.setValue(risposta);
     }
     public void setIsAcquistoAvvenuto(Boolean b){
-        Log.d("setIsAcquistoAvvenuto","entrato nel set");
         isAcquistoAvvenuto = b;
     }
     public Boolean getIsAcquistoAvvenuto(){
-        Log.d("getIsAcquistoAvvenuto","entrato nel get");
         return isAcquistoAvvenuto;
     }
     public Long recuperaIdAstaRibasso(){
@@ -208,13 +195,9 @@ public class SchermataAstaRibassoViewModel extends ViewModel {
             astaAlribassoRepository.verificaAstaRibassoInPreferiti(indirizzoEmail, idAsta, new Asta_alribassoRepository.OnVerificaAstaRibassoInPreferitiListener() {
                 @Override
                 public void OnVerificaAstaRibassoInPreferiti(Integer numeroRecuperato) {
-                    Log.d("asta ricercata", "qui");
                     if (numeroRecuperato != null && numeroRecuperato != 0) {
-                        Log.d("asta ricercata", "è nei preferiti");
                         setIsAstaInPreferiti(true);
                     } else {
-                        Log.d("asta ricercata", "non è nei preferiti");
-                        setErroreRecuperoAsta("errore nella verifica asta in preferiti");
                         setIsAstaInPreferiti(false);
                     }
                 }
@@ -227,13 +210,10 @@ public class SchermataAstaRibassoViewModel extends ViewModel {
         astaAlribassoRepository.inserimentoAstaInPreferiti(idAsta, indirizzoEmail, new Asta_alribassoRepository.OnInserimentoAstaRibassoInPreferitiListener() {
             @Override
             public void OnInserimentoAstaRibassoInPreferiti(Integer numeroRecuperato) {
-                Log.d("asta inserita in preferiti" , "qui");
                 if(numeroRecuperato!=null && numeroRecuperato==1){
-                    //setAstaInPreferiti(true);
                     setIsAstaInPreferiti(true);
                 }else{
-                    setErroreRecuperoAsta("errore nella verifica asta in preferiti");
-                    //setVerificaAstaInPreferitiChecked(true);
+                    setErroreRecuperoAsta("Errore nell'inserimento asta in preferiti");
                 }
             }
         });
@@ -244,13 +224,10 @@ public class SchermataAstaRibassoViewModel extends ViewModel {
         astaAlribassoRepository.eliminazioneAstaInPreferiti(idAsta, indirizzoEmail, new Asta_alribassoRepository.OnEliminazioneAstaRibassoInPreferitiListener() {
             @Override
             public void OnEliminazioneAstaRibassoInPreferiti(Integer numeroRecuperato) {
-                Log.d("asta eliminata in preferiti" , "qui");
                 if(numeroRecuperato!=null && numeroRecuperato==1){
-                    //setAstaInPreferiti(false);
                     setIsAstaInPreferiti(false);
                 }else{
-                    setErroreRecuperoAsta("errore nella verifica asta in preferiti");
-                    //setVerificaAstaInPreferitiChecked(true);
+                    setErroreRecuperoAsta("Errore nella rimozione asta dai preferiti");
                 }
             }
         });
@@ -302,7 +279,6 @@ public class SchermataAstaRibassoViewModel extends ViewModel {
         });
 
         AlertDialog dialog = builder.create();
-        //dialog.show();
         setPopUpInformazioni(dialog);
         setPopUpInformazioni(dialog);
     }

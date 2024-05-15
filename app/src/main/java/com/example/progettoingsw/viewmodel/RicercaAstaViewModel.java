@@ -1,6 +1,5 @@
 package com.example.progettoingsw.viewmodel;
 
-import android.util.Log;
 import android.widget.Switch;
 
 import androidx.lifecycle.MutableLiveData;
@@ -125,14 +124,12 @@ public class RicercaAstaViewModel extends ViewModel {
         return categorieScelte;
     }
     public void setCategorieScelte(ArrayList<String> categorieScelte) {
-        Log.d("setCategorieScelte", "entrato");
         this.categorieScelte = categorieScelte;
     }
     public String getOrdinamentoScelto() {
         return ordinamentoScelto;
     }
     public void setOrdinamentoScelto(String ordinamentoScelto) {
-        Log.d("setOrdinamentoScelto", "entrato");
         this.ordinamentoScelto = ordinamentoScelto;
     }
     public Boolean isOrdinamentoAsc(){
@@ -148,32 +145,25 @@ public class RicercaAstaViewModel extends ViewModel {
         return ordinamentoAncoraDaSalvare;
     }
     public void setOrdinamentoAncoraDaSalvare(String ordinamentoAncoraDaSalvare) {
-        Log.d("setOrdinamentoAncoraDaSalvare", "entrato");
         this.ordinamentoAncoraDaSalvare = new String(ordinamentoAncoraDaSalvare);
     }
     public void setCategoriePopUp(){
-        Log.d("setCategoriePopUp", "entrato");
         if(categorieScelte!=null && !categorieScelte.isEmpty()){
-            Log.d("setPopUpData", "categorieScelte non null");
             setCategorieAncoraDaSalvare(categorieScelte);
             setCategorie(categorieScelte);
         }else{
             categorieAncoraDaSalvare = new ArrayList<>();
-            Log.d("setPopUpData", "categorieScelte null o vuoto");
             setNoCategorie(true);
         }
 
     }
     public void setOrdinamentoPopUp(){
-        Log.d("setOrdinamentoPopUp", "entrato");
         if(ordinamentoScelto!=null && !ordinamentoScelto.isEmpty()){
-            Log.d("setPopUpData", "ordinamento scelto non null");
             setOrdinamentoAncoraDaSalvare(ordinamentoScelto);
             setOrdinamento(ordinamentoScelto);
         }
     }
     public void gestisciSwitchOrdinamento(){
-        Log.d("gestisciSwitchOrdinamento", "entrato");
         if(ordinamentoAncoraDaSalvare!=null) {
             if (ordinamentoAncoraDaSalvare.equals("ASC")) {
                 ordinamentoAncoraDaSalvare = "DESC";
@@ -189,13 +179,9 @@ public class RicercaAstaViewModel extends ViewModel {
     public void gestisciSwitchCategorie(Switch RicercaCliccata){
         String nomeRicerca = RicercaCliccata.getText().toString();
         if(RicercaCliccata.isChecked()) {
-            Log.d("gestisciSwitchCategorie","aggiungo " + nomeRicerca);
             categorieAncoraDaSalvare.add(nomeRicerca);
-            Log.d("gestisciSwitchCategorie","categorieancoradasalvare " + categorieAncoraDaSalvare);
         }else{
-            Log.d("gestisciSwitchCategorie","rimuovo " + nomeRicerca);
             categorieAncoraDaSalvare.remove(nomeRicerca);
-            Log.d("gestisciSwitchCategorie","categorieancoradasalvare " + categorieAncoraDaSalvare);
         }
     }
 
@@ -206,14 +192,12 @@ public class RicercaAstaViewModel extends ViewModel {
     public void salva(){
         setCategorieScelte(categorieAncoraDaSalvare);
         setOrdinamentoScelto(ordinamentoAncoraDaSalvare);
-        Log.d("salva", "categorieancora da salvare :" + categorieAncoraDaSalvare + ", ordinamentoancoradasalvare: " + ordinamentoAncoraDaSalvare);
         setChiudiPopUp(true);
     }
     public void chiudi(){
         setChiudiPopUp(true);
     }
     public void resetPerPopUp(){
-        Log.d("reset ", "entrato");
         setChiudiPopUp(false);
         setNoCategorie(false);
         setCategorie(null);
@@ -269,7 +253,6 @@ public class RicercaAstaViewModel extends ViewModel {
     public void getAsteRicerca(String nomeRicercato){
         if(getIsAcquirente()){
             cercaAsteInglesi(nomeRicercato);
-            //resto
         }else{
             cercaAsteInversa(nomeRicercato);
         }

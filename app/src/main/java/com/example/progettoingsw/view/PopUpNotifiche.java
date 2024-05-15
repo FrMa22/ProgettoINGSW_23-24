@@ -2,7 +2,6 @@ package com.example.progettoingsw.view;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -62,14 +61,12 @@ public class PopUpNotifiche extends DialogPersonalizzato implements View.OnClick
             popUpNotificheViewModel.eliminaNotifica();
         }else
             if(v.getId() == R.id.button_chiudi_popup_notifica){
-                Toast.makeText(fragmentActivity, "premuto annulla", Toast.LENGTH_SHORT).show();
                 dismiss();
             }
         }
     public void dismissPopup() {
         dismiss();
         if (popupDismissListener != null) {
-            Log.d("dismissPopup","entrato");
             popupDismissListener.onPopupDismissed();
         }
     }
@@ -78,7 +75,6 @@ public class PopUpNotifiche extends DialogPersonalizzato implements View.OnClick
     }
     public void osservaErroreEliminazione(){
         popUpNotificheViewModel.erroreEliminazione.observe(fragmentActivity, (messaggio) -> {
-            Log.d("osservaErroreEliminazione","" + messaggio);
             if(popUpNotificheViewModel.isErroreEliminazione()){
                 Toast.makeText(fragmentActivity, messaggio, Toast.LENGTH_SHORT).show();
             }
@@ -104,9 +100,7 @@ public class PopUpNotifiche extends DialogPersonalizzato implements View.OnClick
         }
         public void osservaNotificaEliminata(){
         popUpNotificheViewModel.notificaEliminata.observe(fragmentActivity, (result) -> {
-            Log.d("osservaNotificaEliminata","" + result);
             if(result){
-                Log.d("osservaNotificaEliminata","faccio dismiss popup" );
                 dismissPopup();
             }
             });

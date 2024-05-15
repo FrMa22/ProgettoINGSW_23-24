@@ -3,8 +3,6 @@ package com.example.progettoingsw.view;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.os.CountDownTimer;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -29,7 +27,6 @@ public class SchermataAstaInglese extends GestoreComuniImplementazioni implement
     private TextView text_view_tua_offerta_attuale;
     ImageButton bottoneBack;
     MaterialButton bottoneNuovaOfferta;
-    private CountDownTimer countDownTimer;
     TextView textViewNomeProdotto;
     ImageView imageViewProdotto;
     TextView textViewDescrizione;
@@ -52,7 +49,6 @@ public class SchermataAstaInglese extends GestoreComuniImplementazioni implement
         relativeLayoutSchermataAstaInglese = findViewById(R.id.relativeLayoutSchermataAstaInglese);
         progress_bar_schermata_asta_inglese = findViewById(R.id.progress_bar_schermata_asta_inglese);
 
-        // Inizializzazione dei TextView, ImageView e altri elementi
         textViewSogliaRialzoSchermataAstaInglese = findViewById(R.id.textViewSogliaRialzoSchermataAstaInglese);
         textViewNomeProdotto = findViewById(R.id.textViewNomeProdottoSchermataAstaInglese);
         imageViewProdotto = findViewById(R.id.ImageViewSchermataAstaInglese);
@@ -128,7 +124,6 @@ public class SchermataAstaInglese extends GestoreComuniImplementazioni implement
     }
     @Override
     public void onPopupDismissed() {
-        Log.d("onPopUpDismissed","entrato in on popupdismissed");
         schermataAstaIngleseViewModel.checkUltimaOfferta();
         schermataAstaIngleseViewModel.getAstaData();
     }
@@ -152,66 +147,18 @@ public class SchermataAstaInglese extends GestoreComuniImplementazioni implement
 
     public void setAstaData(Asta_allingleseModel astaIngleseRecuperata) {
         if (astaIngleseRecuperata != null) {
-            Log.d("setAstaData", "Entrato");
             textViewNomeProdotto.setText(astaIngleseRecuperata.getNome());
             textViewDescrizione.setText(astaIngleseRecuperata.getDescrizione());
             textViewPrezzo.setText(String.valueOf(astaIngleseRecuperata.getPrezzoAttuale()));
             textViewVenditore.setText(astaIngleseRecuperata.getId_venditore());
             textViewSogliaRialzoSchermataAstaInglese.setText(String.valueOf(astaIngleseRecuperata.getRialzoMin()));
-        } else {
-            // Gestisci il caso in cui non ci siano dati recuperati
-            Log.d("Errore", "Impossibile recuperare i dati dell'asta");
         }
     }
 
-    public  void verificaPreferiti(boolean check){
-        if (check){
-            imageButtonPreferiti.setImageDrawable(drawableCuorePieno);
-            isPreferito=true;
-        }else {
-            imageButtonPreferiti.setImageDrawable(drawableCuoreVuoto);
-            isPreferito = false;
-
-        }
-    }
     public void setPrezzo(Integer prezzoNuovo){
         textViewPrezzo.setText(Integer.toString(prezzoNuovo));
     }
-    public void getPrezzoeCondizione(String prezzo_aggiornato, String condizione_aggiornata){
-        if(condizione_aggiornata.equals("aperta")){
-            textViewPrezzo.setText(prezzo_aggiornato);
-            // Resetta il timer per farlo ripartire da 10 secondi
-            countDownTimer.start();
-        }else{
-            Toast.makeText(this, "Accidenti! L'asta si è conclusa", Toast.LENGTH_SHORT).show();
-            bottoneBack.callOnClick();
-        }
-    }
-    public void handleOffertaAttualeTua(Boolean result){
-        Log.d("handleOffertaAttuale", "result : " + result);
-        if(result){
-            text_view_tua_offerta_attuale.setVisibility(View.VISIBLE);
-        }else{
-            text_view_tua_offerta_attuale.setVisibility(View.INVISIBLE);
-        }
-    }
 
-    public void handleInserimento(Boolean result){
-        if(result){
-            imageButtonPreferiti.setImageDrawable(drawableCuorePieno);
-        }else{
-            Toast.makeText(this, "Errore nell'inserimento.", Toast.LENGTH_SHORT).show();
-        }
-        setAllClickable(relativeLayoutSchermataAstaInglese,true);
-    }
-    public void handleEliminazione(Boolean result){
-        if(result){
-            imageButtonPreferiti.setImageDrawable(drawableCuoreVuoto);
-        }else{
-            Toast.makeText(this, "Errore nella rimozione.", Toast.LENGTH_SHORT).show();
-        }
-        setAllClickable(relativeLayoutSchermataAstaInglese,true);
-    }
 
     public void osservaAstaRecuperata(){
         schermataAstaIngleseViewModel.astaRecuperata.observe(this, (asta) -> {
@@ -231,15 +178,12 @@ public class SchermataAstaInglese extends GestoreComuniImplementazioni implement
         });
     }
     public void osservaIsAstaChiusa(){
-        Log.d("ooservaAstaChiusa", "osservo");
         schermataAstaIngleseViewModel.isAstaChiusa.observe(this, (valore) -> {
             if(valore){
-                Log.d("asta chiusa" , "si");
                 bottoneNuovaOfferta.setVisibility(View.INVISIBLE);
                 imageButtonPreferiti.setVisibility(View.INVISIBLE);
                 textViewIntervalloOfferte.setText("Asta chiusa.");
             }else {
-                Log.d("asta chiusa" , "no");
                 schermataAstaIngleseViewModel.convertiIntervalloOfferte();
             }
         });
@@ -293,10 +237,7 @@ public class SchermataAstaInglese extends GestoreComuniImplementazioni implement
     }
     public void osservaIsPartecipazioneAvvenuta(){
         schermataAstaIngleseViewModel.isPartecipazioneAvvenuta.observe(this, (messaggio) -> {
-            Log.d("osservaIsAstaRecuperata", "sto recuper");
             if (messaggio) {
-                Log.d("osservaIsAstaRecuperata", "nell'if");
-                Toast.makeText(this, "Offerta accettata", Toast.LENGTH_SHORT).show();
                 schermataAstaIngleseViewModel.getAstaData();
             }
         });
@@ -309,7 +250,6 @@ public class SchermataAstaInglese extends GestoreComuniImplementazioni implement
     }
     public void osservaIsAstaInPreferiti(){
         schermataAstaIngleseViewModel.isAstaInPreferiti.observe(this, (messaggio) -> {
-            Log.d("osservaIsAstaInPreferiti", "sto recuper");
             if (messaggio) {
                 imageButtonPreferiti.setImageDrawable(drawableCuorePieno);
                 imageButtonPreferiti.setOnClickListener(v -> eliminazioneInPreferiti());

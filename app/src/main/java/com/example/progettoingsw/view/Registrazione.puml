@@ -217,7 +217,6 @@ package com.example.progettoingsw.viewmodel {
                 + eliminaSocialViewModel(nome_vecchio: String, link_vecchio: String): void
                 + resetErroriModificaSocial(): void
                 + inserisciSocialNellaLista(): void
-                + stampaLista(): void
                 + resetAllVariables(): void
                 + tornaInRegistrazione(): void
                 + aggiungiCategoria(categoria: String): void

@@ -5,11 +5,13 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.net.Uri;
+import android.graphics.Rect;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -40,7 +42,6 @@ import java.util.Calendar;
 
 public class FragmentCreaAstaInversa extends Fragment {
     private CreaAstaInversaViewModel creaAstaInversaViewModel;
-    private int idAsta;
     private ImageButton imageButtonRimuoviImmagine;
     AppCompatButton bottoneConferma;
     AppCompatButton bottoneAnnullaAstaInversa;
@@ -50,18 +51,13 @@ public class FragmentCreaAstaInversa extends Fragment {
     ImageButton bottoneInserisciImmagine;
     ImageButton bottone_info;
     ActivityResultLauncher<Intent> resultLauncher;
-    private ArrayList<String> listaCategorieScelte;
     private MaterialButton bottoneCategorieAstaInversa;
     EditText nomeAstaInversa;
     EditText prezzoAstaInversa;
 
     private String selectedDateString;
     private String selectedHourString;
-    private byte [] img;//è presente nei metodi per fare select+aggiunta foto nella schermata quindi non serve a livello pratico qui
     Bitmap bitmap;
-    Uri uriImmagine;
-    byte[] imageBytes;
-    String email;
     EditText descrizioneProdottoAstaAstaInversa;
 
     public FragmentCreaAstaInversa(){
@@ -100,7 +96,6 @@ public class FragmentCreaAstaInversa extends Fragment {
             @Override
             public void onClick(View view) {
                 resultLauncher.launch(new Intent(Intent.ACTION_PICK).setType("image/*"));
-                //creaAstaInversaViewModel.prelevaImmagine(requireActivity());
             }
         });
         registraRisultati();
@@ -108,10 +103,8 @@ public class FragmentCreaAstaInversa extends Fragment {
         imageButtonRimuoviImmagine.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                immagineProdotto.setImageResource(android.R.color.transparent); // Rimuove l'immagine
+                immagineProdotto.setImageResource(android.R.color.transparent);
                 bitmap = null;
-//                imageBytes = null; // Reimposta il byte array a null
-//                uriImmagine = null;
             }
         });
 
@@ -170,6 +163,33 @@ public class FragmentCreaAstaInversa extends Fragment {
             @Override
             public void onClick(View view) {
                 creaAstaInversaViewModel.premutoBack();
+            }
+        });
+
+        final View rootView = view2.getRootView();
+        rootView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            private boolean isKeyboardVisible = false;
+
+            @Override
+            public void onGlobalLayout() {
+                Rect rect = new Rect();
+                rootView.getWindowVisibleDisplayFrame(rect);
+                int screenHeight = rootView.getHeight();
+                int keypadHeight = screenHeight - rect.bottom;
+
+                // Consideriamo la tastiera visibile se la sua altezza è maggiore del 15% dell'altezza dello schermo
+                boolean isKeyboardNowVisible = keypadHeight > screenHeight * 0.15;
+
+                if (isKeyboardNowVisible && !isKeyboardVisible) {
+                    // La tastiera è stata aperta
+
+                    setNavigationView(false);
+                } else if (!isKeyboardNowVisible && isKeyboardVisible) {
+                    // La tastiera è stata chiusa
+                    setNavigationView(true);
+                }
+
+                isKeyboardVisible = isKeyboardNowVisible;
             }
         });
 
@@ -325,8 +345,6 @@ public class FragmentCreaAstaInversa extends Fragment {
                         try {
                             creaAstaInversaViewModel.setImmagine(result, requireActivity());
 
-//                            uriImmagine = result.getData().getData();
-//                            displayImage(uriImmagine);
                         } catch (Exception e) {
                             Toast.makeText(requireContext(), "Nessuna Immagine selezionata", Toast.LENGTH_SHORT).show();
                         }
@@ -340,5 +358,11 @@ public class FragmentCreaAstaInversa extends Fragment {
                 immagineProdotto.setImageBitmap(immagine);
             }
         });
+    }
+    private void setNavigationView(Boolean valore) {
+        MainActivity activity = (MainActivity) getActivity();
+        if (activity != null) {
+            activity.enableBottomNavigationView(valore);
+        }
     }
 }

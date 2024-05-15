@@ -1,12 +1,14 @@
 package com.example.progettoingsw.view;
 
 import android.content.Intent;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -18,12 +20,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.progettoingsw.R;
-import com.example.progettoingsw.controllers_package.AstaAdapter;
+import com.example.progettoingsw.gestori_gui.AstaAdapter;
 import com.example.progettoingsw.viewmodel.RicercaAstaViewModel;
 import com.google.android.material.button.MaterialButton;
 import com.google.firebase.analytics.FirebaseAnalytics;
@@ -60,20 +61,13 @@ public class FragmentRicercaAsta extends Fragment {
         button_cerca_asta = view.findViewById(R.id.button_cerca_asta);
         asteRecuperate = new AstaAdapter(getContext(),null) ;
         RecyclerView recyclerViewAsteRecuperate = view.findViewById(R.id.recycler_view_aste_per_ricerca);
-        // Utilizza LinearLayoutManager con orientamento orizzontale per far si che il recycler sia orizzontale, di default è verticale
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2, RecyclerView.VERTICAL, false);
         recyclerViewAsteRecuperate.setLayoutManager(gridLayoutManager);
 
 
-        // Aggiungi un decorator predefinito per ridurre lo spazio tra le aste, superfluo
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(getContext(), gridLayoutManager.getOrientation());
-        //recyclerViewAsteRecuperate.addItemDecoration(dividerItemDecoration);
-
-        //bisogna aggiungere il setOnItemClickListener per ogni setAdapter di ogni recycler view specificando cosa fare per ogni tipo di asta clickato
         asteRecuperate.setOnItemClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Ottieni la posizione dell'elemento cliccato
                 int position = recyclerViewAsteRecuperate.getChildAdapterPosition(v);
                 Object asta = asteRecuperate.getItem(position);
                 ricercaAstaViewModel.gestisciClickRecyclerView(asta);
@@ -114,6 +108,33 @@ public class FragmentRicercaAsta extends Fragment {
 
         ricercaAstaViewModel.checkTipoUtente();
 
+        // Listener per la visibilità della tastiera
+        final View rootView = view.getRootView();
+        rootView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            private boolean isKeyboardVisible = false;
+
+            @Override
+            public void onGlobalLayout() {
+                Rect rect = new Rect();
+                rootView.getWindowVisibleDisplayFrame(rect);
+                int screenHeight = rootView.getHeight();
+                int keypadHeight = screenHeight - rect.bottom;
+
+                // Consideriamo la tastiera visibile se la sua altezza è maggiore del 15% dell'altezza dello schermo
+                boolean isKeyboardNowVisible = keypadHeight > screenHeight * 0.15;
+
+                if (isKeyboardNowVisible && !isKeyboardVisible) {
+                    // La tastiera è stata aperta
+
+                    setNavigationView(false);
+                } else if (!isKeyboardNowVisible && isKeyboardVisible) {
+                    // La tastiera è stata chiusa
+                    setNavigationView(true);
+                }
+
+                isKeyboardVisible = isKeyboardNowVisible;
+            }
+        });
     }
     @Override
     public void onResume() {
@@ -136,20 +157,16 @@ public class FragmentRicercaAsta extends Fragment {
     public void osservaIsAcquirente(){
         ricercaAstaViewModel.isAcquirente.observe(getViewLifecycleOwner(), (valore) -> {
             if(valore){
-                Log.d("acquirente", "" );
                 osservaEntraInSchermataAstaInglese();
                 osservaListaAstaIngleseRicerca();
                 osservaListaAstaIngleseRicercaConvertite();
                 osservaListaAstaRibassoRicerca();
                 osservaListaAstaRibassoRicercaConvertite();
                 osservaEntraInSchermataAstaRibasso();
-                //osservaListaAstaRibassoRicerca();
             }else{
-                Log.d("venditore", "" );
                 osservaEntraInSchermataAstaInversa();
                 osservaListaAstaInversaRicerca();
                 osservaListaAstaInversaRicercaConvertite();
-                //osservaListaAstaInversaRicerca();
             }
 
         });
@@ -182,7 +199,6 @@ public void osservaEntraInSchermataAstaInglese(){
     public void osservaListaAstaIngleseRicerca(){
         ricercaAstaViewModel.listaAstaIngleseRicerca.observe(getViewLifecycleOwner(), (listaAste) -> {
             if(listaAste!=null){
-                //fai qualcosa
                 ricercaAstaViewModel.convertiAsteInglese();
             }
         });
@@ -195,8 +211,6 @@ public void osservaEntraInSchermataAstaInglese(){
                 }else{
                     text_view_nessuna_asta_ricercata.setVisibility(View.INVISIBLE);
                 }
-                //fai qualcosa
-                Log.d("inglesi", "" + listaAste.size());
                 asteRecuperate.setAste(listaAste);
             }
         });
@@ -204,7 +218,6 @@ public void osservaEntraInSchermataAstaInglese(){
     public void osservaListaAstaRibassoRicerca(){
         ricercaAstaViewModel.listaAstaRibassoRicerca.observe(getViewLifecycleOwner(), (listaAste) -> {
             if(listaAste!=null){
-                //fai qualcosa
                 ricercaAstaViewModel.convertiAsteRibasso();
             }
         });
@@ -217,8 +230,6 @@ public void osservaEntraInSchermataAstaInglese(){
                 }else{
                     text_view_nessuna_asta_ricercata.setVisibility(View.INVISIBLE);
                 }
-                //fai qualcosa
-                Log.d("Ribasso", "" + listaAste.size());
                 asteRecuperate.setAste(listaAste);
             }
         });
@@ -226,7 +237,6 @@ public void osservaEntraInSchermataAstaInglese(){
     public void osservaListaAstaInversaRicerca(){
         ricercaAstaViewModel.listaAstaInversaRicerca.observe(getViewLifecycleOwner(), (listaAste) -> {
             if(listaAste!=null){
-                //fai qualcosa
                 ricercaAstaViewModel.convertiAsteInversa();
             }
         });
@@ -239,10 +249,14 @@ public void osservaEntraInSchermataAstaInglese(){
                 }else{
                     text_view_nessuna_asta_ricercata.setVisibility(View.INVISIBLE);
                 }
-                //fai qualcosa
-                Log.d("Inversa", "" + listaAste.size());
                 asteRecuperate.setAste(listaAste);
             }
         });
+    }
+    private void setNavigationView(Boolean valore) {
+        MainActivity activity = (MainActivity) getActivity();
+        if (activity != null) {
+            activity.enableBottomNavigationView(valore);
+        }
     }
 }

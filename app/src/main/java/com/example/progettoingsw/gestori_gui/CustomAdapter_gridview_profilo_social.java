@@ -1,6 +1,5 @@
 package com.example.progettoingsw.gestori_gui;
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -81,8 +80,6 @@ public void clear(){
             // Gestisci l'errore in modo appropriato
         }
 
-        Log.d("CustomAdapter", "Social Name: " + viewHolder.textViewSocialName.getText());
-        Log.d("CustomAdapter", "Social Link: " + viewHolder.textViewSocialLink.getText());
 
         return convertView;
     }
@@ -91,6 +88,6 @@ public void clear(){
 
     private static class ViewHolder {
         TextView textViewSocialName;
-        TextView textViewSocialLink; // Aggiunto
+        TextView textViewSocialLink;
     }
 }

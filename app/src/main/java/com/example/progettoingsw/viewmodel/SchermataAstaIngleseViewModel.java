@@ -5,7 +5,6 @@
     import android.content.DialogInterface;
     import android.graphics.Bitmap;
     import android.graphics.BitmapFactory;
-    import android.util.Log;
     
     import androidx.lifecycle.MutableLiveData;
     import androidx.lifecycle.ViewModel;
@@ -35,7 +34,6 @@
         public MutableLiveData<AlertDialog> popUpInformazioni = new MutableLiveData<>(null);
         private String messaggioPartecipazioneAstaInglese;
         private String tipoUtente;
-        //private Asta_allingleseModel astaRecuperata;
         private Asta_allingleseRepository astaAllingleseRepository;
     
         public SchermataAstaIngleseViewModel(){
@@ -48,13 +46,10 @@
             astaAllingleseRepository.trovaAsta_allinglese(idAsta, new Asta_allingleseRepository.OnTrovaAstaIngleseListener() {
                 @Override
                 public void OnTrovaAstaInglese(Asta_allingleseModel astaRecuperata) {
-                    Log.d("asta ricercata" , "qui");
                     if(astaRecuperata!=null){
-                        Log.d("asta ricercata" , "non null");
                         repository.setAsta_allingleseSelezionata(astaRecuperata);
                         setAstaRecuperata(astaRecuperata);
                     }else{
-                        Log.d("asta ricercata" , "null");
                         setErroreRecuperoAsta("errore nel recupero asta");
                     }
                 }
@@ -198,13 +193,9 @@
             astaAllingleseRepository.verificaAstaIngleseInPreferiti(indirizzoEmail,idAsta, new Asta_allingleseRepository.OnVerificaAstaIngleseInPreferitiListener() {
                 @Override
                 public void OnVerificaAstaIngleseInPreferiti(Integer numeroRecuperato) {
-                    Log.d("asta ricercata" , "qui");
                     if(numeroRecuperato!=null && numeroRecuperato!=0){
-                        Log.d("asta ricercata" , "è nei preferiti");
                         setIsAstaInPreferiti(true);
                     }else{
-                        Log.d("asta ricercata" , "non è nei preferiti");
-                        setErroreRecuperoAsta("errore nella verifica asta in preferiti");
                         setIsAstaInPreferiti(false);
                     }
                 }
@@ -216,13 +207,10 @@
             astaAllingleseRepository.inserimentoAstaInPreferiti(idAsta, indirizzoEmail, new Asta_allingleseRepository.OnInserimentoAstaIngleseInPreferitiListener() {
                 @Override
                 public void OnInserimentoAstaIngleseInPreferiti(Integer numeroRecuperato) {
-                    Log.d("asta inserita in preferiti" , "qui");
                     if(numeroRecuperato!=null && numeroRecuperato==1){
-                        //setAstaInPreferiti(true);
                         setIsAstaInPreferiti(true);
                     }else{
-                        setErroreRecuperoAsta("errore nella verifica asta in preferiti");
-                        //setVerificaAstaInPreferitiChecked(true);
+                        setErroreRecuperoAsta("Errore nell'inserimento asta in preferiti");
                     }
                 }
             });
@@ -233,13 +221,10 @@
             astaAllingleseRepository.eliminazioneAstaInPreferiti(idAsta, indirizzoEmail, new Asta_allingleseRepository.OnEliminazioneAstaIngleseInPreferitiListener() {
                 @Override
                 public void OnEliminazioneAstaIngleseInPreferiti(Integer numeroRecuperato) {
-                    Log.d("asta eliminata in preferiti" , "qui");
                     if(numeroRecuperato!=null && numeroRecuperato==1){
-                        //setAstaInPreferiti(false);
                         setIsAstaInPreferiti(false);
                     }else{
-                        setErroreRecuperoAsta("errore nella verifica asta in preferiti");
-                        //setVerificaAstaInPreferitiChecked(true);
+                        setErroreRecuperoAsta("Errore nella rimozione asta dai preferiti");
                     }
                 }
             });
@@ -292,7 +277,6 @@
             });
 
             AlertDialog dialog = builder.create();
-            //dialog.show();
             setPopUpInformazioni(dialog);
             setPopUpInformazioni(dialog);
         }

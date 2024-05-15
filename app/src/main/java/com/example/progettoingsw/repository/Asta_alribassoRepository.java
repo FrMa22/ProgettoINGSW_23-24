@@ -20,43 +20,33 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class Asta_alribassoRepository {
 
     public void getAste_alribassoNuoveBackend( Asta_alribassoRepository.OnGetAsteRibassoNuoveListener listener) {
-        System.out.println("entrato in getAste_alribassoNuoveBackend");
         new GetAste_alribassoNuoveTask(listener).execute();
     }
     public void getAste_alribassoCategoriaNomeBackend(ArrayList<String> nomiCategorie, Asta_alribassoRepository.OnGetAsteRibassoCategoriaNomeListener listener) {
-        System.out.println("entrato in getAste_alribassoCategoriaNomeBackend");
         new GetAste_alribassoCategoriaNomeTask(listener).execute(nomiCategorie);
     }
     public void acquistaAsta_alribasso(Long idAsta, String emailAcquirente,String prezzoAttuale, Asta_alribassoRepository.OnAcquistaAstaRibassoListener listener) {
-        System.out.println("entrato in getAste_alribassoNuoveBackend");
         new AcquistaAsta_aliribassoTask(listener).execute(String.valueOf(idAsta),emailAcquirente,prezzoAttuale);
     }
     public void trovaAsta_alribasso(Long idAsta, Asta_alribassoRepository.OnTrovaAstaRibassoListener listener) {
-        System.out.println("entrato in trovaAsta_alribasso");
         new TrovaAsta_alribassoTask(listener).execute(String.valueOf(idAsta));
     }
     public void verificaAstaRibassoInPreferiti(String indirizzo_email, Long idAsta, Asta_alribassoRepository.OnVerificaAstaRibassoInPreferitiListener listener) {
-        System.out.println("entrato in verificaAstaRibassoInPreferiti");
         new VerificaAsta_alribassoInPreferitiTask(listener).execute(indirizzo_email, String.valueOf(idAsta));
     }
     public void inserimentoAstaInPreferiti( Long idAsta,String indirizzo_email, Asta_alribassoRepository.OnInserimentoAstaRibassoInPreferitiListener listener) {
-        System.out.println("entrato in inserimentoAstaInPreferiti");
         new InserimentoAsta_alribassoInPreferitiTask(listener).execute(String.valueOf(idAsta), indirizzo_email);
     }
     public void eliminazioneAstaInPreferiti( Long idAsta,String indirizzo_email, Asta_alribassoRepository.OnEliminazioneAstaRibassoInPreferitiListener listener) {
-        System.out.println("entrato in eliminazioneAstaInPreferiti");
         new EliminazioneAsta_alribassoInPreferitiTask(listener).execute(String.valueOf(idAsta), indirizzo_email);
     }
     public void getAsteRibassoPreferite(String indirizzo_email, Asta_alribassoRepository.OnGetAsteRibassoPreferiteListener listener) {
-        System.out.println("entrato in getAsteRibassoPreferite");
         new GetAste_alribassoPreferiteTask(listener).execute(indirizzo_email);
     }
     public void saveAsta_ribasso(Asta_alribassoModel astaRibassoModel, ArrayList<String> listaCategorie, Asta_alribassoRepository.OnInserimentoAstaRibassoListener listener) {
-        System.out.println("entrato in saveAsta_ribasso");
         new InserimentoAsta_ribassoTask(listener).execute(astaRibassoModel,listaCategorie);
     }
     public void getAstePerRicerca(String nome,ArrayList<String> nomiCategorie,String ordinamento, Asta_alribassoRepository.OnGetAstePerRicercaListener listener) {
-        System.out.println("entrato in getAstePerRicerca");
         new Asta_alribassoRepository.GetAstePerRicercaTask(listener,nome, nomiCategorie,ordinamento).execute();
     }
     private static class GetAste_alribassoNuoveTask extends AsyncTask<Void, Void, ArrayList<Asta_alribassoModel>> {
@@ -87,10 +77,8 @@ public class Asta_alribassoRepository {
             try {
                 Response<ArrayList<Asta_alribasso_DTO>> response = call.execute();
                 if (response.isSuccessful()) {
-                    System.out.println("response successful");
                     ArrayList<Asta_alribasso_DTO> list = response.body();
                     if (list != null && !list.isEmpty()) {
-                        System.out.println("lista di aste ribasso dto non null");
                         ArrayList<Asta_alribassoModel> listAsta_alribassoModel = new ArrayList<>();
                         for (Asta_alribasso_DTO astaAlribassoDto : list){
                             byte[] immagine = null;
@@ -108,17 +96,15 @@ public class Asta_alribassoRepository {
                                     astaAlribassoDto.getPrezzoAttuale(),
                                     astaAlribassoDto.getCondizione(),
                                     astaAlribassoDto.getId_venditore());
-                            //stampa dei valori dell asta
-                            Log.d("Asta ribasso" ," valori " + astaAlribassoModel.getNome() + astaAlribassoModel.getDescrizione() + astaAlribassoModel.getId() + astaAlribassoModel.getIntervalloBase() + astaAlribassoModel.getPrezzoMin());
                             listAsta_alribassoModel.add(astaAlribassoModel);
                         }
                         return listAsta_alribassoModel;
                     }
-                    System.out.println("lista di aste al ribasso dto null");
+
                 }
-                System.out.println("response non successful");
+
             } catch (IOException e) {
-                System.out.println("exception IOEXC");
+
                 e.printStackTrace();
             }
             return null;
@@ -126,7 +112,7 @@ public class Asta_alribassoRepository {
 
         @Override
         protected void onPostExecute(ArrayList<Asta_alribassoModel> result) {
-            System.out.println("on post execute loginAcquirente" + result);
+
             if (listener != null) {
                 listener.OnGetAsteRibassoNuove(result);
             }
@@ -163,10 +149,10 @@ public class Asta_alribassoRepository {
             try {
                 Response<ArrayList<Asta_alribasso_DTO>> response = call.execute();
                 if (response.isSuccessful()) {
-                    System.out.println("response successful");
+
                     ArrayList<Asta_alribasso_DTO> list = response.body();
                     if (list != null && !list.isEmpty()) {
-                        System.out.println("lista di aste ribasso dto non null");
+
                         ArrayList<Asta_alribassoModel> listAsta_alribassoModel = new ArrayList<>();
                         for (Asta_alribasso_DTO astaAlribassoDto : list){
                             byte[] immagine = null;
@@ -184,17 +170,15 @@ public class Asta_alribassoRepository {
                                     astaAlribassoDto.getPrezzoAttuale(),
                                     astaAlribassoDto.getCondizione(),
                                     astaAlribassoDto.getId_venditore());
-                            //stampa dei valori dell asta
-                            Log.d("Asta ribasso" ," valori " + astaAlribassoModel.getNome() + astaAlribassoModel.getDescrizione() + astaAlribassoModel.getId() + astaAlribassoModel.getIntervalloBase() + astaAlribassoModel.getPrezzoMin());
                             listAsta_alribassoModel.add(astaAlribassoModel);
                         }
                         return listAsta_alribassoModel;
                     }
-                    System.out.println("lista di aste al ribasso dto null");
+
                 }
-                System.out.println("response non successful");
+
             } catch (IOException e) {
-                System.out.println("exception IOEXC");
+
                 e.printStackTrace();
             }
             return null;
@@ -202,7 +186,7 @@ public class Asta_alribassoRepository {
 
         @Override
         protected void onPostExecute(ArrayList<Asta_alribassoModel> result) {
-            System.out.println("on post execute aste al ribasso per categoria nome" + result);
+
             if (listener != null) {
                 listener.OnGetAsteRibassoCategoriaNome(result);
             }
@@ -242,16 +226,16 @@ public class Asta_alribassoRepository {
             try {
                 Response<Integer> response = call.execute();
                 if (response.isSuccessful()) {
-                    System.out.println("response successful");
+
                     Integer risposta = response.body();
                     if (risposta != null && risposta==1) {
                         return risposta;
                     }
-                    System.out.println("lista di aste al ribasso dto null");
+
                 }
-                System.out.println("response non successful");
+
             } catch (IOException e) {
-                System.out.println("exception IOEXC");
+
                 e.printStackTrace();
                 return null;
             }
@@ -296,7 +280,7 @@ public class Asta_alribassoRepository {
             try {
                 Response<Asta_alribasso_DTO> response = call.execute();
                 if (response.isSuccessful()) {
-                    System.out.println("response successful");
+
                     Asta_alribasso_DTO astaRecuperata = response.body();
                     if (astaRecuperata != null) {
                         byte[] immagine = null;
@@ -317,13 +301,13 @@ public class Asta_alribassoRepository {
                         //stampa dei valori dell asta
                         return astaAlribassoModel;
                     }else{
-                        System.out.println("asta dto null");
+
                         return null;
                     }
                 }
-                System.out.println("response non successful");
+
             } catch (IOException e) {
-                System.out.println("exception IOEXC");
+
                 e.printStackTrace();
             }
             return null;
@@ -331,7 +315,7 @@ public class Asta_alribassoRepository {
 
         @Override
         protected void onPostExecute(Asta_alribassoModel result) {
-            System.out.println("on post execute GetAsteScadenzaRecenteTask" + result);
+
             if (listener != null) {
                 listener.OnTrovaAstaRibasso(result);
             }
@@ -366,18 +350,18 @@ public class Asta_alribassoRepository {
             try {
                 Response<Integer> response = call.execute();
                 if (response.isSuccessful()) {
-                    System.out.println("response successful");
+
                     Integer numeroRecuperato = response.body();
                     if(numeroRecuperato != null){
                         return numeroRecuperato;
                     }else{
-                        System.out.println("asta dto null");
+
                         return null;
                     }
                 }
-                System.out.println("response non successful");
+
             } catch (IOException e) {
-                System.out.println("exception IOEXC");
+
                 e.printStackTrace();
             }
             return null;
@@ -385,7 +369,7 @@ public class Asta_alribassoRepository {
 
         @Override
         protected void onPostExecute(Integer result) {
-            System.out.println("on post execute GetAsteScadenzaRecenteTask" + result);
+
             if (listener != null) {
                 listener.OnVerificaAstaRibassoInPreferiti(result);
             }
@@ -423,18 +407,18 @@ public class Asta_alribassoRepository {
             try {
                 Response<Integer> response = call.execute();
                 if (response.isSuccessful()) {
-                    System.out.println("response successful");
+
                     Integer numeroRecuperato = response.body();
                     if(numeroRecuperato != null){
                         return numeroRecuperato;
                     }else{
-                        System.out.println("asta dto null");
+
                         return null;
                     }
                 }
-                System.out.println("response non successful");
+
             } catch (IOException e) {
-                System.out.println("exception IOEXC");
+
                 e.printStackTrace();
             }
             return null;
@@ -442,7 +426,7 @@ public class Asta_alribassoRepository {
 
         @Override
         protected void onPostExecute(Integer result) {
-            System.out.println("on post execute GetAsteScadenzaRecenteTask" + result);
+
             if (listener != null) {
                 listener.OnInserimentoAstaRibassoInPreferiti(result);
             }
@@ -480,18 +464,18 @@ public class Asta_alribassoRepository {
             try {
                 Response<Integer> response = call.execute();
                 if (response.isSuccessful()) {
-                    System.out.println("response successful");
+
                     Integer numeroRecuperato = response.body();
                     if(numeroRecuperato != null){
                         return numeroRecuperato;
                     }else{
-                        System.out.println("asta dto null");
+
                         return null;
                     }
                 }
-                System.out.println("response non successful");
+
             } catch (IOException e) {
-                System.out.println("exception IOEXC");
+
                 e.printStackTrace();
             }
             return null;
@@ -499,7 +483,7 @@ public class Asta_alribassoRepository {
 
         @Override
         protected void onPostExecute(Integer result) {
-            System.out.println("on post execute GetAsteScadenzaRecenteTask" + result);
+
             if (listener != null) {
                 listener.OnEliminazioneAstaRibassoInPreferiti(result);
             }
@@ -536,10 +520,10 @@ public class Asta_alribassoRepository {
             try {
                 Response<ArrayList<Asta_alribasso_DTO>> response = call.execute();
                 if (response.isSuccessful()) {
-                    System.out.println("response successful");
+
                     ArrayList<Asta_alribasso_DTO> list = response.body();
                     if (list != null && !list.isEmpty()) {
-                        System.out.println("lista di aste ribasso dto non null");
+
                         ArrayList<Asta_alribassoModel> listAsta_alribassoModel = new ArrayList<>();
                         for (Asta_alribasso_DTO astaAlribassoDto : list){
                             byte[] immagine = null;
@@ -557,17 +541,15 @@ public class Asta_alribassoRepository {
                                     astaAlribassoDto.getPrezzoAttuale(),
                                     astaAlribassoDto.getCondizione(),
                                     astaAlribassoDto.getId_venditore());
-                            //stampa dei valori dell asta
-                            Log.d("Asta ribasso" ," valori " + astaAlribassoModel.getNome() + astaAlribassoModel.getDescrizione() + astaAlribassoModel.getId() + astaAlribassoModel.getIntervalloBase() + astaAlribassoModel.getPrezzoMin());
-                            listAsta_alribassoModel.add(astaAlribassoModel);
+                           listAsta_alribassoModel.add(astaAlribassoModel);
                         }
                         return listAsta_alribassoModel;
                     }
-                    System.out.println("lista di aste al ribasso dto null");
+
                 }
-                System.out.println("response non successful");
+
             } catch (IOException e) {
-                System.out.println("exception IOEXC");
+
                 e.printStackTrace();
             }
             return null;
@@ -575,7 +557,7 @@ public class Asta_alribassoRepository {
 
         @Override
         protected void onPostExecute(ArrayList<Asta_alribassoModel> result) {
-            System.out.println("on post execute aste al ribasso per categoria nome" + result);
+
             if (listener != null) {
                 listener.OnGetAsteRibassoPreferite(result);
             }
@@ -618,24 +600,23 @@ public class Asta_alribassoRepository {
                     astaRibassoModel.getPrezzoMin(),astaRibassoModel.getPrezzoBase(),
                     astaRibassoModel.getCondizione(),astaRibassoModel.getId_venditore());
 
-            Log.d("insert asta ribasso", "mando asta con intervallo : " + asta_alribasso_dto.getIntervalloDecrementale());
-            Call<Long> call = service.saveAsta_ribasso(asta_alribasso_dto, lista_categorie);
+           Call<Long> call = service.saveAsta_ribasso(asta_alribasso_dto, lista_categorie);
 
             try {
                 Response<Long> response = call.execute();
                 if (response.isSuccessful()) {
-                    System.out.println("response successful");
+
                     Long numeroRecuperato = response.body();
                     if(numeroRecuperato != null){
                         return 0L;
                     }else{
-                        System.out.println("asta dto null");
+
                         return 0L;
                     }
                 }
-                System.out.println("response non successful");
+
             } catch (IOException e) {
-                System.out.println("exception IOEXC");
+
                 e.printStackTrace();
             }
             return 0L;
@@ -643,7 +624,7 @@ public class Asta_alribassoRepository {
 
         @Override
         protected void onPostExecute(Long result) {
-            System.out.println("on post execute inserimento asta ribasso" + result);
+
             if (listener != null) {
                 listener.OnInserimentoAstaRibasso(result);
             }
@@ -668,7 +649,6 @@ public class Asta_alribassoRepository {
         @Override
         protected ArrayList<Asta_alribassoModel> doInBackground(Void... voids) {
 
-            Log.d("entrato in asycn", "listacategorie: " + nomiCategorie);
             // Effettua l'operazione di rete qui...
             // Restituisci il risultato
 
@@ -693,10 +673,10 @@ public class Asta_alribassoRepository {
             try {
                 Response<ArrayList<Asta_alribasso_DTO>> response = call.execute();
                 if (response.isSuccessful()) {
-                    System.out.println("response successful");
+
                     ArrayList<Asta_alribasso_DTO> list = response.body();
                     if (list != null && !list.isEmpty()) {
-                        System.out.println("lista di aste ribasso dto non null");
+
                         ArrayList<Asta_alribassoModel> listAsta_alribassoModel = new ArrayList<>();
                         for (Asta_alribasso_DTO astaAlribassoDto : list){
                             byte[] immagine = null;
@@ -714,17 +694,15 @@ public class Asta_alribassoRepository {
                                     astaAlribassoDto.getPrezzoAttuale(),
                                     astaAlribassoDto.getCondizione(),
                                     astaAlribassoDto.getId_venditore());
-                            //stampa dei valori dell asta
-                            Log.d("Asta ribasso" ," valori " + astaAlribassoModel.getNome() + astaAlribassoModel.getDescrizione() + astaAlribassoModel.getId() + astaAlribassoModel.getIntervalloBase() + astaAlribassoModel.getPrezzoMin());
                             listAsta_alribassoModel.add(astaAlribassoModel);
                         }
                         return listAsta_alribassoModel;
                     }
-                    System.out.println("lista di aste ribasso dto null");
+
                 }
-                System.out.println("response non successful");
+
             } catch (IOException e) {
-                System.out.println("exception IOEXC");
+
                 e.printStackTrace();
             }
             return null;
@@ -732,7 +710,7 @@ public class Asta_alribassoRepository {
 
         @Override
         protected void onPostExecute(ArrayList<Asta_alribassoModel> result) {
-            System.out.println("on post execute GetAstePerRicercaTask" + result);
+
             if (listener != null) {
                 listener.OnGetAstePerRicerca(result);
             }

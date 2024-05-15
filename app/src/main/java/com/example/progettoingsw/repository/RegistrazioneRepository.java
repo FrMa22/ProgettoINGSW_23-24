@@ -29,42 +29,42 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class RegistrazioneRepository {
 
     public void registrazioneAcquirenteDoppioBackend(String email, OnRegistrazioneAcquirenteDoppioListener listener) {
-        System.out.println("entrato in registrazioneAcquirente backend");
+
         new RegistrazioneAcquirenteDoppioTask(listener).execute(email);
     }
 
     public void registrazioneVenditoreDoppioBackend(String email, OnRegistrazioneVenditoreDoppioListener listener) {
-        System.out.println("entrato in registrazioneVenditore backend");
+
         new RegistrazioneVenditoreDoppioTask(listener).execute(email);
     }
 
     public void inserimentoAcquirente(AcquirenteModel acquirente, OnInserisciAcquirenteListener listener) {
-        System.out.println("entrato in registrazioneAcquirenteCompleta backend");
+
         new InserisciAcquirenteTask(listener).execute(acquirente);
     }
 
     public void inserimentoVenditore(VenditoreModel venditore, OnInserisciVenditoreListener listener) {
-        System.out.println("entrato in registrazioneVenditoreCompleta backend");
+
         new InserisciVenditoreTask(listener).execute(venditore);
     }
 
     public void inserimentoSocialAcquirente(ArrayList<SocialAcquirenteModel> listaSocial, OnInserimentoSocialAcquirenteListener listener) {
-        System.out.println("entrato in inserimento social acquirente");
+
         new inserimentoSocialAcquirenteTask(listener).execute(listaSocial);
     }
 
     public void inserimentoSocialVenditore(ArrayList<SocialVenditoreModel> listaSocial, OnInserimentoSocialVenditoreListener listener) {
-        System.out.println("entrato in inserimento social Venditore");
+
         new inserimentoSocialVenditoreTask(listener).execute(listaSocial);
     }
 
     public void saveCategorieAcquirente(String email, ArrayList<String> listaCategorie, RegistrazioneRepository.OnInserimentoCategorieAcquirente listener) {
-        System.out.println("entrato in saveCategorie acquirente");
+
         new inserimentoCategorieAcquirenteTask(listener).execute(email, listaCategorie);
     }
 
     public void saveCategorieVenditore(String email, ArrayList<String> listaCategorie, RegistrazioneRepository.OnInserimentoCategorieVenditore listener) {
-        System.out.println("entrato in saveCategorie venditore");
+
         new inserimentoCategorieVenditoreTask(listener).execute(email, listaCategorie);
     }
 
@@ -93,24 +93,22 @@ public class RegistrazioneRepository {
             try {
                 Response<AcquirenteDTO> response = call.execute();
                 if (response.body() != null && response.isSuccessful()) {
-                    System.out.println("valore di response " + response.body());
-                    System.out.println("response successful");
+
+
                     AcquirenteDTO acquirenteDTO = response.body();
                     if (acquirenteDTO != null) {
-                        System.out.println("acquirente dto non null");
-                        System.out.println("valori del acquirente: " + acquirenteDTO.getNome() + acquirenteDTO.getCognome());
+
+
                         return new AcquirenteModel(acquirenteDTO.getNome(), acquirenteDTO.getCognome(), acquirenteDTO.getIndirizzo_email(), acquirenteDTO.getPassword(), acquirenteDTO.getBio(), acquirenteDTO.getAreageografica(), acquirenteDTO.getLink());
                     }
-                    System.out.println("acquirente dto null");
+
                 }
-                System.out.println("response non successful");
+
             } catch (
                     EOFException e) {
                 Log.d("RegistrazioneAcquirenteDoppioTask", "catch di EOFException");
-                //e.printStackTrace();
             } catch (
                     IOException e) {
-                //e.printStackTrace();
                 Log.d("RegistrazioneAcquirenteDoppioTask", "catch di IOException");
             }
             return null;
@@ -118,7 +116,7 @@ public class RegistrazioneRepository {
 
         @Override
         protected void onPostExecute(AcquirenteModel result) {
-            System.out.println("on post execute registrazioneAcquirenteDoppia" + result);
+
             if (listener != null) {
                 listener.ricercaDoppia(result);
             }
@@ -150,17 +148,17 @@ public class RegistrazioneRepository {
             try {
                 Response<VenditoreDTO> response = call.execute();
                 if (response.body() != null && response.isSuccessful()) {
-                    System.out.println("valore di response " + response.body());
-                    System.out.println("response successful");
+
+
                     VenditoreDTO venditoreDTO = response.body();
                     if (venditoreDTO != null) {
-                        System.out.println("venditore dto non null");
-                        System.out.println("valori del venditore: " + venditoreDTO.getNome() + venditoreDTO.getCognome());
+
+
                         return new VenditoreModel(venditoreDTO.getNome(), venditoreDTO.getCognome(), venditoreDTO.getIndirizzo_email(), venditoreDTO.getPassword(), venditoreDTO.getBio(), venditoreDTO.getAreageografica(), venditoreDTO.getLink());
                     }
-                    System.out.println("venditore dto null");
+
                 }
-                System.out.println("response non successful");
+
             } catch (
                     EOFException e) {
                 Log.d("RegistrazioneVenditoreDoppioTask", "catch di EOFException");
@@ -175,7 +173,7 @@ public class RegistrazioneRepository {
 
         @Override
         protected void onPostExecute(VenditoreModel result) {
-            System.out.println("on post execute registrazioneAcquirenteDoppia" + result);
+
             if (listener != null) {
                 listener.ricercaDoppia(result);
             }
@@ -211,18 +209,18 @@ public class RegistrazioneRepository {
             try {
                 Response<Long> response = call.execute();
                 if (response.isSuccessful()) {
-                    System.out.println("response successful");
+
                     Long numeroRecuperato = response.body();
                     if (numeroRecuperato != null) {
                         return 0L;
                     } else {
-                        System.out.println("venditore dto null");
+
                         return 1L;
                     }
                 }
-                System.out.println("response non successful");
+
             } catch (IOException e) {
-                System.out.println("exception IOEXC");
+
                 e.printStackTrace();
             }
             return 1L;
@@ -230,7 +228,7 @@ public class RegistrazioneRepository {
 
         @Override
         protected void onPostExecute(Long result) {
-            System.out.println("on post execute inserimento venditore" + result);
+
             if (listener != null) {
                 listener.confermaVenditore(result);
             }
@@ -258,27 +256,25 @@ public class RegistrazioneRepository {
                     .build();
 
             AcquirenteService service = retrofit.create(AcquirenteService.class);
-            Log.d("InserisciAcquirenteTask","valori : " + acquirenteModel.getBio() + acquirenteModel.getAreageografica() + acquirenteModel.getLink());
             AcquirenteDTO acquirenteDTO = new AcquirenteDTO(acquirenteModel.getNome(), acquirenteModel.getCognome(), acquirenteModel.getIndirizzo_email(), acquirenteModel.getPassword(), acquirenteModel.getBio(), acquirenteModel.getAreageografica(), acquirenteModel.getLink());
 
-            Log.d("InserisciAcquirenteTask","valoriDTO : " + acquirenteDTO.getBio() + acquirenteDTO.getAreageografica() + acquirenteDTO.getLink());
             Call<Long> call = service.saveAcquirente(acquirenteDTO);
 
             try {
                 Response<Long> response = call.execute();
                 if (response.isSuccessful()) {
-                    System.out.println("response successful");
+
                     Long numeroRecuperato = response.body();
                     if (numeroRecuperato != null) {
                         return 0L;
                     } else {
-                        System.out.println("acquirente dto null");
+
                         return 1L;
                     }
                 }
-                System.out.println("response non successful");
+
             } catch (IOException e) {
-                System.out.println("exception IOEXC");
+
                 e.printStackTrace();
             }
             return 1L;
@@ -286,7 +282,7 @@ public class RegistrazioneRepository {
 
         @Override
         protected void onPostExecute(Long result) {
-            System.out.println("on post execute inserimento acquirente" + result);
+
             if (listener != null) {
                 listener.confermaAcquirente(result);
             }
@@ -305,9 +301,6 @@ public class RegistrazioneRepository {
             ArrayList<SocialAcquirenteModel> listaSocial = (ArrayList<SocialAcquirenteModel>) params[0];
             // Effettua l'operazione di rete qui...
             // Restituisci il risultato
-            if(listaSocial!=null) {
-                Log.d("categorie da inserire", "valori : " + listaSocial);
-            }
             OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
             // Configura il client OkHttpClient...
 
@@ -328,16 +321,15 @@ public class RegistrazioneRepository {
             }
 
 
-            Log.d("categorie da inserire", "valoriDTO2 : " + listaSocialDTO);
             Call<Void> call = service.insertSocialAcquirenteRegistrazione(listaSocialDTO);
 
             try {
                 Response<Void> response = call.execute();
                 if (response.isSuccessful()) {
-                    System.out.println("response successful");
+
                 }
             } catch (IOException e) {
-                System.out.println("exception IOEXC");
+
                 e.printStackTrace();
             }
             return null;
@@ -382,10 +374,10 @@ public class RegistrazioneRepository {
             try {
                 Response<Void> response = call.execute();
                 if (response.isSuccessful()) {
-                    System.out.println("response successful");
+
                 }
             } catch (IOException e) {
-                System.out.println("exception IOEXC");
+
                 e.printStackTrace();
             }
             return null;
@@ -422,12 +414,12 @@ public class RegistrazioneRepository {
             try {
                 Response<Void> response = call.execute();
                 if (response.isSuccessful()) {
-                    System.out.println("response successful");
+
                     return 1;
                 }
-                System.out.println("response non successful");
+
             } catch (IOException e) {
-                System.out.println("exception IOEXC");
+
                 e.printStackTrace();
             }
             return null;
@@ -435,7 +427,7 @@ public class RegistrazioneRepository {
 
         @Override
         protected void onPostExecute(Integer result) {
-            System.out.println("on post execute GetAsteNuoveTask" + result);
+
             if (listener != null) {
                 listener.categorieInseriteAcquirente(result);
             }
@@ -476,19 +468,19 @@ public class RegistrazioneRepository {
             try {
                 Response<Void> response = call.execute();
                 if (response.isSuccessful()) {
-                    System.out.println("response successful");
+
                     return 1;
                 }
-                System.out.println("response non successful");
+
             } catch (IOException e) {
-                System.out.println("exception IOEXC");
+
                 e.printStackTrace();
             }
             return null;
         }
         @Override
         protected void onPostExecute(Integer result) {
-            System.out.println("on post execute GetAsteNuoveTask" + result);
+
             if (listener != null) {
                 listener.categorieInseriteVenditore(result);
             }
@@ -497,32 +489,32 @@ public class RegistrazioneRepository {
 
 
 
-        public interface OnInserimentoCategorieVenditore {
-            void categorieInseriteVenditore(Integer result);
-        }
-
-        public interface OnInserimentoSocialVenditoreListener {
-            void socialInseritoVenditore();
-        }
-
-        public interface OnInserimentoSocialAcquirenteListener {
-            void socialInseritoAcquirente();
-        }
-
-        public interface OnRegistrazioneAcquirenteDoppioListener {
-            void ricercaDoppia(AcquirenteModel acquirenteModel);
-        }
-
-        public interface OnRegistrazioneVenditoreDoppioListener {
-            void ricercaDoppia(VenditoreModel venditoreModel);
-        }
-
-        public interface OnInserisciAcquirenteListener {
-            void confermaAcquirente(Long check);
-        }
-
-        public interface OnInserisciVenditoreListener {
-            void confermaVenditore(Long check);
-        }
+    public interface OnInserimentoCategorieVenditore {
+        void categorieInseriteVenditore(Integer result);
     }
+
+    public interface OnInserimentoSocialVenditoreListener {
+        void socialInseritoVenditore();
+    }
+
+    public interface OnInserimentoSocialAcquirenteListener {
+        void socialInseritoAcquirente();
+    }
+
+    public interface OnRegistrazioneAcquirenteDoppioListener {
+        void ricercaDoppia(AcquirenteModel acquirenteModel);
+    }
+
+    public interface OnRegistrazioneVenditoreDoppioListener {
+        void ricercaDoppia(VenditoreModel venditoreModel);
+    }
+
+    public interface OnInserisciAcquirenteListener {
+        void confermaAcquirente(Long check);
+    }
+
+    public interface OnInserisciVenditoreListener {
+        void confermaVenditore(Long check);
+    }
+}
 

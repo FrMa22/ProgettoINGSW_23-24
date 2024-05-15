@@ -2,12 +2,9 @@ package com.example.progettoingsw.view;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.EditText;
-import android.widget.Toast;
-
 import androidx.appcompat.widget.AppCompatButton;
 
 import com.example.progettoingsw.R;
@@ -95,21 +92,7 @@ public class PopUpModificaCampiProfilo extends DialogPersonalizzato implements V
     public void onBackPressed(){
         bottoneAnnullaModifica.performClick();
     }
-    public void setFields(Object[] object) {
-        if (object != null && object.length >= 5) {
-            String nome = (String) object[0];
-            String cognome = (String) object[1];
-            String sitoWeb = (String) object[2];
-            String paese = (String) object[3];
-            String bio = (String) object[4];
 
-            edit_text_modifica_nome.setText(nome);
-            edit_text_modifica_cognome.setText(cognome);
-            edit_text_modifica_sitoweb.setText(sitoWeb);
-            edit_text_modifica_bio.setText(bio);
-            edit_text_modifica_paese.setText(paese);
-        }
-    }
 
 
     public void setCampi(String nome,String cognome,String sitoweb,String bio,String paese){
@@ -121,7 +104,6 @@ public class PopUpModificaCampiProfilo extends DialogPersonalizzato implements V
     }
 
 
-    //public void dismissPopup() {dismiss();}
 
     public interface PopupDismissListener {
         void onPopupDismissed();
@@ -134,9 +116,6 @@ public class PopUpModificaCampiProfilo extends DialogPersonalizzato implements V
         }
     }
 
-    public void setPopupDismissListener( PopupDismissListener listener) {
-        this.popupDismissListener = listener;
-    }
 
 
     public void messaggioErroreNomeNuovo(String messaggio){
@@ -146,7 +125,6 @@ public class PopUpModificaCampiProfilo extends DialogPersonalizzato implements V
         fragmentProfiloViewModel.messaggioErroreNomeNuovo.observe(fragmentProfilo, (messaggio) -> {
             if (fragmentProfiloViewModel.isNuovoMessaggioErroreNomeNuovo()) {
                 messaggioErroreNomeNuovo(messaggio);
-                //loginViewModel.cancellaMessaggioLogin();
             }
         });
     }
@@ -159,7 +137,6 @@ public class PopUpModificaCampiProfilo extends DialogPersonalizzato implements V
         fragmentProfiloViewModel.messaggioErroreCognomeNuovo.observe(fragmentProfilo, (messaggio) -> {
             if (fragmentProfiloViewModel.isNuovoMessaggioErroreCognomeNuovo()) {
                 messaggioErroreCognomeNuovo(messaggio);
-                //loginViewModel.cancellaMessaggioLogin();
             }
         });
     }
@@ -172,7 +149,6 @@ public class PopUpModificaCampiProfilo extends DialogPersonalizzato implements V
         fragmentProfiloViewModel.messaggioErroreBioNuovo.observe(fragmentProfilo, (messaggio) -> {
             if (fragmentProfiloViewModel.isNuovoMessaggioErroreBioNuovo()) {
                 messaggioErroreBioNuovo(messaggio);
-                //loginViewModel.cancellaMessaggioLogin();
             }
         });
     }
@@ -184,7 +160,6 @@ public class PopUpModificaCampiProfilo extends DialogPersonalizzato implements V
         fragmentProfiloViewModel.messaggioErrorePaeseNuovo.observe(fragmentProfilo, (messaggio) -> {
             if (fragmentProfiloViewModel.isNuovoMessaggioErrorePaeseNuovo()) {
                 messaggioErrorePaeseNuovo(messaggio);
-                //loginViewModel.cancellaMessaggioLogin();
             }
         });
     }
@@ -196,7 +171,6 @@ public class PopUpModificaCampiProfilo extends DialogPersonalizzato implements V
         fragmentProfiloViewModel.messaggioErroreSitoNuovo.observe(fragmentProfilo, (messaggio) -> {
             if (fragmentProfiloViewModel.isNuovoMessaggioErroreSitoNuovo()) {
                 messaggioErroreSitoNuovo(messaggio);
-                //loginViewModel.cancellaMessaggioLogin();
             }
         });
     }
@@ -206,12 +180,8 @@ public class PopUpModificaCampiProfilo extends DialogPersonalizzato implements V
     public void osservaIsUtenteCambiato(){
         fragmentProfiloViewModel.isUtenteCambiato.observe(fragmentProfilo, (messaggio) -> {
             if(fragmentProfiloViewModel.getIsUtenteCambiato()){
-                Log.d("osservaIsUtenteCambiato","prima di dismiss");
-                //dismiss();
                 fragmentProfiloViewModel.resetErroriModificaCampoProfilo();
                 dismissPopup();
-            }else{
-                Toast.makeText(getContext(), "Errore nei dati del utente", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -220,7 +190,6 @@ public class PopUpModificaCampiProfilo extends DialogPersonalizzato implements V
     public void osservaAcquirenteRecuperato() {
         fragmentProfiloViewModel.acquirenteRecuperato.observe(fragmentProfilo, (acquirente) -> {
             if (acquirente != null) {
-                //lista social quindi estrarre nomi e link poi fare chiamata a update social names per mostrarli graficamente
                 String nome=acquirente.getNome();
                 String cognome=acquirente.getCognome();
                 String sitoweb=acquirente.getLink();
@@ -235,7 +204,6 @@ public class PopUpModificaCampiProfilo extends DialogPersonalizzato implements V
     public void osservaVenditoreRecuperato() {
         fragmentProfiloViewModel.venditoreRecuperato.observe(fragmentProfilo, (venditore) -> {
             if (venditore != null) {
-                //lista social quindi estrarre nomi e link poi fare chiamata a update social names per mostrarli graficamente
                 String nome=venditore.getNome();
                 String cognome=venditore.getCognome();
                 String sitoweb=venditore.getLink();

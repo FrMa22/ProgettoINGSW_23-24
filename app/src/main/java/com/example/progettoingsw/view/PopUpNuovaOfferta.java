@@ -1,7 +1,6 @@
 package com.example.progettoingsw.view;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -62,7 +61,6 @@ public class PopUpNuovaOfferta extends DialogPersonalizzato implements View.OnCl
         osservamessaggioErroreOfferta();
         osservaOffertaValida();
         osservaIsPartecipazioneAvvenuta();
-        Log.d("PopUpNuovaOfferta onCreate", "osservatori riaperti");
         popUpNuovaOffertaViewModel.checkTipoAsta();
         textviewPrezzoAttuale.setText(String.valueOf(popUpNuovaOffertaViewModel.getPrezzoVecchio()));
 
@@ -74,12 +72,10 @@ public class PopUpNuovaOfferta extends DialogPersonalizzato implements View.OnCl
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.bottoneAnnullaPopUpAsta) {
-            //dismiss();
             popUpNuovaOffertaViewModel.resetErroriNuovaOfferta(fragmentActivity);
             dismissPopup();
         } else if (v.getId() == R.id.bottoneConfermaPopUpAsta) {
             offerta = textviewNuovoPrezzo.getText().toString();
-            Log.d("PopUpNuovaOfferta", "premuto conferma");
 
             popUpNuovaOffertaViewModel.checkOfferta(offerta);
 
@@ -92,9 +88,6 @@ public class PopUpNuovaOfferta extends DialogPersonalizzato implements View.OnCl
     public interface PopupDismissListener {
         void onPopupDismissed();
     }
-    public void setPopupDismissListener(PopupDismissListener listener) {
-        this.popupDismissListener = listener;
-    }
 
 
     public void setImpostazioniPerAstaInglese(){
@@ -105,18 +98,14 @@ public class PopUpNuovaOfferta extends DialogPersonalizzato implements View.OnCl
     }
     public void osservamessaggioErroreOfferta(){
         popUpNuovaOffertaViewModel.messaggioErroreOfferta.observe(fragmentActivity, (messaggio) -> {
-            Log.d("osservamessaggioErroreOfferta", ""+messaggio);
             if(popUpNuovaOffertaViewModel.isMessaggioErroreOfferta()){
-                Log.d("osservamessaggioErroreOfferta", "entrato nel if con " + messaggio + " e " + popUpNuovaOffertaViewModel.getMessaggioErrore());
                 textviewNuovoPrezzo.setError(popUpNuovaOffertaViewModel.getMessaggioErrore());
             }
         });
     }
     public void osservaOffertaValida(){
         popUpNuovaOffertaViewModel.offertaValida.observe( fragmentActivity, (messaggio) -> {
-            Log.d("osservaOffertaValida", "avviato osservatore");
             if(popUpNuovaOffertaViewModel.isOffertaValida()){
-                Log.d("osservaOffertaValida", "entrato");
                 popUpNuovaOffertaViewModel.proseguiPartecipazione(offerta);
             }
         });
@@ -126,34 +115,24 @@ public class PopUpNuovaOfferta extends DialogPersonalizzato implements View.OnCl
             if(popUpNuovaOffertaViewModel.isTipoAstaChecked()){
                 if(popUpNuovaOffertaViewModel.isAstaInglese()){
                     setImpostazioniPerAstaInglese();
-                }else{
+                }else if(popUpNuovaOffertaViewModel.isAstaInversa()){
                     setImpostazioniPerAstainversa();
                 }
             }
         } );
     }
     public void dismissPopup() {
-        dismiss();
+        onBackPressed();
         if (popupDismissListener != null) {
             popupDismissListener.onPopupDismissed();
         }
     }
     public void osservaIsPartecipazioneAvvenuta(){
-        Log.d("osservaIsPartecipazioneAvvenuta","osservaIsPartecipazioneAvvenuta");
-        popUpNuovaOffertaViewModel.isPartecipazioneAvvenuta.observe(fragmentActivity, (messaggio) -> {
+        popUpNuovaOffertaViewModel.messaggioPartecipazioneAsta.observe(fragmentActivity, (messaggio) -> {
             if(popUpNuovaOffertaViewModel.getIsPartecipazioneAvvenuta()){
-                String messaggioAcquisto = popUpNuovaOffertaViewModel.getMessaggioPartecipazioneAsta();
-                if(messaggioAcquisto!=null && !messaggioAcquisto.isEmpty()){
-                    Toast.makeText(getContext(),messaggioAcquisto , Toast.LENGTH_SHORT).show();
-                }else{
-                    Toast.makeText(getContext(),"result null" , Toast.LENGTH_SHORT).show();
-                }
-                Log.d("osservaIsPartecipazioneAvvenuta","prima di dismiss");
-                //dismiss();
+                Toast.makeText(getContext(),messaggio , Toast.LENGTH_SHORT).show();
                 popUpNuovaOffertaViewModel.resetErroriNuovaOfferta(fragmentActivity);
                 dismissPopup();
-            }else{
-                Toast.makeText(getContext(), "Errore nell'offerta!", Toast.LENGTH_SHORT).show();
             }
         });
     }

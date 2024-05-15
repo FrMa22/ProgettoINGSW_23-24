@@ -164,8 +164,7 @@ public class RegistrazioneCategorie extends GestoreComuniImplementazioni {
     public void osservaVaiInHome(){
         registrazioneViewModel.vaiInHome.observe(this, (valore) ->{
             if(valore){
-                Log.d("osservaVaiInHome", "entrato");
-                Intent intent = new Intent(RegistrazioneCategorie.this, MainActivity.class);//test del login
+                Intent intent = new Intent(RegistrazioneCategorie.this, MainActivity.class);
                 startActivity(intent);
                 finish();
             }

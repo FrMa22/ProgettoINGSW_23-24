@@ -2,7 +2,6 @@ package com.example.progettoingsw.viewmodel;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.util.Log;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -84,11 +83,6 @@ public class FragmentProfiloViewModel extends ViewModel {
         fragmentProfiloRepository.removeTokenFromAcquirente(email, new FragmentProfiloRepository.RemoveTokenFromAcquirenteListener() {
             @Override
             public void onRemoveTokenFromAcquirenteListener(Integer valore) {
-                if(valore>0){
-                    Log.d("removeTokenAcquirente", "rimosso con successo");
-                }else{
-                    Log.d("removeTokenAcquirente", "errore nella rimozione");
-                }
             }
         });
     }
@@ -96,11 +90,6 @@ public class FragmentProfiloViewModel extends ViewModel {
         fragmentProfiloRepository.removeTokenFromVenditore(email, new FragmentProfiloRepository.RemoveTokenFromVenditoreListener() {
             @Override
             public void onRemoveTokenFromVenditoreListener(Integer valore) {
-                if(valore>0){
-                    Log.d("removeTokenVenditore", "rimosso con successo");
-                }else{
-                    Log.d("removeTokenVenditore", "errore nella rimozione");
-                }
             }
         });
     }
@@ -399,7 +388,6 @@ public class FragmentProfiloViewModel extends ViewModel {
 
     public void aggiungiSocialAcquirenteViewModel(String nome,String link){
         String email=getAcquirenteEmail();
-        //if(repository.getSocialAcquirenteModelList()==null){System.out.println("lista social acquirente null");return ;}
         try{
             aggiungiSocialAcquirente(nome,link,email);
         } catch (Exception e){
@@ -417,7 +405,6 @@ public class FragmentProfiloViewModel extends ViewModel {
 
     public void eliminaSocialAcquirenteViewModel(String nome,String link){
         String email=getAcquirenteEmail();
-        //if(repository.getSocialAcquirenteModelList()==null){System.out.println("lista social acquirente null");return ;}
         try{
             eliminaSocialAcquirente(nome,link,email);
         } catch (Exception e){
@@ -427,7 +414,6 @@ public class FragmentProfiloViewModel extends ViewModel {
     }
 
     public void aggiornaSocialAcquirenteViewModel(String oldNome,String oldLink,String newNome,String newLink){
-        //if(repository.getSocialAcquirenteModelList()==null){System.out.println("lista social acquirente null");return ;}
         try{
             aggiornaSocialAcquirente(oldNome,oldLink,newNome,newLink);
         } catch (Exception e){
@@ -441,7 +427,6 @@ public class FragmentProfiloViewModel extends ViewModel {
     public void aggiornaAcquirenteViewModel(String nome,String cognome,String bio,String link,String areageografica){
         String email=getAcquirenteEmail();
 
-        //if(repository.getSocialAcquirenteModelList()==null){System.out.println("lista social acquirente null");return ;}
         try{
             aggiornaAcquirente(nome,cognome,bio,link,areageografica,email);
         } catch (Exception e){
@@ -453,8 +438,6 @@ public class FragmentProfiloViewModel extends ViewModel {
     public void aggiornaPasswordAcquirenteViewModel(String password){
         String email=getAcquirenteEmail();
 
-
-        //if(repository.getSocialAcquirenteModelList()==null){System.out.println("lista social acquirente null");return ;}
         try{
             aggiornaPasswordAcquirente(password,email);
         } catch (Exception e){
@@ -825,19 +808,6 @@ public class FragmentProfiloViewModel extends ViewModel {
 
 
 
-    public void gestisciModificaSocial(String nome,String link){
-        // Esegui le azioni desiderate con l'oggetto Asta
-            repository.setSocialAcquirenteSelezionato(nome,link);
-            setEntraInPopUpModificaSocial(true);
-//            int id = Math.toIntExact(((Asta_allingleseModel) asta).getId());
-//            Log.d("Asta inglese", "id è " + id);
-//            Intent intent = new Intent(getContext(), SchermataAstaInglese.class);//test del login
-//            intent.putExtra("email", email);
-//            intent.putExtra("tipoUtente", tipoUtente);
-//            intent.putExtra("id", id);
-//            startActivity(intent);
-
-    }
 
     public String getAcquirenteEmail(){
         return repository.getAcquirenteModel().getIndirizzo_email();

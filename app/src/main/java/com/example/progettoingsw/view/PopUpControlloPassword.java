@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.Window;
 import android.widget.EditText;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import androidx.appcompat.widget.AppCompatButton;
 
@@ -87,7 +86,6 @@ private void confermaPassword(){
         fragmentProfiloViewModel.messaggioErrorePasswordVecchia.observe(fragmentProfilo, (messaggio) -> {
             if (fragmentProfiloViewModel.isNuovoMessaggioErrorePasswordVecchia()) {
                 messaggioErrorePasswordVecchia(messaggio);
-                //loginViewModel.cancellaMessaggioLogin();
             }
         });
     }
@@ -100,7 +98,6 @@ private void confermaPassword(){
         fragmentProfiloViewModel.messaggioErrorePasswordNuova.observe(fragmentProfilo, (messaggio) -> {
             if (fragmentProfiloViewModel.isNuovoMessaggioErrorePasswordNuova()) {
                 messaggioErrorePasswordNuova(messaggio);
-                //loginViewModel.cancellaMessaggioLogin();
             }
         });
     }
@@ -110,8 +107,6 @@ private void confermaPassword(){
             if(fragmentProfiloViewModel.getIsPasswordCambiata()){
                 fragmentProfiloViewModel.resetErroriControlloPassword();
                 dismissPopup();
-            }else{
-                Toast.makeText(getContext(), "Errore nelle password!", Toast.LENGTH_SHORT).show();
             }
         });
     }

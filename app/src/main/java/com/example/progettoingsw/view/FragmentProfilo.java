@@ -61,10 +61,7 @@ public class FragmentProfilo extends Fragment implements PopUpModificaCampiProfi
     private TextView textview_paese;
 
     private TextView text_view_bio_profilo;
-    private ProgressBar progressBarAcquirenteFragmentProfilo;
     private View view;
-    private String email;
-    String tipoUtente;
     private RelativeLayout relative_layout_fragment_profilo;
     public FragmentProfiloViewModel fragmentProfiloViewModel;
     private ImageButton button_menu_profilo;
@@ -75,7 +72,7 @@ public class FragmentProfilo extends Fragment implements PopUpModificaCampiProfi
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setRetainInstance(true); // Conserva il fragment durante i cambiamenti di configurazione
+        setRetainInstance(true);
         fragmentProfiloViewModel = new ViewModelProvider(this).get(FragmentProfiloViewModel.class);
     }
 
@@ -90,7 +87,6 @@ public class FragmentProfilo extends Fragment implements PopUpModificaCampiProfi
         super.onViewCreated(view, savedInstanceState);
 
 
-        // fragmentProfiloViewModel = new ViewModelProvider(this).get(FragmentProfiloViewModel.class);
 
         relative_layout_fragment_profilo = view.findViewById(R.id.relative_layout_fragment_profilo);
 
@@ -128,13 +124,10 @@ public class FragmentProfilo extends Fragment implements PopUpModificaCampiProfi
         fragmentProfiloViewModel.checkTipoUtente();
 
 
-        //Inizializza la GridView
         gridView = view.findViewById(R.id.gridview_social_activity_profilo);
 
-// Imposta un'altezza minima per la GridView
         gridView.setMinimumHeight((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 50, getResources().getDisplayMetrics()));
 
-// Chiama il metodo per impostare l'altezza in base agli elementi
         setGridViewHeightBasedOnChildren(gridView);
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -145,7 +138,6 @@ public class FragmentProfilo extends Fragment implements PopUpModificaCampiProfi
 
                 String nome = socialNames.get(position);
                 String link = socialLinks.get(position);
-                //fragmentProfiloViewModel.gestisciModificaSocial(nome,link);
                 fragmentProfiloViewModel.setNomeSocialSelezionato(nome);
                 fragmentProfiloViewModel.setNomeLinkSelezionato(link);
                 PopUpModificaSocial popUpModificaSocial = new PopUpModificaSocial(getContext(), FragmentProfilo.this, fragmentProfiloViewModel, FragmentProfilo.this);
@@ -170,7 +162,6 @@ public class FragmentProfilo extends Fragment implements PopUpModificaCampiProfi
             public void onClick(View view) {
                 osservaEsci();
                 fragmentProfiloViewModel.logout(requireContext());
-                //Controller.redirectActivity(getContext(), LoginActivity.class);
             }
         });
 
@@ -232,19 +223,15 @@ public class FragmentProfilo extends Fragment implements PopUpModificaCampiProfi
                     public boolean onMenuItemClick(MenuItem menuItem) {
                         // Gestisci i clic sui singoli elementi del menu qui
                         if(menuItem.getItemId()==R.id.action_le_mie_aste){
-                            Log.d("menu","le mie aste");
                             button_le_mie_aste.performClick();
                             return true;
                         }else if(menuItem.getItemId()==R.id.action_aste_partecipi){
-                            Log.d("menu","aste a cui partecipi");
                             button_partecipazione_aste.performClick();
                             return true;
                         }else if(menuItem.getItemId()==R.id.action_modifica_valori){
-                            Log.d("menu","modifica valori");
                             button_modifica.performClick();
                             return true;
                         }else if(menuItem.getItemId()==R.id.action_log_out){
-                            Log.d("menu","log out");
                             button_log_out.performClick();
                             return true;
                         }
@@ -274,7 +261,6 @@ public class FragmentProfilo extends Fragment implements PopUpModificaCampiProfi
     }
 
     @Override
-    //questo metodo serve per fare un refresh dei valori dei campi dopo una possibile modifica fatta da PopUp
     public void onResume() {
         super.onResume();
         FirebaseAnalytics firebaseAnalytics = FirebaseAnalytics.getInstance(requireContext());
@@ -288,7 +274,6 @@ public class FragmentProfilo extends Fragment implements PopUpModificaCampiProfi
     private void setGridViewHeightBasedOnChildren(GridView gridView) {
         ListAdapter listAdapter = gridView.getAdapter();
         if (listAdapter == null || listAdapter.getCount() == 0) {
-            // Se l'adapter è null o non ci sono elementi, imposta l'altezza a 20dp e esci dal metodo
             ViewGroup.LayoutParams params = gridView.getLayoutParams();
             params.height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 50, getResources().getDisplayMetrics());
             gridView.setLayoutParams(params);
@@ -322,21 +307,18 @@ public class FragmentProfilo extends Fragment implements PopUpModificaCampiProfi
 
             gridView = view.findViewById(R.id.gridview_social_activity_profilo);
             if (socialNames != null && !socialNames.isEmpty() && socialLinks != null && !socialLinks.isEmpty()) {
-                // Aggiorna l'interfaccia utente con i nomi dei social
 
                 gridView.setVisibility(View.VISIBLE);
                 text_view_nessun_social.setVisibility(View.GONE);
                 adapterSocial = new CustomAdapter_gridview_profilo_social(getContext());
                 gridView.setAdapter(adapterSocial);
 
-                // Aggiungi i nomi dei social alla tua adapter
                 adapterSocial.setData(socialNames, socialLinks);
                 setGridViewHeightBasedOnChildren(gridView);
 
             } else {
                 text_view_nessun_social.setVisibility(View.VISIBLE);
                 gridView.setVisibility(View.GONE);
-                // Rimuovi tutti i dati dall'adattatore e aggiorna la GridView
                 gridView = view.findViewById(R.id.gridview_social_activity_profilo);
                 adapterSocial = new CustomAdapter_gridview_profilo_social(getContext());
                 gridView.setAdapter(adapterSocial);
@@ -348,15 +330,12 @@ public class FragmentProfilo extends Fragment implements PopUpModificaCampiProfi
 
             }
             setAllClickable(relative_layout_fragment_profilo, true);
-            //progressBarAcquirenteFragmentProfilo.setVisibility(View.INVISIBLE);
 
             setNavigationView(true);
 
         } catch (IllegalStateException e) {
-            // Gestione dell'eccezione
             Log.e("FragmentProfilo", "Error updating social names: " + e.getMessage());
         } catch (NullPointerException e) {
-            // Gestione dell'eccezione
             Log.e("FragmentProfilo", "Error updating social names: NUll pointer " + e.getMessage());
         }
     }
@@ -407,7 +386,6 @@ public class FragmentProfilo extends Fragment implements PopUpModificaCampiProfi
     public void osservaModificaCampoProfilo(){
         fragmentProfiloViewModel.modificaCampoProfilo.observe(getViewLifecycleOwner() , (valore) ->{
             if(valore){
-                Log.d("osserva","entro in modifica");
                 PopUpModificaCampiProfilo popUpModificaCampiProfilo = new PopUpModificaCampiProfilo(getContext(), FragmentProfilo.this, fragmentProfiloViewModel, FragmentProfilo.this);
                 popUpModificaCampiProfilo.show();
             }
@@ -424,10 +402,7 @@ public class FragmentProfilo extends Fragment implements PopUpModificaCampiProfi
     public void osservaAcquirenteModelPresente() {
         fragmentProfiloViewModel.acquirenteModelPresente.observe(getViewLifecycleOwner(), (messaggio) -> {
             if (fragmentProfiloViewModel.getAcquirenteModelPresente()) {
-                //chiamate ai vari observer, tra cui quelli di cambiare schermata quindi pure per la gestione dei popup
-
-                //in teoria deve fare qui la chiamata per trovare i social dal backend
-                fragmentProfiloViewModel.trovaSocialAcquirenteViewModel();//questa chiamata trova i social dal backend
+                fragmentProfiloViewModel.trovaSocialAcquirenteViewModel();
 
             }
         });
@@ -437,7 +412,6 @@ public class FragmentProfilo extends Fragment implements PopUpModificaCampiProfi
     public void osservaApriPopUpAggiungiSocial() {
         fragmentProfiloViewModel.apriPopUpAggiungiSocial.observe(getViewLifecycleOwner(), (messaggio) -> {
             if (fragmentProfiloViewModel.getApriPopUpAggiungiSocial()) {
-                //fa le cose che si farebbero premendo il pulsante aggiungi social
                 PopUpAggiungiSocialProfilo popUpAggiungiSocialProfilo = new PopUpAggiungiSocialProfilo(FragmentProfilo.this, fragmentProfiloViewModel, FragmentProfilo.this);
                 popUpAggiungiSocialProfilo.show();
             }
@@ -447,8 +421,6 @@ public class FragmentProfilo extends Fragment implements PopUpModificaCampiProfi
     public void osservaApriLeMieAste() {
         fragmentProfiloViewModel.apriLeMieAste.observe(getViewLifecycleOwner(), (messaggio) -> {
             if (fragmentProfiloViewModel.getApriLeMieAste()) {
-                Log.d("osserva","entro in le mie aste");
-                //fa le cose che si farebbero premendo il pulsante apri le mie aste
                 Intent intent = new Intent(getContext(), LeMieAste.class);
                 startActivity(intent);
             }
@@ -459,8 +431,6 @@ public class FragmentProfilo extends Fragment implements PopUpModificaCampiProfi
     public void osservaApriPartecipazioneAste() {
         fragmentProfiloViewModel.apriPartecipazioneAste.observe(getViewLifecycleOwner(), (messaggio) -> {
             if (fragmentProfiloViewModel.getApriPartecipazioneAste()) {
-                Log.d("osserva","entro in aste a cui partecipi");
-                //fa le cose che si farebbero premendo il pulsante apri partecipazioni aste
                 Intent intent = new Intent(getContext(), SchermataPartecipazioneAste.class);
                 startActivity(intent);
             }
@@ -468,21 +438,10 @@ public class FragmentProfilo extends Fragment implements PopUpModificaCampiProfi
     }
 
 
-    public void osservaSocialAcquirentePresenti() {
-        fragmentProfiloViewModel.socialAcquirentePresenti.observe(getViewLifecycleOwner(), (messaggio) -> {
-            if (messaggio) {//vede se sono presenti,li recupera,e poi deve aggiornare la gui
-                osservaSocialAcquirenteRecuperati();
-                fragmentProfiloViewModel.recuperaSocialAcquirente();
-            }
-
-
-        });
-    }
 
     public void osservaSocialAcquirenteRecuperati() {
         fragmentProfiloViewModel.socialAcquirenteRecuperati.observe(getViewLifecycleOwner(), (lista) -> {
             if (lista != null && !lista.isEmpty()) {
-                //lista social quindi estrarre nomi e link poi fare chiamata a update social names per mostrarli graficamente
                 List<String> links = new ArrayList<>();
                 List<String> nomi = new ArrayList<>();
                 for (SocialAcquirenteModel social : lista) {
@@ -499,7 +458,6 @@ public class FragmentProfilo extends Fragment implements PopUpModificaCampiProfi
     public void osservaSocialVenditoreRecuperati() {
         fragmentProfiloViewModel.socialVenditoreRecuperati.observe(getViewLifecycleOwner(), (lista) -> {
             if (lista != null && !lista.isEmpty()) {
-                //lista social quindi estrarre nomi e link poi fare chiamata a update social names per mostrarli graficamente
                 List<String> links = new ArrayList<>();
                 List<String> nomi = new ArrayList<>();
                 for (SocialVenditoreModel social : lista) {
@@ -516,7 +474,6 @@ public class FragmentProfilo extends Fragment implements PopUpModificaCampiProfi
     public void osservaAcquirenteRecuperato() {
         fragmentProfiloViewModel.acquirenteRecuperato.observe(getViewLifecycleOwner(), (acquirente) -> {
             if (acquirente != null) {
-                //lista social quindi estrarre nomi e link poi fare chiamata a update social names per mostrarli graficamente
                 String nome = acquirente.getNome();
                 String cognome = acquirente.getCognome();
                 String email = acquirente.getIndirizzo_email();
@@ -529,22 +486,10 @@ public class FragmentProfilo extends Fragment implements PopUpModificaCampiProfi
     }
 
 
-    public void osservaSocialVenditorePresenti() {
-        fragmentProfiloViewModel.socialVenditorePresenti.observe(getViewLifecycleOwner(), (messaggio) -> {
-            if (messaggio) {//vede se sono presenti,li recupera,e poi deve aggiornare la gui
-                osservaSocialVenditoreRecuperati();
-                fragmentProfiloViewModel.recuperaSocialVenditore();
-            }
-
-
-        });
-    }
-
 
     public void osservaVenditoreRecuperato() {
         fragmentProfiloViewModel.venditoreRecuperato.observe(getViewLifecycleOwner(), (venditore) -> {
             if (venditore != null) {
-                //lista social quindi estrarre nomi e link poi fare chiamata a update social names per mostrarli graficamente
                 String nome = venditore.getNome();
                 String cognome = venditore.getCognome();
                 String email = venditore.getIndirizzo_email();
@@ -568,13 +513,7 @@ public class FragmentProfilo extends Fragment implements PopUpModificaCampiProfi
     public void osservaVenditoreModelPresente() {
         fragmentProfiloViewModel.venditoreModelPresente.observe(getViewLifecycleOwner(), (messaggio) -> {
             if (fragmentProfiloViewModel.getVenditoreModelPresente()) {
-                //chiamate ai vari observer, tra cui quelli di cambiare schermata quindi pure per la gestione dei popup
-
-                //in teoria deve fare qui la chiamata per trovare i social dal backend
-                fragmentProfiloViewModel.trovaSocialVenditoreViewModel();//questa chiamata trova i social dal backend
-
-            } else {
-                System.out.println("venditore NON ESISTE");
+                fragmentProfiloViewModel.trovaSocialVenditoreViewModel();
             }
         });
     }

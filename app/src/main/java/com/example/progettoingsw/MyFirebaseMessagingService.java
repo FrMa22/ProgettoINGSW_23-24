@@ -30,14 +30,11 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService impleme
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
-        Log.d("Notifica", "notifica ricevuta");
         // Handle FCM message received
         if (remoteMessage.getNotification() != null) {
             String title = remoteMessage.getNotification().getTitle();
             String message = remoteMessage.getNotification().getBody();
-            Log.d(TAG, "FCM message received: " + title + " - " + message);
 
-            // Show notification
             createNotificationChannel();
 
             Intent intent = new Intent(this, SchermataNotifiche.class);
@@ -96,7 +93,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService impleme
                     //                                          int[] grantResults)
                     // to handle the case where the user grants the permission. See the documentation
                     // for ActivityCompat#requestPermissions for more details.
-                    Log.d("Errore permesso","errore");
                     return;
                 }
                 notificationManager.notify(NOTIFICATION_ID, builder.build());

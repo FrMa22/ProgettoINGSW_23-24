@@ -29,7 +29,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FragmentSelezioneCategorie extends Fragment {
-    private List<String> selectedRadioButtonItems = new ArrayList<>();
     private LinearLayout linearLayoutCategorie;
     private SelezioneCategorieViewModel selezioneCategorieViewModel;
     public FragmentSelezioneCategorie() {
@@ -43,7 +42,6 @@ public class FragmentSelezioneCategorie extends Fragment {
     }
 
 
-    // Nella tua classe FragmentSelezioneCategorie
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         selezioneCategorieViewModel = new ViewModelProvider(this).get(SelezioneCategorieViewModel.class);
@@ -72,7 +70,6 @@ public class FragmentSelezioneCategorie extends Fragment {
             button.setTextColor(getResources().getColor(R.color.colore_secondario));
 
             try {
-                // Imposta l'immagine a sinistra del testo
                 Drawable immagine = immaginiArray.getDrawable(i);
                 immagine.setBounds(0, 0, immagine.getIntrinsicWidth(), immagine.getIntrinsicHeight());
                 button.setCompoundDrawablesWithIntrinsicBounds(immagine, null, getResources().getDrawable(R.drawable.ic_freccia_piccola_dx), null);
@@ -81,7 +78,6 @@ public class FragmentSelezioneCategorie extends Fragment {
             }
             button.setGravity(Gravity.CENTER);
             button.setBackgroundColor(Color.TRANSPARENT);
-            //button.setBackgroundResource(R.drawable.bordo_sotto_grigio);
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

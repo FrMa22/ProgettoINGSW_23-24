@@ -3,12 +3,10 @@ package com.example.progettoingsw.view;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
-import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.lifecycle.ViewModelProvider;
@@ -43,14 +41,12 @@ public class Registrazione extends GestoreComuniImplementazioni {
         switch_mostra_password_registrazione.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                // Se lo switch è selezionato, mostra la password
                 int cursorPositionPassword = edittext_password.getSelectionStart();
                 int cursorPositionPasswordConferma = edittext_conferma_password.getSelectionStart();
                 if (isChecked) {
                     edittext_password.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
                     edittext_conferma_password.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
                 } else {
-                    // Altrimenti, nascondi la password
                     edittext_password.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
                     edittext_conferma_password.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
                 }
@@ -90,14 +86,12 @@ public class Registrazione extends GestoreComuniImplementazioni {
                 // Ottieni i valori dai campi di input
                 String email = edittext_email.getText().toString().trim();
                 String tipoUtente = spinner_tipo_utente.getSelectedItem().toString().trim();
-                Log.d("onClickbottoneprosegui", "valore spinner : " + tipoUtente);
                 String nome = edittext_nome.getText().toString().trim();
                 String cognome = edittext_cognome.getText().toString().trim();
                 String password = edittext_password.getText().toString().trim();
                 String conferma_password = edittext_conferma_password.getText().toString().trim();
 
 
-                System.out.println("premuto bottone");
 
 
 
@@ -124,7 +118,6 @@ public class Registrazione extends GestoreComuniImplementazioni {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        // Distrugge il ViewModel quando l'Activity viene distrutta
         registrazioneViewModel.resetAllVariables();
     }
 
@@ -144,7 +137,6 @@ public class Registrazione extends GestoreComuniImplementazioni {
         registrazioneViewModel.messaggioErroreEmail.observe(this, (messaggio) -> {
             if (registrazioneViewModel.isNuovoMessaggioErroreEmail()) {
                 messaggioErroreMail(messaggio);
-                //loginViewModel.cancellaMessaggioLogin();
             }
         });
     }
@@ -186,12 +178,10 @@ public class Registrazione extends GestoreComuniImplementazioni {
                 Intent intent = new Intent(Registrazione.this, RegistrazioneCampiFacoltativi.class);
                 startActivity(intent);
                 finish();
-                Toast.makeText(this, "Passaggio ai campi facoltativi", Toast.LENGTH_SHORT).show();
             } else if (registrazioneViewModel.isProseguiRegistrazione("nuovo venditore")) {
                 Intent intent = new Intent(Registrazione.this, RegistrazioneCampiFacoltativi.class);
                 startActivity(intent);
                 finish();
-                Toast.makeText(this, "Passaggio ai campi facoltativi", Toast.LENGTH_SHORT).show();
             }
 
         });

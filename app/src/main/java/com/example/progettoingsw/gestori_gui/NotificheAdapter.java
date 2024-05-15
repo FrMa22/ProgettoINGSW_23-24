@@ -1,7 +1,6 @@
-    package com.example.progettoingsw.controllers_package;
+    package com.example.progettoingsw.gestori_gui;
 
     import android.content.Context;
-    import android.util.Log;
     import android.view.LayoutInflater;
     import android.view.View;
     import android.view.ViewGroup;
@@ -38,12 +37,10 @@
         }
         public void clearItems() {
             if (notificheAcquirenteItemList != null) {
-                Log.d("clearItemsNotifiche","acquirente");
                 notificheAcquirenteItemList.clear(); // Svuota la lista degli elementi
                 notifyDataSetChanged(); // Notifica che i dati sono cambiati
             }
             if(notificheVenditoreItemList!=null){
-                Log.d("clearItemsNotifiche","venditore");
                 notificheVenditoreItemList.clear();
                 notifyDataSetChanged();
             }

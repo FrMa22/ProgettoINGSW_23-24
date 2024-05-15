@@ -64,7 +64,6 @@ public class PopUpFiltroRicerca extends DialogPersonalizzato implements View.OnC
         buttonAnnullaFiltro.setOnClickListener(this);
         buttonSalva.setOnClickListener(this);
 
-        Log.d("main popup", "prima degli osserva");
         osservaCategorie();
         osservaNoCategorie();
         osservaOrdinamento();
@@ -76,10 +75,8 @@ public class PopUpFiltroRicerca extends DialogPersonalizzato implements View.OnC
     @Override
     public void onClick(View view) {
         if (view.getId() == R.id.buttonAnnullaFiltro) {
-            Log.d("Bottoni in popup" , "annulla");
             ricercaAstaViewModel.chiudi();
         } else if (view.getId() == R.id.buttonSalvaFiltro) {
-            Log.d("Bottoni in popup" , "salva");
             ricercaAstaViewModel.salva();
         }
 
@@ -111,7 +108,6 @@ public class PopUpFiltroRicerca extends DialogPersonalizzato implements View.OnC
             switchButton.setTextColor(resources.getColor(R.color.colore_hint));
             // Controllo se la categoria corrente è già stata selezionata
             if(categorieScelte!=null) {
-                Log.d("populate", "categorieScelte non null" + categorieScelte);
                 if (categorieScelte.contains(categorieArray[i])) {
                     switchButton.setChecked(true);
                 }
@@ -171,18 +167,14 @@ public class PopUpFiltroRicerca extends DialogPersonalizzato implements View.OnC
     public void osservaNoCategorie(){
         ricercaAstaViewModel.noCategorie.observe(fragmentRicercaAsta, (valore)->{
             if(valore){
-                Log.d("osservaNoCategorie","entrato");
                 populateLinearLayout();
             }
         });
     }
     public void osservaCategorie(){
         ricercaAstaViewModel.categorie.observe(fragmentRicercaAsta, (listaCategorie)->{
-            Log.d("osservaCategorie", "entrato");
             if(ricercaAstaViewModel.isCategorie()){
-                Log.d("osservaCategorie", "entrato nell if");
                 categorieScelte = listaCategorie;
-                Log.d("osservaCategorie", "chiamo populate");
                 populateLinearLayout();
         }
         });
@@ -204,7 +196,6 @@ public class PopUpFiltroRicerca extends DialogPersonalizzato implements View.OnC
     public void osservaChiudiPopUp(){
         ricercaAstaViewModel.chiudiPopUp.observe(fragmentRicercaAsta, (valore) -> {
             if(valore){
-                Log.d("osservaChiudiPopup","entrato");
                 rimuoviOsservatori();
                 ricercaAstaViewModel.resetPerPopUp();
                 dismiss();

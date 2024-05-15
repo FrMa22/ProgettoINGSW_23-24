@@ -3,7 +3,6 @@ package com.example.progettoingsw.view.venditore;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -36,7 +35,6 @@ public class VenditoreAstaRibasso extends GestoreComuniImplementazioni {
     AppCompatButton bottoneConferma;
     ImageButton bottoneBack;
     ImageButton button_info_asta_Ribasso;
-    private int idAsta;
     EditText nome;
     EditText descrizione;
     private ImageButton imageButtonRimuoviImmagineCreaAstaRibasso;
@@ -44,14 +42,11 @@ public class VenditoreAstaRibasso extends GestoreComuniImplementazioni {
     EditText intervalloDecremento;
     EditText sogliaDecremento;
     EditText prezzominimoAsta;
-    private byte [] img;
     ActivityResultLauncher<Intent> resultLauncher;
     private ArrayList<String> listaCategorieScelte;
-    Uri uriImmagine;
     ImageView immagineProdotto;
     ImageButton bottoneInserisciImmagine;
     private MaterialButton bottoneCategorieAstaRibasso;
-    private String email;
     private ProgressBar progressBarVenditoreAstaRibasso;
     private RelativeLayout relativeLayoutAstaRibasso;
     @Override
@@ -100,8 +95,6 @@ public class VenditoreAstaRibasso extends GestoreComuniImplementazioni {
             public void onClick(View view) {
                 immagineProdotto.setImageResource(android.R.color.transparent); // Rimuove l'immagine
                 bitmap = null;
-//                imageBytes = null; // Reimposta il byte array a null
-//                uriImmagine = null;
             }
         });
 
@@ -263,15 +256,7 @@ public class VenditoreAstaRibasso extends GestoreComuniImplementazioni {
             }
         });
     }
-    private void prelevaImmagine(){
-        Intent intent= new Intent(Intent.ACTION_PICK);
-        intent.setType("image/*");
-        if (intent.resolveActivity(this.getPackageManager()) != null) {
-            resultLauncher.launch(intent);
-        } else {
-            Toast.makeText(this, "Nessuna app disponibile per gestire la selezione delle immagini", Toast.LENGTH_SHORT).show();
-        }
-    }
+
     private void registraRisultati() {
         resultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
                 new ActivityResultCallback<ActivityResult>() {
@@ -279,8 +264,7 @@ public class VenditoreAstaRibasso extends GestoreComuniImplementazioni {
                     public void onActivityResult(ActivityResult result) {
                         try {
                             creaAstaRibassoViewModel.setImmagine(result, VenditoreAstaRibasso.this);
-//                            uriImmagine = result.getData().getData();
-//                            displayImage(uriImmagine);
+
                         } catch (Exception e) {
                             Toast.makeText(getApplicationContext(), "Nessuna Immagine selezionata", Toast.LENGTH_SHORT).show();
 

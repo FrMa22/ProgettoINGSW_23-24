@@ -1,6 +1,5 @@
 package com.example.progettoingsw.viewmodel;
 
-import android.util.Log;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -66,39 +65,30 @@ public class LeMieAsteViewModel extends ViewModel {
     }
 
 
-//conviene fare che questo tipo di metodo sia fatto 3 volte per tipo di asta da trovare
 
 
 
     public void trovaAsteAperteViewModel(){
         try{
             if(repository.getLeMieAsteUtenteAttuale()) {
-                Log.d("trovaAsteAperteViewModel","utente attuale");
                 if (containsAcquirente()) {
                     String email = getAcquirenteEmail();
-//                    trovaAsteInglesiAperte(email);
-//                    trovaAsteRibassoAperte(email);
                     trovaAsteInverseAperte(email);
 
                 } else if (containsVenditore()) {
                     String email = getVenditoreEmail();
                     trovaAsteInglesiAperte(email);
                     trovaAsteRibassoAperte(email);
-//                    trovaAsteInverseAperte(email);
 
                 }
             }else{
-                Log.d("trovaAsteAperteViewModel","utente da asta");
                 if(repository.getAcquirenteEmailDaAsta()!=null){
                     String email = repository.getAcquirenteEmailDaAsta();
-//                    trovaAsteInglesiAperte(email);
-//                    trovaAsteRibassoAperte(email);
                     trovaAsteInverseAperte(email);
                 }else if(repository.getVenditoreEmailDaAsta()!=null){
                     String email = repository.getVenditoreEmailDaAsta();
                     trovaAsteInglesiAperte(email);
                     trovaAsteRibassoAperte(email);
-//                    trovaAsteInverseAperte(email);
                 }
             }
 
@@ -108,47 +98,28 @@ public class LeMieAsteViewModel extends ViewModel {
 
     }
 
-
-//    public void trovaAsteAperteAcquirenteViewModel(){
-//        try{
-//            //trova le singole aste dal db poi deve fa la ""fusione dei risultati"
-//            trovaAsteInglesiAperte();
-//            trovaAsteRibassoAperte();
-//            trovaAsteInverseAperte();
-//        }catch(Exception e){
-//            e.printStackTrace();
-//        }
-//    }
 
 
     public void trovaAsteChiuseViewModel(){
         try{
             if(repository.getLeMieAsteUtenteAttuale()) {
-                Log.d("trovaAsteAperteViewModel", "utente attuale");
                 if (containsAcquirente()) {
                     String email = getAcquirenteEmail();
-//                    trovaAsteInglesiChiuse(email);
-//                    trovaAsteRibassoChiuse(email);
                     trovaAsteInverseChiuse(email);
 
                 } else if (containsVenditore()) {
                     String email = getVenditoreEmail();
                     trovaAsteInglesiChiuse(email);
                     trovaAsteRibassoChiuse(email);
-//                    trovaAsteInverseChiuse(email);
                 }
             }else{
-                Log.d("trovaAsteAperteViewModel","utente da asta");
                 if(repository.getAcquirenteEmailDaAsta()!=null){
                     String email = repository.getAcquirenteEmailDaAsta();
-//                    trovaAsteInglesiChiuse(email);
-//                    trovaAsteRibassoChiuse(email);
                     trovaAsteInverseChiuse(email);
                 }else if(repository.getVenditoreEmailDaAsta()!=null){
                     String email = repository.getVenditoreEmailDaAsta();
                     trovaAsteInglesiChiuse(email);
                     trovaAsteRibassoChiuse(email);
-//                    trovaAsteInverseChiuse(email);
                 }
             }
 
@@ -158,22 +129,11 @@ public class LeMieAsteViewModel extends ViewModel {
 
     }
 
-//    public void trovaAsteChiuseAcquirenteViewModel(){
-//        try{
-//            //trova le singole aste dal db poi deve fa la ""fusione dei risultati"
-//            trovaAsteInglesiChiuse();
-//            trovaAsteRibassoChiuse();
-//            trovaAsteInverseChiuse();
-//        }catch(Exception e){
-//            e.printStackTrace();
-//        }
-//    }
 
 
     private void checkAndMergeAsteVenditoreAperte() {
         // Controlla se tutte e tre le ricerche sono completate
         if (isAsteInglesiRecuperateAperte && isAsteRibassoRecuperateAperte) {
-            System.out.println("tutte le ricerche sono finite");
             mergeAsteAperteTrovate();
         }
     }
@@ -182,7 +142,6 @@ public class LeMieAsteViewModel extends ViewModel {
     private void checkAndMergeAsteAcquirenteAperte() {
         // Controlla se tutte e tre le ricerche sono completate
         if (isAsteInverseRecuperateAperte) {
-            System.out.println("tutte le ricerche sono finite");
             mergeAsteAperteTrovate();
         }
     }
@@ -192,7 +151,6 @@ public class LeMieAsteViewModel extends ViewModel {
     private void checkAndMergeAsteVenditoreChiuse() {
         // Controlla se tutte e tre le ricerche sono completate
         if (isAsteInglesiRecuperateChiuse && isAsteRibassoRecuperateChiuse) {
-            System.out.println("tutte le ricerche sono finite");
             mergeAsteChiuseTrovate();
         }
     }
@@ -200,7 +158,6 @@ public class LeMieAsteViewModel extends ViewModel {
     private void checkAndMergeAsteAcquirenteChiuse() {
         // Controlla se tutte e tre le ricerche sono completate
         if (isAsteInverseRecuperateChiuse) {
-            System.out.println("tutte le ricerche sono finite");
             mergeAsteChiuseTrovate();
         }
     }
@@ -209,11 +166,9 @@ public class LeMieAsteViewModel extends ViewModel {
 
     private void trovaAsteInglesiAperte(String email) {
 
-        System.out.println("entrato in trova aste inglesi aperte  di view model");
         leMieAsteRepository.trovaAsteInglesiAperteBackend(email, new LeMieAsteRepository.OnTrovaAsteInglesiAperteListener() {
             @Override
             public void onTrovaAsteInglesiAperte(List<Asta_allingleseModel> asteInglesiAperteRecuperateList) {
-               // repository.setAsteAperteRecuperateList(asteAperteRecuperateList);//non so se serve visto che sono acchiappate dal viewModel
                 setAsteInglesiAperteRecuperateList(asteInglesiAperteRecuperateList);//cosi poi la gui "acchiappa" le aste trovate
                 // Imposta il flag su true quando la ricerca è completata
                 isAsteInglesiRecuperateAperte = true;
@@ -226,11 +181,9 @@ public class LeMieAsteViewModel extends ViewModel {
 
 
     private void trovaAsteRibassoAperte(String email) {
-        System.out.println("entrato in trova aste ribasso aperte di view model");
         leMieAsteRepository.trovaAsteRibassoAperteBackend(email, new LeMieAsteRepository.OnTrovaAsteRibassoAperteListener() {
             @Override
             public void onTrovaAsteRibassoAperte(List<Asta_alribassoModel> asteRibassoAperteRecuperateList) {
-                // repository.setAsteAperteRecuperateList(asteAperteRecuperateList);//non so se serve visto che sono acchiappate dal viewModel
                 setAsteRibassoAperteRecuperateList(asteRibassoAperteRecuperateList);//cosi poi la gui "acchiappa" le aste trovate
                 // Imposta il flag su true quando la ricerca è completata
                 isAsteRibassoRecuperateAperte = true;
@@ -241,11 +194,9 @@ public class LeMieAsteViewModel extends ViewModel {
 
 
     private void trovaAsteInverseAperte(String email) {
-        System.out.println("entrato in trova aste inverse aperte  di view model");
         leMieAsteRepository.trovaAsteInverseAperteBackend(email, new LeMieAsteRepository.OnTrovaAsteInverseAperteListener() {
             @Override
             public void onTrovaAsteInverseAperte(List<Asta_inversaModel> asteInverseAperteRecuperateList) {
-                // repository.setAsteAperteRecuperateList(asteAperteRecuperateList);//non so se serve visto che sono acchiappate dal viewModel
                 setAsteInverseAperteRecuperateList(asteInverseAperteRecuperateList);//cosi poi la gui "acchiappa" le aste trovate
                 // Imposta il flag su true quando la ricerca è completata
                 isAsteInverseRecuperateAperte = true;
@@ -257,11 +208,9 @@ public class LeMieAsteViewModel extends ViewModel {
 //
 
     private void trovaAsteInglesiChiuse(String email) {
-        System.out.println("entrato in trova aste inglesi chiuse  di view model");
         leMieAsteRepository.trovaAsteInglesiChiuseBackend(email, new LeMieAsteRepository.OnTrovaAsteInglesiChiuseListener() {
             @Override
             public void onTrovaAsteInglesiChiuse(List<Asta_allingleseModel> asteInglesiChiuseRecuperateList) {
-                // repository.setAsteAperteRecuperateList(asteAperteRecuperateList);//non so se serve visto che sono acchiappate dal viewModel
                 setAsteInglesiChiuseRecuperateList(asteInglesiChiuseRecuperateList);//cosi poi la gui "acchiappa" le aste trovate
                 // Imposta il flag su true quando la ricerca è completata
                 isAsteInglesiRecuperateChiuse = true;
@@ -273,11 +222,9 @@ public class LeMieAsteViewModel extends ViewModel {
 
 
     private void trovaAsteRibassoChiuse(String email) {
-        System.out.println("entrato in trova aste ribasso chiuse  di view model");
         leMieAsteRepository.trovaAsteRibassoChiuseBackend(email, new LeMieAsteRepository.OnTrovaAsteRibassoChiuseListener() {
             @Override
             public void onTrovaAsteRibassoChiuse(List<Asta_alribassoModel> asteRibassoChiuseRecuperateList) {
-                // repository.setAsteAperteRecuperateList(asteAperteRecuperateList);//non so se serve visto che sono acchiappate dal viewModel
                 setAsteRibassoChiuseRecuperateList(asteRibassoChiuseRecuperateList);//cosi poi la gui "acchiappa" le aste trovate
                 // Imposta il flag su true quando la ricerca è completata
                 isAsteRibassoRecuperateChiuse = true;
@@ -288,11 +235,9 @@ public class LeMieAsteViewModel extends ViewModel {
 
 
     private void trovaAsteInverseChiuse(String email) {
-        System.out.println("entrato in trova aste inverse chiuse  di view model");
         leMieAsteRepository.trovaAsteInverseChiuseBackend(email, new LeMieAsteRepository.OnTrovaAsteInverseChiuseListener() {
             @Override
             public void onTrovaAsteInverseChiuse(List<Asta_inversaModel> asteInverseChiuseRecuperateList) {
-                // repository.setAsteAperteRecuperateList(asteAperteRecuperateList);//non so se serve visto che sono acchiappate dal viewModel
                 setAsteInverseChiuseRecuperateList(asteInverseChiuseRecuperateList);//cosi poi la gui "acchiappa" le aste trovate
                 // Imposta il flag su true quando la ricerca è completata
                 isAsteInverseRecuperateChiuse = true;
@@ -311,17 +256,21 @@ public class LeMieAsteViewModel extends ViewModel {
 
     //merge di tutte e 3 le liste di aste
     public  void mergeAsteAperteTrovate(){
-        System.out.println("in merge aste aperte trovate");
         List<Asta_allingleseModel> asteInglesi=getAsteInglesiAperteRecuperateList();
         List<Asta_alribassoModel> asteRibasso=getAsteRibassoAperteRecuperateList();
         List<Asta_inversaModel> asteInverse=getAsteInverseAperteRecuperateList();
         ArrayList<Object> asteAperte=new ArrayList<>();
         //get delle liste e le mette in variabili
-        if(asteInglesi!=null && !asteInglesi.isEmpty()){asteAperte.addAll(asteInglesi);System.out.println("aggiunte aste inglesi");}
-        if(asteRibasso!=null && !asteRibasso.isEmpty()) {asteAperte.addAll(asteRibasso);System.out.println("aggiunte aste ribasso");}
-        if(asteInverse!=null && !asteInverse.isEmpty()){asteAperte.addAll(asteInverse);System.out.println("aggiunte aste inverse");}
+        if(asteInglesi!=null && !asteInglesi.isEmpty()){
+            asteAperte.addAll(asteInglesi);
+        }
+        if(asteRibasso!=null && !asteRibasso.isEmpty()) {
+            asteAperte.addAll(asteRibasso);
+        }
+        if(asteInverse!=null && !asteInverse.isEmpty()){
+            asteAperte.addAll(asteInverse);
+        }
         //setta poi la variabile osservata
-        System.out.println("Finito il merge");
         setAsteAperteRecuperateList(asteAperte);
         isAsteInglesiRecuperateAperte=false;
         isAsteRibassoRecuperateAperte=false;
@@ -331,17 +280,21 @@ public class LeMieAsteViewModel extends ViewModel {
 
 
     public  void mergeAsteChiuseTrovate(){
-        System.out.println("in merge aste chiuse trovate");
         List<Asta_allingleseModel> asteInglesi=getAsteInglesiChiuseRecuperateList();
         List<Asta_alribassoModel> asteRibasso=getAsteRibassoChiuseRecuperateList();
         List<Asta_inversaModel> asteInverse=getAsteInverseChiuseRecuperateList();
         ArrayList<Object> asteChiuse=new ArrayList<>();
         //get delle liste e le mette in variabili
-        if(asteInglesi!=null && !asteInglesi.isEmpty()){asteChiuse.addAll(asteInglesi);System.out.println("aggiunte aste inglesi");}
-        if(asteRibasso!=null && !asteRibasso.isEmpty()) {asteChiuse.addAll(asteRibasso);System.out.println("aggiunte aste ribasso");}
-        if(asteInverse!=null && !asteInverse.isEmpty()){asteChiuse.addAll(asteInverse);System.out.println("aggiunte aste inverse");}
+        if(asteInglesi!=null && !asteInglesi.isEmpty()){
+            asteChiuse.addAll(asteInglesi);
+        }
+        if(asteRibasso!=null && !asteRibasso.isEmpty()) {
+            asteChiuse.addAll(asteRibasso);
+        }
+        if(asteInverse!=null && !asteInverse.isEmpty()){
+            asteChiuse.addAll(asteInverse);
+        }
         //setta poi la variabile osservata
-        System.out.println("Finito il merge");
         setAsteChiuseRecuperateList(asteChiuse);
         isAsteInglesiRecuperateChiuse=false;
         isAsteRibassoRecuperateChiuse=false;
@@ -394,11 +347,9 @@ public class LeMieAsteViewModel extends ViewModel {
 
     public void checkTipoUtente(){
         if(containsAcquirente()){
-            System.out.println("contains di acquirente");
             setAcquirenteModelPresente();
             setAcquirenteRecuperato(getAcquirente());
         }else if(containsVenditore()) {
-            System.out.println("contains di venditore");
             setVenditoreModelPresente();
             setVenditoreRecuperato(getVenditore());
         }

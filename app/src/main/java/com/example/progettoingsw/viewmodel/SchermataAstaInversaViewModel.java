@@ -5,13 +5,11 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.util.Log;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.progettoingsw.R;
-import com.example.progettoingsw.model.Asta_alribassoModel;
 import com.example.progettoingsw.model.Asta_inversaModel;
 import com.example.progettoingsw.model.VenditoreModel;
 import com.example.progettoingsw.repository.Asta_inversaRepository;
@@ -39,12 +37,10 @@ public class SchermataAstaInversaViewModel extends ViewModel {
     }
 
     public void getAstaData(){
-        Log.d("getAstaData","entrato");
         Long idAsta = repository.getAsta_inversaSelezionata().getId();
         astaInversaRepository.trovaAsta_inversa(idAsta, new Asta_inversaRepository.OnTrovaAstaInversaListener() {
             @Override
             public void OnTrovaAstaInversa(Asta_inversaModel astaRecuperata) {
-                Log.d("asta ricercata" , "qui");
                 if(astaRecuperata!=null){
                     repository.setAsta_inversaSelezionata(astaRecuperata);
                     setAstaRecuperata(astaRecuperata);
@@ -149,13 +145,9 @@ public class SchermataAstaInversaViewModel extends ViewModel {
             astaInversaRepository.verificaAstaInversaInPreferiti(indirizzoEmail, idAsta, new Asta_inversaRepository.OnVerificaAstaInversaInPreferitiListener() {
                 @Override
                 public void OnVerificaAstaInversaInPreferiti(Integer numeroRecuperato) {
-                    Log.d("asta ricercata", "qui");
                     if (numeroRecuperato != null && numeroRecuperato != 0) {
-                        Log.d("asta ricercata", "è nei preferiti");
                         setIsAstaInPreferiti(true);
                     } else {
-                        Log.d("asta ricercata", "non è nei preferiti");
-                        setErroreRecuperoAsta("errore nella verifica asta in preferiti");
                         setIsAstaInPreferiti(false);
                     }
                 }
@@ -168,13 +160,10 @@ public class SchermataAstaInversaViewModel extends ViewModel {
         astaInversaRepository.inserimentoAstaInPreferiti(idAsta, indirizzoEmail, new Asta_inversaRepository.OnInserimentoAstaInversaInPreferitiListener() {
             @Override
             public void OnInserimentoAstaInversaInPreferiti(Integer numeroRecuperato) {
-                Log.d("asta inserita in preferiti" , "qui");
                 if(numeroRecuperato!=null && numeroRecuperato==1){
-                    //setAstaInPreferiti(true);
                     setIsAstaInPreferiti(true);
                 }else{
-                    setErroreRecuperoAsta("errore nella verifica asta in preferiti");
-                    //setVerificaAstaInPreferitiChecked(true);
+                    setErroreRecuperoAsta("Errore nell'inserimento asta in preferiti");
                 }
             }
         });
@@ -185,13 +174,10 @@ public class SchermataAstaInversaViewModel extends ViewModel {
         astaInversaRepository.eliminazioneAstaInPreferiti(idAsta, indirizzoEmail, new Asta_inversaRepository.OnEliminazioneAstaInversaInPreferitiListener() {
             @Override
             public void OnEliminazioneAstaInversaInPreferiti(Integer numeroRecuperato) {
-                Log.d("asta eliminata in preferiti" , "qui");
                 if(numeroRecuperato!=null && numeroRecuperato==1){
-                    //setAstaInPreferiti(false);
                     setIsAstaInPreferiti(false);
                 }else{
-                    setErroreRecuperoAsta("errore nella verifica asta in preferiti");
-                    //setVerificaAstaInPreferitiChecked(true);
+                    setErroreRecuperoAsta("Errore nella rimozione asta dai preferiti");
                 }
             }
         });
@@ -218,9 +204,6 @@ public class SchermataAstaInversaViewModel extends ViewModel {
         return (this.astadaMostrare.getValue()!=null);
     }
     public void recuperaAstaDaMostrare(){
-        if(astaRecuperata.getValue()!=null) {
-            Log.d("recuperaAstaDaMostrare", "valori: " + astaRecuperata.getValue().getNome());
-        }
         setAstadaMostrare(repository.getAsta_inversaSelezionata());
     }
     public void setPopUpInformazioni(AlertDialog popUpInformazioni) {
@@ -247,7 +230,6 @@ public class SchermataAstaInversaViewModel extends ViewModel {
         });
 
         AlertDialog dialog = builder.create();
-        //dialog.show();
         setPopUpInformazioni(dialog);
         setPopUpInformazioni(dialog);
     }

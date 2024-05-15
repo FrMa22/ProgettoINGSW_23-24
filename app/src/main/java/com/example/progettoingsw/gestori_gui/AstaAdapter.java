@@ -1,10 +1,9 @@
-package com.example.progettoingsw.controllers_package;
+package com.example.progettoingsw.gestori_gui;
 
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.CountDownTimer;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -120,10 +119,8 @@ public class AstaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     @Override
     public int getItemCount() {
         if (astaItemList == null) {
-            Log.d("AstaAdapter", "count = " + 0);
             return 0; // Se la lista è nulla, non ci sono elementi da visualizzare
         } else {
-            Log.d("AstaAdapter", "count = " + astaItemList.size());
             return astaItemList.size();
         }
     }
@@ -166,7 +163,6 @@ public class AstaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
         public AstaIngleseViewHolder(@NonNull View itemView) {
             super(itemView);
-            Log.d("bind di asta inglese view holder" , "entrato " );
             textViewNome = itemView.findViewById(R.id.textView_nome_item_asta_inglese);
             textViewDescrizione = itemView.findViewById(R.id.textView_descrizione_item_asta_inglese);
             imageView = itemView.findViewById(R.id.image_view_item_asta_inglese);
@@ -176,7 +172,6 @@ public class AstaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         }
 
         public void bind(AstaIngleseItem item) {
-            Log.d("bind di asta inglese view holder" , "nome: " + item.getNome());
             textViewNome.setText(item.getNome());
             textViewDescrizione.setText(item.getDescrizione());
             if(item.getImmagine() != null){
@@ -196,18 +191,14 @@ public class AstaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         }
 
         private void startCountDownTimer(String intervalloOfferteString) {
-            Log.d("startCountDownTimer", "intervallo prima: " + intervalloOfferteString);
             long intervalloOfferteSeconds = convertiStringaInSecondi(intervalloOfferteString);
-            Log.d("startCountDownTimer", "intervallo : " + intervalloOfferteSeconds);
             if (intervalloOfferteSeconds != 0) {
                 countDownTimer = new CountDownTimer(intervalloOfferteSeconds * 1000, 1000) {
                     public void onTick(long millisUntilFinished) {
-                        Log.d("asta adapter asta inglese", "aggiornato textview intervallo offerte");
                         intervalloOfferte.setText(calcolaTempoRimanente(millisUntilFinished / 1000));
                     }
 
                     public void onFinish() {
-                        Log.d("scaduto", "scaduto");
                         intervalloOfferte.setText("Asta Scaduta");
                     }
                 }.start();
@@ -318,7 +309,6 @@ public class AstaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
     public void setAstecopia(ArrayList<Object> astaList) {
-        System.out.println("in set  Aste");
         if (astaItemList == null) {
             astaItemList = new ArrayList<>();
         }
@@ -327,11 +317,6 @@ public class AstaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             astaItemList.addAll(astaList);
             notifyItemRangeInserted(startPosition, astaList.size());
         }
-//        else {
-//            ArrayList<Object> list=new ArrayList<>();
-//            astaItemList.addAll(list);
-//            notifyItemRangeInserted(startPosition,list.size());
-//        }
     }
 
 

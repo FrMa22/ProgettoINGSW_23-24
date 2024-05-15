@@ -43,7 +43,6 @@ public class PopUpRegistrazioneSocial extends DialogPersonalizzato implements Vi
         setContentView(R.layout.pop_up_registrazione_social);
 
 
-        // Riferimenti ai widget all'interno del pop-up
         bottoneChiudiRegistrazioneSocial = findViewById(R.id.bottoneChiudiRegistrazioneSocial);
         bottoneConfermaRegistrazioneSocial = findViewById(R.id.bottoneConfermaRegistrazioneSocial);
         editTextLink = findViewById(R.id.editTextNomeUtenteSocial);
@@ -66,7 +65,7 @@ public class PopUpRegistrazioneSocial extends DialogPersonalizzato implements Vi
         int viewId = v.getId();
         if (viewId == R.id.bottoneChiudiRegistrazioneSocial) {
             registrazioneViewModel.resetErrori();
-            dismiss(); // Chiude il dialog
+            dismiss();
         } else if (viewId == R.id.bottoneConfermaRegistrazioneSocial) {
             nomeSocial = editTextNomeSocial.getText().toString().trim();
             link = editTextLink.getText().toString().trim();
@@ -109,7 +108,6 @@ public class PopUpRegistrazioneSocial extends DialogPersonalizzato implements Vi
     }
     public void dismissModificaSocialPopup() {
         if (popupRegistrazioneSocialDismissListener != null) {
-            Log.d("dismissModificaSocialPopup","chiamo");
             popupRegistrazioneSocialDismissListener.onPopupRegistrazioneSocialDismissed();
         }
         dismiss();

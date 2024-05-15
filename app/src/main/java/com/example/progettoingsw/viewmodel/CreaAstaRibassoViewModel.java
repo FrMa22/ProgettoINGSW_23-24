@@ -9,7 +9,6 @@ import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.media.ExifInterface;
 import android.net.Uri;
-import android.util.Log;
 
 import androidx.activity.result.ActivityResult;
 import androidx.lifecycle.MutableLiveData;
@@ -310,9 +309,6 @@ public class CreaAstaRibassoViewModel extends ViewModel{
             Asta_alribassoModel asta = new Asta_alribassoModel(nome,  descrizione, img_byte, prezzoBase_float,  intervalloDecrementale,  intervalloDecrementale,
                     decrementoAutomaticoCifra_float,  prezzoMin_float, prezzoBase_float, "aperta", id_venditore);
 
-            if(categorieScelte!=null && !categorieScelte.isEmpty()) {
-                Log.d("creo asta", "nome: " + nome + "categorie: " + categorieScelte.get(0));
-            }
             creaAstaBackend(asta);
 
         }
@@ -341,24 +337,7 @@ public class CreaAstaRibassoViewModel extends ViewModel{
         bitmap.compress(Bitmap.CompressFormat.JPEG, 50, outputStream); // Compressione JPEG con qualità del 50%
         return outputStream.toByteArray();
     }
-    public void onActivityResult(Uri uriImmagine) {
-        try {
-            Log.d("ok","ok");
-            //displayImage(uriImmagine);
-        } catch (Exception e) {
-            setErroreGenerico("Nessuna Immagine selezionata");
-        }
-    }
-    public void prelevaImmagine(Activity activity){
-        Intent intent= new Intent(Intent.ACTION_PICK);
-        intent.setType("image/*");
-        if (intent.resolveActivity(activity.getPackageManager()) != null) {
-            setApriGalleria(intent);
-            //resultLauncher.launch(intent);
-        } else {
-            setErroreGenerico("Nessuna app disponibile per gestire la selezione delle immagini");
-        }
-    }
+
     public void setImmagine(ActivityResult result, Activity activity){
         uriImmagine = result.getData().getData();
         displayImage(uriImmagine,activity);
@@ -408,7 +387,6 @@ public class CreaAstaRibassoViewModel extends ViewModel{
             // Imposta l'immagine ridimensionata nella ImageView
             setImmagineConvertita(resizedBitmap);
 
-            //immagineProdotto.setImageBitmap(resizedBitmap);
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -434,21 +412,17 @@ public class CreaAstaRibassoViewModel extends ViewModel{
         });
 
         AlertDialog dialog = builder.create();
-        //dialog.show();
         setPopUpInformazioni(dialog);
 
     }
 
     public void addCategoriaProvvisoria(String nomeCategoria){
-        Log.d("addcategoria", "entrato");
         categorieScelteProvvisorie.add(nomeCategoria);
     }
     public void removeCategoriaProvvisoria(String nomeCategoria){
-        Log.d("removecategoria", "entrato");
         categorieScelteProvvisorie.remove(nomeCategoria);
     }
     public void saveCategorieScelte(){
-        Log.d("save","in categorie scelte metto categorie provvisorie" + categorieScelteProvvisorie);
         this.categorieScelte = new ArrayList<>(categorieScelteProvvisorie);
         setCategorieInserite(categorieScelte);
         this.categorieScelteProvvisorie.clear();
@@ -458,11 +432,9 @@ public class CreaAstaRibassoViewModel extends ViewModel{
     }
     public void checkCategorieInserite(){
         if(categorieScelte != null && !categorieScelte.isEmpty()){
-            Log.d("checkCategorieInserite","categorie scelte non null e non vuoto");
             setCategoriaProvvisoria(categorieScelte);
             setCategorieInserite(categorieScelte);
         }else{
-            Log.d("checkCategorieInserite","categorie scelte null o vuoto");
             categorieScelteProvvisorie = new ArrayList<>();
         }
     }

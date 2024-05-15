@@ -76,18 +76,14 @@ public class LoginActivity extends GestoreComuniImplementazioni {
         switch_mostra_password.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                // Memorizza la posizione corrente del cursore
                 int cursorPosition = editText_password.getSelectionStart();
 
-                // Se lo switch è selezionato, mostra la password
                 if (isChecked) {
                     editText_password.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
                 } else {
-                    // Altrimenti, nascondi la password
                     editText_password.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
                 }
 
-                // Ripristina la posizione del cursore dopo il cambio di tipo di input
                 editText_password.setSelection(cursorPosition);
             }
         });
@@ -95,31 +91,13 @@ public class LoginActivity extends GestoreComuniImplementazioni {
 
         bottoneLogin.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                //commentare per avere app con connesione al back end:
-                //Attenzione, la view non puo avere istanza di Repository, questo è solo per far funzionare senza db e connessione
-//                Repository repository = Repository.getInstance();
-//                AcquirenteModel acquirenteModel = new AcquirenteModel("emailprova", "nomeprova", "cognomeprova","passwordprova", "biorprova", "linkprova", "italia");
-//                Asta_allingleseModel astaAllingleseModel = new Asta_allingleseModel(1L,"nomeasta" , "descrizioneasta" , null, 1f, "00:05:00" , "00:05:00", 1f, 1f, "aperta" , "d" );
-//                ArrayList<Asta_allingleseModel> lista = new ArrayList<>();
-//                lista.add(astaAllingleseModel);
-//                repository.setListaAsteAllInglese(lista);
-//                repository.setAcquirenteModel(acquirenteModel);
-//                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-//                startActivity(intent);
-
-                //commentare per testare app senza connessione al back end:
                 String mail = editText_mail.getText().toString().trim();
                 String password = editText_password.getText().toString().trim();
-
-                Log.d("premuto accedi", "mando token : " + token);
                 loginViewModel.loginAcquirente(mail,password,token);
-
-
             }
         });
 
         registrazione.setOnClickListener(v -> {
-            //apre schermata registrazione
             Intent intent = new Intent(LoginActivity.this, Registrazione.class);
             startActivity(intent);
 
@@ -150,7 +128,6 @@ public class LoginActivity extends GestoreComuniImplementazioni {
     public void checkConnessione() {
         ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetwork = connectivityManager.getActiveNetworkInfo();
-        Log.d("isNetworkConnected","valore : " + !(activeNetwork != null && activeNetwork.isConnected()));
         if(!(activeNetwork != null && activeNetwork.isConnected())){
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle("Connessione di rete necessaria");
@@ -167,11 +144,9 @@ public class LoginActivity extends GestoreComuniImplementazioni {
         }
     }
 private void requestNotificationPermissions() {
-        Log.d("requestNotifiche", "entrato");
     if (ContextCompat.checkSelfPermission(this, "com.example.progettoingsw.permission.POST_NOTIFICATIONS") != PackageManager.PERMISSION_GRANTED) {
         ActivityCompat.requestPermissions(this, new String[]{"com.example.progettoingsw.permission.POST_NOTIFICATIONS"}, PERMISSION_REQUEST_CODE);
     }else{
-        Log.d("Permesso", "il permesso c'è");
         checkNotificationPermissions();
     }
 }
@@ -182,19 +157,15 @@ private void requestNotificationPermissions() {
         if (requestCode == PERMISSION_REQUEST_CODE) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 Log.d("notifiche","notifiche  attive");
-                // I permessi sono stati concessi
             } else {
-                Toast.makeText(this, "Devi abilitare i permessi per le notifiche", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "è necessario abilitare i permessi per le notifiche", Toast.LENGTH_SHORT).show();
                 Log.d("notifiche","notifiche non attive");
-                // I permessi non sono stati concessi
-                // Puoi gestire questo caso in modo appropriato, ad esempio informando l'utente sui motivi per cui i permessi sono necessari
             }
         }
     }
     public void checkNotificationPermissions() {
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
-        // Controlla se le notifiche sono abilitate
         if (!notificationManager.areNotificationsEnabled()) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this,R.style.CustomDialogTheme);
             builder.setTitle("Notifiche disabilitate");
@@ -226,7 +197,6 @@ private void requestNotificationPermissions() {
         loginViewModel.messaggioErroreEmail.observe(this, (messaggio) -> {
             if (loginViewModel.isNuovoMessaggioErroreEmail()) {
                 messaggioErroreMail(messaggio);
-                //loginViewModel.cancellaMessaggioLogin();
             }
         });
     }
@@ -234,12 +204,10 @@ private void requestNotificationPermissions() {
         loginViewModel.messaggioErrorePassword.observe(this, (messaggio) -> {
             if (loginViewModel.isNuovoMessaggioErrorePassword()) {
                 messaggioErrorePassword(messaggio);
-                //loginViewModel.cancellaMessaggioLogin();
             }
         });
     }
     public void salvaTokenInLocale(){
-        Log.d("salvaTokenInLocale","salvo in locale : " + token);
         sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(TOKEN_KEY, token);
@@ -248,16 +216,11 @@ private void requestNotificationPermissions() {
     public void osservaProseguiLogin(){
         loginViewModel.proseguiLogin.observe(this, (messaggio) -> {
             if (loginViewModel.isProseguiLogin("acquirente")) {
-                Log.d("osservaProseguiLogin","Login effettuato come acquirente!");
                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                 startActivity(intent);
-                Toast.makeText(this, "Login effettuato come acquirente!", Toast.LENGTH_SHORT).show();
-
             }else if(loginViewModel.isProseguiLogin("venditore")){
-                Log.d("osservaProseguiLogin","Login effettuato come venditore!");
                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                 startActivity(intent);
-                Toast.makeText(this, "Login effettuato come venditore!", Toast.LENGTH_SHORT).show();
 
             }else if(loginViewModel.isProseguiLogin("entrambi")){
                 showAccountSelectionPopup();
@@ -300,11 +263,9 @@ private void requestNotificationPermissions() {
 
     public void osservaTokenSalvato(){
         loginViewModel.tokenSalvato.observe(this, (tokenNuovo) -> {
-            Log.d("osservaTokenSalvato","fuori if " + loginViewModel.isTokenSalvato());
             if(loginViewModel.isTokenSalvato()){
                 relative_layout_login_activity.setVisibility(View.VISIBLE);
                 progress_bar_login.setVisibility(View.INVISIBLE);
-                Log.d("osservaTokenSalvato","nel if");
                 this.token = tokenNuovo;
                 salvaTokenInLocale();
             }

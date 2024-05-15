@@ -2,7 +2,6 @@ package com.example.progettoingsw.viewmodel;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -125,7 +124,6 @@ private String token;
 
 
     public void checkSocial(String nomeSocial, String link) {
-        System.out.println("entrato in registrazione di viewmodel");
         if (socialValido(nomeSocial, link)) {
             boolean socialGiaPresente = false;
                 if (containsAcquirente()) {
@@ -171,7 +169,6 @@ public void controlloSocial(){
         }
 }
     public Boolean registrazioneValida(String mail, String password,String confermaPassword, String nome, String cognome){
-        System.out.println("entrato in registrazione valida");
         if(mail == null || mail.isEmpty() ){
             setMessaggioErroreEmail("L'indirizzo email non può essere vuoto");
             return false;
@@ -231,9 +228,7 @@ public void controlloSocial(){
     }
 
     public void registrazioneAcquirenteCompleta(String bio, String paese, String sitoWeb, AcquirenteModel acquirente) {
-        System.out.println("entrato in registrazione di viewmodel");
         if (registrazioneParzialeValidaAcquirente(bio, paese, sitoWeb, acquirente)) {
-            System.out.println("in registrazione di viewmodel prima del try");
             try {
                 inserisciAcquirente(acquirente);
             } catch (Exception e) {
@@ -243,7 +238,6 @@ public void controlloSocial(){
     }
 
     public void inserisciSocialAcquirente(){
-        System.out.println("entrato in inserisci social acquirente di view model");
         registrazioneRepository.inserimentoSocialAcquirente(socialAcquirente,new RegistrazioneRepository.OnInserimentoSocialAcquirenteListener(){
             @Override
             public void socialInseritoAcquirente(){
@@ -253,7 +247,6 @@ public void controlloSocial(){
     }
 
     public void inserisciSocialVenditore(){
-        System.out.println("entrato in inserisci social venditore di view model");
         registrazioneRepository.inserimentoSocialVenditore(socialVenditore,new RegistrazioneRepository.OnInserimentoSocialVenditoreListener(){
             @Override
             public void socialInseritoVenditore(){
@@ -267,7 +260,6 @@ public void controlloSocial(){
         token = sharedPreferences.getString(TOKEN_KEY, null);
     }
     public void inserisciAcquirente(AcquirenteModel acquirente) {
-        System.out.println("entrato in inserisci acquirente di view model");
         registrazioneRepository.inserimentoAcquirente(acquirente, new RegistrazioneRepository.OnInserisciAcquirenteListener() {
             @Override
             public void confermaAcquirente(Long check) {
@@ -283,7 +275,6 @@ public void controlloSocial(){
     }
 
     public void trovaAcquirenteDoppio(String email, String password, String nome, String cognome) {
-        System.out.println("entrato in trova acquirente di view model");
         registrazioneRepository.registrazioneAcquirenteDoppioBackend(email, new RegistrazioneRepository.OnRegistrazioneAcquirenteDoppioListener() {
             @Override
             public void ricercaDoppia(AcquirenteModel acquirenteControllo) {
@@ -300,9 +291,7 @@ public void controlloSocial(){
     }
 
     public void registrazioneVenditoreCompleta(String bio, String paese, String sitoWeb, VenditoreModel venditore) {
-        System.out.println("entrato in registrazione di viewmodel");
         if (registrazioneParzialeValidaVenditore(bio, paese, sitoWeb, venditore)) {
-            System.out.println("in registrazione di viewmodel prima del try");
             try {
                 inserisciVenditore(venditore);
             } catch (Exception e) {
@@ -312,7 +301,6 @@ public void controlloSocial(){
     }
 
     public void inserisciVenditore(VenditoreModel venditore) {
-        System.out.println("entrato in trova venditore di view model");
         registrazioneRepository.inserimentoVenditore(venditore, new RegistrazioneRepository.OnInserisciVenditoreListener() {
             @Override
             public void confermaVenditore(Long check) {
@@ -328,7 +316,6 @@ public void controlloSocial(){
     }
 
     private void trovaVenditoreDoppio(String email, String password, String nome, String cognome) {
-        System.out.println("entrato in trova venditore di view model");
         registrazioneRepository.registrazioneVenditoreDoppioBackend(email, new RegistrazioneRepository.OnRegistrazioneVenditoreDoppioListener() {
             @Override
             public void ricercaDoppia(VenditoreModel venditoreControllo) {
@@ -346,9 +333,7 @@ public void controlloSocial(){
 
 
     public void registrazioneVenditore(String email, String password, String confermaPassword, String nome, String cognome) {
-        System.out.println("entrato in registrazione di viewmodel");
         if (registrazioneValida(email, password, confermaPassword, nome, cognome)) {
-            System.out.println("in registrazione di viewmodel prima del try");
             try {
                 trovaVenditoreDoppio(email, password, nome, cognome);
             } catch (Exception e) {
@@ -362,7 +347,6 @@ public void controlloSocial(){
             @Override
             public void  categorieInseriteAcquirente(Integer valore){
                 if(valore==1){
-                    Log.d("categorieAcquirente","inserite categorie acquirente");
                     repository.setListaCategorieAcquirente(listaCategorieScelte);
                     setVaiInHome(true);
                 }
@@ -374,7 +358,6 @@ public void controlloSocial(){
             @Override
             public void categorieInseriteVenditore(Integer valore){
                 if(valore==1) {
-                    Log.d("categorieVenditore", "inserite categorie venditore");
                     repository.setListaCategorieVenditore(listaCategorieScelte);
                     setVaiInHome(true);
                 }
@@ -382,7 +365,6 @@ public void controlloSocial(){
         });
     }
     public Boolean socialValido(String nomeSocial, String link) {
-        System.out.println("entrato in social valido");
         if (nomeSocial == null || nomeSocial.isEmpty()) {
             setMessaggioErroreNomeSocial("nomeSocial non può essere vuoto");
             return false;
@@ -610,7 +592,6 @@ public void controlloSocial(){
         return (valoriPresentiVenditore.getValue()!=null);
     }
     public void checkValoriPresenti(){
-        Log.d("checkValoriPresenti","entrato");
         if(repository.getAcquirenteModel()!=null){
             setValoriPresentiAcquirente(repository.getAcquirenteModel());
         }else if(repository.getVenditoreModel()!=null){
@@ -630,12 +611,9 @@ public void controlloSocial(){
         return (valoriPresentiFacoltativiVenditore.getValue()!=null);
     }
     public void checkValoriPresentiFacoltativi(){
-        Log.d("checkValoriPresenti","entrato");
         if(acquirenteModel.getValue()!=null){
-            Log.d("checkValoriPresenti","entrato caso acquirente");
             setValoriPresentiFacoltativiAcquirente(acquirenteModel.getValue());
         }else if(venditoreModel.getValue()!=null){
-            Log.d("checkValoriPresenti","entrato caso venditore");
             setValoriPresentiFacoltativiVenditore(venditoreModel.getValue());
         }
     }
@@ -744,7 +722,6 @@ public void controlloSocial(){
         this.socialVuoti.setValue(socialVuoti);
     }
     public void inserisciSocialNellaLista(){
-        Log.d("inserisciSocialNellaLista","entrato");
         if(socialAcquirente!=null && !socialAcquirente.isEmpty()){
             setListaSocialAcquirente(socialAcquirente);
         }else if(socialVenditore!=null && !socialVenditore.isEmpty()){
@@ -753,13 +730,7 @@ public void controlloSocial(){
             setSocialVuoti(true);
         }
     }
-    public void stampaLista() {
-        if (listaSocialAcquirente != null && listaSocialAcquirente.getValue() != null) {
-            Log.d("stampaLista", "social acquirenti: " + listaSocialAcquirente.getValue().size());
-        } else if (listaSocialVenditore != null && listaSocialVenditore.getValue() != null) {
-            Log.d("stampaLista", "social acquirenti: " + listaSocialVenditore.getValue().size());
-        }
-    }
+
     public void resetAllVariables() {
         messaggioErroreEmail.setValue("");
         messaggioErrorePassword.setValue("");
@@ -808,14 +779,10 @@ public void controlloSocial(){
         this.listaCategorieScelte = new ArrayList<>(listaCategorieScelte);
     }
     public void aggiungiCategoria(String categoria){
-        Log.d("aggiungiCategoria","categorie prima: " + listaCategorieScelte);
         listaCategorieScelte.add(categoria);
-        Log.d("aggiungiCategoria","categorie dopo: " + listaCategorieScelte);
     }
     public void rimuoviCategoria(String categoria){
-        Log.d("rimuoviCategoria","categorie prima: " + listaCategorieScelte);
         listaCategorieScelte.remove(categoria);
-        Log.d("rimuoviCategoria","categorie dopo: " + listaCategorieScelte);
     }
     public Boolean getVaiInHome() {
         return vaiInHome.getValue();
@@ -837,11 +804,7 @@ public void controlloSocial(){
         loginRepository.setTokenAcquirente(email, token, new LoginRepository.OnSetTokenAcquirenteListener() {
             @Override
             public void onSetTokenAcquirente(Integer valore) {
-                if(valore>0){
-                    Log.d("TOKEN", "Token inviato con successo");
-                }else{
-                    Log.d("TOKEN", "Problema con l'invio del token");
-                }
+
             }
         });
     }
@@ -849,11 +812,7 @@ public void controlloSocial(){
         loginRepository.setTokenVenditore(email, token, new LoginRepository.OnSetTokenVenditoreListener() {
             @Override
             public void onSetTokenVenditore(Integer valore) {
-                if(valore>0){
-                    Log.d("TOKEN", "Token inviato con successo");
-                }else{
-                    Log.d("TOKEN", "Problema con l'invio del token");
-                }
+
             }
         });
     }

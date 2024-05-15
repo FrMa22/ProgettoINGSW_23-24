@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import androidx.appcompat.widget.AppCompatButton;
 
@@ -82,10 +81,6 @@ public class PopUpModificaSocial extends DialogPersonalizzato implements View.On
     }
 
 
-    public void setCampi(String nome,String link){
-        edit_text_nome_social.setText(nome);
-        edit_text_link_social.setText(link);
-    }
 
     public void setNome(String nome){
         edit_text_nome_social.setText(nome);
@@ -107,9 +102,6 @@ public class PopUpModificaSocial extends DialogPersonalizzato implements View.On
         }
     }
 
-    public void setPopupDismissListener( PopupModificaSocialDismissListener listener) {
-        this.popupDismissListener = listener;
-    }
 
     public void messaggioErroreNomeNuovo(String messaggio){
         edit_text_nome_social.setError(messaggio);
@@ -138,8 +130,6 @@ public class PopUpModificaSocial extends DialogPersonalizzato implements View.On
         fragmentProfiloViewModel.isSocialCambiato.observe(fragmentProfilo, (messaggio) -> {
             if(fragmentProfiloViewModel.getIsSocialCambiato()){
                 dismissModificaSocialPopup();
-            }else{
-                Toast.makeText(getContext(), "Errore nei dati del social", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -148,7 +138,6 @@ public class PopUpModificaSocial extends DialogPersonalizzato implements View.On
     public void osservaNomeSocial() {
         fragmentProfiloViewModel.nomeSocialSelezionato.observe(fragmentProfilo, (nome) -> {
             if (nome != null) {
-                //lista social quindi estrarre nomi e link poi fare chiamata a update social names per mostrarli graficamente
                 nome_vecchio=nome;
                 setNome(nome);
             }
@@ -159,7 +148,6 @@ public class PopUpModificaSocial extends DialogPersonalizzato implements View.On
     public void osservaLinkSocial() {
         fragmentProfiloViewModel.nomeLinkSelezionato.observe(fragmentProfilo, (link) -> {
             if (link != null) {
-                //lista social quindi estrarre nomi e link poi fare chiamata a update social names per mostrarli graficamente
                 link_vecchio=link;
                 setLink(link);
             }

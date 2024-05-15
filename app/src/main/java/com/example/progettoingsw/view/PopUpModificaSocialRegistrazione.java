@@ -2,11 +2,9 @@ package com.example.progettoingsw.view;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import androidx.appcompat.widget.AppCompatButton;
 
@@ -49,7 +47,6 @@ public class PopUpModificaSocialRegistrazione extends DialogPersonalizzato imple
         edit_text_nome_social = findViewById(R.id.edit_text_nome_social);
         edit_text_link_social = findViewById(R.id.edit_text_link_social);
 
-        //popUpModificaSocialDAO = new PopUpModificaSocialDAO(this,email,tipoUtente);
 
         bottoneAnnullaModifica = findViewById(R.id.bottoneAnnullaModifica);
         bottoneAnnullaModifica.setOnClickListener(this);
@@ -69,10 +66,8 @@ public class PopUpModificaSocialRegistrazione extends DialogPersonalizzato imple
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.bottoneAnnullaModifica) {
-            Toast.makeText(getContext(), "Annulla", Toast.LENGTH_SHORT).show();
             dismiss();
         } else if (v.getId() == R.id.bottoneConfermaModifica) {
-            Toast.makeText(getContext(), "Conferma", Toast.LENGTH_SHORT).show();
             String nome = edit_text_nome_social.getText().toString();
             String link = edit_text_link_social.getText().toString();
 
@@ -88,7 +83,6 @@ public class PopUpModificaSocialRegistrazione extends DialogPersonalizzato imple
 
     public void dismissModificaSocialPopup() {
         if (popupDismissListener != null) {
-            Log.d("dismissModificaSocialPopup","chiamo");
             popupDismissListener.onPopupModificaSocialRegistrazioneDismissed();
         }
         dismiss();
@@ -103,7 +97,6 @@ public class PopUpModificaSocialRegistrazione extends DialogPersonalizzato imple
         registrazioneViewModel.messaggioErroreNomeSocial.observe(registrazioneCampiFacoltativi, (messaggio) -> {
             if (registrazioneViewModel.isNuovoMessaggioErrorNomeSociale()) {
                 messaggioErroreNomeSocial(messaggio);
-                //loginViewModel.cancellaMessaggioLogin();
             }
         });
     }
@@ -116,7 +109,6 @@ public class PopUpModificaSocialRegistrazione extends DialogPersonalizzato imple
         registrazioneViewModel.messaggioErroreLink.observe(registrazioneCampiFacoltativi, (messaggio) -> {
             if (registrazioneViewModel.isNuovoMessaggioErrorLink()) {
                 messaggioErroreLinkNuovo(messaggio);
-                //loginViewModel.cancellaMessaggioLogin();
             }
         });
     }
@@ -126,8 +118,6 @@ public class PopUpModificaSocialRegistrazione extends DialogPersonalizzato imple
             if(valore){
                 registrazioneViewModel.resetErroriModificaSocial();
                 dismissModificaSocialPopup();
-            }else{
-                Toast.makeText(getContext(), "Errore nei dati del social", Toast.LENGTH_SHORT).show();
             }
         });
     }

@@ -1,7 +1,6 @@
 package com.example.progettoingsw.repository;
 
 import android.os.AsyncTask;
-import android.util.Log;
 
 import com.example.progettoingsw.DTO.NotificheAcquirente_DTO;
 import com.example.progettoingsw.DTO.NotificheVenditore_DTO;
@@ -21,27 +20,27 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class NotificheRepository {
 
     public void getNotificheAcquirente(String indirizzo_email, NotificheRepository.OnGetNotificheAcquirenteListener listener) {
-        System.out.println("entrato in getNotificheAcquirente");
+
         new NotificheRepository.GetNotificheAcquirenteTask(listener).execute(indirizzo_email);
     }
     public void getNotificheVenditore(String indirizzo_email, NotificheRepository.OnGetNotificheVenditoreListener listener) {
-        System.out.println("entrato in getNotificheVenditore");
+
         new NotificheRepository.GetNotificheVenditoreTask(listener).execute(indirizzo_email);
     }
     public void deleteNotificheAcquirente(Long id, NotificheRepository.OnDeleteNotificheAcquirenteListener listener) {
-        System.out.println("entrato in deleteNotificheAcquirente");
+
         new NotificheRepository.DeleteNotificheAcquirenteTask(listener).execute(String.valueOf(id));
     }
     public void deleteNotificheVenditore(Long id, NotificheRepository.OnDeleteNotificheVenditoreListener listener) {
-        System.out.println("entrato in deleteNotificheVenditore");
+
         new NotificheRepository.DeleteNotificheVenditoreTask(listener).execute(String.valueOf(id));
     }
     public void getNumeroNotificheAcquirente(String indirizzo_email, NotificheRepository.OnGetNumeroNotificheAcquirenteListener listener) {
-        System.out.println("entrato in getNumeroNotificheAcquirente");
+
         new NotificheRepository.GetNumeroNotificheAcquirenteTask(listener).execute(indirizzo_email);
     }
     public void getNumeroNotificheVenditore(String indirizzo_email, NotificheRepository.OnGetNumeroNotificheVenditoreListener listener) {
-        System.out.println("entrato in getNumeroNotificheVenditore");
+
         new NotificheRepository.GetNumeroNotificheVenditoreTask(listener).execute(indirizzo_email);
     }
     private static class GetNotificheAcquirenteTask extends AsyncTask<String, Void, ArrayList<NotificheAcquirenteModel>> {
@@ -74,10 +73,10 @@ public class NotificheRepository {
             try {
                 Response<ArrayList<NotificheAcquirente_DTO>> response = call.execute();
                 if (response.isSuccessful()) {
-                    System.out.println("response successful");
+
                     ArrayList<NotificheAcquirente_DTO> list = response.body();
                     if (list != null && !list.isEmpty()) {
-                        System.out.println("lista di notifiche acquirente dto non null");
+
                         ArrayList<NotificheAcquirenteModel> listNotificheAcquirenteModel = new ArrayList<>();
                         for (NotificheAcquirente_DTO notificheAcquirenteDTO : list){
                             NotificheAcquirenteModel notificheAcquirenteModel = new NotificheAcquirenteModel(
@@ -85,17 +84,15 @@ public class NotificheRepository {
                                     notificheAcquirenteDTO.getTitolo(),
                                     notificheAcquirenteDTO.getCommento(),
                                     notificheAcquirenteDTO.getIdAcquirente());
-                            //stampa dei valori dell asta
-                            Log.d("notifiche acquirente" ," valori " + notificheAcquirenteDTO.getId() + notificheAcquirenteDTO.getTitolo() + notificheAcquirenteDTO.getCommento() + notificheAcquirenteDTO.getIdAcquirente());
                             listNotificheAcquirenteModel.add(notificheAcquirenteModel);
                         }
                         return listNotificheAcquirenteModel;
                     }
-                    System.out.println("lista di notifiche acquirente dto null");
+
                 }
-                System.out.println("response non successful");
+
             } catch (IOException e) {
-                System.out.println("exception IOEXC");
+
                 e.printStackTrace();
             }
             return null;
@@ -103,7 +100,7 @@ public class NotificheRepository {
 
         @Override
         protected void onPostExecute(ArrayList<NotificheAcquirenteModel> result) {
-            System.out.println("on post execute GetNotificheAcquirenteTask" + result);
+
             if (listener != null) {
                 listener.OnGetNotificheAcquirente(result);
             }
@@ -142,10 +139,10 @@ public class NotificheRepository {
             try {
                 Response<ArrayList<NotificheVenditore_DTO>> response = call.execute();
                 if (response.isSuccessful()) {
-                    System.out.println("response successful");
+
                     ArrayList<NotificheVenditore_DTO> list = response.body();
                     if (list != null && !list.isEmpty()) {
-                        System.out.println("lista di notifiche Venditore dto non null");
+
                         ArrayList<NotificheVenditoreModel> listNotificheVenditoreModel = new ArrayList<>();
                         for (NotificheVenditore_DTO notificheVenditoreDTO : list){
                             NotificheVenditoreModel notificheVenditoreModel = new NotificheVenditoreModel(
@@ -153,17 +150,15 @@ public class NotificheRepository {
                                     notificheVenditoreDTO.getTitolo(),
                                     notificheVenditoreDTO.getCommento(),
                                     notificheVenditoreDTO.getIdVenditore());
-                            //stampa dei valori dell asta
-                            Log.d("notifiche acquirente" ," valori " + notificheVenditoreDTO.getId() + notificheVenditoreDTO.getTitolo() + notificheVenditoreDTO.getCommento() + notificheVenditoreDTO.getIdVenditore());
                             listNotificheVenditoreModel.add(notificheVenditoreModel);
                         }
                         return listNotificheVenditoreModel;
                     }
-                    System.out.println("lista di notifiche acquirente dto null");
+
                 }
-                System.out.println("response non successful");
+
             } catch (IOException e) {
-                System.out.println("exception IOEXC");
+
                 e.printStackTrace();
             }
             return null;
@@ -171,7 +166,7 @@ public class NotificheRepository {
 
         @Override
         protected void onPostExecute(ArrayList<NotificheVenditoreModel> result) {
-            System.out.println("on post execute GetNotificheVenditoreTask" + result);
+
             if (listener != null) {
                 listener.OnGetNotificheVenditore(result);
             }
@@ -211,7 +206,7 @@ public class NotificheRepository {
                 Response<Integer> result = call.execute();
                 return 1;
             } catch (IOException e) {
-                System.out.println("exception IOEXC");
+
                 e.printStackTrace();
                 return 0;
             }
@@ -219,7 +214,7 @@ public class NotificheRepository {
 
         @Override
         protected void onPostExecute(Integer result) {
-            System.out.println("on post execute DeleteNotificheAcquirenteTask" + result);
+
             if (listener != null) {
                 listener.OnDeleteNotificheAcquirente(result);
             }
@@ -259,7 +254,7 @@ public class NotificheRepository {
                 Response<Integer> result = call.execute();
                 return 1;
             } catch (IOException e) {
-                System.out.println("exception IOEXC");
+
                 e.printStackTrace();
                 return 0;
             }
@@ -267,7 +262,7 @@ public class NotificheRepository {
 
         @Override
         protected void onPostExecute(Integer result) {
-            System.out.println("on post execute DeleteNotificheVenditoreTask" + result);
+
             if (listener != null) {
                 listener.OnDeleteNotificheVenditore(result);
             }
@@ -306,14 +301,13 @@ public class NotificheRepository {
             try {
                 Response<Integer> response = call.execute();
                 if (response.isSuccessful()) {
-                    System.out.println("response successful");
+
                     Integer conteggio = response.body();
-                    Log.d("GetNumeroNotificheAcquirenteTask","numero notifiche recuperato: " + conteggio);
                     return conteggio;
                 }
-                System.out.println("response non successful");
+
             } catch (IOException e) {
-                System.out.println("exception IOEXC");
+
                 e.printStackTrace();
             }
             return null;
@@ -321,7 +315,7 @@ public class NotificheRepository {
 
         @Override
         protected void onPostExecute(Integer result) {
-            System.out.println("on post execute GetNotificheAcquirenteTask" + result);
+
             if (listener != null) {
                 listener.OnGetNumeroNotificheAcquirente(result);
             }
@@ -360,14 +354,13 @@ public class NotificheRepository {
             try {
                 Response<Integer> response = call.execute();
                 if (response.isSuccessful()) {
-                    System.out.println("response successful");
+
                     Integer conteggio = response.body();
-                    Log.d("GetNumeroNotificheVenditoreTask","numero notifiche recuperato: " + conteggio);
                     return conteggio;
                 }
-                System.out.println("response non successful");
+
             } catch (IOException e) {
-                System.out.println("exception IOEXC");
+
                 e.printStackTrace();
             }
             return null;
@@ -375,7 +368,7 @@ public class NotificheRepository {
 
         @Override
         protected void onPostExecute(Integer result) {
-            System.out.println("on post execute GetNotificheVenditoreTask" + result);
+
             if (listener != null) {
                 listener.OnGetNumeroNotificheVenditore(result);
             }

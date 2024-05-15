@@ -1,6 +1,5 @@
 package com.example.progettoingsw.view;
 
-import static android.app.PendingIntent.getActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,7 +7,6 @@ import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ListAdapter;
@@ -23,7 +21,6 @@ import com.example.progettoingsw.classe_da_estendere.GestoreComuniImplementazion
 import com.example.progettoingsw.gestori_gui.CustomAdapter_gridview_profilo_social;
 import com.example.progettoingsw.model.SocialAcquirenteModel;
 import com.example.progettoingsw.viewmodel.SchermataUtenteViewModel;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.button.MaterialButton;
 
 import java.util.ArrayList;
@@ -45,7 +42,6 @@ public class ProfiloAcquirente extends GestoreComuniImplementazioni {
     private TextView text_view_bio_profilo;
 
     private GridView gridView;
-    // Definisci la variabile di istanza view
 
     private RelativeLayout relative_layout_profilo_acquirente;
     private SchermataUtenteViewModel schermataUtenteViewModel;
@@ -77,7 +73,6 @@ public class ProfiloAcquirente extends GestoreComuniImplementazioni {
         button_le_mie_aste.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                System.out.println("le aste oooh");
                 schermataUtenteViewModel.setApriLeMieAste(true);
 
             }
@@ -115,7 +110,6 @@ public void updateDatiUtente(String nome, String cognome, String email, String l
     private void setGridViewHeightBasedOnChildren(GridView gridView) {
         ListAdapter listAdapter = gridView.getAdapter();
         if (listAdapter == null || listAdapter.getCount() == 0) {
-            // Se l'adapter è null o non ci sono elementi, imposta l'altezza a 20dp e esci dal metodo
             ViewGroup.LayoutParams params = gridView.getLayoutParams();
             params.height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 50, getResources().getDisplayMetrics());
             gridView.setLayoutParams(params);
@@ -153,23 +147,15 @@ public void updateDatiUtente(String nome, String cognome, String email, String l
             // Aggiungi i nomi dei social alla tua adapter
             adapterSocial.setData(socialNames, socialLinks);
             setGridViewHeightBasedOnChildren(gridView);
-            // Aggiungi stampe nel log per verificare che i dati siano correttamente passati
-            for (int i = 0; i < socialNames.size(); i++) {
-                Log.d("FragmentProfilo", "Nome Social: " + socialNames.get(i) + ", Link Social: " + socialLinks.get(i));
-            }
             gridView.setVisibility(View.VISIBLE);
             text_view_nessun_social_profilo_acquirente.setVisibility(View.GONE);
         } else {
-            Log.d("updateSocialNames", "no social");
             text_view_nessun_social_profilo_acquirente.setVisibility(View.VISIBLE);
             gridView.setVisibility(View.GONE);
-            // Rimuovi tutti i dati dall'adattatore e aggiorna la GridView
             gridView = findViewById(R.id.gridview_social_activity_profilo);
             adapterSocial = new CustomAdapter_gridview_profilo_social(this);
             gridView.setAdapter(adapterSocial);
 
-            // Aggiungi stampe nel log per verificare che i dati siano correttamente passati
-            Log.d("FragmentProfilo", "Nessun social disponibile");
 
             // Imposta l'altezza della GridView a 50dp
             gridView.setMinimumHeight((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 50, getResources().getDisplayMetrics()));
@@ -188,8 +174,6 @@ public void updateDatiUtente(String nome, String cognome, String email, String l
         schermataUtenteViewModel.socialAcquirente.observe(this, (lista) ->{
             if(schermataUtenteViewModel.isSocialAcquirente()){
                 if (lista != null  && !lista.isEmpty()) {
-                    System.out.println("in osserva social acquirente recuperati");
-                    //lista social quindi estrarre nomi e link poi fare chiamata a update social names per mostrarli graficamente
                     List<String> links = new ArrayList<>();
                     List<String> nomi=new ArrayList<>();
                     for (SocialAcquirenteModel social : lista) {
@@ -204,7 +188,6 @@ public void updateDatiUtente(String nome, String cognome, String email, String l
     public void osservaSocialAssenti() {
         schermataUtenteViewModel.socialAssenti.observe(this, (valore) -> {
             if (valore) {
-                Log.d("osservaSocialAssenti", "entrato");
                 gridView.setVisibility(View.GONE);
                 text_view_nessun_social_profilo_acquirente.setVisibility(View.VISIBLE);
             }
@@ -213,7 +196,6 @@ public void updateDatiUtente(String nome, String cognome, String email, String l
     public void osservaApriLeMieAste(){
         schermataUtenteViewModel.apriLeMieAste.observe(this, (messaggio) -> {
             if (schermataUtenteViewModel.getApriLeMieAste()){
-                //fa le cose che si farebbero premendo il pulsante apri le mie aste
                 Intent intent = new Intent(ProfiloAcquirente.this, LeMieAste.class);
                 startActivity(intent);
             }

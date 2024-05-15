@@ -1,13 +1,12 @@
 package com.example.progettoingsw.viewmodel;
 
-import android.util.Log;
 import android.view.View;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.progettoingsw.controllers_package.NotificheAdapter;
+import com.example.progettoingsw.gestori_gui.NotificheAdapter;
 import com.example.progettoingsw.model.NotificheAcquirenteModel;
 import com.example.progettoingsw.model.NotificheVenditoreModel;
 import com.example.progettoingsw.repository.NotificheRepository;
@@ -33,7 +32,6 @@ public class SchermataNotificheViewModel extends ViewModel {
         isAcquirente.setValue(b);
     }
     public void getTipoUtente(){
-        Log.d("getTipoUtente","entrato, schermata notifiche");
         if(repository.getAcquirenteModel()!=null){
             setIsAcquirente(true);
         }else{
@@ -50,7 +48,6 @@ public class SchermataNotificheViewModel extends ViewModel {
                     setNotificheAcquirenteRecuperate(list);
                 }else{
                     setNotificheAssenti(true);
-                    Log.d("notifiche null", "null");
                 }
             }
         });
@@ -65,7 +62,6 @@ public class SchermataNotificheViewModel extends ViewModel {
                 setNotificheVenditoreRecuperate(list);
                 }else{
                     setNotificheAssenti(true);
-                    Log.d("notifiche null", "null");
                 }
             }
         });
@@ -82,8 +78,6 @@ public class SchermataNotificheViewModel extends ViewModel {
         }else{
             return false;
         }
-        //indica se le notifiche recuperate sono almeno una
-        //return !(notificheAcquirenteRecuperate == null || notificheAcquirenteRecuperate.getValue().isEmpty());
     }
     public void setNotificheVenditoreRecuperate(ArrayList<NotificheVenditoreModel> lista){
         notificheVenditoreRecuperate.setValue(lista);
@@ -94,22 +88,11 @@ public class SchermataNotificheViewModel extends ViewModel {
         }else{
             return false;
         }
-        //return !(notificheVenditoreRecuperate == null || notificheVenditoreRecuperate.getValue().isEmpty());
     }
     public void setVaiInNotificaPopUp(Boolean b) {
         vaiInNotificaPopUp.setValue(b);
     }
-    public void onItemCLick(int position){
-        if(notificheAcquirenteRecuperate!=null && !notificheAcquirenteRecuperate.getValue().isEmpty()){
-            NotificheAcquirenteModel notifica = notificheAcquirenteRecuperate.getValue().get(position);
-            repository.setNotificaAcquirenteScelta(notifica);
-            setVaiInNotificaPopUp(true);
-        }else if(notificheVenditoreRecuperate != null || !notificheVenditoreRecuperate.getValue().isEmpty()){
-            NotificheVenditoreModel notifica = notificheVenditoreRecuperate.getValue().get(position);
-            repository.setNotificaVenditoreScelta(notifica);
-            setVaiInNotificaPopUp(true);
-        }
-    }
+
 
     public void gestisciClickRecyclerView(RecyclerView recyclerView, NotificheAdapter notificheAdapter, View v){
         int position = recyclerView.getChildAdapterPosition(v);

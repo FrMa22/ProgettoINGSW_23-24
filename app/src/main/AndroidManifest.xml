@@ -36,9 +36,7 @@
         <activity
             android:name=".view.SchermataPartecipazioneAste"
             android:exported="false" />
-        <activity
-            android:name=".view.PopUpNotificaRicevuta"
-            android:exported="false" />
+
         <activity
             android:name=".view.PopUpAggiungiCategorieAsta"
             android:exported="false" />
@@ -78,9 +76,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".view.PopUpLogin"
-            android:theme="@style/Base.Theme.ProgettoINGSW.CustomThemeSfocato" />
+
         <activity android:name=".view.Registrazione" />
         <activity
             android:name=".view.RegistrazioneCampiFacoltativi"

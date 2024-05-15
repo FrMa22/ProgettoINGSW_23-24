@@ -2,20 +2,18 @@ package com.example.progettoingsw.view;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.progettoingsw.R;
-import com.example.progettoingsw.controllers_package.AstaAdapter;
+import com.example.progettoingsw.gestori_gui.AstaAdapter;
 import com.example.progettoingsw.viewmodel.SchermataPartecipazioneAsteViewModel;
 
 import java.util.ArrayList;
@@ -53,17 +51,12 @@ public class SchermataPartecipazioneAste extends AppCompatActivity {
 
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2, RecyclerView.VERTICAL, false);
         recyclerView_schermata_partecipazione_aste.setLayoutManager(gridLayoutManager);
-        DividerItemDecoration dividerItemDecorationAttive = new DividerItemDecoration(this, gridLayoutManager.getOrientation());
-        //recyclerView_schermata_partecipazione_aste.addItemDecoration(dividerItemDecorationAttive);
         astaAdapter.setOnItemClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Ottieni la posizione dell'elemento cliccato
                 int position = recyclerView_schermata_partecipazione_aste.getChildAdapterPosition(v);
 
-                // Ottieni l'oggetto Asta corrispondente alla posizione cliccata
                 Object asta = astaAdapter.getItem(position);
-                System.out.println("entrah, non penso proprio");
                 schermataPartecipazioneAsteViewModel.gestisciClickRecyclerView(asta);
             }
         });
@@ -74,7 +67,6 @@ public class SchermataPartecipazioneAste extends AppCompatActivity {
         bottone_back_schermata_partecipazione_aste.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d("SchermataPartecipazioneAste" , "Back");
                 onBackPressed();
             }
         });
@@ -83,7 +75,6 @@ public class SchermataPartecipazioneAste extends AppCompatActivity {
 
     public void updatePartecipazioni(ArrayList<Object> aste) {
         boolean asteVuote = aste == null || aste.isEmpty();
-        Log.d("updatePartecipazioni", "asteVuote: " + asteVuote);
         if (!asteVuote) {
             astaAdapter.setAstecopia(aste);
         } else {
@@ -124,13 +115,10 @@ public class SchermataPartecipazioneAste extends AppCompatActivity {
     public void osservaAsteRecuperate() {
         schermataPartecipazioneAsteViewModel.asteRecuperate.observe(this, (lista) -> {
             if (lista != null) {
-                System.out.println("in osserva aste  recuperate");
-                //lista di aste TUTTI I TIPI DI ASTA aperte recuperate(fare 3 recuperi per singolo tipo poi fondere in una mega lista)
                 updatePartecipazioni(lista);
             }
         });
     }
-
 
 
     @Override

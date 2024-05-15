@@ -1,12 +1,9 @@
 package com.example.progettoingsw.viewmodel;
 
-import android.util.Log;
-import android.view.MenuItem;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.progettoingsw.R;
 import com.example.progettoingsw.repository.Repository;
 
 public class MainActivityViewModel extends ViewModel {
@@ -37,17 +34,14 @@ public class MainActivityViewModel extends ViewModel {
 
 
         if (itemPosition==1) {
-            Log.d("BottomNav", "Selected Home");
             resetAllExcept(1);
             setSceltoHome(true);
 
         } else if (itemPosition==2) {
-            Log.d("BottomNav", "Selected Categories");
             resetAllExcept(2);
             setSceltoCategorie(true);
 
         } else if (itemPosition==3) {
-            Log.d("BottomNav", "Selected Crea Asta");
             if(containsAcquirente()){
                 resetAllExcept(3);
                 setSceltoCreaAstaAcquirente(true);
@@ -57,12 +51,10 @@ public class MainActivityViewModel extends ViewModel {
             }
 
         } else if (itemPosition==4) {
-            Log.d("BottomNav", "Selected Search");
             resetAllExcept(5);
             setSceltoRicerca(true);
 
         } else if (itemPosition==5) {
-            Log.d("BottomNav", "Selected Profile");
             resetAllExcept(6);
             setSceltoProfilo(true);
 

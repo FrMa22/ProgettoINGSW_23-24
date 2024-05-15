@@ -88,10 +88,8 @@ public class VenditoreAstaInglese extends GestoreComuniImplementazioni {
         imageButtonRimuoviImmagineCreaAstaInglese.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                immagineProdotto.setImageResource(android.R.color.transparent); // Rimuove l'immagine
+                immagineProdotto.setImageResource(android.R.color.transparent);
                 bitmap = null;
-//                imageBytes = null; // Reimposta il byte array a null
-//                uriImmagine = null;
             }
         });
 
@@ -240,15 +238,7 @@ public class VenditoreAstaInglese extends GestoreComuniImplementazioni {
 
 
 
-    private void prelevaImmagine(){
-        Intent intent= new Intent(Intent.ACTION_PICK);
-        intent.setType("image/*");
-        if (intent.resolveActivity(this.getPackageManager()) != null) {
-            resultLauncher.launch(intent);
-        } else {
-            Toast.makeText(this, "Nessuna app disponibile per gestire la selezione delle immagini", Toast.LENGTH_SHORT).show();
-        }
-    }
+
     private void registraRisultati() {
         resultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
                 new ActivityResultCallback<ActivityResult>() {
@@ -256,8 +246,7 @@ public class VenditoreAstaInglese extends GestoreComuniImplementazioni {
                     public void onActivityResult(ActivityResult result) {
                         try {
                             creaAstaIngleseViewModel.setImmagine(result,VenditoreAstaInglese.this);
-//                            uriImmagine = result.getData().getData();
-//                            displayImage(uriImmagine);
+
                         } catch (Exception e) {
                             Toast.makeText(getApplicationContext(), "Nessuna Immagine selezionata", Toast.LENGTH_SHORT).show();
 

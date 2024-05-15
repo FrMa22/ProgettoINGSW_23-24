@@ -2,7 +2,6 @@ package com.example.progettoingsw.view;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,13 +16,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.progettoingsw.R;
-import com.example.progettoingsw.controllers_package.AstaAdapter;
+import com.example.progettoingsw.gestori_gui.AstaAdapter;
 import com.example.progettoingsw.viewmodel.HomeViewModel;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
@@ -48,7 +46,7 @@ public class FragmentHome extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setRetainInstance(true); // Conserva il fragment durante i cambiamenti di configurazione
+        setRetainInstance(true);
         homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
     }
     @Nullable
@@ -74,21 +72,15 @@ public class FragmentHome extends Fragment {
 
           astaAdapterConsigliate = new AstaAdapter(getContext(), null);
 
-          // Inizializza il RecyclerView e imposta l'adapter
           recyclerViewAsteConsigliate = view.findViewById(R.id.recycler_view_aste_consigliate);
-//        // Utilizza LinearLayoutManager con orientamento orizzontale per far si che il recycler sia orizzontale, di default è verticale
           LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
           recyclerViewAsteConsigliate.setLayoutManager(linearLayoutManager);
 
-          DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(getContext(), linearLayoutManager.getOrientation());
-          //recyclerViewAsteConsigliate.addItemDecoration(dividerItemDecoration);
 
           astaAdapterConsigliate.setOnItemClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Ottieni la posizione dell'elemento cliccato
                 int position = recyclerViewAsteConsigliate.getChildAdapterPosition(v);
-                // Ottieni l'oggetto Asta corrispondente alla posizione cliccata
                 Object asta = astaAdapterConsigliate.getItem(position);
                 homeViewModel.gestisciClickRecyclerView(asta);
 
@@ -96,22 +88,18 @@ public class FragmentHome extends Fragment {
         });
         recyclerViewAsteConsigliate.setAdapter(astaAdapterConsigliate);
 
-        // Inizializza il RecyclerView e imposta l'adapter
         astaAdapterInScadenza = new AstaAdapter(getContext(), null);
         RecyclerView recyclerViewAsteInScadenza = view.findViewById(R.id.recycler_view_aste_in_scadenza);
         LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         recyclerViewAsteInScadenza.setLayoutManager(linearLayoutManager2);
 
 
-        //recyclerViewAsteInScadenza.addItemDecoration(dividerItemDecoration);
         recyclerViewAsteInScadenza.setAdapter(astaAdapterInScadenza);
         astaAdapterInScadenza.setOnItemClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Ottieni la posizione dell'elemento cliccato
                 int position = recyclerViewAsteInScadenza.getChildAdapterPosition(v);
 
-                // Ottieni l'oggetto Asta corrispondente alla posizione cliccata
                 Object asta = astaAdapterInScadenza.getItem(position);
                 homeViewModel.gestisciClickRecyclerView(asta);
 
@@ -124,15 +112,12 @@ public class FragmentHome extends Fragment {
         recyclerViewAsteNuove.setLayoutManager(linearLayoutManager3);
 
 
-        //recyclerViewAsteNuove.addItemDecoration(dividerItemDecoration);
         recyclerViewAsteNuove.setAdapter(astaAdapterNuove);
         astaAdapterNuove.setOnItemClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Ottieni la posizione dell'elemento cliccato
                 int position = recyclerViewAsteNuove.getChildAdapterPosition(v);
 
-                // Ottieni l'oggetto Asta corrispondente alla posizione cliccata
                 Object asta = astaAdapterNuove.getItem(position);
                 homeViewModel.gestisciClickRecyclerView(asta);
 
@@ -190,7 +175,6 @@ public class FragmentHome extends Fragment {
 
         osservaCategorieVuote();
 
-        //homeViewModel.checkTipoUtente();
 
         scrollView = view.findViewById(R.id.scroll_view);
         swipeRefreshLayout = view.findViewById(R.id.swipe_refresh_layout);
@@ -198,10 +182,8 @@ public class FragmentHome extends Fragment {
             @Override
             public void onScrollChanged() {
                 if (scrollView.getScrollY() == 0) {
-                    // La ScrollView è scorsa fino alla parte superiore
                     swipeRefreshLayout.setEnabled(true); // Abilita lo SwipeRefreshLayout
                 } else {
-                    // La ScrollView non è alla parte superiore
                     swipeRefreshLayout.setEnabled(false); // Disabilita lo SwipeRefreshLayout
                 }
             }
@@ -230,24 +212,8 @@ public class FragmentHome extends Fragment {
 
 
 
-    private void setNavigationView(Boolean valore) {
-        MainActivity activity = (MainActivity) getActivity();
-        if (activity != null) {
-            // Abilita la BottomNavigationView
-            Log.d("setNavigationView" , "preso comando : " + valore);
-            activity.enableBottomNavigationView(valore);
-        }
-    }
 
-    protected void setAllClickable(ViewGroup viewGroup, boolean enabled) {
-        for (int i = 0; i < viewGroup.getChildCount(); i++) {
-            View child = viewGroup.getChildAt(i);
-            child.setEnabled(enabled);
-            if (child instanceof ViewGroup) {
-                setAllClickable((ViewGroup) child, enabled);
-            }
-        }
-    }
+
 
     @Override
     public void onPause() {
@@ -260,7 +226,6 @@ public class FragmentHome extends Fragment {
 
     @Override
     public void onResume() {
-        Log.d("Home" , "entrato in onResume");
         super.onResume();
         FirebaseAnalytics firebaseAnalytics = FirebaseAnalytics.getInstance(requireContext());
         Bundle bundle = new Bundle();
@@ -286,7 +251,6 @@ public class FragmentHome extends Fragment {
     public void osservaaste_allingleseCategoriaNomeRecuperate() {
         homeViewModel.aste_allingleseCategoriaNomeRecuperate.observe(getViewLifecycleOwner(), (listaAste) -> {
             if (listaAste!=null) {
-                Log.d("aste inglesi categoria recuperate" , "numero: " + listaAste.size());
                 astaAdapterConsigliate.setAste(listaAste);
             }
         });
@@ -302,7 +266,6 @@ public class FragmentHome extends Fragment {
     public void osservaaste_allingleseInScadenzaRecuperate() {
         homeViewModel.aste_allingleseInScadenzaRecuperate.observe(getViewLifecycleOwner(), (lista) -> {
             if (lista != null) {
-                Log.d("aste inglese scadenza recuperate" , "numero: " + lista.size());
                 astaAdapterInScadenza.setAste(lista);
             }
         });
@@ -319,7 +282,6 @@ public class FragmentHome extends Fragment {
     public void osservaaste_allingleseNuoveRecuperate() {
         homeViewModel.aste_allingleseNuoveRecuperate.observe(getViewLifecycleOwner(), (lista) -> {
             if (lista != null) {
-                Log.d("aste inglese nuove recuperate" , "numero: " + lista.size());
                 astaAdapterNuove.setAste(lista);
             }
         });
@@ -335,7 +297,6 @@ public class FragmentHome extends Fragment {
     public void osservaaste_alribassoCategoriaNomeRecuperate() {
         homeViewModel.aste_alribassoCategoriaNomeRecuperate.observe(getViewLifecycleOwner(), (lista) -> {
             if (lista != null) {
-                Log.d("aste ribasso categoria recuperate" , "numero: " + lista.size());
                 astaAdapterConsigliate.setAste(lista);
             }
         });
@@ -351,7 +312,6 @@ public class FragmentHome extends Fragment {
     public void osservaAste_alribassoNuoveRecuperate() {
         homeViewModel.aste_alribassoNuoveRecuperate.observe(getViewLifecycleOwner(), (lista) -> {
             if (lista != null) {
-                Log.d("aste ribasso nuove recuperate" , "numero: " + lista.size());
                 astaAdapterNuove.setAste(lista);
             }
         });
@@ -375,7 +335,6 @@ public class FragmentHome extends Fragment {
     public void osservaAcquirenteModelPresente(){
         homeViewModel.acquirenteModelPresente.observe(getViewLifecycleOwner(), (messaggio) -> {
             if (homeViewModel.getAcquirenteModelPresente()) {
-                //Toast.makeText(getContext(), "Entrato come acquirente in home.", Toast.LENGTH_SHORT).show();
                 homeViewModel.trovaEImpostaAste();
             }
         });
@@ -391,7 +350,6 @@ public class FragmentHome extends Fragment {
     public void osservaaste_inversaInScadenzaRecuperate() {
         homeViewModel.aste_inversaInScadenzaRecuperate.observe(getViewLifecycleOwner(), (lista) -> {
             if (lista != null) {
-                Log.d("aste inversa scadenza recuperate" , "numero: " + lista.size());
                 astaAdapterInScadenza.setAste(lista);
             }
         });
@@ -407,7 +365,6 @@ public class FragmentHome extends Fragment {
     public void osservaaste_inversaNuoveRecuperate() {
         homeViewModel.aste_inversaNuoveRecuperate.observe(getViewLifecycleOwner(), (lista) -> {
             if (lista != null) {
-                Log.d("aste inversa nuove recuperate" , "numero: " + lista.size());
                 astaAdapterNuove.setAste(lista);
             }
         });
@@ -423,7 +380,6 @@ public class FragmentHome extends Fragment {
     public void osservaaste_inversaCategoriaNomeRecuperate() {
         homeViewModel.aste_inversaCategoriaNomeRecuperate.observe(getViewLifecycleOwner(), (lista) -> {
             if (lista != null) {
-                Log.d("aste inversa categoria recuperate" , "numero: " + lista.size());
                 astaAdapterConsigliate.setAste(lista);
             }
         });
@@ -439,7 +395,6 @@ public class FragmentHome extends Fragment {
     public void osservaVenditoreModelPresente(){
         homeViewModel.venditoreModelPresente.observe(getViewLifecycleOwner(), (messaggio) -> {
             if (homeViewModel.getVenditoreModelPresente()) {
-                //Toast.makeText(getContext(), "Entrato come acquirente in home.", Toast.LENGTH_SHORT).show();
                 homeViewModel.trovaEImpostaAste();
             }
         });

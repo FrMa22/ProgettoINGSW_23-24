@@ -26,16 +26,11 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class SchermataPartecipazioneAsteRepository {
 
     public void trovaAsteInglesiBackend(String email,OnTrovaAsteInglesiListener listener) {
-        System.out.println("entrato in  Trova Aste inglesi  Backend");
+
         new TrovaAsteInglesiTask(listener).execute(email);
     }
-
-
-
-
-
     public void trovaAsteInverseBackend(String email,OnTrovaAsteInverseListener listener) {
-        System.out.println("entrato in  Trova Aste  inverse  Backend");
+
         new TrovaAsteInverseTask(listener).execute(email);
     }
 
@@ -50,7 +45,7 @@ public class SchermataPartecipazioneAsteRepository {
         @Override
         protected List<Asta_allingleseModel> doInBackground(String... params) {
             String email = params[0];
-            System.out.println("in async trova aste inglesi aperte, email: " + email);
+
             // Effettua l'operazione di rete qui...
             // Restituisci il risultato
 
@@ -67,43 +62,43 @@ public class SchermataPartecipazioneAsteRepository {
             Call<ArrayList<Asta_allinglese_DTO>> call=service.getAste_allinglesePartecipateByEmail(email);
 
 
-            System.out.println("entrato nel collegamento al backend,prima del try");
+
             try {
                 Response<ArrayList<Asta_allinglese_DTO>> response = call.execute();
                 if (response.isSuccessful()) {
-                    System.out.println("response successful");
+
                     ArrayList<Asta_allinglese_DTO> astaIngleseDTOList=response.body();
                     if (astaIngleseDTOList!= null && !astaIngleseDTOList.isEmpty()) {
-                        System.out.println("Asta inglese dto non null");
+
 
                         ArrayList<Asta_allingleseModel> astaIngleseModelList=new ArrayList<>();
                         for (Asta_allinglese_DTO astaIngleseDTO : astaIngleseDTOList) {
                             byte[] pathImmagineByteArray = null;
                             if(astaIngleseDTO.getPath_immagine()!=null){
                                 pathImmagineByteArray = base64ToByteArray(astaIngleseDTO.getPath_immagine());}
-                            System.out.println("Valori del asta inglese DTO: " + "id: " + astaIngleseDTO.getId() + ", nome: " + astaIngleseDTO.getNome() + ", email: " + astaIngleseDTO.getId_venditore());
+
                             // Fai qualcosa con i dati di socialAcquirenteDTO, ad esempio creando un nuovo oggetto AcquirenteModel
                             Asta_allingleseModel astaIngleseModel=new Asta_allingleseModel(astaIngleseDTO.getId(),astaIngleseDTO.getNome(),astaIngleseDTO.getDescrizione(),pathImmagineByteArray,astaIngleseDTO.getBaseAsta(),astaIngleseDTO.getIntervalloTempoOfferte(),astaIngleseDTO.getIntervalloOfferteBase(),astaIngleseDTO.getRialzoMin(),astaIngleseDTO.getPrezzoAttuale(),astaIngleseDTO.getCondizione(),astaIngleseDTO.getId_venditore());
                             astaIngleseModelList.add(astaIngleseModel);
-                            System.out.println("Valori del asta inglese MODEL: " + "id: " + astaIngleseModel.getId() + ", nome: " + astaIngleseModel.getNome() + ", email: " + astaIngleseModel.getId_venditore());
+
                         }
-                        System.out.println("ritornato qualcosa nel asynctask");
+
                         return astaIngleseModelList;
                     }
-                    System.out.println("Asta inglese dto null");
+
                 }
-                System.out.println("response non successful");
+
             } catch (IOException e) {
-                System.out.println("exception IOEXC");
+
                 e.printStackTrace();
             }
-            System.out.println("ritornato null nel asynctask");
+
             return null;
         }
 
         @Override
         protected void onPostExecute(List<Asta_allingleseModel> result) {
-            System.out.println("on post execute trova Asta inglese partecipate");
+
             if (listener != null) {
                 listener.onTrovaAsteInglesi(result);
             }
@@ -138,7 +133,7 @@ public class SchermataPartecipazioneAsteRepository {
         @Override
         protected List<Asta_inversaModel> doInBackground(String... params) {
             String email = params[0];
-            System.out.println("in async trova aste inverse , email: " + email);
+
             // Effettua l'operazione di rete qui...
             // Restituisci il risultato
 
@@ -155,43 +150,43 @@ public class SchermataPartecipazioneAsteRepository {
             Call<ArrayList<Asta_inversa_DTO>> call=service.getAste_inversaPartecipateByEmail(email);
 
 
-            System.out.println("entrato nel collegamento al backend,prima del try");
+
             try {
                 Response<ArrayList<Asta_inversa_DTO>> response = call.execute();
                 if (response.isSuccessful()) {
-                    System.out.println("response successful");
+
                     ArrayList<Asta_inversa_DTO> astaInversaDTOList=response.body();
                     if (astaInversaDTOList!= null && !astaInversaDTOList.isEmpty()) {
-                        System.out.println("Asta inversa dto non null");
+
 
                         ArrayList<Asta_inversaModel> astaInversaModelList=new ArrayList<>();
                         for (Asta_inversa_DTO astaInversaDTO : astaInversaDTOList) {
                             byte[] pathImmagineByteArray = null;
                             if(astaInversaDTO.getPath_immagine()!=null){
                                 pathImmagineByteArray = base64ToByteArray(astaInversaDTO.getPath_immagine());}
-                            System.out.println("Valori del asta inversa DTO: " + "id: " + astaInversaDTO.getId() + ", nome: " + astaInversaDTO.getNome() + ", email: " + astaInversaDTO.getId_acquirente());
+
                             // Fai qualcosa con i dati di socialAcquirenteDTO, ad esempio creando un nuovo oggetto AcquirenteModel
                             Asta_inversaModel astaInversaModel=new Asta_inversaModel(astaInversaDTO.getId(),astaInversaDTO.getNome(),astaInversaDTO.getDescrizione(),pathImmagineByteArray,astaInversaDTO.getPrezzoMax(),astaInversaDTO.getPrezzoAttuale(),astaInversaDTO.getDataDiScadenza(),astaInversaDTO.getCondizione(),astaInversaDTO.getId_acquirente());
                             astaInversaModelList.add(astaInversaModel);
-                            System.out.println("Valori del asta inversa MODEL: " + "id: " + astaInversaModel.getId() + ", nome: " + astaInversaModel.getNome() + ", email: " + astaInversaModel.getId_acquirente());
+
                         }
-                        System.out.println("ritornato qualcosa nel asynctask");
+
                         return astaInversaModelList;
                     }
-                    System.out.println("Asta ribasso dto null");
+
                 }
-                System.out.println("response non successful");
+
             } catch (IOException e) {
-                System.out.println("exception IOEXC");
+
                 e.printStackTrace();
             }
-            System.out.println("ritornato null nel asynctask");
+
             return null;
         }
 
         @Override
         protected void onPostExecute(List<Asta_inversaModel> result) {
-            System.out.println("on post execute trova Asta inverse partecipate");
+
             if (listener != null) {
                 listener.onTrovaAsteInverse(result);
             }

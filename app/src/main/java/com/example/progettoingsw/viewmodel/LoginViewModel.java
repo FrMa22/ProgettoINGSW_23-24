@@ -14,7 +14,6 @@ import com.example.progettoingsw.repository.Repository;
 
 import java.util.ArrayList;
 
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.messaging.FirebaseMessaging;
 
 public class LoginViewModel extends ViewModel {
@@ -41,7 +40,6 @@ public class LoginViewModel extends ViewModel {
         return tokenViewModel;
     }
     public void setTokenViewModel(String tokenViewModel) {
-        Log.d("setTokenViewModel","token salvato localmente: " + tokenViewModel);
         this.tokenViewModel = tokenViewModel;
     }
     public String getTokenSalvato(){
@@ -54,27 +52,18 @@ public class LoginViewModel extends ViewModel {
         return !tokenSalvato.getValue().equals("");
     }
     public void checkSavedToken(Context context){
-        Log.d("checkSavedToken","controllo il token");
         SharedPreferences sharedPreferences = context.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
         token = sharedPreferences.getString(TOKEN_KEY, null);
         if(token != null){
-            Log.d("checkSavedToken","token recuperato : " + token);
-            //setTokenSalvato(token);
             loginAcquirenteConToken(token);
         }else{
 
-
-            Log.d("checkSavedToken","token non trovato : ");
-            Log.d("osservaTokenSalvato","entrato in token non trovato, token : "+ token);
             FirebaseMessaging.getInstance().getToken()
                     .addOnCompleteListener(task -> {
                         if (task.isSuccessful()) {
                             token = task.getResult();
-                            Log.d("token creato", "token: " + token);
-                            Log.d("Firebase", "Connessione a Firebase avvenuta con successo. Token: " + token);
-
+                            Log.d("Firebase", "Connessione a Firebase avvenuta con successo." );
                             setTokenSalvato(token);
-
                         } else {
                             Log.e("Firebase", "Errore durante la connessione a Firebase", task.getException());
                         }
@@ -91,12 +80,10 @@ public class LoginViewModel extends ViewModel {
                 public void onLoginConToken(AcquirenteModel acquirenteModel) {
                     if(acquirenteModel!=null){
                         //accesso come utente
-                        Log.d("onLoginConToken","acquirente trovato");
                         repository.setAcquirenteModel(acquirenteModel);
                         trovaCategorieAcquirenteConToken(acquirenteModel.getIndirizzo_email());
                     }else{
-                        //accesso come venditore ma va trovato
-                        Log.d("onLoginConToken","acquirente non trovato, cerco venditore");
+                        //accesso come venditore ma va cercato
                         loginVenditoreConToken();
                     }
                 }
@@ -105,15 +92,12 @@ public class LoginViewModel extends ViewModel {
     }
     public void trovaCategorieAcquirenteConToken(String indirizzo_email){
         if(indirizzo_email != null && !indirizzo_email.isEmpty()){
-            Log.d("trovaCategorieAcquirenteConToken", "cerco con email " + indirizzo_email);
             loginRepository.recuperaCategorieAcquirenteBackend(indirizzo_email, new LoginRepository.OnRecuperaCategorieAcquirenteListener() {
                 @Override
                 public void onRecuperaCategorieAcquirente(ArrayList<String> listaCategorie) {
                     if(listaCategorie!=null && !listaCategorie.isEmpty()){
-                        Log.d("onRecuperaCategorieAcquirente","categorie acquirente trovate");
                         repository.setListaCategorieAcquirente(listaCategorie);
                     }
-                    Log.d("onRecuperaCategorieAcquirente","prosegui login");
                     setProseguiLogin("acquirente");
                 }
             });
@@ -127,7 +111,6 @@ public class LoginViewModel extends ViewModel {
                     repository.setVenditoreModel(venditoreModel);
                     trovaCategorieVenditoreConToken(venditoreModel.getIndirizzo_email());
                 }else{
-                    Log.d("login venditore con token","nessun utente trovato");
                     setTokenSalvato(token);
                     setMessaggioUtenteNonTrovato("nessun utente trovato");
                 }
@@ -136,15 +119,12 @@ public class LoginViewModel extends ViewModel {
     }
     public void trovaCategorieVenditoreConToken(String indirizzo_email){
         if(indirizzo_email != null && !indirizzo_email.isEmpty()){
-            Log.d("trovaCategorieVenditoreConToken", "cerco con email " + indirizzo_email);
             loginRepository.recuperaCategorieVenditoreBackend(indirizzo_email, new LoginRepository.OnRecuperaCategorieVenditoreListener() {
                 @Override
                 public void onRecuperaCategorieVenditore(ArrayList<String> listaCategorie) {
                     if(listaCategorie!=null && !listaCategorie.isEmpty()){
-                        Log.d("onRecuperaCategorieVenditore","categorie Venditore trovate");
                         repository.setListaCategorieVenditore(listaCategorie);
                     }
-                    Log.d("onRecuperaCategorieVenditore","prosegui login");
                     setProseguiLogin("venditore");
                 }
             });
@@ -152,9 +132,7 @@ public class LoginViewModel extends ViewModel {
     }
 
     public void loginAcquirente(String email, String password,String token){
-        System.out.println("entrato in login di viewmodel");
         if(loginValido(email,password)){
-            System.out.println("in login di viewmodel prima del try");
             try{
                 setTokenViewModel(token);
                 trovaAcquirente(email,password);
@@ -164,9 +142,7 @@ public class LoginViewModel extends ViewModel {
         }
     }
     public void loginVenditore(String email, String password){
-        System.out.println("entrato in login di viewmodel");
         if(loginValido(email,password)){
-            System.out.println("in login di viewmodel prima del try");
             try{
                 trovaVenditore(email,password);
             } catch (Exception e){
@@ -175,19 +151,6 @@ public class LoginViewModel extends ViewModel {
         }
     }
 
-    public String generaFCMToken() {
-        Task<String> task = FirebaseMessaging.getInstance().getToken();
-        while (!task.isComplete()) {
-            // Wait for the task to complete
-        }
-        if (task.isSuccessful()) {
-            String token = task.getResult();
-            return token;
-        } else {
-            // Handle error
-            return null;
-        }
-    }
     private void setProseguiLogin(String tipo) {
         if(getProseguiLogin().equals("")){
             proseguiLogin.setValue(tipo);
@@ -213,15 +176,12 @@ public class LoginViewModel extends ViewModel {
         }
     }
     private void trovaAcquirente(String email, String password) {
-        System.out.println("entrato in trova acquirente di view model");
 
         loginRepository.loginAcquirenteBackend(email, password, new LoginRepository.OnLoginAcquirenteListener() {
             @Override
             public void onLogin(AcquirenteModel acquirenteModel) {
                 repository.setAcquirenteModel(acquirenteModel);
-                Log.d("trovaAcquirente on Login " , "valore di acquirente model : " + acquirenteModel);
                 if(repository.getAcquirenteModel()==null){
-                    setMessaggioUtenteNonTrovato("acquirente non trovato");
                     trovaVenditore(email,password);
                 }else{
                     trovaCategorieAcquirente(email,password);
@@ -233,11 +193,6 @@ public class LoginViewModel extends ViewModel {
         loginRepository.setTokenAcquirente(email, token, new LoginRepository.OnSetTokenAcquirenteListener() {
             @Override
             public void onSetTokenAcquirente(Integer valore) {
-                if(valore>0){
-                    Log.d("TOKEN", "Token inviato con successo");
-                }else{
-                    Log.d("TOKEN", "Problema con l'invio del token");
-                }
             }
         });
     }
@@ -245,11 +200,6 @@ public class LoginViewModel extends ViewModel {
         loginRepository.setTokenVenditore(email, token, new LoginRepository.OnSetTokenVenditoreListener() {
             @Override
             public void onSetTokenVenditore(Integer valore) {
-                if(valore>0){
-                    Log.d("TOKEN", "Token inviato con successo");
-                }else{
-                    Log.d("TOKEN", "Problema con l'invio del token");
-                }
             }
         });
     }
@@ -259,13 +209,10 @@ public class LoginViewModel extends ViewModel {
             public void onRecuperaCategorieAcquirente(ArrayList<String> list) {
                 repository.setListaCategorieAcquirente(list);
                 trovaVenditore(email,password);
-                Log.d("categorie acquirente", "" + list);
-                //setProseguiLogin("acquirente");
             }
         });
     }
     private void trovaVenditore(String email, String password) {
-        System.out.println("entrato in trova venditore di view model");
         loginRepository.loginVenditoreBackend(email, password, new LoginRepository.OnLoginVenditoreListener() {
             @Override
             public void onLogin(VenditoreModel venditoreModel) {
@@ -276,12 +223,10 @@ public class LoginViewModel extends ViewModel {
                     if(repository.getAcquirenteModel()==null){
                         setMessaggioUtenteNonTrovato("nessuna tipologia di utente trovato");
                     }else{
-                        setMessaggioUtenteNonTrovato("venditore non trovato");
                         mandaTokenAcquirenteBackend(repository.getAcquirenteModel().getIndirizzo_email(),getTokenViewModel());
                         setProseguiLogin("acquirente");
                     }
                 }
-                Log.d("trovaVenditore on Login " , "valore di venditore model : " + venditoreModel);
             }
         });
     }
@@ -290,7 +235,6 @@ public class LoginViewModel extends ViewModel {
             @Override
             public void onRecuperaCategorieVenditore(ArrayList<String> list) {
                 repository.setListaCategorieVenditore(list);
-                Log.d("categorie venditore", "" + list);
                 if(repository.getAcquirenteModel()!=null){
                     setProseguiLogin("entrambi");
                 }else{
@@ -302,7 +246,6 @@ public class LoginViewModel extends ViewModel {
     }
 
     public Boolean loginValido(String mail, String password){
-        System.out.println("entrato in login valido");
         if(mail == null || mail.isEmpty() ){
             setMessaggioErroreEmail("L'indirizzo email non può essere vuoto");
             return false;

@@ -5,7 +5,6 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -23,9 +22,6 @@ import com.example.progettoingsw.model.Asta_alribassoModel;
 import com.example.progettoingsw.viewmodel.SchermataAstaRibassoViewModel;
 import com.google.android.material.button.MaterialButton;
 
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
 
 public class SchermataAstaRibasso extends GestoreComuniImplementazioni {
     private SchermataAstaRibassoViewModel schermataAstaRibassoViewModel;
@@ -136,7 +132,6 @@ public class SchermataAstaRibasso extends GestoreComuniImplementazioni {
 
     public void setAstaData(Asta_alribassoModel astaRibassoRecuperata) {
         if (astaRibassoRecuperata != null) {
-            // Imposta i dati recuperati sui TextView e ImageView della tua activity
             textViewNomeProdotto.setText(astaRibassoRecuperata.getNome());
             textViewDescrizione.setText(astaRibassoRecuperata.getDescrizione());
             textViewOffertaAttuale.setText(String.valueOf(astaRibassoRecuperata.getPrezzoAttuale()));
@@ -144,58 +139,25 @@ public class SchermataAstaRibasso extends GestoreComuniImplementazioni {
             textViewVenditore.setText(astaRibassoRecuperata.getId_venditore());
 
 
-        } else {
-            Log.d("Errore", "Impossibile recuperare i dati dell'asta");
         }
     }
 
-    private long convertiIntervallo(String intervallo) {
-        // Dividi l'intervallo in ore, minuti e secondi
-        String[] partiIntervallo = intervallo.split(":");
-        long ore = Long.parseLong(partiIntervallo[0]);
-        long minuti = Long.parseLong(partiIntervallo[1]);
-        long secondi = Long.parseLong(partiIntervallo[2]);
-        // Calcola il tempo totale in millisecondi
-        long tempoTotaleMillisecondi = (ore * 3600 + minuti * 60 + secondi) * 1000;
-        return tempoTotaleMillisecondi;
-    }
-    // Metodo per convertire l'orario millisecondi in un formato leggibile (hh:mm)
-    private String convertiOrario(long millisecondi) {
-        // Converti i millisecondi in un oggetto LocalDateTime utilizzando il fuso orario locale
-        LocalDateTime oraLocale = LocalDateTime.ofInstant(
-                java.time.Instant.ofEpochMilli(millisecondi),
-                ZoneId.systemDefault()
-        );
-        // Formatta l'orario locale in una stringa nel formato hh:mm
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
-        return oraLocale.format(formatter);
-    }
-    // questi metodi onPause, onStop, onDestroy e onResume servono a stoppare il timer quando non si è piu su questa schermata e a farlo ricominciare quando si torna
     @Override
     protected void onPause() {
         super.onPause();
-
-
     }
     @Override
     protected void onStop() {
         super.onStop();
-
-
     }
     @Override
     protected void onDestroy() {
         super.onDestroy();
-
-
     }
     @Override
     public void onResume() {
         super.onResume();
-
     }
-
-
 
 
     public void osservaAstaRecuperata(){
@@ -229,7 +191,6 @@ public class SchermataAstaRibasso extends GestoreComuniImplementazioni {
     public void osservaConvertiIntervalloOfferte(){
         schermataAstaRibassoViewModel.intervalloOfferteConvertito.observe(this, (intervallo) ->{
             if(!intervallo.equals("")) {
-                Log.d("osservaConvertiIntervalloOfferte", intervallo);
                 textViewProssimoDecremento.setText(intervallo);
                 schermataAstaRibassoViewModel.recuperaAstaDaMostrare();
             }
@@ -259,7 +220,6 @@ public class SchermataAstaRibasso extends GestoreComuniImplementazioni {
     public void osservaIsAcquistoAvvenuto(){
         schermataAstaRibassoViewModel.messaggioAcquistaAstaRibasso.observe(this, (messaggio) -> {
             if(schermataAstaRibassoViewModel.isMessaggioAcquistaAstaRibasso()) {
-                Log.d("osservaIsAcquistoAvvenuto", "qui");
                 if (schermataAstaRibassoViewModel.getIsAcquistoAvvenuto()) {
                     Toast.makeText(this, messaggio, Toast.LENGTH_SHORT).show();
                     schermataAstaRibassoViewModel.getAstaData();
@@ -290,7 +250,6 @@ public class SchermataAstaRibasso extends GestoreComuniImplementazioni {
     }
     public void osservaIsAstaInPreferiti(){
         schermataAstaRibassoViewModel.isAstaInPreferiti.observe(this, (messaggio) -> {
-            Log.d("osservaIsAstaRecuperata", "sto recuper");
             if (messaggio) {
                 imageButtonPreferiti.setImageDrawable(drawableCuorePieno);
                 imageButtonPreferiti.setOnClickListener(v -> eliminazioneInPreferiti());
@@ -298,9 +257,6 @@ public class SchermataAstaRibasso extends GestoreComuniImplementazioni {
                 imageButtonPreferiti.setImageDrawable(drawableCuoreVuoto);
                 imageButtonPreferiti.setOnClickListener(v -> inserimentoInPreferiti());
             }
-//                osservaIsAstaInPreferiti();
-//                schermataAstaIngleseViewModel.getIsAstaInPreferiti();
-
         });
     }
     public void osservaVaiInVenditore(){

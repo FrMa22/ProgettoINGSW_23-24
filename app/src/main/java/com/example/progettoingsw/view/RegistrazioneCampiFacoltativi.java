@@ -174,20 +174,7 @@ public class RegistrazioneCampiFacoltativi extends GestoreComuniImplementazioni 
     }
     public void updateSocialNames(List<String> socialNames, List<String> socialLinks) {
         try {
-            System.out.println("in update Social names");
-            //gridView = findViewById(R.id.gridview_social_activity_profilo);
             if (socialNames != null && !socialNames.isEmpty() && socialLinks != null && !socialLinks.isEmpty()) {
-                // Aggiorna l'interfaccia utente con i nomi dei social
-                System.out.println("in update social names con nomi e link non nulli e non vuoti ");
-
-                System.out.println("Stampa a schermo dei nomi dei social");
-                for (String nome : socialNames) {
-                    System.out.println(nome);
-                }
-                System.out.println("Stampa a schermo dei link dei social");
-                for (String link : socialLinks) {
-                    System.out.println(link);
-                }
 
                 gridView.setVisibility(View.VISIBLE);
                 text_view_nessun_social.setVisibility(View.GONE);
@@ -198,22 +185,14 @@ public class RegistrazioneCampiFacoltativi extends GestoreComuniImplementazioni 
                 adapterSocial.setData(socialNames, socialLinks);
                 setGridViewHeightBasedOnChildren(gridView);
 
-                // Aggiungi stampe nel log per verificare che i dati siano correttamente passati
-                for (int i = 0; i < socialNames.size(); i++) {
-                    Log.d("FragmentProfilo", "Nome Social: " + socialNames.get(i) + ", Link Social: " + socialLinks.get(i));
-                }
             } else {
                 text_view_nessun_social.setVisibility(View.VISIBLE);
                 gridView.setVisibility(View.GONE);
-                // Rimuovi tutti i dati dall'adattatore e aggiorna la GridView
                 gridView = findViewById(R.id.gridview_social_activity_profilo);
                 adapterSocial = new CustomAdapter_gridview_profilo_social(RegistrazioneCampiFacoltativi.this);
                 gridView.setAdapter(adapterSocial);
 
-                // Aggiungi stampe nel log per verificare che i dati siano correttamente passati
-                Log.d("FragmentProfilo", "Nessun social disponibile");
 
-                // Imposta l'altezza della GridView a 50dp
                 gridView.setMinimumHeight((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 50, getResources().getDisplayMetrics()));
 
             }
@@ -265,14 +244,12 @@ public class RegistrazioneCampiFacoltativi extends GestoreComuniImplementazioni 
         registrazioneViewModel.getAcquirente().observe(this, new Observer<AcquirenteModel>() {
             @Override
             public void onChanged(AcquirenteModel acquirente) {
-                // Aggiorna l'interfaccia utente con il modello recuperato
                 osservaMessaggioErroreBio();
                 osservaMessaggioErrorePaese();
                 osservaMessaggioErroreSitoWeb();
                 bio = testoBio.getText().toString().trim();
                 paese = testoProvenienza.getText().toString().trim();
                 sitoWeb = testoSitoWeb.getText().toString().trim();
-                Log.d("osservaAcquirente", "valori : " + bio + paese + sitoWeb);
                 registrazioneViewModel.registrazioneAcquirenteCompleta(bio, paese, sitoWeb, acquirente);
             }
         });
@@ -282,7 +259,6 @@ public class RegistrazioneCampiFacoltativi extends GestoreComuniImplementazioni 
         registrazioneViewModel.getVenditore().observe(this, new Observer<VenditoreModel>() {
             @Override
             public void onChanged(VenditoreModel venditore) {
-                // Aggiorna l'interfaccia utente con il modello recuperato
                 osservaMessaggioErroreBio();
                 osservaMessaggioErrorePaese();
                 osservaMessaggioErroreSitoWeb();
@@ -341,8 +317,6 @@ public class RegistrazioneCampiFacoltativi extends GestoreComuniImplementazioni 
 
     @Override
     public void onPopupModificaSocialRegistrazioneDismissed() {
-        //aggiorno lista social
-        Log.d("onPopupModificaSocialRegistrazioneDismissed","entrato");
         registrazioneViewModel.inserisciSocialNellaLista();
     }
     public void osservaListaSocialAcquirente(){
@@ -384,29 +358,23 @@ public class RegistrazioneCampiFacoltativi extends GestoreComuniImplementazioni 
 
     @Override
     public void onPopupRegistrazioneSocialDismissed() {
-        //aggiorno lista social
-        Log.d("onPopupRegistrazioneSocialDismissed","entrato");
         registrazioneViewModel.inserisciSocialNellaLista();
     }
     public void osservaValoriPresentiFacoltativiAcquirente(){
         registrazioneViewModel.valoriPresentiFacoltativiAcquirente.observe(this, (utente)->{
             if(registrazioneViewModel.isValoriPresentiFacoltativiAcquirente()){
-                Log.d("osservaValoriPresentiFacoltativiAcquirente","entrato " + utente.getBio());
                 testoBio.setText(utente.getBio());
                 testoProvenienza.setText(utente.getAreageografica());
                 testoSitoWeb.setText(utente.getLink());
-                registrazioneViewModel.stampaLista();
             }
         });
     }
     public void osservaValoriPresentiFacoltativiVenditore(){
         registrazioneViewModel.valoriPresentiFacoltativiVenditore.observe(this, (utente) ->{
             if(registrazioneViewModel.isValoriPresentiFacoltativiVenditore()){
-                Log.d("osservaValoriPresentiFacoltativiVenditore","entrato");
                 testoBio.setText(utente.getBio());
                 testoProvenienza.setText(utente.getAreageografica());
                 testoSitoWeb.setText(utente.getLink());
-                registrazioneViewModel.stampaLista();
             }
         });
     }

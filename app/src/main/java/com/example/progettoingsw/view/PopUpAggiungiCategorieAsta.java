@@ -49,10 +49,6 @@ public class PopUpAggiungiCategorieAsta extends DialogPersonalizzato implements 
         setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override
             public void onDismiss(DialogInterface dialog) {
-                // Esegui le azioni desiderate quando il popup viene chiuso
-                // Ad esempio, esegui un'azione o mostra un messaggio
-                Log.d("PopUp", "Popup chiuso premendo all'esterno");
-                // Aggiungi qui le azioni desiderate
             }
         });
     }
@@ -84,17 +80,9 @@ public class PopUpAggiungiCategorieAsta extends DialogPersonalizzato implements 
 
         resources = mContext.getResources();
 
-//        switchTexts = new ArrayList<>();
-//        if(!categorieScelte.isEmpty()){
-//            switchTexts = categorieScelte;
-//            for (String categoria : switchTexts) {
-//                Log.d("PopUp switch texts", "Categoria: " + categoria);
-//            }
-//        }
 
         populateLinearLayout();
         osservaCategorieInserite();
-        Log.d("popup", "prima del check");
         if(creaAstaInversaViewModel != null) {
             creaAstaInversaViewModel.checkCategorieInserite();
         }else if(creaAstaIngleseViewModel != null){
@@ -106,20 +94,16 @@ public class PopUpAggiungiCategorieAsta extends DialogPersonalizzato implements 
     @Override
     public void onClick(View view) {
         if (view.getId() == R.id.buttonAnnullaCategorieCreaAsta) {
-            Log.d("Bottoni in popup" , "annulla");
             rimuoviOsservatori();
             dismiss();
         } else if (view.getId() == R.id.buttonSalvaCategorieCreaAsta) {
             if (creaAstaIngleseViewModel != null) {
                 creaAstaIngleseViewModel.saveCategorieScelte();
-                //fragmentCreaAstaInversa.handlePopUp(switchTexts);
             } else if (creaAstaRibassoViewModel != null) {
                 creaAstaRibassoViewModel.saveCategorieScelte();
-                //venditoreAstaInglese.handlePopUp(switchTexts);
             }
             else if (creaAstaInversaViewModel != null) {
                 creaAstaInversaViewModel.saveCategorieScelte();
-//                venditoreAstaRibasso.handlePopUp(switchTexts);
             }
             rimuoviOsservatori();
             dismiss();
@@ -150,13 +134,9 @@ public class PopUpAggiungiCategorieAsta extends DialogPersonalizzato implements 
             switchButton.setText(categorieArray[i]);
             switchButton.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20);
             switchButton.setTextColor(resources.getColor(R.color.colore_hint));
-            // Controllo se la categoria corrente è già stata selezionata
-//            if (categorieScelte.contains(categorieArray[i])) {
-//                switchButton.setChecked(true);
-//            }
+
 
             try {
-                // Imposta l'immagine a sinistra del testo
                 Drawable immagine = immaginiArray.getDrawable(i);
                 immagine.setBounds(0, 0, immagine.getIntrinsicWidth(), immagine.getIntrinsicHeight());
                 switchButton.setCompoundDrawablesWithIntrinsicBounds(immagine, null, null, null); // Qui ho invertito le icone
@@ -182,15 +162,12 @@ public class PopUpAggiungiCategorieAsta extends DialogPersonalizzato implements 
             switchButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    // Se lo switch è stato selezionato, aggiungi il testo all'array
                     if (isChecked) {
                         switchButton.setTextColor(resources.getColor(R.color.colore_secondario));
 
-                        //switchTexts.add(switchButton.getText().toString());
-                    } else { // Se lo switch è stato deselezionato, rimuovi il testo dall'array
+                    } else {
                         switchButton.setTextColor(resources.getColor(R.color.colore_hint));
 
-                        //switchTexts.remove(switchButton.getText().toString());
                     }
                 }
             });
@@ -219,8 +196,7 @@ public class PopUpAggiungiCategorieAsta extends DialogPersonalizzato implements 
 
             linear_layout_categorie_crea_asta.addView(switchButton);
 
-            // Aggiungi la vista con lo spessore nero tra gli switch
-            if (i < categorieArray.length - 1) { // Aggiungi la vista solo se non è l'ultimo elemento
+            if (i < categorieArray.length - 1) {
                 View separatorView = new View(getContext());
                 separatorView.setBackgroundColor(resources.getColor(R.color.colore_trattino_separatore));
                 LinearLayout.LayoutParams separatorLayoutParams = new LinearLayout.LayoutParams(
@@ -257,11 +233,9 @@ public class PopUpAggiungiCategorieAsta extends DialogPersonalizzato implements 
         }
     }
     public void osservaCategorieInserite() {
-        Log.d("osservaCategorieInserite","entrato");
         if (creaAstaInversaViewModel != null) {
             creaAstaInversaViewModel.categorieInserite.observe(fragmentCreaAstaInversa, (listaCategorie) -> {
                 if (creaAstaInversaViewModel.listaCategorieNotEmpty()) {
-                    Log.d("popupaggiungicategoriaAsta", "categorie " + listaCategorie);
                     selectCategories(listaCategorie);
                 }else{
                     populateLinearLayout();

@@ -9,7 +9,6 @@ import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.media.ExifInterface;
 import android.net.Uri;
-import android.util.Log;
 
 import androidx.activity.result.ActivityResult;
 import androidx.lifecycle.MutableLiveData;
@@ -297,24 +296,8 @@ public class CreaAstaIngleseViewModel extends ViewModel {
         bitmap.compress(Bitmap.CompressFormat.JPEG, 50, outputStream); // Compressione JPEG con qualità del 50%
         return outputStream.toByteArray();
     }
-    public void onActivityResult(Uri uriImmagine) {
-        try {
-            Log.d("ok","ok");
-            //displayImage(uriImmagine);
-        } catch (Exception e) {
-            setErroreGenerico("Nessuna Immagine selezionata");
-        }
-    }
-    public void prelevaImmagine(Activity activity){
-        Intent intent= new Intent(Intent.ACTION_PICK);
-        intent.setType("image/*");
-        if (intent.resolveActivity(activity.getPackageManager()) != null) {
-            setApriGalleria(intent);
-            //resultLauncher.launch(intent);
-        } else {
-            setErroreGenerico("Nessuna app disponibile per gestire la selezione delle immagini");
-        }
-    }
+
+
     public void setImmagine(ActivityResult result, Activity activity){
         uriImmagine = result.getData().getData();
         displayImage(uriImmagine,activity);
@@ -364,7 +347,6 @@ public class CreaAstaIngleseViewModel extends ViewModel {
             // Imposta l'immagine ridimensionata nella ImageView
             setImmagineConvertita(resizedBitmap);
 
-            //immagineProdotto.setImageBitmap(resizedBitmap);
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -392,27 +374,17 @@ public class CreaAstaIngleseViewModel extends ViewModel {
         });
 
         AlertDialog dialog = builder.create();
-        //dialog.show();
         setPopUpInformazioni(dialog);
 
     }
 
     public void addCategoriaProvvisoria(String nomeCategoria){
-        Log.d("addcategoria", "entrato" + nomeCategoria);
-        Log.d("addcategoria", "entrato e scelte: " + categorieScelte);
-        Log.d("removecategoria", "prima di aver aggiunto " + nomeCategoria + " si ha " + categorieScelteProvvisorie );
         categorieScelteProvvisorie.add(nomeCategoria);
-        Log.d("removecategoria", "dopo aver aggiunto " + nomeCategoria + " si ha " + categorieScelteProvvisorie );
     }
     public void removeCategoriaProvvisoria(String nomeCategoria){
-        Log.d("removecategoria", "entrato" + nomeCategoria);
-        Log.d("removecategoria", "entrato e scelte: " + categorieScelte);
-        Log.d("removecategoria", "prima di aver rimosso " + nomeCategoria + " si ha " + categorieScelteProvvisorie );
         categorieScelteProvvisorie.remove(nomeCategoria);
-        Log.d("removecategoria", "dopo aver rimosso " + nomeCategoria + " si ha " + categorieScelteProvvisorie );
     }
     public void saveCategorieScelte(){
-        Log.d("save","in categorie scelte metto categorie provvisorie" + categorieScelteProvvisorie);
         this.categorieScelte = new ArrayList<>(categorieScelteProvvisorie);
         setCategorieInserite(categorieScelte);
         this.categorieScelteProvvisorie.clear();
@@ -422,11 +394,9 @@ public class CreaAstaIngleseViewModel extends ViewModel {
     }
     public void checkCategorieInserite(){
         if(categorieScelte != null && !categorieScelte.isEmpty()){
-            Log.d("checkCategorieInserite","categorie scelte non null e non vuoto");
             setCategoriaProvvisoria(categorieScelte);
             setCategorieInserite(categorieScelte);
         }else{
-            Log.d("checkCategorieInserite","categorie scelte null o vuoto");
             categorieScelteProvvisorie = new ArrayList<>();
         }
     }

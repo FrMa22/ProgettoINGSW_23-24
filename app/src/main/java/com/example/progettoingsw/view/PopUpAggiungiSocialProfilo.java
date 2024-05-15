@@ -5,7 +5,6 @@ import android.view.View;
 import android.view.Window;
 import android.widget.EditText;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.example.progettoingsw.R;
 import com.example.progettoingsw.classe_da_estendere.DialogPersonalizzato;
@@ -13,8 +12,6 @@ import com.example.progettoingsw.viewmodel.FragmentProfiloViewModel;
 import com.google.android.material.button.MaterialButton;
 
 public class PopUpAggiungiSocialProfilo extends DialogPersonalizzato implements View.OnClickListener {
-    private String email;
-    private String tipoUtente;
     private FragmentProfilo fragmentProfilo;
     private PopupAggiungiSocialDismissListener popupDismissListener;
     MaterialButton bottoneChiudiRegistrazioneSocial;
@@ -26,7 +23,7 @@ public class PopUpAggiungiSocialProfilo extends DialogPersonalizzato implements 
 
 
     public PopUpAggiungiSocialProfilo(FragmentProfilo fragmentProfilo, FragmentProfiloViewModel fragmentProfiloViewModel,PopupAggiungiSocialDismissListener popupAggiungiSocialDismissListener) {
-        super(fragmentProfilo.getContext()); // Chiama il costruttore della superclasse Dialog
+        super(fragmentProfilo.getContext());
         this.fragmentProfilo = fragmentProfilo;
         this.fragmentProfiloViewModel=fragmentProfiloViewModel;
         this.popupDismissListener=popupAggiungiSocialDismissListener;
@@ -41,11 +38,6 @@ public class PopUpAggiungiSocialProfilo extends DialogPersonalizzato implements 
 
 
 
-
-
-
-
-        // Riferimenti ai widget all'interno del pop-up
         bottoneChiudiRegistrazioneSocial = findViewById(R.id.bottoneChiudiRegistrazioneSocial);
         bottoneConfermaRegistrazioneSocial = findViewById(R.id.bottoneConfermaRegistrazioneSocial);
         editTextLinkSocial = findViewById(R.id.editTextNomeUtenteSocial);
@@ -68,9 +60,8 @@ public class PopUpAggiungiSocialProfilo extends DialogPersonalizzato implements 
 
         if (viewId == R.id.bottoneChiudiRegistrazioneSocial) {
             fragmentProfiloViewModel.setApriPopUpAggiungiSocial(false);
-            //dismissAggiungiSocialPopup();
             fragmentProfiloViewModel.resetErroriSocialAggiunti();
-            dismiss(); // Chiude il dialog
+            dismiss();
         } else if (viewId == R.id.bottoneConfermaRegistrazioneSocial) {
             confermaRegistrazioneSocialProfilo();
         }
@@ -101,9 +92,6 @@ public class PopUpAggiungiSocialProfilo extends DialogPersonalizzato implements 
         }
     }
 
-    public void setPopupDismissListener( PopupAggiungiSocialDismissListener listener) {
-        this.popupDismissListener = listener;
-    }
 
 
     public void messaggioErroreNomeNuovo(String messaggio){
@@ -113,7 +101,6 @@ public class PopUpAggiungiSocialProfilo extends DialogPersonalizzato implements 
         fragmentProfiloViewModel.messaggioErroreNomeNuovo.observe(fragmentProfilo, (messaggio) -> {
             if (fragmentProfiloViewModel.isNuovoMessaggioErroreNomeNuovo()) {
                 messaggioErroreNomeNuovo(messaggio);
-                //loginViewModel.cancellaMessaggioLogin();
             }
         });
     }
@@ -127,7 +114,6 @@ public class PopUpAggiungiSocialProfilo extends DialogPersonalizzato implements 
         fragmentProfiloViewModel.messaggioErroreLinkNuovo.observe(fragmentProfilo, (messaggio) -> {
             if (fragmentProfiloViewModel.isNuovoMessaggioErroreLinkNuovo()) {
                 messaggioErroreLinkNuovo(messaggio);
-                //loginViewModel.cancellaMessaggioLogin();
             }
         });
     }
@@ -135,11 +121,8 @@ public class PopUpAggiungiSocialProfilo extends DialogPersonalizzato implements 
     public void osservaIsSocialAggiunto(){
         fragmentProfiloViewModel.isSocialAggiunto.observe(fragmentProfilo, (messaggio) -> {
             if(fragmentProfiloViewModel.getIsSocialAggiunto()){
-                //dismiss();
                 fragmentProfiloViewModel.resetErroriSocialAggiunti();
                 dismissAggiungiSocialPopup();
-            }else{
-                Toast.makeText(getContext(), "Errore nei dati del social da aggiungere", Toast.LENGTH_SHORT).show();
             }
         });
     }
