@@ -50,7 +50,7 @@
                         repository.setAsta_allingleseSelezionata(astaRecuperata);
                         setAstaRecuperata(astaRecuperata);
                     }else{
-                        setErroreRecuperoAsta("errore nel recupero asta");
+                        setErroreRecuperoAsta("Errore nel recupero asta");
                     }
                 }
             });

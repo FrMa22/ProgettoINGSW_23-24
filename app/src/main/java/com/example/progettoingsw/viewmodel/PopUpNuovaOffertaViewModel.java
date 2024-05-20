@@ -130,7 +130,7 @@ public class PopUpNuovaOffertaViewModel extends ViewModel {
                 if(risposta!=null && risposta==1){
                     setMessaggioPartecipazioneAsta("Offerta effettuata con successo!");
                 }else{
-                    setMessaggioPartecipazioneAsta("Errore nell'effettuare l'offerta, riprovare. ");
+                    setMessaggioPartecipazioneAsta("Errore nell'effettuare l'offerta, riprovare.");
                 }
 
             }
@@ -144,7 +144,7 @@ public class PopUpNuovaOffertaViewModel extends ViewModel {
                 if(risposta!=null && risposta==1){
                     setMessaggioPartecipazioneAsta("Offerta effettuata con successo!");
                 }else{
-                    setMessaggioPartecipazioneAsta("Errore nell'effettuare l'offerta, riprovare. ");
+                    setMessaggioPartecipazioneAsta("Errore nell'effettuare l'offerta, riprovare.");
                 }
 
             }

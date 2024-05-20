@@ -150,9 +150,9 @@ public class SchermataAstaRibassoViewModel extends ViewModel {
             public void OnAcquistaAstaRibasso(Integer risposta) {
                 setIsAcquistoAvvenuto(true);
                 if(risposta==1){
-                    setMessaggioAcquistaAstaRibasso("ok");
+                    setMessaggioAcquistaAstaRibasso("Offerta effettuata con successo!");
                 }else{
-                    setMessaggioAcquistaAstaRibasso("errore");
+                    setMessaggioAcquistaAstaRibasso("Errore nell'effettuare l'offerta!");
                 }
             }
         });
